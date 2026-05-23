@@ -1,0 +1,21 @@
+{
+    "appName": "NaHo",
+    "metadata": {
+        "title": {
+            "home": "Trang chủ"
+        },
+        "action": {
+            "open": "Mở",
+            "close": "Đóng"
+        }
+    },
+    "layout": {
+        "header": {
+            "notificationButton": "Thông báo",
+            "themeSwitchButton": {
+                "darkMode": "Chế độ tối",
+                "lightMode": "Chế độ sáng"
+            }
+        }
+    }
+}
