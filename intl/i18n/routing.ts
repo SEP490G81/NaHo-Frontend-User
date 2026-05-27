@@ -13,5 +13,17 @@ export const routing = defineRouting({
         "/home": {
             vi: "/trang-chu",
         },
+        "/login": {
+            vi: "/dang-nhap",
+        },
+        "/introduction": {
+            vi: "/gioi-thieu",
+        },
+        "/forgot-password": {
+            vi: "/quen-mat-khau",
+        },
+        "/register": {
+            vi: "/dang-ky",
+        },
     },
 });
