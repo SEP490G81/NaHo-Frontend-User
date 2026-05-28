@@ -8,7 +8,7 @@ const UserAvatar = () => {
     return (
         <>
             <button
-                className="border-l-bdc-muted ml-3 cursor-pointer"
+                className="border-l-bdc-muted cursor-pointer"
                 onClick={(event) => setAnchorEl(event.currentTarget)}
             >
                 <Avatar

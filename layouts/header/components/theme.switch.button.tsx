@@ -24,13 +24,12 @@ const ThemeSwitchButton = () => {
         >
             <Button
                 onClick={handleChangeMode}
-                variant="text"
+                variant="outlined"
                 color="primary"
                 sx={{
                     width: "40px",
                     minWidth: "40px",
                     height: "40px",
-                    borderRadius: "50%",
                 }}
             >
                 {mode === "light" ? (

@@ -1,5 +1,6 @@
 import { Avatar, Divider, Popover } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
+import LogoutButton from "@/layouts/header/features/logout.button";
 
 const AccountMenu = ({
     anchorEl,
@@ -28,6 +29,7 @@ const AccountMenu = ({
                         sx={{
                             width: "56px",
                             height: "56px",
+                            bgcolor: "var(--color-bgc-highlight)",
                         }}
                     >
                         T
@@ -43,6 +45,10 @@ const AccountMenu = ({
                 </div>
 
                 <Divider />
+
+                <div className="flex flex-col gap-x-3 p-5">
+                    <LogoutButton />
+                </div>
             </div>
         </Popover>
     );

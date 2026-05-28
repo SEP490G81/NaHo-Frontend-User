@@ -1,24 +1,53 @@
 import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { SxProps, Theme } from "@mui/material/styles";
 
-export function TextFieldCustom(props: TextFieldProps) {
-    const defaultInputSx = {
+export function TextFieldCustom({
+    sx,
+    slotProps,
+    ...restProps
+}: TextFieldProps) {
+    const defaultInputSx: SxProps<Theme> = {
         borderRadius: "6px",
-        fieldset: { border: "1px solid var(--color-bdc-muted)" },
-        "input::placeholder": { fontSize: "15.2px" },
+        fieldset: {
+            border: "1px solid var(--color-bdc-muted)",
+        },
+        "input::placeholder": {
+            fontSize: "15.2px",
+        },
     };
+
+    const defaultTextFieldSx: SxProps<Theme> = {
+        ".MuiFormHelperText-root": {
+            marginLeft: 0,
+            marginRight: 0,
+        },
+    };
+
+    const inputSlotProps = slotProps?.input;
 
     return (
         <TextField
-            {...props}
+            {...restProps}
+            sx={[
+                defaultTextFieldSx,
+                ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
+            ]}
             slotProps={{
-                ...props.slotProps,
-                input: {
-                    ...props.slotProps?.input,
-                    sx: {
-                        ...defaultInputSx,
-                        ...(props.slotProps?.input as any)?.sx,
-                    },
-                },
+                ...slotProps,
+                input:
+                    typeof inputSlotProps === "function"
+                        ? inputSlotProps
+                        : {
+                              ...inputSlotProps,
+                              sx: [
+                                  defaultInputSx,
+                                  ...(Array.isArray(inputSlotProps?.sx)
+                                      ? inputSlotProps.sx
+                                      : inputSlotProps?.sx
+                                        ? [inputSlotProps.sx]
+                                        : []),
+                              ],
+                          },
             }}
         />
     );
