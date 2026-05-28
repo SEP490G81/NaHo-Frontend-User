@@ -39,7 +39,7 @@ const LoginFormButtons = ({
 
             <Button
                 type="button"
-                loading={pending}
+                disabled={pending}
                 fullWidth
                 variant="outlined"
                 color="primary"
