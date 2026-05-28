@@ -1,21 +1,35 @@
-import React from "react";
-import { Button, Divider } from "@mui/material";
-import { useTranslations } from "next-intl";
 import GoogleIcon from "@/components/ui/icons/google.icon";
 import { Link } from "@/intl/i18n/navigation";
+import { LoginState } from "@/modules/public/login/types/login.ui.type";
+import { Button, Divider } from "@mui/material";
+import { useTranslations } from "next-intl";
 
-const LoginFormButtons = () => {
+const LoginFormButtons = ({
+    pending,
+    state,
+}: {
+    pending: boolean;
+    state: LoginState;
+}) => {
     const t = useTranslations();
 
     return (
         <div className="w-full">
-            <Button type="submit" fullWidth color="primary" variant="contained">
+            <Button
+                type="submit"
+                loading={pending}
+                fullWidth
+                color="primary"
+                variant="contained"
+            >
                 {t("page.login.form.loginButton")}
             </Button>
 
-            <p className="text-text-error mt-1 text-xs font-semibold">
-                {t("page.login.form.wrongLoginInfo")}
-            </p>
+            {state.error && (
+                <p className="text-text-error mt-1 text-xs font-semibold">
+                    {t("page.login.form.wrongLoginInfo")}
+                </p>
+            )}
 
             <Divider textAlign="center" sx={{ my: "12px" }}>
                 <p className="text-text-muted text-xs uppercase select-none">
@@ -24,6 +38,8 @@ const LoginFormButtons = () => {
             </Divider>
 
             <Button
+                type="button"
+                loading={pending}
                 fullWidth
                 variant="outlined"
                 color="primary"

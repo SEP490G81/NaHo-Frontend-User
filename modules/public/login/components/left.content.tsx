@@ -1,15 +1,18 @@
-import React from "react";
-import Gate from "@/pages/(public)/login/components/gate";
-import { DOT_POSITION_LIST } from "@/pages/(public)/login/constants/login.constant";
+import Gate from "@/modules/public/login/components/gate";
+import LogoButton from "@/modules/public/login/components/logo.button";
+import { DOT_POSITION_LIST } from "@/modules/public/login/constants/login.constant";
 import { useTranslations } from "next-intl";
-import LogoButton from "@/pages/(public)/login/components/logo.button";
 
 const LeftContent = () => {
     const t = useTranslations();
     return (
         <div className="relative hidden w-1/2 overflow-hidden bg-[linear-gradient(135deg,#1E293B_0%,#0f172a_60%,#1e1b3a_100%)] md:flex md:flex-col md:items-center md:justify-center md:p-12">
             <div className="absolute top-5 left-5">
-                <LogoButton />
+                <LogoButton>
+                    <h1 className="text-text-contrast text-2xl font-bold whitespace-nowrap">
+                        {t("appName")}
+                    </h1>
+                </LogoButton>
             </div>
 
             <div className="pointer-events-none absolute inset-0">

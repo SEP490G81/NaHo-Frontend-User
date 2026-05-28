@@ -1,6 +1,7 @@
-import React from "react";
+import { auth } from "@/auth";
+import { redirect } from "@/intl/i18n/navigation";
+import Login from "@/modules/public/login/components/login";
 import { getTranslations } from "next-intl/server";
-import Login from "@/pages/(public)/login/components/login";
 
 export async function generateMetadata({
     params,
@@ -17,7 +18,17 @@ export async function generateMetadata({
     };
 }
 
-const LoginPage = () => {
+const LoginPage = async ({ params }: { params: { locale: string } }) => {
+    const { locale } = await params;
+    const session = await auth();
+
+    if (session?.user) {
+        redirect({
+            href: "/home",
+            locale,
+        });
+    }
+
     return <Login />;
 };
 

@@ -1,6 +1,5 @@
-import React from "react";
-import LeftContent from "@/pages/(public)/login/components/left.content";
-import RightContent from "@/pages/(public)/login/components/right.content";
+import LeftContent from "@/modules/public/login/components/left.content";
+import RightContent from "@/modules/public/login/components/right.content";
 
 const Login = () => {
     return (

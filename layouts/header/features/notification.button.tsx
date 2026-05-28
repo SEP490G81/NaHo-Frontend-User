@@ -8,13 +8,12 @@ const NotificationButton = () => {
     return (
         <TooltipCustom arrow title={t("layout.header.notificationButton")}>
             <Button
-                variant="text"
+                variant="outlined"
                 color="primary"
                 sx={{
                     width: "40px",
                     minWidth: "40px",
                     height: "40px",
-                    borderRadius: "50%",
                 }}
             >
                 <NotificationsNoneOutlinedIcon />

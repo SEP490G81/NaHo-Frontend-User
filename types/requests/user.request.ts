@@ -1,4 +1,4 @@
 export interface CredentialsLoginRequest {
-    username: string;
+    usernameOrEmail: string;
     rawPassword: string;
 }

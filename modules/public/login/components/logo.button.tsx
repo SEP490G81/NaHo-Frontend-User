@@ -1,15 +1,13 @@
 "use client";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/intl/i18n/navigation";
+import React from "react";
 
-const LogoButton = () => {
-    const t = useTranslations();
-
+const LogoButton = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="mb-3 flex items-center justify-center">
+        <div className="flex items-center justify-center">
             <Link
-                href={"/introduction"}
+                href={"/home"}
                 className="flex items-center gap-x-3 select-none"
             >
                 <Image
@@ -18,9 +16,7 @@ const LogoButton = () => {
                     width={40}
                     height={40}
                 />
-                <h1 className="text-text-pure dark:text-text-contrast text-2xl font-bold whitespace-nowrap">
-                    {t("appName")}
-                </h1>
+                {children}
             </Link>
         </div>
     );

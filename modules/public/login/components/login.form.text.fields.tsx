@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { IconButton, InputAdornment } from "@mui/material";
-import { useTranslations } from "next-intl";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
+import { LoginState } from "@/modules/public/login/types/login.ui.type";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { IconButton, InputAdornment } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
-const LoginFormTextFields = () => {
+const LoginFormTextFields = ({ state }: { state: LoginState }) => {
     const t = useTranslations();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -25,31 +26,39 @@ const LoginFormTextFields = () => {
                     placeholder={t("page.login.form.enterEmailOrUsername")}
                     size="small"
                     fullWidth
-                    error
+                    defaultValue={state.usernameOrEmail.value}
+                    error={state.usernameOrEmail.error}
                     helperText={
-                        <span className="text-text-error font-semibold">
-                            {t("page.login.form.pleaseEnterEmail")}
-                        </span>
+                        state.usernameOrEmail.error ? (
+                            <span className="text-text-error font-semibold">
+                                {t(
+                                    "page.login.form.pleaseEnterEmailOrUsername",
+                                )}
+                            </span>
+                        ) : null
                     }
                 />
             </div>
 
             <div className="flex w-full flex-col items-start gap-y-1.5">
-                <label htmlFor="password" className="font-semibold">
-                    {t("page.login.form.password")}
+                <label htmlFor="rawPassword" className="font-semibold">
+                    {t("page.login.form.rawPassword")}
                 </label>
                 <TextFieldCustom
-                    name="password"
-                    id="password"
+                    name="rawPassword"
+                    id="rawPassword"
                     type={showPassword ? "text" : "password"}
                     placeholder={t("page.login.form.enterPassword")}
                     size="small"
                     fullWidth
-                    error
+                    defaultValue={state.rawPassword.value}
+                    error={state.rawPassword.error}
                     helperText={
-                        <span className="text-text-error font-semibold">
-                            {t("page.login.form.pleaseEnterPassword")}
-                        </span>
+                        state.rawPassword.error ? (
+                            <span className="text-text-error font-semibold">
+                                {t("page.login.form.pleaseEnterPassword")}
+                            </span>
+                        ) : null
                     }
                     slotProps={{
                         input: {

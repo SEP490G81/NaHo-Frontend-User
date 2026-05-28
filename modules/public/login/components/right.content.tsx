@@ -1,9 +1,8 @@
-import React from "react";
-import LoginForm from "@/pages/(public)/login/features/login.form";
 import { Link } from "@/intl/i18n/navigation";
-import { useTranslations } from "next-intl";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ThemeSwitchButton from "@/layouts/header/components/theme.switch.button";
+import LoginForm from "@/modules/public/login/features/login.form";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { useTranslations } from "next-intl";
 
 const RightContent = () => {
     const t = useTranslations();
@@ -18,11 +17,11 @@ const RightContent = () => {
 
             <div className="border-bdc-primary bg-bgc-app/70 relative w-full max-w-md rounded-2xl border px-6 py-5 shadow-xl backdrop-blur-xl md:px-8 md:py-10">
                 <Link
-                    href={"/introduction"}
+                    href={"/home"}
                     className="text-text-muted hover:text-text-highlight mb-5 flex items-center justify-start gap-x-1 text-sm"
                 >
                     <KeyboardBackspaceIcon fontSize="small" />
-                    {t("page.login.backToIntroductionPage")}
+                    {t("page.login.backToHomePage")}
                 </Link>
 
                 <div className="my-5 md:my-8">

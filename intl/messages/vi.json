@@ -8,7 +8,6 @@
         "title": {
             "home": "Trang chủ",
             "login": "Đăng nhập",
-            "introduction": "Giới thiệu",
             "forgotPassword": "Quên mật khẩu",
             "register": "Đăng ký"
         },
@@ -23,19 +22,22 @@
             "themeSwitchButton": {
                 "darkMode": "Chế độ tối",
                 "lightMode": "Chế độ sáng"
-            }
+            },
+            "loginButton": "Đăng nhập",
+            "logoutButton": "Đăng xuất",
+            "registerButton": "Đăng ký trải nghiệm ngay"
         }
     },
     "page": {
         "login": {
             "slogan": "Trò chuyện không giới hạn,\n kết nối không khoảng cách.",
-            "backToIntroductionPage": "Về trang giới thiệu",
+            "backToHomePage": "Về trang chủ",
             "welcome": "Rất vui được gặp bạn",
             "loginDescription": "Đăng nhập để tiếp tục hành trình luyện nói tiếng Nhật cùng NaHo.",
             "form": {
                 "emailOrUsername": "Email/Tên tài khoản",
                 "enterEmailOrUsername": "Nhập email hoặc tên tài khoản của bạn.",
-                "password": "Mật khẩu",
+                "rawPassword": "Mật khẩu",
                 "enterPassword": "••••••••",
                 "rememberLogin": "Ghi nhớ đăng nhập",
                 "forgotPassword": "Quên mật khẩu?",
@@ -43,7 +45,7 @@
                 "loginByGoogle": "Đăng nhập bằng Google",
                 "noAccount": "Chưa có tài khoản?",
                 "registerNow": "Đăng ký ngay",
-                "pleaseEnterEmail": "Vui lòng nhập email!",
+                "pleaseEnterEmailOrUsername": "Vui lòng nhập email/tên tài khoản!",
                 "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
                 "wrongLoginInfo": "Sai thông tin đăng nhập!"
             }
