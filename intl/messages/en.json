@@ -1,0 +1,66 @@
+{
+    "appName": "NaHo",
+    "copyright": "© 2026 NaHo. Developed by Team G81 - SEP490 - FPT University.",
+    "common": {
+        "or": "Or"
+    },
+    "metadata": {
+        "title": {
+            "home": "Home",
+            "login": "Login",
+            "forgotPassword": "Forgot Password",
+            "register": "Register",
+            "settings": "Settings",
+            "getHelp": "Help"
+        },
+        "language": {
+            "vi": "Vietnamese",
+            "en": "English",
+            "jp": "Japanese"
+        },
+        "action": {
+            "open": "Open",
+            "close": "Close"
+        }
+    },
+    "layout": {
+        "header": {
+            "notificationButton": "Notifications",
+            "themeSwitchButton": {
+                "darkMode": "Dark Mode",
+                "lightMode": "Light Mode"
+            },
+            "loginButton": "Login",
+            "logoutButton": "Logout",
+            "registerButton": "Get Started Now",
+            "accountMenu": {
+                "settings": "Settings",
+                "language": "Language",
+                "getHelp": "Help"
+            }
+        }
+    },
+    "page": {
+        "login": {
+            "slogan": "Unlimited conversations,\n connecting without distance.",
+            "backToHomePage": "Back to Home",
+            "welcome": "Nice to Meet You",
+            "loginDescription": "Log in to continue your Japanese speaking journey with NaHo.",
+            "form": {
+                "emailOrUsername": "Email/Username",
+                "enterEmailOrUsername": "Enter your email or username.",
+                "rawPassword": "Password",
+                "enterPassword": "••••••••",
+                "rememberLogin": "Remember Me",
+                "forgotPassword": "Forgot Password?",
+                "loginButton": "Login",
+                "loginByGoogle": "Sign in with Google",
+                "noAccount": "Don't have an account?",
+                "registerNow": "Register Now",
+                "pleaseEnterEmailOrUsername": "Please enter your email/username!",
+                "pleaseEnterPassword": "Please enter your password!",
+                "wrongLoginInfo": "Incorrect login information!"
+            }
+        }
+    }
+}

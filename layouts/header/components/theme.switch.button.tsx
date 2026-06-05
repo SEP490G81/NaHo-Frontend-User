@@ -33,9 +33,9 @@ const ThemeSwitchButton = () => {
                 }}
             >
                 {mode === "light" ? (
-                    <DarkModeOutlinedIcon />
+                    <DarkModeOutlinedIcon fontSize="small" />
                 ) : (
-                    <LightModeOutlinedIcon />
+                    <LightModeOutlinedIcon fontSize="small" />
                 )}
             </Button>
         </TooltipCustom>

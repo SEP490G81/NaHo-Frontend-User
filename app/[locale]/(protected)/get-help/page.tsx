@@ -1,4 +1,4 @@
-import Login from "@/modules/public/login/components/login";
+import React from "react";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
@@ -12,12 +12,12 @@ export async function generateMetadata({
     const t = await getTranslations({ locale, namespace: "metadata.title" });
 
     return {
-        title: t("login"),
+        title: t("getHelp"),
     };
 }
 
-const LoginPage = async () => {
-    return <Login />;
+const GetHelpPage = () => {
+    return <div>get help</div>;
 };
 
-export default LoginPage;
+export default GetHelpPage;

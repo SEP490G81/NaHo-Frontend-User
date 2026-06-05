@@ -9,6 +9,8 @@ import "../../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import React from "react";
 import { routing } from "@/intl/i18n/routing";
+import { AuthProvider } from "@/features/providers/auth.provider";
+import { getCurrentLoggedUser } from "@/services/server/user.service";
 
 type Props = {
     children: React.ReactNode;
@@ -23,6 +25,9 @@ export default async function LocaleLayout({
     if (!hasLocale(routing.locales, locale)) {
         notFound();
     }
+
+    const user = await getCurrentLoggedUser().catch(() => null);
+    console.log(">>>> check user: ", user);
 
     return (
         <html
@@ -40,7 +45,9 @@ export default async function LocaleLayout({
                                     attribute="class"
                                     defaultMode="light"
                                 />
-                                <main>{children}</main>
+                                <AuthProvider initialUser={user}>
+                                    <main>{children}</main>
+                                </AuthProvider>
                                 <ToastContainer />
                             </AppThemeProvider>
                         </BProgressProvider>

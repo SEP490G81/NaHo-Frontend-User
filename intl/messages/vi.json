@@ -9,7 +9,14 @@
             "home": "Trang chủ",
             "login": "Đăng nhập",
             "forgotPassword": "Quên mật khẩu",
-            "register": "Đăng ký"
+            "register": "Đăng ký",
+            "settings": "Cài đặt",
+            "getHelp": "Trợ giúp"
+        },
+        "language": {
+            "vi": "Tiếng Việt",
+            "en": "Tiếng Anh",
+            "jp": "Tiếng Nhật"
         },
         "action": {
             "open": "Mở",
@@ -25,7 +32,12 @@
             },
             "loginButton": "Đăng nhập",
             "logoutButton": "Đăng xuất",
-            "registerButton": "Đăng ký trải nghiệm ngay"
+            "registerButton": "Đăng ký trải nghiệm ngay",
+            "accountMenu": {
+                "settings": "Cài đặt",
+                "language": "Ngôn ngữ",
+                "getHelp": "Trợ giúp"
+            }
         }
     },
     "page": {
