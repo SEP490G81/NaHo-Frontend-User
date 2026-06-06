@@ -11,7 +11,11 @@
             "forgotPassword": "Quên mật khẩu",
             "register": "Đăng ký",
             "settings": "Cài đặt",
-            "getHelp": "Trợ giúp"
+            "getHelp": "Trợ giúp",
+            "features": "Tính năng",
+            "learnerFeedback": "Đánh giá từ người học",
+            "frequentlyQuestions": "Câu hỏi thường gặp",
+            "dashboard": "Bảng điều khiển"
         },
         "language": {
             "vi": "Tiếng Việt",

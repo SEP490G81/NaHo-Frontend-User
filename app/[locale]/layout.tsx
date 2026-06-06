@@ -1,7 +1,7 @@
 import AppThemeProvider from "@/components/providers/app.theme.provider";
 import BProgressProvider from "@/components/providers/bprogress.provider";
 import { fontNotoSansJP, fontQuicksand } from "@/styles/font";
-import { InitColorSchemeScript } from "@mui/material";
+import ThemeInitScript from "@/components/providers/theme.init.script";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
@@ -9,8 +9,7 @@ import "../../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import React from "react";
 import { routing } from "@/intl/i18n/routing";
-import { AuthProvider } from "@/features/providers/auth.provider";
-import { getCurrentLoggedUser } from "@/services/server/user.service";
+import { QueryProvider } from "@/components/providers/query.provider";
 
 type Props = {
     children: React.ReactNode;
@@ -26,9 +25,6 @@ export default async function LocaleLayout({
         notFound();
     }
 
-    const user = await getCurrentLoggedUser().catch(() => null);
-    console.log(">>>> check user: ", user);
-
     return (
         <html
             lang={locale}
@@ -37,17 +33,14 @@ export default async function LocaleLayout({
             suppressHydrationWarning
         >
             <body>
+                <ThemeInitScript />
                 <NextIntlClientProvider>
                     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
                         <BProgressProvider>
                             <AppThemeProvider>
-                                <InitColorSchemeScript
-                                    attribute="class"
-                                    defaultMode="light"
-                                />
-                                <AuthProvider initialUser={user}>
+                                <QueryProvider>
                                     <main>{children}</main>
-                                </AuthProvider>
+                                </QueryProvider>
                                 <ToastContainer />
                             </AppThemeProvider>
                         </BProgressProvider>

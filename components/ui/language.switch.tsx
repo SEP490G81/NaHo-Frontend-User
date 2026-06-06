@@ -2,17 +2,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-import { Button, Menu } from "@mui/material";
+import { Button, Menu, PopoverOrigin } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { routing } from "@/intl/i18n/routing";
 import { usePathname, useRouter } from "@/intl/i18n/navigation";
 import { useParams } from "next/navigation";
 
-export interface LanguageSwitchProps {
+interface LanguageSwitchProps {
     variant?: "menu-item" | "icon-button";
+    anchorOrigin?: PopoverOrigin;
+    transformOrigin?: PopoverOrigin;
 }
 
-const LanguageSwitch = ({ variant = "menu-item" }: LanguageSwitchProps) => {
+const LanguageSwitch = ({
+    variant = "menu-item",
+    anchorOrigin = {
+        vertical: "top",
+        horizontal: "left",
+    },
+    transformOrigin = {
+        vertical: "top",
+        horizontal: "right",
+    },
+}: LanguageSwitchProps) => {
     const router = useRouter();
     const params = useParams();
     const pathname = usePathname();
@@ -106,14 +118,8 @@ const LanguageSwitch = ({ variant = "menu-item" }: LanguageSwitchProps) => {
             <Menu
                 open={Boolean(anchorEl)}
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
+                anchorOrigin={anchorOrigin}
+                transformOrigin={transformOrigin}
                 style={{ pointerEvents: "none" }}
                 disableScrollLock
                 disableRestoreFocus

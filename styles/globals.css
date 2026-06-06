@@ -75,6 +75,7 @@ html[data-locale="jp"] {
 
 /* width của scrollbar */
 ::-webkit-scrollbar {
+    display: none;
     width: 4px;
     height: 4px;
 }
@@ -86,7 +87,7 @@ html[data-locale="jp"] {
 
 /* thumb (thanh kéo) */
 ::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: var(--color-bgc-highlight);
     border-radius: 12px;
 }
 

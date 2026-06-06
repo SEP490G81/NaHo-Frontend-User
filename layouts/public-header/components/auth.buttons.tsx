@@ -12,7 +12,10 @@ const AuthButtons = () => {
                     {t("layout.header.loginButton")}
                 </Button>
             </Link>
-            <Link href={"/register"}>
+            <Link
+                href={"/register"}
+                className="transition-all duration-300 hover:scale-105"
+            >
                 <Button variant="contained" color="primary" size="small">
                     {t("layout.header.registerButton")}
                 </Button>

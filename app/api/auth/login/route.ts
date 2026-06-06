@@ -1,5 +1,6 @@
-import { ProblemDetail } from "@/types/responses/base.response";
+import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import { NextResponse } from "next/server";
+import { TokenExpResponse } from "@/types/responses/user.response";
 
 export async function POST(request: Request) {
     const body = await request.json();
@@ -13,14 +14,20 @@ export async function POST(request: Request) {
         cache: "no-store",
     });
 
+    const result = await backendResponse.json();
+
     if (!backendResponse.ok) {
-        const problemDetail: ProblemDetail = await backendResponse.json();
+        const problemDetail: ProblemDetail = result as ProblemDetail;
         return NextResponse.json(problemDetail, {
             status: backendResponse.status,
         });
     }
 
-    const response = NextResponse.json({ status: backendResponse.status });
+    const tokenExpResponse = (result as ApiResponse<TokenExpResponse>).data;
+
+    const response = NextResponse.json(tokenExpResponse, {
+        status: backendResponse.status,
+    });
 
     const cookies = backendResponse.headers.getSetCookie();
     cookies.forEach((cookie) => {

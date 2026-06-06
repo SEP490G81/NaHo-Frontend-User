@@ -1,10 +1,14 @@
 import { Avatar, Divider, Popover } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import LogoutButton from "@/layouts/header/features/logout.button";
-import { ACCOUNT_MENU_ITEMS } from "@/layouts/header/constants/header.constant";
 import { Link } from "@/intl/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useAuth } from "@/features/providers/auth.provider";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import {
+    getFirstCharacter,
+    getUserFullName,
+} from "@/layouts/protected-header/utils/header.util";
+import { ACCOUNT_MENU_ITEMS } from "@/layouts/protected-header/constants/protected.header.constant";
+import LogoutButton from "@/layouts/protected-header/features/logout.button";
 
 const AccountMenu = ({
     anchorEl,
@@ -14,10 +18,7 @@ const AccountMenu = ({
     setAnchorEl: Dispatch<SetStateAction<HTMLButtonElement | null>>;
 }) => {
     const t = useTranslations();
-    const { user } = useAuth();
-
-    const initials = user?.firstName ? user.firstName.charAt(0).toUpperCase() : "U";
-    const fullName = user ? `${user.firstName} ${user.lastName}`.trim() : "";
+    const { data: user } = useCurrentUser();
 
     return (
         <Popover
@@ -34,23 +35,22 @@ const AccountMenu = ({
             }}
         >
             <div>
-                <div className="flex items-center gap-x-3 p-3.5">
+                <div className="flex min-w-75 items-center gap-x-3 p-3.5">
                     <Avatar
-                        src={user?.avatarFileUrl || undefined}
                         sx={{
                             width: "56px",
                             height: "56px",
                             bgcolor: "var(--color-bgc-highlight)",
                         }}
                     >
-                        {initials}
+                        {getFirstCharacter(user)}
                     </Avatar>
                     <div className="text-left">
                         <h2 className="text-sm font-semibold">
-                            {fullName}
+                            {getUserFullName(user)}
                         </h2>
                         <p className="text-tc-muted text-sm font-semibold">
-                            {user?.email}
+                            {user ? user.email : ""}
                         </p>
                     </div>
                 </div>

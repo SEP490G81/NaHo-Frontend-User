@@ -1,12 +1,15 @@
 import { UserResponse } from "@/types/responses/user.response";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import { cookies } from "next/headers";
+import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
+import { cache } from "react";
 
-export async function getCurrentLoggedUser(): Promise<UserResponse> {
+// cache() function use to cache the result in a request
+export const getCurrentUser = cache(async (): Promise<UserResponse> => {
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access_token")?.value;
+    const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
     if (!accessToken) {
-        throw new Error("Could not find access token without access token");
+        throw new Error("Could not find access token!");
     }
 
     const backendResponse = await fetch(`${process.env.API_URL}/auth/me`, {
@@ -25,4 +28,4 @@ export async function getCurrentLoggedUser(): Promise<UserResponse> {
     }
 
     return (result as ApiResponse<UserResponse>).data;
-}
+});

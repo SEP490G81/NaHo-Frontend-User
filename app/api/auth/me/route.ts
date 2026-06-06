@@ -2,12 +2,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import { UserResponse } from "@/types/responses/user.response";
+import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 
 export async function GET() {
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access_token")?.value;
+    const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
     if (!accessToken) {
-        return NextResponse.json({ status: 401 });
+        return NextResponse.json(null, { status: 401 });
     }
 
     const backendResponse = await fetch(`${process.env.API_URL}/auth/me`, {

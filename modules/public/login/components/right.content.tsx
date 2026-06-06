@@ -1,9 +1,9 @@
 import { Link } from "@/intl/i18n/navigation";
-import ThemeSwitchButton from "@/layouts/header/components/theme.switch.button";
 import LoginForm from "@/modules/public/login/features/login.form";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useTranslations } from "next-intl";
 import LanguageSwitch from "@/components/ui/language.switch";
+import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
 
 const RightContent = () => {
     const t = useTranslations();

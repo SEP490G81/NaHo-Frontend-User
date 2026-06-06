@@ -17,3 +17,8 @@ export interface TokenResponse {
     expiresAt: string;
     expiresIn: number;
 }
+
+export interface TokenExpResponse {
+    expiresAt: string;
+    expiresIn: number;
+}

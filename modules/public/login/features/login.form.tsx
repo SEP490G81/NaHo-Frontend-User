@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import { validateLoginForm } from "@/modules/public/login/actions/login.action";
 import { useRouter } from "@/intl/i18n/navigation";
 import { credentialsLogin } from "@/services/client/user.service";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/libs/query.keys";
 
 const initialState: LoginState = {
     usernameOrEmail: {
@@ -24,6 +26,7 @@ const LoginForm = () => {
     const [state, setState] = useState<LoginState>(initialState);
     const [errorMessage, setErrorMessage] = useState("");
     const { replace, refresh } = useRouter();
+    const queryClient = useQueryClient();
 
     const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,8 +42,12 @@ const LoginForm = () => {
                     rawPassword: newState.rawPassword.value,
                 });
 
+                await queryClient.invalidateQueries({
+                    queryKey: queryKeys.auth.currentUser,
+                });
+
                 refresh();
-                replace("/home");
+                replace("/dashboard");
             } catch (error) {
                 console.log(error);
                 if (error instanceof Error) {
