@@ -8,7 +8,7 @@ import { queryKeys } from "@/libs/query.keys";
 
 const LogoutButton = () => {
     const t = useTranslations();
-    const { replace, refresh } = useRouter();
+    const { replace } = useRouter();
     const queryClient = useQueryClient();
 
     const handleLogout = async () => {
@@ -17,7 +17,6 @@ const LogoutButton = () => {
 
             queryClient.setQueryData(queryKeys.auth.currentUser, null);
 
-            refresh();
             replace("/home");
         } catch (error) {
             console.error(error);
@@ -27,7 +26,7 @@ const LogoutButton = () => {
     return (
         <div className="px-1 py-2">
             <button
-                className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 w-full items-center justify-start rounded-md px-5 transition-all duration-150"
+                className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 w-full cursor-pointer items-center justify-start rounded-md px-5 transition-all duration-150"
                 onClick={handleLogout}
             >
                 <span className="flex h-10 w-10 items-center">

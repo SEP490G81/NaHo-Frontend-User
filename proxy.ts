@@ -1,10 +1,8 @@
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/intl/i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
-import {
-    ACCESS_TOKEN_NAME,
-    REFRESH_TOKEN_NAME,
-} from "@/constants/app.constants";
+import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
+import { isTokenExpired } from "@/libs/token";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -16,30 +14,15 @@ const publicPaths = [
     "/features",
     "/learner-feedback",
     "/frequently-questions",
+    "/home",
 ];
 
-// Helper to check if a JWT token is expired or expiring soon
-function isTokenExpired(token: string | undefined): boolean {
-    if (!token) return true;
-    try {
-        const parts = token.split(".");
-        if (parts.length !== 3) return true;
-        const payload = parts[1];
-        const decoded = atob(payload.replaceAll("-", "+").replaceAll("_", "/"));
-        const data = JSON.parse(decoded);
-        const exp = data.exp;
-        if (typeof exp !== "number") return true;
-        // Check if token is expired or will expire in the next 10 seconds (grace period)
-        const bufferSeconds = 60;
-        return exp - Math.floor(Date.now() / 1000) < bufferSeconds;
-    } catch {
-        return true;
-    }
-}
-
 export default async function middleware(request: NextRequest) {
+    // chạy next-intl trước
     const response = intlMiddleware(request);
 
+    // next-intl có thể trả ra 302
+    // nếu là redirect của next-intl thì return luôn
     if (response.status >= 300 && response.status < 400) {
         return response;
     }
@@ -57,59 +40,57 @@ export default async function middleware(request: NextRequest) {
 
     // Helper for auth failure handling (deletes cookies and handles redirection/routing)
     const handleAuthFailure = () => {
-        if (isPublic) {
-            response.cookies.delete(ACCESS_TOKEN_NAME);
-            response.cookies.delete(REFRESH_TOKEN_NAME);
-            return response;
-        } else {
-            const redirectResponse = NextResponse.redirect(
-                new URL("/login", request.url),
-            );
-            redirectResponse.cookies.delete(ACCESS_TOKEN_NAME);
-            redirectResponse.cookies.delete(REFRESH_TOKEN_NAME);
-            return redirectResponse;
-        }
+        const redirectResponse = NextResponse.redirect(
+            new URL("/login", request.url),
+        );
+        redirectResponse.cookies.delete(ACCESS_TOKEN_NAME);
+        redirectResponse.cookies.delete(REFRESH_TOKEN_NAME);
+        return redirectResponse;
     };
 
-    if (refreshToken) {
-        // Refresh token exists. Check if access token is missing or expired
-        if (!accessToken || isTokenExpired(accessToken)) {
-            try {
-                const backendResponse = await fetch(
-                    `${process.env.API_URL}/auth/rotation`,
-                    {
-                        method: "POST",
-                        cache: "no-store",
-                        headers: {
-                            Cookie: `${REFRESH_TOKEN_NAME}=${refreshToken}`,
+    if (!isPublic) {
+        if (refreshToken) {
+            if (!accessToken || isTokenExpired(accessToken)) {
+                try {
+                    const backendResponse = await fetch(
+                        `${process.env.API_URL}/auth/rotation`,
+                        {
+                            method: "POST",
+                            cache: "no-store",
+                            headers: {
+                                Cookie: `${REFRESH_TOKEN_NAME}=${refreshToken}`,
+                            },
                         },
-                    },
-                );
+                    );
 
-                if (!backendResponse.ok) {
+                    if (!backendResponse.ok) {
+                        return handleAuthFailure();
+                    }
+
+                    console.log(">>> refresh token successfully.");
+                    // Do không thể sửa cookie của request hiện tại
+                    // Nên phải redirect lại chính trang đó
+                    const redirectResponse = NextResponse.redirect(
+                        new URL(request.url),
+                    );
+
+                    // Extract new cookies from Spring Boot response and append to the redirect response
+                    const responseCookies =
+                        backendResponse.headers.getSetCookie();
+                    responseCookies.forEach((cookie) => {
+                        redirectResponse.headers.append("set-cookie", cookie);
+                    });
+
+                    return redirectResponse;
+                } catch (error) {
+                    console.error("Token rotation error in middleware:", error);
                     return handleAuthFailure();
                 }
-
-                // Token rotation succeeded!
-                // We perform a 302 Redirect to the same requested URL (self-redirect)
-                const redirectResponse = NextResponse.redirect(
-                    new URL(request.url),
-                );
-
-                // Extract new cookies from Spring Boot response and append to the redirect response
-                const responseCookies = backendResponse.headers.getSetCookie();
-                responseCookies.forEach((cookie) => {
-                    redirectResponse.headers.append("set-cookie", cookie);
-                });
-
-                return redirectResponse;
-            } catch (error) {
-                console.error("Token rotation error in middleware:", error);
-                return handleAuthFailure();
             }
+        } else {
+            // nếu không có refresh token và không phải trang public
+            return handleAuthFailure();
         }
-    } else if (!isPublic) {
-        return handleAuthFailure();
     }
 
     return response;

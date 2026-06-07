@@ -1,14 +1,14 @@
 "use client";
 import LoginFormButtons from "@/modules/public/login/components/login.form.buttons";
 import LoginFormTextFields from "@/modules/public/login/components/login.form.text.fields";
-import LoginRememberMe from "@/modules/public/login/components/login.remember.me";
 import { LoginState } from "@/modules/public/login/types/login.ui.type";
 import React, { useState } from "react";
 import { validateLoginForm } from "@/modules/public/login/actions/login.action";
-import { useRouter } from "@/intl/i18n/navigation";
+import { Link, useRouter } from "@/intl/i18n/navigation";
 import { credentialsLogin } from "@/services/client/user.service";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
+import { useTranslations } from "next-intl";
 
 const initialState: LoginState = {
     usernameOrEmail: {
@@ -22,11 +22,11 @@ const initialState: LoginState = {
 };
 
 const LoginForm = () => {
-    const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [state, setState] = useState<LoginState>(initialState);
     const [errorMessage, setErrorMessage] = useState("");
-    const { replace, refresh } = useRouter();
+    const { replace } = useRouter();
     const queryClient = useQueryClient();
+    const t = useTranslations();
 
     const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,7 +46,6 @@ const LoginForm = () => {
                     queryKey: queryKeys.auth.currentUser,
                 });
 
-                refresh();
                 replace("/dashboard");
             } catch (error) {
                 console.log(error);
@@ -63,10 +62,14 @@ const LoginForm = () => {
             className="flex w-full flex-col items-center gap-y-3"
         >
             <LoginFormTextFields state={state} />
-            <LoginRememberMe
-                rememberMe={rememberMe}
-                setRememberMe={setRememberMe}
-            />
+            <div className="flex w-full justify-end">
+                <Link
+                    href={"/forgot-password"}
+                    className="text-text-highlight text-sm select-none hover:underline"
+                >
+                    {t("page.login.form.forgotPassword")}
+                </Link>
+            </div>
             <LoginFormButtons errorMessage={errorMessage} />
         </form>
     );

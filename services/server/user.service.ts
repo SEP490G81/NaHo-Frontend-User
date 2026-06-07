@@ -5,11 +5,11 @@ import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 import { cache } from "react";
 
 // cache() function use to cache the result in a request
-export const getCurrentUser = cache(async (): Promise<UserResponse> => {
+export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
     if (!accessToken) {
-        throw new Error("Could not find access token!");
+        return null;
     }
 
     const backendResponse = await fetch(`${process.env.API_URL}/auth/me`, {

@@ -7,7 +7,6 @@
         "build": "next build",
         "start": "next start -p 3636",
         "lint": "eslint",
-        "prepare": "husky",
         "typecheck": "tsc --noEmit",
         "test": "jest --passWithNoTests"
     },
@@ -36,7 +35,6 @@
         "@types/react-dom": "^19",
         "eslint": "^9",
         "eslint-config-next": "16.2.6",
-        "husky": "^9.1.7",
         "jest": "^30.4.2",
         "jest-environment-jsdom": "^30.4.1",
         "prettier": "^3.8.3",

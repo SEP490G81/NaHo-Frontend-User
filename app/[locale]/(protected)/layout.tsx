@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { getCurrentUser } from "@/services/server/user.service";
 import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
+import { redirect } from "next/navigation";
 
 const ProtectedLayout = async ({
     children,
@@ -8,7 +9,7 @@ const ProtectedLayout = async ({
     const user = await getCurrentUser();
 
     if (!user) {
-        throw new Error("Cut");
+        redirect("/login");
     }
 
     return (
