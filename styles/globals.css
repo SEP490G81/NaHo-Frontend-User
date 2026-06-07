@@ -6,7 +6,7 @@
     --app-font: var(--font-quicksand), sans-serif;
 }
 
-html[data-locale="ja"] {
+html[data-locale="jp"] {
     --app-font: var(--font-noto-sans-jp), sans-serif;
 }
 
@@ -27,6 +27,7 @@ html[data-locale="ja"] {
     /*hover background color*/
     --color-hbgc-app: #f1f3f4;
     --color-hbgc-error: #ef233c;
+    --color-hbgc-page: #f3f3f3;
 
     /*text color*/
     --color-text-pure: #fdfffc;
@@ -52,6 +53,7 @@ html[data-locale="ja"] {
         /*hover background color*/
         --color-hbgc-app: #2e2e2e;
         --color-hbgc-error: #ef233c;
+        --color-hbgc-page: #42423f;
 
         /*text color*/
         --color-text-pure: #333533;
@@ -73,6 +75,7 @@ html[data-locale="ja"] {
 
 /* width của scrollbar */
 ::-webkit-scrollbar {
+    display: none;
     width: 4px;
     height: 4px;
 }
@@ -84,7 +87,7 @@ html[data-locale="ja"] {
 
 /* thumb (thanh kéo) */
 ::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: var(--color-bgc-highlight);
     border-radius: 12px;
 }
 

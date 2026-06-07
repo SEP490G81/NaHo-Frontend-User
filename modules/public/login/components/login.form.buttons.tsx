@@ -1,33 +1,20 @@
 import GoogleIcon from "@/components/ui/icons/google.icon";
 import { Link } from "@/intl/i18n/navigation";
-import { LoginState } from "@/modules/public/login/types/login.ui.type";
 import { Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-const LoginFormButtons = ({
-    pending,
-    state,
-}: {
-    pending: boolean;
-    state: LoginState;
-}) => {
+const LoginFormButtons = ({ errorMessage }: { errorMessage: string }) => {
     const t = useTranslations();
 
     return (
         <div className="w-full">
-            <Button
-                type="submit"
-                loading={pending}
-                fullWidth
-                color="primary"
-                variant="contained"
-            >
+            <Button type="submit" fullWidth color="primary" variant="contained">
                 {t("page.login.form.loginButton")}
             </Button>
 
-            {state.error && (
+            {errorMessage.trim().length > 0 && (
                 <p className="text-text-error mt-1 text-xs font-semibold">
-                    {t("page.login.form.wrongLoginInfo")}
+                    {errorMessage}
                 </p>
             )}
 
@@ -39,7 +26,6 @@ const LoginFormButtons = ({
 
             <Button
                 type="button"
-                disabled={pending}
                 fullWidth
                 variant="outlined"
                 color="primary"

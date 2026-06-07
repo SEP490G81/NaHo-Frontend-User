@@ -1,8 +1,9 @@
 import { Link } from "@/intl/i18n/navigation";
-import ThemeSwitchButton from "@/layouts/header/components/theme.switch.button";
 import LoginForm from "@/modules/public/login/features/login.form";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useTranslations } from "next-intl";
+import LanguageSwitch from "@/components/ui/language.switch";
+import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
 
 const RightContent = () => {
     const t = useTranslations();
@@ -12,7 +13,10 @@ const RightContent = () => {
             <div className="bg-bgc-highlight/50 pointer-events-none absolute -bottom-20 left-10 h-72 w-72 rounded-full opacity-20 blur-3xl" />
 
             <div className="absolute top-5 right-5">
-                <ThemeSwitchButton />
+                <div className="flex items-center justify-end gap-x-3">
+                    <LanguageSwitch variant="icon-button" />
+                    <ThemeSwitchButton />
+                </div>
             </div>
 
             <div className="border-bdc-primary bg-bgc-app/70 relative w-full max-w-md rounded-2xl border px-6 py-5 shadow-xl backdrop-blur-xl md:px-8 md:py-10">

@@ -1,16 +1,6 @@
-"use server";
-
-import { signIn } from "@/auth";
-import { getPathname } from "@/intl/i18n/navigation";
-import { AuthError } from "@auth/core/errors";
-import { getLocale } from "next-intl/server";
 import { LoginState } from "../types/login.ui.type";
 
-export async function handleCredentialsLogin(
-    rememberMe: boolean,
-    prevState: LoginState,
-    formData: FormData,
-) {
+export function validateLoginForm(formData: FormData) {
     const usernameOrEmailEntry = formData.get("usernameOrEmail");
     const rawPasswordEntry = formData.get("rawPassword");
 
@@ -28,7 +18,6 @@ export async function handleCredentialsLogin(
             value: rawPassword,
             error: false,
         },
-        error: false,
     };
 
     result.usernameOrEmail.value = usernameOrEmail;
@@ -42,27 +31,5 @@ export async function handleCredentialsLogin(
         result.rawPassword.error = true;
     }
 
-    if (result.usernameOrEmail.error || result.rawPassword.error) return result;
-
-    try {
-        const locale = await getLocale();
-        const localizedHome = getPathname({
-            href: "/home",
-            locale,
-        });
-
-        await signIn("credentials", {
-            usernameOrEmail: usernameOrEmail,
-            rawPassword: rawPassword,
-            redirectTo: localizedHome,
-        });
-
-        return result;
-    } catch (error) {
-        if (error instanceof AuthError) {
-            result.error = true;
-            return result;
-        }
-        throw error;
-    }
+    return result;
 }

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Link } from "@/intl/i18n/navigation";
 import { Checkbox } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -28,12 +27,6 @@ const LoginRememberMe = ({
                     {t("page.login.form.rememberLogin")}
                 </label>
             </div>
-            <Link
-                href={"/forgot-password"}
-                className="text-text-highlight text-sm select-none hover:underline"
-            >
-                {t("page.login.form.forgotPassword")}
-            </Link>
         </div>
     );
 };

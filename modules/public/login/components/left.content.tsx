@@ -9,7 +9,7 @@ const LeftContent = () => {
         <div className="relative hidden w-1/2 overflow-hidden bg-[linear-gradient(135deg,#1E293B_0%,#0f172a_60%,#1e1b3a_100%)] md:flex md:flex-col md:items-center md:justify-center md:p-12">
             <div className="absolute top-5 left-5">
                 <LogoButton>
-                    <h1 className="text-text-contrast text-2xl font-bold whitespace-nowrap">
+                    <h1 className="text-2xl font-bold whitespace-nowrap text-[#fdfffc]">
                         {t("appName")}
                     </h1>
                 </LogoButton>

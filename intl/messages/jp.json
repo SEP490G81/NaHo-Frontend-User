@@ -1,0 +1,66 @@
+{
+    "appName": "NaHo",
+    "copyright": "© 2026 NaHo. FPT大学 SEP490 G81チームによって開発。",
+    "common": {
+        "or": "または"
+    },
+    "metadata": {
+        "title": {
+            "home": "ホーム",
+            "login": "ログイン",
+            "forgotPassword": "パスワードをお忘れですか",
+            "register": "新規登録",
+            "settings": "設定",
+            "getHelp": "ヘルプ"
+        },
+        "language": {
+            "vi": "ベトナム語",
+            "en": "英語",
+            "jp": "日本語"
+        },
+        "action": {
+            "open": "開く",
+            "close": "閉じる"
+        }
+    },
+    "layout": {
+        "header": {
+            "notificationButton": "通知",
+            "themeSwitchButton": {
+                "darkMode": "ダークモード",
+                "lightMode": "ライトモード"
+            },
+            "loginButton": "ログイン",
+            "logoutButton": "ログアウト",
+            "registerButton": "今すぐ体験を始める",
+            "accountMenu": {
+                "settings": "設定",
+                "language": "言語",
+                "getHelp": "ヘルプ"
+            }
+        }
+    },
+    "page": {
+        "login": {
+            "slogan": "会話は無限に、\n距離を超えてつながる。",
+            "backToHomePage": "ホームへ戻る",
+            "welcome": "お会いできて嬉しいです",
+            "loginDescription": "NaHoで日本語会話学習を続けるためにログインしてください。",
+            "form": {
+                "emailOrUsername": "メールアドレス/ユーザー名",
+                "enterEmailOrUsername": "メールアドレスまたはユーザー名を入力してください。",
+                "rawPassword": "パスワード",
+                "enterPassword": "••••••••",
+                "rememberLogin": "ログイン状態を保持",
+                "forgotPassword": "パスワードをお忘れですか？",
+                "loginButton": "ログイン",
+                "loginByGoogle": "Googleでログイン",
+                "noAccount": "アカウントをお持ちではありませんか？",
+                "registerNow": "今すぐ登録",
+                "pleaseEnterEmailOrUsername": "メールアドレスまたはユーザー名を入力してください！",
+                "pleaseEnterPassword": "パスワードを入力してください！",
+                "wrongLoginInfo": "ログイン情報が正しくありません！"
+            }
+        }
+    }
+}

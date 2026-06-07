@@ -10,5 +10,4 @@ export type DotPosition = {
 export interface LoginState {
     usernameOrEmail: FormTextField;
     rawPassword: FormTextField;
-    error: boolean;
 }

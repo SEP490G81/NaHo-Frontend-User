@@ -5,9 +5,8 @@
     "scripts": {
         "dev": "next dev -p 3636",
         "build": "next build",
-        "start": "next start",
+        "start": "next start -p 3636",
         "lint": "eslint",
-        "prepare": "husky",
         "typecheck": "tsc --noEmit",
         "test": "jest --passWithNoTests"
     },
@@ -19,8 +18,8 @@
         "@mui/icons-material": "^9.0.1",
         "@mui/material": "^9.0.1",
         "@mui/material-nextjs": "^9.0.1",
+        "@tanstack/react-query": "^5.101.0",
         "next": "16.2.6",
-        "next-auth": "^5.0.0-beta.31",
         "next-intl": "^4.12.0",
         "query-string": "^9.3.1",
         "react": "19.2.4",
@@ -36,7 +35,6 @@
         "@types/react-dom": "^19",
         "eslint": "^9",
         "eslint-config-next": "16.2.6",
-        "husky": "^9.1.7",
         "jest": "^30.4.2",
         "jest-environment-jsdom": "^30.4.1",
         "prettier": "^3.8.3",
