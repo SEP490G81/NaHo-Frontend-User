@@ -1,8 +1,7 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { ProblemDetail } from "@/types/responses/base.response";
 import { NextResponse } from "next/server";
 import { REFRESH_TOKEN_NAME } from "@/constants/app.constants";
 import { cookies } from "next/headers";
-import { TokenExpResponse } from "@/types/responses/user.response";
 
 export async function POST() {
     const cookieStore = await cookies();
@@ -23,18 +22,15 @@ export async function POST() {
         },
     );
 
-    const result = await backendResponse.json();
-
     if (!backendResponse.ok) {
+        const result = await backendResponse.json();
         const problemDetail: ProblemDetail = result as ProblemDetail;
         return NextResponse.json(problemDetail, {
             status: backendResponse.status,
         });
     }
 
-    const tokenExpResponse = (result as ApiResponse<TokenExpResponse>).data;
-
-    const response = NextResponse.json(tokenExpResponse, {
+    const response = NextResponse.json(null, {
         status: backendResponse.status,
     });
 
