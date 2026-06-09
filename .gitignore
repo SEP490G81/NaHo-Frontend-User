@@ -44,3 +44,6 @@ Conversation
 NAHO Starter Kit
 
 .gitignore
+
+/package-lock.json
+/package.json

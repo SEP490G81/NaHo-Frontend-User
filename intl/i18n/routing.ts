@@ -7,7 +7,7 @@ export const routing = defineRouting({
     // Used when no locale matches
     defaultLocale: "vi",
     // Hide all prefix in the url such as /en, /vi, /ja
-    // localePrefix: 'never',
+    localePrefix: 'never',
 
     pathnames: {
         "/dashboard": {
