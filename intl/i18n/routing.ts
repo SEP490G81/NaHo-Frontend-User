@@ -10,7 +10,7 @@ export const routing = defineRouting({
     // localePrefix: 'never',
 
     pathnames: {
-        "/home": {
+        "/dashboard": {
             vi: "/trang-chu",
         },
         "/login": {
@@ -24,6 +24,24 @@ export const routing = defineRouting({
         },
         "/register": {
             vi: "/dang-ky",
+        },
+        "/topics": {
+            vi: "/chu-de-kaiwa",
+        },
+        "/topics/[topicId]": {
+            vi: "/chu-de-kaiwa/[topicId]",
+        },
+        "/sandbox": {
+            vi: "/phong-luyen",
+        },
+        "/sandbox/[questionId]": {
+            vi: "/phong-luyen/[questionId]",
+        },
+        "/history": {
+            vi: "/lich-su-luyen-tap",
+        },
+        "/history/[historyId]": {
+            vi: "/lich-su-luyen-tap/[historyId]",
         },
     },
 });

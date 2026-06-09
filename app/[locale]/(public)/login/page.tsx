@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import Login from "@/pages/(public)/login/components/login";
+import Login from "@/modules/(public)/login/components/login";
 
 export async function generateMetadata({
     params,

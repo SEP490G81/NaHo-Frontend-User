@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 const IndexPage = () => {
-    redirect("/home");
+    redirect("/dashboard");
 };
 
 export default IndexPage;
