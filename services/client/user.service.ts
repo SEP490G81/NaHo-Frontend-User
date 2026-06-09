@@ -1,4 +1,4 @@
-import { CredentialsLoginRequest } from "@/types/requests/user.request";
+import { CredentialsLoginRequest, RegisterRequest } from "@/types/requests/user.request";
 import { ProblemDetail } from "@/types/responses/base.response";
 import { UserResponse } from "@/types/responses/user.response";
 
@@ -6,6 +6,22 @@ export async function credentialsLogin(
     request: CredentialsLoginRequest,
 ): Promise<void> {
     const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new Error(problemDetail.detail);
+    }
+}
+
+export async function register(request: RegisterRequest): Promise<void> {
+    const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

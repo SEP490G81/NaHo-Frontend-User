@@ -1,5 +1,7 @@
-import React from "react";
+import Register from "@/modules/public/register/components/register";
+import { getCurrentUser } from "@/services/server/user.service";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
     params,
@@ -16,8 +18,19 @@ export async function generateMetadata({
     };
 }
 
-const RegisterPage = () => {
-    return <div></div>;
+const RegisterPage = async () => {
+    let user = null;
+    try {
+        user = await getCurrentUser();
+    } catch (error) {
+        console.log(error);
+    }
+
+    if (user) {
+        redirect("/dashboard");
+    }
+
+    return <Register />;
 };
 
 export default RegisterPage;

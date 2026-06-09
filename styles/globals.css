@@ -69,6 +69,15 @@ html[data-locale="jp"] {
 
 }
 
+/* Ẩn nút hiện/xoá mật khẩu mặc định của trình duyệt (Edge) vì đã có
+   nút toggle riêng -> tránh hiển thị 2 con mắt. */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
 @utility no-scrollbar {
     @apply scrollbar-none [&::-webkit-scrollbar]:hidden;
 }

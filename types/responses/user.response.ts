@@ -12,6 +12,12 @@ export interface UserResponse {
     jlptLevel: JlptLevel;
 }
 
+export interface RegisterResponse {
+    id: string;
+    username: string;
+    email: string;
+}
+
 export interface TokenResponse {
     value: string;
     expiresAt: string;
