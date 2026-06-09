@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev -p 3636",
         "build": "next build",
-        "start": "next start -p 3636",
+        "start": "next start -p",
         "lint": "eslint",
         "typecheck": "tsc --noEmit",
         "test": "jest --passWithNoTests"
