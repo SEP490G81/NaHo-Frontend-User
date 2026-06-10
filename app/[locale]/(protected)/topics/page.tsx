@@ -1,8 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
 import Topics from "@/modules/protected/topics/components/topics";
-import AppHeader from "@/layouts/header/components/app.header";
-import { getTopics } from "@/modules/protected/topics/services/topic.service";
 
 export async function generateMetadata({
     params,

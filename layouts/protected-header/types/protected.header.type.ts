@@ -1,5 +1,6 @@
 import { StaticRoute } from "@/intl/type";
 import { Messages } from "next-intl";
+import React from "react";
 
 export interface AccountMenuLinkItem {
     id: string;

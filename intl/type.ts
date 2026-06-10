@@ -19,7 +19,12 @@ export type AllRoute =
     | "/custom-question"
     | `/sandbox-custom/${string}` // hoặc "/sandbox-custom/[id]"
     | "/history-custom"
-    | "/community-library";
+    | "/community-library"
+    | "/settings"
+    | "/get-help"
+    | "/features"
+    | "/learner-feedback"
+    | "/frequently-questions";
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;
 export type StaticRoute = RemoveDynamic<AllRoute>;

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Link, usePathname } from "@/intl/i18n/navigation";
-import { useTranslations } from "next-intl";
 import NotificationButton from "@/layouts/protected-header/features/notification.button";
 import LanguageSwitch from "@/components/ui/language.switch";
 import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
@@ -11,23 +10,24 @@ import { useUiStore } from "@/store/uiStore";
 import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { ChevronRight, Flame, MenuIcon } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
-
+import { AllRoute } from "@/intl/type";
 
 function prettify(seg: string) {
     return LABELS[seg] ?? decodeURIComponent(seg).replace(/-/g, " ");
 }
 
-
 const ProtectedHeader = () => {
-    const t = useTranslations();
     const pathname = usePathname();
     const segments = pathname.split("/").filter(Boolean);
-    const toggleSidebar = useUiStore((state) => state.toggleSidebar);
+
+    const toggleSidebar = useUiStore(
+        (state: { toggleSidebar: any }) => state.toggleSidebar,
+    );
+
     return (
         <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between border-b px-3 py-3.5">
-
             {/* Left */}
-            <div className="flex items-center justify-start z-10 min-w-0">
+            <div className="z-10 flex min-w-0 items-center justify-start">
                 {/* Mobile Menu Button */}
                 <IconButton
                     onClick={toggleSidebar}
@@ -43,12 +43,14 @@ const ProtectedHeader = () => {
 
                 {/* Breadcrumb */}
                 <Breadcrumbs
-                    separator={<ChevronRight className="h-3 w-3 text-text-muted" />}
+                    separator={
+                        <ChevronRight className="text-text-muted h-3 w-3" />
+                    }
                     aria-label="breadcrumb"
                     className="hidden md:block"
                 >
                     <Link href="/dashboard">
-                        <span className="text-sm font-semibold text-text-contrast hover:text-bgc-highlight transition-colors">
+                        <span className="text-text-contrast hover:text-bgc-highlight text-sm font-semibold transition-colors">
                             NAHO
                         </span>
                     </Link>
@@ -57,14 +59,17 @@ const ProtectedHeader = () => {
                         const path = "/" + segments.slice(0, i + 1).join("/");
                         if (isLast) {
                             return (
-                                <Typography key={i} className="text-sm font-semibold capitalize text-text-contrast">
+                                <Typography
+                                    key={i}
+                                    className="text-text-contrast text-sm font-semibold capitalize"
+                                >
                                     {prettify(seg)}
                                 </Typography>
                             );
                         }
                         return (
-                            <Link key={i} href={path as any}>
-                                <span className="text-sm font-medium capitalize text-text-muted hover:text-bgc-highlight transition-colors">
+                            <Link key={i} href={path as AllRoute}>
+                                <span className="text-text-muted hover:text-bgc-highlight text-sm font-medium capitalize transition-colors">
                                     {prettify(seg)}
                                 </span>
                             </Link>
@@ -74,18 +79,18 @@ const ProtectedHeader = () => {
             </div>
 
             {/* Center streak */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
+            <div className="absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2">
                 <Link
                     href="/dashboard"
-                    className="inline-flex items-center gap-2 rounded-full bg-bgc-highlight px-3 py-1 text-xs md:text-sm font-semibold text-text-pure shadow-sm transition hover:opacity-90"
+                    className="bg-bgc-highlight text-text-pure inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold shadow-sm transition hover:opacity-90 md:text-sm"
                 >
-                    <Flame className="h-3.5 w-3.5 md:h-4 md:w-4 fill-current text-text-pure" />
+                    <Flame className="text-text-pure h-3.5 w-3.5 fill-current md:h-4 md:w-4" />
                     <span>{currentLearner.streakDays} ngày liên tiếp! 🔥</span>
                 </Link>
             </div>
 
             {/* Right */}
-            <div className="flex items-center gap-x-3 z-10">
+            <div className="z-10 flex items-center gap-x-3">
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"
