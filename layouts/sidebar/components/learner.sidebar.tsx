@@ -18,7 +18,11 @@ export function LearnerSidebar() {
             {/* Header */}
             <Box className="border-bdc-primary flex h-16 items-center border-b px-5">
                 <div className="pt-3">
-                    {/* <LogoButton  /> */}
+                    <LogoButton>
+                        <span className="text-xl font-bold tracking-wider text-text-contrast">
+                            NaHo
+                        </span>
+                    </LogoButton>
                 </div>
             </Box>
 
