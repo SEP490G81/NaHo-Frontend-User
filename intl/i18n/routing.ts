@@ -43,5 +43,17 @@ export const routing = defineRouting({
         "/history/[historyId]": {
             vi: "/lich-su-luyen-tap/[historyId]",
         },
+        "/custom-question": {
+            vi: "/de-chon-tu-phat",
+        },
+        "/sandbox-custom/[id]": {
+            vi: "/phong-luyen-tu-phat/[id]",
+        },
+        "/history-custom": {
+            vi: "/lich-su-luyen-tap-tu-phat",
+        },
+        "/community-library": {
+            vi: "/thu-vien-cong-dong",
+        },
     },
 });

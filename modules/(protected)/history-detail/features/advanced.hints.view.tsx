@@ -21,7 +21,7 @@ export interface ItVocab {
 
 interface AdvancedHintsViewProps {
     expressions: Expression[];
-    itVocab: ItVocab[];
+    itVocab: any[];
     showFurigana: boolean;
 }
 
@@ -31,6 +31,18 @@ export function AdvancedHintsView({
     showFurigana,
 }: AdvancedHintsViewProps) {
     const t = useTranslations("page.historyDetail");
+
+    const normalizedItVocab = React.useMemo(() => {
+        if (!itVocab || !Array.isArray(itVocab)) return [];
+        return itVocab.map((v: any) => {
+            const jp = v.jp ?? v.term ?? "";
+            const furigana = v.furigana ?? v.reading ?? "";
+            const vi = v.vi ?? v.meaning ?? "";
+            const romaji = v.romaji ?? "";
+            const en = v.en ?? "IT";
+            return { jp, furigana, vi, romaji, en };
+        });
+    }, [itVocab]);
 
     return (
         <div className="grid gap-5 lg:grid-cols-2">
@@ -66,18 +78,18 @@ export function AdvancedHintsView({
                 </h3>
 
                 <div className="space-y-3">
-                    {itVocab.length === 0 ? (
+                    {normalizedItVocab.length === 0 ? (
                         <p className="text-sm text-text-muted text-center py-6">
                             {t("noItVocabFeedback")}
                         </p>
                     ) : (
-                        itVocab.map((v, idx) => (
+                        normalizedItVocab.map((v, idx) => (
                             <div key={idx} className="flex gap-4 rounded-xl bg-bgc-page p-4 border border-bdc-primary items-center">
                                 <div className="flex-1 space-y-1">
                                     <div className="text-base font-semibold leading-none text-text-contrast">
                                         <FuriganaText text={v.jp} furigana={v.furigana} showFurigana={showFurigana} />
                                     </div>
-                                    <p className="text-xs text-text-muted">{v.romaji} · {v.vi}</p>
+                                    <p className="text-xs text-text-muted">{v.romaji} {v.romaji && v.vi ? "·" : ""} {v.vi}</p>
                                 </div>
                                 <div className="text-right">
                                     <span className="rounded bg-bgc-highlight/10 px-2 py-1 text-xs font-semibold text-bgc-highlight">

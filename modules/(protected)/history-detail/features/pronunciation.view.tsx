@@ -11,12 +11,33 @@ export interface PronunciationWord {
 }
 
 interface PronunciationViewProps {
-    pronunciation: PronunciationWord[];
+    pronunciation: any[];
     note: string;
 }
 
 export function PronunciationView({ pronunciation, note }: PronunciationViewProps) {
     const t = useTranslations("page.historyDetail");
+
+    const normalizedPronunciation = React.useMemo(() => {
+        if (!pronunciation || !Array.isArray(pronunciation)) return [];
+        return pronunciation.map((item: any) => {
+            const word = item.word ?? item.text ?? "";
+            let score = item.score;
+            const feedback = item.feedback ?? item.note ?? "";
+
+            if (score === undefined && item.severity) {
+                if (item.severity === "ok") score = 90;
+                else if (item.severity === "warn") score = 70;
+                else score = 45;
+            }
+
+            return {
+                word,
+                score: score ?? 100,
+                feedback,
+            };
+        });
+    }, [pronunciation]);
 
     return (
         <div className="space-y-6">
@@ -33,7 +54,7 @@ export function PronunciationView({ pronunciation, note }: PronunciationViewProp
                             </tr>
                         </thead>
                         <tbody>
-                            {pronunciation.map((item, i) => (
+                            {normalizedPronunciation.map((item, i) => (
                                 <tr key={i} className="border-b border-bdc-primary last:border-0 hover:bg-hbgc-app/50">
                                     <td className="px-4 py-3 align-middle font-noto-jp text-base font-semibold text-text-contrast">
                                         {item.word}

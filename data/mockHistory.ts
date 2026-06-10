@@ -7,6 +7,8 @@ export interface QuestionHistoryEntry {
   durationSec: number;
   /** Score 0–10 */
   score: number;
+  customJp?: string;
+  customHintVi?: string;
 }
 
 export const mockHistoryList: QuestionHistoryEntry[] = [

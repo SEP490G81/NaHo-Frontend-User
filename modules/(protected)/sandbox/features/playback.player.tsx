@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useSandbox } from "../provider/sandbox.context";
-
 interface PlaybackPlayerProps {
     durationSec: number;
     playing: boolean;
     onToggle: () => void;
+    audioUrl: string | null;
 }
 
 function formatTime(sec: number) {
@@ -15,8 +14,7 @@ function formatTime(sec: number) {
     return `${m}:${s}`;
 }
 
-export function PlaybackPlayer({ durationSec, playing, onToggle }: PlaybackPlayerProps) {
-    const { audioUrl } = useSandbox();
+export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: PlaybackPlayerProps) {
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(durationSec);
     const audioRef = useRef<HTMLAudioElement | null>(null);

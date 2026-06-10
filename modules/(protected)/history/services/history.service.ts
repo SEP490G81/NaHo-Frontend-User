@@ -1,24 +1,35 @@
 import { apiFetch, hasApiConfigured } from "@/lib/apiClient";
 import { mockHistoryList, type QuestionHistoryEntry } from "@/data/mockHistory";
+import { useHistoryStore } from "@/store/historyStore";
 
-// Lưu trữ danh sách lịch sử in-memory để giữ lại bài thi mới thu âm khi chạy ở chế độ offline/fallback
-let fallbackHistoryList: QuestionHistoryEntry[] = [...mockHistoryList];
+function getFallbackHistory(): QuestionHistoryEntry[] {
+  if (typeof window !== "undefined") {
+    return useHistoryStore.getState().entries;
+  }
+  return mockHistoryList;
+}
+
+function addFallbackHistoryEntry(entry: QuestionHistoryEntry) {
+  if (typeof window !== "undefined") {
+    useHistoryStore.getState().addEntry(entry);
+  }
+}
 
 export async function getHistoryList(): Promise<QuestionHistoryEntry[]> {
   if (!hasApiConfigured()) {
-    return fallbackHistoryList;
+    return getFallbackHistory();
   }
   try {
     return await apiFetch<QuestionHistoryEntry[]>("/api/v1/history");
   } catch (error) {
     console.warn("getHistoryList API failed, falling back to mock data:", error);
-    return fallbackHistoryList;
+    return getFallbackHistory();
   }
 }
 
 export async function getHistoryById(historyId: string): Promise<QuestionHistoryEntry> {
   if (!hasApiConfigured()) {
-    const entry = fallbackHistoryList.find((h) => h.historyId === historyId);
+    const entry = getFallbackHistory().find((h) => h.historyId === historyId);
     if (!entry) throw new Error("History entry not found");
     return entry;
   }
@@ -26,7 +37,7 @@ export async function getHistoryById(historyId: string): Promise<QuestionHistory
     return await apiFetch<QuestionHistoryEntry>(`/api/v1/history/${historyId}`);
   } catch (error) {
     console.warn(`getHistoryById API failed for historyId ${historyId}, falling back to mock data:`, error);
-    const entry = fallbackHistoryList.find((h) => h.historyId === historyId);
+    const entry = getFallbackHistory().find((h) => h.historyId === historyId);
     if (!entry) throw new Error("History entry not found");
     return entry;
   }
@@ -57,7 +68,7 @@ export async function submitPractice(submission: PracticeSubmission): Promise<Pr
       durationSec: submission.durationSec,
       score,
     };
-    fallbackHistoryList = [newEntry, ...fallbackHistoryList];
+    addFallbackHistoryEntry(newEntry);
     return {
       historyId: newId,
       score,
@@ -87,7 +98,7 @@ export async function submitPractice(submission: PracticeSubmission): Promise<Pr
       durationSec: submission.durationSec,
       score,
     };
-    fallbackHistoryList = [newEntry, ...fallbackHistoryList];
+    addFallbackHistoryEntry(newEntry);
     return {
       historyId: newId,
       score,

@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import FuriganaText from "@/components/ui/furigana.text";
 import PlaybackPlayer from "../features/playback.player";
 import { useTranslations } from "next-intl";
+import { useSandbox } from "../provider/sandbox.context";
 
 interface SandboxStep3Props {
     topicTitle: string;
@@ -32,6 +33,7 @@ export function SandboxStep3({
     onNext,
 }: SandboxStep3Props) {
     const t = useTranslations("page.sandbox");
+    const { audioUrl } = useSandbox();
 
     return (
         <section className="space-y-5">
@@ -58,6 +60,7 @@ export function SandboxStep3({
                         durationSec={Math.max(elapsed, 1)}
                         playing={playing}
                         onToggle={() => setPlaying(!playing)}
+                        audioUrl={audioUrl}
                     />
                 </div>
 

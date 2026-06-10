@@ -15,7 +15,11 @@
             "topicDetail": "Chi tiết chủ đề",
             "sandbox": "Phòng luyện nói",
             "history": "Lịch sử luyện tập",
-            "historyDetail": "Báo cáo chi tiết"
+            "historyDetail": "Báo cáo chi tiết",
+            "custom-question": "Đề chọn tự phát",
+            "sandbox-custom": "Phòng luyện tự phát",
+            "history-custom": "Lịch sử đề tự phát",
+            "community-library": "Thư viện cộng đồng"
         },
         "action": {
             "open": "Mở",
@@ -203,6 +207,95 @@
             "noItVocabFeedback": "Không có từ vựng chuyên ngành chuyên biệt nào trong bài này.",
             "pointsLabel": "điểm",
             "vietnameseTranslation": "Bản dịch tiếng Việt"
+        },
+        "customQuestion": {
+            "title": "Đề chọn tự phát",
+            "subtitle": "Tự soạn câu hỏi luyện nói tiếng Nhật theo nhu cầu của bạn.",
+            "dialogTitle": "Quy định tạo câu hỏi cá nhân",
+            "dialogSubtitle": "Vui lòng đọc kỹ trước khi soạn câu hỏi luyện nói của bạn.",
+            "rules": {
+                "rule1": "Đặt câu hỏi rõ ràng, đầy đủ ngữ nghĩa, tránh viết lửng lơ hoặc không rõ chủ thể (AI sẽ từ chối chấm điểm).",
+                "rule2": "Tuyệt đối không chứa từ ngữ nhạy cảm, thô tục hoặc vi phạm chính sách học tập của hệ thống.",
+                "rule3": "Khuyên dùng bối cảnh công sở, kỹ sư cầu nối BrSE hoặc chuyên ngành CNTT để tối ưu gợi ý từ AI."
+            },
+            "acceptRules": "Chấp nhận quy tắc",
+            "back": "Quay lại",
+            "formTitle": "Tự soạn câu hỏi thực hành",
+            "formSubtitle": "Nhập câu hỏi bằng tiếng Nhật mà bạn muốn luyện phản xạ trả lời.",
+            "textareaLabel": "Nhập câu hỏi bằng tiếng Nhật của bạn",
+            "textareaPlaceholder": "例：プロジェクトの進捗について教えていただけますか？",
+            "hintLabel": "Bạn cần gợi ý? (Tùy chọn)",
+            "hintPlaceholder": "Ví dụ: Hỏi ý kiến khách hàng về tiến độ dự án",
+            "aiSuggestBtn": "AI gợi ý câu hỏi tiếng Nhật",
+            "shareLabel": "Chia sẻ câu hỏi này lên Thư viện cộng đồng",
+            "shareSubLabel": "(Sẽ đưa vào hàng đợi kiểm duyệt)",
+            "nextStep": "Bước tiếp theo",
+            "errorEmptyJp": "Vui lòng nhập câu hỏi tiếng Nhật.",
+            "suggestSuccess": "Đã tạo gợi ý câu hỏi"
+        },
+        "sandboxCustom": {
+            "backBtn": "Quay lại",
+            "showFurigana": "Hiện Furigana",
+            "step1": "Kiểm tra Mic",
+            "step2": "Luyện nói",
+            "step3": "Nghe lại & Gửi",
+            "step4": "Kết quả sửa lỗi",
+            "stepLabel": "Bước {step}",
+            "noQuestionTitle": "Chưa có câu hỏi tự soạn",
+            "noQuestionSubtitle": "Vui lòng quay lại và soạn câu hỏi luyện tập của bạn trước.",
+            "noQuestionBtn": "Quay lại tự soạn câu hỏi",
+            "guideTitle": "Hướng dẫn trước khi nói",
+            "guideSubtitle": "Hãy chuẩn bị nơi yên tĩnh và kiểm tra micro trước khi bắt đầu luyện tập câu hỏi tự soạn của bạn.",
+            "rules": {
+                "rule1": "Hãy chọn nơi yên tĩnh.",
+                "rule2": "Nói rõ ràng, tốc độ vừa phải.",
+                "rule3": "Kiểm tra chất lượng tai nghe/mic trước khi làm bài."
+            },
+            "customQuestion": "Câu hỏi tùy chỉnh",
+            "micTestTitle": "Kiểm tra micro",
+            "micTestSubtitle": "Đây là chế độ mô phỏng, sandbox sẽ tự đánh giá chất lượng âm thanh.",
+            "micTestBtn": "Kiểm tra Micro",
+            "micTestingBtn": "Đang ghi (3s)...",
+            "micStatusGood": "Chất lượng âm thanh: Tốt! 🟢",
+            "micStatusPoor": "Chất lượng âm thanh: Kém 🔴",
+            "micStatusPoorTip": "Hãy thử lại ở nơi yên tĩnh hơn.",
+            "startPracticeBtn": "Bắt đầu nói",
+            "retryBtn": "Thử lại",
+            "playbackTitle": "Bản ghi âm của bạn",
+            "playbackSubtitle": "Nghe lại và gửi để AI phân tích lỗi ngữ pháp & gợi ý cách nói tự nhiên hơn.",
+            "playbackPlay": "Nghe lại",
+            "playbackPause": "Tạm dừng",
+            "playbackRetry": "Ghi âm lại",
+            "playbackSubmit": "Gửi phân tích AI",
+            "analyzing": "Đang phân tích...",
+            "tabGrammar": "Sửa lỗi ngữ pháp & Bản dịch",
+            "tabCriteria": "Tiêu chí đánh giá",
+            "yourSpeech": "Câu nói của bạn (Transcript)",
+            "aiCorrection": "Gợi ý từ AI (Tự nhiên hơn)",
+            "totalScore": "Điểm tổng",
+            "practiceAgain": "Tự luyện tập lại câu hỏi này",
+            "saveToHistory": "Lưu vào lịch sử",
+            "saveSuccess": "Đã lưu kết quả luyện tập vào lịch sử câu hỏi tự chọn!"
+        },
+        "historyCustom": {
+            "title": "Lịch sử Đề chọn tự phát",
+            "subtitle": "Tổng cộng {total} lượt luyện · Điểm trung bình",
+            "createBtn": "Soạn đề mới",
+            "emptyTitle": "Chưa có lượt luyện đề tự soạn nào",
+            "emptySubtitle": "Hãy soạn câu hỏi của riêng bạn và bắt đầu luyện tập để xem lịch sử tại đây.",
+            "emptyBtn": "Soạn đề ngay",
+            "retryBtn": "Soạn lại"
+        },
+        "communityLibrary": {
+            "title": "Thư viện Câu hỏi Cộng đồng",
+            "subtitle": "Nơi chia sẻ và luyện tập các câu hỏi tình huống giao tiếp, phỏng vấn BrSE do chính học viên NAHO đóng góp.",
+            "contributeBtn": "Đóng góp câu hỏi mới",
+            "filterTitle": "Bộ lọc",
+            "showFurigana": "Hiển thị Furigana",
+            "searchPlaceholder": "Tìm kiếm câu hỏi…",
+            "emptyState": "Không tìm thấy câu hỏi phù hợp.",
+            "practiceCount": "{count} lượt luyện tập",
+            "practiceNow": "Luyện tập ngay"
         }
     }
 }

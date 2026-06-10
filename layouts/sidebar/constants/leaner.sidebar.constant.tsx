@@ -25,15 +25,15 @@ export const NAV_ITEMS: NavItem[] = [
     { title: "Lịch sử luyện tập", url: "/history", icon: History },
     {
         title: "Đề chọn tự phát",
-        url: "/custom-workspace",
+        url: "/custom-question",
         icon: Wand2,
-        disabled: true,
+        disabled: false,
     },
     {
         title: "Thư viện cộng đồng",
         url: "/community-library",
         icon: Library,
-        disabled: true,
+        disabled: false,
     },
     {
         title: "Trò chuyện tự do AI",
@@ -71,7 +71,7 @@ export const LABELS: Record<string, string> = {
     dashboard: "Trang chủ",
     topics: "Chủ đề Kaiwa",
     history: "Lịch sử luyện tập",
-    "custom-workspace": "Đề chọn tự phát",
+    "custom-question": "Đề chọn tự phát",
     "community-library": "Thư viện cộng đồng",
     "dialogue-setup": "Trò chuyện tự do",
     analytics: "Báo cáo tiến độ",
