@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import Dashboard from "@/modules/protected/dashboard/components/dashboard";
 
 export async function generateMetadata({
     params,
@@ -17,7 +18,7 @@ export async function generateMetadata({
 }
 
 const DashboardPage = () => {
-    return <div></div>;
+    return <Dashboard />;
 };
 
 export default DashboardPage;

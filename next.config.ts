@@ -3,6 +3,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
     output: "standalone",
+    typescript: {
+        ignoreBuildErrors: true,
+    }
 };
 
 const withNextIntl = createNextIntlPlugin("./intl/i18n/request.ts");

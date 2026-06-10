@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import React from "react";
 import { routing } from "@/intl/i18n/routing";
 import { QueryProvider } from "@/components/providers/query.provider";
+import { InitColorSchemeScript } from "@mui/material";
 
 type Props = {
     children: React.ReactNode;
@@ -32,7 +33,9 @@ export default async function LocaleLayout({
             className={`${fontQuicksand.variable} ${fontNotoSansJP.variable}`}
             suppressHydrationWarning
         >
-            <body>
+            <body suppressHydrationWarning>
+                <InitColorSchemeScript attribute="class" defaultMode="light" />
+
                 <ThemeInitScript />
                 <NextIntlClientProvider>
                     <AppRouterCacheProvider options={{ enableCssLayer: true }}>

@@ -1,7 +1,7 @@
-import Login from "@/modules/public/login/components/login";
 import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/services/server/user.service";
 import { redirect } from "next/navigation";
+import Login from "@/modules/public/login/components/login";
 
 export async function generateMetadata({
     params,
