@@ -1,30 +1,29 @@
-import AppHeader from "@/layouts/header/components/app.header";
-import { LearnerSidebar } from "@/layouts/sidebar/components/learner.sidebar";
 import React, { ReactNode } from "react";
+import { getCurrentUser } from "@/services/server/user.service";
+import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
+import { redirect } from "next/navigation";
+import LearnerSidebar from "@/layouts/sidebar/components/learner.sidebar";
 
-interface LearnerLayoutProps {
-    children: React.ReactNode;
-}
+const ProtectedLayout = async ({
+    children,
+}: Readonly<{ children: ReactNode }>) => {
+    const user = await getCurrentUser();
 
-export function LearnerLayout({ children }: LearnerLayoutProps) {
+    if (!user) {
+        redirect("/login");
+    }
+
     return (
-        <div className="flex min-h-screen w-full bg-bgc-page">
-            {/* Sidebar điều hướng cố định */}
-            <LearnerSidebar />
-
-            {/* Khu vực nội dung chính */}
+        <div className="relative flex">
+            <div className="w-75">
+                <LearnerSidebar />
+            </div>
             <div className="flex min-w-0 flex-1 flex-col">
-                {/* Header thanh công cụ phía trên */}
-                <AppHeader />
-
-                {/* Phần nội dung trang */}
-                <main className="flex-1 bg-bgc-page p-4 md:p-6">
-                    {children}
-                </main>
+                <ProtectedHeader />
+                <div className="bg-bgc-page w-full flex-1 p-5">{children}</div>
             </div>
         </div>
     );
-}
+};
 
-export default LearnerLayout;
-
+export default ProtectedLayout;

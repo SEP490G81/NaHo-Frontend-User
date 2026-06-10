@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import History from "@/modules/(protected)/history/components/history";
+import History from "@/modules/protected/history/components/history";
 
 export async function generateMetadata({
     params,

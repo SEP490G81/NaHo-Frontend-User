@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import CommunityLibrary from "@/modules/(protected)/community-library/components/community-library";
+import CommunityLibrary from "@/modules/protected/community-library/components/community-library";
 
 export async function generateMetadata({
     params,

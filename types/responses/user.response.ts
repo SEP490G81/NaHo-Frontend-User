@@ -1,11 +1,4 @@
-import { FileResponse } from "@/types/responses/file.response";
 import { Gender, JlptLevel } from "@/types/enums/user.enum";
-
-export interface LoginResponse {
-    user: UserResponse;
-    accessToken: TokenResponse;
-    refreshToken: TokenResponse;
-}
 
 export interface UserResponse {
     id: number;
@@ -15,11 +8,23 @@ export interface UserResponse {
     lastName: string;
     gender: Gender;
     dob: string;
-    avatarFile: FileResponse;
+    avatarFileUrl: string;
     jlptLevel: JlptLevel;
+}
+
+export interface RegisterResponse {
+    id: string;
+    username: string;
+    email: string;
 }
 
 export interface TokenResponse {
     value: string;
-    expireIn: number;
+    expiresAt: string;
+    expiresIn: number;
+}
+
+export interface TokenExpResponse {
+    expiresAt: string;
+    expiresIn: number;
 }

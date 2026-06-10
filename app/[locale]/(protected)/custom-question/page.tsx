@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import CustomQuestion from "@/modules/(protected)/custom-question/components/custom-question";
+import CustomQuestion from "@/modules/protected/custom-question/components/custom-question";
 
 export async function generateMetadata({
     params,

@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import Sandbox from "@/modules/(protected)/sandbox/components/sandbox";
+import Sandbox from "@/modules/protected/sandbox/components/sandbox";
 
 export async function generateMetadata({
     params,

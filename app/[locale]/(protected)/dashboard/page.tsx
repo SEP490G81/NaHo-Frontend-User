@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import Dashboard from "@/modules/(protected)/dashboard/components/dashboard";
+import Dashboard from "@/modules/protected/dashboard/components/dashboard";
 
 export async function generateMetadata({
     params,

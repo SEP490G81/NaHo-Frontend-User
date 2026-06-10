@@ -1,8 +1,25 @@
 import { Messages } from "next-intl";
-import { routing } from "@/intl/i18n/routing";
 
 export type MetadataTitleKey = keyof Messages["metadata"]["title"];
-export type AllRoute = keyof typeof routing.pathnames;
+
+export type AllRoute =
+    | "/"
+    | "/home"
+    | "/dashboard"
+    | "/login"
+    | "/introduction"
+    | "/forgot-password"
+    | "/register"
+    | "/topics"
+    | `/topics/${string}` // hoặc "/topics/[topicId]" tùy thuộc vào cách config router của bạn
+    | "/sandbox"
+    | `/sandbox/${string}` // hoặc "/sandbox/[questionId]"
+    | "/history"
+    | `/history/${string}` // hoặc "/history/[historyId]"
+    | "/custom-question"
+    | `/sandbox-custom/${string}` // hoặc "/sandbox-custom/[id]"
+    | "/history-custom"
+    | "/community-library";
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;
 export type StaticRoute = RemoveDynamic<AllRoute>;

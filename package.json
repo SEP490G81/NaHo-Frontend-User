@@ -5,8 +5,10 @@
     "scripts": {
         "dev": "next dev -p 3636",
         "build": "next build",
-        "start": "next start",
-        "lint": "eslint"
+        "start": "next start -p",
+        "lint": "eslint",
+        "typecheck": "tsc --noEmit",
+        "test": "jest --passWithNoTests"
     },
     "dependencies": {
         "@bprogress/next": "^3.2.12",
@@ -16,7 +18,7 @@
         "@mui/icons-material": "^9.0.1",
         "@mui/material": "^9.0.1",
         "@mui/material-nextjs": "^9.0.1",
-        "@tanstack/react-query": "^5.100.14",
+        "@tanstack/react-query": "^5.101.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^1.16.0",
@@ -33,11 +35,14 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
+        "@types/jest": "^30.0.0",
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "eslint": "^9",
         "eslint-config-next": "16.2.6",
+        "jest": "^30.4.2",
+        "jest-environment-jsdom": "^30.4.1",
         "prettier": "^3.8.3",
         "prettier-plugin-tailwindcss": "^0.8.0",
         "tailwindcss": "^4",

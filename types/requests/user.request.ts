@@ -1,4 +1,10 @@
 export interface CredentialsLoginRequest {
-    username: string;
+    usernameOrEmail: string;
     rawPassword: string;
+}
+
+export interface RegisterRequest {
+    username: string;
+    email: string;
+    password: string;
 }

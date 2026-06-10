@@ -1,0 +1,98 @@
+{
+    "appName": "NaHo",
+    "copyright": "© 2026 NaHo. Developed by Team G81 - SEP490 - FPT University.",
+    "common": {
+        "or": "Or"
+    },
+    "metadata": {
+        "title": {
+            "home": "Home",
+            "login": "Login",
+            "forgotPassword": "Forgot Password",
+            "register": "Register",
+            "settings": "Settings",
+            "getHelp": "Help"
+        },
+        "language": {
+            "vi": "Vietnamese",
+            "en": "English",
+            "jp": "Japanese"
+        },
+        "action": {
+            "open": "Open",
+            "close": "Close"
+        }
+    },
+    "layout": {
+        "header": {
+            "notificationButton": "Notifications",
+            "themeSwitchButton": {
+                "darkMode": "Dark Mode",
+                "lightMode": "Light Mode"
+            },
+            "loginButton": "Login",
+            "logoutButton": "Logout",
+            "registerButton": "Get Started Now",
+            "accountMenu": {
+                "settings": "Settings",
+                "language": "Language",
+                "getHelp": "Help"
+            }
+        }
+    },
+    "page": {
+        "login": {
+            "slogan": "Unlimited conversations,\n connecting without distance.",
+            "backToHomePage": "Back to Home",
+            "welcome": "Nice to Meet You",
+            "loginDescription": "Log in to continue your Japanese speaking journey with NaHo.",
+            "form": {
+                "emailOrUsername": "Email/Username",
+                "enterEmailOrUsername": "Enter your email or username.",
+                "rawPassword": "Password",
+                "enterPassword": "••••••••",
+                "rememberLogin": "Remember Me",
+                "forgotPassword": "Forgot Password?",
+                "loginButton": "Login",
+                "loginByGoogle": "Sign in with Google",
+                "noAccount": "Don't have an account?",
+                "registerNow": "Register Now",
+                "pleaseEnterEmailOrUsername": "Please enter your email/username!",
+                "pleaseEnterPassword": "Please enter your password!",
+                "wrongLoginInfo": "Incorrect login information!"
+            }
+        },
+        "register": {
+            "title": "Start your Kaiwa journey",
+            "slogan": "“Every sentence today is a step closer to natural Japanese reflexes tomorrow.”",
+            "backToHomePage": "Back to Home",
+            "welcome": "Create your NaHo account",
+            "registerDescription": "Personalize your Kaiwa experience in a few steps.",
+            "form": {
+                "username": "Username",
+                "enterUsername": "Enter your username.",
+                "email": "Email Address",
+                "enterEmail": "you@example.com",
+                "rawPassword": "Password",
+                "enterPassword": "At least 6 characters",
+                "confirmPassword": "Confirm Password",
+                "enterConfirmPassword": "Re-enter your password",
+                "agreement": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+                "registerButton": "Create Account",
+                "haveAccount": "Already have an account?",
+                "loginNow": "Login",
+                "pleaseEnterUsername": "Please enter your username!",
+                "usernameInvalidLength": "Username must be 4 to 36 characters!",
+                "usernameInvalidFormat": "Username must start with a lowercase letter and contain only lowercase letters and digits!",
+                "pleaseEnterEmail": "Please enter your email address!",
+                "invalidEmail": "Invalid email address!",
+                "pleaseEnterPassword": "Please enter your password!",
+                "passwordTooShort": "Password must be at least 6 characters!",
+                "pleaseConfirmPassword": "Please re-enter your password!",
+                "passwordNotMatch": "Passwords do not match!",
+                "pleaseAgreeTerms": "Please agree to the Terms of Service!",
+                "registerFailed": "Registration failed, please try again!"
+            }
+        }
+    }
+}

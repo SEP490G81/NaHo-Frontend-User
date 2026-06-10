@@ -14,3 +14,10 @@ export interface ApiResponse<T> {
     message: string;
     data: T;
 }
+
+export interface ProblemDetail {
+    title: string;
+    status: number;
+    detail: string;
+    errorCode: string;
+}

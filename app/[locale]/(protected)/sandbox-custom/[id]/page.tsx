@@ -1,11 +1,11 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import SandboxCustom from "@/modules/(protected)/sandbox-custom/components/sandbox-custom";
+import SandboxCustom from "@/modules/protected/sandbox-custom/components/sandbox-custom";
 
 export async function generateMetadata({
     params,
 }: {
-    params: { locale: string; id: string };
+    params: Promise<{ locale: string; id: string }>;
 }): Promise<{
     title: string;
 }> {
@@ -20,7 +20,7 @@ export async function generateMetadata({
 const SandboxCustomPage = async ({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) => {
     const { id } = await params;
     return <SandboxCustom id={id} />;

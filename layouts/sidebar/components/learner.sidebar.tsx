@@ -3,9 +3,9 @@ import React from "react";
 import { usePathname, Link } from "@/intl/i18n/navigation";
 import { Drawer, List, ListItem, ListItemButton, Box } from "@mui/material";
 import { cn } from "@/lib/utils";
-import LogoButton from "@/modules/(public)/login/components/logo.button";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
+import LogoButton from "@/modules/public/login/components/logo.button";
 
 const DRAWER_WIDTH = 260;
 
@@ -18,7 +18,7 @@ export function LearnerSidebar() {
             {/* Header */}
             <Box className="border-bdc-primary flex h-16 items-center border-b px-5">
                 <div className="pt-3">
-                    <LogoButton />
+                    {/* <LogoButton  /> */}
                 </div>
             </Box>
 
