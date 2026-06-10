@@ -1,0 +1,22 @@
+{
+    "page": {
+        "history": {
+            "title": "Lịch sử luyện tập",
+            "subtitle": "Tổng cộng {total} lượt luyện · Điểm trung bình",
+            "practiceNew": "Luyện chủ đề mới",
+            "filterPlaceholder": "Tìm kiếm câu hỏi hoặc chủ đề...",
+            "filterAllTopics": "Tất cả chủ đề",
+            "tableDate": "Ngày luyện tập",
+            "tableTopic": "Chủ đề",
+            "tableQuestion": "Câu hỏi",
+            "tableAudio": "File ghi âm",
+            "tableScore": "Điểm số",
+            "tableAction": "Hành động",
+            "viewReport": "Xem báo cáo",
+            "emptyTitle": "Chưa có bài luyện nào phù hợp",
+            "emptySubtitle": "Thử bỏ bộ lọc hoặc bắt đầu luyện một chủ đề mới để xem kết quả ở đây.",
+            "emptyBtn": "Bắt đầu luyện ngay",
+            "retryBtn": "Luyện lại"
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "page": {
+        "topics": {
+            "title": "Chủ đề luyện tập",
+            "subtitle": "Chọn một chủ đề để bắt đầu luyện nói phản xạ cùng AI.",
+            "searchPlaceholder": "Tìm kiếm chủ đề...",
+            "filterAll": "Tất cả",
+            "emptyState": "Không tìm thấy chủ đề phù hợp.",
+            "dialogTarget": "Mục tiêu bài học",
+            "dialogVocabulary": "Từ vựng chính",
+            "dialogStart": "Bắt đầu luyện tập",
+            "dialogClose": "Đóng",
+            "questionCount": "{count} câu hỏi",
+            "completedCount": "{completed}/{total} câu đã hoàn thành",
+            "dialogAudience": "Đối tượng phù hợp",
+            "dialogDescription": "Mô tả",
+            "dialogQuestionSummary": "Chủ đề này có <bold>{count} câu hỏi</bold> luyện nói."
+        }
+    }
+}

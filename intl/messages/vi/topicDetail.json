@@ -1,0 +1,23 @@
+{
+    "page": {
+        "topicDetail": {
+            "questionList": "Danh sách câu hỏi",
+            "questionCount": "{total} câu hỏi • Đã luyện {completed}/{total}",
+            "showFurigana": "Hiện Furigana",
+            "practiceNow": "Luyện nói ngay",
+            "completed": "Đã luyện tập • {score}/10",
+            "notCompleted": "Chưa luyện tập",
+            "viewHistory": "Xem lịch sử",
+            "modelAnswer": "Bài mẫu của giảng viên",
+            "showModelAnswer": "Xem bài mẫu",
+            "hideModelAnswer": "Ẩn bài mẫu",
+            "noModelAnswer": "Chưa có bài mẫu cho câu hỏi này.",
+            "vietnameseTranslation": "Bản dịch tiếng Việt",
+            "notFoundTitle": "Không tìm thấy chủ đề này.",
+            "notFoundSubtitle": "Vui lòng quay lại và thử lại.",
+            "backToTopics": "Quay lại danh sách chủ đề",
+            "learningGoals": "Mục tiêu học tập",
+            "averageScore": "Điểm trung bình"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "page": {
+        "historyCustom": {
+            "title": "Lịch sử Đề chọn tự phát",
+            "subtitle": "Tổng cộng {total} lượt luyện · Điểm trung bình",
+            "createBtn": "Soạn đề mới",
+            "emptyTitle": "Chưa có lượt luyện đề tự soạn nào",
+            "emptySubtitle": "Hãy soạn câu hỏi của riêng bạn và bắt đầu luyện tập để xem lịch sử tại đây.",
+            "emptyBtn": "Soạn đề ngay",
+            "retryBtn": "Soạn lại"
+        }
+    }
+}

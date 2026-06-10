@@ -1,0 +1,15 @@
+{
+    "page": {
+        "communityLibrary": {
+            "title": "Thư viện Câu hỏi Cộng đồng",
+            "subtitle": "Nơi chia sẻ và luyện tập các câu hỏi tình huống giao tiếp, phỏng vấn BrSE do chính học viên NAHO đóng góp.",
+            "contributeBtn": "Đóng góp câu hỏi mới",
+            "filterTitle": "Bộ lọc",
+            "showFurigana": "Hiển thị Furigana",
+            "searchPlaceholder": "Tìm kiếm câu hỏi…",
+            "emptyState": "Không tìm thấy câu hỏi phù hợp.",
+            "practiceCount": "{count} lượt luyện tập",
+            "practiceNow": "Luyện tập ngay"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "appName": "NaHo",
+    "copyright": "© 2026 NaHo. Developed by Team G81 - SEP490 - FPT University.",
+    "common": {
+        "or": "Or"
+    },
+    "metadata": {
+        "title": {
+            "home": "Home",
+            "login": "Login",
+            "forgotPassword": "Forgot Password",
+            "register": "Register",
+            "settings": "Settings",
+            "getHelp": "Help"
+        },
+        "language": {
+            "vi": "Vietnamese",
+            "en": "English",
+            "jp": "Japanese"
+        },
+        "action": {
+            "open": "Open",
+            "close": "Close"
+        }
+    },
+    "layout": {
+        "header": {
+            "notificationButton": "Notifications",
+            "themeSwitchButton": {
+                "darkMode": "Dark Mode",
+                "lightMode": "Light Mode"
+            },
+            "loginButton": "Login",
+            "logoutButton": "Logout",
+            "registerButton": "Get Started Now",
+            "accountMenu": {
+                "settings": "Settings",
+                "language": "Language",
+                "getHelp": "Help"
+            }
+        }
+    }
+}

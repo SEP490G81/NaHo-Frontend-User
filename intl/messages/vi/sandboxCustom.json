@@ -1,0 +1,48 @@
+{
+    "page": {
+        "sandboxCustom": {
+            "backBtn": "Quay lại",
+            "showFurigana": "Hiện Furigana",
+            "step1": "Kiểm tra Mic",
+            "step2": "Luyện nói",
+            "step3": "Nghe lại & Gửi",
+            "step4": "Kết quả sửa lỗi",
+            "stepLabel": "Bước {step}",
+            "noQuestionTitle": "Chưa có câu hỏi tự soạn",
+            "noQuestionSubtitle": "Vui lòng quay lại và soạn câu hỏi luyện tập của bạn trước.",
+            "noQuestionBtn": "Quay lại tự soạn câu hỏi",
+            "guideTitle": "Hướng dẫn trước khi nói",
+            "guideSubtitle": "Hãy chuẩn bị nơi yên tĩnh và kiểm tra micro trước khi bắt đầu luyện tập câu hỏi tự soạn của bạn.",
+            "rules": {
+                "rule1": "Hãy chọn nơi yên tĩnh.",
+                "rule2": "Nói rõ ràng, tốc độ vừa phải.",
+                "rule3": "Kiểm tra chất lượng tai nghe/mic trước khi làm bài."
+            },
+            "customQuestion": "Câu hỏi tùy chỉnh",
+            "micTestTitle": "Kiểm tra micro",
+            "micTestSubtitle": "Đây là chế độ mô phỏng, sandbox sẽ tự đánh giá chất lượng âm thanh.",
+            "micTestBtn": "Kiểm tra Micro",
+            "micTestingBtn": "Đang ghi (3s)...",
+            "micStatusGood": "Chất lượng âm thanh: Tốt! 🟢",
+            "micStatusPoor": "Chất lượng âm thanh: Kém 🔴",
+            "micStatusPoorTip": "Hãy thử lại ở nơi yên tĩnh hơn.",
+            "startPracticeBtn": "Bắt đầu nói",
+            "retryBtn": "Thử lại",
+            "playbackTitle": "Bản ghi âm của bạn",
+            "playbackSubtitle": "Nghe lại và gửi để AI phân tích lỗi ngữ pháp & gợi ý cách nói tự nhiên hơn.",
+            "playbackPlay": "Nghe lại",
+            "playbackPause": "Tạm dừng",
+            "playbackRetry": "Ghi âm lại",
+            "playbackSubmit": "Gửi phân tích AI",
+            "analyzing": "Đang phân tích...",
+            "tabGrammar": "Sửa lỗi ngữ pháp & Bản dịch",
+            "tabCriteria": "Tiêu chí đánh giá",
+            "yourSpeech": "Câu nói của bạn (Transcript)",
+            "aiCorrection": "Gợi ý từ AI (Tự nhiên hơn)",
+            "totalScore": "Điểm tổng",
+            "practiceAgain": "Tự luyện tập lại câu hỏi này",
+            "saveToHistory": "Lưu vào lịch sử",
+            "saveSuccess": "Đã lưu kết quả luyện tập vào lịch sử câu hỏi tự chọn!"
+        }
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "page": {
+        "historyDetail": {
+            "breadcrumbHistory": "Lịch sử",
+            "showFurigana": "Hiện Furigana",
+            "backBtn": "Quay lại",
+            "reportTitle": "Báo cáo chi tiết bài luyện",
+            "questionTitle": "Câu hỏi",
+            "overviewTitle": "Tổng quan đánh giá",
+            "dimensionPronunciation": "Phát âm",
+            "dimensionVocabulary": "Từ vựng",
+            "dimensionGrammar": "Ngữ pháp",
+            "dimensionNaturalness": "Độ tự nhiên",
+            "tabTranscript": "Bản dịch & Sửa lỗi",
+            "tabPronunciation": "Chi tiết Phát âm",
+            "tabHints": "Gợi ý nâng cao",
+            "retryBtn": "Luyện tập lại câu này",
+            "yourSpeech": "Bản ghi âm của bạn",
+            "aiCorrection": "Đề xuất sửa lỗi của AI",
+            "pronunciationLabel": "Đánh giá chi tiết phát âm",
+            "pronunciationWord": "Từ vựng",
+            "pronunciationScore": "Độ chính xác",
+            "pronunciationFeedback": "Nhận xét",
+            "hintsTitle": "Cụm từ hữu ích khuyên dùng",
+            "hintsItVocab": "Từ vựng IT chuyên sâu trong câu",
+            "notFoundTitle": "Không tìm thấy bài luyện này.",
+            "notFoundSubtitle": "Vui lòng kiểm tra lại liên kết.",
+            "backToHistory": "Quay lại lịch sử",
+            "aiErrorLabel": "Lỗi:",
+            "aiSuggestionLabel": "Gợi ý:",
+            "aiHoverTip": "Mẹo: di chuột vào các từ hoặc cụm từ gạch chân màu đỏ để xem chi tiết sửa lỗi của AI.",
+            "aiDetailedExplanation": "Giải thích chi tiết",
+            "aiPronunciationNoteLabel": "Lưu ý phát âm từ AI",
+            "noItVocabFeedback": "Không có từ vựng chuyên ngành chuyên biệt nào trong bài này.",
+            "pointsLabel": "điểm",
+            "vietnameseTranslation": "Bản dịch tiếng Việt"
+        }
+    }
+}

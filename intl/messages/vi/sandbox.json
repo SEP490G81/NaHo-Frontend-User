@@ -1,0 +1,49 @@
+{
+    "page": {
+        "sandbox": {
+            "backToTopic": "Quay lại chủ đề",
+            "showFurigana": "Hiện Furigana",
+            "step1": "Kiểm tra thiết bị",
+            "step2": "Luyện nói phản xạ",
+            "step3": "Nghe lại & Nộp bài",
+            "guideTitle": "Hướng dẫn trước khi nói",
+            "guideSubtitle": "Hãy đọc các quy tắc bên dưới và kiểm tra micro trước khi vào phòng luyện.",
+            "rules": {
+                "rule1": "Hãy chọn nơi yên tĩnh.",
+                "rule2": "Nói rõ ràng, tốc độ vừa phải.",
+                "rule3": "Kiểm tra chất lượng tai nghe/mic trước khi làm bài."
+            },
+            "micTestTitle": "Kiểm tra micro",
+            "micTestSubtitle": "Đây là chế độ mô phỏng, sandbox sẽ tự đánh giá chất lượng.",
+            "micTestBtn": "Kiểm tra Mic",
+            "micTestingBtn": "Đang ghi (3s)...",
+            "micStatusGood": "Chất lượng âm thanh: Tốt! 🟢",
+            "micStatusPoor": "Chất lượng âm thanh: Kém 🔴",
+            "micStatusPoorTip": "Có vẻ micro chưa rõ tiếng. Hãy thử lại ở nơi yên tĩnh hơn.",
+            "startPracticeBtn": "Làm bài ngay",
+            "speakQuestion": "Câu hỏi luyện nói",
+            "recordingBtnStop": "Dừng ghi âm",
+            "recordingBtnStart": "Bắt đầu ghi âm",
+            "hintsTitle": "Gợi ý nói phản xạ",
+            "hintsSubtitle": "Sử dụng các cấu trúc hoặc từ vựng gợi ý để tăng điểm Độ tự nhiên.",
+            "hintsModelAnswer": "Cách diễn đạt khuyên dùng:",
+            "hintsItVocab": "Từ vựng IT liên quan:",
+            "notesTitle": "Nháp ghi chú",
+            "notesPlaceholder": "Gõ các từ bạn muốn nói ra đây để đỡ quên...",
+            "playbackTitle": "Bản ghi âm của bạn",
+            "playbackSubtitle": "Nghe lại và gửi để AI chấm theo 4 tiêu chí: Phát âm · Từ vựng · Ngữ pháp · Độ tự nhiên.",
+            "playbackPlay": "Nghe lại",
+            "playbackPause": "Tạm dừng",
+            "playbackRetry": "Nói lại",
+            "playbackSubmit": "Phân tích kết quả",
+            "analyzing": "Đang phân tích...",
+            "retryBtn": "Thử lại",
+            "recordingHintActive": "Đang ghi âm — nhấn lại để dừng",
+            "recordingHintIdle": "Nhấn vào micro để bắt đầu",
+            "notesSubtitle": "Viết cấu trúc hoặc từ vựng cần nhớ trước khi bấm ghi âm nói.",
+            "micLevel": "Mức âm thanh",
+            "notFoundTitle": "Không tìm thấy câu hỏi này.",
+            "notFoundSubtitle": "Vui lòng chọn câu hỏi hợp lệ."
+        }
+    }
+}
