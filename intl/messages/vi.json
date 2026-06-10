@@ -97,6 +97,14 @@
                 "pleaseAgreeTerms": "Vui lòng đồng ý với điều khoản sử dụng!",
                 "registerFailed": "Đăng ký thất bại, vui lòng thử lại!"
             }
+        },
+        "settings": {
+            "title": {
+                "general": "Chung",
+                "account": "Tài khoản",
+                "billing": "Thanh toán"
+            },
+            "searchPlaceholder": "Tìm kiếm"
         }
     }
 }

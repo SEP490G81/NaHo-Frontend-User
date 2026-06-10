@@ -9,6 +9,7 @@ import { credentialsLogin } from "@/services/client/user.service";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
 import { useTranslations } from "next-intl";
+import { getDeviceId } from "@/modules/public/login/utils/login.util";
 
 const initialState: LoginState = {
     usernameOrEmail: {
@@ -40,6 +41,7 @@ const LoginForm = () => {
                 await credentialsLogin({
                     usernameOrEmail: newState.usernameOrEmail.value,
                     rawPassword: newState.rawPassword.value,
+                    deviceId: getDeviceId(),
                 });
 
                 await queryClient.invalidateQueries({
@@ -65,7 +67,7 @@ const LoginForm = () => {
             <div className="flex w-full justify-end">
                 <Link
                     href={"/forgot-password"}
-                    className="text-text-highlight text-sm select-none hover:underline"
+                    className="text-text-highlight text-sm text-nowrap select-none hover:underline"
                 >
                     {t("page.login.form.forgotPassword")}
                 </Link>

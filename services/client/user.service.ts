@@ -1,4 +1,7 @@
-import { CredentialsLoginRequest, RegisterRequest } from "@/types/requests/user.request";
+import {
+    CredentialsLoginRequest,
+    RegisterRequest,
+} from "@/types/requests/user.request";
 import { ProblemDetail } from "@/types/responses/base.response";
 import { UserResponse } from "@/types/responses/user.response";
 
@@ -38,6 +41,18 @@ export async function register(request: RegisterRequest): Promise<void> {
 
 export async function logout(): Promise<void> {
     const response = await fetch("/api/auth/logout", {
+        method: "POST",
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new Error(problemDetail.detail);
+    }
+}
+
+export async function logoutAll(): Promise<void> {
+    const response = await fetch("/api/auth/logout-all", {
         method: "POST",
     });
 

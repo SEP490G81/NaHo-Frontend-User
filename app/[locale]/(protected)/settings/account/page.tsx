@@ -15,12 +15,12 @@ export async function generateMetadata({
     });
 
     return {
-        title: t("general"),
+        title: t("account"),
     };
 }
 
-const SettingsPage = () => {
-    return <div>Settings Page</div>;
+const SettingsAccountPage = () => {
+    return <div>Account Page</div>;
 };
 
-export default SettingsPage;
+export default SettingsAccountPage;

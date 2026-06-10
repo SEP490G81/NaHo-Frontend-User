@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 
 const ProtectedLayout = async ({
     children,
-}: Readonly<{ children: ReactNode }>) => {
+    settingsModal,
+}: Readonly<{ children: ReactNode; settingsModal: ReactNode }>) => {
     const user = await getCurrentUser();
 
     if (!user) {
@@ -19,6 +20,7 @@ const ProtectedLayout = async ({
                 <ProtectedHeader />
                 <div className="bg-bgc-page w-full flex-1 p-5">{children}</div>
             </div>
+            {settingsModal}
         </div>
     );
 };

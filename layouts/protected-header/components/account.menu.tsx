@@ -20,11 +20,15 @@ const AccountMenu = ({
     const t = useTranslations();
     const { data: user } = useCurrentUser();
 
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <Popover
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
-            onClose={() => setAnchorEl(null)}
+            onClose={handleClose}
             anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "right",
@@ -66,6 +70,7 @@ const AccountMenu = ({
                             <Link
                                 href={item.redirectLink}
                                 key={item.id}
+                                onClick={handleClose}
                                 className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 items-center justify-start rounded-md px-5 transition-all duration-150"
                             >
                                 <span className="flex h-10 w-10 items-center">

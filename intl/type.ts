@@ -13,7 +13,9 @@ export type AllRoute =
     | "/features"
     | "/learner-feedback"
     | "/frequently-questions"
-    | "/dashboard";
+    | "/dashboard"
+    | "/settings/account"
+    | "/settings/billing";
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;
 export type StaticRoute = RemoveDynamic<AllRoute>;

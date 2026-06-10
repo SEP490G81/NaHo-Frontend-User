@@ -23,6 +23,7 @@ html[data-locale="jp"] {
     --color-bgc-page: #f7f7f7;
     --color-bgc-highlight: #ff99ac;
     --color-bgc-error: #f87171;
+    --color-bgc-modal: #ffffff;
 
     /*hover background color*/
     --color-hbgc-app: #f1f3f4;
@@ -49,6 +50,7 @@ html[data-locale="jp"] {
         --color-bgc-page: #0a0a0a;
         --color-bgc-highlight: #ff99ac;
         --color-bgc-error: #f87171;
+        --color-bgc-modal: #2c2c2a;
 
         /*hover background color*/
         --color-hbgc-app: #2e2e2e;

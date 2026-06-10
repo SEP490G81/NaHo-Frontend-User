@@ -4,10 +4,15 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
     const body = await request.json();
 
+    const userAgent = request.headers.get("user-agent");
+    const forwardedFor = request.headers.get("x-forwarded-for");
+
     const backendResponse = await fetch(`${process.env.API_URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "User-Agent": userAgent ?? "",
+            "X-Forwarded-For": forwardedFor ?? "",
         },
         body: JSON.stringify(body),
         cache: "no-store",
