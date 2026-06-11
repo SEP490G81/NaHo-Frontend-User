@@ -9,4 +9,12 @@ export interface SettingsMenuItem {
     icon: React.ReactNode;
 }
 
+export interface SettingSearchItem {
+    id: string;
+    title: string;
+    keywords: string[];
+    route: string;
+    targetId: string;
+}
+
 type SettingsMenuTitleKey = keyof Messages["page"]["settings"]["title"];

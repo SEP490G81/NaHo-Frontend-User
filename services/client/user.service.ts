@@ -67,6 +67,7 @@ export async function getCurrentUserClient() {
     const response = await fetch("/api/auth/me", {
         credentials: "include",
     });
+
     const result = await response.json();
 
     if (!response.ok) {

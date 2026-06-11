@@ -2,6 +2,7 @@ import { SettingsMenuItem } from "@/modules/protected/settings/types/settings.ty
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
+import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 
 export const SETTING_MENU_ITEMS: SettingsMenuItem[] = [
     {
@@ -18,6 +19,12 @@ export const SETTING_MENU_ITEMS: SettingsMenuItem[] = [
     },
     {
         id: "st-3",
+        titleKey: "security",
+        redirectLink: "/settings/security",
+        icon: <SecurityOutlinedIcon fontSize="small" />,
+    },
+    {
+        id: "st-4",
         titleKey: "billing",
         redirectLink: "/settings/billing",
         icon: <PaymentOutlinedIcon fontSize="small" />,

@@ -4,17 +4,18 @@ import { SETTING_MENU_ITEMS } from "@/modules/protected/settings/constants/setti
 import { Link, usePathname } from "@/intl/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SettingsSearchBox from "@/modules/protected/settings/components/settings.search.box";
+import { Divider } from "@mui/material";
 
 const SettingsSidebar = () => {
     const t = useTranslations();
     const pathname = usePathname();
 
     return (
-        <div className="flex flex-col gap-y-0.5 p-5">
+        <div className="flex w-52 flex-col gap-y-0.5 p-5">
             <SettingsSearchBox />
-            <p className="text-text-muted mt-5 mb-1 pl-3 text-sm font-semibold">
-                {t("metadata.title.settings")}
-            </p>
+
+            <Divider sx={{ marginBlock: "20px" }} />
+
             {SETTING_MENU_ITEMS.map((item) => {
                 const isActive = pathname === item.redirectLink;
                 const activeClassName = isActive

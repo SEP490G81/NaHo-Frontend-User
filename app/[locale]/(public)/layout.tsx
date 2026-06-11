@@ -1,9 +1,7 @@
 import React, { ReactNode } from "react";
 import PublicHeader from "@/layouts/public-header/components/public.header";
 
-const PublicLayout = async ({
-    children,
-}: Readonly<{ children: ReactNode }>) => {
+const PublicLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     return (
         <div className="flex h-screen flex-col overflow-hidden">
             <PublicHeader />

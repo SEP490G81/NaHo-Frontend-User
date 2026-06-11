@@ -15,6 +15,7 @@ export type AllRoute =
     | "/frequently-questions"
     | "/dashboard"
     | "/settings/account"
+    | "/settings/security"
     | "/settings/billing";
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;

@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import Billing from "@/modules/protected/settings/nested/billing/components/billing";
 
 export async function generateMetadata({
     params,
@@ -20,7 +21,7 @@ export async function generateMetadata({
 }
 
 const BillingPage = () => {
-    return <div>Billing Page</div>;
+    return <Billing />;
 };
 
 export default BillingPage;

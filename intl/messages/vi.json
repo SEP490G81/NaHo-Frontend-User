@@ -102,7 +102,34 @@
             "title": {
                 "general": "Chung",
                 "account": "Tài khoản",
+                "security": "Bảo mật",
                 "billing": "Thanh toán"
+            },
+            "sections": {
+                "profile": "Hồ sơ",
+                "preferences": "Tùy chọn",
+                "account": "Tài khoản",
+                "activeSessions": "Phiên đăng nhập",
+                "security": "Bảo mật",
+                "currentPlan": "Gói hiện tại"
+            },
+            "items": {
+                "avatar": "Ảnh đại diện",
+                "firstName": "Tên",
+                "lastName": "Họ",
+                "preferredName": "AI nên gọi bạn là gì?",
+                "dateOfBirth": "Ngày sinh",
+                "gender": "Giới tính",
+                "occupation": "Công việc của bạn là gì?",
+                "jlptLevel": "Trình độ JLPT",
+                "bio": "Giới thiệu bản thân",
+                "appearance": "Giao diện",
+                "language": "Ngôn ngữ",
+                "username": "Tên đăng nhập",
+                "email": "Email",
+                "logoutAllDevices": "Đăng xuất khỏi tất cả thiết bị",
+                "deleteAccount": "Xóa tài khoản",
+                "changePassword": "Đổi mật khẩu"
             },
             "searchPlaceholder": "Tìm kiếm"
         }

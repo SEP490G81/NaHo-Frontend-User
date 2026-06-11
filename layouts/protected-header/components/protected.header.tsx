@@ -12,22 +12,8 @@ const ProtectedHeader = () => {
     const pathname = usePathname();
 
     useEffect(() => {
-        if (pathname.includes("/settings")) {
-            const stackStr = sessionStorage.getItem("settings_history_stack");
-            let stack: string[] = stackStr ? JSON.parse(stackStr) : [];
-            const index = stack.indexOf(pathname);
-            if (index === -1) {
-                stack.push(pathname);
-            } else {
-                stack = stack.slice(0, index + 1);
-            }
-            sessionStorage.setItem(
-                "settings_history_stack",
-                JSON.stringify(stack),
-            );
-        } else {
+        if (!pathname.includes("/settings")) {
             sessionStorage.setItem("last_non_settings_path", pathname);
-            sessionStorage.removeItem("settings_history_stack");
         }
     }, [pathname]);
 
