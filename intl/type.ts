@@ -28,3 +28,4 @@ export type AllRoute =
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;
 export type StaticRoute = RemoveDynamic<AllRoute>;
+export type AnchorRoute = `${StaticRoute}#${string}`;

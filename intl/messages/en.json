@@ -11,12 +11,14 @@
             "forgotPassword": "Forgot Password",
             "register": "Register",
             "settings": "Settings",
-            "getHelp": "Help"
+            "getHelp": "Help",
+            "features": "Key Features",
+            "learnerFeedback": "Learner Feedback",
+            "frequentlyQuestions": "FAQ"
         },
         "language": {
             "vi": "Vietnamese",
-            "en": "English",
-            "jp": "Japanese"
+            "en": "English"
         },
         "action": {
             "open": "Open",
@@ -41,6 +43,136 @@
         }
     },
     "page": {
+        "home": {
+            "hero": {
+                "badge": "AI-powered Japanese speaking practice platform",
+                "title": "Master <highlight>Japanese</highlight> speaking reflexes with AI",
+                "description": "NaHo helps you build Kaiwa reflexes every day with a virtual speaking room and detailed AI feedback on pronunciation, vocabulary, grammar and naturalness.",
+                "startNow": "Get Started Free",
+                "exploreFeatures": "Explore Features",
+                "mockup": {
+                    "senseiName": "Sensei Yuki",
+                    "speaking": "Speaking now",
+                    "topicTag": "IT Interview",
+                    "questionJp": "自己紹介をお願いします。",
+                    "questionTranslation": "Please introduce yourself.",
+                    "answerJp": "はじめまして、ミンです。",
+                    "aiResponding": "AI is responding…",
+                    "aiFeedback": "AI Feedback",
+                    "pronunciation": "Pronunciation",
+                    "grammar": "Grammar",
+                    "pressToSpeak": "Press to speak"
+                }
+            },
+            "features": {
+                "eyebrow": "Key Features",
+                "title": "Everything you need to practice Kaiwa",
+                "subtitle": "Tools designed specifically for Japanese conversation learners.",
+                "items": {
+                    "topics": {
+                        "title": "Topic-based practice",
+                        "description": "A rich library of topics from office communication to BrSE interviews, each with learning goals and key vocabulary."
+                    },
+                    "aiFeedback": {
+                        "title": "AI scoring on 4 criteria",
+                        "description": "Get instant feedback on Pronunciation, Vocabulary, Grammar and Naturalness after every attempt."
+                    },
+                    "customQuestion": {
+                        "title": "Custom questions",
+                        "description": "Create your own speaking questions, with AI suggesting natural Japanese questions for your context."
+                    },
+                    "history": {
+                        "title": "Track your progress",
+                        "description": "Practice history and detailed reports show your strengths and weaknesses day by day."
+                    }
+                }
+            },
+            "companions": {
+                "title": "Pick the character that fits your goal",
+                "subtitle": "Four distinct AI personalities — from a gentle teacher to a formal business client.",
+                "levelLabel": "Level",
+                "items": {
+                    "sakura": {
+                        "role": "Japanese Teacher",
+                        "description": "Gentle and friendly, focuses on daily conversation and grammar correction.",
+                        "level": "All levels"
+                    },
+                    "kenji": {
+                        "role": "Senior Software Engineer",
+                        "description": "Professional, technical conversations, simulates Japanese office meetings.",
+                        "level": "N3 – N1"
+                    },
+                    "yuki": {
+                        "role": "Job Interviewer",
+                        "description": "Strict, standard interviews with tough behavioral questions.",
+                        "level": "N2 – N1"
+                    },
+                    "tanaka": {
+                        "role": "Japanese Client",
+                        "description": "Formal Keigo, simulates negotiations and business discussions.",
+                        "level": "N1"
+                    }
+                }
+            },
+            "howItWorks": {
+                "title": "Get started in 3 simple steps",
+                "subtitle": "Simple, fast and effective.",
+                "steps": {
+                    "step1": {
+                        "title": "Create an account",
+                        "description": "Sign up for free and personalize your Kaiwa practice experience."
+                    },
+                    "step2": {
+                        "title": "Practice with AI",
+                        "description": "Pick a topic, enter the speaking room and record your answer."
+                    },
+                    "step3": {
+                        "title": "Get feedback & improve",
+                        "description": "Review detailed AI reports and sharpen your reflexes every day."
+                    }
+                }
+            },
+            "learnerFeedback": {
+                "eyebrow": "Learner Feedback",
+                "title": "What learners say about NaHo",
+                "subtitle": "Real stories from learners who practice Kaiwa every day.",
+                "items": {
+                    "t1": {
+                        "name": "Minh Anh",
+                        "role": "BrSE student - FPT University",
+                        "quote": "I practice 15 minutes every night, and after a month my Japanese interview reflexes improved noticeably. The pronunciation scoring is detailed down to each word."
+                    },
+                    "t2": {
+                        "name": "Quoc Bao",
+                        "role": "Bridge Software Engineer",
+                        "quote": "The custom question feature fits my job perfectly — I practice the exact project meeting situations I face with Japanese clients."
+                    },
+                    "t3": {
+                        "name": "Thu Ha",
+                        "role": "N4 level learner",
+                        "quote": "Thanks to Furigana and Vietnamese translations, a beginner like me can practice speaking confidently without fear of mistakes."
+                    }
+                }
+            },
+            "faq": {
+                "eyebrow": "FAQ",
+                "title": "Everything you want to know",
+                "items": {
+                    "q1": {
+                        "question": "Does NaHo help correct honorific (Keigo) mistakes?",
+                        "answer": "Yes. The AI analyzes Keigo structures in workplace contexts, points out misuse of Sonkeigo / Kenjougo / Teineigo and suggests expressions appropriate for each situation."
+                    },
+                    "q2": {
+                        "question": "Can N5/N4 learners practice too?",
+                        "answer": "Yes. The system supports toggling Furigana on every Kanji and instant Vietnamese translations, so beginners can still practice conversations with confidence."
+                    },
+                    "q3": {
+                        "question": "Who is this app designed for?",
+                        "answer": "NaHo is designed for Bridge Software Engineer (BrSE) students at FPT University and Japanese learners in the tech field, especially those who need Kaiwa reflexes for interviews and Japanese workplace settings."
+                    }
+                }
+            }
+        },
         "login": {
             "slogan": "Unlimited conversations,\n connecting without distance.",
             "backToHomePage": "Back to Home",

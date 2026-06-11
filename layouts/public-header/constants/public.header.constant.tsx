@@ -4,16 +4,16 @@ export const HEADER_LINK_ITEMS: HeaderLinkItem[] = [
     {
         id: "i-1",
         titleKey: "features",
-        redirectLink: "/features",
+        redirectLink: "/home#features",
     },
     {
         id: "i-2",
         titleKey: "learnerFeedback",
-        redirectLink: "/learner-feedback",
+        redirectLink: "/home#learner-feedback",
     },
     {
         id: "i-3",
         titleKey: "frequentlyQuestions",
-        redirectLink: "/frequently-questions",
+        redirectLink: "/home#frequently-questions",
     },
 ];
