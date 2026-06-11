@@ -5,14 +5,20 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Button, Menu, PopoverOrigin } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { routing } from "@/intl/i18n/routing";
-import { usePathname, useRouter } from "@/intl/i18n/navigation";
-import { useParams } from "next/navigation";
 
 interface LanguageSwitchProps {
     variant?: "menu-item" | "icon-button";
     anchorOrigin?: PopoverOrigin;
     transformOrigin?: PopoverOrigin;
 }
+
+// Đổi locale bằng cookie + full reload thay vì soft navigation để tránh
+// React render lại các thẻ <script> khởi tạo theme trong root layout
+// (script không được thực thi lại khi client re-render).
+const applyLocale = (nextLocale: (typeof routing.locales)[number]) => {
+    document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    window.location.reload();
+};
 
 const LanguageSwitch = ({
     variant = "menu-item",
@@ -25,10 +31,6 @@ const LanguageSwitch = ({
         horizontal: "right",
     },
 }: LanguageSwitchProps) => {
-    const router = useRouter();
-    const params = useParams();
-    const pathname = usePathname();
-
     const t = useTranslations();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -64,11 +66,7 @@ const LanguageSwitch = ({
     const handleChangeLanguage = (
         nextLocale: (typeof routing.locales)[number],
     ) => {
-        router.replace(
-            // @ts-expect-error next-intl typed pathname does not include params for static routes
-            { pathname, params },
-            { locale: nextLocale },
-        );
+        applyLocale(nextLocale);
     };
 
     useEffect(() => {
