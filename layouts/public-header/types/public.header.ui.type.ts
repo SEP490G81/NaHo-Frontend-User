@@ -1,7 +1,7 @@
-import { MetadataTitleKey, StaticRoute } from "@/intl/type";
+import { AnchorRoute, MetadataTitleKey, StaticRoute } from "@/intl/type";
 
 export interface HeaderLinkItem {
     id: string;
     titleKey: MetadataTitleKey;
-    redirectLink: StaticRoute;
+    redirectLink: StaticRoute | AnchorRoute;
 }
