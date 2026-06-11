@@ -1,6 +1,6 @@
 {
     "appName": "NaHo",
-    "copyright": "© 2026 NaHo. Developed by Team G81 - SEP490 - FPT University.",
+    "copyright": "© 2026 NaHo. Developed by G81 - SEP490 - FPT University.",
     "common": {
         "or": "Or"
     },
@@ -11,10 +11,20 @@
             "forgotPassword": "Forgot Password",
             "register": "Register",
             "settings": "Settings",
-            "getHelp": "Help",
+            "getHelp": "Get Help",
             "features": "Key Features",
             "learnerFeedback": "Learner Feedback",
-            "frequentlyQuestions": "FAQ"
+            "frequentlyQuestions": "Frequently Asked Questions",
+            "dashboard": "Dashboard",
+            "topics": "Practice Topics",
+            "topicDetail": "Topic Details",
+            "sandbox": "Speaking Room",
+            "history": "Practice History",
+            "historyDetail": "Detailed Report",
+            "custom-question": "Custom Topic Selection",
+            "sandbox-custom": "Custom Speaking Room",
+            "history-custom": "Custom Speaking History",
+            "community-library": "Community Library"
         },
         "language": {
             "vi": "Vietnamese",
@@ -34,197 +44,437 @@
             },
             "loginButton": "Login",
             "logoutButton": "Logout",
-            "registerButton": "Get Started Now",
+            "registerButton": "Register and Experience Now",
             "accountMenu": {
                 "settings": "Settings",
                 "language": "Language",
-                "getHelp": "Help"
+                "getHelp": "Get Help"
             }
         }
     },
     "page": {
         "home": {
             "hero": {
-                "badge": "AI-powered Japanese speaking practice platform",
-                "title": "Master <highlight>Japanese</highlight> speaking reflexes with AI",
-                "description": "NaHo helps you build Kaiwa reflexes every day with a virtual speaking room and detailed AI feedback on pronunciation, vocabulary, grammar and naturalness.",
-                "startNow": "Get Started Free",
+                "badge": "AI-Powered Japanese Speaking Platform",
+                "title": "Master Japanese communication <highlight>reflexes</highlight> with AI",
+                "description": "NaHo helps you practice Kaiwa communication every day with a virtual speaking room, receiving detailed feedback from AI on pronunciation, vocabulary, grammar, and naturalness.",
+                "startNow": "Start Experiencing",
                 "exploreFeatures": "Explore Features",
                 "mockup": {
-                    "senseiName": "Sensei Yuki",
-                    "speaking": "Speaking now",
+                    "senseiName": "Yuki Sensei",
+                    "speaking": "Speaking",
                     "topicTag": "IT Interview",
                     "questionJp": "自己紹介をお願いします。",
                     "questionTranslation": "Please introduce yourself.",
                     "answerJp": "はじめまして、ミンです。",
-                    "aiResponding": "AI is responding…",
-                    "aiFeedback": "AI Feedback",
+                    "aiResponding": "AI responding...",
+                    "aiFeedback": "AI Evaluation",
                     "pronunciation": "Pronunciation",
                     "grammar": "Grammar",
-                    "pressToSpeak": "Press to speak"
+                    "pressToSpeak": "Press to Speak"
                 }
             },
             "features": {
                 "eyebrow": "Key Features",
                 "title": "Everything you need to practice Kaiwa",
-                "subtitle": "Tools designed specifically for Japanese conversation learners.",
+                "subtitle": "Tools designed specifically for Japanese communication learners.",
                 "items": {
                     "topics": {
-                        "title": "Topic-based practice",
-                        "description": "A rich library of topics from office communication to BrSE interviews, each with learning goals and key vocabulary."
+                        "title": "Practice by Topic",
+                        "description": "A diverse pool of topics ranging from office communication to BrSE interviews, complete with learning goals and key vocabulary for each lesson."
                     },
                     "aiFeedback": {
-                        "title": "AI scoring on 4 criteria",
-                        "description": "Get instant feedback on Pronunciation, Vocabulary, Grammar and Naturalness after every attempt."
+                        "title": "AI Scoring on 4 Criteria",
+                        "description": "Receive instant feedback on Pronunciation, Vocabulary, Grammar, and Naturalness after each speaking turn."
                     },
                     "customQuestion": {
-                        "title": "Custom questions",
-                        "description": "Create your own speaking questions, with AI suggesting natural Japanese questions for your context."
+                        "title": "Custom Topic Selection",
+                        "description": "Draft your own speaking questions according to your needs, with AI suggestions for context-appropriate Japanese questions."
                     },
                     "history": {
-                        "title": "Track your progress",
-                        "description": "Practice history and detailed reports show your strengths and weaknesses day by day."
+                        "title": "Track Progress",
+                        "description": "Practice history and detailed reports help you clearly see your strengths and weaknesses day by day."
                     }
                 }
             },
             "companions": {
-                "title": "Pick the character that fits your goal",
-                "subtitle": "Four distinct AI personalities — from a gentle teacher to a formal business client.",
+                "title": "Choose the right companion for your goals",
+                "subtitle": "Different AI personalities — from gentle instructors to formal clients.",
                 "levelLabel": "Level",
                 "items": {
                     "sakura": {
-                        "role": "Japanese Teacher",
-                        "description": "Gentle and friendly, focuses on daily conversation and grammar correction.",
-                        "level": "All levels"
+                        "role": "Japanese Instructor",
+                        "description": "Gentle, friendly, focusing on daily communication and correcting grammar.",
+                        "level": "All Levels"
                     },
                     "kenji": {
                         "role": "Senior Software Engineer",
-                        "description": "Professional, technical conversations, simulates Japanese office meetings.",
+                        "description": "Professional, technical conversation, simulating Japanese office meetings.",
                         "level": "N3 – N1"
                     },
                     "yuki": {
-                        "role": "Job Interviewer",
-                        "description": "Strict, standard interviews with tough behavioral questions.",
+                        "role": "Recruitment Interviewer",
+                        "description": "Strict, standard interview, asking difficult behavioral questions.",
                         "level": "N2 – N1"
                     },
                     "tanaka": {
                         "role": "Japanese Client",
-                        "description": "Formal Keigo, simulates negotiations and business discussions.",
+                        "description": "Formal Keigo, simulating negotiations and business discussions.",
                         "level": "N1"
                     }
                 }
             },
             "howItWorks": {
-                "title": "Get started in 3 simple steps",
-                "subtitle": "Simple, fast and effective.",
+                "title": "Start in just 3 steps",
+                "subtitle": "Simple, fast, and effective.",
                 "steps": {
                     "step1": {
-                        "title": "Create an account",
+                        "title": "Create an Account",
                         "description": "Sign up for free and personalize your Kaiwa practice experience."
                     },
                     "step2": {
                         "title": "Practice with AI",
-                        "description": "Pick a topic, enter the speaking room and record your answer."
+                        "description": "Select a topic, enter the speaking room, and record your answer."
                     },
                     "step3": {
-                        "title": "Get feedback & improve",
-                        "description": "Review detailed AI reports and sharpen your reflexes every day."
+                        "title": "Get Feedback & Progress",
+                        "description": "View detailed reports from AI and improve your reflexes every day."
                     }
                 }
             },
             "learnerFeedback": {
                 "eyebrow": "Learner Feedback",
                 "title": "What learners say about NaHo",
-                "subtitle": "Real stories from learners who practice Kaiwa every day.",
+                "subtitle": "Real experiences shared by our daily Kaiwa practice community.",
                 "items": {
                     "t1": {
                         "name": "Minh Anh",
-                        "role": "BrSE student - FPT University",
-                        "quote": "I practice 15 minutes every night, and after a month my Japanese interview reflexes improved noticeably. The pronunciation scoring is detailed down to each word."
+                        "role": "BrSE Student - FPT University",
+                        "quote": "I practice for 15 minutes every night, and after a month, my reflex in answering Japanese interviews is significantly faster. The pronunciation assessment is detailed down to every single word."
                     },
                     "t2": {
                         "name": "Quoc Bao",
-                        "role": "Bridge Software Engineer",
-                        "quote": "The custom question feature fits my job perfectly — I practice the exact project meeting situations I face with Japanese clients."
+                        "role": "Bridge Software Engineer (BrSE)",
+                        "quote": "The custom question drafting feature fits my work perfectly — practicing real project meeting scenarios with Japanese clients."
                     },
                     "t3": {
                         "name": "Thu Ha",
-                        "role": "N4 level learner",
-                        "quote": "Thanks to Furigana and Vietnamese translations, a beginner like me can practice speaking confidently without fear of mistakes."
+                        "role": "N4 Level Learner",
+                        "quote": "Thanks to Furigana and Vietnamese translations, a beginner like me can still confidently practice speaking without being afraid of making mistakes."
                     }
                 }
             },
             "faq": {
-                "eyebrow": "FAQ",
+                "eyebrow": "Frequently Asked Questions",
                 "title": "Everything you want to know",
                 "items": {
                     "q1": {
-                        "question": "Does NaHo help correct honorific (Keigo) mistakes?",
-                        "answer": "Yes. The AI analyzes Keigo structures in workplace contexts, points out misuse of Sonkeigo / Kenjougo / Teineigo and suggests expressions appropriate for each situation."
+                        "question": "Does NaHo support correcting Honorifics (Keigo)?",
+                        "answer": "Yes. The AI analyzes Keigo structures in corporate contexts, points out errors in using Sonkeigo / Kenjougo / Teineigo, and suggests appropriate expressions for each communication scenario."
                     },
                     "q2": {
-                        "question": "Can N5/N4 learners practice too?",
-                        "answer": "Yes. The system supports toggling Furigana on every Kanji and instant Vietnamese translations, so beginners can still practice conversations with confidence."
+                        "question": "Can N5/N4 levels practice on the platform?",
+                        "answer": "Yes. The system supports toggling Furigana on all Kanji characters and instant translations, helping beginners confidently practice conversations."
                     },
                     "q3": {
-                        "question": "Who is this app designed for?",
-                        "answer": "NaHo is designed for Bridge Software Engineer (BrSE) students at FPT University and Japanese learners in the tech field, especially those who need Kaiwa reflexes for interviews and Japanese workplace settings."
+                        "question": "Who is this application designed for?",
+                        "answer": "NaHo is designed for Bridge Software Engineer (BrSE) students at FPT University and Japanese learners in the IT field, especially those who need to practice Kaiwa reflexes for interviews and Japanese office environments."
                     }
                 }
             }
         },
         "login": {
-            "slogan": "Unlimited conversations,\n connecting without distance.",
-            "backToHomePage": "Back to Home",
-            "welcome": "Nice to Meet You",
-            "loginDescription": "Log in to continue your Japanese speaking journey with NaHo.",
+            "slogan": "Chat without limits,\n connect without distance.",
+            "backToHomePage": "Back to Home Page",
+            "welcome": "Welcome back",
+            "loginDescription": "Sign in to continue your Japanese speaking practice journey with NaHo.",
             "form": {
                 "emailOrUsername": "Email/Username",
                 "enterEmailOrUsername": "Enter your email or username.",
                 "rawPassword": "Password",
                 "enterPassword": "••••••••",
-                "rememberLogin": "Remember Me",
-                "forgotPassword": "Forgot Password?",
-                "loginButton": "Login",
-                "loginByGoogle": "Sign in with Google",
+                "rememberLogin": "Remember me",
+                "forgotPassword": "Forgot password?",
+                "loginButton": "Log In",
+                "loginByGoogle": "Log In with Google",
                 "noAccount": "Don't have an account?",
-                "registerNow": "Register Now",
-                "pleaseEnterEmailOrUsername": "Please enter your email/username!",
+                "registerNow": "Register now",
+                "pleaseEnterEmailOrUsername": "Please enter your email or username!",
                 "pleaseEnterPassword": "Please enter your password!",
-                "wrongLoginInfo": "Incorrect login information!"
+                "wrongLoginInfo": "Incorrect credentials!"
             }
         },
         "register": {
             "title": "Start your Kaiwa journey",
-            "slogan": "“Every sentence today is a step closer to natural Japanese reflexes tomorrow.”",
-            "backToHomePage": "Back to Home",
-            "welcome": "Create your NaHo account",
-            "registerDescription": "Personalize your Kaiwa experience in a few steps.",
+            "slogan": "“Every sentence spoken today is a step closer to natural Japanese reflexes tomorrow.”",
+            "backToHomePage": "Back to Home Page",
+            "welcome": "Create a NaHo Account",
+            "registerDescription": "Personalize your Kaiwa experience in just a few steps.",
             "form": {
                 "username": "Username",
                 "enterUsername": "Enter your username.",
                 "email": "Email Address",
                 "enterEmail": "you@example.com",
                 "rawPassword": "Password",
-                "enterPassword": "At least 6 characters",
+                "enterPassword": "Minimum 6 characters",
                 "confirmPassword": "Confirm Password",
                 "enterConfirmPassword": "Re-enter your password",
                 "agreement": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
                 "registerButton": "Create Account",
                 "haveAccount": "Already have an account?",
-                "loginNow": "Login",
+                "loginNow": "Log In",
                 "pleaseEnterUsername": "Please enter your username!",
-                "usernameInvalidLength": "Username must be 4 to 36 characters!",
-                "usernameInvalidFormat": "Username must start with a lowercase letter and contain only lowercase letters and digits!",
+                "usernameInvalidLength": "Username must be between 4 and 36 characters!",
+                "usernameInvalidFormat": "Username must start with a lowercase letter, and contain only lowercase letters and numbers!",
                 "pleaseEnterEmail": "Please enter your email address!",
                 "invalidEmail": "Invalid email address!",
                 "pleaseEnterPassword": "Please enter your password!",
                 "passwordTooShort": "Password must be at least 6 characters!",
-                "pleaseConfirmPassword": "Please re-enter your password!",
+                "pleaseConfirmPassword": "Please confirm your password!",
                 "passwordNotMatch": "Passwords do not match!",
                 "pleaseAgreeTerms": "Please agree to the Terms of Service!",
                 "registerFailed": "Registration failed, please try again!"
             }
+        },
+        "dashboard": {
+            "welcome": "Welcome back, {name}!",
+            "slogan": "Keep up your practice streak today.",
+            "practiceNow": "Practice Now",
+            "kaiwaHistory": "Kaiwa Practice History",
+            "chartTitle": "Daily Practice Time",
+            "chartSubtitle": "Last 7 days (unit: minutes)",
+            "chartTooltipMinute": "min",
+            "chartTooltipTime": "Time",
+            "chartTooltipDay": "Day: {label}",
+            "leaderboardTitle": "Weekly Leaderboard",
+            "leaderboardSubtitle": "Top students with the highest practice scores this week",
+            "leaderboardYou": "You",
+            "leaderboardPoints": "points",
+            "skillScoresTitle": "Average Score",
+            "skillScoresSubtitle": "AI Evaluation across 4 aspects",
+            "loadingChart": "Loading chart data..."
+        },
+        "topics": {
+            "title": "Practice Topics",
+            "subtitle": "Select a topic to start practicing conversational reflexes with AI.",
+            "searchPlaceholder": "Search topics...",
+            "filterAll": "All",
+            "emptyState": "No matching topics found.",
+            "dialogTarget": "Lesson Objectives",
+            "dialogVocabulary": "Key Vocabulary",
+            "dialogStart": "Start Practice",
+            "dialogClose": "Close",
+            "questionCount": "{count} questions",
+            "completedCount": "{completed}/{total} completed",
+            "dialogAudience": "Target Audience",
+            "dialogDescription": "Description",
+            "dialogQuestionSummary": "This topic has <bold>{count} speaking questions</bold>."
+        },
+        "topicDetail": {
+            "questionList": "Question List",
+            "questionCount": "{total} questions • Practiced {completed}/{total}",
+            "showFurigana": "Show Furigana",
+            "practiceNow": "Practice Now",
+            "completed": "Practiced • {score}/10",
+            "notCompleted": "Not practiced",
+            "viewHistory": "View History",
+            "modelAnswer": "Instructor's Sample Answer",
+            "showModelAnswer": "View Sample Answer",
+            "hideModelAnswer": "Hide Sample Answer",
+            "noModelAnswer": "No sample answer available for this question.",
+            "vietnameseTranslation": "Vietnamese Translation",
+            "notFoundTitle": "Topic not found.",
+            "notFoundSubtitle": "Please go back and try again.",
+            "backToTopics": "Back to Topic List",
+            "learningGoals": "Learning Objectives",
+            "averageScore": "Average Score"
+        },
+        "sandbox": {
+            "backToTopic": "Back to Topic",
+            "showFurigana": "Show Furigana",
+            "step1": "Check Device",
+            "step2": "Practice Reflexes",
+            "step3": "Review & Submit",
+            "guideTitle": "Instructions before speaking",
+            "guideSubtitle": "Please read the rules below and test your microphone before entering the speaking room.",
+            "rules": {
+                "rule1": "Please choose a quiet place.",
+                "rule2": "Speak clearly and at a moderate pace.",
+                "rule3": "Check your headset/mic quality before starting."
+            },
+            "micTestTitle": "Microphone Test",
+            "micTestSubtitle": "This is a simulation mode, the sandbox will evaluate the quality.",
+            "micTestBtn": "Test Mic",
+            "micTestingBtn": "Recording (3s)...",
+            "micStatusGood": "Audio Quality: Good! 🟢",
+            "micStatusPoor": "Audio Quality: Poor 🔴",
+            "micStatusPoorTip": "It seems the microphone is not capturing clear sound. Please try again in a quieter place.",
+            "startPracticeBtn": "Start Now",
+            "speakQuestion": "Speaking Question",
+            "recordingBtnStop": "Stop Recording",
+            "recordingBtnStart": "Start Recording",
+            "hintsTitle": "Speaking Reflex Hints",
+            "hintsSubtitle": "Use the suggested structures or vocabulary to increase your Naturalness score.",
+            "hintsModelAnswer": "Recommended expressions:",
+            "hintsItVocab": "Related IT vocabulary:",
+            "notesTitle": "Draft Notes",
+            "notesPlaceholder": "Type words you want to say here so you don't forget...",
+            "playbackTitle": "Your Recording",
+            "playbackSubtitle": "Listen again and submit for AI evaluation based on 4 criteria: Pronunciation · Vocabulary · Grammar · Naturalness.",
+            "playbackPlay": "Listen",
+            "playbackPause": "Pause",
+            "playbackRetry": "Record Again",
+            "playbackSubmit": "Analyze Results",
+            "analyzing": "Analyzing...",
+            "retryBtn": "Retry",
+            "recordingHintActive": "Recording — press again to stop",
+            "recordingHintIdle": "Press the microphone to start",
+            "notesSubtitle": "Write down vocabulary or structures you want to remember before recording.",
+            "micLevel": "Audio Level",
+            "notFoundTitle": "Question not found.",
+            "notFoundSubtitle": "Please select a valid question."
+        },
+        "history": {
+            "title": "Practice History",
+            "subtitle": "Total of {total} practices · Average Score",
+            "practiceNew": "Practice New Topic",
+            "filterPlaceholder": "Search questions or topics...",
+            "filterAllTopics": "All Topics",
+            "tableDate": "Date Practiced",
+            "tableTopic": "Topic",
+            "tableQuestion": "Question",
+            "tableAudio": "Audio File",
+            "tableScore": "Score",
+            "tableAction": "Action",
+            "viewReport": "View Report",
+            "emptyTitle": "No matching practice sessions",
+            "emptySubtitle": "Try removing filters or start practicing a new topic to see results here.",
+            "emptyBtn": "Start Practicing Now",
+            "retryBtn": "Practice Again"
+        },
+        "historyDetail": {
+            "breadcrumbHistory": "History",
+            "showFurigana": "Show Furigana",
+            "backBtn": "Back",
+            "reportTitle": "Detailed Practice Report",
+            "questionTitle": "Question",
+            "overviewTitle": "Evaluation Overview",
+            "dimensionPronunciation": "Pronunciation",
+            "dimensionVocabulary": "Vocabulary",
+            "dimensionGrammar": "Grammar",
+            "dimensionNaturalness": "Naturalness",
+            "tabTranscript": "Translation & Corrections",
+            "tabPronunciation": "Pronunciation Details",
+            "tabHints": "Advanced Suggestions",
+            "retryBtn": "Practice this question again",
+            "yourSpeech": "Your Recording",
+            "aiCorrection": "AI Correction Suggestion",
+            "pronunciationLabel": "Detailed Pronunciation Evaluation",
+            "pronunciationWord": "Word",
+            "pronunciationScore": "Accuracy",
+            "pronunciationFeedback": "Comments",
+            "hintsTitle": "Recommended Useful Phrases",
+            "hintsItVocab": "In-depth IT Vocabulary in Sentence",
+            "notFoundTitle": "Practice session not found.",
+            "notFoundSubtitle": "Please check the link again.",
+            "backToHistory": "Back to History",
+            "aiErrorLabel": "Error:",
+            "aiSuggestionLabel": "Suggestion:",
+            "aiHoverTip": "Tip: Hover over red underlined words or phrases to see AI's detailed correction feedback.",
+            "aiDetailedExplanation": "Detailed Explanation",
+            "aiPronunciationNoteLabel": "Pronunciation Note from AI",
+            "noItVocabFeedback": "There is no specialized industry vocabulary in this session.",
+            "pointsLabel": "points",
+            "vietnameseTranslation": "Vietnamese Translation"
+        },
+        "customQuestion": {
+            "title": "Custom Topic Selection",
+            "subtitle": "Draft your own Japanese speaking questions according to your needs.",
+            "dialogTitle": "Personal Question Creation Rules",
+            "dialogSubtitle": "Please read carefully before drafting your speaking question.",
+            "rules": {
+                "rule1": "Ask clear, fully meaningful questions; avoid writing incomplete sentences or ambiguous subjects (AI will decline to score them).",
+                "rule2": "Strictly no sensitive, profane, or policy-violating language.",
+                "rule3": "We recommend office, BrSE, or IT-related contexts to optimize AI suggestions."
+            },
+            "acceptRules": "Accept Rules",
+            "back": "Back",
+            "formTitle": "Draft Practice Question",
+            "formSubtitle": "Enter the question in Japanese that you want to practice answering.",
+            "textareaLabel": "Enter your Japanese question",
+            "textareaPlaceholder": "例：プロジェクトの進捗について教えていただけますか？",
+            "hintLabel": "Do you need suggestions? (Optional)",
+            "hintPlaceholder": "Example: Asking customer's opinion on project progress",
+            "aiSuggestBtn": "AI Suggests Japanese Question",
+            "shareLabel": "Share this question to Community Library",
+            "shareSubLabel": "(Will be added to moderation queue)",
+            "nextStep": "Next Step",
+            "errorEmptyJp": "Please enter a Japanese question.",
+            "suggestSuccess": "Question suggestion generated successfully"
+        },
+        "sandboxCustom": {
+            "backBtn": "Back",
+            "showFurigana": "Show Furigana",
+            "step1": "Check Mic",
+            "step2": "Practice",
+            "step3": "Review & Submit",
+            "step4": "Correction Results",
+            "stepLabel": "Step {step}",
+            "noQuestionTitle": "No custom question drafted yet",
+            "noQuestionSubtitle": "Please go back and draft your practice question first.",
+            "noQuestionBtn": "Go Back to Draft Question",
+            "guideTitle": "Instructions before speaking",
+            "guideSubtitle": "Please find a quiet place and test your microphone before starting to practice your custom question.",
+            "rules": {
+                "rule1": "Please choose a quiet place.",
+                "rule2": "Speak clearly and at a moderate pace.",
+                "rule3": "Check your headset/mic quality before starting."
+            },
+            "customQuestion": "Custom Question",
+            "micTestTitle": "Microphone Test",
+            "micTestSubtitle": "This is a simulation mode, the sandbox will evaluate the audio quality.",
+            "micTestBtn": "Test Microphone",
+            "micTestingBtn": "Recording (3s)...",
+            "micStatusGood": "Audio Quality: Good! 🟢",
+            "micStatusPoor": "Audio Quality: Poor 🔴",
+            "micStatusPoorTip": "Please try again in a quieter place.",
+            "startPracticeBtn": "Start Speaking",
+            "retryBtn": "Retry",
+            "playbackTitle": "Your Recording",
+            "playbackSubtitle": "Listen again and submit for AI to analyze grammatical errors & suggest more natural expressions.",
+            "playbackPlay": "Listen",
+            "playbackPause": "Pause",
+            "playbackRetry": "Record Again",
+            "playbackSubmit": "Submit to AI Analysis",
+            "analyzing": "Analyzing...",
+            "tabGrammar": "Grammar Correction & Translation",
+            "tabCriteria": "Evaluation Criteria",
+            "yourSpeech": "Your Speech (Transcript)",
+            "aiCorrection": "AI Suggestion (More Natural)",
+            "totalScore": "Total Score",
+            "practiceAgain": "Practice this question again",
+            "saveToHistory": "Save to History",
+            "saveSuccess": "Practice results successfully saved to custom question history!"
+        },
+        "historyCustom": {
+            "title": "Custom Speaking History",
+            "subtitle": "Total of {total} practices · Average Score",
+            "createBtn": "Draft New Question",
+            "emptyTitle": "No custom question practices yet",
+            "emptySubtitle": "Draft your own question and start practicing to see history here.",
+            "emptyBtn": "Draft Question Now",
+            "retryBtn": "Draft Again"
+        },
+        "communityLibrary": {
+            "title": "Community Question Library",
+            "subtitle": "A place to share and practice conversational scenario and BrSE interview questions contributed by NAHO learners.",
+            "contributeBtn": "Contribute New Question",
+            "filterTitle": "Filters",
+            "showFurigana": "Show Furigana",
+            "searchPlaceholder": "Search questions...",
+            "emptyState": "No matching questions found.",
+            "practiceCount": "{count} practices",
+            "practiceNow": "Practice Now"
         }
     }
 }
