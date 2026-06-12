@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRouter } from "@/intl/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { IconButton } from "@mui/material";
 

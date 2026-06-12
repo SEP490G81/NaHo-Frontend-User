@@ -1,0 +1,23 @@
+{
+    "login": {
+        "slogan": "Trò chuyện không giới hạn,\n kết nối không khoảng cách.",
+        "backToHomePage": "Về trang chủ",
+        "welcome": "Rất vui được gặp bạn",
+        "loginDescription": "Đăng nhập để tiếp tục hành trình luyện nói tiếng Nhật cùng NaHo.",
+        "form": {
+            "emailOrUsername": "Email/Tên tài khoản",
+            "enterEmailOrUsername": "Nhập email hoặc tên tài khoản của bạn.",
+            "rawPassword": "Mật khẩu",
+            "enterPassword": "••••••••",
+            "rememberLogin": "Ghi nhớ đăng nhập",
+            "forgotPassword": "Quên mật khẩu?",
+            "loginButton": "Đăng nhập",
+            "loginByGoogle": "Đăng nhập bằng Google",
+            "noAccount": "Chưa có tài khoản?",
+            "registerNow": "Đăng ký ngay",
+            "pleaseEnterEmailOrUsername": "Vui lòng nhập email/tên tài khoản!",
+            "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
+            "wrongLoginInfo": "Sai thông tin đăng nhập!"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { StaticRoute } from "@/intl/type";
+import { StaticRoute } from "@/i18n/type";
 import { Messages } from "next-intl";
 import React from "react";
 
@@ -17,4 +17,4 @@ export interface SettingSearchItem {
     targetId: string;
 }
 
-type SettingsMenuTitleKey = keyof Messages["page"]["settings"]["title"];
+type SettingsMenuTitleKey = keyof Messages["settings"]["page"];

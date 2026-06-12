@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { SETTING_MENU_ITEMS } from "@/modules/protected/settings/constants/settings.constant";
-import { Link, usePathname } from "@/intl/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SettingsSearchBox from "@/modules/protected/settings/components/settings.search.box";
 import { Divider } from "@mui/material";
@@ -32,7 +32,7 @@ const SettingsSidebar = () => {
                             {item.icon}
                         </span>
                         <p className="text-sm font-semibold whitespace-nowrap">
-                            {t(`page.settings.title.${item.titleKey}`)}
+                            {t(`settings.page.${item.titleKey}`)}
                         </p>
                     </Link>
                 );

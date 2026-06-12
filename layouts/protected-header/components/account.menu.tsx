@@ -1,6 +1,6 @@
 import { Avatar, Divider, Popover } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import {
@@ -78,7 +78,7 @@ const AccountMenu = ({
                                 </span>
                                 <p className="text-sm font-semibold whitespace-nowrap">
                                     {t(
-                                        `layout.header.accountMenu.${item.titleKey}`,
+                                        `common.layout.header.accountMenu.${item.titleKey}`,
                                     )}
                                 </p>
                             </Link>

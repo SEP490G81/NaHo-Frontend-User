@@ -1,3 +1,4 @@
+
 import { DotPosition } from "@/modules/public/login/types/login.ui.type";
 
 export const DOT_POSITION_LIST: DotPosition[] = [

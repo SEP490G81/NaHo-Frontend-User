@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Home from "@/modules/public/home/components/home";
 
 export async function generateMetadata({
     params,
@@ -8,7 +9,10 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "metadata.title" });
+    const t = await getTranslations({
+        locale,
+        namespace: "common.metadata.title",
+    });
 
     return {
         title: t("home"),
@@ -16,7 +20,7 @@ export async function generateMetadata({
 }
 
 const HomePage = () => {
-    return <div className="h-screen">home</div>;
+    return <Home />;
 };
 
 export default HomePage;

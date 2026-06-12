@@ -12,7 +12,7 @@ const SettingsSearchBox = () => {
                 fullWidth
                 variant="filled"
                 size="small"
-                placeholder={t("page.settings.searchPlaceholder")}
+                placeholder={t("settings.searchPlaceholder")}
                 slotProps={{
                     input: {
                         startAdornment: (

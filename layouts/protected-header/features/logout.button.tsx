@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logoutAll } from "@/services/client/user.service";
-import { useRouter } from "@/intl/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
 
@@ -34,7 +34,7 @@ const LogoutButton = () => {
                     <LogoutIcon fontSize="small" />
                 </span>
                 <p className="text-sm font-semibold whitespace-nowrap">
-                    {t("layout.header.logoutButton")}
+                    {t("common.layout.header.logoutButton")}
                 </p>
             </button>
         </div>

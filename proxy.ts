@@ -1,5 +1,5 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "@/intl/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
 import {
     ACCESS_TOKEN_NAME,

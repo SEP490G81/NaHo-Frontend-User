@@ -15,25 +15,25 @@ export type RegisterFieldErrors = Partial<Record<keyof RegisterValues, string>>;
 
 export function validateUsername(value: string): string | undefined {
     const v = value.trim();
-    if (v.length === 0) return "page.register.form.pleaseEnterUsername";
+    if (v.length === 0) return "register.form.pleaseEnterUsername";
     if (v.length < USERNAME_MIN_LENGTH || v.length > USERNAME_MAX_LENGTH)
-        return "page.register.form.usernameInvalidLength";
+        return "register.form.usernameInvalidLength";
     if (!USERNAME_REGEX.test(v))
-        return "page.register.form.usernameInvalidFormat";
+        return "register.form.usernameInvalidFormat";
     return undefined;
 }
 
 export function validateEmail(value: string): string | undefined {
     const v = value.trim();
-    if (v.length === 0) return "page.register.form.pleaseEnterEmail";
-    if (!EMAIL_REGEX.test(v)) return "page.register.form.invalidEmail";
+    if (v.length === 0) return "register.form.pleaseEnterEmail";
+    if (!EMAIL_REGEX.test(v)) return "register.form.invalidEmail";
     return undefined;
 }
 
 export function validatePassword(value: string): string | undefined {
-    if (value.length === 0) return "page.register.form.pleaseEnterPassword";
+    if (value.length === 0) return "register.form.pleaseEnterPassword";
     if (value.length < MIN_PASSWORD_LENGTH)
-        return "page.register.form.passwordTooShort";
+        return "register.form.passwordTooShort";
     return undefined;
 }
 
@@ -42,9 +42,9 @@ export function validateConfirmPassword(
     password: string,
 ): string | undefined {
     if (confirmPassword.length === 0)
-        return "page.register.form.pleaseConfirmPassword";
+        return "register.form.pleaseConfirmPassword";
     if (confirmPassword !== password)
-        return "page.register.form.passwordNotMatch";
+        return "register.form.passwordNotMatch";
     return undefined;
 }
 

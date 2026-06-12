@@ -8,9 +8,9 @@ const UpdatePlanButton = () => {
     return (
         <div className="flex items-start justify-between gap-y-5">
             <div>
-                <p>Naho Go</p>
+                <p>{t("settings.billing.currentPlan")}</p>
                 <span className="text-text-muted text-sm font-semibold">
-                    Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026
+                    {t("settings.billing.planExpiry")}
                 </span>
             </div>
             <Button
@@ -18,7 +18,7 @@ const UpdatePlanButton = () => {
                 size="small"
                 startIcon={<UpgradeOutlined fontSize="small" />}
             >
-                {t("page.settings.items.updatePlan")}
+                {t("settings.billing.updatePlan")}
             </Button>
         </div>
     );

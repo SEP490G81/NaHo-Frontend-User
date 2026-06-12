@@ -7,7 +7,7 @@ import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 
 const ThemeSwitchButton = () => {
     const { mode, setMode } = useColorScheme();
-    const t = useTranslations("layout.header.themeSwitchButton");
+    const t = useTranslations("common.layout.header.themeSwitchButton");
     if (!mode) {
         return null;
     }

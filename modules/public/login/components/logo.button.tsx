@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 
 const LogoButton = ({ children }: { children: React.ReactNode }) => {

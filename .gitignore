@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+CodingFrontEndRule.md
+Conversation
+NAHO Starter Kit
+
+.gitignore
+
+/package-lock.json
+/package.json

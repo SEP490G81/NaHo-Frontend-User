@@ -1,7 +1,7 @@
-import Login from "@/modules/public/login/components/login";
 import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/services/server/user.service";
 import { redirect } from "next/navigation";
+import Login from "@/modules/public/login/components/login";
 
 export async function generateMetadata({
     params,
@@ -11,7 +11,7 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "metadata.title" });
+    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
 
     return {
         title: t("login"),

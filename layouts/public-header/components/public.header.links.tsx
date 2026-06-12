@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { HEADER_LINK_ITEMS } from "@/layouts/public-header/constants/public.header.constant";
 
@@ -14,7 +14,7 @@ const PublicHeaderLinks = () => {
                         href={item.redirectLink}
                         key={item.id}
                     >
-                        {t(`metadata.title.${item.titleKey}`)}
+                        {t(`common.metadata.title.${item.titleKey}`)}
                     </Link>
                 );
             })}

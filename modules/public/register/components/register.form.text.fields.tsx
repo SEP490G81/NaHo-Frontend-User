@@ -96,8 +96,8 @@ const RegisterFormTextFields = ({
         <>
             <RegisterTextField
                 name="username"
-                label={t("page.register.form.username")}
-                placeholder={t("page.register.form.enterUsername")}
+                label={t("register.form.username")}
+                placeholder={t("register.form.enterUsername")}
                 value={values.username}
                 errorKey={errors.username}
                 onChange={onChange}
@@ -105,8 +105,8 @@ const RegisterFormTextFields = ({
             />
             <RegisterTextField
                 name="email"
-                label={t("page.register.form.email")}
-                placeholder={t("page.register.form.enterEmail")}
+                label={t("register.form.email")}
+                placeholder={t("register.form.enterEmail")}
                 value={values.email}
                 errorKey={errors.email}
                 onChange={onChange}
@@ -115,8 +115,8 @@ const RegisterFormTextFields = ({
             <RegisterTextField
                 name="password"
                 type={showPassword ? "text" : "password"}
-                label={t("page.register.form.rawPassword")}
-                placeholder={t("page.register.form.enterPassword")}
+                label={t("register.form.rawPassword")}
+                placeholder={t("register.form.enterPassword")}
                 value={values.password}
                 errorKey={errors.password}
                 onChange={onChange}
@@ -131,8 +131,8 @@ const RegisterFormTextFields = ({
             <RegisterTextField
                 name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
-                label={t("page.register.form.confirmPassword")}
-                placeholder={t("page.register.form.enterConfirmPassword")}
+                label={t("register.form.confirmPassword")}
+                placeholder={t("register.form.enterConfirmPassword")}
                 value={values.confirmPassword}
                 errorKey={errors.confirmPassword}
                 onChange={onChange}

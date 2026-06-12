@@ -18,12 +18,12 @@ const LoginFormTextFields = ({ state }: { state: LoginState }) => {
         <>
             <div className="flex w-full flex-col items-start gap-y-1.5">
                 <label htmlFor="usernameOrEmail" className="font-semibold">
-                    {t("page.login.form.emailOrUsername")}
+                    {t("login.form.emailOrUsername")}
                 </label>
                 <TextFieldCustom
                     name="usernameOrEmail"
                     id="usernameOrEmail"
-                    placeholder={t("page.login.form.enterEmailOrUsername")}
+                    placeholder={t("login.form.enterEmailOrUsername")}
                     size="small"
                     fullWidth
                     defaultValue={state.usernameOrEmail.value}
@@ -32,7 +32,7 @@ const LoginFormTextFields = ({ state }: { state: LoginState }) => {
                         state.usernameOrEmail.error ? (
                             <span className="text-text-error font-semibold">
                                 {t(
-                                    "page.login.form.pleaseEnterEmailOrUsername",
+                                    "login.form.pleaseEnterEmailOrUsername",
                                 )}
                             </span>
                         ) : null
@@ -42,13 +42,13 @@ const LoginFormTextFields = ({ state }: { state: LoginState }) => {
 
             <div className="flex w-full flex-col items-start gap-y-1.5">
                 <label htmlFor="rawPassword" className="font-semibold">
-                    {t("page.login.form.rawPassword")}
+                    {t("login.form.rawPassword")}
                 </label>
                 <TextFieldCustom
                     name="rawPassword"
                     id="rawPassword"
                     type={showPassword ? "text" : "password"}
-                    placeholder={t("page.login.form.enterPassword")}
+                    placeholder={t("login.form.enterPassword")}
                     size="small"
                     fullWidth
                     defaultValue={state.rawPassword.value}
@@ -56,7 +56,7 @@ const LoginFormTextFields = ({ state }: { state: LoginState }) => {
                     helperText={
                         state.rawPassword.error ? (
                             <span className="text-text-error font-semibold">
-                                {t("page.login.form.pleaseEnterPassword")}
+                                {t("login.form.pleaseEnterPassword")}
                             </span>
                         ) : null
                     }

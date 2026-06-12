@@ -9,18 +9,15 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({
-        locale,
-        namespace: "page.settings.title",
-    });
+    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
 
     return {
-        title: t("general"),
+        title: t("settings"),
     };
 }
 
 const SettingsPage = () => {
-    return <div>Settings Page</div>;
+    return <div>settings</div>;
 };
 
 export default SettingsPage;

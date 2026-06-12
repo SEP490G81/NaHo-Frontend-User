@@ -4,7 +4,7 @@ import LoginFormTextFields from "@/modules/public/login/components/login.form.te
 import { LoginState } from "@/modules/public/login/types/login.ui.type";
 import React, { useState } from "react";
 import { validateLoginForm } from "@/modules/public/login/actions/login.action";
-import { Link, useRouter } from "@/intl/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { credentialsLogin } from "@/services/client/user.service";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
@@ -69,7 +69,7 @@ const LoginForm = () => {
                     href={"/forgot-password"}
                     className="text-text-highlight text-sm text-nowrap select-none hover:underline"
                 >
-                    {t("page.login.form.forgotPassword")}
+                    {t("login.form.forgotPassword")}
                 </Link>
             </div>
             <LoginFormButtons errorMessage={errorMessage} />

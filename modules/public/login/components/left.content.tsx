@@ -10,7 +10,7 @@ const LeftContent = () => {
             <div className="absolute top-5 left-5">
                 <LogoButton>
                     <h1 className="text-2xl font-bold whitespace-nowrap text-[#fdfffc]">
-                        {t("appName")}
+                        {t("common.appName")}
                     </h1>
                 </LogoButton>
             </div>
@@ -34,18 +34,18 @@ const LeftContent = () => {
                 <Gate />
                 <div className="mt-10 max-w-md text-center">
                     <p className="text-text-pure dark:text-text-contrast text-xl leading-relaxed font-medium whitespace-pre-line md:text-2xl">
-                        {t("page.login.slogan")}
+                        {t("login.slogan")}
                     </p>
                     <div className="text-bgc-highlight mt-5 flex items-center justify-center gap-2 text-xs tracking-[0.3em] uppercase">
                         <span className="bg-bgc-highlight/60 h-px w-8" />
-                        {t("appName")}
+                        {t("common.appName")}
                         <span className="bg-bgc-highlight/60 h-px w-8" />
                     </div>
                 </div>
             </div>
 
             <p className="text-text-muted absolute bottom-5 left-1/2 -translate-x-1/2 text-sm font-semibold text-nowrap">
-                {t("copyright")}
+                {t("common.copyright")}
             </p>
         </div>
     );
