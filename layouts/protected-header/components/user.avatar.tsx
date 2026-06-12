@@ -15,6 +15,7 @@ const UserAvatar = () => {
                 onClick={(event) => setAnchorEl(event.currentTarget)}
             >
                 <Avatar
+                    src={user?.avatarUrl || undefined}
                     sx={{
                         bgcolor: "var(--color-bgc-highlight)",
                         width: "40px",

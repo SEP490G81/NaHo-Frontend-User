@@ -1,15 +1,16 @@
-import { Gender, JlptLevel } from "@/types/enums/user.enum";
+import { Gender, JlptLevel, UserStatus } from "@/types/enums/user.enum";
 
 export interface UserResponse {
     id: number;
+    username: string;
     email: string;
-    roles: string[];
-    firstName: string;
-    lastName: string;
+    roleNames: string[];
+    fullName: string;
     gender: Gender;
     dob: string;
-    avatarFileUrl: string;
+    avatarUrl: string;
     jlptLevel: JlptLevel;
+    status: UserStatus;
 }
 
 export interface RegisterResponse {

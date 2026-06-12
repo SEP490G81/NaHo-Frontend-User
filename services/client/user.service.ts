@@ -1,5 +1,6 @@
 import {
     CredentialsLoginRequest,
+    GoogleLoginRequest,
     RegisterRequest,
 } from "@/types/requests/user.request";
 import { ProblemDetail } from "@/types/responses/base.response";
@@ -9,6 +10,22 @@ export async function credentialsLogin(
     request: CredentialsLoginRequest,
 ): Promise<void> {
     const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new Error(problemDetail.detail);
+    }
+}
+
+export async function googleLogin(request: GoogleLoginRequest): Promise<void> {
+    const response = await fetch("/api/auth/login/google", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

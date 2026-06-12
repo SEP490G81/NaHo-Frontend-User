@@ -16,15 +16,13 @@ export function LearnerSidebar() {
     const drawerContent = (
         <>
             {/* Header */}
-            <Box className="border-bdc-primary flex h-16 items-center border-b px-5">
-                <div className="pt-3">
-                    <LogoButton>
-                        <span className="text-text-contrast text-xl font-bold tracking-wider">
-                            NaHo
-                        </span>
-                    </LogoButton>
-                </div>
-            </Box>
+            <div className="border-bdc-primary border-b py-3.5">
+                <LogoButton>
+                    <h1 className="text-text-contrast text-xl font-bold tracking-wider">
+                        NaHo
+                    </h1>
+                </LogoButton>
+            </div>
 
             {/* Menu items */}
             <Box className="flex-1 overflow-y-auto py-4">

@@ -20,6 +20,7 @@ const AccountMenu = ({
     const t = useTranslations();
     const { data: user } = useCurrentUser();
 
+    console.log("User: ", user);
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -41,6 +42,7 @@ const AccountMenu = ({
             <div>
                 <div className="flex min-w-75 items-center gap-x-3 p-3.5">
                     <Avatar
+                        src={user?.avatarUrl || undefined}
                         sx={{
                             width: "56px",
                             height: "56px",
