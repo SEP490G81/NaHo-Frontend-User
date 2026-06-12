@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import "../../styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import React from "react";
-import { routing } from "@/intl/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { QueryProvider } from "@/components/providers/query.provider";
 import { InitColorSchemeScript } from "@mui/material";
 

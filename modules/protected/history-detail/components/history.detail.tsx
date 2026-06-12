@@ -3,13 +3,12 @@ import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import { RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getHistoryById } from "@/modules/protected/history/services/history.service";
 import { getTopicById } from "@/modules/protected/topics/services/topic.service";
 import { mockHistoryList } from "@/data/mockHistory";
-import { mockTopics } from "@/data/mockTopics";
 import { getReportForHistory } from "@/data/mockReports";
 import HistoryDetailHeader from "./history.detail.header";
 import HistoryDetailQuestionCard from "./history.detail.question.card";
@@ -17,11 +16,15 @@ import HistoryDetailOverview from "./history.detail.overview";
 import HistoryDetailTabs from "./history.detail.tabs";
 
 export function HistoryDetail() {
-    const t = useTranslations("page.historyDetail");
+    const t = useTranslations("historyDetail");
     const params = useParams();
     const rawHistoryId = params?.historyId as string;
-    const matchedHistory = mockHistoryList.find((h) => rawHistoryId?.startsWith(h.historyId));
-    const historyId = matchedHistory ? matchedHistory.historyId : rawHistoryId || "";
+    const matchedHistory = mockHistoryList.find((h) =>
+        rawHistoryId?.startsWith(h.historyId),
+    );
+    const historyId = matchedHistory
+        ? matchedHistory.historyId
+        : rawHistoryId || "";
 
     // Nạp chi tiết bản ghi lịch sử bài làm từ API
     const { data: entry, isLoading: isHistoryLoading } = useQuery({
@@ -115,7 +118,7 @@ export function HistoryDetail() {
                 <div className="sticky bottom-4 z-10 flex justify-center md:static md:justify-end">
                     <Link
                         href={`/sandbox/${entry.questionId}`}
-                        className="inline-flex h-9 items-center justify-center rounded-md bg-bgc-highlight px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-bgc-highlight/90"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
                     >
                         <RotateCcw className="mr-2 h-4 w-4" />
                         {t("retryBtn")}

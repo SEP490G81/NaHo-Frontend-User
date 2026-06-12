@@ -1,6 +1,6 @@
 import { Messages } from "next-intl";
 
-export type MetadataTitleKey = keyof Messages["metadata"]["title"];
+export type MetadataTitleKey = keyof Messages["common"]["metadata"]["title"];
 
 export type AllRoute =
     | "/"

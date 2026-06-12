@@ -22,7 +22,7 @@ export function TranscriptView({
     aiSuggestion,
     showFurigana,
 }: TranscriptViewProps) {
-    const t = useTranslations("page.historyDetail");
+    const t = useTranslations("historyDetail");
 
     return (
         <div className="grid gap-5 lg:grid-cols-2">

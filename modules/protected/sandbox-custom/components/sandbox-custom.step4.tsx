@@ -22,8 +22,8 @@ export function SandboxStep4({
   practiceAgain,
   saveToHistory,
 }: SandboxStep4Props) {
-  const t = useTranslations("page.sandboxCustom");
-  const tHistoryDetail = useTranslations("page.historyDetail");
+  const t = useTranslations("sandboxCustom");
+  const tHistoryDetail = useTranslations("historyDetail");
 
   // Mock report matched with what HistoryDetailOverview and HistoryDetailTabs expect
   const report = React.useMemo(() => {

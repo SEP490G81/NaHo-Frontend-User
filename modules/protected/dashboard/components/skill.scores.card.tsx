@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { skillScores } from "@/data/mockLearnerDashboard";
 
 export function SkillScoresCard() {
-    const t = useTranslations("page.historyDetail");
-    const tHome = useTranslations("page.dashboard");
+    const t = useTranslations("historyDetail");
+    const tHome = useTranslations("dashboard");
 
     const items = [
         { label: t("dimensionPronunciation"), value: skillScores.pronunciation },

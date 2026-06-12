@@ -10,7 +10,7 @@ interface CustomQuestionCardProps {
 }
 
 export function CustomQuestionCard({ jp, vi, showFurigana }: CustomQuestionCardProps) {
-  const t = useTranslations("page.sandboxCustom");
+  const t = useTranslations("sandboxCustom");
 
   return (
     <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 md:p-6 shadow-sm">

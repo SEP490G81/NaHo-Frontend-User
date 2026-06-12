@@ -1,4 +1,4 @@
-import { StaticRoute } from "@/intl/type";
+import { StaticRoute } from "@/i18n/type";
 import { Messages } from "next-intl";
 import React from "react";
 
@@ -16,4 +16,4 @@ export interface AccountMenuStaticItem {
     type: "STATIC";
 }
 
-type AccountMenuTitleKey = keyof Messages["layout"]["header"]["accountMenu"];
+type AccountMenuTitleKey = keyof Messages["common"]["layout"]["header"]["accountMenu"];

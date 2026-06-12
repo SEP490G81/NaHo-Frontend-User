@@ -25,7 +25,7 @@ const RegisterAgreeTerms = ({
                     htmlFor="agreeTerms"
                     className="cursor-pointer text-sm select-none"
                 >
-                    {t.rich("page.register.form.agreement", {
+                    {t.rich("register.form.agreement", {
                         terms: (chunks) => (
                             <span className="text-text-highlight cursor-pointer hover:underline">
                                 {chunks}
@@ -41,7 +41,7 @@ const RegisterAgreeTerms = ({
             </div>
             {error && (
                 <p className="text-text-error mt-1 text-xs font-semibold">
-                    {t("page.register.form.pleaseAgreeTerms")}
+                    {t("register.form.pleaseAgreeTerms")}
                 </p>
             )}
         </div>

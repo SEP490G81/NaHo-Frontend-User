@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import { Box, Button, Switch, FormControlLabel } from "@mui/material";
-import { Link } from "@/intl/i18n/navigation";
+import { Box, Button, FormControlLabel, Switch } from "@mui/material";
+import { Link } from "@/i18n/navigation";
 
 interface HistoryDetailHeaderProps {
     topicTitle: string;
@@ -19,12 +19,14 @@ export function HistoryDetailHeader({
 }: HistoryDetailHeaderProps) {
     return (
         <div className="flex flex-wrap items-center justify-between gap-3">
-            <nav className="flex items-center gap-1.5 text-sm text-text-muted">
+            <nav className="text-text-muted flex items-center gap-1.5 text-sm">
                 <Link href="/history" className="hover:text-foreground">
                     {t("breadcrumbHistory")}
                 </Link>
                 <ChevronRight className="h-3.5 w-3.5" />
-                <span className="text-text-contrast font-semibold">{topicTitle}</span>
+                <span className="text-text-contrast font-semibold">
+                    {topicTitle}
+                </span>
             </nav>
             <div className="flex items-center gap-3">
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -32,13 +34,18 @@ export function HistoryDetailHeader({
                         control={
                             <Switch
                                 checked={showFurigana}
-                                onChange={(e) => setShowFurigana(e.target.checked)}
+                                onChange={(e) =>
+                                    setShowFurigana(e.target.checked)
+                                }
                                 color="primary"
                             />
                         }
                         label={t("showFurigana")}
                         slotProps={{
-                            typography: { className: "text-sm font-semibold text-text-contrast" }
+                            typography: {
+                                className:
+                                    "text-sm font-semibold text-text-contrast",
+                            },
                         }}
                     />
                 </Box>

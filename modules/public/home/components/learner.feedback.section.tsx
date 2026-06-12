@@ -16,13 +16,13 @@ const LearnerFeedbackSection = () => {
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <Reveal className="mx-auto max-w-2xl text-center">
                     <span className="text-text-highlight text-xs font-semibold tracking-wider uppercase">
-                        {t("page.home.learnerFeedback.eyebrow")}
+                        {t("home.learnerFeedback.eyebrow")}
                     </span>
                     <h2 className="text-text-contrast mt-3 text-2xl font-bold md:text-4xl">
-                        {t("page.home.learnerFeedback.title")}
+                        {t("home.learnerFeedback.title")}
                     </h2>
                     <p className="text-text-muted mt-3 text-sm md:text-base">
-                        {t("page.home.learnerFeedback.subtitle")}
+                        {t("home.learnerFeedback.subtitle")}
                     </p>
                 </Reveal>
 
@@ -38,7 +38,7 @@ const LearnerFeedbackSection = () => {
                             <FormatQuoteIcon className="text-bgc-highlight rotate-180" />
                             <p className="text-text-contrast mt-3 flex-1 text-sm leading-relaxed">
                                 {t(
-                                    `page.home.learnerFeedback.items.${item.messageKey}.quote`,
+                                    `home.learnerFeedback.items.${item.messageKey}.quote`,
                                 )}
                             </p>
                             <div className="border-bdc-primary mt-5 flex items-center gap-3 border-t pt-4">
@@ -46,18 +46,18 @@ const LearnerFeedbackSection = () => {
                                     className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${item.avatarClass}`}
                                 >
                                     {t(
-                                        `page.home.learnerFeedback.items.${item.messageKey}.name`,
+                                        `home.learnerFeedback.items.${item.messageKey}.name`,
                                     ).charAt(0)}
                                 </div>
                                 <div>
                                     <div className="text-text-contrast text-sm font-bold">
                                         {t(
-                                            `page.home.learnerFeedback.items.${item.messageKey}.name`,
+                                            `home.learnerFeedback.items.${item.messageKey}.name`,
                                         )}
                                     </div>
                                     <div className="text-text-muted text-xs">
                                         {t(
-                                            `page.home.learnerFeedback.items.${item.messageKey}.role`,
+                                            `home.learnerFeedback.items.${item.messageKey}.role`,
                                         )}
                                     </div>
                                 </div>

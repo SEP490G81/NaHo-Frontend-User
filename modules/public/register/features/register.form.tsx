@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "@/intl/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import RegisterAgreeTerms from "@/modules/public/register/components/register.agree.terms";
 import RegisterFormButtons from "@/modules/public/register/components/register.form.buttons";
 import RegisterFormTextFields from "@/modules/public/register/components/register.form.text.fields";
@@ -87,7 +87,7 @@ const RegisterForm = () => {
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(
-                    error.message || t("page.register.form.registerFailed"),
+                    error.message || t("register.form.registerFailed"),
                 );
             }
         } finally {

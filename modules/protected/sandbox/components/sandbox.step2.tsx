@@ -29,7 +29,7 @@ export function SandboxStep2({
     toggleRecord,
     hints,
 }: SandboxStep2Props) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     return (
         <section className="grid gap-5 lg:grid-cols-[1fr_340px]">
             <div className="space-y-5">

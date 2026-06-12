@@ -1,4 +1,4 @@
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import LoginForm from "@/modules/public/login/features/login.form";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useTranslations } from "next-intl";
@@ -25,15 +25,15 @@ const RightContent = () => {
                     className="text-text-muted hover:text-text-highlight mb-5 flex items-center justify-start gap-x-1 text-sm"
                 >
                     <KeyboardBackspaceIcon fontSize="small" />
-                    {t("page.login.backToHomePage")}
+                    {t("login.backToHomePage")}
                 </Link>
 
                 <div className="my-5 md:my-8">
                     <h1 className="text-3xl leading-tight font-bold">
-                        {t("page.login.welcome")}
+                        {t("login.welcome")}
                     </h1>
                     <p className="text-text-muted mt-2 mb-5 text-sm">
-                        {t("page.login.loginDescription")}
+                        {t("login.loginDescription")}
                     </p>
                 </div>
 

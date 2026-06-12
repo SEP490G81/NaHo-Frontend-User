@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { ArrowLeft, Target } from "lucide-react";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { LinearProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { CATEGORY_LABEL, type Topic } from "@/data/mockTopics";
@@ -13,13 +13,13 @@ interface TopicMetadataCardProps {
 }
 
 export function TopicMetadataCard({ topic }: TopicMetadataCardProps) {
-    const t = useTranslations("page.topicDetail");
+    const t = useTranslations("topicDetail");
 
     return (
-        <aside className="space-y-4 rounded-xl border border-bdc-primary bg-bgc-app p-5 lg:sticky lg:top-6">
+        <aside className="border-bdc-primary bg-bgc-app space-y-4 rounded-xl border p-5 lg:sticky lg:top-6">
             <Link
                 href="/topics"
-                className="inline-flex items-center gap-1.5 text-sm text-text-muted hover:text-bgc-highlight"
+                className="text-text-muted hover:text-bgc-highlight inline-flex items-center gap-1.5 text-sm"
             >
                 <ArrowLeft className="h-4 w-4" />
                 {t("backToTopics")}
@@ -28,37 +28,44 @@ export function TopicMetadataCard({ topic }: TopicMetadataCardProps) {
             <SakuraIllustration />
 
             <div className="space-y-2">
-                <span className="inline-block rounded-full bg-bgc-highlight/15 px-2.5 py-0.5 text-xs font-medium text-bgc-highlight">
+                <span className="bg-bgc-highlight/15 text-bgc-highlight inline-block rounded-full px-2.5 py-0.5 text-xs font-medium">
                     {CATEGORY_LABEL[topic.category]}
                 </span>
-                <h1 className="text-2xl font-bold leading-tight text-text-contrast">{topic.title}</h1>
-                <div className="text-base text-text-muted">
-                    <FuriganaText text={topic.jpTitle} furigana={topic.jpFurigana} />
+                <h1 className="text-text-contrast text-2xl leading-tight font-bold">
+                    {topic.title}
+                </h1>
+                <div className="text-text-muted text-base">
+                    <FuriganaText
+                        text={topic.jpTitle}
+                        furigana={topic.jpFurigana}
+                    />
                 </div>
             </div>
 
-            <p className="text-sm text-text-muted">{topic.description}</p>
+            <p className="text-text-muted text-sm">{topic.description}</p>
 
-            <section className="space-y-2 rounded-lg border border-bdc-primary bg-bgc-page p-3">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-text-contrast">
-                    <Target className="h-4 w-4 text-bgc-highlight" />
+            <section className="border-bdc-primary bg-bgc-page space-y-2 rounded-lg border p-3">
+                <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
+                    <Target className="text-bgc-highlight h-4 w-4" />
                     {t("learningGoals")}
                 </h3>
-                <ul className="list-disc space-y-1 pl-5 text-sm text-text-muted">
+                <ul className="text-text-muted list-disc space-y-1 pl-5 text-sm">
                     {topic.goals.map((g) => (
                         <li key={g}>{g}</li>
                     ))}
                 </ul>
             </section>
 
-            <section className="space-y-2 rounded-lg border border-bdc-primary bg-bgc-page p-3">
+            <section className="border-bdc-primary bg-bgc-page space-y-2 rounded-lg border p-3">
                 <div className="flex items-baseline justify-between">
-                    <h3 className="text-sm font-semibold text-text-contrast">{t("averageScore")}</h3>
+                    <h3 className="text-text-contrast text-sm font-semibold">
+                        {t("averageScore")}
+                    </h3>
                     <p>
-                        <span className="text-2xl font-bold text-bgc-highlight">
+                        <span className="text-bgc-highlight text-2xl font-bold">
                             {topic.averageScore.toFixed(1)}
                         </span>
-                        <span className="text-sm text-text-muted">/10</span>
+                        <span className="text-text-muted text-sm">/10</span>
                     </p>
                 </div>
                 <LinearProgress

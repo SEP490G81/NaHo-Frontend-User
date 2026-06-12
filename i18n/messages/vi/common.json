@@ -1,0 +1,57 @@
+{
+    "common": {
+        "appName": "NaHo",
+        "copyright": "© 2026 NaHo. Phát triển bởi nhóm G81 - SEP490 - Đại học FPT.",
+        "common": {
+            "or": "Hoặc"
+        },
+        "metadata": {
+            "title": {
+                "home": "Trang chủ",
+                "login": "Đăng nhập",
+                "forgotPassword": "Quên mật khẩu",
+                "register": "Đăng ký",
+                "settings": "Cài đặt",
+                "getHelp": "Trợ giúp",
+                "features": "Tính năng nổi bật",
+                "learnerFeedback": "Đánh giá từ người học",
+                "frequentlyQuestions": "Câu hỏi thường gặp",
+                "dashboard": "Dashboard",
+                "topics": "Practice Topics",
+                "topicDetail": "Topic Detail",
+                "sandbox": "Speaking Room",
+                "history": "Practice History",
+                "historyDetail": "Detailed Report",
+                "custom-question": "Custom Questions",
+                "sandbox-custom": "Custom Practice Room",
+                "history-custom": "Custom Question History",
+                "community-library": "Community Library"
+            },
+            "language": {
+                "vi": "Tiếng Việt",
+                "en": "Tiếng Anh"
+            },
+            "action": {
+                "open": "Mở",
+                "close": "Đóng"
+            }
+        },
+        "layout": {
+            "header": {
+                "notificationButton": "Thông báo",
+                "themeSwitchButton": {
+                    "darkMode": "Chế độ tối",
+                    "lightMode": "Chế độ sáng"
+                },
+                "loginButton": "Đăng nhập",
+                "logoutButton": "Đăng xuất",
+                "registerButton": "Đăng ký trải nghiệm ngay",
+                "accountMenu": {
+                    "settings": "Cài đặt",
+                    "language": "Ngôn ngữ",
+                    "getHelp": "Trợ giúp"
+                }
+            }
+        }
+    }
+}

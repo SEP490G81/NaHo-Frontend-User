@@ -10,7 +10,7 @@ interface CustomStepperProps {
 }
 
 export function CustomStepper({ step }: CustomStepperProps) {
-  const t = useTranslations("page.sandboxCustom");
+  const t = useTranslations("sandboxCustom");
 
   const steps = [
     { id: 1 as SandboxCustomStep, labelKey: "stepLabel", subKey: "step1" },

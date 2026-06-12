@@ -16,10 +16,10 @@ const CompanionsSection = () => {
             <div className="relative mx-auto max-w-6xl px-5 md:px-8">
                 <Reveal className="mx-auto max-w-2xl text-center">
                     <h2 className="text-text-contrast text-2xl font-bold md:text-4xl">
-                        {t("page.home.companions.title")}
+                        {t("home.companions.title")}
                     </h2>
                     <p className="text-text-muted mt-3 text-sm md:text-base">
-                        {t("page.home.companions.subtitle")}
+                        {t("home.companions.subtitle")}
                     </p>
                 </Reveal>
 
@@ -42,19 +42,19 @@ const CompanionsSection = () => {
                             </h3>
                             <p className="text-text-highlight mt-1 text-xs font-medium">
                                 {t(
-                                    `page.home.companions.items.${item.messageKey}.role`,
+                                    `home.companions.items.${item.messageKey}.role`,
                                 )}
                             </p>
                             <p className="text-text-muted mt-3 flex-1 text-sm leading-relaxed">
                                 {t(
-                                    `page.home.companions.items.${item.messageKey}.description`,
+                                    `home.companions.items.${item.messageKey}.description`,
                                 )}
                             </p>
                             <span className="bg-bgc-highlight/15 text-text-highlight mt-4 inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium">
-                                {t("page.home.companions.levelLabel")}
+                                {t("home.companions.levelLabel")}
                                 {": "}
                                 {t(
-                                    `page.home.companions.items.${item.messageKey}.level`,
+                                    `home.companions.items.${item.messageKey}.level`,
                                 )}
                             </span>
                         </div>

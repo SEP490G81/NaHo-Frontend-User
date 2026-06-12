@@ -22,7 +22,7 @@ export function CommunityFilters({
   category,
   onCategoryChange,
 }: CommunityFiltersProps) {
-  const t = useTranslations("page.communityLibrary");
+  const t = useTranslations("communityLibrary");
 
   return (
     <div className="flex flex-col gap-3">

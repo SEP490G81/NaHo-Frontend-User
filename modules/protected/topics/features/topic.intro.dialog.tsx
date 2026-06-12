@@ -1,8 +1,14 @@
 "use client";
 import React from "react";
-import { Users, Target, ListChecks } from "lucide-react";
-import { Link } from "@/intl/i18n/navigation";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { ListChecks, Target, Users } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import { CATEGORY_LABEL, type Topic } from "@/data/mockTopics";
 import FuriganaText from "@/components/ui/furigana.text";
@@ -14,8 +20,12 @@ interface TopicIntroDialogProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export function TopicIntroDialog({ topic, open, onOpenChange }: TopicIntroDialogProps) {
-    const t = useTranslations("page.topics");
+export function TopicIntroDialog({
+    topic,
+    open,
+    onOpenChange,
+}: TopicIntroDialogProps) {
+    const t = useTranslations("topics");
 
     if (!topic) return null;
 
@@ -37,46 +47,60 @@ export function TopicIntroDialog({ topic, open, onOpenChange }: TopicIntroDialog
         >
             <DialogTitle>
                 <div className="flex flex-col gap-1.5">
-                    <span className="w-fit rounded-full bg-bgc-highlight/15 px-2.5 py-0.5 text-xs font-semibold text-bgc-highlight">
+                    <span className="bg-bgc-highlight/15 text-bgc-highlight w-fit rounded-full px-2.5 py-0.5 text-xs font-semibold">
                         {CATEGORY_LABEL[topic.category]}
                     </span>
-                    <h2 className="text-2xl font-bold text-text-contrast">{topic.title}</h2>
-                    <div className="text-base text-text-muted">
-                        <FuriganaText text={topic.jpTitle} furigana={topic.jpFurigana} />
+                    <h2 className="text-text-contrast text-2xl font-bold">
+                        {topic.title}
+                    </h2>
+                    <div className="text-text-muted text-base">
+                        <FuriganaText
+                            text={topic.jpTitle}
+                            furigana={topic.jpFurigana}
+                        />
                     </div>
                 </div>
             </DialogTitle>
 
-            <DialogContent dividers className="border-bdc-primary text-sm space-y-4">
+            <DialogContent
+                dividers
+                className="border-bdc-primary space-y-4 text-sm"
+            >
                 <section className="space-y-1">
-                    <h4 className="flex items-center gap-2 font-semibold text-text-contrast">
-                        <Users className="h-4 w-4 text-bgc-highlight" />
+                    <h4 className="text-text-contrast flex items-center gap-2 font-semibold">
+                        <Users className="text-bgc-highlight h-4 w-4" />
                         {t("dialogAudience")}
                     </h4>
                     <p className="text-text-muted">{topic.audience}</p>
                 </section>
 
                 <section className="space-y-1">
-                    <h4 className="font-semibold text-text-contrast">{t("dialogDescription")}</h4>
+                    <h4 className="text-text-contrast font-semibold">
+                        {t("dialogDescription")}
+                    </h4>
                     <p className="text-text-muted">{topic.description}</p>
                 </section>
 
                 <section className="space-y-2">
-                    <h4 className="flex items-center gap-2 font-semibold text-text-contrast">
-                        <Target className="h-4 w-4 text-bgc-highlight" />
+                    <h4 className="text-text-contrast flex items-center gap-2 font-semibold">
+                        <Target className="text-bgc-highlight h-4 w-4" />
                         {t("dialogTarget")}
                     </h4>
-                    <ul className="list-disc space-y-1 pl-5 text-text-muted">
+                    <ul className="text-text-muted list-disc space-y-1 pl-5">
                         {topic.objectives.map((o) => (
                             <li key={o}>{o}</li>
                         ))}
                     </ul>
                 </section>
 
-                <div className="rounded-lg border border-bdc-primary bg-bgc-page px-3 py-2 text-xs text-text-muted">
+                <div className="border-bdc-primary bg-bgc-page text-text-muted rounded-lg border px-3 py-2 text-xs">
                     {t.rich("dialogQuestionSummary", {
                         count: topic.questions.length,
-                        bold: (chunks) => <span className="font-semibold text-text-contrast">{chunks}</span>
+                        bold: (chunks) => (
+                            <span className="text-text-contrast font-semibold">
+                                {chunks}
+                            </span>
+                        ),
                     })}
                 </div>
             </DialogContent>
@@ -100,7 +124,7 @@ export function TopicIntroDialog({ topic, open, onOpenChange }: TopicIntroDialog
                 </Button>
                 <Link
                     href={`/topics/${slugifyText(topic.id + "-" + topic.jpTitle)}`}
-                    className="inline-flex h-9 items-center justify-center rounded-md bg-bgc-highlight px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-bgc-highlight/90"
+                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
                 >
                     <ListChecks className="mr-2 h-4 w-4" />
                     {t("dialogStart")}

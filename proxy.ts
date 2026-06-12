@@ -1,7 +1,10 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "@/intl/i18n/routing";
+import { routing } from "@/i18n/routing";
 import { NextRequest, NextResponse } from "next/server";
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
+import {
+    ACCESS_TOKEN_NAME,
+    REFRESH_TOKEN_NAME,
+} from "@/constants/app.constants";
 import { isTokenExpired } from "@/libs/token";
 
 const intlMiddleware = createMiddleware(routing);

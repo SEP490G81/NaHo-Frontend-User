@@ -18,7 +18,7 @@ export function HistoryFilters({
     topicId,
     onTopicChange,
 }: HistoryFiltersProps) {
-    const t = useTranslations("page.history");
+    const t = useTranslations("history");
 
     return (
         <div className="flex flex-wrap items-center gap-3 rounded-xl border border-bdc-primary bg-bgc-app p-4">

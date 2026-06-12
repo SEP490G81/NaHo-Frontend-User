@@ -8,7 +8,7 @@ interface SandboxStepperProps {
 }
 
 export function SandboxStepper({ step }: SandboxStepperProps) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
 
     const steps = [
         t("step1"),

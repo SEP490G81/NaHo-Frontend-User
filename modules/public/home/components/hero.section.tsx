@@ -3,7 +3,7 @@ import {
     HERO_PETAL_ITEMS,
     HOME_SECTION_IDS,
 } from "@/modules/public/home/constants/home.constant";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { useTranslations } from "next-intl";
@@ -57,14 +57,14 @@ const HeroSection = () => {
                             sx={{ fontSize: 14 }}
                             className="text-bgc-highlight"
                         />
-                        {t("page.home.hero.badge")}
+                        {t("home.hero.badge")}
                     </span>
 
                     <h1
                         className="text-text-contrast animate-naho-fade-up mt-5 text-4xl leading-[1.15] font-bold tracking-tight md:text-5xl"
                         style={{ animationDelay: "0.1s" }}
                     >
-                        {t.rich("page.home.hero.title", {
+                        {t.rich("home.hero.title", {
                             highlight: (chunks) => (
                                 <span className="bg-gradient-to-r from-[#ff99ac] to-[#ff6b8a] bg-clip-text text-transparent">
                                     {chunks}
@@ -77,7 +77,7 @@ const HeroSection = () => {
                         className="text-text-muted animate-naho-fade-up mt-5 max-w-xl text-base leading-relaxed md:text-lg"
                         style={{ animationDelay: "0.2s" }}
                     >
-                        {t("page.home.hero.description")}
+                        {t("home.hero.description")}
                     </p>
 
                     <div
@@ -93,7 +93,7 @@ const HeroSection = () => {
                                 color="primary"
                                 size="large"
                             >
-                                {t("page.home.hero.startNow")}
+                                {t("home.hero.startNow")}
                             </Button>
                         </Link>
                         <Link href={`/home#${HOME_SECTION_IDS.features}`}>
@@ -102,7 +102,7 @@ const HeroSection = () => {
                                 color="primary"
                                 size="large"
                             >
-                                {t("page.home.hero.exploreFeatures")}
+                                {t("home.hero.exploreFeatures")}
                             </Button>
                         </Link>
                     </div>

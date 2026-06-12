@@ -1,4 +1,4 @@
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
 import RegisterForm from "@/modules/public/register/features/register.form";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -21,15 +21,15 @@ const RightContent = () => {
                     className="text-text-muted hover:text-text-highlight mb-5 flex items-center justify-start gap-x-1 text-sm"
                 >
                     <KeyboardBackspaceIcon fontSize="small" />
-                    {t("page.register.backToHomePage")}
+                    {t("register.backToHomePage")}
                 </Link>
 
                 <div className="my-4 md:my-5">
                     <h1 className="text-3xl leading-tight font-bold">
-                        {t("page.register.welcome")}
+                        {t("register.welcome")}
                     </h1>
                     <p className="text-text-muted mt-2 mb-5 text-sm">
-                        {t("page.register.registerDescription")}
+                        {t("register.registerDescription")}
                     </p>
                 </div>
 

@@ -24,7 +24,7 @@ const LoginRememberMe = ({
                     htmlFor="rememberMe"
                     className="cursor-pointer text-sm select-none"
                 >
-                    {t("page.login.form.rememberLogin")}
+                    {t("login.form.rememberLogin")}
                 </label>
             </div>
         </div>

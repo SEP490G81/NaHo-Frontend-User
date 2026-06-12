@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { RANK_COLORS } from "../constants/dashboard.constant";
 
 export function LeaderboardWidget() {
-    const t = useTranslations("page.dashboard");
+    const t = useTranslations("dashboard");
 
     return (
         <div className="rounded-xl border border-bdc-primary bg-bgc-app p-6">

@@ -26,7 +26,7 @@ export function SandboxStep1({
     setStep,
     furigana,
 }: SandboxStep1Props) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
 
     return (
         <section className="grid gap-5 lg:grid-cols-[1fr_340px]">

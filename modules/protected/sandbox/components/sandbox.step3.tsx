@@ -32,7 +32,7 @@ export function SandboxStep3({
     retrySpeaking,
     onNext,
 }: SandboxStep3Props) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     const { audioUrl } = useSandbox();
 
     return (

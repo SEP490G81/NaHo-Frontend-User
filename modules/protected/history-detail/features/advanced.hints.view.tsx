@@ -30,7 +30,7 @@ export function AdvancedHintsView({
     itVocab,
     showFurigana,
 }: AdvancedHintsViewProps) {
-    const t = useTranslations("page.historyDetail");
+    const t = useTranslations("historyDetail");
 
     const normalizedItVocab = React.useMemo(() => {
         if (!itVocab || !Array.isArray(itVocab)) return [];

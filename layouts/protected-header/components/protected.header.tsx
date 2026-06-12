@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Link, usePathname } from "@/intl/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import NotificationButton from "@/layouts/protected-header/features/notification.button";
 import LanguageSwitch from "@/components/ui/language.switch";
 import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
@@ -10,7 +10,7 @@ import { useUiStore } from "@/store/uiStore";
 import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { ChevronRight, Flame, MenuIcon } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
-import { AllRoute } from "@/intl/type";
+import { AllRoute } from "@/i18n/type";
 
 function prettify(seg: string) {
     return LABELS[seg] ?? decodeURIComponent(seg).replace(/-/g, " ");

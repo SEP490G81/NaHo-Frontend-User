@@ -8,7 +8,7 @@ interface ScoreGaugeProps {
 }
 
 export function ScoreGauge({ score }: ScoreGaugeProps) {
-    const t = useTranslations("page.historyDetail");
+    const t = useTranslations("historyDetail");
     const size = 120;
     const strokeWidth = 10;
     const radius = (size - strokeWidth) / 2;

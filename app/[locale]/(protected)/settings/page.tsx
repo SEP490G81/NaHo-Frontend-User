@@ -9,7 +9,7 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "metadata.title" });
+    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
 
     return {
         title: t("settings"),

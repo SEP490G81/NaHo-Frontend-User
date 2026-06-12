@@ -21,7 +21,7 @@ export function SandboxStep1({
   resetMicTest,
   setStep,
 }: SandboxStep1Props) {
-  const t = useTranslations("page.sandboxCustom");
+  const t = useTranslations("sandboxCustom");
 
   const rules = [
     t("rules.rule1"),

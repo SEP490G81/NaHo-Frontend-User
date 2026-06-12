@@ -16,7 +16,7 @@ interface PronunciationViewProps {
 }
 
 export function PronunciationView({ pronunciation, note }: PronunciationViewProps) {
-    const t = useTranslations("page.historyDetail");
+    const t = useTranslations("historyDetail");
 
     const normalizedPronunciation = React.useMemo(() => {
         if (!pronunciation || !Array.isArray(pronunciation)) return [];

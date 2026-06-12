@@ -10,7 +10,7 @@ import TopicMetadataCard from "../components/topic.metadata.card";
 import QuestionList from "../components/question.list";
 
 export function TopicDetail() {
-    const t = useTranslations("page.topicDetail");
+    const t = useTranslations("topicDetail");
     const params = useParams();
     const rawTopicId = params?.topicId as string;
     const matchedTopic = mockTopics.find((t) => rawTopicId?.startsWith(t.id));

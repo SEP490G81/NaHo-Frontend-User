@@ -8,7 +8,7 @@ interface HistoryCustomListProps {
 }
 
 export function HistoryCustomList({ filtered }: HistoryCustomListProps) {
-  const t = useTranslations("page.history");
+  const t = useTranslations("history");
 
   return (
     <>

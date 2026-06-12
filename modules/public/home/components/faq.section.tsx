@@ -17,10 +17,10 @@ const FaqSection = () => {
             <div className="mx-auto max-w-3xl px-5 md:px-8">
                 <Reveal className="text-center">
                     <span className="text-text-highlight text-xs font-semibold tracking-wider uppercase">
-                        {t("page.home.faq.eyebrow")}
+                        {t("home.faq.eyebrow")}
                     </span>
                     <h2 className="text-text-contrast mt-3 text-2xl font-bold md:text-4xl">
-                        {t("page.home.faq.title")}
+                        {t("home.faq.title")}
                     </h2>
                 </Reveal>
 
@@ -41,14 +41,14 @@ const FaqSection = () => {
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <span className="text-text-contrast text-sm font-semibold md:text-base">
                                     {t(
-                                        `page.home.faq.items.${item.messageKey}.question`,
+                                        `home.faq.items.${item.messageKey}.question`,
                                     )}
                                 </span>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <p className="text-text-muted text-sm leading-relaxed">
                                     {t(
-                                        `page.home.faq.items.${item.messageKey}.answer`,
+                                        `home.faq.items.${item.messageKey}.answer`,
                                     )}
                                 </p>
                             </AccordionDetails>

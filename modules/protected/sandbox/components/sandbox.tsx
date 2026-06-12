@@ -14,7 +14,7 @@ import SandboxStep1 from "./sandbox.step1";
 import SandboxStep2 from "./sandbox.step2";
 import SandboxStep3 from "./sandbox.step3";
 import SandboxAnalyzingOverlay from "./sandbox.analyzing.overlay";
-import { useRouter } from "@/intl/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 function loadQuestion(questionId: string) {
     for (const topic of mockTopics) {
@@ -33,7 +33,7 @@ export function Sandbox() {
 }
 
 function SandboxContent() {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     const params = useParams();
     const { push } = useRouter();
     const questionId = params?.questionId as string;

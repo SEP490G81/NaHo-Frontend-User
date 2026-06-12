@@ -4,7 +4,7 @@ import { NotebookPen } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function NotesPanel() {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     const [notes, setNotes] = useState("");
     const max = 500;
 

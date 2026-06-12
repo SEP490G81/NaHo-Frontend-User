@@ -2,7 +2,7 @@
 import React from "react";
 import { History as HistoryIcon } from "lucide-react";
 import { Button } from "@mui/material";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
 interface HistoryEmptyStateProps {
     t: any;
@@ -10,10 +10,12 @@ interface HistoryEmptyStateProps {
 
 export function HistoryEmptyState({ t }: HistoryEmptyStateProps) {
     return (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-bdc-muted bg-bgc-app p-10 text-center">
-            <HistoryIcon className="h-10 w-10 text-text-muted" />
-            <h3 className="text-lg font-semibold text-text-contrast">{t("emptyTitle")}</h3>
-            <p className="max-w-md text-sm text-text-muted">
+        <div className="border-bdc-muted bg-bgc-app flex flex-col items-center gap-3 rounded-2xl border border-dashed p-10 text-center">
+            <HistoryIcon className="text-text-muted h-10 w-10" />
+            <h3 className="text-text-contrast text-lg font-semibold">
+                {t("emptyTitle")}
+            </h3>
+            <p className="text-text-muted max-w-md text-sm">
                 {t("emptySubtitle")}
             </p>
             <Button

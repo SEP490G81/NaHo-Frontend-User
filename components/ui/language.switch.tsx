@@ -4,7 +4,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Button, Menu, PopoverOrigin } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { routing } from "@/intl/i18n/routing";
+import { routing } from "@/i18n/routing";
 
 interface LanguageSwitchProps {
     variant?: "menu-item" | "icon-button";
@@ -90,7 +90,7 @@ const LanguageSwitch = ({
                             <LanguageOutlinedIcon fontSize="small" />
                         </span>
                         <p className="text-sm font-semibold whitespace-nowrap">
-                            {t("layout.header.accountMenu.language")}
+                            {t("common.layout.header.accountMenu.language")}
                         </p>
                     </div>
                     <span className="text-text-muted group-hover:text-text-highlight">
@@ -138,7 +138,7 @@ const LanguageSwitch = ({
                                 key={locale}
                                 className="hover:bg-hbgc-page h-10 w-full cursor-pointer rounded-md pr-10 pl-5 text-left transition-all duration-150"
                             >
-                                <p>{t(`metadata.language.${locale}`)}</p>
+                                <p>{t(`common.metadata.language.${locale}`)}</p>
                             </button>
                         );
                     })}

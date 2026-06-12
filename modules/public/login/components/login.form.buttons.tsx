@@ -1,5 +1,5 @@
 import GoogleIcon from "@/components/ui/icons/google.icon";
-import { Link } from "@/intl/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -9,7 +9,7 @@ const LoginFormButtons = ({ errorMessage }: { errorMessage: string }) => {
     return (
         <div className="w-full">
             <Button type="submit" fullWidth color="primary" variant="contained">
-                {t("page.login.form.loginButton")}
+                {t("login.form.loginButton")}
             </Button>
 
             {errorMessage.trim().length > 0 && (
@@ -20,7 +20,7 @@ const LoginFormButtons = ({ errorMessage }: { errorMessage: string }) => {
 
             <Divider textAlign="center" sx={{ my: "12px" }}>
                 <p className="text-text-muted text-xs uppercase select-none">
-                    {t("common.or")}
+                    {t("common.common.or")}
                 </p>
             </Divider>
 
@@ -31,18 +31,18 @@ const LoginFormButtons = ({ errorMessage }: { errorMessage: string }) => {
                 color="primary"
                 startIcon={<GoogleIcon />}
             >
-                {t("page.login.form.loginByGoogle")}
+                {t("login.form.loginByGoogle")}
             </Button>
 
             <div className="mt-5 flex items-center justify-center gap-x-1 text-sm md:mt-8">
                 <p className="text-text-muted">
-                    {t("page.login.form.noAccount")}
+                    {t("login.form.noAccount")}
                 </p>
                 <Link
                     href={"/register"}
                     className="text-text-highlight hover:underline"
                 >
-                    {t("page.login.form.registerNow")}
+                    {t("login.form.registerNow")}
                 </Link>
             </div>
         </div>

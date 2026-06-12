@@ -13,7 +13,7 @@ interface TopicCardProps {
 }
 
 export function TopicCard({ topic, completedCount, onOpen }: TopicCardProps) {
-    const t = useTranslations("page.topics");
+    const t = useTranslations("topics");
     const total = topic.questions.length;
     const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
 

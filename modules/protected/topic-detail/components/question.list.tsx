@@ -13,7 +13,7 @@ interface QuestionListProps {
 }
 
 export function QuestionList({ topic, completed }: QuestionListProps) {
-    const t = useTranslations("page.topicDetail");
+    const t = useTranslations("topicDetail");
     const [showFurigana, setShowFurigana] = useState(true);
 
     return (

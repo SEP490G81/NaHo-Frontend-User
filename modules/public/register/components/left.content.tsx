@@ -10,7 +10,7 @@ const LeftContent = () => {
             <div className="absolute top-5 left-5">
                 <LogoButton>
                     <h1 className="text-text-pure dark:text-text-contrast text-2xl font-bold whitespace-nowrap">
-                        {t("appName")}
+                        {t("common.appName")}
                     </h1>
                 </LogoButton>
             </div>
@@ -34,21 +34,21 @@ const LeftContent = () => {
                 <Sakura />
                 <div className="mt-10 max-w-md text-center">
                     <h2 className="text-text-pure dark:text-text-contrast text-2xl leading-tight font-bold md:text-3xl">
-                        {t("page.register.title")}
+                        {t("register.title")}
                     </h2>
                     <p className="text-text-pure dark:text-text-contrast mt-4 text-lg leading-relaxed font-medium whitespace-pre-line md:text-xl">
-                        {t("page.register.slogan")}
+                        {t("register.slogan")}
                     </p>
                     <div className="text-bgc-highlight mt-5 flex items-center justify-center gap-2 text-xs tracking-[0.3em] uppercase">
                         <span className="bg-bgc-highlight/60 h-px w-8" />
-                        {t("appName")}
+                        {t("common.appName")}
                         <span className="bg-bgc-highlight/60 h-px w-8" />
                     </div>
                 </div>
             </div>
 
             <p className="text-text-muted absolute bottom-5 left-1/2 -translate-x-1/2 text-sm font-semibold text-nowrap">
-                {t("copyright")}
+                {t("common.copyright")}
             </p>
         </div>
     );

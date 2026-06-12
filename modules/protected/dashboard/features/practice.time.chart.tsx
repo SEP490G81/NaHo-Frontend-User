@@ -7,7 +7,7 @@ import { CHART_COLOR, CHART_HOVER_FILL } from "../constants/dashboard.constant";
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 export function PracticeTimeChart() {
-    const t = useTranslations("page.dashboard");
+    const t = useTranslations("dashboard");
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

@@ -11,7 +11,7 @@ interface RulesDialogProps {
 }
 
 export function RulesDialog({ open, onAccept, onBack }: RulesDialogProps) {
-  const t = useTranslations("page.customQuestion");
+  const t = useTranslations("customQuestion");
 
   const handleClose = (event: {}, reason: "backdropClick" | "escapeKeyDown") => {
     if (reason === "backdropClick" || reason === "escapeKeyDown") {

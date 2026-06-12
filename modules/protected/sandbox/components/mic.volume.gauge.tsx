@@ -9,7 +9,7 @@ interface MicVolumeGaugeProps {
 }
 
 export function MicVolumeGauge({ level, active }: MicVolumeGaugeProps) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     const bars = 16;
     const clamped = Math.max(0, Math.min(100, level));
 

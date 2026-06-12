@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { ArrowLeft } from "lucide-react";
-import { Button, Switch, FormControlLabel, Box } from "@mui/material";
-import { Link } from "@/intl/i18n/navigation";
+import { Box, Button, FormControlLabel, Switch } from "@mui/material";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
 interface SandboxHeaderProps {
@@ -11,8 +11,12 @@ interface SandboxHeaderProps {
     setShowFurigana: (v: boolean) => void;
 }
 
-export function SandboxHeader({ topicId, showFurigana, setShowFurigana }: SandboxHeaderProps) {
-    const t = useTranslations("page.sandbox");
+export function SandboxHeader({
+    topicId,
+    showFurigana,
+    setShowFurigana,
+}: SandboxHeaderProps) {
+    const t = useTranslations("sandbox");
     return (
         <header className="flex flex-wrap items-center justify-between gap-3">
             <Button
@@ -43,7 +47,10 @@ export function SandboxHeader({ topicId, showFurigana, setShowFurigana }: Sandbo
                     }
                     label={t("showFurigana")}
                     slotProps={{
-                        typography: { className: "text-sm font-semibold text-text-contrast" }
+                        typography: {
+                            className:
+                                "text-sm font-semibold text-text-contrast",
+                        },
                     }}
                 />
             </Box>

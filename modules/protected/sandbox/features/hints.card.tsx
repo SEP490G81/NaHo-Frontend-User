@@ -11,7 +11,7 @@ interface HintsCardProps {
 }
 
 export function HintsCard({ hints, showFurigana }: HintsCardProps) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
 
     return (
         <div className="rounded-xl border border-bdc-primary bg-bgc-app">

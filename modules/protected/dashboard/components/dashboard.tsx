@@ -8,7 +8,7 @@ import LeaderboardWidget from "../features/leaderboard.widget";
 import WelcomeBanner from "./welcome.banner";
 
 export function Dashboard() {
-    const t = useTranslations("page.dashboard");
+    const t = useTranslations("dashboard");
 
     return (
         <div className="px-4 py-6 md:px-8">

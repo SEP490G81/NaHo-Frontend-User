@@ -5,7 +5,7 @@ import TopicsList from "../features/topics.list";
 import TopicsHeader from "./topics.header";
 
 export function Topics() {
-    const t = useTranslations("page.topics");
+    const t = useTranslations("topics");
 
     return (
         <div className="px-4 py-6 md:px-8">

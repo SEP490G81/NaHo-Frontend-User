@@ -13,7 +13,7 @@ import TopicCard from "../components/topic.card";
 import TopicIntroDialog from "./topic.intro.dialog";
 
 export function TopicsList() {
-    const t = useTranslations("page.topics");
+    const t = useTranslations("topics");
 
     // Nạp dữ liệu các chủ đề qua API (hoặc fallback)
     const { data: topics = [] } = useQuery({

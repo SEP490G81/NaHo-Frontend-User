@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { usePathname, Link } from "@/intl/i18n/navigation";
-import { Drawer, List, ListItem, ListItemButton, Box } from "@mui/material";
+import { Link, usePathname } from "@/i18n/navigation";
+import { Box, Drawer, List, ListItem, ListItemButton } from "@mui/material";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
@@ -19,7 +19,7 @@ export function LearnerSidebar() {
             <Box className="border-bdc-primary flex h-16 items-center border-b px-5">
                 <div className="pt-3">
                     <LogoButton>
-                        <span className="text-xl font-bold tracking-wider text-text-contrast">
+                        <span className="text-text-contrast text-xl font-bold tracking-wider">
                             NaHo
                         </span>
                     </LogoButton>
@@ -144,6 +144,6 @@ export function LearnerSidebar() {
                 {drawerContent}
             </Drawer>
         </Box>
-    )
+    );
 }
 export default LearnerSidebar;

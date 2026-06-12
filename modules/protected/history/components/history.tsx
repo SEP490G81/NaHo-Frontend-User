@@ -10,7 +10,7 @@ import HistoryEmptyState from "./history.empty.state";
 import HistoryList from "./history.list";
 
 export function History() {
-    const t = useTranslations("page.history");
+    const t = useTranslations("history");
 
     // Nạp lịch sử bài làm từ API với fallback thông minh
     const { data: entries = [], isLoading } = useQuery({

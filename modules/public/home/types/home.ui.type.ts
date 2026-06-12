@@ -2,20 +2,20 @@ import { Messages } from "next-intl";
 import { SvgIconComponent } from "@mui/icons-material";
 
 export type HomeFeatureKey =
-    keyof Messages["page"]["home"]["features"]["items"];
+    keyof Messages["home"]["features"]["items"];
 
-export type HomeStepKey = keyof Messages["page"]["home"]["howItWorks"]["steps"];
+export type HomeStepKey = keyof Messages["home"]["howItWorks"]["steps"];
 
 export type HomeTestimonialKey =
-    keyof Messages["page"]["home"]["learnerFeedback"]["items"];
+    keyof Messages["home"]["learnerFeedback"]["items"];
 
-export type HomeFaqKey = keyof Messages["page"]["home"]["faq"]["items"];
+export type HomeFaqKey = keyof Messages["home"]["faq"]["items"];
 
 export type HomeCompanionKey =
-    keyof Messages["page"]["home"]["companions"]["items"];
+    keyof Messages["home"]["companions"]["items"];
 
 export type HomeFeedbackBarKey = Extract<
-    keyof Messages["page"]["home"]["hero"]["mockup"],
+    keyof Messages["home"]["hero"]["mockup"],
     "pronunciation" | "grammar"
 >;
 

@@ -17,7 +17,7 @@ function formatTime(sec: number) {
 }
 
 export function RecordButton({ recording, elapsed, onToggle }: RecordButtonProps) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
 
     return (
         <div className="flex flex-col items-center gap-3">

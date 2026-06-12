@@ -8,7 +8,7 @@ interface SandboxAnalyzingOverlayProps {
 }
 
 export function SandboxAnalyzingOverlay({ analyzing }: SandboxAnalyzingOverlayProps) {
-    const t = useTranslations("page.sandbox");
+    const t = useTranslations("sandbox");
     return (
         <Dialog
             open={analyzing}

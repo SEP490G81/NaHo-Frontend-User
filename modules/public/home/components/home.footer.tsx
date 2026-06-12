@@ -8,11 +8,11 @@ const HomeFooter = () => {
             <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-5 py-4 md:flex-row md:justify-between md:px-8">
                 <LogoButton>
                     <span className="text-text-contrast text-sm font-bold whitespace-nowrap">
-                        {t("appName")}
+                        {t("common.appName")}
                     </span>
                 </LogoButton>
                 <p className="text-text-muted text-center text-xs font-semibold md:text-right md:text-sm">
-                    {t("copyright")}
+                    {t("common.copyright")}
                 </p>
             </div>
         </footer>

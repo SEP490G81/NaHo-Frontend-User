@@ -9,10 +9,10 @@ const HowItWorksSection = () => {
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <Reveal className="mx-auto max-w-2xl text-center">
                     <h2 className="text-text-contrast text-2xl font-bold md:text-4xl">
-                        {t("page.home.howItWorks.title")}
+                        {t("home.howItWorks.title")}
                     </h2>
                     <p className="text-text-muted mt-3 text-sm md:text-base">
-                        {t("page.home.howItWorks.subtitle")}
+                        {t("home.howItWorks.subtitle")}
                     </p>
                 </Reveal>
 
@@ -35,12 +35,12 @@ const HowItWorksSection = () => {
                                 </span>
                                 <h3 className="text-text-contrast mt-2 text-base font-bold">
                                     {t(
-                                        `page.home.howItWorks.steps.${item.messageKey}.title`,
+                                        `home.howItWorks.steps.${item.messageKey}.title`,
                                     )}
                                 </h3>
                                 <p className="text-text-muted mt-2 max-w-xs text-sm leading-relaxed">
                                     {t(
-                                        `page.home.howItWorks.steps.${item.messageKey}.description`,
+                                        `home.howItWorks.steps.${item.messageKey}.description`,
                                     )}
                                 </p>
                             </div>
