@@ -13,6 +13,7 @@ const MESSAGE_FILES = [
     "topic",
     "sandbox",
     "community-library",
+    "settings",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

@@ -41,7 +41,7 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
     };
 
     return (
-        <article className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/40 flex flex-col justify-between gap-4 rounded-xl border p-5 shadow-sm transition-colors">
+        <article className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/40 flex flex-col justify-between gap-4 rounded-md border p-5 shadow-sm transition-colors">
             <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
                     <span

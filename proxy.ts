@@ -20,7 +20,7 @@ const publicPaths = [
     "/home",
 ];
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
     // chạy next-intl trước
     const response = intlMiddleware(request);
 
@@ -43,57 +43,58 @@ export default async function middleware(request: NextRequest) {
 
     // Helper for auth failure handling (deletes cookies and handles redirection/routing)
     const handleAuthFailure = () => {
-        const redirectResponse = NextResponse.redirect(
-            new URL("/login", request.url),
-        );
-        redirectResponse.cookies.delete(ACCESS_TOKEN_NAME);
-        redirectResponse.cookies.delete(REFRESH_TOKEN_NAME);
-        return redirectResponse;
+        if (isPublic) {
+            return response;
+        } else {
+            const redirectResponse = NextResponse.redirect(
+                new URL("/login", request.url),
+            );
+            redirectResponse.cookies.delete(ACCESS_TOKEN_NAME);
+            redirectResponse.cookies.delete(REFRESH_TOKEN_NAME);
+            return redirectResponse;
+        }
     };
 
-    if (!isPublic) {
-        if (refreshToken) {
-            if (!accessToken || isTokenExpired(accessToken)) {
-                try {
-                    const backendResponse = await fetch(
-                        `${process.env.API_URL}/auth/rotation`,
-                        {
-                            method: "POST",
-                            cache: "no-store",
-                            headers: {
-                                Cookie: `${REFRESH_TOKEN_NAME}=${refreshToken}`,
-                            },
+    if (refreshToken) {
+        if (!accessToken || isTokenExpired(accessToken)) {
+            try {
+                const backendResponse = await fetch(
+                    `${process.env.API_URL}/auth/rotation`,
+                    {
+                        method: "POST",
+                        cache: "no-store",
+                        headers: {
+                            Cookie: `${REFRESH_TOKEN_NAME}=${refreshToken}`,
                         },
-                    );
+                    },
+                );
 
-                    if (!backendResponse.ok) {
-                        return handleAuthFailure();
-                    }
-
-                    console.log(">>> refresh token successfully.");
-                    // Do không thể sửa cookie của request hiện tại
-                    // Nên phải redirect lại chính trang đó
-                    const redirectResponse = NextResponse.redirect(
-                        new URL(request.url),
-                    );
-
-                    // Extract new cookies from Spring Boot response and append to the redirect response
-                    const responseCookies =
-                        backendResponse.headers.getSetCookie();
-                    responseCookies.forEach((cookie) => {
-                        redirectResponse.headers.append("set-cookie", cookie);
-                    });
-
-                    return redirectResponse;
-                } catch (error) {
-                    console.error("Token rotation error in middleware:", error);
+                if (!backendResponse.ok) {
                     return handleAuthFailure();
                 }
+
+                console.log(">>> refresh token successfully.");
+                // Do không thể sửa cookie của request hiện tại
+                // Nên phải redirect lại chính trang đó
+                const redirectResponse = NextResponse.redirect(
+                    new URL(request.url),
+                );
+
+                // Extract new cookies from Spring Boot response and append to the redirect response
+                const responseCookies = backendResponse.headers.getSetCookie();
+                responseCookies.forEach((cookie) => {
+                    redirectResponse.headers.append("set-cookie", cookie);
+                });
+
+                return redirectResponse;
+            } catch (error) {
+                console.error("Token rotation error in middleware:", error);
+                return handleAuthFailure();
             }
-        } else {
-            // nếu không có refresh token và không phải trang public
-            return handleAuthFailure();
         }
+    } else {
+        // nếu không có refresh token
+        return handleAuthFailure();
     }
 
     return response;

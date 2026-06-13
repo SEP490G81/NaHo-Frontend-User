@@ -8,6 +8,7 @@ import question from "@/i18n/messages/vi/question.json";
 import topic from "@/i18n/messages/vi/topic.json";
 import sandbox from "@/i18n/messages/vi/sandbox.json";
 import communityLibrary from "@/i18n/messages/vi/community-library.json";
+import settings from "@/i18n/messages/vi/settings.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -20,6 +21,7 @@ declare module "next-intl" {
             typeof question &
             typeof topic &
             typeof sandbox &
+            typeof settings &
             typeof communityLibrary;
     }
 }

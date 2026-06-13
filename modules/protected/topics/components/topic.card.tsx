@@ -15,39 +15,52 @@ interface TopicCardProps {
 export function TopicCard({ topic, completedCount, onOpen }: TopicCardProps) {
     const t = useTranslations("topics");
     const total = topic.questions.length;
-    const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+    const percent =
+        total === 0 ? 0 : Math.round((completedCount / total) * 100);
 
     return (
         <button
             type="button"
             onClick={() => onOpen(topic)}
-            className="group flex h-full w-full flex-col gap-3 rounded-xl border border-bdc-primary bg-bgc-app p-5 text-left transition-all hover:border-bgc-highlight hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bgc-highlight"
+            className="group border-bdc-primary bg-bgc-app hover:border-bgc-highlight focus-visible:ring-bgc-highlight flex h-full w-full flex-col gap-3 rounded-md border p-5 text-left transition-all hover:shadow-md focus-visible:ring-2 focus-visible:outline-none"
         >
-            <div className="flex items-start justify-between gap-2 w-full">
-                <span className="rounded-full bg-bgc-highlight/15 px-2.5 py-0.5 text-xs font-medium text-bgc-highlight">
+            <div className="flex w-full items-start justify-between gap-2">
+                <span className="bg-bgc-highlight/15 text-bgc-highlight rounded-full px-2.5 py-0.5 text-xs font-medium">
                     {CATEGORY_LABEL[topic.category]}
                 </span>
-                <span className="inline-flex items-center gap-1 text-xs text-text-muted">
+                <span className="text-text-muted inline-flex items-center gap-1 text-xs">
                     <BookOpen className="h-3.5 w-3.5" />
                     {t("questionCount", { count: total })}
                 </span>
             </div>
 
             <div className="space-y-1">
-                <h3 className="text-lg font-semibold leading-snug text-text-contrast">{topic.title}</h3>
-                <p className="text-sm text-text-muted">
-                    <FuriganaText text={topic.jpTitle} furigana={topic.jpFurigana} />
+                <h3 className="text-text-contrast text-lg leading-snug font-semibold">
+                    {topic.title}
+                </h3>
+                <p className="text-text-muted text-sm">
+                    <FuriganaText
+                        text={topic.jpTitle}
+                        furigana={topic.jpFurigana}
+                    />
                 </p>
             </div>
 
-            <p className="line-clamp-2 text-sm text-text-muted">{topic.description}</p>
+            <p className="text-text-muted line-clamp-2 text-sm">
+                {topic.description}
+            </p>
 
-            <div className="mt-auto space-y-2 pt-2 w-full">
+            <div className="mt-auto w-full space-y-2 pt-2">
                 <div className="flex items-center justify-between text-xs">
                     <span className="text-text-muted">
-                        {t("completedCount", { completed: completedCount, total })}
+                        {t("completedCount", {
+                            completed: completedCount,
+                            total,
+                        })}
                     </span>
-                    <span className="font-medium text-bgc-highlight">{percent}%</span>
+                    <span className="text-bgc-highlight font-medium">
+                        {percent}%
+                    </span>
                 </div>
                 <LinearProgress
                     variant="determinate"

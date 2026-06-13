@@ -9,24 +9,22 @@ export function NotesPanel() {
     const max = 500;
 
     return (
-        <div className="rounded-xl border border-bdc-primary bg-bgc-app p-4">
+        <div className="border-bdc-primary bg-bgc-app rounded-md border p-4">
             <div className="flex items-center justify-between">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-text-contrast">
-                    <NotebookPen className="h-4 w-4 text-bgc-highlight" />
+                <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
+                    <NotebookPen className="text-bgc-highlight h-4 w-4" />
                     {t("notesTitle")}
                 </h3>
-                <span className="text-xs text-text-muted">
+                <span className="text-text-muted text-xs">
                     {notes.length}/{max}
                 </span>
             </div>
-            <p className="mt-1 text-xs text-text-muted">
-                {t("notesSubtitle")}
-            </p>
+            <p className="text-text-muted mt-1 text-xs">{t("notesSubtitle")}</p>
             <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value.slice(0, max))}
                 placeholder={t("notesPlaceholder")}
-                className="mt-3 h-40 w-full resize-none rounded-md border border-bdc-primary bg-bgc-page p-2.5 text-sm text-text-contrast placeholder-text-muted focus:border-bgc-highlight focus:outline-none"
+                className="border-bdc-primary bg-bgc-page text-text-contrast placeholder-text-muted focus:border-bgc-highlight mt-3 h-40 w-full resize-none rounded-md border p-2.5 text-sm focus:outline-none"
             />
         </div>
     );

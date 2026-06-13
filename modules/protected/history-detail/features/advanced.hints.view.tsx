@@ -47,21 +47,28 @@ export function AdvancedHintsView({
     return (
         <div className="grid gap-5 lg:grid-cols-2">
             {/* Expressions */}
-            <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 space-y-4">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-text-contrast">
-                    <Sparkles className="h-4 w-4 text-bgc-highlight" />
+            <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
+                <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
+                    <Sparkles className="text-bgc-highlight h-4 w-4" />
                     {t("hintsTitle")}
                 </h3>
 
                 <div className="space-y-3">
                     {expressions.map((e, idx) => (
-                        <div key={idx} className="rounded-xl bg-bgc-page p-4 border border-bdc-primary space-y-2">
-                            <div className="text-base font-semibold leading-relaxed text-text-contrast">
-                                <FuriganaText text={e.jp} furigana={e.furigana} showFurigana={showFurigana} />
+                        <div
+                            key={idx}
+                            className="bg-bgc-page border-bdc-primary space-y-2 rounded-md border p-4"
+                        >
+                            <div className="text-text-contrast text-base leading-relaxed font-semibold">
+                                <FuriganaText
+                                    text={e.jp}
+                                    furigana={e.furigana}
+                                    showFurigana={showFurigana}
+                                />
                             </div>
-                            <p className="text-sm text-text-contrast">{e.vi}</p>
+                            <p className="text-text-contrast text-sm">{e.vi}</p>
                             {e.note && (
-                                <p className="text-xs text-text-muted border-t border-dashed border-bdc-primary pt-1.5 mt-1">
+                                <p className="text-text-muted border-bdc-primary mt-1 border-t border-dashed pt-1.5 text-xs">
                                     💡 {e.note}
                                 </p>
                             )}
@@ -71,28 +78,38 @@ export function AdvancedHintsView({
             </div>
 
             {/* IT Vocab */}
-            <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 space-y-4">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-text-contrast">
-                    <BookOpen className="h-4 w-4 text-bgc-highlight" />
+            <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
+                <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
+                    <BookOpen className="text-bgc-highlight h-4 w-4" />
                     {t("hintsItVocab")}
                 </h3>
 
                 <div className="space-y-3">
                     {normalizedItVocab.length === 0 ? (
-                        <p className="text-sm text-text-muted text-center py-6">
+                        <p className="text-text-muted py-6 text-center text-sm">
                             {t("noItVocabFeedback")}
                         </p>
                     ) : (
                         normalizedItVocab.map((v, idx) => (
-                            <div key={idx} className="flex gap-4 rounded-xl bg-bgc-page p-4 border border-bdc-primary items-center">
+                            <div
+                                key={idx}
+                                className="bg-bgc-page border-bdc-primary flex items-center gap-4 rounded-md border p-4"
+                            >
                                 <div className="flex-1 space-y-1">
-                                    <div className="text-base font-semibold leading-none text-text-contrast">
-                                        <FuriganaText text={v.jp} furigana={v.furigana} showFurigana={showFurigana} />
+                                    <div className="text-text-contrast text-base leading-none font-semibold">
+                                        <FuriganaText
+                                            text={v.jp}
+                                            furigana={v.furigana}
+                                            showFurigana={showFurigana}
+                                        />
                                     </div>
-                                    <p className="text-xs text-text-muted">{v.romaji} {v.romaji && v.vi ? "·" : ""} {v.vi}</p>
+                                    <p className="text-text-muted text-xs">
+                                        {v.romaji} {v.romaji && v.vi ? "·" : ""}{" "}
+                                        {v.vi}
+                                    </p>
                                 </div>
                                 <div className="text-right">
-                                    <span className="rounded bg-bgc-highlight/10 px-2 py-1 text-xs font-semibold text-bgc-highlight">
+                                    <span className="bg-bgc-highlight/10 text-bgc-highlight rounded px-2 py-1 text-xs font-semibold">
                                         {v.en}
                                     </span>
                                 </div>

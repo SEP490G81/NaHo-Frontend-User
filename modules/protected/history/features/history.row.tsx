@@ -89,7 +89,7 @@ export function HistoryRowCard({ entry, topic, question }: Props) {
     const t = useTranslations("history");
 
     return (
-        <article className="border-bdc-primary bg-bgc-app space-y-3 rounded-xl border p-4">
+        <article className="border-bdc-primary bg-bgc-app space-y-3 rounded-md border p-4">
             <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1">
                     <p className="text-text-muted text-xs">

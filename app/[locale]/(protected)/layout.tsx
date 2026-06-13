@@ -26,9 +26,7 @@ const ProtectedLayout = async ({
     return (
         <HydrationBoundary state={dehydratedState}>
             <div className="relative flex">
-                <div className="w-75">
-                    <LearnerSidebar />
-                </div>
+                <LearnerSidebar />
                 <div className="flex min-w-0 flex-1 flex-col">
                     <ProtectedHeader />
                     <div className="bg-bgc-page w-full flex-1 p-5">

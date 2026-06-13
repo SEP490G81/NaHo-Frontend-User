@@ -12,3 +12,11 @@ const JlptLevel = Object.freeze({
     N5: "N5",
 });
 export type JlptLevel = (typeof JlptLevel)[keyof typeof JlptLevel];
+
+const UserStatus = Object.freeze({
+    ACTIVE: "ACTIVE",
+    UNACTIVE: "UNACTIVE",
+    DELETED: "DELETED",
+});
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
+

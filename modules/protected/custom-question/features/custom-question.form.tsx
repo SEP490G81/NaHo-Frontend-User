@@ -51,7 +51,7 @@ export function CustomQuestionForm({
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app rounded-xl border p-6 shadow-sm">
+        <div className="border-bdc-primary bg-bgc-app rounded-md border p-6 shadow-sm">
             <div className="flex flex-col gap-6">
                 <div>
                     <h2 className="text-text-contrast text-lg font-semibold">

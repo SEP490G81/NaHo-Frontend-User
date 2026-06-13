@@ -11,24 +11,22 @@ export function Dashboard() {
     const t = useTranslations("dashboard");
 
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-7xl space-y-6">
-                {/* Welcome */}
-                <WelcomeBanner name={currentLearner.name} t={t} />
+        <div className="mx-auto max-w-7xl space-y-6">
+            {/* Welcome */}
+            <WelcomeBanner name={currentLearner.name} t={t} />
 
-                {/* Progression */}
-                <div className="grid gap-6 lg:grid-cols-3">
-                    <div className="lg:col-span-2">
-                        <PracticeTimeChart />
-                    </div>
-                    <div className="lg:col-span-1">
-                        <SkillScoresCard />
-                    </div>
+            {/* Progression */}
+            <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                    <PracticeTimeChart />
                 </div>
-
-                {/* Leaderboard */}
-                <LeaderboardWidget />
+                <div className="lg:col-span-1">
+                    <SkillScoresCard />
+                </div>
             </div>
+
+            {/* Leaderboard */}
+            <LeaderboardWidget />
         </div>
     );
 }

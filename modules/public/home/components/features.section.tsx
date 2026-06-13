@@ -36,7 +36,7 @@ const FeaturesSection = () => {
                                 key={item.id}
                                 className="group border-bdc-primary bg-bgc-app rounded-2xl border p-6 shadow-[0_8px_30px_-12px_rgba(255,153,172,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_rgba(255,153,172,0.45)]"
                             >
-                                <div className="bg-bgc-highlight/15 text-text-highlight group-hover:bg-bgc-highlight flex h-12 w-12 items-center justify-center rounded-xl transition-colors group-hover:text-[#333533]">
+                                <div className="bg-bgc-highlight/15 text-text-highlight group-hover:bg-bgc-highlight flex h-12 w-12 items-center justify-center rounded-md transition-colors group-hover:text-[#333533]">
                                     <Icon />
                                 </div>
                                 <h3 className="text-text-contrast mt-5 text-lg font-bold">

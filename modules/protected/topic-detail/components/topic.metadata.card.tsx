@@ -16,7 +16,7 @@ export function TopicMetadataCard({ topic }: TopicMetadataCardProps) {
     const t = useTranslations("topicDetail");
 
     return (
-        <aside className="border-bdc-primary bg-bgc-app space-y-4 rounded-xl border p-5 lg:sticky lg:top-6">
+        <aside className="border-bdc-primary bg-bgc-app space-y-4 rounded-md border p-5 lg:sticky lg:top-6">
             <Link
                 href="/topics"
                 className="text-text-muted hover:text-bgc-highlight inline-flex items-center gap-1.5 text-sm"
