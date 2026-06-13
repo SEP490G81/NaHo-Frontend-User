@@ -18,11 +18,16 @@ export function QuestionList({ topic, completed }: QuestionListProps) {
 
     return (
         <section className="space-y-4">
-            <header className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-bdc-primary bg-bgc-app p-4">
+            <header className="border-bdc-primary bg-bgc-app flex flex-wrap items-center justify-between gap-3 rounded-md border p-4">
                 <div>
-                    <h2 className="text-xl font-bold text-text-contrast">{t("questionList")}</h2>
-                    <p className="text-sm text-text-muted">
-                        {t("questionCount", { total: topic.questions.length, completed: completed.length })}
+                    <h2 className="text-text-contrast text-xl font-bold">
+                        {t("questionList")}
+                    </h2>
+                    <p className="text-text-muted text-sm">
+                        {t("questionCount", {
+                            total: topic.questions.length,
+                            completed: completed.length,
+                        })}
                     </p>
                 </div>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -30,13 +35,18 @@ export function QuestionList({ topic, completed }: QuestionListProps) {
                         control={
                             <Switch
                                 checked={showFurigana}
-                                onChange={(e) => setShowFurigana(e.target.checked)}
+                                onChange={(e) =>
+                                    setShowFurigana(e.target.checked)
+                                }
                                 color="primary"
                             />
                         }
                         label={t("showFurigana")}
                         slotProps={{
-                            typography: { className: "text-sm font-semibold text-text-contrast" }
+                            typography: {
+                                className:
+                                    "text-sm font-semibold text-text-contrast",
+                            },
                         }}
                     />
                 </Box>

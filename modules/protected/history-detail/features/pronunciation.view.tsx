@@ -15,7 +15,10 @@ interface PronunciationViewProps {
     note: string;
 }
 
-export function PronunciationView({ pronunciation, note }: PronunciationViewProps) {
+export function PronunciationView({
+    pronunciation,
+    note,
+}: PronunciationViewProps) {
     const t = useTranslations("historyDetail");
 
     const normalizedPronunciation = React.useMemo(() => {
@@ -42,21 +45,32 @@ export function PronunciationView({ pronunciation, note }: PronunciationViewProp
     return (
         <div className="space-y-6">
             <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-text-contrast">{t("pronunciationLabel")}</h3>
+                <h3 className="text-text-contrast text-sm font-semibold">
+                    {t("pronunciationLabel")}
+                </h3>
 
-                <div className="overflow-hidden rounded-xl border border-bdc-primary bg-bgc-page">
+                <div className="border-bdc-primary bg-bgc-page overflow-hidden rounded-md border">
                     <table className="w-full text-sm">
-                        <thead className="bg-bgc-app text-xs uppercase tracking-wide text-text-muted border-b border-bdc-primary">
+                        <thead className="bg-bgc-app text-text-muted border-bdc-primary border-b text-xs tracking-wide uppercase">
                             <tr>
-                                <th className="px-4 py-3 text-left font-semibold">{t("pronunciationWord")}</th>
-                                <th className="px-4 py-3 text-left font-semibold">{t("pronunciationScore")}</th>
-                                <th className="px-4 py-3 text-left font-semibold">{t("pronunciationFeedback")}</th>
+                                <th className="px-4 py-3 text-left font-semibold">
+                                    {t("pronunciationWord")}
+                                </th>
+                                <th className="px-4 py-3 text-left font-semibold">
+                                    {t("pronunciationScore")}
+                                </th>
+                                <th className="px-4 py-3 text-left font-semibold">
+                                    {t("pronunciationFeedback")}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {normalizedPronunciation.map((item, i) => (
-                                <tr key={i} className="border-b border-bdc-primary last:border-0 hover:bg-hbgc-app/50">
-                                    <td className="px-4 py-3 align-middle font-noto-jp text-base font-semibold text-text-contrast">
+                                <tr
+                                    key={i}
+                                    className="border-bdc-primary hover:bg-hbgc-app/50 border-b last:border-0"
+                                >
+                                    <td className="font-noto-jp text-text-contrast px-4 py-3 align-middle text-base font-semibold">
                                         {item.word}
                                     </td>
                                     <td className="px-4 py-3 align-middle">
@@ -67,13 +81,13 @@ export function PronunciationView({ pronunciation, note }: PronunciationViewProp
                                                     ? "bg-green-500/10 text-green-500"
                                                     : item.score >= 60
                                                       ? "bg-orange-500/10 text-orange-500"
-                                                      : "bg-red-500/10 text-red-500"
+                                                      : "bg-red-500/10 text-red-500",
                                             )}
                                         >
                                             {item.score}%
                                         </span>
                                     </td>
-                                    <td className="px-4 py-3 align-middle text-text-muted">
+                                    <td className="text-text-muted px-4 py-3 align-middle">
                                         {item.feedback}
                                     </td>
                                 </tr>
@@ -83,12 +97,12 @@ export function PronunciationView({ pronunciation, note }: PronunciationViewProp
                 </div>
             </div>
 
-            <div className="rounded-xl border border-bdc-primary bg-bgc-page p-4">
-                <h4 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
-                    <AlertCircle className="h-4 w-4 text-bgc-highlight" />
+            <div className="border-bdc-primary bg-bgc-page rounded-md border p-4">
+                <h4 className="text-text-muted flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
+                    <AlertCircle className="text-bgc-highlight h-4 w-4" />
                     {t("aiPronunciationNoteLabel")}
                 </h4>
-                <p className="mt-2 text-sm leading-relaxed text-text-contrast">
+                <p className="text-text-contrast mt-2 text-sm leading-relaxed">
                     {note}
                 </p>
             </div>

@@ -27,7 +27,7 @@ export function QuestionCard({
     const completed = !!history;
 
     return (
-        <article className="border-bdc-primary bg-bgc-app space-y-4 rounded-xl border p-5">
+        <article className="border-bdc-primary bg-bgc-app space-y-4 rounded-md border p-5">
             <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3">
                     <span className="bg-bgc-highlight/15 text-bgc-highlight mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold">

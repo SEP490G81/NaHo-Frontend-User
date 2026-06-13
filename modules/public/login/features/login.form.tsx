@@ -1,5 +1,5 @@
 "use client";
-import LoginFormButtons from "@/modules/public/login/components/login.form.buttons";
+import LoginFormButtons from "@/modules/public/login/features/login.form.buttons";
 import LoginFormTextFields from "@/modules/public/login/components/login.form.text.fields";
 import { LoginState } from "@/modules/public/login/types/login.ui.type";
 import React, { useState } from "react";

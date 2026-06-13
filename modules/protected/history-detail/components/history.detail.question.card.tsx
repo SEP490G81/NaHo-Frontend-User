@@ -37,16 +37,17 @@ export function HistoryDetailQuestionCard({
     t,
 }: HistoryDetailQuestionCardProps) {
     return (
-        <section className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 md:p-6">
+        <section className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 md:p-6">
             <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="space-y-2">
-                    <span className="inline-block rounded-full bg-bgc-highlight/15 px-2.5 py-0.5 text-xs font-semibold text-bgc-highlight">
-                        {(CATEGORY_LABEL as any)[topic.category]} · {topic.title}
+                    <span className="bg-bgc-highlight/15 text-bgc-highlight inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold">
+                        {(CATEGORY_LABEL as any)[topic.category]} ·{" "}
+                        {topic.title}
                     </span>
-                    <h1 className="text-xl font-bold md:text-2xl text-text-contrast">
+                    <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
                         {t("reportTitle")}
                     </h1>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-text-muted">
+                    <div className="text-text-muted flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                         <span className="inline-flex items-center gap-1.5">
                             <CalendarDays className="h-3.5 w-3.5" />
                             {formatDate(entry.practicedAt)}
@@ -60,10 +61,12 @@ export function HistoryDetailQuestionCard({
                 <MockAudioBar durationSec={entry.durationSec} />
             </div>
 
-            <div className="mt-4 rounded-xl border border-bdc-primary bg-bgc-page p-4">
-                <p className="text-xs text-text-muted font-medium">{t("questionTitle")}</p>
-                <p className="mt-1 text-sm text-text-muted">{question.vi}</p>
-                <div className="mt-2 text-lg text-text-contrast leading-snug">
+            <div className="border-bdc-primary bg-bgc-page mt-4 rounded-md border p-4">
+                <p className="text-text-muted text-xs font-medium">
+                    {t("questionTitle")}
+                </p>
+                <p className="text-text-muted mt-1 text-sm">{question.vi}</p>
+                <div className="text-text-contrast mt-2 text-lg leading-snug">
                     <FuriganaText
                         text={question.jp}
                         furigana={question.furigana}

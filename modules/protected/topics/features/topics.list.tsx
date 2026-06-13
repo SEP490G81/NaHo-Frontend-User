@@ -67,7 +67,7 @@ export function TopicsList() {
     return (
         <div className="space-y-6">
             {/* Search and Filters */}
-            <div className="border-bdc-primary bg-bgc-app space-y-3 rounded-xl border p-4">
+            <div className="border-bdc-primary bg-bgc-app space-y-3 rounded-md border p-4">
                 <div className="relative">
                     <Search className="text-text-muted pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <input
@@ -121,7 +121,7 @@ export function TopicsList() {
 
             {/* Topics Grid */}
             {filtered.length === 0 ? (
-                <div className="border-bdc-primary bg-bgc-app text-text-muted rounded-xl border border-dashed p-12 text-center">
+                <div className="border-bdc-primary bg-bgc-app text-text-muted rounded-md border border-dashed p-12 text-center">
                     {t("emptyState")}
                 </div>
             ) : (

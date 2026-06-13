@@ -65,7 +65,7 @@ export function CommunityLibrary() {
                     </Button>
                 </div>
 
-                <div className="border-bdc-primary bg-bgc-app flex flex-col gap-4 rounded-xl border p-4 shadow-sm sm:p-5">
+                <div className="border-bdc-primary bg-bgc-app flex flex-col gap-4 rounded-md border p-4 shadow-sm sm:p-5">
                     <div className="flex items-center justify-between gap-3">
                         <h2 className="text-text-contrast text-sm font-semibold">
                             {t("filterTitle")}
@@ -104,7 +104,7 @@ export function CommunityLibrary() {
                 </div>
 
                 {filtered.length === 0 ? (
-                    <div className="border-bdc-primary bg-bgc-app text-text-muted rounded-xl border border-dashed p-10 text-center text-sm shadow-sm">
+                    <div className="border-bdc-primary bg-bgc-app text-text-muted rounded-md border border-dashed p-10 text-center text-sm shadow-sm">
                         {t("emptyState")}
                     </div>
                 ) : (

@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/services/server/user.service";
 import { redirect } from "next/navigation";
 import Login from "@/modules/public/login/components/login";
-import GoogleOauth2Provider from "@/components/providers/google.oauth2.provider";
 
 export async function generateMetadata({
     params,
@@ -32,11 +31,7 @@ const LoginPage = async () => {
         console.log(error);
     }
 
-    return (
-        <GoogleOauth2Provider>
-            <Login />
-        </GoogleOauth2Provider>
-    );
+    return <Login />;
 };
 
 export default LoginPage;

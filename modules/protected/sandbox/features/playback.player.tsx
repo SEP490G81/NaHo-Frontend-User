@@ -9,12 +9,21 @@ interface PlaybackPlayerProps {
 }
 
 function formatTime(sec: number) {
-    const m = Math.floor(sec / 60).toString().padStart(2, "0");
-    const s = Math.floor(sec % 60).toString().padStart(2, "0");
+    const m = Math.floor(sec / 60)
+        .toString()
+        .padStart(2, "0");
+    const s = Math.floor(sec % 60)
+        .toString()
+        .padStart(2, "0");
     return `${m}:${s}`;
 }
 
-export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: PlaybackPlayerProps) {
+export function PlaybackPlayer({
+    durationSec,
+    playing,
+    onToggle,
+    audioUrl,
+}: PlaybackPlayerProps) {
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(durationSec);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -63,7 +72,9 @@ export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: Pla
         if (!audio || !audioUrl) return;
 
         if (playing) {
-            audio.play().catch((err) => console.log("Audio playback error:", err));
+            audio
+                .play()
+                .catch((err) => console.log("Audio playback error:", err));
         } else {
             audio.pause();
         }
@@ -79,7 +90,7 @@ export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: Pla
     const playedBars = Math.floor((progress / currentDuration) * bars);
 
     return (
-        <div className="rounded-xl border border-bdc-primary bg-bgc-page p-4">
+        <div className="border-bdc-primary bg-bgc-page rounded-md border p-4">
             <div className="flex items-center gap-4">
                 <div className="flex h-12 flex-1 items-end gap-[3px]">
                     {Array.from({ length: bars }).map((_, i) => {
@@ -89,7 +100,9 @@ export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: Pla
                                 key={i}
                                 className={cn(
                                     "w-full rounded-full transition-colors",
-                                    i < playedBars ? "bg-bgc-highlight" : "bg-bdc-muted/60"
+                                    i < playedBars
+                                        ? "bg-bgc-highlight"
+                                        : "bg-bdc-muted/60",
                                 )}
                                 style={{ height: `${seed * 100}%` }}
                             />
@@ -97,7 +110,7 @@ export function PlaybackPlayer({ durationSec, playing, onToggle, audioUrl }: Pla
                     })}
                 </div>
 
-                <div className="w-20 text-right font-mono text-xs tabular-nums text-text-muted">
+                <div className="text-text-muted w-20 text-right font-mono text-xs tabular-nums">
                     {formatTime(progress)} / {formatTime(currentDuration)}
                 </div>
             </div>

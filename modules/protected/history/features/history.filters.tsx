@@ -21,14 +21,14 @@ export function HistoryFilters({
     const t = useTranslations("history");
 
     return (
-        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-bdc-primary bg-bgc-app p-4">
-            <div className="relative flex-1 min-w-[240px]">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
+        <div className="border-bdc-primary bg-bgc-app flex flex-wrap items-center gap-3 rounded-md border p-4">
+            <div className="relative min-w-[240px] flex-1">
+                <Search className="text-text-muted pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <input
                     value={query}
                     onChange={(e) => onQueryChange(e.target.value)}
                     placeholder={t("filterPlaceholder")}
-                    className="w-full rounded-lg border border-bdc-primary bg-bgc-page py-2 pl-9 pr-4 text-sm text-text-contrast placeholder-text-muted focus:border-bgc-highlight focus:outline-none"
+                    className="border-bdc-primary bg-bgc-page text-text-contrast placeholder-text-muted focus:border-bgc-highlight w-full rounded-lg border py-2 pr-4 pl-9 text-sm focus:outline-none"
                 />
             </div>
 
@@ -57,7 +57,11 @@ export function HistoryFilters({
                         {t("filterAllTopics")}
                     </MenuItem>
                     {mockTopics.map((topic) => (
-                        <MenuItem key={topic.id} value={topic.id} className="text-sm">
+                        <MenuItem
+                            key={topic.id}
+                            value={topic.id}
+                            className="text-sm"
+                        >
                             {topic.title}
                         </MenuItem>
                     ))}
