@@ -19,7 +19,7 @@ const LoginFormButtons = ({ errorMessage }: { errorMessage: string }) => {
             setIsLoading(true);
 
             getDeviceId();
-            globalThis.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/oauth2/authorization/google`;
+            globalThis.location.href = "/api/auth/login/google";
 
             await queryClient.invalidateQueries({
                 queryKey: queryKeys.auth.currentUser,

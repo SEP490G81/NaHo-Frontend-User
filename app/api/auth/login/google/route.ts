@@ -1,42 +1,16 @@
 import { ProblemDetail } from "@/types/responses/base.response";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-    const body = await request.json();
-
-    const userAgent = request.headers.get("user-agent");
-    const forwardedFor = request.headers.get("x-forwarded-for");
-
-    const backendResponse = await fetch(
-        `${process.env.API_URL}/auth/login/google`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "User-Agent": userAgent ?? "",
-                "X-Forwarded-For": forwardedFor ?? "",
-            },
-            body: JSON.stringify(body),
-            cache: "no-store",
-        },
-    );
-
-    if (!backendResponse.ok) {
-        const result = await backendResponse.json();
-        const problemDetail: ProblemDetail = result as ProblemDetail;
-        return NextResponse.json(problemDetail, {
-            status: backendResponse.status,
-        });
+export async function GET() {
+    const backendUrl = process.env.BACKEND_URL;
+    if (!backendUrl) {
+        return NextResponse.json(
+            {
+                detail: "Backend URL is not configured on the server.",
+            } as ProblemDetail,
+            { status: 500 },
+        );
     }
 
-    const response = NextResponse.json(null, {
-        status: backendResponse.status,
-    });
-
-    const cookies = backendResponse.headers.getSetCookie();
-    cookies.forEach((cookie) => {
-        response.headers.append("set-cookie", cookie);
-    });
-
-    return response;
+    return NextResponse.redirect(`${backendUrl}/oauth2/authorization/google`);
 }
