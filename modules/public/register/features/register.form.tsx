@@ -39,10 +39,17 @@ const RegisterForm = () => {
         setErrors((prev) => {
             const next = { ...prev };
             if (name === "confirmPassword") {
-                // Không báo khớp/không khớp khi đang gõ; chỉ xoá lỗi cũ.
+                // Không báo khớp/không khớp khi đang gõ; chỉ xoá lỗi cũ
                 next.confirmPassword = undefined;
             } else if (touched[name]) {
                 next[name] = validateField(name, nextValues);
+            }
+            // Đổi mật khẩu thì kiểm tra lại ô xác nhận (nếu đã từng nhập)
+            if (name === "password" && touched.confirmPassword) {
+                next.confirmPassword = validateField(
+                    "confirmPassword",
+                    nextValues,
+                );
             }
             return next;
         });
@@ -104,6 +111,7 @@ const RegisterForm = () => {
             <RegisterFormTextFields
                 values={values}
                 errors={errors}
+                touched={touched}
                 onChange={handleChange}
                 onBlur={handleBlur}
             />
@@ -114,6 +122,7 @@ const RegisterForm = () => {
             />
             <RegisterFormButtons
                 pending={submitting}
+                disabled={Object.values(errors).some(Boolean)}
                 errorMessage={errorMessage}
             />
         </form>

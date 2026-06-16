@@ -2,7 +2,36 @@ const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
 const USERNAME_REGEX = /^[a-z][a-z0-9]*$/;
 const USERNAME_MIN_LENGTH = 4;
 const USERNAME_MAX_LENGTH = 36;
-const MIN_PASSWORD_LENGTH = 6;
+const MIN_PASSWORD_LENGTH = 8;
+export const MAX_PASSWORD_LENGTH = 16;
+
+export interface PasswordRule {
+    needKey: string;
+    test: (value: string) => boolean;
+}
+
+export const PASSWORD_RULES: PasswordRule[] = [
+    {
+        needKey: "register.form.passwordNeed.minLength",
+        test: (v) => v.length >= MIN_PASSWORD_LENGTH,
+    },
+    {
+        needKey: "register.form.passwordNeed.lowercase",
+        test: (v) => /[a-z]/.test(v),
+    },
+    {
+        needKey: "register.form.passwordNeed.uppercase",
+        test: (v) => /[A-Z]/.test(v),
+    },
+    {
+        needKey: "register.form.passwordNeed.number",
+        test: (v) => /\d/.test(v),
+    },
+    {
+        needKey: "register.form.passwordNeed.special",
+        test: (v) => /[^A-Za-z0-9]/.test(v),
+    },
+];
 
 export interface RegisterValues {
     username: string;
@@ -32,8 +61,8 @@ export function validateEmail(value: string): string | undefined {
 
 export function validatePassword(value: string): string | undefined {
     if (value.length === 0) return "register.form.pleaseEnterPassword";
-    if (value.length < MIN_PASSWORD_LENGTH)
-        return "register.form.passwordTooShort";
+    if (PASSWORD_RULES.some((rule) => !rule.test(value)))
+        return "register.form.passwordTooWeak";
     return undefined;
 }
 
