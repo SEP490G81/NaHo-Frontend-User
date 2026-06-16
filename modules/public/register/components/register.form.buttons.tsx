@@ -4,9 +4,11 @@ import { useTranslations } from "next-intl";
 
 const RegisterFormButtons = ({
     pending,
+    disabled,
     errorMessage,
 }: {
     pending: boolean;
+    disabled?: boolean;
     errorMessage?: string;
 }) => {
     const t = useTranslations();
@@ -16,6 +18,7 @@ const RegisterFormButtons = ({
             <Button
                 type="submit"
                 loading={pending}
+                disabled={disabled}
                 fullWidth
                 color="primary"
                 variant="contained"
