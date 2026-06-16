@@ -118,7 +118,7 @@ export function HistoryDetail() {
                 <div className="sticky bottom-4 z-10 flex justify-center md:static md:justify-end">
                     <Link
                         href={`/sandbox/${entry.questionId}`}
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors cursor-pointer"
                     >
                         <RotateCcw className="mr-2 h-4 w-4" />
                         {t("retryBtn")}

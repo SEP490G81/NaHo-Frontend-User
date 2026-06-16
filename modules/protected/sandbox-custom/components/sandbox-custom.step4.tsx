@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { RotateCcw, Save } from "lucide-react";
 import { Button } from "@mui/material";
+import { toast } from "react-toastify";
 import CustomQuestionCard from "./custom.question.card";
 import HistoryDetailOverview from "@/modules/protected/history-detail/components/history.detail.overview";
 import HistoryDetailTabs from "@/modules/protected/history-detail/components/history.detail.tabs";
+import SandboxCustomShareDialog from "./sandbox-custom-share.dialog";
 
 interface SandboxStep4Props {
   questionJp: string;
@@ -24,6 +26,7 @@ export function SandboxStep4({
 }: SandboxStep4Props) {
   const t = useTranslations("sandboxCustom");
   const tHistoryDetail = useTranslations("historyDetail");
+  const [openShare, setOpenShare] = useState(false);
 
   // Mock report matched with what HistoryDetailOverview and HistoryDetailTabs expect
   const report = React.useMemo(() => {
@@ -94,6 +97,17 @@ export function SandboxStep4({
     };
   }, []);
 
+  const handleConfirmShare = () => {
+    setOpenShare(false);
+    toast.success(t("shareSuccessToast"));
+    saveToHistory();
+  };
+
+  const handleOnlySave = () => {
+    setOpenShare(false);
+    saveToHistory();
+  };
+
   return (
     <section className="space-y-6 animate-fade-in pb-8">
       <CustomQuestionCard
@@ -134,7 +148,7 @@ export function SandboxStep4({
           {t("practiceAgain")}
         </Button>
         <Button
-          onClick={saveToHistory}
+          onClick={() => setOpenShare(true)}
           variant="contained"
           startIcon={<Save className="h-4 w-4" />}
           sx={{
@@ -148,6 +162,15 @@ export function SandboxStep4({
           {t("saveToHistory")}
         </Button>
       </div>
+
+      {/* Share to Community Confirmation Dialog */}
+      <SandboxCustomShareDialog
+        open={openShare}
+        onClose={() => setOpenShare(false)}
+        onConfirmShare={handleConfirmShare}
+        onOnlySave={handleOnlySave}
+        t={t}
+      />
     </section>
   );
 }

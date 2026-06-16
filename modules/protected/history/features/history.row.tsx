@@ -67,14 +67,14 @@ export function HistoryRowDesktop({ entry, topic, question }: Props) {
                 <div className="flex items-center justify-end gap-2">
                     <Link
                         href={`/history/${slugifyText(entry.historyId + "-bao-cao-luyen-tap")}`}
-                        className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors"
+                        className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors cursor-pointer"
                     >
                         <BarChart3 className="mr-1.5 h-3.5 w-3.5" />
                         {t("viewReport")}
                     </Link>
                     <Link
                         href={`/sandbox/${entry.questionId}`}
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white transition-colors"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white transition-colors cursor-pointer"
                     >
                         <PlayCircle className="mr-1.5 h-3.5 w-3.5" />
                         {t("retryBtn")}
@@ -120,14 +120,14 @@ export function HistoryRowCard({ entry, topic, question }: Props) {
             <div className="flex items-center justify-end gap-2 pt-1">
                 <Link
                     href={`/history/${slugifyText(entry.historyId + "-bao-cao-luyen-tap")}`}
-                    className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors"
+                    className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors cursor-pointer"
                 >
                     <BarChart3 className="mr-1.5 h-3.5 w-3.5" />
                     {t("viewReport")}
                 </Link>
                 <Link
                     href={`/sandbox/${entry.questionId}`}
-                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white transition-colors"
+                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white transition-colors cursor-pointer"
                 >
                     <PlayCircle className="mr-1.5 h-3.5 w-3.5" />
                     {t("retryBtn")}

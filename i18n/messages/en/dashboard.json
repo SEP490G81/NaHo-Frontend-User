@@ -1,0 +1,20 @@
+{
+    "dashboard": {
+        "welcome": "Chào mừng quay trở lại, {name}!",
+        "slogan": "Hãy duy trì chuỗi luyện tập của bạn hôm nay nhé.",
+        "practiceNow": "Luyện tập ngay",
+        "kaiwaHistory": "Lịch sử luyện Kaiwa",
+        "chartTitle": "Thời gian luyện tập hàng ngày",
+        "chartSubtitle": "7 ngày gần nhất (đơn vị: phút)",
+        "chartTooltipMinute": "phút",
+        "chartTooltipTime": "Thời gian",
+        "chartTooltipDay": "Thứ: {label}",
+        "leaderboardTitle": "Bảng xếp hạng tuần",
+        "leaderboardSubtitle": "Top học viên có điểm luyện tập cao nhất tuần này",
+        "leaderboardYou": "Bạn",
+        "leaderboardPoints": "điểm",
+        "skillScoresTitle": "Điểm số trung bình",
+        "skillScoresSubtitle": "Đánh giá AI trên 4 phương diện",
+        "loadingChart": "Đang tải dữ liệu biểu đồ..."
+    }
+}

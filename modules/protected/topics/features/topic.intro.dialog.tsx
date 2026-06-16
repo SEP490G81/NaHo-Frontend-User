@@ -124,7 +124,7 @@ export function TopicIntroDialog({
                 </Button>
                 <Link
                     href={`/topics/${slugifyText(topic.id + "-" + topic.jpTitle)}`}
-                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
+                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors cursor-pointer"
                 >
                     <ListChecks className="mr-2 h-4 w-4" />
                     {t("dialogStart")}

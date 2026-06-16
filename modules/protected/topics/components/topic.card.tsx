@@ -22,7 +22,7 @@ export function TopicCard({ topic, completedCount, onOpen }: TopicCardProps) {
         <button
             type="button"
             onClick={() => onOpen(topic)}
-            className="group border-bdc-primary bg-bgc-app hover:border-bgc-highlight focus-visible:ring-bgc-highlight flex h-full w-full flex-col gap-3 rounded-md border p-5 text-left transition-all hover:shadow-md focus-visible:ring-2 focus-visible:outline-none"
+            className="group border-bdc-primary bg-bgc-app hover:border-bgc-highlight focus-visible:ring-bgc-highlight flex h-full w-full flex-col gap-3 rounded-md border p-5 text-left transition-all hover:shadow-md focus-visible:ring-2 focus-visible:outline-none cursor-pointer"
         >
             <div className="flex w-full items-start justify-between gap-2">
                 <span className="bg-bgc-highlight/15 text-bgc-highlight rounded-full px-2.5 py-0.5 text-xs font-medium">
