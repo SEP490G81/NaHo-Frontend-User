@@ -1,7 +1,10 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ProblemDetail } from "@/types/responses/base.response";
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
+import {
+    ACCESS_TOKEN_NAME,
+    REFRESH_TOKEN_NAME,
+} from "@/constants/app.constants";
 
 export async function POST() {
     const cookieStore = await cookies();
