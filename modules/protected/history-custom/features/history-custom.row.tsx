@@ -61,7 +61,7 @@ export function HistoryCustomRowDesktop({ entry }: Props) {
                 <div className="flex items-center justify-end gap-2">
                     <Link
                         href="/custom-question"
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white shadow-sm transition-colors"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white shadow-sm transition-colors cursor-pointer"
                     >
                         <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                         {t("retryBtn")}
@@ -105,7 +105,7 @@ export function HistoryCustomRowCard({ entry }: Props) {
             <div className="flex items-center justify-end gap-2 pt-1">
                 <Link
                     href="/custom-question"
-                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white shadow-sm transition-colors"
+                    className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-semibold text-white shadow-sm transition-colors cursor-pointer"
                 >
                     <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                     {t("retryBtn")}

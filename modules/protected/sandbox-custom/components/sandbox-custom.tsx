@@ -68,7 +68,7 @@ function SandboxCustomContent({ id }: { id: string }) {
                     </p>
                     <Link
                         href="/custom-question"
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 mt-5 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 mt-5 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors cursor-pointer"
                     >
                         {t("noQuestionBtn")}
                     </Link>
@@ -107,7 +107,7 @@ function SandboxCustomContent({ id }: { id: string }) {
                 <header className="flex flex-wrap items-center justify-between gap-3">
                     <Link
                         href="/custom-question"
-                        className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors"
+                        className="border-bdc-primary bg-bgc-page text-text-contrast hover:bg-hbgc-app inline-flex h-8 items-center justify-center rounded-md border px-3 text-xs font-semibold transition-colors cursor-pointer"
                     >
                         <ArrowLeft className="mr-1 h-3.5 w-3.5" />
                         {t("backBtn")}

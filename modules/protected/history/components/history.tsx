@@ -1,9 +1,10 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { getHistoryList } from "@/modules/protected/history/services/history.service";
 import { mockTopics } from "@/data/mockTopics";
+import { Pagination } from "@mui/material";
 import HistoryFilters from "../features/history.filters";
 import HistoryHeader from "./history.header";
 import HistoryEmptyState from "./history.empty.state";
@@ -20,6 +21,7 @@ export function History() {
 
     const [query, setQuery] = useState("");
     const [topicFilter, setTopicFilter] = useState("all");
+    const [page, setPage] = useState(1);
 
     const sortedEntries = useMemo(
         () =>
@@ -46,6 +48,18 @@ export function History() {
             return hay.includes(q);
         });
     }, [sortedEntries, query, topicFilter]);
+
+    // Reset pagination to page 1 when query or filters change
+    useEffect(() => {
+        setPage(1);
+    }, [query, topicFilter]);
+
+    // Pagination constants and calculations
+    const itemsPerPage = 8;
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const paginatedEntries = useMemo(() => {
+        return filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    }, [filtered, page]);
 
     const totalCount = entries.length;
     const avgScore =
@@ -80,7 +94,32 @@ export function History() {
                 {filtered.length === 0 ? (
                     <HistoryEmptyState t={t} />
                 ) : (
-                    <HistoryList filtered={filtered} t={t} />
+                    <>
+                        <HistoryList filtered={paginatedEntries} t={t} />
+
+                        {/* Pagination Controls */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-center mt-6">
+                                <Pagination
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={(_, value) => setPage(value)}
+                                    sx={{
+                                        "& .MuiPaginationItem-root": {
+                                            color: "var(--color-text-contrast)",
+                                            "&.Mui-selected": {
+                                                backgroundColor: "var(--color-bgc-highlight)",
+                                                color: "var(--color-text-pure)",
+                                            },
+                                            "&:hover": {
+                                                backgroundColor: "var(--color-hbgc-app)",
+                                            },
+                                        },
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

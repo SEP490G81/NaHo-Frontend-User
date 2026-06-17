@@ -4,6 +4,8 @@ import { AlertTriangle } from "lucide-react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 
+import RulesList from "./rules-list";
+
 interface RulesDialogProps {
   open: boolean;
   onAccept: () => void;
@@ -53,16 +55,7 @@ export function RulesDialog({ open, onAccept, onBack }: RulesDialogProps) {
       </DialogTitle>
 
       <DialogContent dividers className="border-bdc-primary">
-        <ol className="space-y-3 rounded-lg border border-bdc-primary bg-bgc-page p-4 text-sm leading-relaxed">
-          {[1, 2, 3].map((num) => (
-            <li key={num} className="flex gap-3 text-text-contrast">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bgc-highlight/20 text-xs font-semibold text-bgc-highlight">
-                {num}
-              </span>
-              <span className="flex-1">{t(`rules.rule${num}` as any)}</span>
-            </li>
-          ))}
-        </ol>
+        <RulesList t={t} />
       </DialogContent>
 
       <DialogActions className="gap-2 px-6 py-4">

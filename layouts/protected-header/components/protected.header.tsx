@@ -11,6 +11,7 @@ import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { ChevronRight, Flame, MenuIcon } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
+import HeaderDecoration from "./header-decoration";
 
 function prettify(seg: string) {
     return LABELS[seg] ?? decodeURIComponent(seg).replace(/-/g, " ");
@@ -25,7 +26,9 @@ const ProtectedHeader = () => {
     );
 
     return (
-        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between border-b px-3 py-3.5">
+        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between border-b px-3 py-3.5 overflow-hidden">
+            <HeaderDecoration />
+
             {/* Left */}
             <div className="z-10 flex min-w-0 items-center justify-start">
                 {/* Mobile Menu Button */}
@@ -49,11 +52,6 @@ const ProtectedHeader = () => {
                     aria-label="breadcrumb"
                     className="hidden md:block"
                 >
-                    <Link href="/dashboard">
-                        <span className="text-text-contrast hover:text-bgc-highlight text-sm font-semibold transition-colors">
-                            NAHO
-                        </span>
-                    </Link>
                     {segments.map((seg, i) => {
                         const isLast = i === segments.length - 1;
                         const path = "/" + segments.slice(0, i + 1).join("/");
