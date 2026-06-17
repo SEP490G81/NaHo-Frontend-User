@@ -55,7 +55,7 @@ export function QuestionCard({
                         <Tooltip title={t("viewHistory")} placement="top">
                             <Link
                                 href={`/history/${slugifyText(history!.historyId + "-bao-cao-luyen-tap")}`}
-                                className="flex items-center gap-1.5 rounded bg-blue-50 px-2 py-1 transition-colors hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/40"
+                                className="flex items-center gap-1.5 rounded bg-blue-50 px-2 py-1 transition-colors hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/40 cursor-pointer"
                             >
                                 <History className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 {t("viewHistory")}
@@ -73,7 +73,7 @@ export function QuestionCard({
                 <div className="flex flex-wrap gap-2">
                     <Link
                         href={`/sandbox/${question.id}`}
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
+                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors cursor-pointer"
                     >
                         {t("practiceNow")}
                     </Link>

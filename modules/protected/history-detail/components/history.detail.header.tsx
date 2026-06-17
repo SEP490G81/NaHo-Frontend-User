@@ -20,7 +20,7 @@ export function HistoryDetailHeader({
     return (
         <div className="flex flex-wrap items-center justify-between gap-3">
             <nav className="text-text-muted flex items-center gap-1.5 text-sm">
-                <Link href="/history" className="hover:text-foreground">
+                <Link href="/history" className="hover:text-foreground cursor-pointer">
                     {t("breadcrumbHistory")}
                 </Link>
                 <ChevronRight className="h-3.5 w-3.5" />

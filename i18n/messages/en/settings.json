@@ -1,0 +1,16 @@
+{
+    "settings": {
+        "page": {
+            "general": "Chung",
+            "account": "Tài khoản",
+            "security": "Bảo mật",
+            "billing": "Thanh toán"
+        },
+        "searchPlaceholder": "Tìm kiếm",
+        "billing": {
+            "currentPlan": "Naho Go",
+            "planExpiry": "Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026",
+            "updatePlan": "Nâng cấp gói"
+        }
+    }
+}

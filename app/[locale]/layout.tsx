@@ -6,6 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import "../../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import React from "react";
 import { QueryProvider } from "@/components/providers/query.provider";
@@ -47,7 +48,7 @@ export default async function LocaleLayout({
                                         <main>{children}</main>
                                     </SseProvider>
                                 </QueryProvider>
-                                <ToastContainer />
+                                <ToastContainer position="bottom-right" />
                             </AppThemeProvider>
                         </BProgressProvider>
                     </AppRouterCacheProvider>

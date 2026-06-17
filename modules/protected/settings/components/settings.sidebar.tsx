@@ -26,7 +26,7 @@ const SettingsSidebar = () => {
                     <Link
                         href={item.redirectLink}
                         key={item.id}
-                        className={`${activeClassName} flex h-10 items-center justify-start rounded-md px-3 transition-all duration-150`}
+                        className={`${activeClassName} flex h-10 items-center justify-start rounded-md px-3 transition-all duration-150 cursor-pointer`}
                     >
                         <span className="flex h-10 w-10 items-center">
                             {item.icon}

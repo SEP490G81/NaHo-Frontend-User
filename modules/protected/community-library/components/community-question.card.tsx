@@ -41,24 +41,10 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
     };
 
     return (
-        <article className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/40 flex flex-col justify-between gap-4 rounded-md border p-5 shadow-sm transition-colors">
-            <div className="space-y-3">
-                <div className="flex items-center justify-between gap-2">
-                    <span
-                        className={cn(
-                            "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                            CATEGORY_TONE[question.category],
-                        )}
-                    >
-                        {CATEGORY_LABEL[question.category]}
-                    </span>
-                    <span className="text-text-muted inline-flex items-center gap-1 text-xs">
-                        <User className="h-3 w-3" />
-                        {question.contributorName} • {question.contributorLevel}
-                    </span>
-                </div>
-
-                <p className="text-text-contrast text-base leading-snug">
+        <article className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/40 grid grid-cols-1 md:grid-cols-12 items-start md:items-center gap-4 rounded-md border p-4 shadow-sm transition-colors">
+            {/* Column 1: Text content (5/12 cols) */}
+            <div className="md:col-span-5 space-y-1.5 min-w-0">
+                <p className="text-text-contrast text-base font-semibold leading-snug">
                     <FuriganaText
                         text={question.jp}
                         furigana={question.furigana}
@@ -68,11 +54,32 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
                 <p className="text-text-muted text-sm">{question.vi}</p>
             </div>
 
-            <div className="border-bdc-primary flex items-center justify-between gap-3 border-t pt-3">
-                <span className="text-text-muted inline-flex items-center gap-1 text-xs">
+            {/* Column 2: Category Badge (2/12 cols) */}
+            <div className="md:col-span-2 flex justify-start md:justify-center">
+                <span
+                    className={cn(
+                        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap",
+                        CATEGORY_TONE[question.category],
+                    )}
+                >
+                    {CATEGORY_LABEL[question.category]}
+                </span>
+            </div>
+
+            {/* Column 3: Metadata stats (3/12 cols) */}
+            <div className="md:col-span-3 flex flex-col gap-1.5 text-text-muted text-xs">
+                <span className="inline-flex items-center gap-1 whitespace-nowrap">
                     <Repeat2 className="h-3.5 w-3.5" />
                     {t("practiceCount", { count: question.practiceCount })}
                 </span>
+                <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                    <User className="h-3 w-3" />
+                    {question.contributorName} • {question.contributorLevel}
+                </span>
+            </div>
+
+            {/* Column 4: Practice Button (2/12 cols) */}
+            <div className="md:col-span-2 flex justify-start md:justify-end w-full">
                 <Button
                     onClick={handlePractice}
                     variant="contained"
@@ -84,6 +91,9 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
                         color: "var(--color-text-pure)",
                         fontWeight: "bold",
                         "&:hover": { opacity: 0.9 },
+                        width: { xs: "100%", md: "auto" },
+                        py: 0.75,
+                        px: 2,
                     }}
                 >
                     {t("practiceNow")}

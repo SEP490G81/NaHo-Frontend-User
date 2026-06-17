@@ -1,0 +1,27 @@
+{
+    "customQuestion": {
+        "title": "Đề chọn tự phát",
+        "subtitle": "Tự soạn câu hỏi luyện nói tiếng Nhật theo nhu cầu của bạn.",
+        "dialogTitle": "Quy định tạo câu hỏi cá nhân",
+        "dialogSubtitle": "Vui lòng đọc kỹ trước khi soạn câu hỏi luyện nói của bạn.",
+        "rules": {
+            "rule1": "Đặt câu hỏi rõ ràng, đầy đủ ngữ nghĩa, tránh viết lửng lơ hoặc không rõ chủ thể (AI sẽ từ chối chấm điểm).",
+            "rule2": "Tuyệt đối không chứa từ ngữ nhạy cảm, thô tục hoặc vi phạm chính sách học tập của hệ thống.",
+            "rule3": "Khuyên dùng bối cảnh công sở, kỹ sư cầu nối BrSE hoặc chuyên ngành CNTT để tối ưu gợi ý từ AI."
+        },
+        "acceptRules": "Chấp nhận quy tắc",
+        "back": "Quay lại",
+        "formTitle": "Tự soạn câu hỏi thực hành",
+        "formSubtitle": "Nhập câu hỏi bằng tiếng Nhật mà bạn muốn luyện phản xạ trả lời.",
+        "textareaLabel": "Nhập câu hỏi bằng tiếng Nhật của bạn",
+        "textareaPlaceholder": "例：プロジェクトの進捗について教えていただけますか？",
+        "hintLabel": "Bạn cần gợi ý? (Tùy chọn)",
+        "hintPlaceholder": "Ví dụ: Hỏi ý kiến khách hàng về tiến độ dự án",
+        "aiSuggestBtn": "AI gợi ý câu hỏi tiếng Nhật",
+        "shareLabel": "Chia sẻ câu hỏi này lên Thư viện cộng đồng",
+        "shareSubLabel": "(Sẽ đưa vào hàng đợi kiểm duyệt)",
+        "nextStep": "Bước tiếp theo",
+        "errorEmptyJp": "Vui lòng nhập câu hỏi tiếng Nhật.",
+        "suggestSuccess": "Đã tạo gợi ý câu hỏi"
+    }
+}

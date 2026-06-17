@@ -1,0 +1,132 @@
+{
+    "home": {
+        "hero": {
+            "badge": "Nền tảng luyện nói tiếng Nhật cùng AI",
+            "title": "Chinh phục phản xạ giao tiếp <highlight>tiếng Nhật</highlight> cùng AI",
+            "description": "NaHo giúp bạn luyện phản xạ Kaiwa mỗi ngày với phòng luyện nói ảo, nhận phản hồi chi tiết từ AI về phát âm, từ vựng, ngữ pháp và độ tự nhiên.",
+            "startNow": "Đăng ký trải nghiệm",
+            "exploreFeatures": "Khám phá tính năng",
+            "mockup": {
+                "senseiName": "Sensei Yuki",
+                "speaking": "Đang nói chuyện",
+                "topicTag": "Phỏng vấn IT",
+                "questionJp": "自己紹介をお願いします。",
+                "questionTranslation": "Hãy giới thiệu bản thân.",
+                "answerJp": "はじめまして、ミンです。",
+                "aiResponding": "AI đang phản hồi…",
+                "aiFeedback": "Đánh giá AI",
+                "pronunciation": "Phát âm",
+                "grammar": "Ngữ pháp",
+                "pressToSpeak": "Nhấn để nói"
+            }
+        },
+        "features": {
+            "eyebrow": "Tính năng nổi bật",
+            "title": "Mọi thứ bạn cần để luyện Kaiwa",
+            "subtitle": "Các công cụ được thiết kế dành riêng cho người học tiếng Nhật giao tiếp.",
+            "items": {
+                "topics": {
+                    "title": "Luyện nói theo chủ đề",
+                    "description": "Kho chủ đề đa dạng từ giao tiếp công sở đến phỏng vấn BrSE, kèm mục tiêu học tập và từ vựng chính cho từng bài."
+                },
+                "aiFeedback": {
+                    "title": "AI chấm điểm 4 tiêu chí",
+                    "description": "Nhận phản hồi tức thì về Phát âm, Từ vựng, Ngữ pháp và Độ tự nhiên sau mỗi lượt nói."
+                },
+                "customQuestion": {
+                    "title": "Đề chọn tự phát",
+                    "description": "Tự soạn câu hỏi luyện nói theo nhu cầu riêng, AI hỗ trợ gợi ý câu hỏi tiếng Nhật chuẩn ngữ cảnh."
+                },
+                "history": {
+                    "title": "Theo dõi tiến bộ",
+                    "description": "Lịch sử luyện tập và báo cáo chi tiết giúp bạn nhìn rõ điểm mạnh, điểm yếu qua từng ngày."
+                }
+            }
+        },
+        "companions": {
+            "title": "Chọn nhân vật phù hợp với mục tiêu của bạn",
+            "subtitle": "Các cá tính AI khác biệt — từ giảng viên dịu dàng đến khách hàng trang trọng.",
+            "levelLabel": "Trình độ",
+            "items": {
+                "sakura": {
+                    "role": "Giảng viên tiếng Nhật",
+                    "description": "Nhẹ nhàng, thân thiện, tập trung giao tiếp hàng ngày và sửa ngữ pháp.",
+                    "level": "Tất cả"
+                },
+                "kenji": {
+                    "role": "Kỹ sư phần mềm Senior",
+                    "description": "Chuyên nghiệp, hội thoại kỹ thuật, mô phỏng họp văn phòng Nhật.",
+                    "level": "N3 – N1"
+                },
+                "yuki": {
+                    "role": "Người phỏng vấn tuyển dụng",
+                    "description": "Nghiêm khắc, phỏng vấn chuẩn, hỏi các câu hành vi khó.",
+                    "level": "N2 – N1"
+                },
+                "tanaka": {
+                    "role": "Khách hàng Nhật Bản",
+                    "description": "Keigo trang trọng, mô phỏng đàm phán và thảo luận kinh doanh.",
+                    "level": "N1"
+                }
+            }
+        },
+        "howItWorks": {
+            "title": "Bắt đầu chỉ với 3 bước",
+            "subtitle": "Đơn giản, nhanh chóng và hiệu quả.",
+            "steps": {
+                "step1": {
+                    "title": "Tạo tài khoản",
+                    "description": "Đăng ký miễn phí và cá nhân hóa trải nghiệm luyện Kaiwa của bạn."
+                },
+                "step2": {
+                    "title": "Luyện nói cùng AI",
+                    "description": "Chọn chủ đề, vào phòng luyện và ghi âm câu trả lời của bạn."
+                },
+                "step3": {
+                    "title": "Nhận phản hồi & tiến bộ",
+                    "description": "Xem báo cáo chi tiết từ AI và cải thiện phản xạ mỗi ngày."
+                }
+            }
+        },
+        "learnerFeedback": {
+            "eyebrow": "Đánh giá từ người học",
+            "title": "Người học nói gì về NaHo",
+            "subtitle": "Những chia sẻ thực tế từ cộng đồng học viên luyện Kaiwa mỗi ngày.",
+            "items": {
+                "t1": {
+                    "name": "Minh Anh",
+                    "role": "Sinh viên BrSE - Đại học FPT",
+                    "quote": "Mình luyện 15 phút mỗi tối, sau một tháng phản xạ trả lời phỏng vấn tiếng Nhật nhanh hơn hẳn. Phần chấm phát âm chi tiết tới từng từ."
+                },
+                "t2": {
+                    "name": "Quốc Bảo",
+                    "role": "Kỹ sư cầu nối",
+                    "quote": "Tính năng tự soạn câu hỏi rất hợp với công việc của mình — luyện đúng các tình huống họp dự án thật với khách hàng Nhật."
+                },
+                "t3": {
+                    "name": "Thu Hà",
+                    "role": "Học viên trình độ N4",
+                    "quote": "Nhờ có Furigana và bản dịch tiếng Việt nên người mới như mình vẫn tự tin luyện nói mà không sợ sai."
+                }
+            }
+        },
+        "faq": {
+            "eyebrow": "Câu hỏi thường gặp",
+            "title": "Mọi điều bạn muốn biết",
+            "items": {
+                "q1": {
+                    "question": "NaHo có hỗ trợ sửa lỗi kính ngữ (Keigo) không?",
+                    "answer": "Có. AI phân tích cấu trúc Keigo trong bối cảnh công sở, chỉ ra lỗi sử dụng Sonkeigo / Kenjougo / Teineigo và gợi ý cách diễn đạt phù hợp với từng tình huống giao tiếp."
+                },
+                "q2": {
+                    "question": "Trình độ N5/N4 có luyện tập được không?",
+                    "answer": "Có. Hệ thống hỗ trợ bật/tắt Furigana trên mọi chữ Kanji và dịch nghĩa tức thời sang tiếng Việt, giúp người mới bắt đầu vẫn tự tin luyện hội thoại."
+                },
+                "q3": {
+                    "question": "Ứng dụng này thiết kế cho ai?",
+                    "answer": "NaHo được thiết kế cho sinh viên ngành Kỹ sư cầu nối (BrSE) Đại học FPT và người học tiếng Nhật trong lĩnh vực công nghệ, đặc biệt là những ai cần luyện phản xạ Kaiwa cho phỏng vấn và môi trường công sở Nhật."
+                }
+            }
+        }
+    }
+}

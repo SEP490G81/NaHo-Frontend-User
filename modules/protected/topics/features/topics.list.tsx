@@ -1,8 +1,8 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getTopics } from "@/modules/protected/topics/services/topic.service";
 import { getHistoryList } from "@/modules/protected/history/services/history.service";
@@ -43,6 +43,7 @@ export function TopicsList() {
     const [filter, setFilter] = useState<FilterType>("all");
     const [selected, setSelected] = useState<Topic | null>(null);
     const [open, setOpen] = useState(false);
+    const [page, setPage] = useState(1);
 
     const filters = getFiltersConfig(t);
 
@@ -58,6 +59,18 @@ export function TopicsList() {
             );
         });
     }, [topics, search, filter]);
+
+    // Reset page to 1 when filters or search change
+    useEffect(() => {
+        setPage(1);
+    }, [search, filter]);
+
+    // Pagination calculations
+    const itemsPerPage = 6;
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const paginatedTopics = useMemo(() => {
+        return filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    }, [filtered, page]);
 
     const openTopic = (topic: Topic) => {
         setSelected(topic);
@@ -126,7 +139,7 @@ export function TopicsList() {
                 </div>
             ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {filtered.map((topic) => (
+                    {paginatedTopics.map((topic) => (
                         <TopicCard
                             key={topic.id}
                             topic={topic}
@@ -134,6 +147,29 @@ export function TopicsList() {
                             onOpen={openTopic}
                         />
                     ))}
+                </div>
+            )}
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex justify-center mt-6">
+                    <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={(_, value) => setPage(value)}
+                        sx={{
+                            "& .MuiPaginationItem-root": {
+                                color: "var(--color-text-contrast)",
+                                "&.Mui-selected": {
+                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    color: "var(--color-text-pure)",
+                                },
+                                "&:hover": {
+                                    backgroundColor: "var(--color-hbgc-app)",
+                                },
+                            },
+                        }}
+                    />
                 </div>
             )}
 
