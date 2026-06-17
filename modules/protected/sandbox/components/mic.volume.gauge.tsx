@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 interface MicVolumeGaugeProps {
     /** Mức âm lượng 0–100 */
@@ -15,7 +15,7 @@ export function MicVolumeGauge({ level, active }: MicVolumeGaugeProps) {
 
     return (
         <div className="space-y-2">
-            <div className="flex h-12 items-end justify-center gap-1 rounded-lg border border-bdc-primary bg-bgc-page p-2">
+            <div className="border-bdc-primary bg-bgc-page flex h-12 items-end justify-center gap-1 rounded-lg border p-2">
                 {Array.from({ length: bars }).map((_, i) => {
                     const threshold = ((i + 1) / bars) * 100;
                     const lit = active && clamped >= threshold;
@@ -31,16 +31,18 @@ export function MicVolumeGauge({ level, active }: MicVolumeGaugeProps) {
                                         : threshold > 55
                                           ? "bg-bgc-highlight"
                                           : "bg-bgc-highlight/80"
-                                    : "bg-bdc-muted/50"
+                                    : "bg-bdc-muted/50",
                             )}
                             style={{ height: `${heightPct}%` }}
                         />
                     );
                 })}
             </div>
-            <div className="flex items-center justify-between text-xs text-text-muted">
+            <div className="text-text-muted flex items-center justify-between text-xs">
                 <span>{t("micLevel")}</span>
-                <span className="font-mono tabular-nums">{Math.round(clamped)}%</span>
+                <span className="font-mono tabular-nums">
+                    {Math.round(clamped)}%
+                </span>
             </div>
         </div>
     );

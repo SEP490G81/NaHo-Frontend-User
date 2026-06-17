@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { getScoreBadgeClass } from "../constants/history.constant";
 
 interface ScoreBadgeProps {
@@ -16,7 +16,7 @@ export function ScoreBadge({ score, className }: ScoreBadgeProps) {
             className={cn(
                 "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums",
                 badgeColorClass,
-                className
+                className,
             )}
         >
             {score.toFixed(1)}/10

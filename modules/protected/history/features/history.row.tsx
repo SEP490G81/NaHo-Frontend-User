@@ -2,7 +2,7 @@
 import React from "react";
 import { BarChart3, PlayCircle } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { slugifyText } from "@/lib/utils";
+import { slugifyText } from "@/libs/utils";
 import { useTranslations } from "next-intl";
 import { CATEGORY_LABEL, type Question, type Topic } from "@/data/mockTopics";
 import type { QuestionHistoryEntry } from "@/data/mockHistory";

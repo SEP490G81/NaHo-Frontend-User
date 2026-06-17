@@ -9,9 +9,10 @@ import "../../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import React from "react";
-import { routing } from "@/i18n/routing";
 import { QueryProvider } from "@/components/providers/query.provider";
 import { InitColorSchemeScript } from "@mui/material";
+import SseProvider from "@/components/providers/sse.provider";
+import { routing } from "@/i18n/routing";
 
 type Props = {
     children: React.ReactNode;
@@ -43,7 +44,9 @@ export default async function LocaleLayout({
                         <BProgressProvider>
                             <AppThemeProvider>
                                 <QueryProvider>
-                                    <main>{children}</main>
+                                    <SseProvider>
+                                        <main>{children}</main>
+                                    </SseProvider>
                                 </QueryProvider>
                                 <ToastContainer position="bottom-right" />
                             </AppThemeProvider>

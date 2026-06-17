@@ -2,7 +2,7 @@
 import React from "react";
 import { AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 export interface PronunciationWord {
     word: string;

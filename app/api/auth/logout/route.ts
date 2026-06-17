@@ -10,7 +10,14 @@ export async function POST() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
     if (!accessToken) {
-        return NextResponse.json(null, { status: 401 });
+        const response = NextResponse.json(null, {
+            status: 401,
+        });
+
+        response.cookies.delete(ACCESS_TOKEN_NAME);
+        response.cookies.delete(REFRESH_TOKEN_NAME);
+
+        return response;
     }
 
     const backendResponse = await fetch(`${process.env.API_URL}/auth/logout`, {
@@ -20,6 +27,17 @@ export async function POST() {
         },
         cache: "no-store",
     });
+
+    if (backendResponse.status === 401) {
+        const response = NextResponse.json(null, {
+            status: 401,
+        });
+
+        response.cookies.delete(ACCESS_TOKEN_NAME);
+        response.cookies.delete(REFRESH_TOKEN_NAME);
+
+        return response;
+    }
 
     if (!backendResponse.ok) {
         const result = await backendResponse.json();

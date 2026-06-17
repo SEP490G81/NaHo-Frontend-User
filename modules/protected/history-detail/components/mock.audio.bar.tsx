@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface MockAudioBarProps {
     src?: string;
@@ -9,8 +8,12 @@ interface MockAudioBarProps {
 }
 
 function formatTime(sec: number) {
-    const m = Math.floor(sec / 60).toString().padStart(2, "0");
-    const s = Math.floor(sec % 60).toString().padStart(2, "0");
+    const m = Math.floor(sec / 60)
+        .toString()
+        .padStart(2, "0");
+    const s = Math.floor(sec % 60)
+        .toString()
+        .padStart(2, "0");
     return `${m}:${s}`;
 }
 
@@ -21,7 +24,8 @@ export function MockAudioBar({ src, durationSec }: MockAudioBarProps) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // Fallback sample audio url (a short public domain sample)
-    const audioSrc = src || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+    const audioSrc =
+        src || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -81,26 +85,30 @@ export function MockAudioBar({ src, durationSec }: MockAudioBarProps) {
 
     return (
         <div
-            className="flex items-center gap-3 rounded-lg border border-bdc-primary bg-bgc-page px-3 py-1.5 w-fit min-w-[200px]"
+            className="border-bdc-primary bg-bgc-page flex w-fit min-w-[200px] items-center gap-3 rounded-lg border px-3 py-1.5"
             onClick={(e) => e.stopPropagation()}
         >
             <button
                 type="button"
                 onClick={toggle}
                 aria-label={playing ? "Tạm dừng" : "Phát"}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-bgc-highlight text-text-pure transition-transform hover:scale-105"
+                className="bg-bgc-highlight text-text-pure flex h-7 w-7 items-center justify-center rounded-full transition-transform hover:scale-105"
             >
-                {playing ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
+                {playing ? (
+                    <Pause className="h-3.5 w-3.5" />
+                ) : (
+                    <Play className="ml-0.5 h-3.5 w-3.5" />
+                )}
             </button>
 
-            <div className="relative h-1.5 w-24 overflow-hidden rounded-full bg-bdc-muted/50">
+            <div className="bg-bdc-muted/50 relative h-1.5 w-24 overflow-hidden rounded-full">
                 <div
-                    className="h-full bg-bgc-highlight transition-all duration-75"
+                    className="bg-bgc-highlight h-full transition-all duration-75"
                     style={{ width: `${pct}%` }}
                 />
             </div>
 
-            <span className="font-mono text-xs tabular-nums text-text-muted">
+            <span className="text-text-muted font-mono text-xs tabular-nums">
                 {formatTime(progress)}
             </span>
         </div>

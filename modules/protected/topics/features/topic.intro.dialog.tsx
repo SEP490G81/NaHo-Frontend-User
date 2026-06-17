@@ -12,7 +12,7 @@ import {
 import { useTranslations } from "next-intl";
 import { CATEGORY_LABEL, type Topic } from "@/data/mockTopics";
 import FuriganaText from "@/components/ui/furigana.text";
-import { slugifyText } from "@/lib/utils";
+import { slugifyText } from "@/libs/utils";
 
 interface TopicIntroDialogProps {
     topic: Topic | null;

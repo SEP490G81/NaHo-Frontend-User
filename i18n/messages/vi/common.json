@@ -1,5 +1,10 @@
 {
     "common": {
+        "forceLogout": {
+            "title": "Cảnh báo đăng nhập",
+            "message": "Tài khoản hiện đang được đăng nhập ở nơi khác",
+            "button": "Đăng nhập lại"
+        },
         "appName": "NaHo",
         "copyright": "© 2026 NaHo. Phát triển bởi nhóm G81 - SEP490 - Đại học FPT.",
         "common": {

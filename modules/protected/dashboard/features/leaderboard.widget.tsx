@@ -3,7 +3,7 @@ import React from "react";
 import { Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { leaderboard } from "@/data/mockLearnerDashboard";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { RANK_COLORS } from "../constants/dashboard.constant";
 
 export function LeaderboardWidget() {

@@ -1,8 +1,9 @@
 import { UserResponse } from "@/types/responses/user.response";
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { ApiResponse } from "@/types/responses/base.response";
 import { cookies } from "next/headers";
 import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 import { cache } from "react";
+import { redirect } from "next/navigation";
 
 // cache() function use to cache the result in a request
 export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
@@ -23,8 +24,7 @@ export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
     const result = await backendResponse.json();
 
     if (!backendResponse.ok) {
-        const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.title);
+        redirect("/login");
     }
 
     return (result as ApiResponse<UserResponse>).data;

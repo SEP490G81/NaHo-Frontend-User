@@ -4,7 +4,7 @@ import { ChevronDown, History, Volume2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button, Collapse, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { cn, slugifyText } from "@/lib/utils";
+import { cn, slugifyText } from "@/libs/utils";
 import type { Question } from "@/data/mockTopics";
 import FuriganaText from "@/components/ui/furigana.text";
 import MockAudioPlayer from "../components/mock.audio.player";
