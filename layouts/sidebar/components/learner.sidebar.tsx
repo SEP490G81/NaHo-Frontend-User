@@ -2,7 +2,7 @@
 import React from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Box, Drawer, List, ListItem, ListItemButton } from "@mui/material";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
 import LogoButton from "@/modules/public/login/components/logo.button";

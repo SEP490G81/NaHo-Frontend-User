@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
+
 interface PlaybackPlayerProps {
     durationSec: number;
     playing: boolean;

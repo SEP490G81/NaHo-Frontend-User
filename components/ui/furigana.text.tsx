@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 export interface FuriganaTextProps {
     text: string;
@@ -25,7 +25,7 @@ export function FuriganaText({
     return (
         <ruby
             className={cn(
-                "ruby-text font-noto-jp [&>rt]:text-[0.6em] [&>rt]:text-text-muted [&>rt]:font-normal",
+                "ruby-text font-noto-jp [&>rt]:text-text-muted [&>rt]:text-[0.6em] [&>rt]:font-normal",
                 className,
             )}
         >

@@ -10,7 +10,7 @@ import {
 } from "@/data/mockCommunityQuestions";
 import { useCustomQuestionStore } from "@/store/customQuestionStore";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 const CATEGORY_TONE: Record<CommunityQuestion["category"], string> = {
     brse: "bg-bgc-highlight/15 text-bgc-highlight",

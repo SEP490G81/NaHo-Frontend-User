@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { IconButton } from "@mui/material";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 interface MockAudioPlayerProps {
     src?: string;
@@ -11,7 +11,9 @@ interface MockAudioPlayerProps {
 
 function formatTime(sec: number) {
     const s = Math.max(0, Math.floor(sec));
-    const mm = Math.floor(s / 60).toString().padStart(2, "0");
+    const mm = Math.floor(s / 60)
+        .toString()
+        .padStart(2, "0");
     const ss = (s % 60).toString().padStart(2, "0");
     return `${mm}:${ss}`;
 }
@@ -29,7 +31,8 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // Fallback sample audio url (a short silent MP3 or public domain sample)
-    const audioSrc = src || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+    const audioSrc =
+        src || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -94,7 +97,7 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
     const progress = Math.min(100, (elapsed / Math.max(0.001, duration)) * 100);
 
     return (
-        <div className="space-y-3 rounded-lg border border-bdc-primary bg-bgc-app p-4">
+        <div className="border-bdc-primary bg-bgc-app space-y-3 rounded-lg border p-4">
             <div className="flex items-center gap-3">
                 <IconButton
                     onClick={togglePlay}
@@ -110,20 +113,27 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
                         },
                     }}
                 >
-                    {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                    {playing ? (
+                        <Pause className="h-4 w-4" />
+                    ) : (
+                        <Play className="h-4 w-4" />
+                    )}
                 </IconButton>
 
                 <div className="flex h-12 flex-1 items-center gap-[3px]">
                     {BAR_HEIGHTS.map((h, i) => {
-                        const barProgress = ((i + 1) / BAR_HEIGHTS.length) * 100;
+                        const barProgress =
+                            ((i + 1) / BAR_HEIGHTS.length) * 100;
                         const reached = barProgress <= progress;
                         return (
                             <span
                                 key={i}
                                 className={cn(
                                     "w-[3px] rounded-full transition-colors",
-                                    reached ? "bg-bgc-highlight" : "bg-bdc-muted",
-                                    playing && "animate-pulse"
+                                    reached
+                                        ? "bg-bgc-highlight"
+                                        : "bg-bdc-muted",
+                                    playing && "animate-pulse",
                                 )}
                                 style={{
                                     height: `${h}%`,
@@ -149,7 +159,7 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
                 </IconButton>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-text-muted">
+            <div className="text-text-muted flex items-center justify-between text-xs">
                 <span className="tabular-nums">{formatTime(elapsed)}</span>
                 <span className="tabular-nums">{formatTime(duration)}</span>
             </div>

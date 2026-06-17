@@ -2,7 +2,7 @@
 import React from "react";
 import { Mic, Square } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
+import { cn } from "@/libs/utils";
 
 interface RecordButtonProps {
     recording: boolean;
@@ -11,12 +11,20 @@ interface RecordButtonProps {
 }
 
 function formatTime(sec: number) {
-    const m = Math.floor(sec / 60).toString().padStart(2, "0");
-    const s = Math.floor(sec % 60).toString().padStart(2, "0");
+    const m = Math.floor(sec / 60)
+        .toString()
+        .padStart(2, "0");
+    const s = Math.floor(sec % 60)
+        .toString()
+        .padStart(2, "0");
     return `${m}:${s}`;
 }
 
-export function RecordButton({ recording, elapsed, onToggle }: RecordButtonProps) {
+export function RecordButton({
+    recording,
+    elapsed,
+    onToggle,
+}: RecordButtonProps) {
     const t = useTranslations("sandbox");
 
     return (
@@ -24,33 +32,43 @@ export function RecordButton({ recording, elapsed, onToggle }: RecordButtonProps
             <div className="relative flex h-44 w-44 items-center justify-center">
                 {recording && (
                     <>
-                        <span className="absolute inset-0 animate-ping rounded-full bg-bgc-highlight/30" />
-                        <span className="absolute inset-2 animate-pulse rounded-full bg-bgc-highlight/20" />
+                        <span className="bg-bgc-highlight/30 absolute inset-0 animate-ping rounded-full" />
+                        <span className="bg-bgc-highlight/20 absolute inset-2 animate-pulse rounded-full" />
                     </>
                 )}
                 <button
                     type="button"
                     onClick={onToggle}
-                    aria-label={recording ? t("recordingBtnStop") : t("recordingBtnStart")}
+                    aria-label={
+                        recording
+                            ? t("recordingBtnStop")
+                            : t("recordingBtnStart")
+                    }
                     className={cn(
-                        "relative z-10 flex h-32 w-32 items-center justify-center rounded-full text-text-pure shadow-lg transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-bgc-highlight/50",
+                        "text-text-pure focus-visible:ring-bgc-highlight/50 relative z-10 flex h-32 w-32 items-center justify-center rounded-full shadow-lg transition-all focus-visible:ring-4 focus-visible:outline-none",
                         recording
                             ? "bg-bgc-error hover:bg-hbgc-error"
-                            : "bg-bgc-highlight hover:scale-105"
+                            : "bg-bgc-highlight hover:scale-105",
                     )}
                 >
-                    {recording ? <Square className="h-10 w-10 fill-current" /> : <Mic className="h-12 w-12" />}
+                    {recording ? (
+                        <Square className="h-10 w-10 fill-current" />
+                    ) : (
+                        <Mic className="h-12 w-12" />
+                    )}
                 </button>
             </div>
 
-            <div className="font-mono text-2xl tabular-nums text-text-contrast">{formatTime(elapsed)}</div>
+            <div className="text-text-contrast font-mono text-2xl tabular-nums">
+                {formatTime(elapsed)}
+            </div>
 
             {recording && (
                 <div className="flex h-12 items-end justify-center gap-1">
                     {Array.from({ length: 28 }).map((_, i) => (
                         <span
                             key={i}
-                            className="w-1 rounded-full bg-bgc-highlight"
+                            className="bg-bgc-highlight w-1 rounded-full"
                             style={{
                                 height: `${20 + Math.abs(Math.sin((elapsed * 2 + i) * 0.5)) * 80}%`,
                                 transition: "height 180ms ease-out",
@@ -60,7 +78,7 @@ export function RecordButton({ recording, elapsed, onToggle }: RecordButtonProps
                 </div>
             )}
 
-            <p className="text-xs text-text-muted">
+            <p className="text-text-muted text-xs">
                 {recording ? t("recordingHintActive") : t("recordingHintIdle")}
             </p>
         </div>
