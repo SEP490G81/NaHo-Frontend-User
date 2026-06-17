@@ -22,13 +22,15 @@ export async function generateMetadata({
 }
 
 const LoginPage = async () => {
+    let user = null;
     try {
-        const user = await getCurrentUser();
-        if (user) {
-            redirect("/dashboard");
-        }
+        user = await getCurrentUser();
     } catch (error) {
         console.log(error);
+    }
+
+    if (user) {
+        redirect("/dashboard");
     }
 
     return <Login />;

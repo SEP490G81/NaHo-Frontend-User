@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { logoutAll } from "@/services/client/user.service";
+import { logout } from "@/services/client/user.service";
 import { useRouter } from "@/i18n/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
@@ -13,12 +13,11 @@ const LogoutButton = () => {
 
     const handleLogout = async () => {
         try {
-            // await logout();
-            await logoutAll();
+            await logout();
 
             queryClient.setQueryData(queryKeys.auth.currentUser, null);
 
-            replace("/home");
+            replace("/login");
         } catch (error) {
             console.error(error);
         }
