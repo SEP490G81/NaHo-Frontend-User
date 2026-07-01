@@ -58,25 +58,25 @@ export const NAV_ITEMS: NavItem[] = [
         title: "Shadowing & Dictation",
         url: "/dashboard",
         icon: Headphones,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Báo cáo tiến độ",
         url: "/dashboard",
         icon: LineChart,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Bảng xếp hạng thi đua",
         url: "/dashboard",
         icon: Trophy,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Cài đặt & Hồ sơ",
         url: "/dashboard",
         icon: UserCog,
-        disabled: false,
+        disabled: true,
     },
 ];
 
