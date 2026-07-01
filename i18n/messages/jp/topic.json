@@ -20,6 +20,7 @@
         "questionCount": "{total} câu hỏi • Đã luyện {completed}/{total}",
         "showFurigana": "Hiện Furigana",
         "practiceNow": "Luyện nói ngay",
+        "viewDetail": "Xem chi tiết",
         "completed": "Đã luyện tập • {score}/10",
         "notCompleted": "Chưa luyện tập",
         "viewHistory": "Xem lịch sử",

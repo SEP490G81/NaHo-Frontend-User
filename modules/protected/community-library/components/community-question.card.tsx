@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-import { Mic, Repeat2, User } from "lucide-react";
+import { Repeat2, User } from "lucide-react";
 import { Button } from "@mui/material";
-import { useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import FuriganaText from "@/components/ui/furigana.text";
 import {
     CATEGORY_LABEL,
     type CommunityQuestion,
 } from "@/data/mockCommunityQuestions";
-import { useCustomQuestionStore } from "@/store/customQuestionStore";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 
@@ -25,20 +24,7 @@ interface Props {
 }
 
 export function CommunityQuestionCard({ question, showFurigana }: Props) {
-    const { push } = useRouter();
     const t = useTranslations("communityLibrary");
-    const setQuestion = useCustomQuestionStore((s) => s.setQuestion);
-
-    const handlePractice = () => {
-        const id = `cq-${Date.now()}`;
-        setQuestion({
-            id,
-            questionJp: question.jp,
-            hintVi: question.vi,
-            shareToCommunity: false,
-        });
-        push(`/sandbox-custom/${id}`);
-    };
 
     return (
         <article className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/40 grid grid-cols-1 md:grid-cols-12 items-start md:items-center gap-4 rounded-md border p-4 shadow-sm transition-colors">
@@ -81,10 +67,10 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
             {/* Column 4: Practice Button (2/12 cols) */}
             <div className="md:col-span-2 flex justify-start md:justify-end w-full">
                 <Button
-                    onClick={handlePractice}
+                    component={Link as any}
+                    href={`/community-library/${question.id}`}
                     variant="contained"
                     size="small"
-                    startIcon={<Mic className="h-4 w-4" />}
                     sx={{
                         textTransform: "none",
                         backgroundColor: "var(--color-bgc-highlight)",
@@ -96,7 +82,7 @@ export function CommunityQuestionCard({ question, showFurigana }: Props) {
                         px: 2,
                     }}
                 >
-                    {t("practiceNow")}
+                    {t("viewDetail")}
                 </Button>
             </div>
         </article>

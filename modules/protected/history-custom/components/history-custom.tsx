@@ -60,7 +60,7 @@ export function HistoryCustom() {
     return (
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-6xl space-y-6">
-                <header className="flex flex-wrap items-end justify-between gap-4">
+                <header className="border-bdc-primary bg-bgc-app rounded-xl border flex flex-wrap items-end justify-between gap-4 p-6 shadow-sm">
                     <div>
                         <h1 className="text-text-contrast flex items-center gap-2 text-2xl font-bold md:text-3xl">
                             <Wand2 className="text-bgc-highlight h-6 w-6" />

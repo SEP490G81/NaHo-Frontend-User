@@ -3,6 +3,7 @@ import React from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
     Box,
+    Collapse,
     Drawer,
     IconButton,
     List,
@@ -13,13 +14,36 @@ import { cn } from "@/libs/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
 import SidebarLogoButton from "./sidebar.logo.button";
-import { MenuIcon } from "lucide-react";
+import { ChevronDown, MenuIcon } from "lucide-react";
 
 const DRAWER_WIDTH = 260;
 
 export function LearnerSidebar() {
     const pathname = usePathname();
     const { isSidebarOpen, isSidebarCollapsed, toggleSidebarCollapse, closeSidebar } = useUiStore();
+    const [openSubMenus, setOpenSubMenus] = React.useState<Record<string, boolean>>({});
+
+    React.useEffect(() => {
+        const initialOpenState: Record<string, boolean> = {};
+        NAV_ITEMS.forEach((item) => {
+            if (item.children) {
+                const hasActiveChild = item.children.some(
+                    (child) => pathname === child.url || pathname.startsWith(child.url + "/")
+                );
+                if (hasActiveChild) {
+                    initialOpenState[item.title] = true;
+                }
+            }
+        });
+        setOpenSubMenus((prev) => ({ ...initialOpenState, ...prev }));
+    }, [pathname]);
+
+    const toggleSubMenu = (title: string) => {
+        setOpenSubMenus((prev) => ({
+            ...prev,
+            [title]: !prev[title],
+        }));
+    };
 
     const renderDrawerContent = (isCollapsed: boolean) => (
         <>
@@ -53,10 +77,16 @@ export function LearnerSidebar() {
             <Box className="flex-1 overflow-y-auto py-4">
                 <List disablePadding className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}>
                     {NAV_ITEMS.map((item) => {
-                        const active =
-                            pathname === item.url ||
-                            (item.url !== "/dashboard" &&
-                                pathname.startsWith(item.url + "/"));
+                        const hasChildren = item.children && item.children.length > 0;
+                        const active = item.url
+                            ? pathname === item.url ||
+                              (item.url !== "/dashboard" &&
+                                  pathname.startsWith(item.url + "/"))
+                            : item.children?.some(
+                                  (child) =>
+                                      pathname === child.url ||
+                                      pathname.startsWith(child.url + "/")
+                              );
 
                         if (item.disabled) {
                             return (
@@ -82,6 +112,104 @@ export function LearnerSidebar() {
                                         )}
                                     </Box>
                                 </ListItem>
+                            );
+                        }
+
+                        if (hasChildren) {
+                            const isOpen = !!openSubMenus[item.title];
+                            return (
+                                <React.Fragment key={item.title}>
+                                    <ListItem disablePadding>
+                                        <ListItemButton
+                                            onClick={() => {
+                                                if (isCollapsed) {
+                                                    toggleSidebarCollapse();
+                                                }
+                                                toggleSubMenu(item.title);
+                                            }}
+                                            className={cn(
+                                                "relative flex w-full items-center rounded-lg text-sm transition-all duration-200 ease-in-out",
+                                                isCollapsed ? "justify-center px-0" : "gap-3 px-3",
+                                                active
+                                                    ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
+                                                    : "text-text-contrast hover:bg-hbgc-app" + (isCollapsed ? "" : " hover:translate-x-1"),
+                                            )}
+                                            sx={{
+                                                paddingTop: "10px",
+                                                paddingBottom: "10px",
+                                            }}
+                                            title={isCollapsed ? item.title : undefined}
+                                        >
+                                            {active && (
+                                                <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                                            )}
+                                            <item.icon
+                                                className={cn(
+                                                    "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
+                                                    active
+                                                        ? "text-bgc-highlight"
+                                                        : "text-text-muted",
+                                                )}
+                                            />
+                                            {!isCollapsed && (
+                                                <>
+                                                    <span
+                                                        className={cn(
+                                                            "flex-1 text-sm font-medium transition-all duration-200",
+                                                            active
+                                                                ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
+                                                                : "text-text-contrast truncate",
+                                                        )}
+                                                    >
+                                                        {item.title}
+                                                    </span>
+                                                    <ChevronDown
+                                                        className={cn(
+                                                            "h-4 w-4 shrink-0 text-text-muted transition-transform duration-200",
+                                                            isOpen && "rotate-180"
+                                                        )}
+                                                    />
+                                                </>
+                                            )}
+                                        </ListItemButton>
+                                    </ListItem>
+                                    <Collapse in={isOpen && !isCollapsed} timeout="auto" unmountOnExit>
+                                        <List component="div" disablePadding className="space-y-1 mt-1 pl-6">
+                                            {item.children!.map((child) => {
+                                                const childActive =
+                                                    pathname === child.url ||
+                                                    pathname.startsWith(child.url + "/");
+                                                return (
+                                                    <ListItem key={child.title} disablePadding>
+                                                        <ListItemButton
+                                                            component={Link as any}
+                                                            href={child.url}
+                                                            onClick={closeSidebar}
+                                                            className={cn(
+                                                                "relative flex w-full items-center rounded-lg text-xs transition-all duration-200 ease-in-out gap-3 px-3 py-2",
+                                                                childActive
+                                                                    ? "bg-bgc-highlight/10 text-bgc-highlight font-semibold"
+                                                                    : "text-text-contrast hover:bg-hbgc-app" + (isCollapsed ? "" : " hover:translate-x-1"),
+                                                            )}
+                                                        >
+                                                            {childActive && (
+                                                                <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                                                            )}
+                                                            <span
+                                                                className={cn(
+                                                                    "flex-1 text-xs font-medium transition-all duration-200 truncate",
+                                                                    childActive ? "text-bgc-highlight font-semibold" : "text-text-muted"
+                                                                )}
+                                                            >
+                                                                {child.title}
+                                                            </span>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                );
+                                            })}
+                                        </List>
+                                    </Collapse>
+                                </React.Fragment>
                             );
                         }
 
