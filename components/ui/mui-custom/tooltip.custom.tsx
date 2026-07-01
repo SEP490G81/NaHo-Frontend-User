@@ -6,7 +6,7 @@ interface TooltipCustomProps extends TooltipProps {
 }
 
 export const TooltipCustom = styled(
-    ({ className, ...props }: TooltipCustomProps) => (
+    ({ className, color, ...props }: TooltipCustomProps) => (
         <Tooltip {...props} arrow classes={{ popper: className }} />
     ),
 )(({ color = "--color-bgc-highlight" }) => ({

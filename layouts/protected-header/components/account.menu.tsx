@@ -9,6 +9,7 @@ import {
 } from "@/layouts/protected-header/utils/header.util";
 import { ACCOUNT_MENU_ITEMS } from "@/layouts/protected-header/constants/protected.header.constant";
 import LogoutButton from "@/layouts/protected-header/features/logout.button";
+import { useReportStore } from "@/store/reportStore";
 
 const AccountMenu = ({
     anchorEl,
@@ -19,6 +20,7 @@ const AccountMenu = ({
 }) => {
     const t = useTranslations();
     const { data: user } = useCurrentUser();
+    const openReportModal = useReportStore((s) => s.openModal);
 
     console.log("User: ", user);
     const handleClose = () => {
@@ -67,6 +69,27 @@ const AccountMenu = ({
                     {ACCOUNT_MENU_ITEMS.map((item) => {
                         if (item.type === "STATIC") {
                             return <div key={item.id}>{item.component}</div>;
+                        }
+                        if (item.titleKey === "report") {
+                            return (
+                                <button
+                                    key={item.id}
+                                    onClick={() => {
+                                        handleClose();
+                                        openReportModal("SYSTEM");
+                                    }}
+                                    className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 w-full items-center justify-start rounded-md px-5 text-text-contrast transition-all duration-150 cursor-pointer"
+                                >
+                                    <span className="flex h-10 w-10 items-center">
+                                        {item.icon}
+                                    </span>
+                                    <p className="text-sm font-semibold whitespace-nowrap text-left">
+                                        {t(
+                                            `common.layout.header.accountMenu.${item.titleKey}`,
+                                        )}
+                                    </p>
+                                </button>
+                            );
                         }
                         return (
                             <Link

@@ -30,7 +30,8 @@
                 "custom-question": "Custom Questions",
                 "sandbox-custom": "Custom Practice Room",
                 "history-custom": "Custom Question History",
-                "community-library": "Community Library"
+                "community-library": "Community Library",
+                "report": "Report"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -55,7 +56,8 @@
                 "accountMenu": {
                     "settings": "Cài đặt",
                     "language": "Ngôn ngữ",
-                    "getHelp": "Trợ giúp"
+                    "getHelp": "Trợ giúp",
+                    "report": "Báo cáo"
                 }
             }
         },
@@ -72,7 +74,28 @@
             "like": "Thích",
             "reply": "Phản hồi",
             "writeReplyPlaceholder": "Viết phản hồi...",
-            "sendButton": "Gửi"
+            "sendButton": "Gửi",
+            "report": "Báo cáo"
+        },
+        "report": {
+            "modalTitle": "Gửi phản hồi & báo cáo",
+            "fieldReportType": "Loại báo cáo",
+            "typeQuestion": "Câu hỏi",
+            "typeComment": "Bình luận",
+            "typeSystem": "Hệ thống",
+            "fieldTitle": "Tiêu đề",
+            "titlePlaceholder": "Nhập tiêu đề phản hồi...",
+            "fieldDescription": "Mô tả chi tiết",
+            "descriptionPlaceholder": "Vui lòng mô tả chi tiết vấn đề bạn gặp phải...",
+            "fieldImage": "Ảnh đính kèm",
+            "uploadImageBtn": "Tải lên hình ảnh",
+            "imageAttached": "Ảnh đã đính kèm",
+            "removeBtn": "Xóa ảnh",
+            "cancelBtn": "Hủy",
+            "submitBtn": "Gửi báo cáo",
+            "submitSuccess": "Gửi báo cáo thành công! Cảm ơn đóng góp của bạn.",
+            "errorOnlyImage": "Vui lòng chỉ chọn tệp hình ảnh!",
+            "errorRequired": "Vui lòng nhập đầy đủ tiêu đề và mô tả!"
         }
     }
 }

@@ -12,6 +12,7 @@ import { ChevronRight, Flame, MenuIcon } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
 import HeaderDecoration from "./header-decoration";
+import { ReportModal } from "@/modules/protected/report/features/report-modal";
 
 function prettify(seg: string) {
     return LABELS[seg] ?? decodeURIComponent(seg).replace(/-/g, " ");
@@ -103,6 +104,7 @@ const ProtectedHeader = () => {
                 />
                 <ThemeSwitchButton />
                 <UserAvatar />
+                <ReportModal />
             </div>
         </div>
     );

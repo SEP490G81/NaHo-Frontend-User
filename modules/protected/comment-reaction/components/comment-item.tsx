@@ -5,8 +5,11 @@ import type { Reaction, ReactionType } from "../types/reaction";
 import { REACTION_EMOJIS } from "../constants/mockData";
 import ReactionPicker from "./reaction-picker";
 import ReactionSummary from "./reaction-summary";
-import { Avatar, Button, TextField } from "@mui/material";
+import CommentReplyForm from "./comment-reply-form";
+import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Flag } from "lucide-react";
+import { useReportStore } from "@/store/reportStore";
 
 interface CommentItemProps {
   comment: Comment;
@@ -26,6 +29,7 @@ export function CommentItem({
   onToggleReaction,
 }: CommentItemProps) {
   const t = useTranslations("common.commentReaction");
+  const openReportModal = useReportStore((s) => s.openModal);
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -115,7 +119,7 @@ export function CommentItem({
             >
               <button
                 onClick={() => onToggleReaction(comment.id, "LIKE")}
-                className={`flex items-center gap-1 cursor-pointer transition-colors ${reactionBtnColor}`}
+                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${reactionBtnColor}`}
               >
                 <span>{reactionBtnEmoji}</span>
                 <span>{reactionBtnText}</span>
@@ -141,6 +145,15 @@ export function CommentItem({
               </button>
             )}
 
+            {/* Report Button */}
+            <button
+              onClick={() => openReportModal("COMMENT", comment.questionId, comment.id)}
+              className="text-text-muted hover:text-red-500 cursor-pointer transition-colors flex items-center gap-1"
+            >
+              <Flag className="h-3 w-3" />
+              <span>{t("report") || "Báo cáo"}</span>
+            </button>
+
             {/* Reaction Summary */}
             <ReactionSummary reactions={commentReactions} />
           </div>
@@ -149,46 +162,13 @@ export function CommentItem({
 
       {/* Reply Input Form */}
       {showReplyInput && (
-        <form
+        <CommentReplyForm
+          value={replyText}
+          onChange={setReplyText}
           onSubmit={handleSendReply}
-          className="ml-12 flex items-start gap-3 bg-bgc-page p-3 rounded-xl border border-bdc-primary border-dashed animate-fade-in"
-        >
-          <TextField
-            fullWidth
-            size="small"
-            placeholder={t("writeReplyPlaceholder")}
-            value={replyText}
-            onChange={(e) => setReplyText(e.target.value)}
-            slotProps={{
-              input: {
-                className: "text-sm text-text-contrast bg-bgc-app",
-              },
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "8px",
-                "& fieldset": { borderColor: "var(--color-bdc-primary)" },
-                "&:hover fieldset": { borderColor: "var(--color-bdc-muted)" },
-              },
-            }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            size="small"
-            sx={{
-              textTransform: "none",
-              bgcolor: "var(--color-bgc-highlight)",
-              color: "var(--color-text-pure)",
-              fontWeight: "bold",
-              borderRadius: "8px",
-              height: "40px",
-              "&:hover": { opacity: 0.9 },
-            }}
-          >
-            {t("sendButton")}
-          </Button>
-        </form>
+          placeholder={t("writeReplyPlaceholder")}
+          submitLabel={t("sendButton")}
+        />
       )}
 
       {/* Render Nested Child Replies */}

@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import { MessageSquare, ThumbsUp } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useCommentReactionStore } from "@/store/commentReactionStore";
-import { ReactionType } from "../types/reaction";
+import type { ReactionType } from "../types/reaction";
 import { REACTION_EMOJIS } from "../constants/mockData";
 import ReactionPicker from "../components/reaction-picker";
 import ReactionSummary from "../components/reaction-summary";
 import CommentItem from "../components/comment-item";
-import { Button, TextField, Avatar } from "@mui/material";
+import CommentInputForm from "../components/comment-input-form";
 import { useTranslations } from "next-intl";
 
 interface CommentSectionProps {
@@ -123,56 +123,14 @@ export function CommentSection({ questionId }: CommentSectionProps) {
       </div>
 
       {/* Input box for new comment */}
-      <form onSubmit={handleAddRootComment} className="flex items-start gap-3">
-        <Avatar
-          sx={{ width: 40, height: 40, bgcolor: "var(--color-bgc-highlight)" }}
-        >
-          {currentUserName.charAt(0).toUpperCase()}
-        </Avatar>
-
-        <div className="flex-1 flex flex-col gap-2">
-          <TextField
-            fullWidth
-            multiline
-            rows={2}
-            placeholder={t("writeCommentPlaceholder")}
-            value={newCommentText}
-            onChange={(e) => setNewCommentText(e.target.value)}
-            slotProps={{
-              input: {
-                className: "text-sm text-text-contrast bg-bgc-page",
-              },
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "12px",
-                "& fieldset": { borderColor: "var(--color-bdc-primary)" },
-                "&:hover fieldset": { borderColor: "var(--color-bdc-muted)" },
-              },
-            }}
-          />
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={!newCommentText.trim()}
-              sx={{
-                textTransform: "none",
-                bgcolor: "var(--color-bgc-highlight)",
-                color: "var(--color-text-pure)",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                px: 3,
-                py: 0.75,
-                "&:hover": { opacity: 0.9 },
-                "&.Mui-disabled": { bgcolor: "var(--color-bdc-muted)", color: "var(--color-text-muted)" },
-              }}
-            >
-              {t("postCommentButton")}
-            </Button>
-          </div>
-        </div>
-      </form>
+      <CommentInputForm
+        currentUserName={currentUserName}
+        value={newCommentText}
+        onChange={setNewCommentText}
+        onSubmit={handleAddRootComment}
+        placeholder={t("writeCommentPlaceholder")}
+        submitLabel={t("postCommentButton")}
+      />
 
       {/* Root Comments List */}
       <div className="space-y-4 pt-2">
