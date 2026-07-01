@@ -58,6 +58,21 @@
                     "getHelp": "Trợ giúp"
                 }
             }
+        },
+        "commentReaction": {
+            "discussionAndInteraction": "Thảo luận & Tương tác",
+            "commentsCount": "{count} bình luận",
+            "likeQuestion": "Thích câu hỏi",
+            "writeCommentPlaceholder": "Chia sẻ ý kiến của bạn về câu hỏi này...",
+            "postCommentButton": "Bình luận",
+            "noCommentsYet": "Chưa có thảo luận nào. Hãy là người đầu tiên chia sẻ ý kiến!",
+            "justNow": "Vừa xong",
+            "minutesAgo": "{count} phút trước",
+            "hoursAgo": "{count} giờ trước",
+            "like": "Thích",
+            "reply": "Phản hồi",
+            "writeReplyPlaceholder": "Viết phản hồi...",
+            "sendButton": "Gửi"
         }
     }
 }

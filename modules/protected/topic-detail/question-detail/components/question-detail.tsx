@@ -6,11 +6,10 @@ import { mockTopics } from "@/data/mockTopics";
 import { getTopicById } from "@/modules/protected/topics/services/topic.service";
 import { getQuestionHints } from "@/data/mockHints";
 import { useHistoryStore } from "@/store/historyStore";
-// import QuestionHeader from "./components/question-header";
-import QuestionCardView from "./components/question-card-view";
-import ModelAnswerView from "./components/model-answer-view";
-import HintsView from "./components/hints-view";
-import ActionsFooter from "./features/actions-footer";
+import QuestionCardView from "./question-card-view";
+import ModelAnswerView from "./model-answer-view";
+import HintsView from "./hints-view";
+import CommentSection from "@/modules/protected/comment-reaction/features/comment-section";
 
 export function QuestionDetail() {
     const params = useParams();
@@ -59,21 +58,32 @@ export function QuestionDetail() {
         <div className="px-4 py-6 md:px-8 space-y-6">
 
             {/* Main Content Layout */}
-            <div className="mx-auto max-w-4xl space-y-6">
-                {/* Question Section */}
-                <QuestionCardView jp={question.jp} furigana={question.furigana} vi={question.vi} />
+            <div className="mx-auto max-w-7xl">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                    {/* Left Content (2/3) */}
+                    <div className="space-y-6 lg:col-span-2">
+                        <QuestionCardView
+                            questionId={question.id}
+                            jp={question.jp}
+                            furigana={question.furigana}
+                            vi={question.vi}
+                            historyEntry={historyEntry}
+                        />
 
-                {/* Model Answer Card */}
-                <ModelAnswerView modelAnswer={question.modelAnswer} />
+                        <ModelAnswerView modelAnswer={question.modelAnswer} />
 
-                {/* Suggestions / Hints Card */}
-                <HintsView hints={hints} />
+                        <HintsView hints={hints} />
+                    </div>
 
-                {/* Bottom Actions */}
-                <ActionsFooter questionId={question.id} historyEntry={historyEntry} />
+                    {/* Right Sidebar (1/3) */}
+                    <div className="lg:col-span-1">
+                        <CommentSection questionId={question.id} />
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
 
 export default QuestionDetail;
+

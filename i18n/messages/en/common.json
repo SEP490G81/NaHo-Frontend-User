@@ -53,6 +53,21 @@
                     "getHelp": "Trợ giúp"
                 }
             }
+        },
+        "commentReaction": {
+            "discussionAndInteraction": "Discussion & Interaction",
+            "commentsCount": "{count} comments",
+            "likeQuestion": "Like Question",
+            "writeCommentPlaceholder": "Share your thoughts about this question...",
+            "postCommentButton": "Comment",
+            "noCommentsYet": "No discussions yet. Be the first to share your thoughts!",
+            "justNow": "Just now",
+            "minutesAgo": "{count} minutes ago",
+            "hoursAgo": "{count} hours ago",
+            "like": "Like",
+            "reply": "Reply",
+            "writeReplyPlaceholder": "Write a reply...",
+            "sendButton": "Send"
         }
     }
 }

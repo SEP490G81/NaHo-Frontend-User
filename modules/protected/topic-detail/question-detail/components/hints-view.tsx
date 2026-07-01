@@ -2,21 +2,24 @@
 import React from "react";
 import type { QuestionHints } from "@/data/mockHints";
 import FuriganaText from "@/components/ui/furigana.text";
+import { useTranslations } from "next-intl";
 
 interface HintsViewProps {
     hints: QuestionHints;
 }
 
 export function HintsView({ hints }: HintsViewProps) {
+    const t = useTranslations("topicDetail");
+
     return (
         <section className="border-bdc-primary bg-bgc-app rounded-xl border p-6 shadow-sm space-y-6">
             <h3 className="text-text-contrast text-base font-bold border-b border-bdc-primary pb-3">
-                Gợi ý nói phản xạ
+                {t("reflexHints")}
             </h3>
 
             {/* Vocab hints */}
             <div className="space-y-3">
-                <h4 className="text-text-contrast text-sm font-semibold">Từ vựng khuyên dùng:</h4>
+                <h4 className="text-text-contrast text-sm font-semibold">{t("recommendedVocab")}</h4>
                 <div className="grid gap-3 sm:grid-cols-2">
                     {hints.vocab.map((v, idx) => (
                         <div key={idx} className="border-bdc-primary bg-bgc-page rounded-lg border p-3 flex flex-col gap-1">
@@ -31,7 +34,7 @@ export function HintsView({ hints }: HintsViewProps) {
 
             {/* Structure hints */}
             <div className="space-y-3 pt-3 border-t border-bdc-primary border-dashed">
-                <h4 className="text-text-contrast text-sm font-semibold">Cấu trúc ngữ pháp gợi ý:</h4>
+                <h4 className="text-text-contrast text-sm font-semibold">{t("recommendedStructures")}</h4>
                 <div className="space-y-2">
                     {hints.structures.map((s, idx) => (
                         <div key={idx} className="border-bdc-primary bg-bgc-page rounded-lg border p-3">

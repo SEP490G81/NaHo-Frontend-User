@@ -5,10 +5,10 @@ import { useRouter } from "@/i18n/navigation";
 import { mockCommunityQuestions } from "@/data/mockCommunityQuestions";
 import { useHistoryStore } from "@/store/historyStore";
 import { useCustomQuestionStore } from "@/store/customQuestionStore";
-import CustomQuestionCardView from "./components/custom-question-card-view";
-import CustomModelAnswerView from "./components/custom-model-answer-view";
-import CustomHintsView from "./components/custom-hints-view";
-import CustomActionsFooter from "./features/custom-actions-footer";
+import CustomQuestionCardView from "./custom-question-card-view";
+import CustomModelAnswerView from "./custom-model-answer-view";
+import CustomHintsView from "./custom-hints-view";
+import CommentSection from "@/modules/protected/comment-reaction/features/comment-section";
 
 export function QuestionCustomDetail() {
     const params = useParams();
@@ -62,21 +62,35 @@ export function QuestionCustomDetail() {
         <div className="px-4 py-6 md:px-8 space-y-6">
 
             {/* Main Content Layout */}
-            <div className="mx-auto max-w-4xl space-y-6">
-                {/* Question Section */}
-                <CustomQuestionCardView question={question} />
+            <div className="mx-auto max-w-7xl">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                    {/* Left Content (2/3) */}
+                    <div className="space-y-6 lg:col-span-2">
+                        {/* Question Section */}
+                        <CustomQuestionCardView
+                            question={question}
+                            handlePractice={handlePractice}
+                            historyEntry={historyEntry}
+                        />
 
-                {/* Model Answer Card */}
-                <CustomModelAnswerView mockModelAnswer={mockModelAnswer} />
+                        {/* Model Answer Card */}
+                        <CustomModelAnswerView mockModelAnswer={mockModelAnswer} />
 
-                {/* Suggestions / Hints Card */}
-                <CustomHintsView />
+                        {/* Suggestions / Hints Card */}
+                        <CustomHintsView />
+                    </div>
 
-                {/* Bottom Actions */}
-                <CustomActionsFooter handlePractice={handlePractice} historyEntry={historyEntry} />
+                    {/* Right Sidebar (1/3) */}
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-6">
+                            <CommentSection questionId={question.id} />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
 
 export default QuestionCustomDetail;
+

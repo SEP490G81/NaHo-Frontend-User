@@ -32,8 +32,13 @@
         "notFoundTitle": "Không tìm thấy chủ đề này.",
         "notFoundSubtitle": "Vui lòng quay lại và thử lại.",
         "backToTopics": "Quay lại danh sách chủ đề",
-        "learningGoals": "Mục tiêu học tập",
-        "averageScore": "Điểm trung bình",
-        "questionDetail": "Câu hỏi chi tiết"
+        "learningGoals": "Learning Goals",
+        "averageScore": "Average Score",
+        "questionDetail": "Question Detail",
+        "practiceQuestion": "Practice Question",
+        "latestPracticeScore": "Latest practice score:",
+        "reflexHints": "Reflexive Speaking Hints",
+        "recommendedVocab": "Recommended Vocabulary:",
+        "recommendedStructures": "Recommended Grammar Structures:"
     }
 }

@@ -34,6 +34,11 @@
         "backToTopics": "Quay lại danh sách chủ đề",
         "learningGoals": "Mục tiêu học tập",
         "averageScore": "Điểm trung bình",
-        "questionDetail": "Câu hỏi chi tiết"
+        "questionDetail": "Câu hỏi chi tiết",
+        "practiceQuestion": "Câu hỏi luyện tập",
+        "latestPracticeScore": "Điểm số lượt luyện gần nhất:",
+        "reflexHints": "Gợi ý nói phản xạ",
+        "recommendedVocab": "Từ vựng khuyên dùng:",
+        "recommendedStructures": "Cấu trúc ngữ pháp gợi ý:"
     }
 }

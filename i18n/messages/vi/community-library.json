@@ -10,6 +10,13 @@
         "practiceCount": "{count} lượt luyện tập",
         "practiceNow": "Luyện tập ngay",
         "viewDetail": "Xem chi tiết",
-        "questionCustomDetail": "Câu hỏi chi tiết"
+        "questionCustomDetail": "Câu hỏi chi tiết",
+        "communityQuestion": "Câu hỏi cộng đồng",
+        "contributor": "Người đóng góp: ",
+        "totalPracticeCount": "Lượt luyện tập toàn bộ: ",
+        "recommendedModelAnswer": "Bài mẫu khuyên dùng",
+        "vietnameseTranslationModelAnswer": "Bản dịch tiếng Việt bài mẫu",
+        "viewHistory": "Xem lịch sử",
+        "latestPracticeScore": "Điểm số lượt luyện gần nhất:"
     }
 }

@@ -53,6 +53,21 @@
                     "getHelp": "Trợ giúp"
                 }
             }
+        },
+        "commentReaction": {
+            "discussionAndInteraction": "ディスカッションと相互作用",
+            "commentsCount": "{count} 件のコメント",
+            "likeQuestion": "質問にいいね",
+            "writeCommentPlaceholder": "この質問について意見を共有する...",
+            "postCommentButton": "コメント",
+            "noCommentsYet": "まだディスカッションはありません。最初の意見を共有しましょう！",
+            "justNow": "たった今",
+            "minutesAgo": "{count} 分前",
+            "hoursAgo": "{count} 時間前",
+            "like": "いいね",
+            "reply": "返信",
+            "writeReplyPlaceholder": "返信を書く...",
+            "sendButton": "送信"
         }
     }
 }

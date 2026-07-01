@@ -32,8 +32,13 @@
         "notFoundTitle": "Không tìm thấy chủ đề này.",
         "notFoundSubtitle": "Vui lòng quay lại và thử lại.",
         "backToTopics": "Quay lại danh sách chủ đề",
-        "learningGoals": "Mục tiêu học tập",
-        "averageScore": "Điểm trung bình",
-        "questionDetail": "Câu hỏi chi tiết"
+        "learningGoals": "学習目標",
+        "averageScore": "平均スコア",
+        "questionDetail": "質問の詳細",
+        "practiceQuestion": "練習問題",
+        "latestPracticeScore": "最近の練習スコア:",
+        "reflexHints": "反射スピーキングのヒント",
+        "recommendedVocab": "推奨ボキャブラリー:",
+        "recommendedStructures": "推奨文法構造:"
     }
 }
