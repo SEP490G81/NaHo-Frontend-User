@@ -50,7 +50,7 @@ export const NAV_ITEMS: NavItem[] = [
     },
     {
         title: "Trò chuyện tự do AI",
-        url: "/dashboard",
+        url: "/dialogue-setup",
         icon: MessagesSquare,
         disabled: false,
     },

@@ -1,0 +1,35 @@
+{
+  "liveChatroom": {
+    "settingsTitle": "会話設定",
+    "speedLabel": "AIの読み上げ速度",
+    "furiganaToggle": "ふりがなを表示",
+    "translateToggle": "自動翻訳",
+    "endChatButton": "会話を終了",
+    "endChatModal": {
+      "title": "会話を終了しますか？",
+      "description": "セットアップページに戻ります。現在のチャット履歴は保存されません。",
+      "cancel": "会話を続ける",
+      "confirm": "終了"
+    },
+    "toastEndSuccess": "会話が終了しました。",
+    "playAudio": "発音",
+    "showTranslation": "翻訳",
+    "showGrammar": "文法解説",
+    "translationHeader": "翻訳",
+    "grammarHeader": "文法解説",
+    "correctionTitle": "添削提案",
+    "correctionErrorPrefix": "エラー：",
+    "listeningIndicator": "AIが聴いています... ゆっくり、はっきりと話してください。",
+    "inputPlaceholder": "メッセージを入力するか、マイクをクリックして話してください...",
+    "sendButton": "送信",
+    "micStart": "録音開始",
+    "micStop": "録音停止",
+    "cancelRecord": "録音をキャンセル",
+    "typingSuffix": "が入力中...",
+    "processingFilterNoise": "音声のノイズを除去中...",
+    "processingSTT": "音声をテキストに変換中 (STT)...",
+    "processingAnalysis": "文法と言い回しを分析中...",
+    "processingAiResponse": "AIが回答を作成中...",
+    "suggestionLabel": "ヒントが必要ですか？推奨回答："
+  }
+}

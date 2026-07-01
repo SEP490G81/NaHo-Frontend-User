@@ -1,19 +1,7 @@
-import type { Comment } from "../types/comment";
-import type { Reaction, ReactionType } from "../types/reaction";
+import type { Comment } from "@/modules/protected/comment-reaction/types/comment";
+import type { Reaction } from "@/modules/protected/comment-reaction/types/reaction";
 
-
-export const REACTION_EMOJIS: Record<ReactionType, { emoji: string; label: string }> = {
-  LIKE: { emoji: "👍", label: "Thích" },
-  DISLIKE: { emoji: "👎", label: "Không thích" },
-  LOVE: { emoji: "❤️", label: "Yêu thích" },
-  CARE: { emoji: "🤗", label: "Thương thương" },
-  HAHA: { emoji: "😆", label: "Haha" },
-  WOW: { emoji: "😮", label: "Wow" },
-  SAD: { emoji: "😢", label: "Buồn" },
-  ANGRY: { emoji: "😡", label: "Phẫn nộ" },
-};
-
-export const INITIAL_MOCK_COMMENTS: Comment[] = [
+export const mockComments: Comment[] = [
   {
     id: 1,
     userId: "u02",
@@ -66,7 +54,7 @@ export const INITIAL_MOCK_COMMENTS: Comment[] = [
   },
 ];
 
-export const INITIAL_MOCK_REACTIONS: Reaction[] = [
+export const mockReactions: Reaction[] = [
   {
     id: 1,
     userId: "u01",

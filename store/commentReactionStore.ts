@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type { Comment } from "@/modules/protected/comment-reaction/types/comment";
 import type { Reaction, ReactionType } from "@/modules/protected/comment-reaction/types/reaction";
 
-import { INITIAL_MOCK_COMMENTS, INITIAL_MOCK_REACTIONS } from "@/modules/protected/comment-reaction/constants/mockData";
+import { mockComments, mockReactions } from "@/data/mockComments";
 
 interface CommentReactionState {
   comments: Comment[];
@@ -26,8 +26,8 @@ interface CommentReactionState {
 export const useCommentReactionStore = create<CommentReactionState>()(
   persist(
     (set) => ({
-      comments: INITIAL_MOCK_COMMENTS,
-      reactions: INITIAL_MOCK_REACTIONS,
+      comments: mockComments,
+      reactions: mockReactions,
       addComment: (questionId, content, parentId, user) =>
         set((state) => {
           const newComment: Comment = {

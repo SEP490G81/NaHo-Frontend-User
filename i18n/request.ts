@@ -14,6 +14,8 @@ const MESSAGE_FILES = [
     "sandbox",
     "community-library",
     "settings",
+    "live-chatroom",
+    "dialogue-setup",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

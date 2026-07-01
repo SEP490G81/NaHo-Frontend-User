@@ -1,0 +1,27 @@
+{
+  "dialogueSetup": {
+    "title": "Thiết lập Hội thoại AI",
+    "subtitle": "Chọn bạn đồng hành và điều chỉnh cài đặt ngữ cảnh để có trải nghiệm luyện nói tốt nhất.",
+    "companionHeader": "Chọn bạn đồng hành AI",
+    "advancedTitle": "Thiết lập ngữ cảnh & Cài đặt nâng cao",
+    "advancedSubtitle": "Tinh chỉnh để phù hợp với mục tiêu luyện tập của bạn.",
+    "toneLabel": "Chế độ hội thoại",
+    "toneCasual": "Thân mật",
+    "toneBusiness": "Công sở",
+    "toneInterview": "Phỏng vấn",
+    "keigoLabel": "Yêu cầu kính ngữ (Keigo)",
+    "keigoAuto": "Tự động / Không bắt buộc",
+    "keigoSonkeigo": "Thể tôn kính (Sonkeigo)",
+    "keigoKenjougo": "Thể khiêm nhường (Kenjougo)",
+    "speedLabel": "Tốc độ nói của AI",
+    "speedSlow": "Chậm",
+    "speedFast": "Nhanh",
+    "translationTitle": "Hiển thị bản dịch tức thì",
+    "translationDesc": "Tự động dịch tin nhắn của AI sang tiếng Việt.",
+    "hintsTitle": "Gợi ý câu trả lời khi bí từ",
+    "hintsDesc": "Hiển thị nút \"Cứu trợ\" với mẫu câu phù hợp ngữ cảnh.",
+    "startButton": "Bắt đầu trò chuyện",
+    "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
+    "companionLevel": "Trình độ: {level}"
+  }
+}

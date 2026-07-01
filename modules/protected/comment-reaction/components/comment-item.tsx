@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import type { Comment } from "../types/comment";
 import type { Reaction, ReactionType } from "../types/reaction";
-import { REACTION_EMOJIS } from "../constants/mockData";
+import { REACTION_EMOJIS } from "../constants/reaction-type";
 import ReactionPicker from "./reaction-picker";
 import ReactionSummary from "./reaction-summary";
 import CommentReplyForm from "./comment-reply-form";

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import type { ReactionType } from "../types/reaction";
-import { REACTION_EMOJIS } from "../constants/mockData";
+import { REACTION_EMOJIS } from "../constants/reaction-type";
 
 interface ReactionPickerProps {
   onSelect: (type: ReactionType) => void;

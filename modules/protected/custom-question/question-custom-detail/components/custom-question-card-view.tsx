@@ -69,19 +69,8 @@ export function CustomQuestionCardView({
                         <Button
                             onClick={handlePractice}
                             variant="contained"
-                            sx={{
-                                textTransform: "none",
-                                backgroundColor: "var(--color-bgc-highlight)",
-                                color: "var(--color-text-pure)",
-                                fontWeight: "bold",
-                                borderRadius: "8px",
-                                height: "44px",
-                                px: 4,
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: 1,
-                                "&:hover": { opacity: 0.9 },
-                            }}
+                            color="primary"
+                            className="!h-11 !rounded-lg !px-6 font-bold text-white hover:opacity-90 capitalize inline-flex items-center gap-2"
                         >
                             <Mic className="h-5 w-5" />
                             {t("practiceNow")}

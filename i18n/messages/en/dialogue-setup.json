@@ -1,0 +1,27 @@
+{
+  "dialogueSetup": {
+    "title": "AI Conversation Setup",
+    "subtitle": "Choose your AI companion and adjust context settings for the best speaking experience.",
+    "companionHeader": "Choose AI Companion",
+    "advancedTitle": "Context Setup & Advanced Settings",
+    "advancedSubtitle": "Fine-tune to match your practice goals.",
+    "toneLabel": "Conversation Tone",
+    "toneCasual": "Casual",
+    "toneBusiness": "Business",
+    "toneInterview": "Interview",
+    "keigoLabel": "Honorific Requirement (Keigo)",
+    "keigoAuto": "Auto / Not Required",
+    "keigoSonkeigo": "Respectful (Sonkeigo)",
+    "keigoKenjougo": "Humble (Kenjougo)",
+    "speedLabel": "AI Speaking Speed",
+    "speedSlow": "Slow",
+    "speedFast": "Fast",
+    "translationTitle": "Show Instant Translation",
+    "translationDesc": "Automatically translate AI messages to Vietnamese.",
+    "hintsTitle": "Answer Hints when stuck",
+    "hintsDesc": "Show context-appropriate helper sentences.",
+    "startButton": "Start Chatting",
+    "toastStartSuccess": "Settings saved. Start chatting!",
+    "companionLevel": "Level: {level}"
+  }
+}

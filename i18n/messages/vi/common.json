@@ -31,7 +31,9 @@
                 "sandbox-custom": "Custom Practice Room",
                 "history-custom": "Custom Question History",
                 "community-library": "Community Library",
-                "report": "Report"
+                "report": "Báo cáo",
+                "liveChatroom": "Trò chuyện trực tuyến",
+                "dialogueSetup": "Thiết lập hội thoại"
             },
             "language": {
                 "vi": "Tiếng Việt",

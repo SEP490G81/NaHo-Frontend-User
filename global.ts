@@ -9,6 +9,8 @@ import topic from "@/i18n/messages/vi/topic.json";
 import sandbox from "@/i18n/messages/vi/sandbox.json";
 import communityLibrary from "@/i18n/messages/vi/community-library.json";
 import settings from "@/i18n/messages/vi/settings.json";
+import liveChatroom from "@/i18n/messages/vi/live-chatroom.json";
+import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -22,6 +24,8 @@ declare module "next-intl" {
             typeof topic &
             typeof sandbox &
             typeof settings &
-            typeof communityLibrary;
+            typeof communityLibrary &
+            typeof liveChatroom &
+            typeof dialogueSetup;
     }
 }

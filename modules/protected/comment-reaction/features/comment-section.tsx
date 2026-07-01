@@ -4,7 +4,7 @@ import { MessageSquare } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useCommentReactionStore } from "@/store/commentReactionStore";
 import type { ReactionType } from "../types/reaction";
-import { REACTION_EMOJIS } from "../constants/mockData";
+import { REACTION_EMOJIS } from "../constants/reaction-type";
 import ReactionPicker from "../components/reaction-picker";
 import ReactionSummary from "../components/reaction-summary";
 import CommentItem from "../components/comment-item";
