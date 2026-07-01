@@ -31,7 +31,7 @@ const ProtectedLayout = async ({
                 <LearnerSidebar />
                 <div className="flex min-w-0 flex-1 flex-col">
                     <ProtectedHeader />
-                    <div className="bg-bgc-page w-full flex-1 p-5 relative overflow-hidden isolate">
+                    <div className="bg-bgc-page w-full flex-1 p-5 relative isolate">
                         <SakuraFalling />
                         <JapanBackground />
                         {children}

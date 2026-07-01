@@ -11,30 +11,32 @@ import { useTranslations } from "next-intl";
 const HeroSection = () => {
     const t = useTranslations();
     return (
-        <section className="relative overflow-hidden">
-            <div
-                className="pointer-events-none absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full opacity-50 blur-3xl"
-                style={{
-                    background:
-                        "radial-gradient(circle, #ff99ac 0%, transparent 70%)",
-                }}
-            />
-            <div
-                className="pointer-events-none absolute -right-24 -bottom-40 h-[32rem] w-[32rem] rounded-full opacity-40 blur-3xl"
-                style={{
-                    background:
-                        "radial-gradient(circle, #ffd6dd 0%, transparent 70%)",
-                }}
-            />
-            <div
-                className="pointer-events-none absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full opacity-30 blur-3xl"
-                style={{
-                    background:
-                        "radial-gradient(circle, #ff99ac 0%, transparent 70%)",
-                }}
-            />
+        <section className="relative">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div
+                    className="absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full opacity-50 blur-3xl"
+                    style={{
+                        background:
+                            "radial-gradient(circle, #ff99ac 0%, transparent 70%)",
+                    }}
+                />
+                <div
+                    className="absolute -right-24 -bottom-40 h-[32rem] w-[32rem] rounded-full opacity-40 blur-3xl"
+                    style={{
+                        background:
+                            "radial-gradient(circle, #ffd6dd 0%, transparent 70%)",
+                    }}
+                />
+                <div
+                    className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full opacity-30 blur-3xl"
+                    style={{
+                        background:
+                            "radial-gradient(circle, #ff99ac 0%, transparent 70%)",
+                    }}
+                />
+            </div>
 
-            <div className="pointer-events-none absolute inset-0">
+            <div className="pointer-events-none absolute -top-[72px] left-0 right-0 bottom-0 overflow-hidden">
                 {HERO_PETAL_ITEMS.map((petal) => (
                     <span
                         key={petal.id}
