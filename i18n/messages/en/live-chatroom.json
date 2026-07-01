@@ -1,0 +1,35 @@
+{
+  "liveChatroom": {
+    "settingsTitle": "Conversation Settings",
+    "speedLabel": "AI Speaking Speed",
+    "furiganaToggle": "Show Furigana",
+    "translateToggle": "Auto Translate",
+    "endChatButton": "End Conversation",
+    "endChatModal": {
+      "title": "End Conversation?",
+      "description": "You will return to the setup page. Current chat history will not be saved.",
+      "cancel": "Continue Chatting",
+      "confirm": "End"
+    },
+    "toastEndSuccess": "Conversation ended.",
+    "playAudio": "Pronounce",
+    "showTranslation": "Translation",
+    "showGrammar": "Grammar Explanation",
+    "translationHeader": "Translation",
+    "grammarHeader": "Grammar Explanation",
+    "correctionTitle": "Grammar correction suggestion",
+    "correctionErrorPrefix": "Error:",
+    "listeningIndicator": "AI is listening... Please speak slowly and clearly.",
+    "inputPlaceholder": "Type your message or click the mic to speak...",
+    "sendButton": "Send",
+    "micStart": "Start Recording",
+    "micStop": "Stop Recording",
+    "cancelRecord": "Cancel Recording",
+    "typingSuffix": "is typing...",
+    "processingFilterNoise": "Filtering audio noise...",
+    "processingSTT": "Transcribing speech to text (STT)...",
+    "processingAnalysis": "Analyzing grammar & errors...",
+    "processingAiResponse": "AI is preparing a response...",
+    "suggestionLabel": "Stuck? Suggested responses:"
+  }
+}

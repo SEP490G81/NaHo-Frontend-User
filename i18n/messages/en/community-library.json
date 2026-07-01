@@ -8,6 +8,15 @@
         "searchPlaceholder": "Tìm kiếm câu hỏi…",
         "emptyState": "Không tìm thấy câu hỏi phù hợp.",
         "practiceCount": "{count} lượt luyện tập",
-        "practiceNow": "Luyện tập ngay"
+        "practiceNow": "Luyện tập ngay",
+        "viewDetail": "View details",
+        "questionCustomDetail": "Question Detail",
+        "communityQuestion": "Community Question",
+        "contributor": "Contributor: ",
+        "totalPracticeCount": "Total practice count: ",
+        "recommendedModelAnswer": "Recommended Model Answer",
+        "vietnameseTranslationModelAnswer": "Vietnamese Translation of Model Answer",
+        "viewHistory": "View History",
+        "latestPracticeScore": "Latest practice score:"
     }
 }

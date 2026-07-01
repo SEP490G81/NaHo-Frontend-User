@@ -7,6 +7,7 @@ import { cn } from "@/libs/utils";
 interface MockAudioPlayerProps {
     src?: string;
     durationSec: number;
+    autoPlay?: boolean;
 }
 
 function formatTime(sec: number) {
@@ -24,7 +25,7 @@ const BAR_HEIGHTS = Array.from({ length: 32 }, (_, i) => {
     return 30 + Math.round(r * 70);
 });
 
-export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
+export function MockAudioPlayer({ src, durationSec, autoPlay = false }: MockAudioPlayerProps) {
     const [playing, setPlaying] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [duration, setDuration] = useState(durationSec);
@@ -62,7 +63,14 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
 
         // Sync state if audio was modified elsewhere
         setElapsed(audio.currentTime);
-        setPlaying(!audio.paused);
+
+        if (autoPlay) {
+            audio.play()
+                .then(() => setPlaying(true))
+                .catch((err) => console.log("Auto-play failed", err));
+        } else {
+            setPlaying(!audio.paused);
+        }
 
         return () => {
             audio.pause();
@@ -70,7 +78,7 @@ export function MockAudioPlayer({ src, durationSec }: MockAudioPlayerProps) {
             audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
             audio.removeEventListener("ended", handleEnded);
         };
-    }, [audioSrc, durationSec]);
+    }, [audioSrc, durationSec, autoPlay]);
 
     const togglePlay = () => {
         const audio = audioRef.current;

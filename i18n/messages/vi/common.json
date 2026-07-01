@@ -30,7 +30,10 @@
                 "custom-question": "Custom Questions",
                 "sandbox-custom": "Custom Practice Room",
                 "history-custom": "Custom Question History",
-                "community-library": "Community Library"
+                "community-library": "Community Library",
+                "report": "Báo cáo",
+                "liveChatroom": "Trò chuyện trực tuyến",
+                "dialogueSetup": "Thiết lập hội thoại"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -55,9 +58,46 @@
                 "accountMenu": {
                     "settings": "Cài đặt",
                     "language": "Ngôn ngữ",
-                    "getHelp": "Trợ giúp"
+                    "getHelp": "Trợ giúp",
+                    "report": "Báo cáo"
                 }
             }
+        },
+        "commentReaction": {
+            "discussionAndInteraction": "Thảo luận & Tương tác",
+            "commentsCount": "{count} bình luận",
+            "likeQuestion": "Thích câu hỏi",
+            "writeCommentPlaceholder": "Chia sẻ ý kiến của bạn về câu hỏi này...",
+            "postCommentButton": "Bình luận",
+            "noCommentsYet": "Chưa có thảo luận nào. Hãy là người đầu tiên chia sẻ ý kiến!",
+            "justNow": "Vừa xong",
+            "minutesAgo": "{count} phút trước",
+            "hoursAgo": "{count} giờ trước",
+            "like": "Thích",
+            "reply": "Phản hồi",
+            "writeReplyPlaceholder": "Viết phản hồi...",
+            "sendButton": "Gửi",
+            "report": "Báo cáo"
+        },
+        "report": {
+            "modalTitle": "Gửi phản hồi & báo cáo",
+            "fieldReportType": "Loại báo cáo",
+            "typeQuestion": "Câu hỏi",
+            "typeComment": "Bình luận",
+            "typeSystem": "Hệ thống",
+            "fieldTitle": "Tiêu đề",
+            "titlePlaceholder": "Nhập tiêu đề phản hồi...",
+            "fieldDescription": "Mô tả chi tiết",
+            "descriptionPlaceholder": "Vui lòng mô tả chi tiết vấn đề bạn gặp phải...",
+            "fieldImage": "Ảnh đính kèm",
+            "uploadImageBtn": "Tải lên hình ảnh",
+            "imageAttached": "Ảnh đã đính kèm",
+            "removeBtn": "Xóa ảnh",
+            "cancelBtn": "Hủy",
+            "submitBtn": "Gửi báo cáo",
+            "submitSuccess": "Gửi báo cáo thành công! Cảm ơn đóng góp của bạn.",
+            "errorOnlyImage": "Vui lòng chỉ chọn tệp hình ảnh!",
+            "errorRequired": "Vui lòng nhập đầy đủ tiêu đề và mô tả!"
         }
     }
 }

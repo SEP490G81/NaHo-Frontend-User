@@ -1,0 +1,35 @@
+{
+  "liveChatroom": {
+    "settingsTitle": "Cài đặt hội thoại",
+    "speedLabel": "Tốc độ nói của AI",
+    "furiganaToggle": "Hiển thị Furigana",
+    "translateToggle": "Dịch tự động",
+    "endChatButton": "Kết thúc hội thoại",
+    "endChatModal": {
+      "title": "Kết thúc hội thoại?",
+      "description": "Bạn sẽ quay lại trang thiết lập. Lịch sử trò chuyện hiện tại sẽ không được lưu lại.",
+      "cancel": "Tiếp tục trò chuyện",
+      "confirm": "Kết thúc"
+    },
+    "toastEndSuccess": "Đã kết thúc cuộc hội thoại.",
+    "playAudio": "Phát âm",
+    "showTranslation": "Dịch nghĩa",
+    "showGrammar": "Giải thích ngữ pháp",
+    "translationHeader": "Bản dịch",
+    "grammarHeader": "Giải thích ngữ pháp",
+    "correctionTitle": "Đề xuất sửa lỗi",
+    "correctionErrorPrefix": "Lỗi:",
+    "listeningIndicator": "AI đang lắng nghe... Hãy nói chậm và rõ.",
+    "inputPlaceholder": "Nhập câu trả lời của bạn hoặc bấm mic để nói...",
+    "sendButton": "Gửi",
+    "micStart": "Bắt đầu ghi âm",
+    "micStop": "Dừng ghi âm",
+    "cancelRecord": "Hủy ghi âm",
+    "typingSuffix": "đang soạn câu trả lời...",
+    "processingFilterNoise": "Đang lọc nhiễu âm thanh...",
+    "processingSTT": "Đang nhận dạng giọng nói (STT)...",
+    "processingAnalysis": "Đang phân tích lỗi & ngữ pháp...",
+    "processingAiResponse": "AI đang chuẩn bị câu trả lời...",
+    "suggestionLabel": "Bạn bí từ? Gợi ý trả lời:"
+  }
+}

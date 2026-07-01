@@ -12,6 +12,7 @@ export type AllRoute =
     | "/register"
     | "/topics"
     | `/topics/${string}` // hoặc "/topics/[topicId]" tùy thuộc vào cách config router của bạn
+    | `/topics/${string}/${string}` // hoặc "/topics/[topicId]/[questionId]"
     | "/sandbox"
     | `/sandbox/${string}` // hoặc "/sandbox/[questionId]"
     | "/history"
@@ -20,6 +21,7 @@ export type AllRoute =
     | `/sandbox-custom/${string}` // hoặc "/sandbox-custom/[id]"
     | "/history-custom"
     | "/community-library"
+    | `/community-library/${string}` // hoặc "/community-library/[questionId]"
     | "/settings"
     | "/settings/account"
     | "/settings/security"

@@ -12,7 +12,7 @@ export interface QuestionHints {
   structures: StructureHint[];
 }
 
-const DEFAULT_HINTS: QuestionHints = {
+export const DEFAULT_HINTS: QuestionHints = {
   vocab: [
     { jp: "すみません", furigana: "すみません", vi: "Xin lỗi / Cảm phiền" },
     { jp: "お願いします", furigana: "おねがいします", vi: "Xin nhờ / Làm ơn" },

@@ -8,6 +8,15 @@
         "searchPlaceholder": "Tìm kiếm câu hỏi…",
         "emptyState": "Không tìm thấy câu hỏi phù hợp.",
         "practiceCount": "{count} lượt luyện tập",
-        "practiceNow": "Luyện tập ngay"
+        "practiceNow": "Luyện tập ngay",
+        "viewDetail": "詳細を見る",
+        "questionCustomDetail": "質問の詳細",
+        "communityQuestion": "コミュニティの質問",
+        "contributor": "投稿者: ",
+        "totalPracticeCount": "総練習回数: ",
+        "recommendedModelAnswer": "推奨モデルアンサー",
+        "vietnameseTranslationModelAnswer": "モデルアンサーのベトナム語訳",
+        "viewHistory": "履歴を見る",
+        "latestPracticeScore": "最近の練習スコア:"
     }
 }

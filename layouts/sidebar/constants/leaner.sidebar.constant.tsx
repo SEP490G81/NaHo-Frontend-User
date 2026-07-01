@@ -12,17 +12,30 @@ import {
     UserCog,
 } from "lucide-react";
 
-export interface NavItem {
+export interface SubNavItem {
     title: string;
     url: string;
+}
+
+export interface NavItem {
+    title: string;
+    url?: string;
     icon: React.ComponentType<any>;
     disabled?: boolean;
+    children?: SubNavItem[];
 }
 
 export const NAV_ITEMS: NavItem[] = [
     { title: "Trang chủ Dashboard", url: "/dashboard", icon: LayoutDashboard },
-    { title: "Duyệt chủ đề Kaiwa", url: "/topics", icon: Mic },
-    { title: "Lịch sử luyện tập", url: "/history", icon: History },
+    { title: "Các chủ đề luyện tập", url: "/topics", icon: Mic },
+    {
+        title: "Lịch sử",
+        icon: History,
+        children: [
+            { title: "Lịch sử câu hỏi tự tạo", url: "/history-custom" },
+            { title: "Lịch sử câu hỏi đã luyện", url: "/history" },
+        ],
+    },
     {
         title: "Đề chọn tự phát",
         url: "/custom-question",
@@ -37,7 +50,7 @@ export const NAV_ITEMS: NavItem[] = [
     },
     {
         title: "Trò chuyện tự do AI",
-        url: "/dashboard",
+        url: "/dialogue-setup",
         icon: MessagesSquare,
         disabled: false,
     },
@@ -45,32 +58,33 @@ export const NAV_ITEMS: NavItem[] = [
         title: "Shadowing & Dictation",
         url: "/dashboard",
         icon: Headphones,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Báo cáo tiến độ",
         url: "/dashboard",
         icon: LineChart,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Bảng xếp hạng thi đua",
         url: "/dashboard",
         icon: Trophy,
-        disabled: false,
+        disabled: true,
     },
     {
         title: "Cài đặt & Hồ sơ",
         url: "/dashboard",
         icon: UserCog,
-        disabled: false,
+        disabled: true,
     },
 ];
 
 export const LABELS: Record<string, string> = {
     dashboard: "Trang chủ",
     topics: "Chủ đề Kaiwa",
-    history: "Lịch sử luyện tập",
+    history: "Lịch sử câu hỏi đã luyện",
+    "history-custom": "Lịch sử câu hỏi tự tạo",
     "custom-question": "Đề chọn tự phát",
     "community-library": "Thư viện cộng đồng",
     analytics: "Báo cáo tiến độ",

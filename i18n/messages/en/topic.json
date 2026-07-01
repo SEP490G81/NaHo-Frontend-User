@@ -20,6 +20,7 @@
         "questionCount": "{total} câu hỏi • Đã luyện {completed}/{total}",
         "showFurigana": "Hiện Furigana",
         "practiceNow": "Luyện nói ngay",
+        "viewDetail": "Xem chi tiết",
         "completed": "Đã luyện tập • {score}/10",
         "notCompleted": "Chưa luyện tập",
         "viewHistory": "Xem lịch sử",
@@ -31,7 +32,13 @@
         "notFoundTitle": "Không tìm thấy chủ đề này.",
         "notFoundSubtitle": "Vui lòng quay lại và thử lại.",
         "backToTopics": "Quay lại danh sách chủ đề",
-        "learningGoals": "Mục tiêu học tập",
-        "averageScore": "Điểm trung bình"
+        "learningGoals": "Learning Goals",
+        "averageScore": "Average Score",
+        "questionDetail": "Question Detail",
+        "practiceQuestion": "Practice Question",
+        "latestPracticeScore": "Latest practice score:",
+        "reflexHints": "Reflexive Speaking Hints",
+        "recommendedVocab": "Recommended Vocabulary:",
+        "recommendedStructures": "Recommended Grammar Structures:"
     }
 }

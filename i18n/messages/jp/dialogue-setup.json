@@ -1,0 +1,27 @@
+{
+  "dialogueSetup": {
+    "title": "AI会話設定",
+    "subtitle": "話す練習を最適化するために、AIの話し相手を選択し、設定を調整してください。",
+    "companionHeader": "AIの話し相手を選択",
+    "advancedTitle": "コンテキスト設定と詳細設定",
+    "advancedSubtitle": "あなたの練習目標に合わせて細かく調整します。",
+    "toneLabel": "会話モード",
+    "toneCasual": "タメ口",
+    "toneBusiness": "ビジネス",
+    "toneInterview": "面接",
+    "keigoLabel": "敬語の要求",
+    "keigoAuto": "自動 / 指定なし",
+    "keigoSonkeigo": "尊敬語",
+    "keigoKenjougo": "謙譲語",
+    "speedLabel": "AIの読み上げ速度",
+    "speedSlow": "遅い",
+    "speedFast": "速い",
+    "translationTitle": "即時翻訳を表示",
+    "translationDesc": "AIメッセージをベトナム語に自動翻訳します。",
+    "hintsTitle": "ヒント表示",
+    "hintsDesc": "状況に応じた返答のヒントを表示します。",
+    "startButton": "会話を開始",
+    "toastStartSuccess": "設定を保存しました。会話を開始します！",
+    "companionLevel": "レベル：{level}"
+  }
+}

@@ -25,7 +25,10 @@
                 "custom-question": "Custom Questions",
                 "sandbox-custom": "Custom Practice Room",
                 "history-custom": "Custom Question History",
-                "community-library": "Community Library"
+                "community-library": "Community Library",
+                "report": "Report",
+                "liveChatroom": "Live Chatroom",
+                "dialogueSetup": "Dialogue Setup"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -48,11 +51,48 @@
                 "logoutButton": "Đăng xuất",
                 "registerButton": "Đăng ký trải nghiệm ngay",
                 "accountMenu": {
-                    "settings": "Cài đặt",
-                    "language": "Ngôn ngữ",
-                    "getHelp": "Trợ giúp"
+                    "settings": "Settings",
+                    "language": "Language",
+                    "getHelp": "Help & Support",
+                    "report": "Report"
                 }
             }
+        },
+        "commentReaction": {
+            "discussionAndInteraction": "Discussion & Interaction",
+            "commentsCount": "{count} comments",
+            "likeQuestion": "Like Question",
+            "writeCommentPlaceholder": "Share your thoughts about this question...",
+            "postCommentButton": "Comment",
+            "noCommentsYet": "No discussions yet. Be the first to share your thoughts!",
+            "justNow": "Just now",
+            "minutesAgo": "{count} minutes ago",
+            "hoursAgo": "{count} hours ago",
+            "like": "Like",
+            "reply": "Reply",
+            "writeReplyPlaceholder": "Write a reply...",
+            "sendButton": "Send",
+            "report": "Report"
+        },
+        "report": {
+            "modalTitle": "Submit Feedback & Report",
+            "fieldReportType": "Report Type",
+            "typeQuestion": "Question",
+            "typeComment": "Comment",
+            "typeSystem": "System",
+            "fieldTitle": "Title",
+            "titlePlaceholder": "Enter feedback title...",
+            "fieldDescription": "Detailed Description",
+            "descriptionPlaceholder": "Please describe in detail the issue you encountered...",
+            "fieldImage": "Attachment Image",
+            "uploadImageBtn": "Upload Image",
+            "imageAttached": "Image attached",
+            "removeBtn": "Remove Image",
+            "cancelBtn": "Cancel",
+            "submitBtn": "Submit Report",
+            "submitSuccess": "Report submitted successfully! Thank you for your feedback.",
+            "errorOnlyImage": "Please select only image files!",
+            "errorRequired": "Please fill in both title and description!"
         }
     }
 }
