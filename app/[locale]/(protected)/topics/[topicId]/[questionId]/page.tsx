@@ -10,10 +10,10 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
+    const t = await getTranslations({ locale, namespace: "topicDetail" });
 
     return {
-        title: "Chi tiết câu hỏi | NaHo",
+        title: t("questionDetail"),
     };
 }
 

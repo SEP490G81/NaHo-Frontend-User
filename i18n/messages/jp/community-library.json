@@ -9,6 +9,7 @@
         "emptyState": "Không tìm thấy câu hỏi phù hợp.",
         "practiceCount": "{count} lượt luyện tập",
         "practiceNow": "Luyện tập ngay",
-        "viewDetail": "Xem chi tiết"
+        "viewDetail": "Xem chi tiết",
+        "questionCustomDetail": "Câu hỏi chi tiết"
     }
 }
