@@ -10,7 +10,7 @@ export function DialogueSetup() {
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6">
-      <header>
+      <header className="border-bdc-primary bg-bgc-app rounded-xl border p-6 shadow-sm space-y-4">
         <h1 className="text-2xl font-bold tracking-tight text-text-contrast">
           {t("title")}
         </h1>
