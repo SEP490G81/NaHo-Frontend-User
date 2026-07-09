@@ -9,7 +9,7 @@ COPY package*.json ./
 # không dùng npm install
 # Dùng npm clean install vì bắt buộc cài đúng version trong lock file
 # Tránh việc trong file package.json có dấu "^" khiến version mỗi lần build không cố định
-RUN npm ci
+RUN npm i
 
 # Stage 2: Builder
 FROM node:24.12.0-alpine3.23 AS builder
