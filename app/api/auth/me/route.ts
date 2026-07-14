@@ -11,7 +11,7 @@ export async function GET() {
         return NextResponse.json(null, { status: 401 });
     }
 
-    const backendResponse = await fetch(`${process.env.API_URL}/auth/me`, {
+    const backendResponse = await fetch(`${process.env.API_URL}/users/me`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,

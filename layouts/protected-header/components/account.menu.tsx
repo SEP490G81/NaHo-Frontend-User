@@ -3,10 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import {
-    getFirstCharacter,
-    getUserFullName,
-} from "@/layouts/protected-header/utils/header.util";
+import { getFirstCharacter, getUserAvatarUrl, getUserFullName } from "@/layouts/protected-header/utils/header.util";
 import { ACCOUNT_MENU_ITEMS } from "@/layouts/protected-header/constants/protected.header.constant";
 import LogoutButton from "@/layouts/protected-header/features/logout.button";
 import { useReportStore } from "@/store/reportStore";
@@ -22,7 +19,6 @@ const AccountMenu = ({
     const { data: user } = useCurrentUser();
     const openReportModal = useReportStore((s) => s.openModal);
 
-    console.log("User: ", user);
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -44,7 +40,7 @@ const AccountMenu = ({
             <div>
                 <div className="flex min-w-75 items-center gap-x-3 p-3.5">
                     <Avatar
-                        src={user?.avatarUrl || undefined}
+                        src={getUserAvatarUrl(user)}
                         sx={{
                             width: "56px",
                             height: "56px",
@@ -78,12 +74,12 @@ const AccountMenu = ({
                                         handleClose();
                                         openReportModal("SYSTEM");
                                     }}
-                                    className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 w-full items-center justify-start rounded-md px-5 text-text-contrast transition-all duration-150 cursor-pointer"
+                                    className="hover:text-text-highlight hover:bg-hbgc-page text-text-contrast flex h-10 w-full cursor-pointer items-center justify-start rounded-md px-5 transition-all duration-150"
                                 >
                                     <span className="flex h-10 w-10 items-center">
                                         {item.icon}
                                     </span>
-                                    <p className="text-sm font-semibold whitespace-nowrap text-left">
+                                    <p className="text-left text-sm font-semibold whitespace-nowrap">
                                         {t(
                                             `common.layout.header.accountMenu.${item.titleKey}`,
                                         )}

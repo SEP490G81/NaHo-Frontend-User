@@ -20,3 +20,18 @@ const UserStatus = Object.freeze({
 });
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
 
+export const RoleName = Object.freeze({
+    LEARNER: "LEARNER",
+    CONTENT_MANAGER: "CONTENT_MANAGER",
+    ADMIN: "ADMIN",
+});
+export type RoleName = (typeof RoleName)[keyof typeof RoleName];
+
+export const OAuthProviderName = Object.freeze({
+    GOOGLE: "GOOGLE",
+    FACEBOOK: "FACEBOOK",
+    APPLE: "APPLE",
+});
+export type OAuthProviderName = (typeof OAuthProviderName)[keyof typeof OAuthProviderName];
+
+

@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getFirstCharacter } from "@/layouts/protected-header/utils/header.util";
+import { getFirstCharacter, getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import AccountMenu from "@/layouts/protected-header/components/account.menu";
 
 const UserAvatar = () => {
@@ -15,7 +15,7 @@ const UserAvatar = () => {
                 onClick={(event) => setAnchorEl(event.currentTarget)}
             >
                 <Avatar
-                    src={user?.avatarUrl || undefined}
+                    src={getUserAvatarUrl(user)}
                     sx={{
                         bgcolor: "var(--color-bgc-highlight)",
                         width: "40px",
@@ -24,6 +24,7 @@ const UserAvatar = () => {
                 >
                     {getFirstCharacter(user)}
                 </Avatar>
+
             </button>
 
             <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />

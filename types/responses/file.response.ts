@@ -1,8 +1,16 @@
 export interface FileResponse {
     id: number;
-    fileUrl: string;
-    previewUrl: string;
+    objectKey: string;
     originalName: string;
     contentType: string;
     size: number;
 }
+
+export interface FileResult {
+    id: number;
+    objectKey: string;
+    originalName: string;
+    contentType: string;
+    size: number;
+}
+
