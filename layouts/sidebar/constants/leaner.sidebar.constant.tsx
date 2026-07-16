@@ -26,8 +26,8 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-    { title: "Trang chủ Dashboard", url: "/dashboard", icon: LayoutDashboard },
-    { title: "Các chủ đề luyện tập", url: "/topics", icon: Mic },
+    { title: "Trang chủ", url: "/dashboard", icon: LayoutDashboard },
+    { title: "Lộ trình Kaiwa", url: "/books", icon: Mic },
     {
         title: "Lịch sử",
         icon: History,
@@ -82,7 +82,9 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const LABELS: Record<string, string> = {
     dashboard: "Trang chủ",
-    topics: "Chủ đề Kaiwa",
+    topics: "Lộ trình Kaiwa",
+    books: "Lộ trình Kaiwa",
+    learn: "Bài học",
     history: "Lịch sử câu hỏi đã luyện",
     "history-custom": "Lịch sử câu hỏi tự tạo",
     "custom-question": "Đề chọn tự phát",

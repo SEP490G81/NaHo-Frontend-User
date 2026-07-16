@@ -108,6 +108,11 @@ export const SidebarItem = ({
                                 sx={{
                                     paddingTop: "10px",
                                     paddingBottom: "10px",
+                                    ...(isCollapsed && {
+                                        justifyContent: "center",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                    }),
                                 }}
                             >
                                 {active && (
@@ -197,6 +202,11 @@ export const SidebarItem = ({
                         sx={{
                             paddingTop: "10px",
                             paddingBottom: "10px",
+                            ...(isCollapsed && {
+                                justifyContent: "center",
+                                paddingLeft: 0,
+                                paddingRight: 0,
+                            }),
                         }}
                     >
                         {active && (
