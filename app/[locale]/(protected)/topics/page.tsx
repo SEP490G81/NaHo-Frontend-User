@@ -1,28 +1,8 @@
-import React from "react";
-import { getTranslations } from "next-intl/server";
-import Topics from "@/modules/protected/topics/components/topics";
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({
-    params,
-}: {
-    params: { locale: string };
-}): Promise<{
-    title: string;
-}> {
-    const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
-
-    return {
-        title: t("topics"),
-    };
-}
-
-const TopicsPage = async () => {
-    // const res = await getTopics(); //goi api de lay data topic
-    //goi api de lay data topic
-    return (
-        <Topics /> //truyen data topic vao component topics de render
-    );
+/** Thư viện sách đã chuyển sang /books → điều hướng để giữ tương thích link cũ. */
+const TopicsRedirectPage = () => {
+    return redirect("/books");
 };
 
-export default TopicsPage;
+export default TopicsRedirectPage;

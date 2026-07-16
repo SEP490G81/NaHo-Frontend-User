@@ -1,24 +1,22 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import TopicDetail from "@/modules/protected/topic-detail/features/topic.detail";
+import BookDetail from "@/modules/protected/topics/features/book.detail";
 
 export async function generateMetadata({
     params,
 }: {
-    params: { locale: string };
-}): Promise<{
-    title: string;
-}> {
+    params: Promise<{ locale: string }>;
+}): Promise<{ title: string }> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "common.metadata.title" });
 
     return {
-        title: t("topicDetail"),
+        title: t("topics"),
     };
 }
 
-const TopicDetailPage = () => {
-    return <TopicDetail />;
+const BookDetailPage = () => {
+    return <BookDetail />;
 };
 
-export default TopicDetailPage;
+export default BookDetailPage;

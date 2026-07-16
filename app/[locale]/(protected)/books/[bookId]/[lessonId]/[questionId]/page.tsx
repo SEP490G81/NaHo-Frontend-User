@@ -6,9 +6,7 @@ export async function generateMetadata({
     params,
 }: {
     params: Promise<{ locale: string }>;
-}): Promise<{
-    title: string;
-}> {
+}): Promise<{ title: string }> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "topicDetail" });
 
@@ -17,8 +15,8 @@ export async function generateMetadata({
     };
 }
 
-const TopicQuestionDetailPage = () => {
+const QuestionDetailPage = () => {
     return <QuestionDetail />;
 };
 
-export default TopicQuestionDetailPage;
+export default QuestionDetailPage;
