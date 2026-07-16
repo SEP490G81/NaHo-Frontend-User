@@ -1,7 +1,10 @@
 export interface FileResponse {
     id: number;
-    fileUrl: string;
-    previewUrl: string;
+    /** URL công khai của file (BE trả trực tiếp URL CloudFront). */
+    objectKey: string;
+    /** Các trường cũ (giữ optional để tương thích ngược). */
+    fileUrl?: string;
+    previewUrl?: string;
     originalName: string;
     contentType: string;
     size: number;
