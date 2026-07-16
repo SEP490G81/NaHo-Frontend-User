@@ -1,0 +1,120 @@
+{
+    "marugoto": {
+        "roadmap": {
+            "badge": "Interactive learning path",
+            "title": "Kaiwa Learning Path",
+            "subtitle": "Conquer each lesson in the Marugoto series and level up to go further on your Kaiwa journey.",
+            "streak": "Daily streak",
+            "currentLevel": "Current level",
+            "totalPoints": "Total points",
+            "streakValue": "{days} day streak! 🔥",
+            "levelValue": "Level: {level}",
+            "pointsValue": "{points} L-Point 🌟"
+        },
+        "books": {
+            "chooseBook": "Choose a book",
+            "library": "Marugoto Library",
+            "currentBook": "Now showing",
+            "locked": "This book is locked",
+            "lockedDesc": "Level up to unlock the next book.",
+            "jumpTest": "Level-up test",
+            "empty": "Content for this book is coming soon.",
+            "lessonCount": "{count} lessons",
+            "topicCount": "{count} topics",
+            "overallProgress": "Course progress",
+            "lessonsDone": "{done}/{total} lessons done",
+            "comingSoon": "Coming soon",
+            "current": "Learning",
+            "backToLibrary": "Back to book library"
+        },
+        "bands": {
+            "A1": "Starter",
+            "A2": "Elementary",
+            "A2/B1": "Pre-Intermediate",
+            "B1": "Intermediate",
+            "B2": "Upper-Intermediate"
+        },
+        "search": "Search topics in this book...",
+        "topic": {
+            "label": "Topic {index}",
+            "lessonCount": "{count} lessons"
+        },
+        "lesson": {
+            "label": "Lesson {number}",
+            "candoCount": "{count} Can-do",
+            "enter": "Start learning",
+            "review": "Review",
+            "needUnlock": "Locked"
+        },
+        "status": {
+            "completed": "Done",
+            "active": "Learning",
+            "locked": "Locked"
+        },
+        "lockedToast": "This content is locked",
+        "lockedToastDesc": "Complete the previous step to continue.",
+        "path": {
+            "backToTopic": "Back to topic",
+            "candoTitle": "Communication goals (Can-do)",
+            "candoSubtitle": "Expand each Can-do to start its practice path.",
+            "showFurigana": "Show Furigana",
+            "candoLabel": "Can-do {index}",
+            "milestoneProgress": "{done}/{total} milestones",
+            "routeTitle": "Practice path",
+            "routeSubtitle": "Complete each circle to unlock the next milestone.",
+            "viewVocab": "View Can-do vocabulary",
+            "vocabShort": "Vocabulary",
+            "emptyNodes": "This Can-do has no practice milestones yet.",
+            "overallProgress": "Lesson progress",
+            "candoListTitle": "Can-do list",
+            "candoSummary": "{total} Can-do • {done}/{total} done",
+            "lessonGoals": "Communication goals"
+        },
+        "node": {
+            "vocabTitle": "Vocabulary",
+            "speakingTitle": "Speaking",
+            "testTitle": "Test",
+            "start": "Start →",
+            "vocabCaption": "Learn Can-do vocabulary",
+            "vocabForCaption": "Prep for question {index}",
+            "speakingCaption": "Question {index}",
+            "testCaption": "Can-do mini-test",
+            "chestTitle": "Reward chest",
+            "chestCaption": "+{reward} L-Point",
+            "chestOpened": "Chest opened",
+            "chestClaimed": "You got +{reward} L-Point! 🎁",
+            "chestAlready": "You already opened this chest.",
+            "scoreSuffix": "{score}/10"
+        },
+        "preview": {
+            "title": "Question detail",
+            "bestScore": "Best score: {score}/10",
+            "context": "Context hint",
+            "grammar": "Key grammar patterns",
+            "modelAnswer": "Model answer",
+            "viTranslation": "Vietnamese translation",
+            "practiceNow": "Practice this question"
+        },
+        "vocab": {
+            "dialogTitle": "Vocabulary · Can-do {index}",
+            "titleCando": "Vocabulary · Can-do {index}",
+            "titleQuestion": "Prep · Question {index}",
+            "dialogDesc": "Study the target vocabulary below before you start speaking.",
+            "empty": "This Can-do has no vocabulary yet.",
+            "emptyGrammar": "No grammar patterns for this part yet.",
+            "grammar": "Representative grammar patterns",
+            "count": "{count} words",
+            "close": "Close",
+            "tabCards": "Flashcards",
+            "tabGrammar": "Grammar & sample sentences",
+            "flip": "Tap to flip",
+            "speak": "Pronounce",
+            "reading": "Reading",
+            "meaning": "Meaning",
+            "prev": "Prev",
+            "next": "Next",
+            "learned": "Learned",
+            "finish": "Finish"
+        }
+    }
+}

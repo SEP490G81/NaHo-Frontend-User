@@ -11,8 +11,10 @@ export type AllRoute =
     | "/forgot-password"
     | "/register"
     | "/topics"
-    | `/topics/${string}` // hoặc "/topics/[topicId]" tùy thuộc vào cách config router của bạn
-    | `/topics/${string}/${string}` // hoặc "/topics/[topicId]/[questionId]"
+    | "/books"
+    | `/books/${string}` // "/books/[bookId]"
+    | `/books/${string}/${string}` // "/books/[bookId]/[lessonId]"
+    | `/books/${string}/${string}/${string}` // "/books/[bookId]/[lessonId]/[questionId]"
     | "/sandbox"
     | `/sandbox/${string}` // hoặc "/sandbox/[questionId]"
     | "/history"
