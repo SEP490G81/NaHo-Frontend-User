@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { mockTopics } from "@/data/mockTopics";
+import { findQuestionAnywhere, findTopicAnywhere } from "@/data/questionLookup";
+import { getQuestionChain } from "@/data/marugoto";
 import { getQuestionHints } from "@/data/mockHints";
+import { useMarugotoStore } from "@/store/marugotoStore";
 import { useMutation } from "@tanstack/react-query";
 import { submitPractice } from "@/modules/protected/history/services/history.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
@@ -17,11 +19,10 @@ import SandboxAnalyzingOverlay from "./sandbox.analyzing.overlay";
 import { useRouter } from "@/i18n/navigation";
 
 function loadQuestion(questionId: string) {
-    for (const topic of mockTopics) {
-        const q = topic.questions.find((x) => x.id === questionId);
-        if (q) return { topic, question: q };
-    }
-    return null;
+    const hit = findQuestionAnywhere(questionId);
+    if (!hit) return null;
+    const topicTitle = findTopicAnywhere(hit.topicId)?.title ?? "";
+    return { topicId: hit.topicId, topicTitle, question: hit.question };
 }
 
 export function Sandbox() {
@@ -38,6 +39,8 @@ function SandboxContent() {
     const { push } = useRouter();
     const questionId = params?.questionId as string;
 
+    // TODO: câu hỏi Marugoto từ BE (id số) chưa tra được vì BE chưa có endpoint
+    // chi tiết câu hỏi (GET /speaking-questions/{id}) → tạm dùng dữ liệu local.
     const data = loadQuestion(questionId);
 
     const {
@@ -64,6 +67,9 @@ function SandboxContent() {
         mutationFn: submitPractice,
         onSuccess: (result) => {
             setAnalyzing(false);
+            // Ghi điểm vào lộ trình Marugoto để mở khóa node kế + cộng L-Point
+            // (không ảnh hưởng câu hỏi ngoài Marugoto).
+            useMarugotoStore.getState().setQuestionScore(questionId, result.score);
             push(`/history/${result.historyId}`);
         },
         onError: (err) => {
@@ -83,9 +89,13 @@ function SandboxContent() {
         );
     }
 
-    const { topic, question } = data;
-    const hints = getQuestionHints(topic.id, question.id);
+    const { topicId, topicTitle, question } = data;
+    const hints = getQuestionHints(topicId, question.id);
     const rules = getSandboxRules(t);
+    const chain = getQuestionChain(question.id);
+    const backHref = chain
+        ? `/books/${chain.book.id}/${chain.lesson.id}/${question.id}`
+        : "/history";
 
     const handleAnalyze = async () => {
         if (!audioUrl) return;
@@ -99,7 +109,7 @@ function SandboxContent() {
             const audioBlob = await res.blob();
 
             mutation.mutate({
-                topicId: topic.id,
+                topicId,
                 questionId: question.id,
                 audioBlob,
                 durationSec,
@@ -114,7 +124,7 @@ function SandboxContent() {
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-5xl space-y-5">
                 <SandboxHeader
-                    topicId={topic.id}
+                    backHref={backHref}
                     showFurigana={showFurigana}
                     setShowFurigana={setShowFurigana}
                 />
@@ -137,7 +147,7 @@ function SandboxContent() {
                 {/* Step 2 */}
                 {step === 2 && (
                     <SandboxStep2
-                        topicTitle={topic.title}
+                        topicTitle={topicTitle}
                         question={question}
                         showFurigana={showFurigana}
                         recording={recording}
@@ -150,7 +160,7 @@ function SandboxContent() {
                 {/* Step 3 */}
                 {step === 3 && (
                     <SandboxStep3
-                        topicTitle={topic.title}
+                        topicTitle={topicTitle}
                         question={question}
                         showFurigana={showFurigana}
                         elapsed={elapsed}

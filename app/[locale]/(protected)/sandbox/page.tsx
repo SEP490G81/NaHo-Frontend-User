@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 const SandboxDefaultPage = () => {
-    redirect("/topics");
+    redirect("/books");
 };
 
 export default SandboxDefaultPage;
