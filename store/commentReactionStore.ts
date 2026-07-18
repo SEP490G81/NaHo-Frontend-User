@@ -20,6 +20,8 @@ interface CommentReactionState {
     reactionType: ReactionType,
     userId: string
   ) => void;
+  receiveComment: (comment: Comment) => void;
+  receiveToggleReaction: (reaction: Reaction) => void;
   clear: () => void;
 }
 
@@ -75,6 +77,36 @@ export const useCommentReactionStore = create<CommentReactionState>()(
               reactionType,
             };
             updatedReactions.push(newReaction);
+          }
+
+          return { reactions: updatedReactions };
+        }),
+      receiveComment: (comment) =>
+        set((state) => {
+          if (state.comments.some((c) => c.id === comment.id)) {
+            return {};
+          }
+          return { comments: [...state.comments, comment] };
+        }),
+      receiveToggleReaction: (reaction) =>
+        set((state) => {
+          const existingIdx = state.reactions.findIndex(
+            (r) =>
+              r.questionId === reaction.questionId &&
+              r.commentId === reaction.commentId &&
+              r.userId === reaction.userId
+          );
+
+          let updatedReactions = [...state.reactions];
+
+          if (existingIdx > -1) {
+            if (state.reactions[existingIdx].reactionType === reaction.reactionType) {
+              updatedReactions.splice(existingIdx, 1);
+            } else {
+              updatedReactions[existingIdx] = reaction;
+            }
+          } else {
+            updatedReactions.push(reaction);
           }
 
           return { reactions: updatedReactions };

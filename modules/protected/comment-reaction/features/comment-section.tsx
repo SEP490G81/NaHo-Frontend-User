@@ -10,6 +10,7 @@ import ReactionSummary from "../components/reaction-summary";
 import CommentItem from "../components/comment-item";
 import CommentInputForm from "../components/comment-input-form";
 import { useTranslations } from "next-intl";
+import { useCommentReactionSocket } from "../hooks/useCommentReactionSocket";
 
 interface CommentSectionProps {
   questionId: string;
@@ -19,6 +20,9 @@ export function CommentSection({ questionId }: CommentSectionProps) {
   const t = useTranslations("common.commentReaction");
   const [newCommentText, setNewCommentText] = useState("");
   const [showQuestionPicker, setShowQuestionPicker] = useState(false);
+
+  // Khởi tạo kết nối WebSocket real-time cho bài học / câu hỏi này
+  useCommentReactionSocket(questionId);
 
   // Zustand Store hooks
   const allComments = useCommentReactionStore((s) => s.comments);
