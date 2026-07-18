@@ -1,0 +1,60 @@
+{
+    "leaderboard": {
+        "title": "Bảng xếp hạng thi đua",
+        "subtitle": "Cạnh tranh cùng học viên NAHO — giữ vững Top {size} để thăng hạng!",
+        "yourLeagueBadge": "CỦA BẠN",
+        "pointRange": "{min} – {max} L-Point",
+        "pointRangeOpen": "≥ {min} L-Point",
+        "progress": {
+            "label": "L-Point tích lũy",
+            "value": "{current} / {target}",
+            "toNext": "Còn {point} L-Point nữa để lên {league}",
+            "maxLeague": "Bạn đã ở hạng cao nhất — hãy giữ vững phong độ!"
+        },
+        "list": {
+            "columnPoint": "L-Point",
+            "youBadge": "BẠN",
+            "streak": "Chuỗi {days} ngày liên tiếp"
+        },
+        "myPosition": {
+            "title": "VỊ TRÍ CỦA BẠN",
+            "outsideTop": "Bạn đang ở ngoài Top {size} — cố lên để lọt vào bảng xếp hạng!"
+        },
+        "otherLeagueNotice": "Bạn đang xem hạng khác. Hạng hiện tại của bạn là {league}.",
+        "empty": {
+            "title": "Chưa có ai trong hạng này",
+            "description": "Hãy là học viên đầu tiên chinh phục {league}!"
+        },
+        "leagueNames": {
+            "bronze": "Hạng Đồng",
+            "silver": "Hạng Bạc",
+            "gold": "Hạng Vàng",
+            "sapphire": "Hạng Lam Ngọc",
+            "ruby": "Hạng Hồng Ngọc",
+            "emerald": "Hạng Lục Bảo",
+            "amethyst": "Hạng Thạch Anh Tím",
+            "pearl": "Hạng Ngọc Trai",
+            "obsidian": "Hạng Đá Hắc Diệu",
+            "diamond": "Hạng Kim Cương"
+        },
+        "leagueDescriptions": {
+            "bronze": "Bước khởi đầu trên hành trình chinh phục tri thức.",
+            "silver": "Nỗ lực không ngừng, khẳng định bản thân.",
+            "gold": "Đỉnh cao phong độ, sẵn sàng bứt phá.",
+            "sapphire": "Trí tuệ ngời sáng, tự tin tiến bước.",
+            "ruby": "Đam mê rực cháy, chinh phục đỉnh cao.",
+            "emerald": "Tài năng nở rộ, vươn tầm cao mới.",
+            "amethyst": "Tinh hoa hội tụ, khẳng định đẳng cấp.",
+            "pearl": "Sự kiên trì tỏa sáng qua thời gian.",
+            "obsidian": "Sức mạnh tiềm ẩn, vượt mọi giới hạn.",
+            "diamond": "Đỉnh cao tối thượng, tỏa sáng vĩnh cửu."
+        },
+        "railTitle": "{count} hạng thi đua",
+        "podiumTitle": "Bục vinh danh",
+        "error": {
+            "title": "Không tải được bảng xếp hạng",
+            "description": "Đã có lỗi xảy ra khi kết nối máy chủ. Vui lòng thử lại.",
+            "retry": "Thử lại"
+        }
+    }
+}

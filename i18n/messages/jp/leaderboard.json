@@ -1,0 +1,60 @@
+{
+    "leaderboard": {
+        "title": "ランキング",
+        "subtitle": "NAHOの学習者と競い合おう — 上位{size}を守ってリーグを上げよう！",
+        "yourLeagueBadge": "あなた",
+        "pointRange": "{min} – {max} L-Point",
+        "pointRangeOpen": "{min} L-Point 以上",
+        "progress": {
+            "label": "累計 L-Point",
+            "value": "{current} / {target}",
+            "toNext": "{league}まであと {point} L-Point",
+            "maxLeague": "最高リーグに到達しています。この調子で頑張りましょう！"
+        },
+        "list": {
+            "columnPoint": "L-Point",
+            "youBadge": "あなた",
+            "streak": "{days}日連続ログイン"
+        },
+        "myPosition": {
+            "title": "あなたの順位",
+            "outsideTop": "上位{size}名圏外です。ランクインを目指しましょう！"
+        },
+        "otherLeagueNotice": "他のリーグを閲覧中です。現在のリーグは{league}です。",
+        "empty": {
+            "title": "このリーグにはまだ誰もいません",
+            "description": "{league}を制する最初の学習者になりましょう！"
+        },
+        "leagueNames": {
+            "bronze": "ブロンズリーグ",
+            "silver": "シルバーリーグ",
+            "gold": "ゴールドリーグ",
+            "sapphire": "サファイアリーグ",
+            "ruby": "ルビーリーグ",
+            "emerald": "エメラルドリーグ",
+            "amethyst": "アメジストリーグ",
+            "pearl": "パールリーグ",
+            "obsidian": "オブシディアンリーグ",
+            "diamond": "ダイヤモンドリーグ"
+        },
+        "leagueDescriptions": {
+            "bronze": "知識を極める旅の第一歩。",
+            "silver": "絶え間ない努力で自分を証明する。",
+            "gold": "絶好調、飛躍への準備は万全。",
+            "sapphire": "輝く知性で自信を持って前進。",
+            "ruby": "燃える情熱で頂点を目指す。",
+            "emerald": "才能が開花し、新たな高みへ。",
+            "amethyst": "精華が集い、実力を証明する。",
+            "pearl": "時を越えて輝く粘り強さ。",
+            "obsidian": "限界を超える秘めた力。",
+            "diamond": "永遠に輝く究極の頂点。"
+        },
+        "railTitle": "{count} リーグ",
+        "podiumTitle": "栄誉の殿堂",
+        "error": {
+            "title": "ランキングを読み込めませんでした",
+            "description": "サーバー接続でエラーが発生しました。もう一度お試しください。",
+            "retry": "再試行"
+        }
+    }
+}
