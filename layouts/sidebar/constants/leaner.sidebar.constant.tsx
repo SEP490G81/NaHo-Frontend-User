@@ -68,9 +68,9 @@ export const NAV_ITEMS: NavItem[] = [
     },
     {
         title: "Bảng xếp hạng thi đua",
-        url: "/dashboard",
+        url: "/leaderboard",
         icon: Trophy,
-        disabled: true,
+        disabled: false,
     },
     {
         title: "Cài đặt & Hồ sơ",
