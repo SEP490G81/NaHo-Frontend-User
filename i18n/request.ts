@@ -16,6 +16,7 @@ const MESSAGE_FILES = [
     "settings",
     "live-chatroom",
     "dialogue-setup",
+    "leaderboard",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

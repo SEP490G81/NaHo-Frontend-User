@@ -11,6 +11,7 @@ import communityLibrary from "@/i18n/messages/vi/community-library.json";
 import settings from "@/i18n/messages/vi/settings.json";
 import liveChatroom from "@/i18n/messages/vi/live-chatroom.json";
 import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
+import leaderboard from "@/i18n/messages/vi/leaderboard.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -26,6 +27,7 @@ declare module "next-intl" {
             typeof settings &
             typeof communityLibrary &
             typeof liveChatroom &
-            typeof dialogueSetup;
+            typeof dialogueSetup &
+            typeof leaderboard;
     }
 }
