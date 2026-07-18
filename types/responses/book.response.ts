@@ -1,11 +1,16 @@
 import { FileResponse } from "./file.response";
-
-/** Contract Backend cho Book → Topic → Lesson. */
+import { LearningPathNodeListItemResponse } from "./learning.response";
+import { SpeakingQuestionListItemResponse } from "./question.response";
 
 export type JLPTLevel = "N5" | "N4" | "N3" | "N2" | "N1";
 export type CefrLevel = "A1" | "A2" | "A2B1" | "B1" | "B2" | "C1" | "C2";
-/** Trạng thái CMS của nội dung (không phải khóa/mở của học viên). */
 export type ContentStatus = string;
+export type TopicStatus = "DRAFT" | "PUBLISHED" | "ARCHIVE";
+
+export type LessonListItemResponse = LessonResponse;
+export type ObjectiveListItemResponse = ObjectiveResponse;
+export type SpeakingQuestionResponse = SpeakingQuestionListItemResponse;
+export type TopicListItemResponse = TopicResponse;
 
 export interface BookResponse {
     id: number;
@@ -14,57 +19,86 @@ export interface BookResponse {
     jlptLevel: JLPTLevel;
     cefrLevel: CefrLevel;
     orderIndex: number;
-    coverImage: FileResponse | null;
+    coverImage: FileResponse;
 }
 
-/** Trường tiếng Nhật dùng chung cho Topic / Lesson (kèm markup furigana). */
-interface JapaneseNode {
+export interface CreateTopicResponse {
+    id: number;
+    userId: number;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
+    orderIndex: number;
+    coverImageFileId: number;
+}
+
+export interface LessonDetailResponse {
     id: number;
     japaneseName: string;
     japaneseDescription: string;
     japaneseNameMarkup: string;
     japaneseDescriptionMarkup: string;
-    status: ContentStatus;
+    status: TopicStatus;
+    orderIndex: number;
+    objectives: ObjectiveResponse[];
+}
+
+export interface LessonResponse {
+    id: number;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
     orderIndex: number;
 }
 
-export interface TopicListItemResponse extends JapaneseNode {
-    userId: number;
-    bookId: number;
-    coverImageFileId: number | null;
+export interface ObjectiveDetailResponse {
+    id: number;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
+    orderIndex: number;
+    learningPathNodes: LearningPathNodeListItemResponse[];
+    questions?: SpeakingQuestionListItemResponse[];
 }
 
-export type LessonListItemResponse = JapaneseNode;
-
-export interface TopicDetailResponse extends JapaneseNode {
-    userId: number;
-    coverImageFileId: number | null;
-    lessons: LessonListItemResponse[];
+export interface ObjectiveResponse {
+    id: number;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
+    orderIndex: number;
 }
 
-export type ObjectiveListItemResponse = JapaneseNode;
-
-export interface LessonDetailResponse extends JapaneseNode {
-    objectives: ObjectiveListItemResponse[];
-}
-
-export interface SpeakingQuestionResponse {
+export interface TopicDetailResponse {
     id: number;
     userId: number;
-    questionAudioFileId: number | null;
-    title: string;
-    titleMarkup: string;
-    description: string;
-    descriptionMarkup: string;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
     orderIndex: number;
-    status: ContentStatus;
-    createdTime: string | null;
+    coverImageFileId: number;
+    lessons: LessonResponse[];
 }
 
-export interface ObjectiveDetailResponse extends JapaneseNode {
-    questions: SpeakingQuestionResponse[];
+export interface TopicResponse {
+    id: number;
+    userId: number;
+    bookId: number;
+    coverImageFileId: number;
+    japaneseName: string;
+    japaneseDescription: string;
+    japaneseNameMarkup: string;
+    japaneseDescriptionMarkup: string;
+    status: TopicStatus;
+    orderIndex: number;
 }
-
-// TODO: BE chưa có endpoint chi tiết câu hỏi kèm từ vựng/ngữ pháp
-// (GET /speaking-questions/{id}). Khi team BE bổ sung, thêm lại các type
-// VocabularyItemResponse / GrammarItemResponse / SpeakingQuestionDetailResponse.

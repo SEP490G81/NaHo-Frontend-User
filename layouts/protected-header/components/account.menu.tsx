@@ -44,7 +44,11 @@ const AccountMenu = ({
             <div>
                 <div className="flex min-w-75 items-center gap-x-3 p-3.5">
                     <Avatar
-                        src={user?.avatarUrl || undefined}
+                        src={
+                            user?.avatar?.objectKey ||
+                            user?.oAuthProviders?.find((p) => p.avatarUrl)?.avatarUrl ||
+                            undefined
+                        }
                         sx={{
                             width: "56px",
                             height: "56px",

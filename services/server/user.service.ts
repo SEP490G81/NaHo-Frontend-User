@@ -13,7 +13,7 @@ export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
         return null;
     }
 
-    const backendResponse = await fetch(`${process.env.API_URL}/auth/me`, {
+    const backendResponse = await fetch(`${process.env.API_URL}/users/me`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,
