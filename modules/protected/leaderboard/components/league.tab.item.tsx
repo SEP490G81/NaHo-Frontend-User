@@ -11,6 +11,8 @@ interface LeagueTabItemProps {
     league: LeagueResponse;
     isActive: boolean;
     isMine: boolean;
+    /** Hạng cao hơn hạng hiện tại (chưa đạt đủ điểm) -> làm mờ nhưng vẫn bấm được. */
+    isLocked: boolean;
     onSelect: (leagueId: number) => void;
     className?: string;
 }
@@ -19,6 +21,7 @@ export function LeagueTabItem({
     league,
     isActive,
     isMine,
+    isLocked,
     onSelect,
     className,
 }: LeagueTabItemProps) {
@@ -37,9 +40,11 @@ export function LeagueTabItem({
                 background: `color-mix(in srgb, var(${cssVar}) ${isActive ? 18 : 7}%, transparent)`,
             }}
             className={cn(
-                "flex items-center gap-3 rounded-xl px-4 py-3 text-left transition hover:brightness-105",
+                "flex items-center gap-3 rounded-xl px-4 py-3 text-left transition hover:opacity-100",
                 theme.border,
                 isActive ? "border-2" : "border",
+                // Mờ khi là hạng cao hơn mình và không phải hạng đang xem.
+                isLocked && !isActive && "opacity-45",
                 className,
             )}
         >

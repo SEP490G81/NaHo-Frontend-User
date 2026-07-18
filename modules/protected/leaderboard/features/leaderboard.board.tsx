@@ -84,6 +84,7 @@ export function LeaderboardBoard() {
                 leagues={leagues}
                 activeLeagueId={activeLeague.id}
                 myLeagueId={myLeagueId}
+                totalPoint={totalPoint}
                 onSelect={setSelectedLeagueId}
             />
 

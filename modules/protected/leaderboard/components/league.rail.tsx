@@ -8,6 +8,8 @@ interface LeagueRailProps {
     leagues: LeagueResponse[];
     activeLeagueId: number | null;
     myLeagueId: number | null;
+    /** L-Point tích lũy của mình, để xác định hạng nào cao hơn -> làm mờ. */
+    totalPoint: number;
     onSelect: (leagueId: number) => void;
 }
 
@@ -18,6 +20,7 @@ export function LeagueRail({
     leagues,
     activeLeagueId,
     myLeagueId,
+    totalPoint,
     onSelect,
 }: LeagueRailProps) {
     const t = useTranslations("leaderboard");
@@ -49,6 +52,7 @@ export function LeagueRail({
                                 league={league}
                                 isActive={isActive}
                                 isMine={league.id === myLeagueId}
+                                isLocked={league.minPoint > totalPoint}
                                 onSelect={onSelect}
                                 className="h-full lg:w-full"
                             />
