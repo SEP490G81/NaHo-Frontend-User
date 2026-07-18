@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { UserResponse } from "@/types/responses/user.response";
+import { UserLearningProgressResponse } from "@/types/responses/league.response";
 import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 
 export async function GET() {
@@ -11,13 +11,16 @@ export async function GET() {
         return NextResponse.json(null, { status: 401 });
     }
 
-    const backendResponse = await fetch(`${process.env.API_URL}/users/me`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
+    const backendResponse = await fetch(
+        `${process.env.API_URL}/user-learning-progresses`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            cache: "no-store",
         },
-        cache: "no-store",
-    });
+    );
 
     const result = await backendResponse.json();
 
@@ -28,7 +31,8 @@ export async function GET() {
         });
     }
 
-    return NextResponse.json((result as ApiResponse<UserResponse>).data, {
-        status: backendResponse.status,
-    });
+    return NextResponse.json(
+        (result as ApiResponse<UserLearningProgressResponse>).data,
+        { status: backendResponse.status },
+    );
 }

@@ -1,23 +1,30 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { UserResponse } from "@/types/responses/user.response";
+import { LeagueLeaderboardEntryResponse } from "@/types/responses/league.response";
 import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 
-export async function GET() {
+export async function GET(
+    _request: Request,
+    { params }: { params: Promise<{ leagueId: string }> },
+) {
+    const { leagueId } = await params;
     const cookieStore = await cookies();
     const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
     if (!accessToken) {
         return NextResponse.json(null, { status: 401 });
     }
 
-    const backendResponse = await fetch(`${process.env.API_URL}/users/me`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
+    const backendResponse = await fetch(
+        `${process.env.API_URL}/leagues/leaderboard/${leagueId}`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            cache: "no-store",
         },
-        cache: "no-store",
-    });
+    );
 
     const result = await backendResponse.json();
 
@@ -28,7 +35,8 @@ export async function GET() {
         });
     }
 
-    return NextResponse.json((result as ApiResponse<UserResponse>).data, {
-        status: backendResponse.status,
-    });
+    return NextResponse.json(
+        (result as ApiResponse<LeagueLeaderboardEntryResponse[]>).data,
+        { status: backendResponse.status },
+    );
 }

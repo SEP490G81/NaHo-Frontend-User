@@ -29,7 +29,8 @@
                 "community-library": "Community Library",
                 "report": "Report",
                 "liveChatroom": "ライブチャットルーム",
-                "dialogueSetup": "会話設定"
+                "dialogueSetup": "会話設定",
+                "leaderboard": "ランキング"
             },
             "language": {
                 "vi": "Tiếng Việt",

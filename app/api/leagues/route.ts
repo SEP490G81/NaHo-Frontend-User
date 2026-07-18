@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { UserResponse } from "@/types/responses/user.response";
+import { LeagueResponse } from "@/types/responses/league.response";
 import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 
 export async function GET() {
@@ -11,7 +11,7 @@ export async function GET() {
         return NextResponse.json(null, { status: 401 });
     }
 
-    const backendResponse = await fetch(`${process.env.API_URL}/users/me`, {
+    const backendResponse = await fetch(`${process.env.API_URL}/leagues/all`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -28,7 +28,7 @@ export async function GET() {
         });
     }
 
-    return NextResponse.json((result as ApiResponse<UserResponse>).data, {
+    return NextResponse.json((result as ApiResponse<LeagueResponse[]>).data, {
         status: backendResponse.status,
     });
 }

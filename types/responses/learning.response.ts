@@ -1,5 +1,5 @@
 import { QuestionStatus } from "./question.response";
-import { LeaderboardUserResponse } from "./user.response";
+import { LeaderboardUserResponse } from "./league.response";
 
 export type NodeType = "SPEAKING_QUESTION" | "VOCABULARY_QUESTION" | "CHEST";
 

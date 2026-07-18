@@ -1,38 +1,50 @@
-import { Gender, UserStatus } from "@/types/enums/user.enum";
-import { JLPTLevel } from "./book.response";
+import { Gender, JlptLevel, UserStatus, RoleName, OAuthProviderName } from "@/types/enums/user.enum";
 import { FileResult } from "./file.response";
 
-export type RoleName = "LEARNER" | "CONTENT_MANAGER" | "ADMIN";
-export type OAuthProviderName = "GOOGLE" | "FACEBOOK" | "APPLE";
+export interface PointSummaryResult {
+    id: number;
+    totalPoint: number;
+}
 
 export interface RoleResult {
     id: number;
     roleName: RoleName;
-    description: string;
+    description: string | null;
 }
 
 export interface OAuthProviderResult {
     id: number;
     providerName: OAuthProviderName;
-    avatarUrl: string;
+    avatarUrl: string | null;
 }
 
-export interface LeaderboardUserResponse {
-    id: number;
-    leagueId: number;
-    rank: number;
-    username: string;
-    email: string;
-    fullName: string;
-    avatarObjectKey: string;
-    oAuthAvatarUrl: string[];
-    totalPoint: number;
+export interface RoleResponse {
+    id: string;
+    name: string;
+    description: string | null;
 }
 
 export interface OAuthProviderResponse {
     id: number;
     providerName: OAuthProviderName;
-    avatarUrl: string;
+    avatarUrl: string | null;
+}
+
+export interface UserResponse {
+    id: number;
+    roles: RoleResult[];
+    userSessionIds: number[];
+    oAuthProviders: OAuthProviderResult[];
+    pointSummary: PointSummaryResult | null;
+    userLearningProgressId: number | null;
+    avatar: FileResult | null;
+    username: string | null;
+    email: string;
+    fullName: string | null;
+    gender: Gender | null;
+    dob: string | null;
+    jlptLevel: JlptLevel | null;
+    status: UserStatus;
 }
 
 export interface RegisterResponse {
@@ -41,10 +53,10 @@ export interface RegisterResponse {
     email: string;
 }
 
-export interface RoleResponse {
-    id: string;
-    name: string;
-    description: string;
+export interface TokenResponse {
+    value: string;
+    expiresAt: string;
+    expiresIn: number;
 }
 
 export interface TokenExpResponse {
@@ -52,26 +64,3 @@ export interface TokenExpResponse {
     expiresIn: number;
 }
 
-export interface TokenResponse {
-    value: string;
-    expiresAt: string;
-    expiresIn: number;
-}
-
-export interface UserResponse {
-    id: number;
-    roles: RoleResult[];
-    userSessionIds: number[];
-    oAuthProviders: OAuthProviderResult[];
-    userLearningProgressId: number;
-    avatar: FileResult;
-    username: string;
-    email: string;
-    fullName: string;
-    gender: Gender;
-    dob: string;
-    jlptLevel: JLPTLevel;
-    status: UserStatus;
-    avatarUrl?: string;
-    roleNames?: string[];
-}

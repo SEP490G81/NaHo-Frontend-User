@@ -17,6 +17,7 @@ const MESSAGE_FILES = [
     "live-chatroom",
     "dialogue-setup",
     "marugoto",
+    "leaderboard",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

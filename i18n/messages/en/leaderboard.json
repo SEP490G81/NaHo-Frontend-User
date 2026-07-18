@@ -1,0 +1,60 @@
+{
+    "leaderboard": {
+        "title": "Competitive leaderboard",
+        "subtitle": "Compete with NAHO learners — hold your Top {size} spot to rank up!",
+        "yourLeagueBadge": "YOURS",
+        "pointRange": "{min} – {max} L-Point",
+        "pointRangeOpen": "≥ {min} L-Point",
+        "progress": {
+            "label": "Lifetime L-Point",
+            "value": "{current} / {target}",
+            "toNext": "{point} L-Point to reach {league}",
+            "maxLeague": "You are in the highest league — keep it up!"
+        },
+        "list": {
+            "columnPoint": "L-Point",
+            "youBadge": "YOU",
+            "streak": "{days}-day streak"
+        },
+        "myPosition": {
+            "title": "YOUR POSITION",
+            "outsideTop": "You are outside the Top {size} — keep going to make the board!"
+        },
+        "otherLeagueNotice": "You are viewing another league. Your current league is {league}.",
+        "empty": {
+            "title": "No one in this league yet",
+            "description": "Be the first learner to conquer {league}!"
+        },
+        "leagueNames": {
+            "bronze": "Bronze League",
+            "silver": "Silver League",
+            "gold": "Gold League",
+            "sapphire": "Sapphire League",
+            "ruby": "Ruby League",
+            "emerald": "Emerald League",
+            "amethyst": "Amethyst League",
+            "pearl": "Pearl League",
+            "obsidian": "Obsidian League",
+            "diamond": "Diamond League"
+        },
+        "leagueDescriptions": {
+            "bronze": "The first step on your journey to knowledge.",
+            "silver": "Constant effort, proving yourself.",
+            "gold": "Peak form, ready to break through.",
+            "sapphire": "Bright minds moving forward with confidence.",
+            "ruby": "Burning passion, conquering the summit.",
+            "emerald": "Talent in full bloom, reaching new heights.",
+            "amethyst": "Excellence gathered, class confirmed.",
+            "pearl": "Perseverance shining through time.",
+            "obsidian": "Hidden strength beyond every limit.",
+            "diamond": "The ultimate peak, shining forever."
+        },
+        "railTitle": "{count} leagues",
+        "podiumTitle": "Hall of fame",
+        "error": {
+            "title": "Couldn't load the leaderboard",
+            "description": "Something went wrong while reaching the server. Please try again.",
+            "retry": "Retry"
+        }
+    }
+}

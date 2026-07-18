@@ -12,6 +12,7 @@ import settings from "@/i18n/messages/vi/settings.json";
 import liveChatroom from "@/i18n/messages/vi/live-chatroom.json";
 import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
 import marugoto from "@/i18n/messages/vi/marugoto.json";
+import leaderboard from "@/i18n/messages/vi/leaderboard.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -28,6 +29,7 @@ declare module "next-intl" {
             typeof communityLibrary &
             typeof liveChatroom &
             typeof dialogueSetup &
-            typeof marugoto;
+            typeof marugoto &
+            typeof leaderboard;
     }
 }
