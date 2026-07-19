@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { MicStatus, SandboxStep } from "../types/sandbox.type";
+import { blobToWav } from "../utils/wav.encoder";
 
 interface SandboxContextProps {
     step: SandboxStep;
@@ -61,7 +62,10 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             micTestStreamRef.current = stream;
 
-            const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+            const AudioContextClass =
+                window.AudioContext ||
+                (window as unknown as { webkitAudioContext: typeof AudioContext })
+                    .webkitAudioContext;
             const audioContext = new AudioContextClass();
             micTestContextRef.current = audioContext;
 
@@ -132,11 +136,19 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
                     if (e.data.size > 0) chunks.push(e.data);
                 };
 
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: "audio/webm" });
-                    const url = URL.createObjectURL(blob);
-                    setAudioUrl(url);
+                mediaRecorder.onstop = async () => {
                     stream.getTracks().forEach((track) => track.stop());
+                    const raw = new Blob(chunks, {
+                        type: mediaRecorder.mimeType || "audio/webm",
+                    });
+                    // Chuẩn hoá về WAV 16kHz để nghe lại được + Azure chấm được.
+                    try {
+                        const wav = await blobToWav(raw);
+                        setAudioUrl(URL.createObjectURL(wav));
+                    } catch (err) {
+                        console.error("Không chuyển được WAV, dùng bản gốc:", err);
+                        setAudioUrl(URL.createObjectURL(raw));
+                    }
                 };
 
                 setRecording(true);
