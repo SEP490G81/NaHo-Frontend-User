@@ -14,6 +14,17 @@ export interface LearningPathNodeDetailResponse {
     chest: LearningPathNodeDetailResponseChestDetailResponse;
 }
 
+export interface NodeVocabularyItem {
+    id: number;
+    reading: string | null;
+    japanese: string;
+    vietnameseMeaningText: string | null;
+    englishMeaningText: string | null;
+}
+
+/** Ngữ pháp trên node có cùng shape với từ vựng (mẫu câu + nghĩa). */
+export type NodeGrammarItem = NodeVocabularyItem;
+
 export interface LearningPathNodeDetailResponseSpeakingQuestionDetailResponse {
     id: number;
     userId: number;
@@ -22,6 +33,8 @@ export interface LearningPathNodeDetailResponseSpeakingQuestionDetailResponse {
     description: string;
     descriptionMarkup: string;
     status: QuestionStatus;
+    vocabularies: NodeVocabularyItem[];
+    grammars: NodeGrammarItem[];
 }
 
 export interface LearningPathNodeDetailResponseVocabularyQuestionDetailResponse {

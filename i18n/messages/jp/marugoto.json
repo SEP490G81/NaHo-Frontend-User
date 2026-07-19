@@ -55,36 +55,25 @@
         "lockedToastDesc": "前のステップを完了して続けてください。",
         "path": {
             "backToTopic": "トピックに戻る",
-            "candoTitle": "コミュニケーション目標（Can-do）",
-            "candoSubtitle": "各 Can-do を開いて練習ロードマップを始めましょう。",
             "showFurigana": "ふりがなを表示",
             "candoLabel": "Can-do {index}",
             "milestoneProgress": "{done}/{total} マイルストーン",
-            "routeTitle": "練習ロードマップ",
-            "routeSubtitle": "各サークルを完了して次のマイルストーンを解放しましょう。",
-            "viewVocab": "Can-do の語彙を見る",
             "vocabShort": "語彙",
-            "emptyNodes": "この Can-do にはまだ練習マイルストーンがありません。",
-            "overallProgress": "レッスンの進捗",
-            "candoListTitle": "Can-do 一覧",
             "candoSummary": "Can-do {total}件 • 達成 {done}/{total}",
-            "lessonGoals": "コミュニケーション目標"
+            "startBubble": "スタート"
         },
         "node": {
             "vocabTitle": "語彙",
             "speakingTitle": "スピーキング",
-            "testTitle": "テスト",
-            "start": "開始 →",
             "vocabCaption": "Can-do の語彙を学ぶ",
-            "vocabForCaption": "問題{index}の準備",
             "speakingCaption": "問題 {index}",
-            "testCaption": "Can-do ミニテスト",
             "chestTitle": "ごほうび箱",
-            "chestCaption": "+{reward} L-Point",
+            "chestHint": "開けてごほうびをゲット",
+            "chestReward": "+{point} L-Point",
+            "chestClaimBtn": "ごほうびを受け取る",
             "chestOpened": "開封済み",
             "chestClaimed": "+{reward} L-Point を獲得！🎁",
-            "chestAlready": "この箱はすでに開けています。",
-            "scoreSuffix": "{score}/10"
+            "chestAlready": "この箱はすでに開けています。"
         },
         "preview": {
             "title": "問題の詳細",

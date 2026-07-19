@@ -23,21 +23,13 @@ interface MarugotoState {
     claimChest: (nodeId: string, reward: number) => boolean;
 }
 
-/** Seed dữ liệu tiến độ để lộ trình có sẵn vài mốc đã đạt khi demo. */
-const SEED_SCORES: Record<string, number> = {
-    "m-a22-l1-c1-q1": 8.5,
-    "m-a22-l1-c1-q2": 9,
-    "m-a22-l1-c2-q1": 7.8,
-};
-const SEED_NODES = ["m-a22-l1-c1-q1::vocab", "m-a22-l1-c1-q2::vocab"];
-
 export const useMarugotoStore = create<MarugotoState>()(
     persist(
         (set, get) => ({
             activeBookId: CURRENT_BOOK_ID,
-            questionScores: SEED_SCORES,
-            completedNodes: SEED_NODES,
-            lPoints: 170,
+            questionScores: {},
+            completedNodes: [],
+            lPoints: 0,
             showFurigana: true,
             setShowFurigana: (v) => set({ showFurigana: v }),
             setActiveBook: (id) => set({ activeBookId: id }),
@@ -65,6 +57,6 @@ export const useMarugotoStore = create<MarugotoState>()(
                 return true;
             },
         }),
-        { name: "naho-marugoto-path-v3" },
+        { name: "naho-marugoto-path-v4" },
     ),
 );

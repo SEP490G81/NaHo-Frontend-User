@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import {
     getBookDetail,
     getTopicDetail,
@@ -37,35 +37,33 @@ export function BookDetail() {
         enabled: !!bookId,
     });
 
-    // Chủ đề "đang học" hiện tại = chủ đề đầu tiên (chưa có dữ liệu tiến độ) → nạp
-    // sẵn lesson của nó để mở sổ ra ngay.
+    // TẠM THỜI hiển thị toàn bộ giáo trình: nạp lesson cho MỌI chủ đề (không chỉ
+    // chủ đề đầu) để mọi Can-do đều lấy được.
     const topics = useMemo(() => topicsQ.data ?? [], [topicsQ.data]);
-    const currentTopicId = topics[0]?.id;
-    const currentTopicQ = useQuery({
-        queryKey: ["topic", currentTopicId],
-        queryFn: () => getTopicDetail(currentTopicId!),
-        enabled: !!currentTopicId,
+    const topicDetailQs = useQueries({
+        queries: topics.map((tp) => ({
+            queryKey: ["topic", tp.id],
+            queryFn: () => getTopicDetail(tp.id),
+        })),
     });
 
     const book: MarugotoBook | null = useMemo(() => {
         if (!bookQ.data) return null;
         const mb = mapBook(bookQ.data);
-        mb.topics = topics.map((tp) =>
+        mb.topics = topics.map((tp, i) =>
             mapBeTopic(
                 tp,
-                tp.id === currentTopicId
-                    ? (currentTopicQ.data?.lessons ?? []).map(mapBeLesson)
-                    : [],
+                (topicDetailQs[i]?.data?.lessons ?? []).map(mapBeLesson),
             ),
         );
         return mb;
-    }, [bookQ.data, topics, currentTopicId, currentTopicQ.data]);
+    }, [bookQ.data, topics, topicDetailQs]);
 
-    // Chờ nạp xong lesson của chủ đề hiện tại rồi mới render, để accordion tự mở sổ.
+    // Chờ nạp xong lesson của mọi chủ đề rồi mới render, để accordion tự mở sổ.
     const loading =
         bookQ.isLoading ||
         topicsQ.isLoading ||
-        (!!currentTopicId && currentTopicQ.isLoading);
+        (topics.length > 0 && topicDetailQs.some((q) => q.isLoading));
 
     return (
         <div className="px-4 py-6 md:px-8">

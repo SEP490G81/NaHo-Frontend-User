@@ -1,17 +1,16 @@
-import type { Question } from "@/data/mockTopics";
 import type {
     BookResponse,
     CefrLevel,
     LessonDetailResponse,
     LessonListItemResponse,
     ObjectiveListItemResponse,
-    SpeakingQuestionResponse,
     TopicListItemResponse,
 } from "@/types/responses/book.response";
+import type { LearningPathNodeListItemResponse } from "@/types/responses/learning.response";
 import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
 
 /** Tách markup "[漢字](かな)…" thành text gốc và chuỗi đọc (reading) tương ứng. */
-function splitMarkup(markup: string): { text: string; reading: string } {
+export function splitMarkup(markup: string): { text: string; reading: string } {
     const re = /\[([^\]]+)\]\(([^)]+)\)/g;
     let text = "";
     let reading = "";
@@ -38,14 +37,25 @@ const CEFR_ORDER: Record<CefrLevel, number> = {
     C1: 6,
     C2: 7,
 };
+// Màu dự phòng theo band CEFR (khi thiếu orderIndex).
 const CEFR_COLOR: Record<CefrLevel, string> = {
-    A1: "#7c9cc4",
-    A2: "#e59ab0",
-    A2B1: "#c78fb4",
-    B1: "#6fa891",
-    B2: "#cf9264",
+    A1: "#d23f87",
+    A2: "#df7327",
+    A2B1: "#5aa04a",
+    B1: "#3568b0",
+    B2: "#d98a3e",
     C1: "#9384cc",
     C2: "#d76a99",
+};
+// Màu chủ đạo bám theo bìa thật của từng quyển Marugoto Katsudoo (theo thứ tự),
+// đã hạ tông một chút để chữ trắng / chữ màu vẫn nổi rõ.
+const BOOK_COLOR_BY_ORDER: Record<number, string> = {
+    1: "#d23f87", // A1 · hồng đậm
+    2: "#df7327", // A2-1 · cam
+    3: "#c99a17", // A2-2 · vàng (amber trầm)
+    4: "#5aa04a", // A2/B1 · xanh lá
+    5: "#3568b0", // B1-1 · xanh lam đậm
+    6: "#2f8fa6", // B1-2 · xanh nước biển
 };
 /** Nhãn band CEFR để nhóm & tra i18n (A2B1 → "A2/B1"). */
 const CEFR_BAND: Partial<Record<CefrLevel, string>> = { A2B1: "A2/B1" };
@@ -63,7 +73,7 @@ export function mapBook(b: BookResponse): MarugotoBook {
         title: b.title,
         subtitle: b.description,
         coverImage: b.coverImage?.objectKey ?? b.coverImage?.fileUrl,
-        coverColor: CEFR_COLOR[b.cefrLevel],
+        coverColor: BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
         topics: [],
     };
 }
@@ -98,22 +108,17 @@ export function mapBeTopic(
     };
 }
 
-/** Map một câu hỏi luyện nói BE → model FE (furigana tách từ markup). */
-export function mapBeQuestion(q: SpeakingQuestionResponse): Question {
-    const { text, reading } = splitMarkup(q.titleMarkup || q.title);
-    return {
-        id: String(q.id),
-        jp: text,
-        furigana: reading,
-        vi: q.description,
-    };
-}
+const NODE_KIND: Record<string, "vocab" | "question" | "chest"> = {
+    VOCABULARY_QUESTION: "vocab",
+    SPEAKING_QUESTION: "question",
+    CHEST: "chest",
+};
 
-/** Map một Can-do (objective) BE → model FE; BE chưa có từ vựng/ngữ pháp. */
+/** Map một Can-do (objective) BE → model FE; node lộ trình lấy từ BE. */
 export function mapBeObjective(
     o: ObjectiveListItemResponse,
     orderInLesson: number,
-    questions: SpeakingQuestionResponse[] = [],
+    nodes: LearningPathNodeListItemResponse[] = [],
 ): CanDo {
     return {
         id: String(o.id),
@@ -125,7 +130,17 @@ export function mapBeObjective(
         enDesc: "",
         grammar: [],
         vocabulary: [],
-        questions: questions.map(mapBeQuestion),
+        questions: [],
+        pathNodes: [...nodes]
+            .sort((a, b) => a.globalOrderIndex - b.globalOrderIndex)
+            .map((n) => ({
+                id: n.id,
+                kind: NODE_KIND[n.nodeType] ?? "question",
+                speakingQuestionId: n.speakingQuestionId ?? null,
+                vocabularyQuestionId: n.vocabularyQuestionId ?? null,
+                chestId: n.chestId ?? null,
+                orderIndex: n.orderIndex,
+            })),
     };
 }
 

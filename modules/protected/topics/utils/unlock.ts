@@ -29,35 +29,31 @@ function lessonPercent(
 }
 
 function topicStatus(lessons: LessonView[]): NodeStatus {
-    // Chủ đề chưa nạp bài (mảng rỗng) → coi như khóa, tránh every([]) = completed.
-    if (lessons.length === 0) return "locked";
-    if (lessons.every((l) => l.status === "completed")) return "completed";
-    if (lessons.some((l) => l.status !== "locked")) return "active";
-    return "locked";
+    // TẠM THỜI bỏ khóa: mọi chủ đề đều mở (đã học hết = completed, còn lại = active).
+    if (lessons.length > 0 && lessons.every((l) => l.status === "completed")) {
+        return "completed";
+    }
+    return "active";
 }
 
 /**
- * Tính trạng thái khóa/mở tuần tự cho toàn bộ topic & lesson của một quyển sách.
- * Bài đầu chưa hoàn thành = "active", các bài sau = "locked". Sách khóa → tất cả khóa.
+ * Trạng thái topic/lesson cho màn chi tiết sách. BE trả toàn bộ nội dung và
+ * không gate lesson theo progress → lesson để duyệt mở (đã học = completed,
+ * còn lại = active); việc khóa/mở thật nằm ở tầng node trong lộ trình luyện tập.
  */
 export function buildBookView(
     topics: BookTopic[],
-    bookUnlocked: boolean,
     scores: Record<string, number>,
     pass: number,
 ): TopicView[] {
-    let activeAssigned = false;
     return topics.map((topic) => {
         const lessons: LessonView[] = topic.lessons.map((lesson) => {
             const { percent, done } = lessonPercent(lesson, scores, pass);
-            let status: NodeStatus;
-            if (!bookUnlocked) status = "locked";
-            else if (done) status = "completed";
-            else if (!activeAssigned) {
-                activeAssigned = true;
-                status = "active";
-            } else status = "locked";
-            return { lesson, status, percent };
+            return {
+                lesson,
+                status: done ? "completed" : "active",
+                percent,
+            };
         });
         return { topic, status: topicStatus(lessons), lessons };
     });

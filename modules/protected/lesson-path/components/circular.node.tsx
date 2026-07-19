@@ -1,19 +1,18 @@
 "use client";
 import React from "react";
-import { BookOpen, Check, Lock, Mic, Trophy } from "lucide-react";
+import { Lock } from "lucide-react";
 import { cn } from "@/libs/utils";
 import type { NodeKind, PathNode } from "../hooks/use.cando.nodes";
-import ProgressRing from "./progress.ring";
 import NodeDisc from "./node.disc";
+import NodeIcon from "./node.icon";
 
-const KIND_ICON: Record<Exclude<NodeKind, "chest">, React.ElementType> = {
-    vocab: BookOpen,
-    question: Mic,
-    test: Trophy,
+/** Màu mặt node khi đang mở, phân biệt "học từ vựng" (lam) với "luyện nói" (hồng). */
+const KIND_COLOR: Record<Exclude<NodeKind, "chest">, string> = {
+    vocab: "#5b9bd5",
+    question: "var(--color-bgc-highlight)",
 };
 
-const SIZE = 104;
-const STROKE = 7;
+const SIZE = 92;
 
 interface Props {
     node: PathNode;
@@ -22,84 +21,54 @@ interface Props {
     onClick: () => void;
 }
 
+/** Node tròn 3D trên lộ trình (từ vựng / câu hỏi). */
 export function CircularNode({ node, title, caption, onClick }: Props) {
-    const { status, progress } = node;
+    const { status } = node;
     const locked = status === "locked";
     const completed = status === "completed";
-    const active = status === "active";
-    const KindIcon = KIND_ICON[node.kind as Exclude<NodeKind, "chest">];
-
-    const base = completed
-        ? "var(--color-text-success)"
-        : "var(--color-bgc-highlight)";
-    const ringColor = completed
-        ? "var(--color-text-success)"
-        : active
-          ? "var(--color-bgc-highlight)"
-          : "var(--color-bdc-primary)";
+    const kind = node.kind as Exclude<NodeKind, "chest">;
+    const color = completed ? "var(--color-text-success)" : KIND_COLOR[kind];
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2.5">
             <button
                 type="button"
                 onClick={onClick}
                 aria-label={`${title} — ${caption}`}
                 className={cn(
-                    "relative flex items-center justify-center rounded-full transition-transform duration-200",
-                    !locked && "hover:-translate-y-0.5 hover:scale-105",
+                    "rounded-full transition-transform duration-100",
+                    !locked && "hover:-translate-y-0.5 active:translate-y-[3px]",
                     locked && "cursor-not-allowed",
                 )}
-                style={{ width: SIZE, height: SIZE }}
             >
-                <ProgressRing
-                    size={SIZE}
-                    stroke={STROKE}
-                    color={ringColor}
-                    progress={progress}
-                />
-
-                {active && (
-                    <span
-                        className="absolute h-[74px] w-[74px] animate-ping rounded-full"
-                        style={{ background: "var(--color-bgc-highlight)", opacity: 0.25 }}
-                    />
-                )}
-
-                <NodeDisc color={base} locked={locked}>
-                    {completed ? (
-                        <Check className="h-9 w-9" strokeWidth={3} />
-                    ) : locked ? (
+                <NodeDisc color={color} locked={locked} size={SIZE}>
+                    {locked ? (
                         <Lock className="h-6 w-6" />
                     ) : (
-                        <KindIcon className="h-8 w-8" />
+                        <NodeIcon kind={completed ? "done" : kind} size={44} />
                     )}
                 </NodeDisc>
             </button>
 
-            <div className="max-w-[170px] text-center">
+            <div className="max-w-[160px] text-center">
                 <p
                     className={cn(
-                        "text-[10px] font-bold tracking-wide uppercase",
-                        completed && "text-text-success",
-                        active && "text-bgc-highlight",
-                        locked && "text-text-muted",
+                        "text-[11px] font-bold tracking-wide uppercase",
+                        completed
+                            ? "text-text-success"
+                            : locked
+                              ? "text-text-muted"
+                              : "text-text-contrast",
                     )}
                 >
                     {title}
                     {typeof node.bestScore === "number" && node.bestScore > 0 && (
                         <span className="text-text-highlight ml-1">
-                            · {node.bestScore.toFixed(1)}/10
+                            · {node.bestScore.toFixed(1)}
                         </span>
                     )}
                 </p>
-                <p
-                    className={cn(
-                        "text-xs font-medium",
-                        locked ? "text-text-muted" : "text-text-contrast",
-                    )}
-                >
-                    {caption}
-                </p>
+                <p className="text-text-muted text-xs font-medium">{caption}</p>
             </div>
         </div>
     );

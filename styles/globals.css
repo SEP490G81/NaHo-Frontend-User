@@ -57,7 +57,6 @@
     --animate-naho-branch-sway: naho-branch-sway 8s ease-in-out infinite;
     --animate-naho-cloud-drift: naho-cloud-drift 30s ease-in-out infinite;
     --animate-naho-bob: naho-bob 2.6s ease-in-out infinite;
-    --animate-naho-paw: naho-paw 1.4s ease-in-out infinite;
 
     @keyframes naho-bob {
         0%, 100% {
@@ -65,15 +64,6 @@
         }
         50% {
             transform: translateY(-6px);
-        }
-    }
-
-    @keyframes naho-paw {
-        0%, 100% {
-            transform: rotate(-8deg);
-        }
-        50% {
-            transform: rotate(16deg);
         }
     }
 

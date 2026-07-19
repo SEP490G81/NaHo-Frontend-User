@@ -55,36 +55,25 @@
         "lockedToastDesc": "Complete the previous step to continue.",
         "path": {
             "backToTopic": "Back to topic",
-            "candoTitle": "Communication goals (Can-do)",
-            "candoSubtitle": "Expand each Can-do to start its practice path.",
             "showFurigana": "Show Furigana",
             "candoLabel": "Can-do {index}",
             "milestoneProgress": "{done}/{total} milestones",
-            "routeTitle": "Practice path",
-            "routeSubtitle": "Complete each circle to unlock the next milestone.",
-            "viewVocab": "View Can-do vocabulary",
             "vocabShort": "Vocabulary",
-            "emptyNodes": "This Can-do has no practice milestones yet.",
-            "overallProgress": "Lesson progress",
-            "candoListTitle": "Can-do list",
             "candoSummary": "{total} Can-do • {done}/{total} done",
-            "lessonGoals": "Communication goals"
+            "startBubble": "Start"
         },
         "node": {
             "vocabTitle": "Vocabulary",
             "speakingTitle": "Speaking",
-            "testTitle": "Test",
-            "start": "Start →",
             "vocabCaption": "Learn Can-do vocabulary",
-            "vocabForCaption": "Prep for question {index}",
             "speakingCaption": "Question {index}",
-            "testCaption": "Can-do mini-test",
             "chestTitle": "Reward chest",
-            "chestCaption": "+{reward} L-Point",
+            "chestHint": "Open to earn a reward",
+            "chestReward": "+{point} L-Point",
+            "chestClaimBtn": "Claim reward",
             "chestOpened": "Chest opened",
             "chestClaimed": "You got +{reward} L-Point! 🎁",
-            "chestAlready": "You already opened this chest.",
-            "scoreSuffix": "{score}/10"
+            "chestAlready": "You already opened this chest."
         },
         "preview": {
             "title": "Question detail",

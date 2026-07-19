@@ -7,10 +7,25 @@ import BackButton from "@/components/ui/back.button";
 import BookCover from "@/components/ui/book.cover";
 import type { TopicView } from "../utils/unlock";
 
-function MetaChip({ icon, label }: { icon: React.ReactNode; label: string }) {
+function MetaChip({
+    icon,
+    label,
+    accent,
+}: {
+    icon: React.ReactNode;
+    label: string;
+    accent: string;
+}) {
     return (
-        <span className="border-bdc-primary bg-bgc-page text-text-muted inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium">
-            <span className="text-text-highlight">{icon}</span>
+        <span
+            className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-semibold"
+            style={{
+                color: accent,
+                borderColor: `color-mix(in srgb, ${accent} 35%, transparent)`,
+                background: `color-mix(in srgb, ${accent} 10%, var(--color-bgc-app))`,
+            }}
+        >
+            {icon}
             {label}
         </span>
     );
@@ -34,8 +49,19 @@ export function BookHero({
         : 0;
 
     return (
-        <div className="border-bdc-primary bg-bgc-app overflow-hidden rounded-2xl border shadow-sm">
-            <div className="border-bdc-primary flex items-center border-b px-3 py-2.5 sm:px-4">
+        <div
+            className="overflow-hidden rounded-2xl border shadow-sm"
+            style={{
+                borderColor: `color-mix(in srgb, ${accent} 30%, var(--color-bdc-primary))`,
+                background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 12%, var(--color-bgc-app)) 0%, var(--color-bgc-app) 55%)`,
+            }}
+        >
+            <div
+                className="flex items-center border-b px-3 py-2.5 sm:px-4"
+                style={{
+                    borderColor: `color-mix(in srgb, ${accent} 20%, var(--color-bdc-primary))`,
+                }}
+            >
                 <BackButton
                     href="/books"
                     label={t("books.backToLibrary")}
@@ -68,6 +94,7 @@ export function BookHero({
                             label={t("books.topicCount", {
                                 count: book.topics.length,
                             })}
+                            accent={accent}
                         />
                     </div>
                 </div>

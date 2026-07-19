@@ -6,6 +6,7 @@ import {
     TopicDetailResponse,
     TopicListItemResponse,
 } from "@/types/responses/book.response";
+import { LearningPathNodeDetailResponse } from "@/types/responses/learning.response";
 
 /**
  * Service phía client cho sách Marugoto. Gọi qua Next route handler (/api/*)
@@ -61,6 +62,11 @@ export function getObjectiveDetail(
     return getData<ObjectiveDetailResponse>(`/api/objectives/${objectiveId}`);
 }
 
-// TODO: khi BE có endpoint chi tiết câu hỏi kèm từ vựng/ngữ pháp
-// (GET /speaking-questions/{id}), nối lại `getSpeakingQuestionDetail` tại đây
-// + route handler /api/speaking-questions/[id] theo pattern 2 lớp ở trên.
+/** Chi tiết một node lộ trình: từ vựng / câu hỏi (kèm vocab + grammar) / rương. */
+export function getLearningPathNodeDetail(
+    nodeId: string | number,
+): Promise<LearningPathNodeDetailResponse> {
+    return getData<LearningPathNodeDetailResponse>(
+        `/api/learning-path-nodes/${nodeId}`,
+    );
+}

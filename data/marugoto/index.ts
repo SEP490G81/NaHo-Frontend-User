@@ -1,6 +1,6 @@
 import type { Topic, Question } from "@/data/mockTopics";
 import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
-import { MARUGOTO_BOOKS, USER_CEFR_ORDER } from "./books";
+import { MARUGOTO_BOOKS } from "./books";
 
 export * from "./types";
 export { MARUGOTO_BOOKS, USER_CEFR_ORDER, CURRENT_BOOK_ID } from "./books";
@@ -14,9 +14,12 @@ export function getBookById(bookId: string): MarugotoBook | undefined {
     return MARUGOTO_BOOKS.find((b) => b.id === bookId);
 }
 
-/** Quyển sách bị khóa nếu trình độ vượt quá trình độ hiện tại của người dùng. */
-export function isBookUnlocked(book: MarugotoBook): boolean {
-    return book.cefrOrder <= USER_CEFR_ORDER;
+/**
+ * Sách để duyệt mở (BE trả toàn bộ sách, không gate theo progress) — việc
+ * khóa/mở thật diễn ra ở tầng node (theo `farthestAvailableNodeId`).
+ */
+export function isBookUnlocked(): boolean {
+    return true;
 }
 
 /** Tổng số bài học (lesson) của một quyển sách. */

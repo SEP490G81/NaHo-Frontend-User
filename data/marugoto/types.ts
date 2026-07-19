@@ -11,6 +11,17 @@ export interface Vocab {
     vi: string;
 }
 
+/** Một node lộ trình (từ BE) thuộc một Can-do — nguồn để dựng đường tròn. */
+export interface LessonPathNodeMeta {
+    /** Id của learning_path_node (dùng để gọi chi tiết node). */
+    id: number;
+    kind: "vocab" | "question" | "chest";
+    speakingQuestionId: number | null;
+    vocabularyQuestionId: number | null;
+    chestId: number | null;
+    orderIndex: number;
+}
+
 /** Một mục tiêu giao tiếp (Can-do) — đơn vị nhỏ nhất chứa câu hỏi luyện nói. */
 export interface CanDo {
     id: string;
@@ -26,6 +37,8 @@ export interface CanDo {
     grammar: string[];
     vocabulary: Vocab[];
     questions: Question[];
+    /** Node lộ trình lấy từ BE (vocab / question / chest). */
+    pathNodes?: LessonPathNodeMeta[];
 }
 
 /** Một bài học (Lesson) gồm nhiều Can-do. */

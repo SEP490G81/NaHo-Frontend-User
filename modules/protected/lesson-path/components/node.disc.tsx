@@ -7,20 +7,37 @@ interface Props {
     color: string;
     locked: boolean;
     size?: number;
+    /** Độ dày gờ đáy (khối nhô 3D); mặc định ~11% đường kính. */
+    depth?: number;
     className?: string;
     children: React.ReactNode;
 }
 
-const SUNKEN = "inset 0 3px 6px rgba(0,0,0,0.4)";
-
 /**
- * Đĩa tròn nổi khối 3D kiểu "nút xu" Duolingo: mặt gradient, gờ đáy đặc màu
- * tối hơn (giả khối nhô), bóng đổ mềm và highlight bóng ở đỉnh.
+ * Đĩa tròn nổi khối 3D kiểu "nút" Duolingo: mặt gradient sáng ở đỉnh, gờ đáy đặc
+ * màu tối (giả chiều cao), bóng đổ xuống nền và highlight bóng ở đỉnh.
  */
-export function NodeDisc({ color, locked, size = 76, className, children }: Props) {
-    const shade = `color-mix(in srgb, ${color} 58%, #000)`;
-    const face = `radial-gradient(120% 120% at 50% 20%, color-mix(in srgb, ${color} 80%, #fff) 0%, ${color} 48%, color-mix(in srgb, ${color} 82%, #000) 100%)`;
-    const raised = `0 6px 0 0 ${shade}, 0 16px 16px -8px rgba(0,0,0,0.45), inset 0 4px 5px rgba(255,255,255,0.55), inset 0 -7px 10px rgba(0,0,0,0.28)`;
+export function NodeDisc({
+    color,
+    locked,
+    size = 84,
+    depth,
+    className,
+    children,
+}: Props) {
+    const d = depth ?? Math.round(size * 0.11);
+    const shade = `color-mix(in srgb, ${color} 52%, #000)`;
+    const face = `radial-gradient(120% 120% at 50% 22%, color-mix(in srgb, ${color} 82%, #fff) 0%, ${color} 46%, color-mix(in srgb, ${color} 84%, #000) 100%)`;
+    const raised = [
+        `0 ${d}px 0 0 ${shade}`,
+        `0 ${d + 8}px 14px -4px rgba(0,0,0,0.45)`,
+        "inset 0 5px 6px rgba(255,255,255,0.6)",
+        "inset 0 -8px 12px rgba(0,0,0,0.3)",
+    ].join(", ");
+    const sunken = [
+        `0 3px 0 0 var(--color-bdc-primary)`,
+        "inset 0 3px 7px rgba(0,0,0,0.35)",
+    ].join(", ");
 
     return (
         <div
@@ -32,8 +49,9 @@ export function NodeDisc({ color, locked, size = 76, className, children }: Prop
             style={{
                 width: size,
                 height: size,
+                marginBottom: locked ? 3 : d,
                 background: locked ? "var(--color-bgc-app)" : face,
-                boxShadow: locked ? SUNKEN : raised,
+                boxShadow: locked ? sunken : raised,
             }}
         >
             {!locked && (
@@ -41,7 +59,7 @@ export function NodeDisc({ color, locked, size = 76, className, children }: Prop
                     className="pointer-events-none absolute inset-x-2 top-1.5 h-2/5 rounded-full"
                     style={{
                         background:
-                            "linear-gradient(to bottom, rgba(255,255,255,0.65), rgba(255,255,255,0))",
+                            "linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0))",
                     }}
                 />
             )}

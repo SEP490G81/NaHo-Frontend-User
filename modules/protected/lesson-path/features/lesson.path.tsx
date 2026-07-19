@@ -16,8 +16,8 @@ import type { Lesson, MarugotoBook } from "@/data/marugoto/types";
 import { useMarugotoStore } from "@/store/marugotoStore";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useLessonNodes } from "../hooks/use.cando.nodes";
-import LessonMetadataCard from "../components/lesson.metadata.card";
-import CanDoAccordion from "./cando.accordion";
+import LessonPathHeader from "../components/lesson.path.header";
+import LessonRoadmap from "./lesson.roadmap";
 
 function LoadingState() {
     return (
@@ -42,29 +42,29 @@ function LessonPathContent({
 }) {
     const showFurigana = useMarugotoStore((s) => s.showFurigana);
     const setShowFurigana = useMarugotoStore((s) => s.setShowFurigana);
-    const { blocks, overallPercent } = useLessonNodes(lesson);
+    const { blocks, overallPercent, currentNodeId } = useLessonNodes(lesson);
     const done = blocks.filter((b) => b.status === "completed").length;
+    const accent = book.coverColor ?? "var(--color-bgc-highlight)";
 
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto grid max-w-7xl items-start gap-6 lg:grid-cols-[340px_1fr]">
-                <div className="lg:sticky lg:top-20">
-                    <LessonMetadataCard
-                        book={book}
-                        lesson={lesson}
-                        overallPercent={overallPercent}
-                        showFurigana={showFurigana}
-                        setShowFurigana={setShowFurigana}
-                        candoDone={done}
-                        candoTotal={blocks.length}
-                    />
-                </div>
-
-                <CanDoAccordion
-                    blocks={blocks}
-                    bookId={book.id}
-                    lessonId={lesson.id}
+        <div className="px-4 py-6">
+            <div className="mx-auto flex max-w-2xl flex-col gap-4">
+                <LessonPathHeader
+                    book={book}
+                    lesson={lesson}
+                    accent={accent}
+                    overallPercent={overallPercent}
+                    candoDone={done}
+                    candoTotal={blocks.length}
                     showFurigana={showFurigana}
+                    setShowFurigana={setShowFurigana}
+                />
+
+                <LessonRoadmap
+                    blocks={blocks}
+                    accent={accent}
+                    showFurigana={showFurigana}
+                    currentNodeId={currentNodeId}
                 />
             </div>
         </div>
@@ -87,7 +87,7 @@ export function LessonPath() {
         enabled: !!lessonId,
     });
 
-    // Nạp câu hỏi cho từng Can-do (objective) của bài học.
+    // Nạp node lộ trình cho từng Can-do (objective) của bài học.
     const objectives = lessonQ.data?.objectives ?? [];
     const objectiveQs = useQueries({
         queries: objectives.map((o) => ({
@@ -103,12 +103,12 @@ export function LessonPath() {
     const lesson = useMemo<Lesson | null>(() => {
         if (!lessonQ.data) return null;
         const canDos = lessonQ.data.objectives.map((o, i) =>
-            mapBeObjective(o, i + 1, objectiveQs[i]?.data?.questions ?? []),
+            mapBeObjective(o, i + 1, objectiveQs[i]?.data?.learningPathNodes ?? []),
         );
         return mapBeLessonDetail(lessonQ.data, canDos);
     }, [lessonQ.data, objectiveQs]);
 
-    // Chờ nạp xong câu hỏi để lộ trình node đầy đủ + tự mở Can-do đang học.
+    // Chờ nạp xong node để lộ trình đầy đủ + tự mở Can-do đang học.
     const loading =
         bookQ.isLoading ||
         lessonQ.isLoading ||

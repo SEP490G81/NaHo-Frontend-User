@@ -11,7 +11,7 @@ import type { MarugotoBook } from "@/data/marugoto/types";
 
 export function BookCard({ book }: { book: MarugotoBook }) {
     const t = useTranslations("marugoto");
-    const unlocked = isBookUnlocked(book);
+    const unlocked = isBookUnlocked();
     // Quyển đang học = quyển ở đúng trình độ hiện tại của người dùng.
     const current = book.cefrOrder === USER_CEFR_ORDER;
     const navigable = unlocked;
