@@ -30,3 +30,32 @@ export async function proxyGet(path: string, search?: URLSearchParams) {
     const result = await backendResponse.json();
     return NextResponse.json(result, { status: backendResponse.status });
 }
+
+/**
+ * Helper cho route handler (lớp 1): forward request multipart/form-data lên BE
+ * (giữ nguyên các part file/text), tự đính kèm access token từ cookie. Không tự
+ * set Content-Type để fetch tự sinh boundary cho FormData.
+ */
+export async function proxyPostForm(path: string, request: Request) {
+    if (!process.env.API_URL) {
+        return NextResponse.json(
+            { detail: "API_URL chưa được cấu hình trên server." } as ProblemDetail,
+            { status: 500 },
+        );
+    }
+
+    const accessToken = (await cookies()).get(ACCESS_TOKEN_NAME)?.value;
+    const form = await request.formData();
+
+    const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
+        method: "POST",
+        headers: {
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body: form,
+        cache: "no-store",
+    });
+
+    const result = await backendResponse.json();
+    return NextResponse.json(result, { status: backendResponse.status });
+}

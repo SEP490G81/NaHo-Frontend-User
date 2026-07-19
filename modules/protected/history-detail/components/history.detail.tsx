@@ -14,11 +14,21 @@ import HistoryDetailHeader from "./history.detail.header";
 import HistoryDetailQuestionCard from "./history.detail.question.card";
 import HistoryDetailOverview from "./history.detail.overview";
 import HistoryDetailTabs from "./history.detail.tabs";
+import SpeakingResultView from "../features/speaking.result.view";
 
+/** Điều phối: id số → bản ghi thật từ BE; id "h-..." → dữ liệu mock cũ (demo). */
 export function HistoryDetail() {
-    const t = useTranslations("historyDetail");
     const params = useParams();
     const rawHistoryId = params?.historyId as string;
+
+    if (/^\d+$/.test(rawHistoryId)) {
+        return <SpeakingResultView historyId={rawHistoryId} />;
+    }
+    return <MockHistoryDetail rawHistoryId={rawHistoryId} />;
+}
+
+function MockHistoryDetail({ rawHistoryId }: { rawHistoryId: string }) {
+    const t = useTranslations("historyDetail");
     const matchedHistory = mockHistoryList.find((h) =>
         rawHistoryId?.startsWith(h.historyId),
     );
@@ -26,7 +36,6 @@ export function HistoryDetail() {
         ? matchedHistory.historyId
         : rawHistoryId || "";
 
-    // Nạp chi tiết bản ghi lịch sử bài làm từ API
     const { data: entry, isLoading: isHistoryLoading } = useQuery({
         queryKey: ["historyDetail", historyId],
         queryFn: () => getHistoryById(historyId),
@@ -35,7 +44,6 @@ export function HistoryDetail() {
 
     const topicId = entry?.topicId;
 
-    // Nạp chi tiết chủ đề tương ứng từ API
     const { data: topic, isLoading: isTopicLoading } = useQuery({
         queryKey: ["topic", topicId],
         queryFn: () => getTopicById(topicId!),
@@ -114,7 +122,6 @@ export function HistoryDetail() {
                     t={t}
                 />
 
-                {/* Retake speaking CTA */}
                 <div className="sticky bottom-4 z-10 flex justify-center md:static md:justify-end">
                     <Link
                         href={`/sandbox/${entry.questionId}`}
