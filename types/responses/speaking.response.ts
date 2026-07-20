@@ -59,6 +59,15 @@ export interface SpeakingReport {
     itVocab: SpeakingVocabItem[];
 }
 
+/** Một dòng trong danh sách lịch sử luyện nói (khi BE có endpoint list). */
+export interface SpeakingHistoryListItem {
+    historyId: number;
+    questionId: number | null;
+    score: number;
+    durationSec: number;
+    practicedAt: string;
+}
+
 /** Response của GET /history/{historyId} (chi tiết báo cáo luyện nói). */
 export interface SpeakingHistoryDetailResponse {
     historyId: number;

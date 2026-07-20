@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { mockHistoryList, type QuestionHistoryEntry } from "@/data/mockHistory";
+import { type QuestionHistoryEntry } from "@/data/mockHistory";
 
 interface HistoryState {
   entries: QuestionHistoryEntry[];
@@ -12,7 +12,7 @@ interface HistoryState {
 export const useHistoryStore = create<HistoryState>()(
   persist(
     (set, get) => ({
-      entries: mockHistoryList,
+      entries: [],
       addEntry: (entry) =>
         set((state) => {
           if (state.entries.some((e) => e.historyId === entry.historyId)) return state;

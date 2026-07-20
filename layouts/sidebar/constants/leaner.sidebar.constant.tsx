@@ -20,7 +20,7 @@ export interface SubNavItem {
 export interface NavItem {
     title: string;
     url?: string;
-    icon: React.ComponentType<any>;
+    icon: React.ComponentType<{ className?: string }>;
     disabled?: boolean;
     children?: SubNavItem[];
 }
@@ -28,14 +28,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
     { title: "Trang chủ", url: "/dashboard", icon: LayoutDashboard },
     { title: "Lộ trình Kaiwa", url: "/books", icon: Mic },
-    {
-        title: "Lịch sử",
-        icon: History,
-        children: [
-            { title: "Lịch sử câu hỏi tự tạo", url: "/history-custom" },
-            { title: "Lịch sử câu hỏi đã luyện", url: "/history" },
-        ],
-    },
+    { title: "Lịch sử luyện tập", url: "/history", icon: History },
     {
         title: "Đề chọn tự phát",
         url: "/custom-question",
@@ -85,8 +78,7 @@ export const LABELS: Record<string, string> = {
     topics: "Lộ trình Kaiwa",
     books: "Lộ trình Kaiwa",
     learn: "Bài học",
-    history: "Lịch sử câu hỏi đã luyện",
-    "history-custom": "Lịch sử câu hỏi tự tạo",
+    history: "Lịch sử luyện tập",
     "custom-question": "Đề chọn tự phát",
     "community-library": "Thư viện cộng đồng",
     analytics: "Báo cáo tiến độ",

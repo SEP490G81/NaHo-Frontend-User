@@ -2,6 +2,7 @@ import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import {
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
+    SpeakingHistoryListItem,
 } from "@/types/responses/speaking.response";
 
 /**
@@ -51,4 +52,15 @@ export async function getSpeakingHistoryDetail(
 ): Promise<SpeakingHistoryDetailResponse> {
     const response = await fetch(`/api/history/${historyId}`);
     return unwrap<SpeakingHistoryDetailResponse>(response);
+}
+
+/**
+ * Danh sách lịch sử luyện nói của người dùng.
+ * TODO: BE chưa có endpoint list → tạm trả rỗng. Khi BE bổ sung
+ * (vd GET /api/v1/histories phân trang) thì nối vào đây qua route handler /api/histories.
+ */
+export async function getSpeakingHistoryList(): Promise<
+    SpeakingHistoryListItem[]
+> {
+    return [];
 }

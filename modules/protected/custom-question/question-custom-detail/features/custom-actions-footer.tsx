@@ -29,7 +29,7 @@ export function CustomActionsFooter({ handlePractice, historyEntry }: CustomActi
 
                 {historyEntry && (
                     <Link
-                        href="/history-custom"
+                        href="/history"
                         className="border-bdc-primary bg-bgc-app hover:bg-hbgc-app inline-flex h-11 items-center justify-center rounded-lg border px-5 text-sm font-semibold text-text-contrast transition-colors gap-2 cursor-pointer"
                     >
                         <History className="h-4.5 w-4.5 text-text-muted" />

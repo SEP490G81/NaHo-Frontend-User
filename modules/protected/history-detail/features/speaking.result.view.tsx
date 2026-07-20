@@ -1,21 +1,27 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import { RotateCcw } from "lucide-react";
+import React, { useMemo } from "react";
+import { CalendarClock, Clock, ListChecks, Mic, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
+import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
 import { mapSpeakingReport } from "../utils/speaking.mapper";
-import HistoryDetailHeader from "../components/history.detail.header";
-import HistoryDetailSummary from "../components/history.detail.summary";
 import HistoryDetailOverview from "../components/history.detail.overview";
 import HistoryDetailTabs from "../components/history.detail.tabs";
 
-/** Màn kết quả luyện nói lấy từ BE (GET /history/{id}). */
+function formatDate(iso: string): string {
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? iso : d.toLocaleString();
+}
+
+/** Màn báo cáo chi tiết bài luyện (GET /history/{id}). */
 export function SpeakingResultView({ historyId }: { historyId: string }) {
     const t = useTranslations("historyDetail");
-    const [showFurigana, setShowFurigana] = useState(true);
+    const searchParams = useSearchParams();
+    const showFurigana = true;
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["speaking-history", historyId],
@@ -60,22 +66,49 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         );
     }
 
+    // Mở lại đúng sandbox câu này (kèm ngữ cảnh node/book/topic nếu có).
+    const ctx = new URLSearchParams();
+    const node = searchParams.get("node");
+    const book = searchParams.get("book");
+    const topic = searchParams.get("topic");
+    if (node) ctx.set("node", node);
+    if (book) ctx.set("book", book);
+    if (topic) ctx.set("topic", topic);
+    const qs = ctx.toString();
+    const retryHref =
+        data.questionId != null
+            ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
+            : "/history";
+
     return (
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-6xl space-y-6">
-                <HistoryDetailHeader
-                    topicTitle={t("reportTitle")}
-                    showFurigana={showFurigana}
-                    setShowFurigana={setShowFurigana}
-                    t={t}
-                />
-
-                <HistoryDetailSummary
-                    score={data.score}
-                    durationSec={data.durationSec}
-                    practicedAt={data.practicedAt}
-                    t={t}
-                />
+                {/* Hero + thông tin phiên luyện (gộp làm một) */}
+                <div className="border-bdc-primary bg-bgc-app rounded-2xl border px-5 py-4">
+                    <div className="flex items-center gap-3">
+                        <span className="bg-bgc-highlight/15 text-bgc-highlight flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+                            <Sparkles className="h-5 w-5" />
+                        </span>
+                        <div>
+                            <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
+                                {t("reportTitle")}
+                            </h1>
+                            <p className="text-text-muted text-sm">
+                                {t("reportSubtitle")}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="border-bdc-primary text-text-muted mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t pt-3 text-sm">
+                        <span className="inline-flex items-center gap-1.5">
+                            <CalendarClock className="h-4 w-4" />
+                            {t("practicedAtLabel")}: {formatDate(data.practicedAt)}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                            <Clock className="h-4 w-4" />
+                            {t("durationLabel")}: {data.durationSec}s
+                        </span>
+                    </div>
+                </div>
 
                 <HistoryDetailOverview report={report} t={t} />
 
@@ -85,17 +118,44 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     t={t}
                 />
 
-                {data.questionId != null && (
-                    <div className="sticky bottom-4 z-10 flex justify-center md:static md:justify-end">
-                        <Link
-                            href={`/sandbox/${data.questionId}`}
-                            className="bg-bgc-highlight hover:bg-bgc-highlight/90 inline-flex h-9 cursor-pointer items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors"
-                        >
-                            <RotateCcw className="mr-2 h-4 w-4" />
-                            {t("retryBtn")}
-                        </Link>
-                    </div>
-                )}
+                <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
+                    <Button
+                        component={Link}
+                        href="/history"
+                        variant="outlined"
+                        startIcon={<ListChecks className="h-4 w-4" />}
+                        sx={{
+                            textTransform: "none",
+                            borderColor: "var(--color-bdc-muted)",
+                            color: "var(--color-text-contrast)",
+                            fontWeight: 600,
+                            "&:hover": {
+                                borderColor: "var(--color-bdc-primary)",
+                                backgroundColor: "var(--color-hbgc-app)",
+                            },
+                        }}
+                    >
+                        {t("viewAllBtn")}
+                    </Button>
+                    <Button
+                        component={Link}
+                        href={retryHref as AllRoute}
+                        variant="contained"
+                        startIcon={<Mic className="h-4 w-4" />}
+                        sx={{
+                            textTransform: "none",
+                            backgroundColor: "var(--color-bgc-highlight)",
+                            color: "var(--color-text-pure)",
+                            fontWeight: 700,
+                            "&:hover": {
+                                backgroundColor: "var(--color-bgc-highlight)",
+                                filter: "brightness(0.95)",
+                            },
+                        }}
+                    >
+                        {t("retryBtn")}
+                    </Button>
+                </div>
             </div>
         </div>
     );

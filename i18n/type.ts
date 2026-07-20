@@ -21,7 +21,6 @@ export type AllRoute =
     | `/history/${string}` // hoặc "/history/[historyId]"
     | "/custom-question"
     | `/sandbox-custom/${string}` // hoặc "/sandbox-custom/[id]"
-    | "/history-custom"
     | "/community-library"
     | `/community-library/${string}` // hoặc "/community-library/[questionId]"
     | "/settings"

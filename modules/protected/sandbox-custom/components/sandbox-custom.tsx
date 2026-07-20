@@ -98,7 +98,7 @@ function SandboxCustomContent({ id }: { id: string }) {
             customHintVi: current.hintVi,
         });
         toast.success(t("saveSuccess"));
-        push("/history-custom");
+        push("/history");
     };
 
     return (

@@ -8,6 +8,7 @@ interface RecordButtonProps {
     recording: boolean;
     elapsed: number;
     onToggle: () => void;
+    accent?: string;
 }
 
 function formatTime(sec: number) {
@@ -24,6 +25,7 @@ export function RecordButton({
     recording,
     elapsed,
     onToggle,
+    accent = "var(--color-bgc-highlight)",
 }: RecordButtonProps) {
     const t = useTranslations("sandbox");
 
@@ -32,8 +34,18 @@ export function RecordButton({
             <div className="relative flex h-44 w-44 items-center justify-center">
                 {recording && (
                     <>
-                        <span className="bg-bgc-highlight/30 absolute inset-0 animate-ping rounded-full" />
-                        <span className="bg-bgc-highlight/20 absolute inset-2 animate-pulse rounded-full" />
+                        <span
+                            className="absolute inset-0 animate-ping rounded-full"
+                            style={{
+                                background: `color-mix(in srgb, ${accent} 28%, transparent)`,
+                            }}
+                        />
+                        <span
+                            className="absolute inset-2 animate-pulse rounded-full"
+                            style={{
+                                background: `color-mix(in srgb, ${accent} 18%, transparent)`,
+                            }}
+                        />
                     </>
                 )}
                 <button
@@ -45,11 +57,12 @@ export function RecordButton({
                             : t("recordingBtnStart")
                     }
                     className={cn(
-                        "text-text-pure focus-visible:ring-bgc-highlight/50 relative z-10 flex h-32 w-32 items-center justify-center rounded-full shadow-lg transition-all focus-visible:ring-4 focus-visible:outline-none",
+                        "text-text-pure relative z-10 flex h-32 w-32 items-center justify-center rounded-full shadow-lg transition-all focus-visible:ring-4 focus-visible:outline-none",
                         recording
                             ? "bg-bgc-error hover:bg-hbgc-error"
-                            : "bg-bgc-highlight hover:scale-105",
+                            : "hover:scale-105",
                     )}
+                    style={recording ? undefined : { background: accent }}
                 >
                     {recording ? (
                         <Square className="h-10 w-10 fill-current" />
@@ -68,8 +81,9 @@ export function RecordButton({
                     {Array.from({ length: 28 }).map((_, i) => (
                         <span
                             key={i}
-                            className="bg-bgc-highlight w-1 rounded-full"
+                            className="w-1 rounded-full"
                             style={{
+                                background: accent,
                                 height: `${20 + Math.abs(Math.sin((elapsed * 2 + i) * 0.5)) * 80}%`,
                                 transition: "height 180ms ease-out",
                             }}

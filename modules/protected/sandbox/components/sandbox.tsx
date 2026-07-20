@@ -2,49 +2,27 @@
 import React, { useMemo } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { findQuestionAnywhere, findTopicAnywhere } from "@/data/questionLookup";
 import { splitMarkup, mapBook } from "@/data/marugoto/mapper";
-import { getQuestionHints, type QuestionHints } from "@/data/mockHints";
+import type { QuestionHints } from "@/data/mockHints";
 import { useMarugotoStore } from "@/store/marugotoStore";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
     getBookDetail,
     getLearningPathNodeDetail,
 } from "@/services/client/book.service";
-import { submitPractice } from "@/modules/protected/history/services/history.service";
 import { submitSpeakingAnalysis } from "@/services/client/speaking.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
 import { getSandboxRules } from "../constants/sandbox.constant";
 import SandboxStepper from "./sandbox.stepper";
 import SandboxHeader from "./sandbox.header";
+import SandboxQuestionBanner from "./sandbox.question.banner";
 import SandboxStep1 from "./sandbox.step1";
 import SandboxStep2 from "./sandbox.step2";
 import SandboxStep3 from "./sandbox.step3";
 import SandboxAnalyzingOverlay from "./sandbox.analyzing.overlay";
 import { useRouter } from "@/i18n/navigation";
 
-function loadQuestion(questionId: string) {
-    const hit = findQuestionAnywhere(questionId);
-    if (hit) {
-        const topicTitle = findTopicAnywhere(hit.topicId)?.title ?? "";
-        return { topicId: hit.topicId, topicTitle, question: hit.question };
-    }
-    // Câu hỏi BE (id số) chưa có endpoint chi tiết → dựng placeholder tối thiểu để
-    // người dùng vẫn ghi âm và gửi chấm điểm được (prompt đầy đủ sẽ nối sau).
-    if (/^\d+$/.test(questionId)) {
-        return {
-            topicId: "",
-            topicTitle: "",
-            question: {
-                id: questionId,
-                jp: "録音して発音を分析しましょう",
-                furigana: "ろくおんしてはつおんをぶんせきしましょう",
-                vi: "Ghi âm câu trả lời của bạn để hệ thống chấm điểm phát âm.",
-            },
-        };
-    }
-    return null;
-}
+const EMPTY_HINTS: QuestionHints = { vocab: [], structures: [] };
 
 export function Sandbox() {
     return (
@@ -59,20 +37,21 @@ function SandboxContent() {
     const params = useParams();
     const searchParams = useSearchParams();
     const { push } = useRouter();
+    const queryClient = useQueryClient();
     const questionId = params?.questionId as string;
     const nodeId = searchParams.get("node");
     const bookParam = searchParams.get("book");
     const topicParam = searchParams.get("topic");
 
-    // Câu hỏi BE: nạp đề bài thật qua learning-path-node detail (không cần API
-    // /speaking-questions/{id}); nếu không có nodeId thì tra dữ liệu local.
+    // Đề bài + từ vựng + ngữ pháp lấy THẬT từ learning-path-node detail.
     const nodeQ = useQuery({
         queryKey: ["sandbox-node", nodeId],
         queryFn: () => getLearningPathNodeDetail(nodeId!),
         enabled: !!nodeId,
     });
+    const sq = nodeQ.data?.speakingQuestion;
 
-    // Màu chủ đạo = màu quyển sách chứa câu hỏi (để tô nút Quay lại).
+    // Màu chủ đạo = màu quyển sách chứa câu hỏi.
     const bookQ = useQuery({
         queryKey: ["book", bookParam],
         queryFn: () => getBookDetail(bookParam!),
@@ -82,43 +61,39 @@ function SandboxContent() {
         ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
         : "var(--color-bgc-highlight)";
 
-    const data = useMemo(() => {
-        const sq = nodeQ.data?.speakingQuestion;
+    const question = useMemo(() => {
         if (sq) {
             const { text, reading } = splitMarkup(sq.titleMarkup || sq.title);
             return {
-                topicId: "",
-                topicTitle: "",
-                question: {
-                    id: questionId,
-                    jp: text,
-                    furigana: reading,
-                    vi: sq.description ?? "",
-                },
+                id: questionId,
+                jp: text,
+                furigana: reading,
+                vi: sq.description ?? "",
             };
         }
-        return loadQuestion(questionId);
-    }, [nodeQ.data, questionId]);
+        // Chưa nạp được node → placeholder tối thiểu để vẫn ghi âm/gửi chấm được.
+        return {
+            id: questionId,
+            jp: "録音して発音を分析しましょう",
+            furigana: "ろくおんしてはつおんをぶんせきしましょう",
+            vi: "",
+        };
+    }, [sq, questionId]);
 
-    // Từ vựng + ngữ pháp: ưu tiên dữ liệu thật của câu hỏi (node), không dùng mock.
     const hints = useMemo<QuestionHints>(() => {
-        const sq = nodeQ.data?.speakingQuestion;
-        if (sq) {
-            return {
-                vocab: sq.vocabularies.map((v) => ({
-                    jp: v.japanese,
-                    furigana: v.reading ?? v.japanese,
-                    vi: v.vietnameseMeaningText ?? "",
-                })),
-                structures: sq.grammars.map((g) => ({
-                    jp: g.japanese,
-                    vi: g.vietnameseMeaningText ?? "",
-                })),
-            };
-        }
-        if (!data) return { vocab: [], structures: [] };
-        return getQuestionHints(data.topicId, data.question.id);
-    }, [nodeQ.data, data]);
+        if (!sq) return EMPTY_HINTS;
+        return {
+            vocab: sq.vocabularies.map((v) => ({
+                jp: v.japanese,
+                furigana: v.reading ?? v.japanese,
+                vi: v.vietnameseMeaningText ?? "",
+            })),
+            structures: sq.grammars.map((g) => ({
+                jp: g.japanese,
+                vi: g.vietnameseMeaningText ?? "",
+            })),
+        };
+    }, [sq]);
 
     const {
         step,
@@ -140,35 +115,28 @@ function SandboxContent() {
 
     const showFurigana = true;
 
-    // questionId số = câu hỏi BE → gọi API chấm điểm thật; ngược lại (mock) → giả lập.
     const mutation = useMutation({
-        mutationFn: async (vars: {
-            audioBlob: Blob;
-            durationSec: number;
-            topicId: string;
-            mockQuestionId: string;
-        }) => {
-            const speakingQuestionId = Number(questionId);
-            if (Number.isFinite(speakingQuestionId)) {
-                return submitSpeakingAnalysis({
-                    file: vars.audioBlob,
-                    speakingQuestionId,
-                    durationSec: vars.durationSec,
-                });
-            }
-            return submitPractice({
-                topicId: vars.topicId,
-                questionId: vars.mockQuestionId,
-                audioBlob: vars.audioBlob,
+        mutationFn: (vars: { audioBlob: Blob; durationSec: number }) =>
+            submitSpeakingAnalysis({
+                file: vars.audioBlob,
+                speakingQuestionId: Number(questionId),
                 durationSec: vars.durationSec,
-            });
-        },
+            }),
         onSuccess: (result) => {
             setAnalyzing(false);
-            // Ghi điểm vào lộ trình Marugoto để mở khóa node kế + cộng L-Point
-            // (không ảnh hưởng câu hỏi ngoài Marugoto).
+            // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
             useMarugotoStore.getState().setQuestionScore(questionId, result.score);
-            push(`/history/${result.historyId}`);
+            // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
+            queryClient.invalidateQueries({
+                queryKey: ["user-learning-progress"],
+            });
+            // Kèm ngữ cảnh để màn kết quả mở lại đúng sandbox câu này.
+            const ctx = new URLSearchParams();
+            if (nodeId) ctx.set("node", nodeId);
+            if (bookParam) ctx.set("book", bookParam);
+            if (topicParam) ctx.set("topic", topicParam);
+            const qs = ctx.toString();
+            push(`/history/${result.historyId}${qs ? `?${qs}` : ""}`);
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
@@ -184,18 +152,6 @@ function SandboxContent() {
         );
     }
 
-    if (!data) {
-        return (
-            <div className="flex h-[50vh] flex-col items-center justify-center gap-4 text-center">
-                <h2 className="text-text-contrast text-2xl font-bold">
-                    {t("notFoundTitle")}
-                </h2>
-                <p className="text-text-muted">{t("notFoundSubtitle")}</p>
-            </div>
-        );
-    }
-
-    const { topicId, topicTitle, question } = data;
     const rules = getSandboxRules(t);
     // Quay lại đúng lộ trình chủ đề chứa câu hỏi (nếu vào từ lộ trình Marugoto).
     const backHref =
@@ -210,18 +166,10 @@ function SandboxContent() {
         setAnalyzing(true);
         setPlaying(false);
         const durationSec = Math.max(elapsed, 1);
-
         try {
-            // Lấy file Blob từ url ghi âm cục bộ
             const res = await fetch(audioUrl);
             const audioBlob = await res.blob();
-
-            mutation.mutate({
-                audioBlob,
-                durationSec,
-                topicId,
-                mockQuestionId: question.id,
-            });
+            mutation.mutate({ audioBlob, durationSec });
         } catch (err) {
             console.error("Lỗi khi tải file ghi âm:", err);
             setAnalyzing(false);
@@ -233,9 +181,16 @@ function SandboxContent() {
             <div className="mx-auto max-w-5xl space-y-5">
                 <SandboxHeader backHref={backHref} accent={accent} />
 
-                <SandboxStepper step={step} />
+                <SandboxQuestionBanner
+                    jp={question.jp}
+                    furigana={question.furigana}
+                    vi={question.vi}
+                    accent={accent}
+                    showFurigana={showFurigana}
+                />
 
-                {/* Step 1 */}
+                <SandboxStepper step={step} accent={accent} />
+
                 {step === 1 && (
                     <SandboxStep1
                         rules={rules}
@@ -244,39 +199,34 @@ function SandboxContent() {
                         startMicTest={startMicTest}
                         resetMicTest={resetMicTest}
                         setStep={setStep}
-                        furigana={showFurigana}
+                        accent={accent}
                     />
                 )}
 
-                {/* Step 2 */}
                 {step === 2 && (
                     <SandboxStep2
-                        topicTitle={topicTitle}
-                        question={question}
-                        showFurigana={showFurigana}
                         recording={recording}
                         elapsed={elapsed}
                         toggleRecord={toggleRecord}
                         hints={hints}
+                        showFurigana={showFurigana}
+                        accent={accent}
                     />
                 )}
 
-                {/* Step 3 */}
                 {step === 3 && (
                     <SandboxStep3
-                        topicTitle={topicTitle}
-                        question={question}
-                        showFurigana={showFurigana}
                         elapsed={elapsed}
                         playing={playing}
                         setPlaying={setPlaying}
                         retrySpeaking={retrySpeaking}
                         onNext={handleAnalyze}
+                        accent={accent}
                     />
                 )}
             </div>
 
-            <SandboxAnalyzingOverlay analyzing={analyzing} />
+            <SandboxAnalyzingOverlay analyzing={analyzing} accent={accent} />
         </div>
     );
 }

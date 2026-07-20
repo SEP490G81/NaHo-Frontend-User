@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { Mic, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button, CircularProgress } from "@mui/material";
@@ -13,9 +13,8 @@ interface SandboxStep1Props {
     startMicTest: () => void;
     resetMicTest: () => void;
     setStep: (step: SandboxStep) => void;
-    furigana: boolean;
+    accent: string;
 }
-
 
 export function SandboxStep1({
     rules,
@@ -24,7 +23,7 @@ export function SandboxStep1({
     startMicTest,
     resetMicTest,
     setStep,
-    furigana,
+    accent,
 }: SandboxStep1Props) {
     const t = useTranslations("sandbox");
 
@@ -61,7 +60,7 @@ export function SandboxStep1({
                         fullWidth
                         sx={{
                             textTransform: "none",
-                            backgroundColor: "var(--color-bgc-highlight)",
+                            backgroundColor: accent,
                             color: "var(--color-text-pure)",
                             fontWeight: "bold",
                             "&:hover": { opacity: 0.9 },
@@ -79,7 +78,7 @@ export function SandboxStep1({
                         startIcon={<CircularProgress size={16} color="inherit" />}
                         sx={{
                             textTransform: "none",
-                            backgroundColor: "var(--color-bgc-highlight)",
+                            backgroundColor: accent,
                             opacity: 0.7,
                         }}
                     >
@@ -99,7 +98,7 @@ export function SandboxStep1({
                             fullWidth
                             sx={{
                                 textTransform: "none",
-                                backgroundColor: "var(--color-bgc-highlight)",
+                                backgroundColor: accent,
                                 color: "var(--color-text-pure)",
                                 fontWeight: "bold",
                                 "&:hover": { opacity: 0.9 },
