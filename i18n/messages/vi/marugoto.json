@@ -73,7 +73,8 @@
             "chestClaimBtn": "Nhận thưởng",
             "chestOpened": "Đã mở rương",
             "chestClaimed": "Bạn nhận được +{reward} L-Point! 🎁",
-            "chestAlready": "Bạn đã mở rương này rồi."
+            "chestAlready": "Bạn đã mở rương này rồi.",
+            "chestFailed": "Mở rương thất bại, thử lại nhé."
         },
         "preview": {
             "title": "Chi tiết câu hỏi",

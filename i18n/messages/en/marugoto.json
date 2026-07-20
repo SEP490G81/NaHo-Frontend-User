@@ -73,7 +73,8 @@
             "chestClaimBtn": "Claim reward",
             "chestOpened": "Chest opened",
             "chestClaimed": "You got +{reward} L-Point! 🎁",
-            "chestAlready": "You already opened this chest."
+            "chestAlready": "You already opened this chest.",
+            "chestFailed": "Could not open the chest, please try again."
         },
         "preview": {
             "title": "Question detail",

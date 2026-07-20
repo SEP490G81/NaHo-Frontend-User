@@ -73,7 +73,8 @@
             "chestClaimBtn": "ごほうびを受け取る",
             "chestOpened": "開封済み",
             "chestClaimed": "+{reward} L-Point を獲得！🎁",
-            "chestAlready": "この箱はすでに開けています。"
+            "chestAlready": "この箱はすでに開けています。",
+            "chestFailed": "宝箱を開けられませんでした。もう一度お試しください。"
         },
         "preview": {
             "title": "問題の詳細",

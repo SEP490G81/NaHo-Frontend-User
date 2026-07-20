@@ -59,3 +59,33 @@ export async function proxyPostForm(path: string, request: Request) {
     const result = await backendResponse.json();
     return NextResponse.json(result, { status: backendResponse.status });
 }
+
+/**
+ * Helper cho route handler (lớp 1): forward request JSON lên BE, tự đính kèm
+ * access token. Chịu được response rỗng (BE trả 201 no-body).
+ */
+export async function proxyPostJson(path: string, request: Request) {
+    if (!process.env.API_URL) {
+        return NextResponse.json(
+            { detail: "API_URL chưa được cấu hình trên server." } as ProblemDetail,
+            { status: 500 },
+        );
+    }
+
+    const accessToken = (await cookies()).get(ACCESS_TOKEN_NAME)?.value;
+    const body = await request.text();
+
+    const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body,
+        cache: "no-store",
+    });
+
+    const text = await backendResponse.text();
+    const result = text ? JSON.parse(text) : null;
+    return NextResponse.json(result, { status: backendResponse.status });
+}
