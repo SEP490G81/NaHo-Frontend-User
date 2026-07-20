@@ -14,14 +14,6 @@ export function getBookById(bookId: string): MarugotoBook | undefined {
     return MARUGOTO_BOOKS.find((b) => b.id === bookId);
 }
 
-/**
- * Sách để duyệt mở (BE trả toàn bộ sách, không gate theo progress) — việc
- * khóa/mở thật diễn ra ở tầng node (theo `farthestAvailableNodeId`).
- */
-export function isBookUnlocked(): boolean {
-    return true;
-}
-
 /** Tổng số bài học (lesson) của một quyển sách. */
 export function getBookLessonCount(book: MarugotoBook): number {
     return book.topics.reduce((sum, t) => sum + t.lessons.length, 0);

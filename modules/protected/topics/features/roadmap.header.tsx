@@ -2,9 +2,9 @@
 import React from "react";
 import { Flame, Sparkles, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { currentLearner } from "@/data/mockLearnerDashboard";
+import { useQuery } from "@tanstack/react-query";
 import { getBookById, CURRENT_BOOK_ID } from "@/data/marugoto";
-import { useMarugotoStore } from "@/store/marugotoStore";
+import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 
 interface StatCardProps {
     icon: React.ReactNode;
@@ -32,7 +32,13 @@ function StatCard({ icon, label, value }: StatCardProps) {
 
 export function RoadmapHeader() {
     const t = useTranslations("marugoto.roadmap");
-    const lPoints = useMarugotoStore((s) => s.lPoints);
+    // Tiến độ thật của người dùng (điểm · streak) — theo suốt hành trình học.
+    const { data: progress } = useQuery({
+        queryKey: ["user-learning-progress"],
+        queryFn: getUserLearningProgress,
+    });
+    const totalPoint = Math.round(progress?.totalPoint ?? 0);
+    const streakDays = progress?.currentStreak ?? 0;
     const level = getBookById(CURRENT_BOOK_ID)?.level ?? "A2";
 
     return (
@@ -54,7 +60,7 @@ export function RoadmapHeader() {
                 <StatCard
                     icon={<Flame className="text-bgc-highlight h-5 w-5" />}
                     label={t("streak")}
-                    value={t("streakValue", { days: currentLearner.streakDays })}
+                    value={t("streakValue", { days: streakDays })}
                 />
                 <StatCard
                     icon={<Trophy className="text-bgc-highlight h-5 w-5" />}
@@ -64,7 +70,7 @@ export function RoadmapHeader() {
                 <StatCard
                     icon={<Sparkles className="text-bgc-highlight h-5 w-5" />}
                     label={t("totalPoints")}
-                    value={t("pointsValue", { points: lPoints })}
+                    value={t("pointsValue", { points: totalPoint })}
                 />
             </div>
         </div>

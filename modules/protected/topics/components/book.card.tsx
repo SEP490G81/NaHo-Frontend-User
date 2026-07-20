@@ -6,14 +6,18 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/libs/utils";
 import BookCover from "@/components/ui/book.cover";
-import { isBookUnlocked, USER_CEFR_ORDER } from "@/data/marugoto";
 import type { MarugotoBook } from "@/data/marugoto/types";
 
-export function BookCard({ book }: { book: MarugotoBook }) {
+interface BookCardProps {
+    book: MarugotoBook;
+    /** Mở khóa theo tiến độ thật (frontier đã tới node đầu của quyển). */
+    unlocked: boolean;
+    /** Quyển đang học (frontier nằm trong khoảng node của quyển). */
+    current: boolean;
+}
+
+export function BookCard({ book, unlocked, current }: BookCardProps) {
     const t = useTranslations("marugoto");
-    const unlocked = isBookUnlocked();
-    // Quyển đang học = quyển ở đúng trình độ hiện tại của người dùng.
-    const current = book.cefrOrder === USER_CEFR_ORDER;
     const navigable = unlocked;
     const accent = book.coverColor ?? "var(--color-bgc-highlight)";
 

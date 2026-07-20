@@ -74,6 +74,8 @@ export function mapBook(b: BookResponse): MarugotoBook {
         subtitle: b.description,
         coverImage: b.coverImage?.objectKey ?? b.coverImage?.fileUrl,
         coverColor: BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
+        firstNodeOrder: b.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: b.lastNodeGlobalOrderIndex ?? undefined,
         topics: [],
     };
 }

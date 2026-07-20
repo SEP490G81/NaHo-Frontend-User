@@ -19,6 +19,9 @@ export interface BookResponse {
     jlptLevel: JLPTLevel;
     cefrLevel: CefrLevel;
     orderIndex: number;
+    /** Global order index của node đầu/cuối trong quyển — dùng để khóa/mở sách. */
+    firstNodeGlobalOrderIndex: number | null;
+    lastNodeGlobalOrderIndex: number | null;
     coverImage: FileResponse;
 }
 

@@ -86,6 +86,9 @@ export interface MarugotoBook {
     coverImage?: string;
     /** Màu nền cho bìa mock (khi chưa có coverImage). */
     coverColor?: string;
+    /** Global order index node đầu/cuối của quyển (khóa/mở theo tiến độ). */
+    firstNodeOrder?: number;
+    lastNodeOrder?: number;
     /** Chỉ quyển được mock đầy đủ mới có topics; quyển khác để rỗng. */
     topics: BookTopic[];
 }
