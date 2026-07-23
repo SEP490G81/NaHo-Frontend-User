@@ -20,7 +20,7 @@ export function HistoryEmptyState({ t }: HistoryEmptyStateProps) {
             </p>
             <Button
                 component={Link}
-                href="/topics"
+                href="/books"
                 variant="contained"
                 sx={{
                     textTransform: "none",

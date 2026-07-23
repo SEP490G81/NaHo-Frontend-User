@@ -7,11 +7,12 @@ import history from "@/i18n/messages/vi/history.json";
 import question from "@/i18n/messages/vi/question.json";
 import topic from "@/i18n/messages/vi/topic.json";
 import sandbox from "@/i18n/messages/vi/sandbox.json";
-import communityLibrary from "@/i18n/messages/vi/community-library.json";
 import settings from "@/i18n/messages/vi/settings.json";
 import liveChatroom from "@/i18n/messages/vi/live-chatroom.json";
 import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
+import marugoto from "@/i18n/messages/vi/marugoto.json";
 import leaderboard from "@/i18n/messages/vi/leaderboard.json";
+import pointHistory from "@/i18n/messages/vi/point-history.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -25,9 +26,10 @@ declare module "next-intl" {
             typeof topic &
             typeof sandbox &
             typeof settings &
-            typeof communityLibrary &
             typeof liveChatroom &
             typeof dialogueSetup &
-            typeof leaderboard;
+            typeof marugoto &
+            typeof leaderboard &
+            typeof pointHistory;
     }
 }

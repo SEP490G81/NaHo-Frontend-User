@@ -1,58 +1,77 @@
 "use client";
 import React from "react";
-import FuriganaText from "@/components/ui/furigana.text";
+import { Mic } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type { QuestionHints } from "@/data/mockHints";
 import RecordButton from "../features/record.button";
 import HintsCard from "../features/hints.card";
 import NotesPanel from "./notes.panel";
-import { useTranslations } from "next-intl";
 
 interface SandboxStep2Props {
-    topicTitle: string;
-    question: {
-        jp: string;
-        furigana: any;
-        vi: string;
-    };
-    showFurigana: boolean;
     recording: boolean;
     elapsed: number;
     toggleRecord: () => void;
-    hints: any;
+    hints: QuestionHints;
+    showFurigana: boolean;
+    accent: string;
 }
 
 export function SandboxStep2({
-    topicTitle,
-    question,
-    showFurigana,
     recording,
     elapsed,
     toggleRecord,
     hints,
+    showFurigana,
+    accent,
 }: SandboxStep2Props) {
     const t = useTranslations("sandbox");
     return (
-        <section className="grid gap-5 lg:grid-cols-[1fr_340px]">
-            <div className="space-y-5">
-                {/* Question Card Display */}
-                <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-6">
-                    <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-full bg-bgc-highlight/15 px-2.5 py-0.5 text-xs font-medium text-bgc-highlight">
-                            {topicTitle}
-                        </span>
-                        <span className="text-xs text-text-muted">{t("speakQuestion")}</span>
+        <section className="grid gap-5 lg:grid-cols-[1fr_360px]">
+            <div className="border-bdc-primary bg-bgc-app flex flex-col overflow-hidden rounded-2xl border">
+                <div className="border-bdc-primary flex items-center gap-2 border-b px-5 py-3.5">
+                    <span
+                        className="flex h-7 w-7 items-center justify-center rounded-full"
+                        style={{
+                            background: `color-mix(in srgb, ${accent} 14%, transparent)`,
+                            color: accent,
+                        }}
+                    >
+                        <Mic className="h-4 w-4" />
+                    </span>
+                    <div className="min-w-0">
+                        <p className="text-text-contrast text-sm font-bold">
+                            {t("recordCardTitle")}
+                        </p>
+                        <p className="text-text-muted text-xs">
+                            {t("recordCardHint")}
+                        </p>
                     </div>
-                    <h1 className="mt-3 text-xl font-bold leading-snug md:text-2xl text-text-contrast">
-                        <FuriganaText text={question.jp} furigana={question.furigana} showFurigana={showFurigana} />
-                    </h1>
-                    <p className="mt-2 text-sm text-text-muted">{question.vi}</p>
                 </div>
 
-                <div className="flex flex-col items-center justify-center rounded-2xl border border-bdc-primary bg-bgc-app p-6">
-                    <RecordButton recording={recording} elapsed={elapsed} onToggle={toggleRecord} />
+                <div className="relative flex flex-1 items-center justify-center px-6 py-10">
+                    {/* Nền glow mềm theo màu sách để mic không trơ giữa khối trắng. */}
+                    <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                            background: `radial-gradient(60% 55% at 50% 45%, color-mix(in srgb, ${accent} 12%, transparent), transparent 70%)`,
+                        }}
+                    />
+                    <RecordButton
+                        recording={recording}
+                        elapsed={elapsed}
+                        onToggle={toggleRecord}
+                        accent={accent}
+                    />
                 </div>
             </div>
+
             <aside className="space-y-5">
-                <HintsCard hints={hints} showFurigana={showFurigana} />
+                <HintsCard
+                    hints={hints}
+                    showFurigana={showFurigana}
+                    accent={accent}
+                />
                 <NotesPanel />
             </aside>
         </section>

@@ -1,0 +1,34 @@
+{
+    "pointHistory": {
+        "title": "ポイント履歴",
+        "subtitle": "アクティビティごとのポイント増減の詳細。",
+        "back": "戻る",
+        "totalLabel": "{count} 件",
+        "colTime": "日時",
+        "colType": "取引",
+        "colPoint": "ポイント",
+        "colContext": "内容",
+        "ctxVocab": "語彙学習",
+        "ctxChest": "ごほうび箱",
+        "filterType": "取引の種類",
+        "filterAmount": "獲得 / 減少",
+        "all": "すべて",
+        "amountPositive": "獲得",
+        "amountNegative": "減少",
+        "empty": "ポイント取引はまだありません。",
+        "emptyHint": "会話練習・宝箱・連続ログインでポイントを獲得しましょう。",
+        "loading": "読み込み中...",
+        "error": "ポイント履歴を読み込めませんでした。",
+        "types": {
+            "LEARNING_PATH_NODE_COMPLETION": "マイルストーン達成",
+            "CAN_DO_COMPLETION": "Can-do 達成",
+            "LESSON_COMPLETION": "レッスン達成",
+            "TOPIC_COMPLETION": "トピック達成",
+            "BOOK_COMPLETION": "教材達成",
+            "DAILY_REWARD": "デイリー報酬",
+            "STREAK_BONUS": "連続ボーナス",
+            "ACHIEVEMENT_REWARD": "実績報酬",
+            "PENALTY": "減点"
+        }
+    }
+}

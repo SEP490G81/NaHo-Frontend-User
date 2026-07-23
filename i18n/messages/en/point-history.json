@@ -1,0 +1,34 @@
+{
+    "pointHistory": {
+        "title": "Point history",
+        "subtitle": "Detailed point gains/losses by each activity.",
+        "back": "Back",
+        "totalLabel": "{count} transactions",
+        "colTime": "Time",
+        "colType": "Transaction",
+        "colPoint": "Points",
+        "colContext": "Content",
+        "ctxVocab": "Vocabulary",
+        "ctxChest": "Reward chest",
+        "filterType": "Transaction type",
+        "filterAmount": "Gain / Loss",
+        "all": "All",
+        "amountPositive": "Gains",
+        "amountNegative": "Losses",
+        "empty": "No point transactions yet.",
+        "emptyHint": "Practice speaking, open chests and keep your streak to earn points.",
+        "loading": "Loading...",
+        "error": "Could not load point history.",
+        "types": {
+            "LEARNING_PATH_NODE_COMPLETION": "Milestone completed",
+            "CAN_DO_COMPLETION": "Can-do completed",
+            "LESSON_COMPLETION": "Lesson completed",
+            "TOPIC_COMPLETION": "Topic completed",
+            "BOOK_COMPLETION": "Book completed",
+            "DAILY_REWARD": "Daily reward",
+            "STREAK_BONUS": "Streak bonus",
+            "ACHIEVEMENT_REWARD": "Achievement reward",
+            "PENALTY": "Penalty"
+        }
+    }
+}

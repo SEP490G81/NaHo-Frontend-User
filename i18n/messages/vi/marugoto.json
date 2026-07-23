@@ -1,0 +1,113 @@
+{
+    "marugoto": {
+        "roadmap": {
+            "badge": "Lộ trình học tập tương tác",
+            "title": "Lộ trình luyện tập Kaiwa",
+            "subtitle": "Chinh phục từng bài học theo sách Marugoto và vượt cấp để tiến xa hơn trên hành trình Kaiwa.",
+            "streak": "Streak hàng ngày",
+            "currentLevel": "Trình độ hiện tại",
+            "totalPoints": "Tổng điểm tích lũy",
+            "streakValue": "{days} ngày liên tiếp! 🔥",
+            "levelValue": "Trình độ: {level}",
+            "pointsValue": "{points} L-Point 🌟"
+        },
+        "books": {
+            "chooseBook": "Chọn sách học",
+            "library": "Thư viện Marugoto",
+            "currentBook": "Sách đang hiển thị",
+            "locked": "Sách này chưa được mở khóa",
+            "lockedDesc": "Hãy vượt cấp để mở khóa sách kế tiếp.",
+            "jumpTest": "Thi vượt cấp",
+            "empty": "Nội dung của quyển sách này sẽ sớm được cập nhật.",
+            "lessonCount": "{count} bài học",
+            "topicCount": "{count} chủ đề",
+            "overallProgress": "Tiến độ khoá học",
+            "lessonsDone": "{done}/{total} bài đã học",
+            "comingSoon": "Sắp cập nhật",
+            "current": "Đang học",
+            "backToLibrary": "Quay lại thư viện sách"
+        },
+        "bands": {
+            "A1": "Nhập môn",
+            "A2": "Sơ cấp",
+            "A2/B1": "Sơ – trung cấp",
+            "B1": "Trung cấp",
+            "B2": "Cao cấp"
+        },
+        "search": "Tìm kiếm chủ đề trong sách...",
+        "topic": {
+            "label": "Chủ đề {index}",
+            "lessonCount": "{count} bài"
+        },
+        "lesson": {
+            "label": "Bài {number}",
+            "candoCount": "{count} Can-do",
+            "enter": "Vào học ngay",
+            "markerDone": "Hoàn thành",
+            "markerActive": "Đang học",
+            "markerLocked": "Chưa mở khóa",
+            "review": "Ôn lại",
+            "needUnlock": "Cần mở khóa"
+        },
+        "status": {
+            "completed": "Đã học",
+            "active": "Đang học",
+            "locked": "Đang khóa"
+        },
+        "lockedToast": "Nội dung chưa được mở khóa",
+        "lockedToastDesc": "Hãy hoàn thành phần trước để tiếp tục.",
+        "path": {
+            "backToTopic": "Quay lại chủ đề",
+            "showFurigana": "Hiện Furigana",
+            "candoLabel": "Can-do {index}",
+            "milestoneProgress": "{done}/{total} mốc",
+            "vocabShort": "Từ vựng",
+            "candoSummary": "{total} Can-do • Đã đạt {done}/{total}",
+            "startBubble": "Bắt đầu"
+        },
+        "node": {
+            "vocabTitle": "Từ vựng",
+            "speakingTitle": "Luyện nói",
+            "vocabCaption": "Học từ vựng Can-do",
+            "speakingCaption": "Câu {index}",
+            "chestTitle": "Rương thưởng",
+            "chestHint": "Mở để nhận thưởng",
+            "chestReward": "+{point} L-Point",
+            "chestClaimBtn": "Nhận thưởng",
+            "chestOpened": "Đã mở rương",
+            "chestClaimed": "Bạn nhận được +{reward} L-Point! 🎁",
+            "chestAlready": "Bạn đã mở rương này rồi.",
+            "chestFailed": "Mở rương thất bại, thử lại nhé."
+        },
+        "preview": {
+            "title": "Chi tiết câu hỏi",
+            "bestScore": "Điểm cao nhất: {score}/10",
+            "context": "Gợi ý ngữ cảnh",
+            "grammar": "Ngữ pháp tiêu biểu",
+            "modelAnswer": "Bài mẫu (Model Answer)",
+            "viTranslation": "Bản dịch tiếng Việt",
+            "practiceNow": "Luyện nói câu này ngay"
+        },
+        "vocab": {
+            "dialogTitle": "Từ vựng · Can-do {index}",
+            "titleCando": "Từ vựng · Can-do {index}",
+            "titleQuestion": "Chuẩn bị · Câu {index}",
+            "dialogDesc": "Học kỹ các từ vựng mục tiêu bên dưới trước khi vào luyện nói.",
+            "empty": "Can-do này chưa có từ vựng.",
+            "emptyGrammar": "Phần này chưa có mẫu ngữ pháp.",
+            "grammar": "Mẫu ngữ pháp tiêu biểu",
+            "count": "{count} từ vựng",
+            "close": "Đóng",
+            "tabCards": "Thẻ từ vựng",
+            "tabGrammar": "Ngữ pháp & mẫu câu",
+            "flip": "Chạm để lật thẻ",
+            "speak": "Phát âm",
+            "reading": "Cách đọc",
+            "meaning": "Nghĩa",
+            "prev": "Trước",
+            "next": "Tiếp",
+            "learned": "Đã thuộc",
+            "finish": "Hoàn thành"
+        }
+    }
+}

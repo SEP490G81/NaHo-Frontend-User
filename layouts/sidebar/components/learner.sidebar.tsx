@@ -2,14 +2,12 @@
 
 import React from "react";
 import { usePathname } from "@/i18n/navigation";
-import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
-import { Box, Drawer, IconButton, List } from "@mui/material";
+import { Box, Drawer, List } from "@mui/material";
 import { cn } from "@/libs/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
 import SidebarLogoButton from "./sidebar.logo.button";
 import SidebarItem from "./sidebar.item";
-import { MenuIcon } from "lucide-react";
 
 const DRAWER_WIDTH = 260;
 
@@ -45,35 +43,20 @@ export function LearnerSidebar() {
 
     const renderDrawerContent = (isCollapsed: boolean) => (
         <>
-            {/* Header */}
+            {/* Header: chỉ còn logo (nút thu gọn đã chuyển lên header trên) */}
             <div
                 className={cn(
-                    "border-bdc-primary border-b py-3.5 flex items-center justify-center relative min-h-[66px]",
-                    isCollapsed ? "px-0" : "px-4"
+                    "border-bdc-primary flex min-h-[66px] items-center justify-center border-b py-3.5",
+                    isCollapsed ? "px-2" : "px-4"
                 )}
             >
-                <div className={cn(!isCollapsed && "absolute left-4")}>
-                    <TooltipCustom title={isCollapsed ? "Mở rộng" : "Thu gọn"} placement="right">
-                        <IconButton
-                            onClick={toggleSidebarCollapse}
-                            sx={{
-                                display: { xs: "none", md: "inline-flex" },
-                                color: "var(--color-text-contrast)",
-                                "&:hover": { backgroundColor: "var(--color-hbgc-app)" },
-                            }}
-                        >
-                            <MenuIcon className="h-6 w-6" />
-                        </IconButton>
-                    </TooltipCustom>
-                </div>
-
-                {!isCollapsed && (
-                    <SidebarLogoButton>
+                <SidebarLogoButton>
+                    {!isCollapsed && (
                         <h1 className="text-text-contrast text-xl font-bold tracking-wider">
                             NaHo
                         </h1>
-                    </SidebarLogoButton>
-                )}
+                    )}
+                </SidebarLogoButton>
             </div>
 
             {/* Menu items */}

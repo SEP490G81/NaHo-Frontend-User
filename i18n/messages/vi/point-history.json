@@ -1,0 +1,34 @@
+{
+    "pointHistory": {
+        "title": "Lịch sử nhận điểm",
+        "subtitle": "Chi tiết điểm cộng/trừ theo từng hoạt động của bạn.",
+        "back": "Quay lại",
+        "totalLabel": "{count} hoạt động",
+        "colTime": "Thời gian",
+        "colType": "Loại hoạt động",
+        "colPoint": "Điểm",
+        "colContext": "Nội dung",
+        "ctxVocab": "Học từ vựng",
+        "ctxChest": "Rương thưởng",
+        "filterType": "Loại hoạt động",
+        "filterAmount": "Cộng / Trừ",
+        "all": "Tất cả",
+        "amountPositive": "Điểm cộng",
+        "amountNegative": "Điểm trừ",
+        "empty": "Chưa có hoạt động điểm nào.",
+        "emptyHint": "Hãy luyện nói, mở rương và duy trì streak để nhận điểm.",
+        "loading": "Đang tải dữ liệu...",
+        "error": "Không tải được lịch sử điểm.",
+        "types": {
+            "LEARNING_PATH_NODE_COMPLETION": "Hoàn thành mốc học",
+            "CAN_DO_COMPLETION": "Hoàn thành Can-do",
+            "LESSON_COMPLETION": "Hoàn thành bài học",
+            "TOPIC_COMPLETION": "Hoàn thành chủ đề",
+            "BOOK_COMPLETION": "Hoàn thành quyển sách",
+            "DAILY_REWARD": "Thưởng hằng ngày",
+            "STREAK_BONUS": "Thưởng chuỗi ngày",
+            "ACHIEVEMENT_REWARD": "Thưởng thành tích",
+            "PENALTY": "Trừ điểm"
+        }
+    }
+}

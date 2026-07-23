@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl";
 
 interface SandboxStepperProps {
     step: 1 | 2 | 3;
+    accent: string;
 }
 
-export function SandboxStepper({ step }: SandboxStepperProps) {
+export function SandboxStepper({ step, accent }: SandboxStepperProps) {
     const t = useTranslations("sandbox");
 
     const steps = [
@@ -27,12 +28,12 @@ export function SandboxStepper({ step }: SandboxStepperProps) {
                         border: "1px solid var(--color-bdc-muted)",
                         borderRadius: "50%",
                         "&.Mui-active": {
-                            color: "var(--color-bgc-highlight)",
-                            borderColor: "var(--color-bgc-highlight)",
+                            color: accent,
+                            borderColor: accent,
                         },
                         "&.Mui-completed": {
-                            color: "var(--color-bgc-highlight)",
-                            borderColor: "var(--color-bgc-highlight)",
+                            color: accent,
+                            borderColor: accent,
                         },
                     },
                     "& .MuiStepLabel-label": {

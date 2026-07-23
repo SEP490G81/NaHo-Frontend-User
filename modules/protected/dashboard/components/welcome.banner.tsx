@@ -21,7 +21,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
             <div className="flex flex-col gap-2 sm:flex-row">
                 <Button
                     component={Link}
-                    href="/topics"
+                    href="/books"
                     variant="contained"
                     sx={{
                         backgroundColor: "var(--color-bgc-highlight)",
