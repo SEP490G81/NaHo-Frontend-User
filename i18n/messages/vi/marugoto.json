@@ -43,6 +43,9 @@
             "label": "Bài {number}",
             "candoCount": "{count} Can-do",
             "enter": "Vào học ngay",
+            "markerDone": "Hoàn thành",
+            "markerActive": "Đang học",
+            "markerLocked": "Chưa mở khóa",
             "review": "Ôn lại",
             "needUnlock": "Cần mở khóa"
         },

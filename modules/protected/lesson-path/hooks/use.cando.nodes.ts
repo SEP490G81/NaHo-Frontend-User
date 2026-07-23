@@ -6,19 +6,14 @@ import type { NodeStatus } from "@/components/ui/status.badge";
 export type NodeKind = "vocab" | "question" | "chest";
 
 export interface PathNode {
-    /** Khóa duy nhất = id của learning_path_node. */
     id: string;
-    /** Id learning_path_node (dùng để gọi chi tiết node). */
     nodeId: number;
     kind: NodeKind;
     /** Id bài học chứa node (để dựng link luyện nói). */
     lessonId: string;
-    /** Số thứ tự câu hỏi (chỉ với node kiểu question). */
     index?: number;
-    /** Id câu hỏi luyện nói (để chấm điểm / điều hướng sandbox). */
     speakingQuestionId?: number | null;
     status: NodeStatus;
-    /** Độ đầy vòng progress 0..100. */
     progress: number;
     bestScore?: number;
 }
@@ -41,12 +36,12 @@ export interface LessonNodes {
 export interface LessonGroup {
     lesson: Lesson;
     blocks: CanDoBlock[];
+    status: NodeStatus;
 }
 
 export interface TopicNodes {
     groups: LessonGroup[];
     overallPercent: number;
-    /** Mốc học đầu tiên chưa hoàn thành của cả chủ đề ("bạn đang ở đây"). */
     currentNodeId?: string;
 }
 
@@ -68,7 +63,7 @@ function buildRawNodes(cando: CanDo, lessonId: string): RawNode[] {
     });
 }
 
-/** Dựng các CanDoBlock (node + trạng thái) cho một bài học từ dữ liệu BE. */
+/** Dựng CanDoBlock với cờ "đã hoàn thành" từng node (chưa áp khóa). */
 export function buildLessonBlocks(
     canDos: CanDo[],
     lessonId: string,
@@ -84,19 +79,60 @@ export function buildLessonBlocks(
     return canDos.map((cando) => {
         const nodes: PathNode[] = buildRawNodes(cando, lessonId).map((r) => {
             const done = isDone(r);
-            const status: NodeStatus = done ? "completed" : "active";
             const bestScore = r.kind === "question" ? scoreOf(r) : undefined;
             const progress =
-                status === "completed"
-                    ? 100
-                    : Math.round(((bestScore ?? 0) / 10) * 100);
-            return { ...r, status, progress, bestScore };
+                done ? 100 : Math.round(((bestScore ?? 0) / 10) * 100);
+            // Trạng thái tạm: done → completed, còn lại → active (khóa áp ở bước sau).
+            return {
+                ...r,
+                status: done ? "completed" : "active",
+                progress,
+                bestScore,
+            };
         });
-        const done = nodes.filter((n) => n.status === "completed").length;
-        const status: NodeStatus =
-            nodes.length > 0 && done === nodes.length ? "completed" : "active";
         return {
             cando,
+            nodes,
+            done: nodes.filter((n) => n.status === "completed").length,
+            total: nodes.length,
+            percent: 0,
+            status: "active",
+        };
+    });
+}
+
+/**
+ * Khóa tuần tự trên danh sách block đã xếp đúng thứ tự: node hoàn thành = completed,
+ * node đầu tiên chưa xong = active ("đang học"), tất cả node sau = locked.
+ */
+function applyLock(blocks: CanDoBlock[]): {
+    blocks: CanDoBlock[];
+    currentNodeId?: string;
+} {
+    const flat = blocks.flatMap((b) => b.nodes);
+    const frontier = flat.findIndex((n) => n.status !== "completed");
+    const currentNodeId = frontier >= 0 ? flat[frontier].id : undefined;
+    const orderById = new Map(flat.map((n, i) => [n.id, i] as const));
+
+    const locked = blocks.map((b) => {
+        const nodes = b.nodes.map((n) => {
+            const i = orderById.get(n.id) ?? 0;
+            const status: NodeStatus =
+                frontier === -1 || i < frontier
+                    ? "completed"
+                    : i === frontier
+                      ? "active"
+                      : "locked";
+            return { ...n, status };
+        });
+        const done = nodes.filter((n) => n.status === "completed").length;
+        const status: NodeStatus = nodes.every((n) => n.status === "completed")
+            ? "completed"
+            : nodes.some((n) => n.status === "active")
+              ? "active"
+              : "locked";
+        return {
+            ...b,
             nodes,
             done,
             total: nodes.length,
@@ -104,41 +140,39 @@ export function buildLessonBlocks(
             status,
         };
     });
+    return { blocks: locked, currentNodeId };
 }
 
-function summarize(blocks: CanDoBlock[]) {
+function overallOf(blocks: CanDoBlock[]): number {
     const total = blocks.reduce((s, b) => s + b.total, 0);
     const done = blocks.reduce((s, b) => s + b.done, 0);
-    return { total, done, percent: total ? Math.round((done / total) * 100) : 0 };
+    return total ? Math.round((done / total) * 100) : 0;
 }
 
-/** Node lộ trình cho MỘT bài học (dùng ở trang bài học lẻ). */
+/** Node lộ trình cho MỘT bài học (trang bài học lẻ). */
 export function useLessonNodes(lesson: Lesson): LessonNodes {
     const scores = useMarugotoStore((s) => s.questionScores);
     const completedNodes = useMarugotoStore((s) => s.completedNodes);
 
     return useMemo(() => {
-        const blocks = buildLessonBlocks(
+        const raw = buildLessonBlocks(
             lesson.canDos,
             lesson.id,
             scores,
             completedNodes,
         );
-        const { percent } = summarize(blocks);
-        const currentNodeId = blocks
-            .flatMap((b) => b.nodes)
-            .find((n) => n.status !== "completed")?.id;
-        return { blocks, overallPercent: percent, currentNodeId };
+        const { blocks, currentNodeId } = applyLock(raw);
+        return { blocks, overallPercent: overallOf(blocks), currentNodeId };
     }, [lesson, scores, completedNodes]);
 }
 
-/** Node lộ trình cho CẢ chủ đề (mọi bài học · Can-do · câu hỏi). */
+/** Node lộ trình cho CẢ chủ đề (mọi bài học · Can-do · câu hỏi), khóa tuần tự. */
 export function useTopicNodes(lessons: Lesson[]): TopicNodes {
     const scores = useMarugotoStore((s) => s.questionScores);
     const completedNodes = useMarugotoStore((s) => s.completedNodes);
 
     return useMemo(() => {
-        const groups: LessonGroup[] = lessons.map((lesson) => ({
+        const rawGroups = lessons.map((lesson) => ({
             lesson,
             blocks: buildLessonBlocks(
                 lesson.canDos,
@@ -147,11 +181,28 @@ export function useTopicNodes(lessons: Lesson[]): TopicNodes {
                 completedNodes,
             ),
         }));
-        const allBlocks = groups.flatMap((g) => g.blocks);
-        const { percent } = summarize(allBlocks);
-        const currentNodeId = allBlocks
-            .flatMap((b) => b.nodes)
-            .find((n) => n.status !== "completed")?.id;
-        return { groups, overallPercent: percent, currentNodeId };
+
+        // Khóa tuần tự trên toàn bộ node của chủ đề (theo đúng thứ tự bài → can-do).
+        const allBlocks = rawGroups.flatMap((g) => g.blocks);
+        const { blocks: lockedFlat, currentNodeId } = applyLock(allBlocks);
+
+        const offsets = rawGroups.map((_, i) =>
+            rawGroups.slice(0, i).reduce((s, g) => s + g.blocks.length, 0),
+        );
+        const groups: LessonGroup[] = rawGroups.map((g, i) => {
+            const blocks = lockedFlat.slice(offsets[i], offsets[i] + g.blocks.length);
+            const status: NodeStatus = blocks.every((b) => b.status === "completed")
+                ? "completed"
+                : blocks.some((b) => b.status !== "locked")
+                  ? "active"
+                  : "locked";
+            return { lesson: g.lesson, blocks, status };
+        });
+
+        return {
+            groups,
+            overallPercent: overallOf(lockedFlat),
+            currentNodeId,
+        };
     }, [lessons, scores, completedNodes]);
 }

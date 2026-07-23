@@ -43,6 +43,9 @@
             "label": "第{number}課",
             "candoCount": "Can-do {count}件",
             "enter": "学習を始める",
+            "markerDone": "完了",
+            "markerActive": "学習中",
+            "markerLocked": "ロック中",
             "review": "復習する",
             "needUnlock": "ロック中"
         },

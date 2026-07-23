@@ -8,15 +8,12 @@ import {
     getLearningPathNodeDetail,
     openChest,
 } from "@/services/client/book.service";
-import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 import type {
     CanDoBlock,
     LessonGroup,
     PathNode,
 } from "../hooks/use.cando.nodes";
-import LessonBand from "../components/lesson.band";
-import CanDoSectionHeader from "../components/cando.section.header";
-import NodeFlow from "../components/node.flow";
+import TopicSnakePath from "../components/topic.snake.path";
 import VocabDialog from "../components/vocab.dialog";
 import QuestionPreviewDrawer from "../components/question.preview.drawer";
 import ChestDialog from "../components/chest.dialog";
@@ -62,19 +59,12 @@ export function TopicRoadmapBody({
     const detail = nodeQ.data;
     const closeDialog = () => setActive(null);
 
-    // Cần userId để mở rương (BE cộng L-Point thật rồi refetch tiến độ).
-    const { data: progress } = useQuery({
-        queryKey: ["user-learning-progress"],
-        queryFn: getUserLearningProgress,
-    });
-
     const openMutation = useMutation({
         mutationFn: (vars: {
             chestId: number;
-            userId: number;
             nodeId: string;
             reward: number;
-        }) => openChest(vars.chestId, vars.userId),
+        }) => openChest(vars.chestId),
         onSuccess: (_data, vars) => {
             markNodeDone(vars.nodeId); // đánh dấu đã mở (UI)
             queryClient.invalidateQueries({
@@ -93,6 +83,10 @@ export function TopicRoadmapBody({
             : t("node.vocabCaption");
 
     const handleClick = (block: CanDoBlock) => (n: PathNode) => {
+        if (n.status === "locked") {
+            toast.info(t("lockedToastDesc"));
+            return;
+        }
         if (n.kind === "vocab") markNodeDone(n.id);
         setActive({ node: n, block });
     };
@@ -108,14 +102,8 @@ export function TopicRoadmapBody({
             toast.info(t("node.chestAlready"));
             return;
         }
-        const userId = progress?.leaderboardUser?.id;
-        if (!userId) {
-            toast.error(t("node.chestFailed"));
-            return;
-        }
         openMutation.mutate({
             chestId: detail.chest.id,
-            userId,
             nodeId: active.node.id,
             reward: detail.chest.point,
         });
@@ -123,31 +111,15 @@ export function TopicRoadmapBody({
 
     return (
         <div className="space-y-3">
-            {groups.map((group) => (
-                <section key={group.lesson.id} className="space-y-3">
-                    <LessonBand
-                        lesson={group.lesson}
-                        accent={accent}
-                        showFurigana={showFurigana}
-                    />
-                    {group.blocks.map((block) => (
-                        <div key={block.cando.id} className="space-y-1">
-                            <CanDoSectionHeader
-                                block={block}
-                                accent={accent}
-                                showFurigana={showFurigana}
-                            />
-                            <NodeFlow
-                                nodes={block.nodes}
-                                title={nodeTitle}
-                                caption={nodeCaption}
-                                onNodeClick={handleClick(block)}
-                                currentNodeId={currentNodeId}
-                            />
-                        </div>
-                    ))}
-                </section>
-            ))}
+            <TopicSnakePath
+                groups={groups}
+                accent={accent}
+                showFurigana={showFurigana}
+                currentNodeId={currentNodeId}
+                nodeTitle={nodeTitle}
+                nodeCaption={nodeCaption}
+                onNodeClick={(block, n) => handleClick(block)(n)}
+            />
 
             <VocabDialog
                 open={active?.node.kind === "vocab"}

@@ -43,6 +43,9 @@
             "label": "Lesson {number}",
             "candoCount": "{count} Can-do",
             "enter": "Start learning",
+            "markerDone": "Completed",
+            "markerActive": "Learning",
+            "markerLocked": "Locked",
             "review": "Review",
             "needUnlock": "Locked"
         },

@@ -55,6 +55,10 @@ export function LessonRoadmap({
             : t("node.vocabCaption");
 
     const handleClick = (block: CanDoBlock) => (n: PathNode) => {
+        if (n.status === "locked") {
+            toast.info(t("lockedToastDesc"));
+            return;
+        }
         if (n.kind === "vocab") markNodeDone(n.id);
         setActive({ node: n, block });
     };
