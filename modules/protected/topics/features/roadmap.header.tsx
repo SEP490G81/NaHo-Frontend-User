@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import { Flame, Sparkles, Trophy } from "lucide-react";
+import { ChevronRight, Flame, Sparkles, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@/i18n/navigation";
+import { cn } from "@/libs/utils";
 import { getBookById, CURRENT_BOOK_ID } from "@/data/marugoto";
 import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 
@@ -10,15 +12,17 @@ interface StatCardProps {
     icon: React.ReactNode;
     label: string;
     value: string;
+    /** Có href → thẻ thành link (vd Tổng điểm → lịch sử nhận điểm). */
+    href?: "/point-history";
 }
 
-function StatCard({ icon, label, value }: StatCardProps) {
-    return (
-        <div className="border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-xl border p-4">
+function StatCard({ icon, label, value, href }: StatCardProps) {
+    const inner = (
+        <>
             <div className="bg-bgc-highlight/15 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
                 {icon}
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
                 <p className="text-text-muted text-[11px] tracking-wide uppercase">
                     {label}
                 </p>
@@ -26,7 +30,21 @@ function StatCard({ icon, label, value }: StatCardProps) {
                     {value}
                 </p>
             </div>
-        </div>
+            {href && (
+                <ChevronRight className="text-text-muted h-4 w-4 shrink-0" />
+            )}
+        </>
+    );
+    const className = cn(
+        "border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-xl border p-4",
+        href && "hover:border-bgc-highlight/60 hover:shadow-sm transition-all",
+    );
+    return href ? (
+        <Link href={href} className={className}>
+            {inner}
+        </Link>
+    ) : (
+        <div className={className}>{inner}</div>
     );
 }
 
@@ -71,6 +89,7 @@ export function RoadmapHeader() {
                     icon={<Sparkles className="text-bgc-highlight h-5 w-5" />}
                     label={t("totalPoints")}
                     value={t("pointsValue", { points: totalPoint })}
+                    href="/point-history"
                 />
             </div>
         </div>

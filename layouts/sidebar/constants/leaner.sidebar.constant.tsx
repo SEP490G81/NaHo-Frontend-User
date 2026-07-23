@@ -3,8 +3,6 @@ import {
     LayoutDashboard,
     Mic,
     History,
-    Wand2,
-    Library,
     MessagesSquare,
     Headphones,
     LineChart,
@@ -30,18 +28,6 @@ export const NAV_ITEMS: NavItem[] = [
     { title: "Lộ trình Kaiwa", url: "/books", icon: Mic },
     { title: "Lịch sử luyện tập", url: "/history", icon: History },
     {
-        title: "Đề chọn tự phát",
-        url: "/custom-question",
-        icon: Wand2,
-        disabled: false,
-    },
-    {
-        title: "Thư viện cộng đồng",
-        url: "/community-library",
-        icon: Library,
-        disabled: false,
-    },
-    {
         title: "Trò chuyện tự do AI",
         url: "/dialogue-setup",
         icon: MessagesSquare,
@@ -65,12 +51,6 @@ export const NAV_ITEMS: NavItem[] = [
         icon: Trophy,
         disabled: false,
     },
-    {
-        title: "Cài đặt & Hồ sơ",
-        url: "/dashboard",
-        icon: UserCog,
-        disabled: true,
-    },
 ];
 
 export const LABELS: Record<string, string> = {
@@ -79,8 +59,6 @@ export const LABELS: Record<string, string> = {
     books: "Lộ trình Kaiwa",
     learn: "Bài học",
     history: "Lịch sử luyện tập",
-    "custom-question": "Đề chọn tự phát",
-    "community-library": "Thư viện cộng đồng",
     analytics: "Báo cáo tiến độ",
     leaderboard: "Bảng xếp hạng",
     profile: "Hồ sơ",
