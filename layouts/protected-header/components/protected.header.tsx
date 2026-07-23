@@ -11,6 +11,7 @@ import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { ChevronRight, Flame, MenuIcon } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
+import DailyRewardCalendar from "./daily.reward.calendar";
 import HeaderDecoration from "./header-decoration";
 import { ReportModal } from "@/modules/protected/report/features/report-modal";
 
@@ -90,6 +91,7 @@ const ProtectedHeader = () => {
 
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
+                <DailyRewardCalendar />
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"
