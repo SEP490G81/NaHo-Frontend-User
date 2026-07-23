@@ -1,18 +1,21 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import { BarChart3, Mic } from "lucide-react";
+import React, { useState } from "react";
+import { BarChart3, Mic, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Button, Pagination } from "@mui/material";
 import { Link } from "@/i18n/navigation";
+import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryList } from "@/services/client/speaking.service";
+import type { SpeakingHistoryListItem } from "@/types/responses/speaking.response";
 import HistoryHeader from "./history.header";
 import HistoryEmptyState from "./history.empty.state";
 import ScoreBadge from "./score.badge";
+import AudioPlayButton from "./audio.play.button";
 
-const ITEMS_PER_PAGE = 8;
+const PAGE_SIZE = 10;
 
-function formatDate(iso: string) {
+function formatDate(iso: string): string {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return "—";
     return d.toLocaleString("vi-VN", {
@@ -27,33 +30,41 @@ function formatDate(iso: string) {
 export function History() {
     const t = useTranslations("history");
     const [page, setPage] = useState(1);
+    const [term, setTerm] = useState("");
+    const [search, setSearch] = useState("");
 
-    // BE chưa có endpoint list → hiện rỗng; khi có sẽ tự đổ dữ liệu vào.
-    const { data: items = [], isLoading } = useQuery({
-        queryKey: ["speaking-history-list"],
-        queryFn: getSpeakingHistoryList,
+    const { data, isLoading } = useQuery({
+        queryKey: ["speaking-history-list", page, search],
+        queryFn: () =>
+            getSpeakingHistoryList({
+                page: page - 1,
+                size: PAGE_SIZE,
+                search: search || null,
+            }),
+        placeholderData: keepPreviousData,
     });
 
-    const sorted = useMemo(
-        () =>
-            [...items].sort(
-                (a, b) =>
-                    new Date(b.practicedAt).getTime() -
-                    new Date(a.practicedAt).getTime(),
-            ),
-        [items],
-    );
-
-    const totalCount = items.length;
-    const avgScore = totalCount
-        ? items.reduce((s, e) => s + e.score, 0) / totalCount
+    const items = data?.items ?? [];
+    const totalCount = data?.totalElements ?? 0;
+    const totalPages = data?.totalPages ?? 0;
+    const avgScore = items.length
+        ? items.reduce((s, e) => s + e.score, 0) / items.length
         : 0;
 
-    const totalPages = Math.ceil(sorted.length / ITEMS_PER_PAGE);
-    const paginated = sorted.slice(
-        (page - 1) * ITEMS_PER_PAGE,
-        page * ITEMS_PER_PAGE,
-    );
+    const applySearch = () => {
+        setSearch(term.trim());
+        setPage(1);
+    };
+
+    // Mở lại sandbox kèm ngữ cảnh để nạp đúng đề bài + từ vựng/ngữ pháp gốc.
+    const practiceHref = (e: SpeakingHistoryListItem) => {
+        const ctx = new URLSearchParams();
+        if (e.learningPathNodeId) ctx.set("node", String(e.learningPathNodeId));
+        if (e.bookId) ctx.set("book", String(e.bookId));
+        if (e.topicId) ctx.set("topic", String(e.topicId));
+        const qs = ctx.toString();
+        return `/sandbox/${e.speakingQuestionId}${qs ? `?${qs}` : ""}` as AllRoute;
+    };
 
     if (isLoading) {
         return (
@@ -68,16 +79,47 @@ export function History() {
             <div className="mx-auto max-w-6xl space-y-6">
                 <HistoryHeader totalCount={totalCount} avgScore={avgScore} t={t} />
 
-                {sorted.length === 0 ? (
+                <div className="border-bdc-primary bg-bgc-app flex items-center gap-2 rounded-2xl border px-4 py-3">
+                    <Search className="text-text-muted h-4 w-4 shrink-0" />
+                    <input
+                        value={term}
+                        onChange={(e) => setTerm(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && applySearch()}
+                        placeholder={t("filterPlaceholder")}
+                        className="text-text-contrast placeholder:text-text-muted min-w-0 flex-1 bg-transparent text-sm outline-none"
+                    />
+                    <Button
+                        size="small"
+                        onClick={applySearch}
+                        sx={{
+                            textTransform: "none",
+                            color: "var(--color-bgc-highlight)",
+                            fontWeight: 600,
+                        }}
+                    >
+                        {t("searchBtn")}
+                    </Button>
+                </div>
+
+                {items.length === 0 ? (
                     <HistoryEmptyState t={t} />
                 ) : (
                     <>
-                        <div className="border-bdc-primary bg-bgc-app overflow-hidden rounded-2xl border">
-                            <table className="w-full text-sm">
+                        <div className="border-bdc-primary bg-bgc-app overflow-x-auto rounded-2xl border">
+                            <table className="w-full min-w-[720px] text-sm">
                                 <thead className="bg-bgc-page text-text-muted border-bdc-primary border-b text-xs tracking-wide uppercase">
                                     <tr>
                                         <th className="px-4 py-3 text-left font-semibold">
                                             {t("tableDate")}
+                                        </th>
+                                        <th className="px-4 py-3 text-left font-semibold">
+                                            {t("tableTopic")}
+                                        </th>
+                                        <th className="px-4 py-3 text-left font-semibold">
+                                            {t("tableQuestion")}
+                                        </th>
+                                        <th className="px-4 py-3 text-left font-semibold">
+                                            {t("tableAudio")}
                                         </th>
                                         <th className="px-4 py-3 text-left font-semibold">
                                             {t("tableScore")}
@@ -88,13 +130,28 @@ export function History() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {paginated.map((e) => (
+                                    {items.map((e) => (
                                         <tr
                                             key={e.historyId}
                                             className="border-bdc-primary hover:bg-hbgc-app border-b last:border-0"
                                         >
-                                            <td className="text-text-contrast px-4 py-3 whitespace-nowrap tabular-nums">
+                                            <td className="text-text-muted px-4 py-3 whitespace-nowrap tabular-nums">
                                                 {formatDate(e.practicedAt)}
+                                            </td>
+                                            <td className="text-text-contrast px-4 py-3">
+                                                {e.topicName || "—"}
+                                            </td>
+                                            <td className="text-text-contrast max-w-80 truncate px-4 py-3">
+                                                {e.speakingQuestionTitle || "—"}
+                                            </td>
+                                            <td className="px-4 py-3">
+                                                {e.audioUrl ? (
+                                                    <AudioPlayButton src={e.audioUrl} />
+                                                ) : (
+                                                    <span className="text-text-muted">
+                                                        —
+                                                    </span>
+                                                )}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <ScoreBadge score={e.score} />
@@ -118,10 +175,10 @@ export function History() {
                                                     >
                                                         {t("viewReport")}
                                                     </Button>
-                                                    {e.questionId != null && (
+                                                    {e.speakingQuestionId != null && (
                                                         <Button
                                                             component={Link}
-                                                            href={`/sandbox/${e.questionId}`}
+                                                            href={practiceHref(e)}
                                                             size="small"
                                                             variant="contained"
                                                             startIcon={
@@ -147,7 +204,7 @@ export function History() {
                         </div>
 
                         {totalPages > 1 && (
-                            <div className="mt-6 flex justify-center">
+                            <div className="flex justify-center">
                                 <Pagination
                                     count={totalPages}
                                     page={page}

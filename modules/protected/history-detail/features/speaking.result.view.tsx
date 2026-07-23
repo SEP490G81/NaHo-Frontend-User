@@ -1,6 +1,13 @@
 "use client";
 import React, { useMemo } from "react";
-import { CalendarClock, Clock, ListChecks, Mic, Sparkles } from "lucide-react";
+import {
+    CalendarClock,
+    ChevronRight,
+    Clock,
+    ListChecks,
+    Mic,
+    Sparkles,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
@@ -34,6 +41,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         [data],
     );
 
+
     if (isLoading) {
         return (
             <div className="flex h-[50vh] items-center justify-center">
@@ -66,15 +74,17 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         );
     }
 
-    // Mở lại đúng sandbox câu này (kèm ngữ cảnh node/book/topic nếu có).
+    // Mở lại đúng sandbox câu này: ưu tiên ngữ cảnh từ BE, thiếu thì lấy từ URL.
+    const node = data.learningPathNodeId ?? searchParams.get("node");
+    const book = data.bookId ?? searchParams.get("book");
+    const topic = data.topicId ?? searchParams.get("topic");
     const ctx = new URLSearchParams();
-    const node = searchParams.get("node");
-    const book = searchParams.get("book");
-    const topic = searchParams.get("topic");
-    if (node) ctx.set("node", node);
-    if (book) ctx.set("book", book);
-    if (topic) ctx.set("topic", topic);
+    if (node) ctx.set("node", String(node));
+    if (book) ctx.set("book", String(book));
+    if (topic) ctx.set("topic", String(topic));
     const qs = ctx.toString();
+    const topicHref =
+        book && topic ? `/books/${book}/topics/${topic}` : null;
     const retryHref =
         data.questionId != null
             ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
@@ -98,6 +108,31 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                             </p>
                         </div>
                     </div>
+                    {data.speakingQuestionTitle && (
+                        <div className="border-bdc-primary mt-3 border-t pt-3">
+                            <p className="text-text-muted text-[11px] font-bold tracking-[0.14em] uppercase">
+                                {t("questionTitle")}
+                            </p>
+                            <p className="text-text-contrast mt-0.5 font-semibold">
+                                {data.speakingQuestionTitle}
+                            </p>
+                            {data.topicName &&
+                                (topicHref ? (
+                                    <Link
+                                        href={topicHref as AllRoute}
+                                        className="text-text-highlight hover:text-bgc-highlight inline-flex items-center gap-1 text-xs font-medium"
+                                    >
+                                        {data.topicName}
+                                        <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                ) : (
+                                    <p className="text-text-muted text-xs">
+                                        {data.topicName}
+                                    </p>
+                                ))}
+                        </div>
+                    )}
+
                     <div className="border-bdc-primary text-text-muted mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t pt-3 text-sm">
                         <span className="inline-flex items-center gap-1.5">
                             <CalendarClock className="h-4 w-4" />
@@ -109,6 +144,20 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                         </span>
                     </div>
                 </div>
+
+                {data.audioUrl && (
+                    <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
+                        <p className="text-text-contrast mb-2 text-sm font-semibold">
+                            {t("yourSpeech")}
+                        </p>
+                        <audio
+                            controls
+                            src={data.audioUrl}
+                            className="w-full"
+                            preload="none"
+                        />
+                    </div>
+                )}
 
                 <HistoryDetailOverview report={report} t={t} />
 

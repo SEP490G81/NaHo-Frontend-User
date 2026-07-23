@@ -3,6 +3,7 @@ import {
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
     SpeakingHistoryListItem,
+    SpringPage,
 } from "@/types/responses/speaking.response";
 
 /**
@@ -54,13 +55,44 @@ export async function getSpeakingHistoryDetail(
     return unwrap<SpeakingHistoryDetailResponse>(response);
 }
 
-/**
- * Danh sách lịch sử luyện nói của người dùng.
- * TODO: BE chưa có endpoint list → tạm trả rỗng. Khi BE bổ sung
- * (vd GET /api/v1/histories phân trang) thì nối vào đây qua route handler /api/histories.
- */
-export async function getSpeakingHistoryList(): Promise<
-    SpeakingHistoryListItem[]
-> {
-    return [];
+export interface SpeakingHistoryListQuery {
+    page?: number;
+    size?: number;
+    topicId?: number | null;
+    speakingQuestionId?: number | null;
+    search?: string | null;
+}
+
+export interface SpeakingHistoryListPage {
+    items: SpeakingHistoryListItem[];
+    totalPages: number;
+    totalElements: number;
+}
+
+/** Danh sách lịch sử luyện nói (GET /history) — BE trả Spring Page trong `data`. */
+export async function getSpeakingHistoryList(
+    query: SpeakingHistoryListQuery = {},
+): Promise<SpeakingHistoryListPage> {
+    const params = new URLSearchParams();
+    params.set("page", String(query.page ?? 0));
+    params.set("size", String(query.size ?? 10));
+    if (query.topicId != null) params.set("topicId", String(query.topicId));
+    if (query.speakingQuestionId != null)
+        params.set("speakingQuestionId", String(query.speakingQuestionId));
+    if (query.search) params.set("search", query.search);
+
+    const response = await fetch(`/api/history?${params.toString()}`);
+    const result = await response.json();
+    if (!response.ok) {
+        throw new Error(
+            (result as ProblemDetail).detail || "Không tải được lịch sử luyện tập",
+        );
+    }
+    const page = (result as ApiResponse<SpringPage<SpeakingHistoryListItem>>)
+        .data;
+    return {
+        items: page?.content ?? [],
+        totalPages: page?.totalPages ?? 0,
+        totalElements: page?.totalElements ?? 0,
+    };
 }

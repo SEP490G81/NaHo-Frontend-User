@@ -1,6 +1,7 @@
 "use client";
 import React, { useMemo } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { splitMarkup, mapBook } from "@/data/marugoto/mapper";
 import type { QuestionHints } from "@/data/mockHints";
@@ -141,6 +142,7 @@ function SandboxContent() {
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
+            toast.error(t("analyzeFailed"));
         },
     });
 

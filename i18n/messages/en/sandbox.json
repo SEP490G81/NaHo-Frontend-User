@@ -58,6 +58,7 @@
         "recordingHintIdle": "Nhấn vào micro để bắt đầu",
         "recordCardTitle": "Record your answer",
         "recordCardHint": "Tap the mic, speak your answer, then tap again to stop.",
+        "analyzeFailed": "Couldn't score your speech. Please speak clearly and try again.",
         "notesSubtitle": "Viết cấu trúc hoặc từ vựng cần nhớ trước khi bấm ghi âm nói.",
         "micLevel": "Mức âm thanh",
         "notFoundTitle": "Không tìm thấy câu hỏi này.",
