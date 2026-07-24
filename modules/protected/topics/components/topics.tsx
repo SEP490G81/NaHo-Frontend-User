@@ -1,23 +1,17 @@
 "use client";
 import React from "react";
-import { useTranslations } from "next-intl";
-import TopicsList from "../features/topics.list";
-import TopicsHeader from "./topics.header";
+import RoadmapHeader from "../features/roadmap.header";
+import BookLibrary from "../features/book.library";
 
 export function Topics() {
-    const t = useTranslations("topics");
-
     return (
         <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-7xl space-y-6">
-                <TopicsHeader t={t} />
-
-                {/* Topics Container */}
-                <TopicsList />
+            <div className="mx-auto max-w-6xl space-y-8">
+                <RoadmapHeader />
+                <BookLibrary />
             </div>
         </div>
     );
 }
 
 export default Topics;
-

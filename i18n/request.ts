@@ -12,11 +12,12 @@ const MESSAGE_FILES = [
     "question",
     "topic",
     "sandbox",
-    "community-library",
     "settings",
     "live-chatroom",
     "dialogue-setup",
+    "marugoto",
     "leaderboard",
+    "point-history",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

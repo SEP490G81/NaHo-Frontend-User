@@ -7,6 +7,7 @@ interface PlaybackPlayerProps {
     playing: boolean;
     onToggle: () => void;
     audioUrl: string | null;
+    accent?: string;
 }
 
 function formatTime(sec: number) {
@@ -24,6 +25,7 @@ export function PlaybackPlayer({
     playing,
     onToggle,
     audioUrl,
+    accent = "var(--color-bgc-highlight)",
 }: PlaybackPlayerProps) {
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(durationSec);
@@ -81,11 +83,6 @@ export function PlaybackPlayer({
         }
     }, [playing, audioUrl]);
 
-    // Reset progress when audioUrl changes
-    useEffect(() => {
-        setProgress(0);
-    }, [audioUrl]);
-
     const bars = 40;
     const currentDuration = duration || durationSec || 1;
     const playedBars = Math.floor((progress / currentDuration) * bars);
@@ -101,11 +98,13 @@ export function PlaybackPlayer({
                                 key={i}
                                 className={cn(
                                     "w-full rounded-full transition-colors",
-                                    i < playedBars
-                                        ? "bg-bgc-highlight"
-                                        : "bg-bdc-muted/60",
+                                    i < playedBars ? "" : "bg-bdc-muted/60",
                                 )}
-                                style={{ height: `${seed * 100}%` }}
+                                style={{
+                                    height: `${seed * 100}%`,
+                                    background:
+                                        i < playedBars ? accent : undefined,
+                                }}
                             />
                         );
                     })}

@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
     output: "standalone",
     typescript: {
         ignoreBuildErrors: true,
-    }
+    },
+    images: {
+        remotePatterns: [
+            { protocol: "https", hostname: "**.cloudfront.net" },
+        ],
+    },
 };
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");

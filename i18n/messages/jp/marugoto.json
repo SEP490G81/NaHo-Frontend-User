@@ -1,0 +1,113 @@
+{
+    "marugoto": {
+        "roadmap": {
+            "badge": "インタラクティブ学習ロードマップ",
+            "title": "会話学習ロードマップ",
+            "subtitle": "まるごとシリーズの各レッスンを攻略し、レベルアップして会話の旅を進めましょう。",
+            "streak": "連続学習",
+            "currentLevel": "現在のレベル",
+            "totalPoints": "累計ポイント",
+            "streakValue": "{days}日連続！🔥",
+            "levelValue": "レベル：{level}",
+            "pointsValue": "{points} L-Point 🌟"
+        },
+        "books": {
+            "chooseBook": "教材を選ぶ",
+            "library": "まるごとライブラリー",
+            "currentBook": "表示中の教材",
+            "locked": "この教材はまだロックされています",
+            "lockedDesc": "レベルアップして次の教材を解放しましょう。",
+            "jumpTest": "レベルアップテスト",
+            "empty": "この教材のコンテンツは近日公開予定です。",
+            "lessonCount": "{count} 課",
+            "topicCount": "{count} トピック",
+            "overallProgress": "コースの進捗",
+            "lessonsDone": "{done}/{total} 課 完了",
+            "comingSoon": "近日公開",
+            "current": "学習中",
+            "backToLibrary": "教材ライブラリーに戻る"
+        },
+        "bands": {
+            "A1": "入門",
+            "A2": "初級",
+            "A2/B1": "初中級",
+            "B1": "中級",
+            "B2": "中上級"
+        },
+        "search": "教材内のトピックを検索...",
+        "topic": {
+            "label": "トピック {index}",
+            "lessonCount": "{count} 課"
+        },
+        "lesson": {
+            "label": "第{number}課",
+            "candoCount": "Can-do {count}件",
+            "enter": "学習を始める",
+            "markerDone": "完了",
+            "markerActive": "学習中",
+            "markerLocked": "ロック中",
+            "review": "復習する",
+            "needUnlock": "ロック中"
+        },
+        "status": {
+            "completed": "完了",
+            "active": "学習中",
+            "locked": "ロック中"
+        },
+        "lockedToast": "このコンテンツはロックされています",
+        "lockedToastDesc": "前のステップを完了して続けてください。",
+        "path": {
+            "backToTopic": "トピックに戻る",
+            "showFurigana": "ふりがなを表示",
+            "candoLabel": "Can-do {index}",
+            "milestoneProgress": "{done}/{total} マイルストーン",
+            "vocabShort": "語彙",
+            "candoSummary": "Can-do {total}件 • 達成 {done}/{total}",
+            "startBubble": "スタート"
+        },
+        "node": {
+            "vocabTitle": "語彙",
+            "speakingTitle": "スピーキング",
+            "vocabCaption": "Can-do の語彙を学ぶ",
+            "speakingCaption": "問題 {index}",
+            "chestTitle": "ごほうび箱",
+            "chestHint": "開けてごほうびをゲット",
+            "chestReward": "+{point} L-Point",
+            "chestClaimBtn": "ごほうびを受け取る",
+            "chestOpened": "開封済み",
+            "chestClaimed": "+{reward} L-Point を獲得！🎁",
+            "chestAlready": "この箱はすでに開けています。",
+            "chestFailed": "宝箱を開けられませんでした。もう一度お試しください。"
+        },
+        "preview": {
+            "title": "問題の詳細",
+            "bestScore": "最高スコア：{score}/10",
+            "context": "コンテキストのヒント",
+            "grammar": "重要文型",
+            "modelAnswer": "モデルアンサー",
+            "viTranslation": "ベトナム語訳",
+            "practiceNow": "この問題を練習する"
+        },
+        "vocab": {
+            "dialogTitle": "語彙 · Can-do {index}",
+            "titleCando": "語彙 · Can-do {index}",
+            "titleQuestion": "準備 · 問題 {index}",
+            "dialogDesc": "スピーキングを始める前に、下の目標語彙をしっかり学びましょう。",
+            "empty": "この Can-do にはまだ語彙がありません。",
+            "emptyGrammar": "このパートの文法パターンはまだありません。",
+            "grammar": "代表的な文型",
+            "count": "{count} 語",
+            "close": "閉じる",
+            "tabCards": "単語カード",
+            "tabGrammar": "文法・例文",
+            "flip": "タップして裏返す",
+            "speak": "発音",
+            "reading": "読み方",
+            "meaning": "意味",
+            "prev": "前へ",
+            "next": "次へ",
+            "learned": "覚えた",
+            "finish": "完了"
+        }
+    }
+}

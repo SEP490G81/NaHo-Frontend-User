@@ -40,7 +40,7 @@ export function HistoryHeader({ totalCount, avgScore, t }: HistoryHeaderProps) {
             </div>
             <Button
                 component={Link}
-                href="/topics"
+                href="/books"
                 variant="contained"
                 startIcon={<Sparkles className="h-4 w-4" />}
                 sx={{

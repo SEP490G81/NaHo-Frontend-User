@@ -1,28 +1,29 @@
 "use client";
-import React, { useState } from "react";
-import { useParams } from "next/navigation";
+import React, { useMemo } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { mockTopics } from "@/data/mockTopics";
-import { getQuestionHints } from "@/data/mockHints";
-import { useMutation } from "@tanstack/react-query";
-import { submitPractice } from "@/modules/protected/history/services/history.service";
+import { splitMarkup, mapBook } from "@/data/marugoto/mapper";
+import type { QuestionHints } from "@/data/mockHints";
+import { useMarugotoStore } from "@/store/marugotoStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    getBookDetail,
+    getLearningPathNodeDetail,
+} from "@/services/client/book.service";
+import { submitSpeakingAnalysis } from "@/services/client/speaking.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
 import { getSandboxRules } from "../constants/sandbox.constant";
 import SandboxStepper from "./sandbox.stepper";
 import SandboxHeader from "./sandbox.header";
+import SandboxQuestionBanner from "./sandbox.question.banner";
 import SandboxStep1 from "./sandbox.step1";
 import SandboxStep2 from "./sandbox.step2";
 import SandboxStep3 from "./sandbox.step3";
 import SandboxAnalyzingOverlay from "./sandbox.analyzing.overlay";
 import { useRouter } from "@/i18n/navigation";
 
-function loadQuestion(questionId: string) {
-    for (const topic of mockTopics) {
-        const q = topic.questions.find((x) => x.id === questionId);
-        if (q) return { topic, question: q };
-    }
-    return null;
-}
+const EMPTY_HINTS: QuestionHints = { vocab: [], structures: [] };
 
 export function Sandbox() {
     return (
@@ -35,10 +36,65 @@ export function Sandbox() {
 function SandboxContent() {
     const t = useTranslations("sandbox");
     const params = useParams();
+    const searchParams = useSearchParams();
     const { push } = useRouter();
+    const queryClient = useQueryClient();
     const questionId = params?.questionId as string;
+    const nodeId = searchParams.get("node");
+    const bookParam = searchParams.get("book");
+    const topicParam = searchParams.get("topic");
 
-    const data = loadQuestion(questionId);
+    // Đề bài + từ vựng + ngữ pháp lấy THẬT từ learning-path-node detail.
+    const nodeQ = useQuery({
+        queryKey: ["sandbox-node", nodeId],
+        queryFn: () => getLearningPathNodeDetail(nodeId!),
+        enabled: !!nodeId,
+    });
+    const sq = nodeQ.data?.speakingQuestion;
+
+    // Màu chủ đạo = màu quyển sách chứa câu hỏi.
+    const bookQ = useQuery({
+        queryKey: ["book", bookParam],
+        queryFn: () => getBookDetail(bookParam!),
+        enabled: !!bookParam,
+    });
+    const accent = bookQ.data
+        ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
+        : "var(--color-bgc-highlight)";
+
+    const question = useMemo(() => {
+        if (sq) {
+            const { text, reading } = splitMarkup(sq.titleMarkup || sq.title);
+            return {
+                id: questionId,
+                jp: text,
+                furigana: reading,
+                vi: sq.description ?? "",
+            };
+        }
+        // Chưa nạp được node → placeholder tối thiểu để vẫn ghi âm/gửi chấm được.
+        return {
+            id: questionId,
+            jp: "録音して発音を分析しましょう",
+            furigana: "ろくおんしてはつおんをぶんせきしましょう",
+            vi: "",
+        };
+    }, [sq, questionId]);
+
+    const hints = useMemo<QuestionHints>(() => {
+        if (!sq) return EMPTY_HINTS;
+        return {
+            vocab: sq.vocabularies.map((v) => ({
+                jp: v.japanese,
+                furigana: v.reading ?? v.japanese,
+                vi: v.vietnameseMeaningText ?? "",
+            })),
+            structures: sq.grammars.map((g) => ({
+                jp: g.japanese,
+                vi: g.vietnameseMeaningText ?? "",
+            })),
+        };
+    }, [sq]);
 
     const {
         step,
@@ -58,52 +114,64 @@ function SandboxContent() {
         audioUrl,
     } = useSandbox();
 
-    const [showFurigana, setShowFurigana] = useState(true);
+    const showFurigana = true;
 
     const mutation = useMutation({
-        mutationFn: submitPractice,
+        mutationFn: (vars: { audioBlob: Blob; durationSec: number }) =>
+            submitSpeakingAnalysis({
+                file: vars.audioBlob,
+                speakingQuestionId: Number(questionId),
+                durationSec: vars.durationSec,
+            }),
         onSuccess: (result) => {
             setAnalyzing(false);
-            push(`/history/${result.historyId}`);
+            // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
+            useMarugotoStore.getState().setQuestionScore(questionId, result.score);
+            // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
+            queryClient.invalidateQueries({
+                queryKey: ["user-learning-progress"],
+            });
+            // Kèm ngữ cảnh để màn kết quả mở lại đúng sandbox câu này.
+            const ctx = new URLSearchParams();
+            if (nodeId) ctx.set("node", nodeId);
+            if (bookParam) ctx.set("book", bookParam);
+            if (topicParam) ctx.set("topic", topicParam);
+            const qs = ctx.toString();
+            push(`/history/${result.historyId}${qs ? `?${qs}` : ""}`);
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
+            toast.error(t("analyzeFailed"));
         },
     });
 
-    if (!data) {
+    if (nodeId && nodeQ.isLoading) {
         return (
-            <div className="flex h-[50vh] flex-col items-center justify-center gap-4 text-center">
-                <h2 className="text-text-contrast text-2xl font-bold">
-                    {t("notFoundTitle")}
-                </h2>
-                <p className="text-text-muted">{t("notFoundSubtitle")}</p>
+            <div className="flex h-[50vh] items-center justify-center">
+                <p className="text-text-muted">Đang tải câu hỏi...</p>
             </div>
         );
     }
 
-    const { topic, question } = data;
-    const hints = getQuestionHints(topic.id, question.id);
     const rules = getSandboxRules(t);
+    // Quay lại đúng lộ trình chủ đề chứa câu hỏi (nếu vào từ lộ trình Marugoto).
+    const backHref =
+        bookParam && topicParam
+            ? `/books/${bookParam}/topics/${topicParam}`
+            : bookParam
+              ? `/books/${bookParam}`
+              : "/history";
 
     const handleAnalyze = async () => {
         if (!audioUrl) return;
         setAnalyzing(true);
         setPlaying(false);
         const durationSec = Math.max(elapsed, 1);
-
         try {
-            // Lấy file Blob từ url ghi âm cục bộ
             const res = await fetch(audioUrl);
             const audioBlob = await res.blob();
-
-            mutation.mutate({
-                topicId: topic.id,
-                questionId: question.id,
-                audioBlob,
-                durationSec,
-            });
+            mutation.mutate({ audioBlob, durationSec });
         } catch (err) {
             console.error("Lỗi khi tải file ghi âm:", err);
             setAnalyzing(false);
@@ -113,15 +181,18 @@ function SandboxContent() {
     return (
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-5xl space-y-5">
-                <SandboxHeader
-                    topicId={topic.id}
+                <SandboxHeader backHref={backHref} accent={accent} />
+
+                <SandboxQuestionBanner
+                    jp={question.jp}
+                    furigana={question.furigana}
+                    vi={question.vi}
+                    accent={accent}
                     showFurigana={showFurigana}
-                    setShowFurigana={setShowFurigana}
                 />
 
-                <SandboxStepper step={step} />
+                <SandboxStepper step={step} accent={accent} />
 
-                {/* Step 1 */}
                 {step === 1 && (
                     <SandboxStep1
                         rules={rules}
@@ -130,39 +201,34 @@ function SandboxContent() {
                         startMicTest={startMicTest}
                         resetMicTest={resetMicTest}
                         setStep={setStep}
-                        furigana={showFurigana}
+                        accent={accent}
                     />
                 )}
 
-                {/* Step 2 */}
                 {step === 2 && (
                     <SandboxStep2
-                        topicTitle={topic.title}
-                        question={question}
-                        showFurigana={showFurigana}
                         recording={recording}
                         elapsed={elapsed}
                         toggleRecord={toggleRecord}
                         hints={hints}
+                        showFurigana={showFurigana}
+                        accent={accent}
                     />
                 )}
 
-                {/* Step 3 */}
                 {step === 3 && (
                     <SandboxStep3
-                        topicTitle={topic.title}
-                        question={question}
-                        showFurigana={showFurigana}
                         elapsed={elapsed}
                         playing={playing}
                         setPlaying={setPlaying}
                         retrySpeaking={retrySpeaking}
                         onNext={handleAnalyze}
+                        accent={accent}
                     />
                 )}
             </div>
 
-            <SandboxAnalyzingOverlay analyzing={analyzing} />
+            <SandboxAnalyzingOverlay analyzing={analyzing} accent={accent} />
         </div>
     );
 }
