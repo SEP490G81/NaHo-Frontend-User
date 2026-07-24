@@ -13,6 +13,8 @@ export interface PathNode {
     lessonId: string;
     index?: number;
     speakingQuestionId?: number | null;
+    /** Thứ tự toàn cục — mốc so sánh với tiến độ BE để khóa/mở. */
+    globalOrderIndex: number;
     status: NodeStatus;
     progress: number;
     bestScore?: number;
@@ -59,6 +61,7 @@ function buildRawNodes(cando: CanDo, lessonId: string): RawNode[] {
             lessonId,
             index: n.kind === "question" ? qIdx : undefined,
             speakingQuestionId: n.speakingQuestionId,
+            globalOrderIndex: n.globalOrderIndex,
         };
     });
 }
@@ -102,27 +105,41 @@ export function buildLessonBlocks(
 }
 
 /**
- * Khóa tuần tự trên danh sách block đã xếp đúng thứ tự: node hoàn thành = completed,
- * node đầu tiên chưa xong = active ("đang học"), tất cả node sau = locked.
+ * Khóa tuần tự theo tiến độ THẬT của người dùng.
+ *
+ * `beFrontier` = global order index của node xa nhất người dùng được phép học
+ * (`farthestAvailableNode` của BE). Người dùng mới đăng ký luôn đứng ở node đầu
+ * giáo trình nên mốc = 1 → chỉ node 1 mở, node 2 trở đi khóa.
+ *
+ * Mốc thực tế lấy xa hơn giữa BE và node kế tiếp node FE đã biết là xong, để lộ trình
+ * không kẹt lại khi BE chưa kịp đẩy biên giới.
+ *
+ * GOI < mốc → completed · GOI = mốc → active · GOI > mốc → locked.
  */
-function applyLock(blocks: CanDoBlock[]): {
+function applyLock(
+    blocks: CanDoBlock[],
+    beFrontier: number | null,
+): {
     blocks: CanDoBlock[];
     currentNodeId?: string;
 } {
     const flat = blocks.flatMap((b) => b.nodes);
-    const frontier = flat.findIndex((n) => n.status !== "completed");
-    const currentNodeId = frontier >= 0 ? flat[frontier].id : undefined;
-    const orderById = new Map(flat.map((n, i) => [n.id, i] as const));
+    const localFrontier = flat
+        .filter((n) => n.status === "completed")
+        .reduce((max, n) => Math.max(max, n.globalOrderIndex + 1), -Infinity);
+    const frontier = Math.max(beFrontier ?? -Infinity, localFrontier);
+
+    const isDone = (n: PathNode) =>
+        n.status === "completed" || n.globalOrderIndex < frontier;
+    const currentNodeId = flat.find((n) => !isDone(n))?.id;
 
     const locked = blocks.map((b) => {
         const nodes = b.nodes.map((n) => {
-            const i = orderById.get(n.id) ?? 0;
-            const status: NodeStatus =
-                frontier === -1 || i < frontier
-                    ? "completed"
-                    : i === frontier
-                      ? "active"
-                      : "locked";
+            const status: NodeStatus = isDone(n)
+                ? "completed"
+                : n.id === currentNodeId
+                  ? "active"
+                  : "locked";
             return { ...n, status };
         });
         const done = nodes.filter((n) => n.status === "completed").length;
@@ -150,7 +167,10 @@ function overallOf(blocks: CanDoBlock[]): number {
 }
 
 /** Node lộ trình cho MỘT bài học (trang bài học lẻ). */
-export function useLessonNodes(lesson: Lesson): LessonNodes {
+export function useLessonNodes(
+    lesson: Lesson,
+    beFrontier: number | null = null,
+): LessonNodes {
     const scores = useMarugotoStore((s) => s.questionScores);
     const completedNodes = useMarugotoStore((s) => s.completedNodes);
 
@@ -161,13 +181,16 @@ export function useLessonNodes(lesson: Lesson): LessonNodes {
             scores,
             completedNodes,
         );
-        const { blocks, currentNodeId } = applyLock(raw);
+        const { blocks, currentNodeId } = applyLock(raw, beFrontier);
         return { blocks, overallPercent: overallOf(blocks), currentNodeId };
-    }, [lesson, scores, completedNodes]);
+    }, [lesson, scores, completedNodes, beFrontier]);
 }
 
 /** Node lộ trình cho CẢ chủ đề (mọi bài học · Can-do · câu hỏi), khóa tuần tự. */
-export function useTopicNodes(lessons: Lesson[]): TopicNodes {
+export function useTopicNodes(
+    lessons: Lesson[],
+    beFrontier: number | null = null,
+): TopicNodes {
     const scores = useMarugotoStore((s) => s.questionScores);
     const completedNodes = useMarugotoStore((s) => s.completedNodes);
 
@@ -184,7 +207,10 @@ export function useTopicNodes(lessons: Lesson[]): TopicNodes {
 
         // Khóa tuần tự trên toàn bộ node của chủ đề (theo đúng thứ tự bài → can-do).
         const allBlocks = rawGroups.flatMap((g) => g.blocks);
-        const { blocks: lockedFlat, currentNodeId } = applyLock(allBlocks);
+        const { blocks: lockedFlat, currentNodeId } = applyLock(
+            allBlocks,
+            beFrontier,
+        );
 
         const offsets = rawGroups.map((_, i) =>
             rawGroups.slice(0, i).reduce((s, g) => s + g.blocks.length, 0),
@@ -204,5 +230,5 @@ export function useTopicNodes(lessons: Lesson[]): TopicNodes {
             overallPercent: overallOf(lockedFlat),
             currentNodeId,
         };
-    }, [lessons, scores, completedNodes]);
+    }, [lessons, scores, completedNodes, beFrontier]);
 }

@@ -14,6 +14,7 @@ import {
 } from "@/data/marugoto/mapper";
 import type { Lesson, MarugotoBook } from "@/data/marugoto/types";
 import { useMarugotoStore } from "@/store/marugotoStore";
+import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useLessonNodes } from "../hooks/use.cando.nodes";
 import LessonPathHeader from "../components/lesson.path.header";
@@ -42,7 +43,11 @@ function LessonPathContent({
 }) {
     const showFurigana = useMarugotoStore((s) => s.showFurigana);
     const setShowFurigana = useMarugotoStore((s) => s.setShowFurigana);
-    const { blocks, overallPercent, currentNodeId } = useLessonNodes(lesson);
+    const { frontier } = useLearningFrontier();
+    const { blocks, overallPercent, currentNodeId } = useLessonNodes(
+        lesson,
+        frontier,
+    );
     const done = blocks.filter((b) => b.status === "completed").length;
     const accent = book.coverColor ?? "var(--color-bgc-highlight)";
 

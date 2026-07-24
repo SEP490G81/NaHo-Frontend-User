@@ -15,6 +15,7 @@ import {
 } from "@/data/marugoto/mapper";
 import type { BookTopic, Lesson } from "@/data/marugoto/types";
 import { useMarugotoStore } from "@/store/marugotoStore";
+import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useTopicNodes } from "../hooks/use.cando.nodes";
 import TopicPathHeader from "../components/topic.path.header";
@@ -101,9 +102,14 @@ export function TopicPath() {
             .filter((l): l is Lesson => l !== null);
     }, [lessons, lessonQs, objRefs, objQs]);
 
-    const { groups, overallPercent, currentNodeId } = useTopicNodes(lessonModels);
+    const { frontier, isLoading: frontierLoading } = useLearningFrontier();
+    const { groups, overallPercent, currentNodeId } = useTopicNodes(
+        lessonModels,
+        frontier,
+    );
 
     const loading =
+        frontierLoading ||
         bookQ.isLoading ||
         topicQ.isLoading ||
         (lessons.length > 0 && lessonQs.some((q) => q.isLoading)) ||
