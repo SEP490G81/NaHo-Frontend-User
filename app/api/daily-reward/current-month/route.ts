@@ -1,10 +1,13 @@
 import { cookies } from "next/headers";
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
+import {
+    ACCESS_TOKEN_NAME,
+    REFRESH_TOKEN_NAME,
+} from "@/constants/app.constants";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import { DailyRewardResponse } from "@/types/responses/daily.reward.response";
 
-export async function POST() {
+export async function GET() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
 
@@ -15,7 +18,6 @@ export async function POST() {
     const backendResponse = await fetch(
         `${process.env.API_URL}/daily-rewards/current-month`,
         {
-            method: "POST",
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },

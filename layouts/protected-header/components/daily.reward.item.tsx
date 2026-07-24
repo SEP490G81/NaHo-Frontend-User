@@ -1,51 +1,21 @@
 "use client";
 
 import React from "react";
-import { Tooltip, Zoom } from "@mui/material";
-import { Lock, Sparkles } from "lucide-react";
-import { DailyRewardResponse, ChestType } from "@/types/responses/daily.reward.response";
-import ChestNone from "@/components/ui/icons/chests/chest.none";
-import ChestBronze from "@/components/ui/icons/chests/chest.bronze";
-import ChestSilver from "@/components/ui/icons/chests/chest.silver";
-import ChestGold from "@/components/ui/icons/chests/chest.gold";
+import { Divider, Zoom } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { DailyRewardResponse } from "@/types/responses/daily.reward.response";
+import { getChestBadgeColor, renderChestIcon } from "@/layouts/protected-header/utils/daily.reward.util";
+import { useTranslations } from "next-intl";
+import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 
 interface DailyRewardItemProps {
-    data: DailyRewardResponse | null;
+    data: DailyRewardResponse;
     dayNumber: number;
     isToday: boolean;
     isLocked: boolean;
     isPast: boolean;
 }
-
-const renderChestIcon = (chestType?: ChestType | string, size: number = 44) => {
-    switch (chestType) {
-        case "BRONZE":
-            return <ChestBronze size={size} />;
-        case "SILVER":
-        case "SLIVER": // Backend API sends "SLIVER"
-            return <ChestSilver size={size} />;
-        case "GOLD":
-            return <ChestGold size={size} />;
-        case "NONE":
-        default:
-            return <ChestNone size={size} />;
-    }
-};
-
-const getChestLabel = (chestType?: ChestType | string) => {
-    switch (chestType) {
-        case "BRONZE":
-            return { name: "Rương Đồng", color: "bg-amber-700/15 text-amber-600 dark:text-amber-400 border-amber-600/30" };
-        case "SILVER":
-        case "SLIVER":
-            return { name: "Rương Bạc", color: "bg-slate-400/15 text-slate-600 dark:text-slate-300 border-slate-400/30" };
-        case "GOLD":
-            return { name: "Rương Vàng", color: "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border-yellow-500/40" };
-        case "NONE":
-        default:
-            return { name: "Điểm Trực Tiếp", color: "bg-pink-500/15 text-pink-600 dark:text-pink-400 border-pink-500/30" };
-    }
-};
 
 const DailyRewardItem: React.FC<DailyRewardItemProps> = ({
     data,
@@ -54,126 +24,94 @@ const DailyRewardItem: React.FC<DailyRewardItemProps> = ({
     isLocked,
     isPast,
 }) => {
-    const chest = data?.chest;
-    const chestType = chest?.chestType;
-    const chestInfo = getChestLabel(chestType);
+    const t = useTranslations("dailyReward");
+    const chest = data.chest;
+    const chestType = chest.chestType;
+    const chestTypeLower = (chestType?.toLowerCase() || "none") as
+        | "bronze"
+        | "silver"
+        | "gold"
+        | "none";
+    const chestName = t(`chest.${chestTypeLower}`);
+    const chestBadgeColor = getChestBadgeColor(chestType);
 
-    // Format point label for tooltip
-    let pointText = "+5 pt";
-    if (chest) {
-        if (chest.minPoint && chest.maxPoint && chest.minPoint !== chest.maxPoint) {
-            pointText = `${chest.minPoint}~${chest.maxPoint} pt`;
-        } else if (chest.minPoint) {
-            pointText = `+${chest.minPoint} pt`;
-        }
-    }
-
-    // Custom Tooltip Content
     const tooltipContent = (
-        <div className="p-3 max-w-xs space-y-2 text-xs font-sans">
-            <div className="flex items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-700 pb-2">
-                <span className="font-bold text-sm text-gray-900 dark:text-gray-100 flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-pink-500" />
-                    Ngày {dayNumber}
+        <div className="max-w-xs space-y-1.5 p-1.5 font-sans text-xs">
+            <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-medium text-white/80">
+                    {t("tooltip.chestLabel")}
                 </span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${chestInfo.color}`}>
-                    {chestInfo.name}
-                </span>
-            </div>
-
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {chest?.description || "Điểm danh đúng ngày để nhận điểm tích lũy đổi quà hấp dẫn."}
-            </p>
-
-            <div className="pt-1 flex items-center justify-between text-gray-500 dark:text-gray-400 font-medium">
-                <span>Phần thưởng dự kiến:</span>
-                <span className="font-bold text-pink-600 dark:text-pink-400 text-xs">
-                    {pointText}
+                <span
+                    className={`rounded-full border px-2 py-0.5 text-[10px] font-bold ${chestBadgeColor}`}
+                >
+                    {chestName}
                 </span>
             </div>
-
-            <div className="pt-1 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-[11px]">
-                <span className="text-gray-400">Trạng thái:</span>
-                {isToday ? (
-                    <span className="text-pink-500 font-bold flex items-center gap-1">
-                        ● Hôm nay (Sẵn sàng)
-                    </span>
-                ) : isLocked ? (
-                    <span className="text-gray-400 flex items-center gap-1">
-                        🔒 Chưa mở (Khóa)
-                    </span>
-                ) : (
-                    <span className="text-emerald-500 font-medium flex items-center gap-1">
-                        ✓ Ngày đã qua
-                    </span>
-                )}
+            <Divider
+                sx={{
+                    marginBlock: 0.75,
+                    borderColor: "rgba(255, 255, 255, 0.2)",
+                }}
+            />
+            <div className="text-xs font-semibold text-white">
+                {t("expectedReward", {
+                    min: chest.minPoint,
+                    max: chest.maxPoint ?? chest.minPoint,
+                })}
             </div>
         </div>
     );
 
     return (
-        <Tooltip
-            title={tooltipContent}
-            slots={{ transition: Zoom }}
-            arrow
-            placement="top"
-            slotProps={{
-                tooltip: {
-                    sx: {
-                        bgcolor: "var(--color-bgc-app)",
-                        color: "var(--color-text-contrast)",
-                        border: "1px solid var(--color-bdc-primary)",
-                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-                        borderRadius: "12px",
-                        p: 0,
-                    },
-                },
-                arrow: {
-                    sx: {
-                        color: "var(--color-bgc-app)",
-                        "&::before": {
-                            border: "1px solid var(--color-bdc-primary)",
-                        },
-                    },
-                },
-            }}
+        <div
+            className={`group relative flex min-h-20.5 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-xl border p-2 transition-all duration-300 select-none sm:min-h-[90px] ${
+                isToday
+                    ? "z-10 scale-[1.04] border-pink-500 bg-pink-50/80 text-pink-600 shadow-md ring-2 ring-pink-500/40 dark:border-pink-500 dark:bg-pink-950/40 dark:text-pink-400 dark:ring-pink-500/50"
+                    : isLocked
+                      ? "border-bdc-primary/50 bg-bgc-page/50 opacity-80"
+                      : "border-bdc-primary bg-bgc-app hover:border-pink-400 hover:bg-pink-50/30 hover:shadow-xs dark:hover:border-pink-500 dark:hover:bg-pink-950/20"
+            }`}
         >
-            <div
-                className={`
-                    relative group flex flex-col items-center justify-between p-2 rounded-xl transition-all duration-300 cursor-pointer select-none
-                    min-h-[82px] sm:min-h-[90px] border
-                    ${
+            <div className="flex w-full items-center justify-between px-1">
+                <span
+                    className={`text-xs font-extrabold ${
                         isToday
-                            ? "bg-gradient-to-b from-pink-500/15 via-rose-500/10 to-amber-500/15 border-pink-500 shadow-md shadow-pink-500/20 ring-2 ring-pink-500/80 scale-[1.04] z-10"
-                            : isLocked
-                            ? "bg-bgc-page/40 border-bdc-primary/60 opacity-60 hover:opacity-90 hover:border-pink-300/50"
-                            : "bg-bgc-app border-bdc-primary hover:border-pink-400/50 hover:shadow-sm"
-                    }
-                `}
-            >
-                {/* Header Day Number & Status Indicator */}
-                <div className="w-full flex items-center justify-between px-1">
-                    <span
-                        className={`text-xs font-extrabold ${
-                            isToday
-                                ? "text-pink-600 dark:text-pink-400 text-sm"
-                                : "text-text-contrast/80"
-                        }`}
+                            ? "text-sm text-pink-600 dark:text-pink-400"
+                            : "text-text-contrast/80"
+                    }`}
+                >
+                    {dayNumber < 10 ? `0${dayNumber}` : dayNumber}
+                </span>
+
+                <TooltipCustom
+                    title={tooltipContent}
+                    slots={{ transition: Zoom }}
+                    placement="top"
+                    arrow
+                >
+                    <button
+                        type="button"
+                        className="text-text-muted z-20 cursor-pointer rounded-full p-0.5 transition-colors hover:text-pink-500 focus:outline-hidden dark:hover:text-pink-400"
+                        aria-label={t("infoTooltip")}
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        {dayNumber < 10 ? `0${dayNumber}` : dayNumber}
-                    </span>
-
-                    {isLocked ? (
-                        <Lock className="w-3 h-3 text-text-muted opacity-60" />
-                    ) : null}
-                </div>
-
-                {/* Center Chest Graphic */}
-                <div className="my-auto py-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    {renderChestIcon(chestType, isToday ? 48 : 42)}
-                </div>
+                        <InfoOutlinedIcon sx={{ fontSize: 16 }} />
+                    </button>
+                </TooltipCustom>
             </div>
-        </Tooltip>
+
+            <div className="my-auto flex items-center justify-center py-1 transition-transform duration-300 group-hover:scale-110">
+                {renderChestIcon(chestType, isToday ? 48 : 42)}
+            </div>
+
+            {isLocked && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-slate-900/30 backdrop-blur-[1px] transition-opacity dark:bg-slate-950/60">
+                    <div className="flex items-center justify-center rounded-full bg-slate-900/70 p-1.5 text-white shadow-sm dark:bg-slate-800/80">
+                        <LockOutlinedIcon sx={{ fontSize: 18 }} />
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 

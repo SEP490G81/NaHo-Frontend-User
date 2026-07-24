@@ -1,0 +1,29 @@
+{
+    "dailyReward": {
+        "triggerTooltip": "Điểm danh hàng ngày nhận điểm",
+        "triggerBtn": "Điểm danh",
+        "title": "Lịch Điểm Danh Hàng Ngày",
+        "monthFormat": "Tháng {month}, {year}",
+        "retry": "Thử lại",
+        "fetchError": "Không thể lấy dữ liệu điểm danh hàng ngày",
+        "infoTooltip": "Chi tiết phần thưởng",
+        "expectedReward": "Phần thưởng dự kiến {min}~{max} điểm",
+        "dayFormat": "Ngày {day}",
+        "chest": {
+            "bronze": "Rương Đồng",
+            "silver": "Rương Bạc",
+            "gold": "Rương Vàng",
+            "none": "Điểm Trực Tiếp"
+        },
+        "status": {
+            "label": "Trạng thái:",
+            "today": "Hôm nay",
+            "locked": "Chưa mở",
+            "passed": "Ngày đã qua"
+        },
+        "tooltip": {
+            "chestLabel": "Loại rương:",
+            "rewardLabel": "Phần thưởng:"
+        }
+    }
+}

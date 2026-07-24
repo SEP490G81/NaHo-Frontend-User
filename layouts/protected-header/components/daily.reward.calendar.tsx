@@ -3,64 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, IconButton, Skeleton, Tooltip } from "@mui/material";
 import { Gift, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { getCurrentMonthDailyRewards } from "@/services/client/daily.reward.service";
-import { ChestType, DailyRewardResponse } from "@/types/responses/daily.reward.response";
+import { DailyRewardResponse } from "@/types/responses/daily.reward.response";
 import DailyRewardItem from "./daily.reward.item";
 
 const DAYS_OF_WEEK = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
 
-// Generate fallback data matching prompt sample if backend API is offline or returns empty
-const generateFallbackMonthlyData = (
-    year: number,
-    monthIndex: number,
-): DailyRewardResponse[] => {
-    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-    const yearMonthStr = `${year}-${String(monthIndex + 1).padStart(2, "0")}`;
-
-    const items: DailyRewardResponse[] = [];
-    for (let day = 1; day <= daysInMonth; day++) {
-        let chestType: ChestType = "NONE";
-        let description = "Nhận ngay điểm thưởng khi điểm danh hàng ngày";
-        let minPoint = 5;
-        let maxPoint: number | null = 10;
-
-        if (day === daysInMonth) {
-            chestType = "GOLD";
-            description =
-                "Mở rương vàng đặc biệt cuối tháng để nhận từ 60 đến 100 điểm!";
-            minPoint = 60;
-            maxPoint = 100;
-        } else if (day === 15) {
-            chestType = "SLIVER";
-            description =
-                "Mở rương bạc giữa tháng để nhận ngẫu nhiên từ 30 đến 50 điểm!";
-            minPoint = 30;
-            maxPoint = 50;
-        } else if (day === 5 || day === 12 || day === 19 || day === 26) {
-            chestType = "BRONZE";
-            description = "Mở rương đồng để nhận ngẫu nhiên từ 15 đến 25 điểm!";
-            minPoint = 15;
-            maxPoint = 25;
-        }
-
-        items.push({
-            id: day,
-            chest: {
-                id: day,
-                chestType,
-                description,
-                minPoint,
-                maxPoint,
-            },
-            rewardYearMonth: yearMonthStr,
-            dayOfMonth: day,
-        });
-    }
-
-    return items;
-};
-
 const DailyRewardCalendar: React.FC = () => {
+    const t = useTranslations("dailyReward");
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [rewardsData, setRewardsData] = useState<DailyRewardResponse[]>([]);
@@ -70,6 +21,11 @@ const DailyRewardCalendar: React.FC = () => {
     const currentYear = now.getFullYear();
     const currentMonthIndex = now.getMonth(); // 0-indexed
     const currentDay = now.getDate();
+
+    const formattedMonthYear = t("monthFormat", {
+        month: String(currentMonthIndex + 1).padStart(2, "0"),
+        year: currentYear,
+    });
 
     // Calculate calendar offset days (Monday as first day of week)
     // getDay(): 0 = Sun, 1 = Mon, ..., 6 = Sat
@@ -82,22 +38,15 @@ const DailyRewardCalendar: React.FC = () => {
         setError(null);
         try {
             const data = await getCurrentMonthDailyRewards();
-            if (data && Array.isArray(data) && data.length > 0) {
+            if (data && Array.isArray(data)) {
                 setRewardsData(data);
             } else {
-                // Fallback to sample month data
-                setRewardsData(
-                    generateFallbackMonthlyData(currentYear, currentMonthIndex),
-                );
+                setRewardsData([]);
             }
         } catch (err: any) {
-            console.warn(
-                "Daily reward API failed, using client calendar fallback:",
-                err,
-            );
-            setRewardsData(
-                generateFallbackMonthlyData(currentYear, currentMonthIndex),
-            );
+            console.error(" Daily reward API failed:", err);
+            setError(err?.message || t("fetchError"));
+            setRewardsData([]);
         } finally {
             setLoading(false);
         }
@@ -116,7 +65,7 @@ const DailyRewardCalendar: React.FC = () => {
         <>
             {/* Header Trigger Button */}
             <Tooltip
-                title="Điểm danh hàng ngày nhận điểm"
+                title={t("triggerTooltip")}
                 arrow
                 placement="bottom"
             >
@@ -130,7 +79,7 @@ const DailyRewardCalendar: React.FC = () => {
                         <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-pink-500" />
                     </div>
                     <span className="hidden font-bold sm:inline">
-                        Điểm danh
+                        {t("triggerBtn")}
                     </span>
                 </button>
             </Tooltip>
@@ -166,9 +115,14 @@ const DailyRewardCalendar: React.FC = () => {
                     className="border-bdc-primary border-b bg-linear-to-r from-pink-500/15 via-rose-500/10 to-amber-500/15"
                 >
                     <div className="flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5">
-                        <h2 className="text-text-contrast text-base font-bold tracking-tight sm:text-lg">
-                            Lịch Điểm Danh Hàng Ngày
-                        </h2>
+                        <div className="flex items-center gap-3">
+                            <h2 className="text-text-contrast text-base font-bold tracking-tight sm:text-lg">
+                                {t("title")}
+                            </h2>
+                            <span className="border-pink-500/30 bg-pink-500/10 text-pink-600 dark:text-pink-400 rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+                                {formattedMonthYear}
+                            </span>
+                        </div>
 
                         <IconButton
                             onClick={handleClose}
@@ -187,12 +141,12 @@ const DailyRewardCalendar: React.FC = () => {
 
                 {/* Calendar Body Content */}
                 <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
-                    {/* Days of Week Header */}
-                    <div className="mb-2 grid grid-cols-7 gap-1.5 text-center sm:gap-2">
+                    {/* Days of Week Header with clear top spacing */}
+                    <div className="mt-3 mb-2.5 grid grid-cols-7 gap-1.5 text-center sm:gap-2">
                         {DAYS_OF_WEEK.map((dayName, idx) => (
                             <div
                                 key={dayName}
-                                className={`rounded-lg py-1 text-xs font-bold ${
+                                className={`rounded-lg py-1.5 text-xs font-bold ${
                                     idx >= 5
                                         ? "bg-rose-50 text-rose-500 dark:bg-rose-950/20"
                                         : "text-text-muted bg-bgc-page/40"
@@ -223,9 +177,9 @@ const DailyRewardCalendar: React.FC = () => {
                             <p className="text-text-error text-sm">{error}</p>
                             <button
                                 onClick={fetchRewards}
-                                className="rounded-xl bg-pink-500 px-4 py-2 text-xs font-bold text-white transition hover:bg-pink-600"
+                                className="rounded-xl bg-pink-500 px-4 py-2 text-xs font-bold text-white transition hover:bg-pink-600 cursor-pointer"
                             >
-                                Thử lại
+                                {t("retry")}
                             </button>
                         </div>
                     ) : (
@@ -267,3 +221,5 @@ const DailyRewardCalendar: React.FC = () => {
 };
 
 export default DailyRewardCalendar;
+
+

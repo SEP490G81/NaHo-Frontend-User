@@ -10,7 +10,7 @@ export interface ChestResult {
 
 export interface DailyRewardResponse {
     id: number;
-    chest: ChestResult | null;
+    chest: ChestResult;
     rewardYearMonth: string;
     dayOfMonth: number;
 }
