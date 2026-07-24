@@ -68,7 +68,7 @@ export async function logoutAll(): Promise<void> {
 }
 
 export async function getCurrentUserClient() {
-    const response = await fetch("/api/auth/me", {
+    const response = await fetch("/api/users/me", {
         credentials: "include",
     });
 

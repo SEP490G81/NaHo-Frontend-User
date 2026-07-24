@@ -6,6 +6,11 @@ import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.b
 import UserAvatar from "@/layouts/protected-header/components/user.avatar";
 import { IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
+import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
+import { ChevronRight, Flame, MenuIcon } from "lucide-react";
+import { currentLearner } from "@/data/mockLearnerDashboard";
+import { AllRoute } from "@/i18n/type";
+import DailyRewardCalendar from "./daily.reward.calendar";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
@@ -57,6 +62,7 @@ const ProtectedHeader = () => {
 
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
+                <DailyRewardCalendar />
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"
