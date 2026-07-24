@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/libs/utils";
-import { getBookById, CURRENT_BOOK_ID } from "@/data/marugoto";
+import { useCurrentLevelLabel } from "@/hooks/use.current.level";
 import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 
 interface StatCardProps {
@@ -57,7 +57,8 @@ export function RoadmapHeader() {
     });
     const totalPoint = Math.round(progress?.totalPoint ?? 0);
     const streakDays = progress?.currentStreak ?? 0;
-    const level = getBookById(CURRENT_BOOK_ID)?.level ?? "A2";
+    // Trình độ = quyển đang học theo mốc tiến độ; user mới luôn là quyển đầu (N5 · A1).
+    const level = useCurrentLevelLabel();
 
     return (
         <div className="border-bdc-primary bg-bgc-app grid gap-6 rounded-2xl border p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
@@ -83,7 +84,7 @@ export function RoadmapHeader() {
                 <StatCard
                     icon={<Trophy className="text-bgc-highlight h-5 w-5" />}
                     label={t("currentLevel")}
-                    value={t("levelValue", { level })}
+                    value={t("levelValue", { level: level || "—" })}
                 />
                 <StatCard
                     icon={<Sparkles className="text-bgc-highlight h-5 w-5" />}
