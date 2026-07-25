@@ -18,7 +18,7 @@ const DailyRewardItemTooltipContent = ({ chest }: { chest: ChestResponse }) => {
     return (
         <div className="max-w-xs space-y-1.5 p-1.5 font-sans text-xs">
             <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-medium text-white/80">
+                <span className="text-text-muted text-[11px] font-medium">
                     {t("tooltip.chestLabel")}
                 </span>
                 <span
@@ -30,10 +30,10 @@ const DailyRewardItemTooltipContent = ({ chest }: { chest: ChestResponse }) => {
             <Divider
                 sx={{
                     marginBlock: 0.75,
-                    borderColor: "rgba(255, 255, 255, 0.2)",
+                    borderColor: "var(--color-bdc-primary)",
                 }}
             />
-            <div className="text-xs font-semibold text-white">
+            <div className="text-text-contrast text-xs font-semibold">
                 {t("expectedReward", {
                     min: chest.minPoint,
                     max: chest.maxPoint ?? chest.minPoint,

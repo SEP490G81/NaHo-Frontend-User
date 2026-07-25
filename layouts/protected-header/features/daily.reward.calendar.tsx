@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import { Gift } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -40,48 +40,59 @@ const DailyRewardCalendar = () => {
 
     const fetchRewards = async () => {
         setLoading(true);
-        const [rewards, attendances] = await Promise.all([
-            getCurrentMonthDailyRewards(),
-            getUserDailyAttendancesCurrentMonth(),
-        ]);
-        setRewardsData(rewards);
-        setAttendancesData(attendances);
-        setLoading(false);
+
+        try {
+            const [rewards, attendances] = await Promise.all([
+                getCurrentMonthDailyRewards(),
+                getUserDailyAttendancesCurrentMonth(),
+            ]);
+
+            setRewardsData(rewards);
+            setAttendancesData(attendances);
+        } catch (e) {
+            console.error(e);
+            if (e instanceof Error) {
+                toast.error(e.message);
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleClaimReward = async (item: DailyRewardResponse) => {
-        if (!item?.id) return;
-        setClaimingId(item.id);
-        const data = await earnDailyReward(item.id);
-        const earnedPoints = data.earnedPoint ?? 0;
-        toast.success(t("claimSuccess", { points: earnedPoints }));
-        await fetchRewards();
-        setClaimingId(null);
+        if (!item.id) return;
+
+        try {
+            setClaimingId(item.id);
+
+            const data = await earnDailyReward(item.id);
+
+            toast.success(
+                t("claimSuccess", {
+                    points: data.earnedPoint ?? 0,
+                }),
+            );
+
+            await fetchRewards();
+        } catch (e) {
+            console.error(e);
+            if (e instanceof Error) {
+                toast.error(e.message);
+            }
+        } finally {
+            setClaimingId(null);
+        }
     };
 
-    useEffect(() => {
-        if (isOpen) {
-            fetchRewards();
-        }
-    }, [isOpen]);
+    const handleOpen = async () => {
+        setIsOpen(true);
+        await fetchRewards();
+    };
 
-    const handleOpen = () => setIsOpen(true);
-    const handleClose = () => setIsOpen(false);
-
-    const attendedRewardIdsSet = new Set(
-        attendancesData.map((att) => att.dailyRewardId),
-    );
-
-    const attendedDayNumbersSet = new Set(
-        attendancesData
-            .map((att) => {
-                if (!att.attendanceDate) return null;
-                const parts = att.attendanceDate.split("-");
-                return parts.length === 3
-                    ? Number.parseInt(parts[2], 10)
-                    : null;
-            })
-            .filter((day): day is number => day !== null),
+    const attendedRewardIdsSet = useMemo(
+        () =>
+            new Set(attendancesData.map(({ dailyRewardId }) => dailyRewardId)),
+        [attendancesData],
     );
 
     return (
@@ -90,11 +101,7 @@ const DailyRewardCalendar = () => {
                 onClick={handleOpen}
                 className="text-text-contrast bg-bgc-app border-bdc-primary group relative flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-2xs transition-all duration-300 hover:border-pink-400 hover:bg-pink-500/5"
             >
-                <div className="relative">
-                    <Gift className="h-4 w-4 text-pink-500 transition-transform duration-300 group-hover:scale-110" />
-                    <span className="absolute -top-1 -right-1 h-2 w-2 animate-ping rounded-full bg-pink-500" />
-                    <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-pink-500" />
-                </div>
+                <Gift className="h-4 w-4 text-pink-500 transition-transform duration-300 group-hover:scale-110" />
                 <span className="hidden font-bold sm:inline">
                     {t("triggerBtn")}
                 </span>
@@ -102,7 +109,6 @@ const DailyRewardCalendar = () => {
 
             <Dialog
                 open={isOpen}
-                onClose={handleClose}
                 maxWidth="md"
                 fullWidth
                 slotProps={{
@@ -124,7 +130,9 @@ const DailyRewardCalendar = () => {
                     },
                 }}
             >
-                <DailyRewardCalendarHeader handleClose={handleClose} />
+                <DailyRewardCalendarHeader
+                    handleClose={() => setIsOpen(false)}
+                />
 
                 <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
                     <div className="mt-3 mb-2.5 grid grid-cols-7 gap-1.5 text-center sm:gap-2">
@@ -156,9 +164,9 @@ const DailyRewardCalendar = () => {
                                 const isToday = dayNum === currentDay;
                                 const isLocked = dayNum > currentDay;
                                 const isPast = dayNum < currentDay;
-                                const isAttended =
-                                    attendedRewardIdsSet.has(item.id) ||
-                                    attendedDayNumbersSet.has(dayNum);
+                                const isAttended = attendedRewardIdsSet.has(
+                                    item.id,
+                                );
 
                                 return (
                                     <DailyRewardItem
