@@ -1,16 +1,41 @@
 {
     "settings": {
         "page": {
-            "general": "Chung",
-            "account": "Tài khoản",
-            "security": "Bảo mật",
-            "billing": "Thanh toán"
+            "general": "一般",
+            "account": "アカウント",
+            "security": "セキュリティ",
+            "billing": "お支払いプラン"
         },
-        "searchPlaceholder": "Tìm kiếm",
+        "searchPlaceholder": "設定を検索",
         "billing": {
-            "currentPlan": "Naho Go",
-            "planExpiry": "Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026",
-            "updatePlan": "Nâng cấp gói"
+            "currentPlan": "現在のプラン",
+            "currentPlanTitle": "ご利用中のサブスクリプション",
+            "planStatus": "ステータス",
+            "active": "有効",
+            "planExpiry": "有効期限: {date}",
+            "permanent": "無制限プラン",
+            "updatePlan": "プランをアップグレード",
+            "modalTitle": "NaHoサブスクリプションのアップグレード",
+            "modalSubtitle": "あなたの日本語学習ニーズに最適なプランをお選びください",
+            "buyNow": "今すぐ購入",
+            "currentPlanLabel": "現在のプラン",
+            "includedLabel": "所有済み",
+            "processing": "処理中...",
+            "retry": "再試行",
+            "perMonth": "ドン / 月",
+            "freePrice": "0 ドン",
+            "popular": "一番人気",
+            "features": {
+                "assessmentLimit": "月 {count} 回のスピーキング評価",
+                "conversationMinutes": "月 {minutes} 分の会話練習",
+                "fullCurriculum": "全カリキュラムへの完全アクセス",
+                "analytics": "詳細な学習進捗分析",
+                "sampleAnswer": "AIスマート回答ヒント"
+            },
+            "errors": {
+                "createPaymentFailed": "VNPAY決済の開始に失敗しました。もう一度お試しください。",
+                "fetchPlansFailed": "サブスクリプションプランを読み込めませんでした。"
+            }
         }
     }
 }

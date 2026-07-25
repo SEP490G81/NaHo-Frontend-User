@@ -29,7 +29,8 @@
                 "report": "Report",
                 "liveChatroom": "ライブチャットルーム",
                 "dialogueSetup": "会話設定",
-                "leaderboard": "ランキング"
+                "leaderboard": "ランキング",
+                "settings": "設定"
             },
             "language": {
                 "vi": "Tiếng Việt",

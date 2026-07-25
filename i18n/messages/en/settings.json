@@ -1,16 +1,41 @@
 {
     "settings": {
         "page": {
-            "general": "Chung",
-            "account": "Tài khoản",
-            "security": "Bảo mật",
-            "billing": "Thanh toán"
+            "general": "General",
+            "account": "Account",
+            "security": "Security",
+            "billing": "Billing & Subscription"
         },
-        "searchPlaceholder": "Tìm kiếm",
+        "searchPlaceholder": "Search settings",
         "billing": {
-            "currentPlan": "Naho Go",
-            "planExpiry": "Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026",
-            "updatePlan": "Nâng cấp gói"
+            "currentPlan": "Current Plan",
+            "currentPlanTitle": "Your Active Subscription",
+            "planStatus": "Status",
+            "active": "Active",
+            "planExpiry": "Valid until: {date}",
+            "permanent": "Lifetime Access",
+            "updatePlan": "Upgrade Plan",
+            "modalTitle": "Upgrade NaHo Subscription",
+            "modalSubtitle": "Choose the best plan for your Japanese speaking and learning journey",
+            "buyNow": "BUY NOW",
+            "currentPlanLabel": "Current Plan",
+            "includedLabel": "Owned",
+            "processing": "Processing...",
+            "retry": "Click to Retry",
+            "perMonth": "VND / month",
+            "freePrice": "0 VND",
+            "popular": "Most Popular",
+            "features": {
+                "assessmentLimit": "{count} speaking assessments / month",
+                "conversationMinutes": "{minutes} conversation practice minutes / month",
+                "fullCurriculum": "Full access to all course curricula",
+                "analytics": "Advanced progress & learning analytics",
+                "sampleAnswer": "AI Smart sample answer hints"
+            },
+            "errors": {
+                "createPaymentFailed": "Failed to initiate VNPAY payment. Please try again.",
+                "fetchPlansFailed": "Unable to load subscription plans."
+            }
         }
     }
 }

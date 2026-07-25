@@ -14,11 +14,11 @@ export function LeaderboardWidget() {
             <div className="flex items-center gap-2">
                 <Trophy className="text-bgc-highlight h-5 w-5" />
                 <h3 className="text-text-contrast text-lg font-semibold">
-                    {t("leaderboardTitle")}
+                    {t("leaderboardTitle" as any)}
                 </h3>
             </div>
             <p className="text-text-muted mt-1 text-sm">
-                {t("leaderboardSubtitle")}
+                {t("leaderboardSubtitle" as any)}
             </p>
 
             <div className="mt-5 space-y-2">
@@ -51,7 +51,7 @@ export function LeaderboardWidget() {
                                 </span>
                                 {entry.isCurrentUser && (
                                     <span className="bg-bgc-highlight text-text-pure rounded-full px-2 py-0.5 text-xs font-semibold">
-                                        {t("leaderboardYou")}
+                                        {t("leaderboardYou" as any)}
                                     </span>
                                 )}
                             </div>
@@ -61,7 +61,7 @@ export function LeaderboardWidget() {
                                 {entry.points.toLocaleString("vi-VN")}
                             </div>
                             <div className="text-text-muted text-xs">
-                                {t("leaderboardPoints")}
+                                {t("leaderboardPoints" as any)}
                             </div>
                         </div>
                     </div>

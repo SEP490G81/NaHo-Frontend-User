@@ -1,26 +1,25 @@
 import React from "react";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useTranslations } from "next-intl";
-import { UpgradeOutlined } from "@mui/icons-material";
+import UpgradeOutlinedIcon from "@mui/icons-material/UpgradeOutlined";
 
-const UpdatePlanButton = () => {
-    const t = useTranslations();
+interface UpdatePlanButtonProps {
+    onOpenModal: () => void;
+}
+
+const UpdatePlanButton: React.FC<UpdatePlanButtonProps> = ({ onOpenModal }) => {
+    const t = useTranslations("settings.billing");
+
     return (
-        <div className="flex items-start justify-between gap-y-5">
-            <div>
-                <p>{t("settings.billing.currentPlan")}</p>
-                <span className="text-text-muted text-sm font-semibold">
-                    {t("settings.billing.planExpiry")}
-                </span>
-            </div>
-            <Button
-                variant="contained"
-                size="small"
-                startIcon={<UpgradeOutlined fontSize="small" />}
-            >
-                {t("settings.billing.updatePlan")}
-            </Button>
-        </div>
+        <Button
+            variant="contained"
+            size="medium"
+            startIcon={<UpgradeOutlinedIcon fontSize="small" />}
+            onClick={onOpenModal}
+            className="bg-primary hover:bg-primary/90 font-bold text-white shadow"
+        >
+            {t("updatePlan")}
+        </Button>
     );
 };
 

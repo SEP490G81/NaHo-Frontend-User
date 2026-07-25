@@ -12,7 +12,7 @@ export async function generateMetadata({
     const t = await getTranslations({ locale, namespace: "common.metadata.title" });
 
     return {
-        title: t("settings"),
+        title: t("settings" as any),
     };
 }
 

@@ -8,9 +8,34 @@
         },
         "searchPlaceholder": "Tìm kiếm",
         "billing": {
-            "currentPlan": "Naho Go",
-            "planExpiry": "Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026",
-            "updatePlan": "Nâng cấp gói"
+            "currentPlan": "Gói hiện tại",
+            "currentPlanTitle": "Gói dịch vụ hiện tại",
+            "planStatus": "Trạng thái",
+            "active": "Đang hoạt động",
+            "planExpiry": "Hạn sử dụng đến: {date}",
+            "permanent": "Gói vĩnh viễn",
+            "updatePlan": "Nâng cấp gói",
+            "modalTitle": "Nâng cấp gói dịch vụ NaHo",
+            "modalSubtitle": "Lựa chọn gói dịch vụ phù hợp để mở khóa toàn bộ tính năng luyện tập Kaiwa thông minh",
+            "buyNow": "MUA NGAY",
+            "currentPlanLabel": "Gói hiện tại",
+            "includedLabel": "Đã sở hữu",
+            "processing": "Đang xử lý...",
+            "retry": "Bấm để thử lại",
+            "perMonth": "đ / tháng",
+            "freePrice": "0 đ",
+            "popular": "Phổ biến nhất",
+            "features": {
+                "assessmentLimit": "{count} bài đánh giá / tháng",
+                "conversationMinutes": "{minutes} phút luyện hội thoại / tháng",
+                "fullCurriculum": "Mở khóa toàn bộ giáo trình học",
+                "analytics": "Phân tích tiến độ học tập chuyên sâu",
+                "sampleAnswer": "Gợi ý câu trả lời bài mẫu AI"
+            },
+            "errors": {
+                "createPaymentFailed": "Không thể khởi tạo thanh toán VNPAY. Vui lòng thử lại.",
+                "fetchPlansFailed": "Không thể lấy danh sách gói dịch vụ."
+            }
         }
     }
 }

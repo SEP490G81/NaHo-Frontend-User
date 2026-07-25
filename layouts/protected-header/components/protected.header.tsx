@@ -7,7 +7,7 @@ import UserAvatar from "@/layouts/protected-header/components/user.avatar";
 import { IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
 import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
-import { ChevronRight, Flame, MenuIcon } from "lucide-react";
+import { ChevronRight, Flame } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
 import DailyRewardCalendar from "./daily.reward.calendar";
