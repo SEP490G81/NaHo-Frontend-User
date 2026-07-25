@@ -105,41 +105,40 @@ export function buildLessonBlocks(
 }
 
 /**
- * Khóa tuần tự theo tiến độ THẬT của người dùng.
+ * Khóa Node THUẦN theo mốc BE, khớp đúng luật khóa phía server.
  *
- * `beFrontier` = global order index của node xa nhất người dùng được phép học
- * (`farthestAvailableNode` của BE). Người dùng mới đăng ký luôn đứng ở node đầu
- * giáo trình nên mốc = 1 → chỉ node 1 mở, node 2 trở đi khóa.
+ * `frontier` = `farthestAvailableNodeGlobalOrderIndex` — node xa nhất người dùng được
+ * phép học. BE chặn (400) mọi thao tác lên node có `GOI > frontier`, và tự đẩy mốc sang
+ * node kế khi hoàn thành node tại mốc. Vì thế FE phải khóa y hệt, KHÔNG bù cục bộ (bù
+ * sẽ cho bấm node mà BE từ chối).
  *
- * Mốc thực tế lấy xa hơn giữa BE và node kế tiếp node FE đã biết là xong, để lộ trình
- * không kẹt lại khi BE chưa kịp đẩy biên giới.
+ *   GOI < mốc → completed · GOI = mốc → active (đang học) · GOI > mốc → locked.
  *
- * GOI < mốc → completed · GOI = mốc → active · GOI > mốc → locked.
+ * Chưa có dữ liệu BE (mock/dev) → không khóa (mọi node active).
  */
 function applyLock(
     blocks: CanDoBlock[],
-    beFrontier: number | null,
+    frontier: number | null,
 ): {
     blocks: CanDoBlock[];
     currentNodeId?: string;
 } {
+    const hasFrontier = frontier != null;
     const flat = blocks.flatMap((b) => b.nodes);
-    const localFrontier = flat
-        .filter((n) => n.status === "completed")
-        .reduce((max, n) => Math.max(max, n.globalOrderIndex + 1), -Infinity);
-    const frontier = Math.max(beFrontier ?? -Infinity, localFrontier);
-
-    const isDone = (n: PathNode) =>
-        n.status === "completed" || n.globalOrderIndex < frontier;
-    const currentNodeId = flat.find((n) => !isDone(n))?.id;
+    const statusOf = (n: PathNode): NodeStatus => {
+        if (!hasFrontier) return "active";
+        if (n.globalOrderIndex < frontier) return "completed";
+        if (n.globalOrderIndex > frontier) return "locked";
+        return "active";
+    };
+    // Node đang học = node đúng tại mốc (nếu mốc rơi trong tập node này).
+    const currentNodeId = hasFrontier
+        ? flat.find((n) => statusOf(n) === "active")?.id
+        : undefined;
 
     const locked = blocks.map((b) => {
         const nodes = b.nodes.map((n) => {
-            const status: NodeStatus = isDone(n)
-                ? "completed"
-                : n.id === currentNodeId
-                  ? "active"
-                  : "locked";
+            const status = statusOf(n);
             return { ...n, status };
         });
         const done = nodes.filter((n) => n.status === "completed").length;
