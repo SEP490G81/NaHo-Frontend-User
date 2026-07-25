@@ -1,11 +1,13 @@
 import { cookies } from "next/headers";
+import {
+    ACCESS_TOKEN_NAME,
+    REFRESH_TOKEN_NAME,
+} from "@/constants/app.constants";
 import { NextResponse } from "next/server";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
 import { UserDailyAttendanceResponse } from "@/types/responses/daily.reward.response";
 
-/** Nhận phần thưởng điểm danh hàng ngày. */
-export async function POST(request: Request) {
+export async function GET() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get(ACCESS_TOKEN_NAME)?.value;
 
@@ -13,17 +15,12 @@ export async function POST(request: Request) {
         return NextResponse.json(null, { status: 401 });
     }
 
-    const body = await request.json();
-
     const backendResponse = await fetch(
-        `${process.env.API_URL}/daily-rewards`,
+        `${process.env.API_URL}/user-daily-attendances/all/current-month`,
         {
-            method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify(body),
             cache: "no-store",
         },
     );
@@ -49,7 +46,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-        (result as ApiResponse<UserDailyAttendanceResponse>).data,
+        (result as ApiResponse<UserDailyAttendanceResponse[]>).data,
         {
             status: backendResponse.status,
         },

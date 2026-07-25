@@ -3,6 +3,7 @@
         "triggerTooltip": "Điểm danh hàng ngày nhận điểm",
         "triggerBtn": "Điểm danh",
         "title": "Lịch Điểm Danh Hàng Ngày",
+        "close": "Đóng",
         "monthFormat": "Tháng {month}, {year}",
         "retry": "Thử lại",
         "fetchError": "Không thể lấy dữ liệu điểm danh hàng ngày",
@@ -19,11 +20,16 @@
             "label": "Trạng thái:",
             "today": "Hôm nay",
             "locked": "Chưa mở",
-            "passed": "Ngày đã qua"
+            "passed": "Ngày đã qua",
+            "attended": "Đã điểm danh",
+            "missed": "Chưa điểm danh"
         },
         "tooltip": {
             "chestLabel": "Loại rương:",
             "rewardLabel": "Phần thưởng:"
-        }
+        },
+        "claimSuccess": "Nhận phần thưởng thành công! Bạn nhận được +{points} điểm.",
+        "claimError": "Không thể nhận phần thưởng điểm danh",
+        "claiming": "Đang nhận..."
     }
 }

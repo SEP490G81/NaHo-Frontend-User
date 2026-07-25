@@ -6,7 +6,7 @@ import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.b
 import UserAvatar from "@/layouts/protected-header/components/user.avatar";
 import { IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
-import DailyRewardCalendar from "./daily.reward.calendar";
+import DailyRewardCalendar from "../features/daily.reward.calendar";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
