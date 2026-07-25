@@ -49,7 +49,11 @@ export function FlashcardDeck({
     }, [total]);
 
     if (total === 0)
-        return <p className="text-text-muted py-6 text-center text-sm">{t("vocab.empty")}</p>;
+        return (
+            <p className="text-text-muted py-6 text-center text-sm">
+                {t("vocab.empty")}
+            </p>
+        );
 
     const v = vocab[i];
 
@@ -74,10 +78,12 @@ export function FlashcardDeck({
                                 showFurigana={showFurigana && !!v.reading}
                             />
                         </span>
-                        <span className="text-text-muted text-xs">{t("vocab.flip")}</span>
+                        <span className="text-text-muted text-xs">
+                            {t("vocab.flip")}
+                        </span>
                     </div>
                     {/* Back */}
-                    <div className="border-bgc-highlight/40 bg-bgc-highlight/10 absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                    <div className="border-bgc-highlight/40 bg-bgc-highlight/10 absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden]">
                         {v.reading && (
                             <p className="text-bgc-highlight font-noto-jp text-2xl font-bold">
                                 {v.reading}
@@ -105,7 +111,7 @@ export function FlashcardDeck({
                     type="button"
                     onClick={() => speak(v.japanese)}
                     aria-label={t("vocab.speak")}
-                    className="bg-bgc-highlight/15 text-bgc-highlight hover:bg-bgc-highlight hover:text-white inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold transition-all"
+                    className="bg-bgc-highlight/15 text-bgc-highlight hover:bg-bgc-highlight inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold transition-all hover:text-white"
                 >
                     <Volume2 className="h-4 w-4" />
                     {i + 1}/{total}

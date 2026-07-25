@@ -29,7 +29,8 @@ export function ChestNode({ node, onClick }: Props) {
                 aria-label={t("node.chestTitle")}
                 className={cn(
                     "rounded-full transition-transform duration-100",
-                    !locked && "hover:-translate-y-0.5 active:translate-y-[3px]",
+                    !locked &&
+                        "hover:-translate-y-0.5 active:translate-y-[3px]",
                     locked && "cursor-not-allowed",
                 )}
             >
@@ -42,7 +43,10 @@ export function ChestNode({ node, onClick }: Props) {
                     {locked ? (
                         <Lock className="h-6 w-6" />
                     ) : (
-                        <NodeIcon kind={completed ? "done" : "chest"} size={44} />
+                        <NodeIcon
+                            kind={completed ? "done" : "chest"}
+                            size={44}
+                        />
                     )}
                 </NodeDisc>
             </button>

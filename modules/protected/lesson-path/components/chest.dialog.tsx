@@ -79,12 +79,15 @@ export function ChestDialog({
                                 borderRadius: "12px",
                                 backgroundColor: "var(--color-bgc-highlight)",
                                 "&:hover": {
-                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
                                     filter: "brightness(0.95)",
                                 },
                             }}
                         >
-                            {claimed ? t("node.chestOpened") : t("node.chestClaimBtn")}
+                            {claimed
+                                ? t("node.chestOpened")
+                                : t("node.chestClaimBtn")}
                         </Button>
                     </div>
                 )}

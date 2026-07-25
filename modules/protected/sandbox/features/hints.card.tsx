@@ -35,7 +35,7 @@ function TabButton({
                 "flex flex-1 items-center justify-center gap-1.5 border-b-2 px-3 py-2.5 text-xs font-bold transition-colors",
                 active
                     ? "text-text-contrast"
-                    : "border-transparent text-text-muted hover:text-text-contrast",
+                    : "text-text-muted hover:text-text-contrast border-transparent",
             )}
             style={active ? { borderColor: accent, color: accent } : undefined}
         >

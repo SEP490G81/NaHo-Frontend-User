@@ -8,11 +8,19 @@ interface FlowerProps {
     rotation?: number;
 }
 
-const SakuraFlower: React.FC<FlowerProps> = ({ cx, cy, size, rotation = 0 }) => {
+const SakuraFlower: React.FC<FlowerProps> = ({
+    cx,
+    cy,
+    size,
+    rotation = 0,
+}) => {
     const petalRotations = [0, 72, 144, 216, 288];
     const r = size;
     return (
-        <g transform={`translate(${cx}, ${cy}) rotate(${rotation})`} className="text-bgc-highlight">
+        <g
+            transform={`translate(${cx}, ${cy}) rotate(${rotation})`}
+            className="text-bgc-highlight"
+        >
             {/* Petals */}
             {petalRotations.map((deg) => (
                 <ellipse
@@ -47,14 +55,31 @@ const SakuraFlower: React.FC<FlowerProps> = ({ cx, cy, size, rotation = 0 }) => 
 
 const SakuraBud: React.FC<FlowerProps> = ({ cx, cy, size, rotation = 0 }) => {
     return (
-        <g transform={`translate(${cx}, ${cy}) rotate(${rotation})`} className="text-bgc-highlight">
+        <g
+            transform={`translate(${cx}, ${cy}) rotate(${rotation})`}
+            className="text-bgc-highlight"
+        >
             <path
                 d={`M ${-size * 0.2} ${size * 0.2} Q 0 ${size * 0.5} ${size * 0.2} ${size * 0.2} L 0 ${-size * 0.2} Z`}
                 fill="var(--color-text-muted)"
                 opacity={0.5}
             />
-            <ellipse cx={-size * 0.1} cy={-size * 0.1} rx={size * 0.15} ry={size * 0.3} transform="rotate(-15)" fill="currentColor" />
-            <ellipse cx={size * 0.1} cy={-size * 0.1} rx={size * 0.15} ry={size * 0.3} transform="rotate(15)" fill="currentColor" />
+            <ellipse
+                cx={-size * 0.1}
+                cy={-size * 0.1}
+                rx={size * 0.15}
+                ry={size * 0.3}
+                transform="rotate(-15)"
+                fill="currentColor"
+            />
+            <ellipse
+                cx={size * 0.1}
+                cy={-size * 0.1}
+                rx={size * 0.15}
+                ry={size * 0.3}
+                transform="rotate(15)"
+                fill="currentColor"
+            />
         </g>
     );
 };
@@ -63,8 +88,8 @@ export function JapanBackground() {
     return (
         <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden select-none">
             {/* Top-Left Hanging Sakura Branch */}
-            <div className="absolute top-0 left-0 w-80 h-80 origin-top-left animate-naho-branch-sway opacity-70 dark:opacity-40">
-                <svg viewBox="0 0 250 250" className="w-full h-full fill-none">
+            <div className="animate-naho-branch-sway absolute top-0 left-0 h-80 w-80 origin-top-left opacity-70 dark:opacity-40">
+                <svg viewBox="0 0 250 250" className="h-full w-full fill-none">
                     {/* Main branches */}
                     <path
                         d="M 0 0 Q 70 30 130 90 T 220 120"
@@ -112,8 +137,11 @@ export function JapanBackground() {
             </div>
 
             {/* Top-Right Hanging Sakura Branch */}
-            <div className="absolute top-0 right-0 w-72 h-72 origin-top-right animate-naho-branch-sway opacity-70 dark:opacity-40" style={{ animationDelay: "-3.5s" }}>
-                <svg viewBox="0 0 250 250" className="w-full h-full fill-none">
+            <div
+                className="animate-naho-branch-sway absolute top-0 right-0 h-72 w-72 origin-top-right opacity-70 dark:opacity-40"
+                style={{ animationDelay: "-3.5s" }}
+            >
+                <svg viewBox="0 0 250 250" className="h-full w-full fill-none">
                     {/* Mirrored branches */}
                     <path
                         d="M 250 0 Q 180 30 120 90 T 30 120"
@@ -151,20 +179,48 @@ export function JapanBackground() {
             </div>
 
             {/* Bottom-Right Mount Fuji & Sun Silhouette */}
-            <div className="absolute bottom-0 right-0 w-[500px] h-[300px] md:w-[600px] md:h-[360px] opacity-70 dark:opacity-45">
-                <svg viewBox="0 0 600 360" className="w-full h-full fill-none select-none" aria-hidden="true">
+            <div className="absolute right-0 bottom-0 h-[300px] w-[500px] opacity-70 md:h-[360px] md:w-[600px] dark:opacity-45">
+                <svg
+                    viewBox="0 0 600 360"
+                    className="h-full w-full fill-none select-none"
+                    aria-hidden="true"
+                >
                     <defs>
                         {/* Sun Radial Glow */}
                         <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="#ff4d6d" stopOpacity="0.85" />
-                            <stop offset="60%" stopColor="#ff8fa3" stopOpacity="0.4" />
-                            <stop offset="100%" stopColor="#ffccd5" stopOpacity="0" />
+                            <stop
+                                offset="0%"
+                                stopColor="#ff4d6d"
+                                stopOpacity="0.85"
+                            />
+                            <stop
+                                offset="60%"
+                                stopColor="#ff8fa3"
+                                stopOpacity="0.4"
+                            />
+                            <stop
+                                offset="100%"
+                                stopColor="#ffccd5"
+                                stopOpacity="0"
+                            />
                         </radialGradient>
                     </defs>
 
                     {/* Sun (under mountain, glowing) */}
-                    <circle cx="340" cy="160" r="80" fill="url(#sunGlow)" className="animate-[pulse_5s_infinite]" />
-                    <circle cx="340" cy="160" r="45" fill="#ef233c" opacity="0.35" />
+                    <circle
+                        cx="340"
+                        cy="160"
+                        r="80"
+                        fill="url(#sunGlow)"
+                        className="animate-[pulse_5s_infinite]"
+                    />
+                    <circle
+                        cx="340"
+                        cy="160"
+                        r="45"
+                        fill="#ef233c"
+                        opacity="0.35"
+                    />
 
                     {/* Mount Fuji Silhouette */}
                     <path
@@ -181,7 +237,10 @@ export function JapanBackground() {
                     />
 
                     {/* Traditional Clouds (Kasumi) overlapping Fuji */}
-                    <g className="animate-naho-cloud-drift opacity-65 dark:opacity-40 text-bgc-highlight" fill="currentColor">
+                    <g
+                        className="animate-naho-cloud-drift text-bgc-highlight opacity-65 dark:opacity-40"
+                        fill="currentColor"
+                    >
                         <rect x="180" y="200" width="160" height="12" rx="6" />
                         <rect x="420" y="180" width="120" height="10" rx="5" />
                         <rect x="260" y="240" width="200" height="14" rx="7" />
@@ -190,8 +249,12 @@ export function JapanBackground() {
             </div>
 
             {/* Bottom-Left Kyoto Pagoda, Torii Gate & Hills */}
-            <div className="absolute bottom-0 left-0 w-[400px] h-[260px] opacity-70 dark:opacity-45">
-                <svg viewBox="0 0 400 260" className="w-full h-full fill-none select-none" aria-hidden="true">
+            <div className="absolute bottom-0 left-0 h-[260px] w-[400px] opacity-70 dark:opacity-45">
+                <svg
+                    viewBox="0 0 400 260"
+                    className="h-full w-full fill-none select-none"
+                    aria-hidden="true"
+                >
                     {/* Back Hill */}
                     <path
                         d="M -50 260 Q 150 180, 320 260 Z"
@@ -200,9 +263,20 @@ export function JapanBackground() {
                     />
 
                     {/* Five-Story Pagoda Silhouette */}
-                    <g transform="translate(60, 65)" fill="var(--color-text-contrast)" opacity="0.2">
+                    <g
+                        transform="translate(60, 65)"
+                        fill="var(--color-text-contrast)"
+                        opacity="0.2"
+                    >
                         {/* Finial / Spire */}
-                        <line x1="25" y1="5" x2="25" y2="40" stroke="currentColor" strokeWidth="2" />
+                        <line
+                            x1="25"
+                            y1="5"
+                            x2="25"
+                            y2="40"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                        />
                         <circle cx="25" cy="15" r="3" />
                         <circle cx="25" cy="22" r="2.5" />
                         <circle cx="25" cy="28" r="2" />
@@ -240,7 +314,11 @@ export function JapanBackground() {
                     />
 
                     {/* Torii Gate Silhouette */}
-                    <g transform="translate(180, 155)" fill="var(--color-text-contrast)" opacity="0.35">
+                    <g
+                        transform="translate(180, 155)"
+                        fill="var(--color-text-contrast)"
+                        opacity="0.35"
+                    >
                         <path d="M 2 3 C 12 1, 28 1, 38 3 L 36 6 C 26 5, 14 5, 4 6 Z" />
                         <rect x="5" y="9" width="30" height="2" />
                         <rect x="9" y="9" width="3" height="27" />
@@ -251,7 +329,11 @@ export function JapanBackground() {
                     </g>
 
                     {/* Drifting Clouds on Left Hill */}
-                    <g className="animate-naho-cloud-drift opacity-55 dark:opacity-30 text-bgc-highlight" fill="currentColor" style={{ animationDelay: "-10s" }}>
+                    <g
+                        className="animate-naho-cloud-drift text-bgc-highlight opacity-55 dark:opacity-30"
+                        fill="currentColor"
+                        style={{ animationDelay: "-10s" }}
+                    >
                         <rect x="20" y="110" width="100" height="10" rx="5" />
                         <rect x="250" y="130" width="120" height="10" rx="5" />
                     </g>
@@ -259,10 +341,15 @@ export function JapanBackground() {
             </div>
 
             {/* Bottom Seigaiha Wave Pattern */}
-            <div className="absolute bottom-0 left-0 w-full h-16 opacity-[0.16] dark:opacity-[0.08] text-bgc-highlight">
-                <svg className="w-full h-full">
+            <div className="text-bgc-highlight absolute bottom-0 left-0 h-16 w-full opacity-[0.16] dark:opacity-[0.08]">
+                <svg className="h-full w-full">
                     <defs>
-                        <pattern id="seigaiha" width="40" height="20" patternUnits="userSpaceOnUse">
+                        <pattern
+                            id="seigaiha"
+                            width="40"
+                            height="20"
+                            patternUnits="userSpaceOnUse"
+                        >
                             <path
                                 d="M 0 20 A 20 20 0 0 1 40 20 M 5 20 A 15 15 0 0 1 35 20 M 10 20 A 10 10 0 0 1 30 20 M 15 20 A 5 5 0 0 1 25 20"
                                 fill="none"

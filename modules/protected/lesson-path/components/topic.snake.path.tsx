@@ -86,11 +86,16 @@ export function TopicSnakePath({
     ]);
 
     const heightOf = (it: Item) =>
-        it.kind === "lesson" ? H_LESSON : it.kind === "cando" ? H_CANDO : H_NODE;
+        it.kind === "lesson"
+            ? H_LESSON
+            : it.kind === "cando"
+              ? H_CANDO
+              : H_NODE;
     const isWaypoint = (it: Item) => it.kind !== "cando";
 
     const tops = items.map(
-        (_, i) => TOP_PAD + items.slice(0, i).reduce((s, it) => s + heightOf(it), 0),
+        (_, i) =>
+            TOP_PAD + items.slice(0, i).reduce((s, it) => s + heightOf(it), 0),
     );
     const dxAt = (i: number) => {
         const w = items.slice(0, i).filter(isWaypoint).length;
@@ -99,7 +104,9 @@ export function TopicSnakePath({
     const xAt = (i: number) => CX + dxAt(i);
 
     const totalHeight = items.length
-        ? tops[items.length - 1] + heightOf(items[items.length - 1]) + BOTTOM_PAD
+        ? tops[items.length - 1] +
+          heightOf(items[items.length - 1]) +
+          BOTTOM_PAD
         : TOP_PAD;
 
     const points: Pt[] = items

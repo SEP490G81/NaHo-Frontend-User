@@ -15,4 +15,3 @@ const BProgressProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default BProgressProvider;
-

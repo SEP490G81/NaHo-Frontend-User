@@ -10,7 +10,10 @@ export async function generateMetadata({
     title: string;
 }> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "common.metadata.title" });
+    const t = await getTranslations({
+        locale,
+        namespace: "common.metadata.title",
+    });
 
     return {
         title: t("dialogueSetup"),
@@ -18,9 +21,7 @@ export async function generateMetadata({
 }
 
 const DialogueSetupPage = async () => {
-    return (
-        <DialogueSetup />
-    );
+    return <DialogueSetup />;
 };
 
 export default DialogueSetupPage;

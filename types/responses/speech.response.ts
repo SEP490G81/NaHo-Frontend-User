@@ -1,4 +1,8 @@
-export type SpeechAssessmentErrorType = "OMISSION" | "INSERTION" | "MISPRONUNCIATION" | "NONE";
+export type SpeechAssessmentErrorType =
+    | "OMISSION"
+    | "INSERTION"
+    | "MISPRONUNCIATION"
+    | "NONE";
 
 export interface PronunciationAssessmentResponse {
     id: number;

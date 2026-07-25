@@ -7,9 +7,7 @@ const nextConfig: NextConfig = {
         ignoreBuildErrors: true,
     },
     images: {
-        remotePatterns: [
-            { protocol: "https", hostname: "**.cloudfront.net" },
-        ],
+        remotePatterns: [{ protocol: "https", hostname: "**.cloudfront.net" }],
     },
 };
 

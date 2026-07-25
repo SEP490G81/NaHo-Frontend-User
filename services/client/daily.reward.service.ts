@@ -2,7 +2,7 @@ import { ProblemDetail } from "@/types/responses/base.response";
 import {
     DailyRewardResponse,
     EarnDailyRewardRequest,
-    UserDailyAttendanceResponse
+    UserDailyAttendanceResponse,
 } from "@/types/responses/daily.reward.response";
 
 export async function getCurrentMonthDailyRewards() {

@@ -101,7 +101,8 @@ export function TopicPath() {
             .filter((l): l is Lesson => l !== null);
     }, [lessons, lessonQs, objRefs, objQs]);
 
-    const { groups, overallPercent, currentNodeId } = useTopicNodes(lessonModels);
+    const { groups, overallPercent, currentNodeId } =
+        useTopicNodes(lessonModels);
 
     const loading =
         bookQ.isLoading ||

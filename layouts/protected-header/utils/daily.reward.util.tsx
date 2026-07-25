@@ -1,5 +1,10 @@
 import { ChestType } from "@/types/responses/daily.reward.response";
-import { ChestBronze, ChestGold, ChestNone, ChestSilver } from "@/components/ui/chests";
+import {
+    ChestBronze,
+    ChestGold,
+    ChestNone,
+    ChestSilver,
+} from "@/components/ui/chests";
 
 export const renderChestIcon = (
     chestType?: ChestType | string,

@@ -35,4 +35,3 @@ declare module "next-intl" {
             typeof dailyReward;
     }
 }
-

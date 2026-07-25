@@ -1,4 +1,7 @@
-import { AccountMenuLinkItem, AccountMenuStaticItem } from "@/layouts/protected-header/types/protected.header.type";
+import {
+    AccountMenuLinkItem,
+    AccountMenuStaticItem,
+} from "@/layouts/protected-header/types/protected.header.type";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";

@@ -16,4 +16,5 @@ export interface AccountMenuStaticItem {
     type: "STATIC";
 }
 
-type AccountMenuTitleKey = keyof Messages["common"]["layout"]["header"]["accountMenu"];
+type AccountMenuTitleKey =
+    keyof Messages["common"]["layout"]["header"]["accountMenu"];

@@ -1,17 +1,17 @@
 "use client";
 
 import React from "react";
-import {CircularProgress, Zoom} from "@mui/material";
+import { CircularProgress, Zoom } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import {Check} from "lucide-react";
-import {DailyRewardResponse} from "@/types/responses/daily.reward.response";
+import { Check } from "lucide-react";
+import { DailyRewardResponse } from "@/types/responses/daily.reward.response";
 import {
     getDailyRewardDayNumberClass,
     getDailyRewardItemCardClass,
     renderChestIcon,
 } from "@/layouts/protected-header/utils/daily.reward.util";
-import {TooltipCustom} from "@/components/ui/mui-custom/tooltip.custom";
+import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import DailyRewardItemTooltipContent from "@/layouts/protected-header/components/daily.reward.item.tooltip.content";
 
 interface DailyRewardItemProps {

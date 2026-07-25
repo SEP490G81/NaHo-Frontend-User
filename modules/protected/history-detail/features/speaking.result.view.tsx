@@ -41,7 +41,6 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         [data],
     );
 
-
     if (isLoading) {
         return (
             <div className="flex h-[50vh] items-center justify-center">
@@ -83,8 +82,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
     if (book) ctx.set("book", String(book));
     if (topic) ctx.set("topic", String(topic));
     const qs = ctx.toString();
-    const topicHref =
-        book && topic ? `/books/${book}/topics/${topic}` : null;
+    const topicHref = book && topic ? `/books/${book}/topics/${topic}` : null;
     const retryHref =
         data.questionId != null
             ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
@@ -136,7 +134,8 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     <div className="border-bdc-primary text-text-muted mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t pt-3 text-sm">
                         <span className="inline-flex items-center gap-1.5">
                             <CalendarClock className="h-4 w-4" />
-                            {t("practicedAtLabel")}: {formatDate(data.practicedAt)}
+                            {t("practicedAtLabel")}:{" "}
+                            {formatDate(data.practicedAt)}
                         </span>
                         <span className="inline-flex items-center gap-1.5">
                             <Clock className="h-4 w-4" />

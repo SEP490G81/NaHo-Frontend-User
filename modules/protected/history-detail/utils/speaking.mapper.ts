@@ -1,4 +1,4 @@
-import type { ReportDetail, PronSegment } from "@/data/mockReports";
+import type { PronSegment, ReportDetail } from "@/data/mockReports";
 import type { SpeakingReport } from "@/types/responses/speaking.response";
 
 /** Chuẩn hoá mức độ lỗi phát âm từ BE (chuỗi tự do) về 3 mức của FE. */

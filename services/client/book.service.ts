@@ -4,7 +4,7 @@ import {
     LessonDetailResponse,
     ObjectiveDetailResponse,
     TopicDetailResponse,
-    TopicListItemResponse,
+    TopicListItemResponse
 } from "@/types/responses/book.response";
 import { LearningPathNodeDetailResponse } from "@/types/responses/learning.response";
 
@@ -79,9 +79,9 @@ export async function openChest(chestId: number): Promise<void> {
         body: JSON.stringify({ chestId }),
     });
     if (!response.ok) {
-        const result = (await response.json().catch(() => null)) as
-            | ProblemDetail
-            | null;
+        const result = (await response
+            .json()
+            .catch(() => null)) as ProblemDetail | null;
         throw new Error(result?.detail || "Mở rương thất bại");
     }
 }

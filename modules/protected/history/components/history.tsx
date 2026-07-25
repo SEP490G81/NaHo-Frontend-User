@@ -77,7 +77,11 @@ export function History() {
     return (
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-6xl space-y-6">
-                <HistoryHeader totalCount={totalCount} avgScore={avgScore} t={t} />
+                <HistoryHeader
+                    totalCount={totalCount}
+                    avgScore={avgScore}
+                    t={t}
+                />
 
                 <div className="border-bdc-primary bg-bgc-app flex items-center gap-2 rounded-2xl border px-4 py-3">
                     <Search className="text-text-muted h-4 w-4 shrink-0" />
@@ -146,7 +150,9 @@ export function History() {
                                             </td>
                                             <td className="px-4 py-3">
                                                 {e.audioUrl ? (
-                                                    <AudioPlayButton src={e.audioUrl} />
+                                                    <AudioPlayButton
+                                                        src={e.audioUrl}
+                                                    />
                                                 ) : (
                                                     <span className="text-text-muted">
                                                         —
@@ -167,7 +173,8 @@ export function History() {
                                                             <BarChart3 className="h-3.5 w-3.5" />
                                                         }
                                                         sx={{
-                                                            textTransform: "none",
+                                                            textTransform:
+                                                                "none",
                                                             borderColor:
                                                                 "var(--color-bdc-muted)",
                                                             color: "var(--color-text-contrast)",
@@ -175,10 +182,13 @@ export function History() {
                                                     >
                                                         {t("viewReport")}
                                                     </Button>
-                                                    {e.speakingQuestionId != null && (
+                                                    {e.speakingQuestionId !=
+                                                        null && (
                                                         <Button
                                                             component={Link}
-                                                            href={practiceHref(e)}
+                                                            href={practiceHref(
+                                                                e,
+                                                            )}
                                                             size="small"
                                                             variant="contained"
                                                             startIcon={

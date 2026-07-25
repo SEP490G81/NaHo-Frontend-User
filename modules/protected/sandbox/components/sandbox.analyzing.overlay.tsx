@@ -10,7 +10,12 @@ interface SandboxAnalyzingOverlayProps {
     accent?: string;
 }
 
-const CRIT_KEYS = ["critPron", "critVocab", "critGrammar", "critNatural"] as const;
+const CRIT_KEYS = [
+    "critPron",
+    "critVocab",
+    "critGrammar",
+    "critNatural",
+] as const;
 
 export function SandboxAnalyzingOverlay({
     analyzing,

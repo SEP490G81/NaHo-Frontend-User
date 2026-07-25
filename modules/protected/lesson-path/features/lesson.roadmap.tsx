@@ -73,7 +73,9 @@ export function LessonRoadmap({
         if (!active || !detail?.chest) return;
         const claimed = claimChest(active.node.id, detail.chest.point);
         if (claimed)
-            toast.success(t("node.chestClaimed", { reward: detail.chest.point }));
+            toast.success(
+                t("node.chestClaimed", { reward: detail.chest.point }),
+            );
         else toast.info(t("node.chestAlready"));
     };
 

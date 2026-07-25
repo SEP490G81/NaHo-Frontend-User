@@ -19,7 +19,10 @@ export function ScoreGauge({ score }: ScoreGaugeProps) {
     const strokeColor = getGaugeColor(score);
 
     return (
-        <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+        <div
+            className="relative flex items-center justify-center"
+            style={{ width: size, height: size }}
+        >
             <svg className="h-full w-full -rotate-90">
                 {/* Track */}
                 <circle
@@ -46,10 +49,12 @@ export function ScoreGauge({ score }: ScoreGaugeProps) {
                 />
             </svg>
             <div className="absolute text-center">
-                <span className="text-3xl font-bold tabular-nums leading-none text-text-contrast">
+                <span className="text-text-contrast text-3xl leading-none font-bold tabular-nums">
                     {score.toFixed(1)}
                 </span>
-                <span className="mt-0.5 block text-[10px] uppercase tracking-wider text-text-muted">{t("pointsLabel")}</span>
+                <span className="text-text-muted mt-0.5 block text-[10px] tracking-wider uppercase">
+                    {t("pointsLabel")}
+                </span>
             </div>
         </div>
     );

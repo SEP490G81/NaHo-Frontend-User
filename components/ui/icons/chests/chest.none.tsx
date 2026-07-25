@@ -4,7 +4,11 @@ interface ChestProps extends React.SVGProps<SVGSVGElement> {
     size?: number;
 }
 
-const ChestNone: React.FC<ChestProps> = ({ size = 48, className = "", ...props }) => {
+const ChestNone: React.FC<ChestProps> = ({
+    size = 48,
+    className = "",
+    ...props
+}) => {
     return (
         <svg
             width={size}
@@ -12,7 +16,7 @@ const ChestNone: React.FC<ChestProps> = ({ size = 48, className = "", ...props }
             viewBox="0 0 64 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={`transition-transform duration-300 hover:scale-110 drop-shadow-md ${className}`}
+            className={`drop-shadow-md transition-transform duration-300 hover:scale-110 ${className}`}
             {...props}
         >
             <defs>
@@ -39,14 +43,26 @@ const ChestNone: React.FC<ChestProps> = ({ size = 48, className = "", ...props }
                     <stop offset="50%" stopColor="#FBC02D" />
                     <stop offset="100%" stopColor="#E65100" />
                 </linearGradient>
-                <filter id="shadowNone" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#f59e0b" floodOpacity="0.4" />
+                <filter
+                    id="shadowNone"
+                    x="-20%"
+                    y="-20%"
+                    width="140%"
+                    height="140%"
+                >
+                    <feDropShadow
+                        dx="0"
+                        dy="4"
+                        stdDeviation="3"
+                        floodColor="#f59e0b"
+                        floodOpacity="0.4"
+                    />
                 </filter>
             </defs>
 
             {/* Background Glow Ring */}
             <circle cx="32" cy="32" r="28" fill="#FEF3C7" opacity="0.4" />
-            
+
             {/* Outer Coin Body */}
             <circle
                 cx="32"

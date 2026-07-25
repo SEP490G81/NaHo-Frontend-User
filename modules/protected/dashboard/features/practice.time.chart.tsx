@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Bar,
     BarChart,
@@ -12,10 +12,6 @@ import {
 import { useTranslations } from "next-intl";
 import { dailyPractice } from "@/data/mockLearnerDashboard";
 import { CHART_COLOR, CHART_HOVER_FILL } from "../constants/dashboard.constant";
-import {
-    NameType,
-    ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
 
 export function PracticeTimeChart() {
     const t = useTranslations("dashboard");

@@ -45,7 +45,8 @@ export function LessonPathHeader({
                         className="text-[11px] font-bold tracking-[0.14em] uppercase"
                         style={{ color: accent }}
                     >
-                        {book.level} · {t("lesson.label", { number: lesson.order })}
+                        {book.level} ·{" "}
+                        {t("lesson.label", { number: lesson.order })}
                     </span>
                     <h1 className="text-text-contrast truncate text-lg leading-tight font-bold">
                         {lesson.furiganaMarkup ? (
@@ -85,7 +86,10 @@ export function LessonPathHeader({
                 <div className="bg-bgc-page h-2 flex-1 overflow-hidden rounded-full">
                     <div
                         className="h-full rounded-full transition-all duration-500"
-                        style={{ width: `${overallPercent}%`, background: accent }}
+                        style={{
+                            width: `${overallPercent}%`,
+                            background: accent,
+                        }}
                     />
                 </div>
                 <span className="text-text-muted shrink-0 text-xs font-semibold">

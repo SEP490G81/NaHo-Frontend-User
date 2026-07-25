@@ -194,6 +194,7 @@ input::-ms-clear {
 .Toastify__toast-container {
     padding: 16px !important;
 }
+
 .Toastify__toast {
     background-color: var(--color-bgc-app) !important;
     color: var(--color-text-contrast) !important;
@@ -203,25 +204,32 @@ input::-ms-clear {
     font-family: var(--app-font), sans-serif !important;
     padding: 14px 18px !important;
 }
+
 .Toastify__toast--success {
     border-left: 4px solid var(--color-bgc-highlight) !important;
 }
+
 .Toastify__toast--error {
     border-left: 4px solid var(--color-text-error) !important;
 }
+
 .Toastify__toast--info {
     border-left: 4px solid var(--color-bgc-highlight) !important;
 }
+
 .Toastify__toast--warning {
     border-left: 4px solid #f59e0b !important;
 }
+
 .Toastify__progress-bar {
     background: var(--color-bgc-highlight) !important;
 }
+
 .Toastify__close-button {
     color: var(--color-text-contrast) !important;
     opacity: 0.5;
 }
+
 .Toastify__close-button:hover {
     opacity: 0.9;
 }

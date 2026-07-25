@@ -11,7 +11,8 @@ type AudioCtor = typeof AudioContext;
 function getAudioContext(): AudioContext {
     const Ctor =
         window.AudioContext ||
-        (window as unknown as { webkitAudioContext: AudioCtor }).webkitAudioContext;
+        (window as unknown as { webkitAudioContext: AudioCtor })
+            .webkitAudioContext;
     return new Ctor();
 }
 

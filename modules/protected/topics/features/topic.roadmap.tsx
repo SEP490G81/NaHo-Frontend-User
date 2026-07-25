@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import type { MarugotoBook } from "@/data/marugoto/types";
-import { useMarugotoStore, PASS_SCORE } from "@/store/marugotoStore";
+import { PASS_SCORE, useMarugotoStore } from "@/store/marugotoStore";
 import { buildBookView } from "../utils/unlock";
 import BookHero from "../components/book.hero";
 import TopicRow from "../components/topic.row";

@@ -1,4 +1,4 @@
-import type { Topic, Question } from "@/data/mockTopics";
+import type { Question, Topic } from "@/data/mockTopics";
 import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
 import { MARUGOTO_BOOKS } from "./books";
 
@@ -59,13 +59,18 @@ export interface QuestionChain {
 }
 
 /** Chuỗi phân cấp đầy đủ Sách → Chủ đề → Bài → Can-do → Câu hỏi (cho breadcrumb). */
-export function getQuestionChain(questionId: string): QuestionChain | undefined {
+export function getQuestionChain(
+    questionId: string,
+): QuestionChain | undefined {
     for (const book of MARUGOTO_BOOKS) {
         for (const topic of book.topics) {
             for (const lesson of topic.lessons) {
                 for (const canDo of lesson.canDos) {
-                    const question = canDo.questions.find((q) => q.id === questionId);
-                    if (question) return { book, topic, lesson, canDo, question };
+                    const question = canDo.questions.find(
+                        (q) => q.id === questionId,
+                    );
+                    if (question)
+                        return { book, topic, lesson, canDo, question };
                 }
             }
         }

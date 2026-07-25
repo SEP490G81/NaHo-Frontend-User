@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/libs/utils";
-import { getBookById, CURRENT_BOOK_ID } from "@/data/marugoto";
+import { CURRENT_BOOK_ID, getBookById } from "@/data/marugoto";
 import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 
 interface StatCardProps {

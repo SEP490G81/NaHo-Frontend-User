@@ -132,7 +132,9 @@ export function PointHistory() {
                         size="small"
                         value={type}
                         onChange={(e) => {
-                            setType(e.target.value as PointTransactionType | "ALL");
+                            setType(
+                                e.target.value as PointTransactionType | "ALL",
+                            );
                             setPage(1);
                         }}
                         sx={selectSx}
@@ -150,7 +152,9 @@ export function PointHistory() {
                         size="small"
                         value={amount}
                         onChange={(e) => {
-                            setAmount(e.target.value as PointAmountType | "ALL");
+                            setAmount(
+                                e.target.value as PointAmountType | "ALL",
+                            );
                             setPage(1);
                         }}
                         sx={selectSx}
@@ -158,8 +162,12 @@ export function PointHistory() {
                         <MenuItem value="ALL">
                             {t("filterAmount")}: {t("all")}
                         </MenuItem>
-                        <MenuItem value="POSITIVE">{t("amountPositive")}</MenuItem>
-                        <MenuItem value="NEGATIVE">{t("amountNegative")}</MenuItem>
+                        <MenuItem value="POSITIVE">
+                            {t("amountPositive")}
+                        </MenuItem>
+                        <MenuItem value="NEGATIVE">
+                            {t("amountNegative")}
+                        </MenuItem>
                     </Select>
                 </div>
 
@@ -168,7 +176,9 @@ export function PointHistory() {
                         {t("loading")}
                     </p>
                 ) : isError ? (
-                    <p className="text-text-muted py-16 text-center">{t("error")}</p>
+                    <p className="text-text-muted py-16 text-center">
+                        {t("error")}
+                    </p>
                 ) : items.length === 0 ? (
                     <div className="border-bdc-muted bg-bgc-app flex flex-col items-center gap-2 rounded-2xl border border-dashed p-12 text-center">
                         <Sparkles className="text-text-muted h-9 w-9" />
@@ -211,11 +221,15 @@ export function PointHistory() {
                                             </td>
                                             <td className="px-4 py-3">
                                                 <span className="border-bdc-primary bg-bgc-page text-text-contrast inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium">
-                                                    {t(`types.${it.transactionType}`)}
+                                                    {t(
+                                                        `types.${it.transactionType}`,
+                                                    )}
                                                 </span>
                                             </td>
                                             <td className="text-text-muted hidden max-w-70 truncate px-4 py-3 sm:table-cell">
-                                                {contextOf(it.learningPathNodeId)}
+                                                {contextOf(
+                                                    it.learningPathNodeId,
+                                                )}
                                             </td>
                                             <td
                                                 className={cn(
@@ -246,7 +260,8 @@ export function PointHistory() {
                                 "& .MuiPaginationItem-root": {
                                     color: "var(--color-text-contrast)",
                                     "&.Mui-selected": {
-                                        backgroundColor: "var(--color-bgc-highlight)",
+                                        backgroundColor:
+                                            "var(--color-bgc-highlight)",
                                         color: "var(--color-text-pure)",
                                     },
                                 },

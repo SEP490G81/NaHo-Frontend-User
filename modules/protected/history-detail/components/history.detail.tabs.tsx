@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import TranscriptView from "../features/transcript.view";
 import PronunciationView from "../features/pronunciation.view";
 import AdvancedHintsView from "../features/advanced.hints.view";
@@ -18,7 +18,11 @@ interface HistoryDetailTabsProps {
     t: any;
 }
 
-export function HistoryDetailTabs({ report, showFurigana, t }: HistoryDetailTabsProps) {
+export function HistoryDetailTabs({
+    report,
+    showFurigana,
+    t,
+}: HistoryDetailTabsProps) {
     const [tabIndex, setTabIndex] = useState(0);
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -60,7 +64,7 @@ export function HistoryDetailTabs({ report, showFurigana, t }: HistoryDetailTabs
                     />
                 )}
                 {tabIndex === 1 && (
-                    <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5">
+                    <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
                         <PronunciationView
                             pronunciation={report.pronunciation}
                             note={report.pronunciationNote}

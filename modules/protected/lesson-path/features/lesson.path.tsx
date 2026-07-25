@@ -103,7 +103,11 @@ export function LessonPath() {
     const lesson = useMemo<Lesson | null>(() => {
         if (!lessonQ.data) return null;
         const canDos = lessonQ.data.objectives.map((o, i) =>
-            mapBeObjective(o, i + 1, objectiveQs[i]?.data?.learningPathNodes ?? []),
+            mapBeObjective(
+                o,
+                i + 1,
+                objectiveQs[i]?.data?.learningPathNodes ?? [],
+            ),
         );
         return mapBeLessonDetail(lessonQ.data, canDos);
     }, [lessonQ.data, objectiveQs]);
