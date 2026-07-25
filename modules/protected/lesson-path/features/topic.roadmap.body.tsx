@@ -60,17 +60,17 @@ export function TopicRoadmapBody({
     const closeDialog = () => setActive(null);
 
     const openMutation = useMutation({
-        mutationFn: (vars: {
-            chestId: number;
-            nodeId: string;
-            reward: number;
-        }) => openChest(vars.chestId),
-        onSuccess: (_data, vars) => {
-            markNodeDone(vars.nodeId); // đánh dấu đã mở (UI)
+        // BE nhận id NODE lộ trình (không phải chestId) và trả điểm ngẫu nhiên thực nhận.
+        mutationFn: (vars: { nodeId: number; uiId: string }) =>
+            openChest(vars.nodeId),
+        onSuccess: (earned, vars) => {
+            markNodeDone(vars.uiId); // đánh dấu đã mở (UI)
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],
             });
-            toast.success(t("node.chestClaimed", { reward: vars.reward }));
+            toast.success(
+                t("node.chestClaimed", { reward: Math.round(earned) }),
+            );
             closeDialog();
         },
         onError: () => toast.error(t("node.chestFailed")),
@@ -103,9 +103,8 @@ export function TopicRoadmapBody({
             return;
         }
         openMutation.mutate({
-            chestId: detail.chest.id,
-            nodeId: active.node.id,
-            reward: detail.chest.point,
+            nodeId: active.node.nodeId,
+            uiId: active.node.id,
         });
     };
 

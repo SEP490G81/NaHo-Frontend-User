@@ -71,17 +71,22 @@ export function getLearningPathNodeDetail(
     );
 }
 
-/** Mở rương thưởng → BE cộng L-Point (userId lấy từ token, chỉ 1 lần). */
-export async function openChest(chestId: number): Promise<void> {
+/**
+ * Mở rương thưởng → BE cộng L-Point (userId lấy từ token, chỉ 1 lần) và đẩy mốc
+ * tiến độ sang node kế. Body dùng `learningPathNodeId` (id node lộ trình, không phải
+ * chestId). Trả về số điểm ngẫu nhiên thực nhận.
+ */
+export async function openChest(learningPathNodeId: number): Promise<number> {
     const response = await fetch("/api/chests/open", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chestId }),
+        body: JSON.stringify({ learningPathNodeId }),
     });
+    const result = await response.json().catch(() => null);
     if (!response.ok) {
-        const result = (await response.json().catch(() => null)) as
-            | ProblemDetail
-            | null;
-        throw new Error(result?.detail || "Mở rương thất bại");
+        throw new Error(
+            (result as ProblemDetail | null)?.detail || "Mở rương thất bại",
+        );
     }
+    return (result as ApiResponse<{ earnedPoint: number }>)?.data?.earnedPoint ?? 0;
 }
