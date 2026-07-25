@@ -8,9 +8,12 @@ import { toast } from "react-toastify";
 import {
     earnDailyReward,
     getCurrentMonthDailyRewards,
-    getUserDailyAttendancesCurrentMonth
+    getUserDailyAttendancesCurrentMonth,
 } from "@/services/client/daily.reward.service";
-import { DailyRewardResponse, UserDailyAttendanceResponse } from "@/types/responses/daily.reward.response";
+import {
+    DailyRewardResponse,
+    UserDailyAttendanceResponse,
+} from "@/types/responses/daily.reward.response";
 import DailyRewardItem from "./daily.reward.item";
 import DailyRewardCalendarHeader from "@/layouts/protected-header/components/daily.reward.calendar.header";
 import DailyRewardCalendarLoading from "@/layouts/protected-header/components/daily.reward.calendar.loading";
