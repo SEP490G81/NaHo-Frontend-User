@@ -59,7 +59,9 @@ export function getMockUserProgress(): UserLearningProgressResponse {
     return {
         id: MOCK_USER_ID,
         farthestAvailableNodeId: 1,
+        farthestAvailableNodeGlobalOrderIndex: 1,
         lastLearningNodeId: null,
+        lastLearningNodeGlobalOrderIndex: null,
         lastLearningAt: null,
         currentStreak: MOCK_USER_STREAK,
         longestStreak: MOCK_USER_STREAK,

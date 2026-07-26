@@ -19,9 +19,22 @@ export interface ItVocab {
     en: string;
 }
 
+/** Dạng thô của một từ vựng — chấp nhận cả field cũ (term/reading/meaning)
+ *  lẫn field mở rộng (jp/furigana/vi/romaji/en). */
+interface RawItVocab {
+    jp?: string;
+    term?: string;
+    furigana?: string;
+    reading?: string;
+    vi?: string;
+    meaning?: string;
+    romaji?: string;
+    en?: string;
+}
+
 interface AdvancedHintsViewProps {
     expressions: Expression[];
-    itVocab: any[];
+    itVocab: RawItVocab[];
     showFurigana: boolean;
 }
 
@@ -34,7 +47,7 @@ export function AdvancedHintsView({
 
     const normalizedItVocab = React.useMemo(() => {
         if (!itVocab || !Array.isArray(itVocab)) return [];
-        return itVocab.map((v: any) => {
+        return itVocab.map((v: RawItVocab) => {
             const jp = v.jp ?? v.term ?? "";
             const furigana = v.furigana ?? v.reading ?? "";
             const vi = v.vi ?? v.meaning ?? "";
@@ -49,7 +62,10 @@ export function AdvancedHintsView({
             {/* Expressions */}
             <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
-                    <Sparkles className="text-bgc-highlight h-4 w-4" />
+                    <Sparkles
+                        className="h-4 w-4"
+                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                    />
                     {t("hintsTitle")}
                 </h3>
 
@@ -80,7 +96,10 @@ export function AdvancedHintsView({
             {/* IT Vocab */}
             <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
-                    <BookOpen className="text-bgc-highlight h-4 w-4" />
+                    <BookOpen
+                        className="h-4 w-4"
+                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                    />
                     {t("hintsItVocab")}
                 </h3>
 
@@ -109,7 +128,14 @@ export function AdvancedHintsView({
                                     </p>
                                 </div>
                                 <div className="text-right">
-                                    <span className="bg-bgc-highlight/10 text-bgc-highlight rounded px-2 py-1 text-xs font-semibold">
+                                    <span
+                                        className="rounded px-2 py-1 text-xs font-semibold"
+                                        style={{
+                                            background:
+                                                "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 10%, transparent)",
+                                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                                        }}
+                                    >
                                         {v.en}
                                     </span>
                                 </div>

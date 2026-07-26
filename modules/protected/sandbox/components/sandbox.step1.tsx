@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Mic, RotateCcw } from "lucide-react";
+import { Mic, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button, CircularProgress } from "@mui/material";
 import { SandboxStep } from "../types/sandbox.type";
 import MicVolumeGauge from "./mic.volume.gauge";
@@ -29,43 +29,33 @@ export function SandboxStep1({
 
     return (
         <section className="grid gap-5 lg:grid-cols-[1fr_340px]">
-            <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-6">
-                <h2 className="text-text-contrast text-lg font-semibold">
-                    {t("guideTitle")}
-                </h2>
-                <p className="text-text-muted mt-1 text-sm">
-                    {t("guideSubtitle")}
-                </p>
+            <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-6">
+                <h2 className="text-lg font-semibold text-text-contrast">{t("guideTitle")}</h2>
+                <p className="mt-1 text-sm text-text-muted">{t("guideSubtitle")}</p>
                 <ol className="mt-4 space-y-3 text-sm">
                     {rules.map((rule, i) => (
-                        <li
-                            key={i}
-                            className="bg-bgc-page flex items-start gap-3 rounded-lg p-3"
-                        >
-                            <span className="bg-bgc-highlight/15 text-bgc-highlight flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+                        <li key={i} className="flex items-start gap-3 rounded-lg bg-bgc-page p-3">
+                            <span
+                                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                                style={{
+                                    background: `color-mix(in srgb, ${accent} 15%, transparent)`,
+                                    color: accent,
+                                }}
+                            >
                                 {i + 1}
                             </span>
-                            <span className="text-text-contrast leading-relaxed">
-                                {rule}
-                            </span>
+                            <span className="leading-relaxed text-text-contrast">{rule}</span>
                         </li>
                     ))}
                 </ol>
             </div>
 
-            <aside className="border-bdc-primary bg-bgc-app rounded-2xl border p-6">
-                <h2 className="text-text-contrast text-lg font-semibold">
-                    {t("micTestTitle")}
-                </h2>
-                <p className="text-text-muted mt-1 text-sm">
-                    {t("micTestSubtitle")}
-                </p>
+            <aside className="rounded-2xl border border-bdc-primary bg-bgc-app p-6">
+                <h2 className="text-lg font-semibold text-text-contrast">{t("micTestTitle")}</h2>
+                <p className="mt-1 text-sm text-text-muted">{t("micTestSubtitle")}</p>
 
                 <div className="my-5">
-                    <MicVolumeGauge
-                        level={volume}
-                        active={micStatus === "testing"}
-                    />
+                    <MicVolumeGauge level={volume} active={micStatus === "testing"} />
                 </div>
 
                 {micStatus === "idle" && (
@@ -91,9 +81,7 @@ export function SandboxStep1({
                         disabled
                         variant="contained"
                         fullWidth
-                        startIcon={
-                            <CircularProgress size={16} color="inherit" />
-                        }
+                        startIcon={<CircularProgress size={16} color="inherit" />}
                         sx={{
                             textTransform: "none",
                             backgroundColor: accent,
@@ -106,7 +94,13 @@ export function SandboxStep1({
 
                 {micStatus === "good" && (
                     <div className="space-y-3 text-center">
-                        <p className="bg-bgc-highlight/15 text-bgc-highlight inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm font-semibold">
+                        <p
+                            className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm font-semibold"
+                            style={{
+                                background: `color-mix(in srgb, ${accent} 15%, transparent)`,
+                                color: accent,
+                            }}
+                        >
                             <CheckCircle2 className="h-4 w-4" />
                             {t("micStatusGood")}
                         </p>
@@ -129,12 +123,10 @@ export function SandboxStep1({
 
                 {micStatus === "poor" && (
                     <div className="space-y-3 text-center">
-                        <p className="bg-bgc-error/15 text-bgc-error inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm font-semibold">
+                        <p className="inline-flex items-center gap-2 rounded-full bg-bgc-error/15 px-4 py-1 text-sm font-semibold text-bgc-error">
                             {t("micStatusPoor")}
                         </p>
-                        <p className="text-text-muted text-xs">
-                            {t("micStatusPoorTip")}
-                        </p>
+                        <p className="text-xs text-text-muted">{t("micStatusPoorTip")}</p>
                         <Button
                             onClick={resetMicTest}
                             variant="outlined"

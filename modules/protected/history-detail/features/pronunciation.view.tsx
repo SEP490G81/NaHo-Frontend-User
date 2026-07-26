@@ -10,8 +10,19 @@ export interface PronunciationWord {
     feedback: string;
 }
 
+/** Dạng thô của một mục phát âm — chấp nhận cả field cũ (word/score/feedback)
+ *  lẫn field đã map (text/severity/note). */
+interface RawPronItem {
+    word?: string;
+    text?: string;
+    score?: number;
+    severity?: string;
+    feedback?: string;
+    note?: string;
+}
+
 interface PronunciationViewProps {
-    pronunciation: any[];
+    pronunciation: RawPronItem[];
     note: string;
 }
 
@@ -23,7 +34,7 @@ export function PronunciationView({
 
     const normalizedPronunciation = React.useMemo(() => {
         if (!pronunciation || !Array.isArray(pronunciation)) return [];
-        return pronunciation.map((item: any) => {
+        return pronunciation.map((item: RawPronItem) => {
             const word = item.word ?? item.text ?? "";
             let score = item.score;
             const feedback = item.feedback ?? item.note ?? "";
@@ -99,7 +110,10 @@ export function PronunciationView({
 
             <div className="border-bdc-primary bg-bgc-page rounded-md border p-4">
                 <h4 className="text-text-muted flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
-                    <AlertCircle className="text-bgc-highlight h-4 w-4" />
+                    <AlertCircle
+                        className="h-4 w-4"
+                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                    />
                     {t("aiPronunciationNoteLabel")}
                 </h4>
                 <p className="text-text-contrast mt-2 text-sm leading-relaxed">

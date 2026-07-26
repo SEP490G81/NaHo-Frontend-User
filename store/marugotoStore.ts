@@ -6,6 +6,8 @@ import { CURRENT_BOOK_ID } from "@/data/marugoto/books";
 export const PASS_SCORE = 7.5;
 
 interface MarugotoState {
+    /** Chủ tài khoản của tiến độ cục bộ; đổi user → xóa sạch để không lẫn dữ liệu. */
+    userId: string | null;
     activeBookId: string;
     /** Điểm cao nhất theo từng câu hỏi (questionId → score 0..10). */
     questionScores: Record<string, number>;
@@ -21,11 +23,20 @@ interface MarugotoState {
     markNodeDone: (nodeId: string) => void;
     /** Mở rương: đánh dấu hoàn thành + cộng L-Point (chỉ 1 lần). */
     claimChest: (nodeId: string, reward: number) => boolean;
+    /** Gắn tiến độ cục bộ với 1 user; nếu khác chủ cũ thì xóa sạch trước. */
+    scopeToUser: (userId: string) => void;
 }
+
+const EMPTY_PROGRESS = {
+    questionScores: {} as Record<string, number>,
+    completedNodes: [] as string[],
+    lPoints: 0,
+};
 
 export const useMarugotoStore = create<MarugotoState>()(
     persist(
         (set, get) => ({
+            userId: null,
             activeBookId: CURRENT_BOOK_ID,
             questionScores: {},
             completedNodes: [],
@@ -33,6 +44,10 @@ export const useMarugotoStore = create<MarugotoState>()(
             showFurigana: true,
             setShowFurigana: (v) => set({ showFurigana: v }),
             setActiveBook: (id) => set({ activeBookId: id }),
+            scopeToUser: (userId) => {
+                if (get().userId === userId) return;
+                set({ userId, ...EMPTY_PROGRESS });
+            },
             setQuestionScore: (questionId, score) => {
                 const prev = get().questionScores[questionId] ?? 0;
                 if (score <= prev) return;
@@ -62,6 +77,6 @@ export const useMarugotoStore = create<MarugotoState>()(
                 return true;
             },
         }),
-        { name: "naho-marugoto-path-v4" },
+        { name: "naho-marugoto-path-v5" },
     ),
 );

@@ -27,7 +27,10 @@ export interface LeaderboardUserResponse extends LeagueLeaderboardEntryResponse 
 export interface UserLearningProgressResponse {
     id: number;
     farthestAvailableNodeId: number | null;
+    /** Thứ tự toàn cục của node xa nhất được mở; null khi user vừa tạo tài khoản. */
+    farthestAvailableNodeGlobalOrderIndex: number | null;
     lastLearningNodeId: number | null;
+    lastLearningNodeGlobalOrderIndex: number | null;
     lastLearningAt: string | null;
     currentStreak: number;
     longestStreak: number;

@@ -1,6 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { cn } from "@/libs/utils";
+
+const ACCENT = "var(--book-accent, var(--color-bgc-highlight))";
 
 interface MicVolumeGaugeProps {
     /** Mức âm lượng 0–100 */
@@ -20,20 +21,19 @@ export function MicVolumeGauge({ level, active }: MicVolumeGaugeProps) {
                     const threshold = ((i + 1) / bars) * 100;
                     const lit = active && clamped >= threshold;
                     const heightPct = 20 + ((i + 1) / bars) * 80;
+                    // Bar sáng theo màu sách; ngưỡng cao (>80%) giữ màu đỏ cảnh báo.
+                    const background = !lit
+                        ? "color-mix(in srgb, var(--color-bdc-muted) 50%, transparent)"
+                        : threshold > 80
+                          ? "var(--color-bgc-error)"
+                          : threshold > 55
+                            ? ACCENT
+                            : `color-mix(in srgb, ${ACCENT} 80%, transparent)`;
                     return (
                         <span
                             key={i}
-                            className={cn(
-                                "w-1.5 rounded-sm transition-all duration-150",
-                                lit
-                                    ? threshold > 80
-                                        ? "bg-bgc-error"
-                                        : threshold > 55
-                                          ? "bg-bgc-highlight"
-                                          : "bg-bgc-highlight/80"
-                                    : "bg-bdc-muted/50",
-                            )}
-                            style={{ height: `${heightPct}%` }}
+                            className="w-1.5 rounded-sm transition-all duration-150"
+                            style={{ height: `${heightPct}%`, background }}
                         />
                     );
                 })}

@@ -7,9 +7,9 @@
             "streak": "Streak hàng ngày",
             "currentLevel": "Trình độ hiện tại",
             "totalPoints": "Tổng điểm tích lũy",
-            "streakValue": "{days} ngày liên tiếp! 🔥",
-            "levelValue": "Trình độ: {level}",
-            "pointsValue": "{points} L-Point 🌟"
+            "streakValue": "{days} ngày 🔥",
+            "levelValue": "{level}",
+            "pointsValue": "{points} L-Point"
         },
         "books": {
             "chooseBook": "Chọn sách học",
@@ -73,11 +73,17 @@
             "chestTitle": "Rương thưởng",
             "chestHint": "Mở để nhận thưởng",
             "chestReward": "+{point} L-Point",
+            "chestMystery": "+? L-Point",
+            "chestRangeHint": "Mở rương để nhận ngẫu nhiên từ",
+            "chestRange": "{min} – {max} L-Point",
+            "chestGotLabel": "Bạn nhận được",
             "chestClaimBtn": "Nhận thưởng",
             "chestOpened": "Đã mở rương",
             "chestClaimed": "Bạn nhận được +{reward} L-Point! 🎁",
             "chestAlready": "Bạn đã mở rương này rồi.",
-            "chestFailed": "Mở rương thất bại, thử lại nhé."
+            "chestFailed": "Mở rương thất bại, thử lại nhé.",
+            "vocabDone": "Đã hoàn thành phần từ vựng",
+            "vocabFailed": "Không hoàn thành được, thử lại nhé."
         },
         "preview": {
             "title": "Chi tiết câu hỏi",
@@ -107,7 +113,9 @@
             "prev": "Trước",
             "next": "Tiếp",
             "learned": "Đã thuộc",
-            "finish": "Hoàn thành"
+            "finish": "Hoàn thành",
+            "done": "Đã hoàn thành",
+            "finishHint": "Lướt hết các thẻ để hoàn thành"
         }
     }
 }

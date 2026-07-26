@@ -1,6 +1,6 @@
 import { proxyPostJson } from "@/services/server/backend.proxy";
 
-/** Mở rương thưởng: forward { chestId, userId } lên BE (cộng L-Point thật). */
+/** Mở rương thưởng: forward { learningPathNodeId } lên BE (userId lấy từ token). */
 export async function POST(request: Request) {
     return proxyPostJson("/chests/open", request);
 }
