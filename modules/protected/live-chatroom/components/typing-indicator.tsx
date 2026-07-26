@@ -1,28 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Avatar } from "@mui/material";
 import { getInitials } from "../utils/get-initials";
 import type { Companion } from "../types/live-chatroom.type";
 import { useTranslations } from "next-intl";
 
+/** Chỉ báo AI (Tanaka) đang soạn câu trả lời — hiện sau khi câu của bạn đã lên. */
 export function TypingIndicator({ companion }: { companion: Companion }) {
     const t = useTranslations("liveChatroom");
-    const [stepIdx, setStepIdx] = useState(0);
-
-    const steps = [
-        t("processingFilterNoise"),
-        t("processingSTT"),
-        t("processingAnalysis"),
-        t("processingAiResponse"),
-    ];
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setStepIdx((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
-        }, 1500);
-
-        return () => clearInterval(timer);
-    }, [steps.length]);
 
     return (
         <div className="flex items-start gap-3">
@@ -40,7 +25,7 @@ export function TypingIndicator({ companion }: { companion: Companion }) {
                         <span className="bg-bgc-highlight h-1.5 w-1.5 animate-bounce rounded-full" />
                     </span>
                     <span className="text-text-contrast animate-pulse font-medium">
-                        {steps[stepIdx]}
+                        {t("aiThinking")}
                     </span>
                 </div>
             </div>
