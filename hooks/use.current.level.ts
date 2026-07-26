@@ -30,11 +30,10 @@ export function useCurrentBook(): MarugotoBook | null {
     return current ?? ordered[0];
 }
 
-/** Nhãn trình độ hiện tại, ví dụ "N5 · A1"; thiếu dữ liệu → chuỗi rỗng. */
+/** Nhãn trình độ hiện tại theo đúng cấp của sách đang mở, ví dụ "A1". */
 export function useCurrentLevelLabel(): string {
     const book = useCurrentBook();
-    if (!book) return "";
-    return book.jlpt ? `${book.jlpt} · ${book.cefr}` : book.cefr;
+    return book?.cefr ?? "";
 }
 
 export default useCurrentLevelLabel;

@@ -19,14 +19,14 @@ interface StatCardProps {
 function StatCard({ icon, label, value, href }: StatCardProps) {
     const inner = (
         <>
-            <div className="bg-bgc-highlight/15 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+            <div className="bg-bgc-highlight/15 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
                 {icon}
             </div>
             <div className="min-w-0 flex-1">
-                <p className="text-text-muted text-[11px] tracking-wide uppercase">
+                <p className="text-text-muted text-[10px] leading-tight font-semibold tracking-tight uppercase">
                     {label}
                 </p>
-                <p className="text-text-contrast truncate text-sm font-semibold">
+                <p className="text-text-contrast mt-0.5 truncate text-base leading-tight font-black">
                     {value}
                 </p>
             </div>
@@ -36,7 +36,7 @@ function StatCard({ icon, label, value, href }: StatCardProps) {
         </>
     );
     const className = cn(
-        "border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-xl border p-4",
+        "border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-xl border px-4 py-3.5",
         href && "hover:border-bgc-highlight/60 hover:shadow-sm transition-all",
     );
     return href ? (
@@ -75,7 +75,7 @@ export function RoadmapHeader() {
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:w-[560px]">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:w-[600px]">
                 <StatCard
                     icon={<Flame className="text-bgc-highlight h-5 w-5" />}
                     label={t("streak")}
