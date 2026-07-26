@@ -31,7 +31,8 @@
                 "report": "Report",
                 "liveChatroom": "Live Chatroom",
                 "dialogueSetup": "Dialogue Setup",
-                "leaderboard": "Competitive Leaderboard"
+                "leaderboard": "Competitive Leaderboard",
+                "orders": "Order History"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -55,6 +56,7 @@
                 "registerButton": "Đăng ký trải nghiệm ngay",
                 "accountMenu": {
                     "settings": "Settings",
+                    "orders": "Order History",
                     "language": "Language",
                     "getHelp": "Help & Support",
                     "report": "Report"

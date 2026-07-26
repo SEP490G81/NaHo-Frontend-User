@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { getSubscriptionPlans } from "@/services/client/subscription.service";
 import { createPaymentOrder } from "@/services/client/payment.service";
 import {
     PlanTier,
     SubscriptionPlanResponse,
 } from "@/types/responses/subscription.response";
-import PlanCard from "@/modules/protected/settings/nested/billing/components/plan.card";
+import PlanCard from "@/modules/protected/settings/billing/components/plan.card";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -27,6 +28,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
     currentPlanTier,
 }) => {
     const t = useTranslations("settings.billing");
+    const router = useRouter();
 
     const [plans, setPlans] = useState<SubscriptionPlanResponse[]>([]);
     const [loadingPlans, setLoadingPlans] = useState<boolean>(false);
@@ -89,8 +91,17 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             );
 
             if (res && res.paymentUrl) {
-                // Direct browser to VNPAY checkout URL
-                window.location.href = res.paymentUrl;
+                try {
+                    const savedUrls = JSON.parse(localStorage.getItem("naho_payment_urls") || "{}");
+                    savedUrls[res.orderCode] = res.paymentUrl;
+                    localStorage.setItem("naho_payment_urls", JSON.stringify(savedUrls));
+                } catch (e) {
+                    console.error("Failed to save paymentUrl to localStorage:", e);
+                }
+
+                window.open(res.paymentUrl, "_blank");
+                onClose();
+                router.push("/settings/orders");
             } else {
                 throw new Error(t("errors.createPaymentFailed"));
             }

@@ -4,9 +4,33 @@
             "general": "General",
             "account": "Account",
             "security": "Security",
-            "billing": "Billing & Subscription"
+            "billing": "Billing & Subscription",
+            "orders": "Order History"
         },
         "searchPlaceholder": "Search settings",
+
+        "orders": {
+            "title": "Payment Order History",
+            "subtitle": "View and manage your subscription payment invoices",
+            "orderCode": "Order Code",
+            "plan": "Plan",
+            "amount": "Amount",
+            "provider": "Payment Gateway",
+            "status": "Status",
+            "createdTime": "Created At",
+            "actions": "Actions",
+            "continuePayment": "Continue Payment",
+            "cancelOrder": "Cancel Order",
+            "confirmCancelTitle": "Confirm Order Cancellation",
+            "confirmCancelMessage": "Are you sure you want to cancel order {orderCode}? This action cannot be undone.",
+            "cancelSuccess": "Order cancelled successfully!",
+            "cancelFailed": "Failed to cancel order. Please try again.",
+            "noOrders": "No payment history found.",
+            "statusPaid": "Paid",
+            "statusPending": "Pending",
+            "statusCancelled": "Cancelled",
+            "statusExpired": "Expired"
+        },
         "billing": {
             "currentPlan": "Current Plan",
             "currentPlanTitle": "Your Active Subscription",

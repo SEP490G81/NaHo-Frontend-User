@@ -35,7 +35,8 @@
                 "liveChatroom": "Trò chuyện trực tuyến",
                 "dialogueSetup": "Thiết lập hội thoại",
                 "leaderboard": "Bảng xếp hạng thi đua",
-                "settings": "Cài đặt"
+                "settings": "Cài đặt",
+                "orders": "Lịch sử giao dịch"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -59,6 +60,7 @@
                 "registerButton": "Đăng ký trải nghiệm ngay",
                 "accountMenu": {
                     "settings": "Cài đặt",
+                    "orders": "Lịch sử giao dịch",
                     "language": "Ngôn ngữ",
                     "getHelp": "Trợ giúp",
                     "report": "Báo cáo"

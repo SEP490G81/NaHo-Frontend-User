@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { UserSubscriptionResponse } from "@/types/responses/subscription.response";
-import UpdatePlanButton from "@/modules/protected/settings/nested/billing/components/update.plan.button";
+import UpdatePlanButton from "@/modules/protected/settings/billing/components/update.plan.button";
 import Chip from "@mui/material/Chip";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -85,7 +85,16 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                 </div>
 
                 <div className="shrink-0">
-                    <UpdatePlanButton onOpenModal={onOpenModal} />
+                    {tier !== "PREMIUM" ? (
+                        <UpdatePlanButton onOpenModal={onOpenModal} />
+                    ) : (
+                        <Chip
+                            label="Gói cao nhất 👑"
+                            color="warning"
+                            variant="filled"
+                            className="font-bold text-white shadow"
+                        />
+                    )}
                 </div>
             </div>
 

@@ -4,9 +4,33 @@
             "general": "Chung",
             "account": "Tài khoản",
             "security": "Bảo mật",
-            "billing": "Thanh toán"
+            "billing": "Thanh toán",
+            "orders": "Lịch sử giao dịch"
         },
         "searchPlaceholder": "Tìm kiếm",
+
+        "orders": {
+            "title": "Lịch sử giao dịch thanh toán",
+            "subtitle": "Xem và quản lý danh sách các hóa đơn thanh toán gói dịch vụ của bạn",
+            "orderCode": "Mã đơn hàng",
+            "plan": "Gói dịch vụ",
+            "amount": "Số tiền",
+            "provider": "Cổng thanh toán",
+            "status": "Trạng thái",
+            "createdTime": "Thời gian tạo",
+            "actions": "Thao tác",
+            "continuePayment": "Tiếp tục thanh toán",
+            "cancelOrder": "Hủy đơn",
+            "confirmCancelTitle": "Xác nhận hủy đơn hàng",
+            "confirmCancelMessage": "Bạn có chắc chắn muốn hủy đơn hàng {orderCode} không? Thao tác này không thể hoàn tác.",
+            "cancelSuccess": "Hủy đơn hàng thành công!",
+            "cancelFailed": "Không thể hủy đơn hàng. Vui lòng thử lại.",
+            "noOrders": "Chưa có lịch sử giao dịch nào.",
+            "statusPaid": "Đã thanh toán",
+            "statusPending": "Chờ thanh toán",
+            "statusCancelled": "Đã hủy",
+            "statusExpired": "Đã hết hạn"
+        },
         "billing": {
             "currentPlan": "Gói hiện tại",
             "currentPlanTitle": "Gói dịch vụ hiện tại",

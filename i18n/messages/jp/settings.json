@@ -4,9 +4,33 @@
             "general": "一般",
             "account": "アカウント",
             "security": "セキュリティ",
-            "billing": "お支払いプラン"
+            "billing": "お支払いプラン",
+            "orders": "取引履歴"
         },
         "searchPlaceholder": "設定を検索",
+
+        "orders": {
+            "title": "決済注文履歴",
+            "subtitle": "サブスクリプション決済請求書の表示と管理",
+            "orderCode": "注文コード",
+            "plan": "プラン",
+            "amount": "金額",
+            "provider": "決済プロバイダー",
+            "status": "ステータス",
+            "createdTime": "作成日時",
+            "actions": "操作",
+            "continuePayment": "決済を継続",
+            "cancelOrder": "注文キャンセル",
+            "confirmCancelTitle": "注文キャンセルの確認",
+            "confirmCancelMessage": "注文 {orderCode} をキャンセルしてもよろしいですか？この操作は取り消せません。",
+            "cancelSuccess": "注文を正常にキャンセルしました！",
+            "cancelFailed": "注文のキャンセルに失敗しました。もう一度お試しください。",
+            "noOrders": "決済履歴がありません。",
+            "statusPaid": "支払い済み",
+            "statusPending": "支払い待ち",
+            "statusCancelled": "キャンセル済み",
+            "statusExpired": "期限切れ"
+        },
         "billing": {
             "currentPlan": "現在のプラン",
             "currentPlanTitle": "ご利用中のサブスクリプション",

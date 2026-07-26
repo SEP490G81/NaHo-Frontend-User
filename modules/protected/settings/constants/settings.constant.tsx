@@ -3,6 +3,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 export const SETTING_MENU_ITEMS: SettingsMenuItem[] = [
     {
@@ -29,4 +30,11 @@ export const SETTING_MENU_ITEMS: SettingsMenuItem[] = [
         redirectLink: "/settings/billing",
         icon: <PaymentOutlinedIcon fontSize="small" />,
     },
+    {
+        id: "st-5",
+        titleKey: "orders",
+        redirectLink: "/settings/orders",
+        icon: <ReceiptLongOutlinedIcon fontSize="small" />,
+    },
 ];
+
