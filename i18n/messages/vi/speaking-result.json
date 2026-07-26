@@ -1,0 +1,21 @@
+{
+    "speakingResult": {
+        "title": "Báo cáo phiên luyện",
+        "overall": "Tổng",
+        "jlpt": "JLPT ước lượng",
+        "breakdownTitle": "Biểu đồ kỹ năng",
+        "detailTitle": "Chi tiết điểm",
+        "strengths": "Điểm mạnh",
+        "weaknesses": "Cần cải thiện",
+        "feedbackTitle": "Gợi ý cá nhân hóa",
+        "improvedTitle": "Cách diễn đạt hay hơn",
+        "retry": "Luyện lại",
+        "dim_fluency": "Trôi chảy",
+        "dim_pronunciation": "Phát âm",
+        "dim_grammar": "Ngữ pháp",
+        "dim_vocabulary": "Từ vựng",
+        "dim_interaction": "Tương tác",
+        "dim_naturalness": "Tự nhiên",
+        "dim_coherence": "Mạch lạc"
+    }
+}

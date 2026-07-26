@@ -1,6 +1,12 @@
 {
     "liveChatroom": {
         "settingsTitle": "Cài đặt hội thoại",
+        "online": "Đang trực tuyến",
+        "ending": "Đang kết thúc...",
+        "sendError": "Không gửi được tin nhắn. Vui lòng thử lại.",
+        "endError": "Không thể kết thúc phiên. Vui lòng thử lại.",
+        "pronunciationScore": "Phát âm",
+        "aiThinking": "Đang soạn câu trả lời...",
         "speedLabel": "Tốc độ nói của AI",
         "furiganaToggle": "Hiển thị Furigana",
         "translateToggle": "Dịch tự động",

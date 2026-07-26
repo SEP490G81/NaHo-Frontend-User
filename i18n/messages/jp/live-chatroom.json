@@ -1,6 +1,12 @@
 {
     "liveChatroom": {
         "settingsTitle": "会話設定",
+        "online": "オンライン",
+        "ending": "終了中...",
+        "sendError": "メッセージを送信できませんでした。もう一度お試しください。",
+        "endError": "セッションを終了できませんでした。もう一度お試しください。",
+        "pronunciationScore": "発音",
+        "aiThinking": "返信を考えています...",
         "speedLabel": "AIの読み上げ速度",
         "furiganaToggle": "ふりがなを表示",
         "translateToggle": "自動翻訳",

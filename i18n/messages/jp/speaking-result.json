@@ -1,0 +1,21 @@
+{
+    "speakingResult": {
+        "title": "セッションレポート",
+        "overall": "総合",
+        "jlpt": "推定JLPT",
+        "breakdownTitle": "スキルレーダー",
+        "detailTitle": "スコア詳細",
+        "strengths": "強み",
+        "weaknesses": "改善点",
+        "feedbackTitle": "個別アドバイス",
+        "improvedTitle": "より良い表現",
+        "retry": "もう一度練習",
+        "dim_fluency": "流暢さ",
+        "dim_pronunciation": "発音",
+        "dim_grammar": "文法",
+        "dim_vocabulary": "語彙",
+        "dim_interaction": "やり取り",
+        "dim_naturalness": "自然さ",
+        "dim_coherence": "一貫性"
+    }
+}
