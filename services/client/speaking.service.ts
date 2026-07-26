@@ -3,7 +3,7 @@ import {
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
     SpeakingHistoryListItem,
-    SpringPage,
+    SpringPage
 } from "@/types/responses/speaking.response";
 
 /**
@@ -23,7 +23,8 @@ async function unwrap<T>(response: Response): Promise<T> {
 /** Đuôi file theo mime của bản ghi để BE nhận đúng định dạng. */
 function fileNameFor(blob: Blob): string {
     if (blob.type.includes("wav")) return "recording.wav";
-    if (blob.type.includes("mp4") || blob.type.includes("m4a")) return "recording.m4a";
+    if (blob.type.includes("mp4") || blob.type.includes("m4a"))
+        return "recording.m4a";
     if (blob.type.includes("ogg")) return "recording.ogg";
     return "recording.webm";
 }
@@ -41,9 +42,15 @@ export async function submitSpeakingAnalysis(
     const form = new FormData();
     form.append("file", input.file, fileNameFor(input.file));
     form.append("speakingQuestionId", String(input.speakingQuestionId));
-    form.append("durationSec", String(Math.max(1, Math.round(input.durationSec))));
+    form.append(
+        "durationSec",
+        String(Math.max(1, Math.round(input.durationSec))),
+    );
 
-    const response = await fetch("/api/analysis", { method: "POST", body: form });
+    const response = await fetch("/api/analysis", {
+        method: "POST",
+        body: form,
+    });
     return unwrap<SpeakingAnalysisResponse>(response);
 }
 
@@ -85,7 +92,8 @@ export async function getSpeakingHistoryList(
     const result = await response.json();
     if (!response.ok) {
         throw new Error(
-            (result as ProblemDetail).detail || "Không tải được lịch sử luyện tập",
+            (result as ProblemDetail).detail ||
+                "Không tải được lịch sử luyện tập",
         );
     }
     const page = (result as ApiResponse<SpringPage<SpeakingHistoryListItem>>)

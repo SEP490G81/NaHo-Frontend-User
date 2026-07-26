@@ -36,7 +36,7 @@ const HeroSection = () => {
                 />
             </div>
 
-            <div className="pointer-events-none absolute -top-[72px] left-0 right-0 bottom-0 overflow-hidden">
+            <div className="pointer-events-none absolute -top-[72px] right-0 bottom-0 left-0 overflow-hidden">
                 {HERO_PETAL_ITEMS.map((petal) => (
                     <span
                         key={petal.id}

@@ -4,7 +4,7 @@ import type {
     LessonDetailResponse,
     LessonListItemResponse,
     ObjectiveListItemResponse,
-    TopicListItemResponse,
+    TopicListItemResponse
 } from "@/types/responses/book.response";
 import type { LearningPathNodeListItemResponse } from "@/types/responses/learning.response";
 import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
@@ -68,12 +68,14 @@ export function mapBook(b: BookResponse): MarugotoBook {
         code: b.title,
         level: band,
         cefr: band,
+        jlpt: b.jlptLevel,
         cefrOrder: CEFR_ORDER[b.cefrLevel] ?? 99,
         order: b.orderIndex ?? 0,
         title: b.title,
         subtitle: b.description,
         coverImage: b.coverImage?.objectKey ?? b.coverImage?.fileUrl,
-        coverColor: BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
+        coverColor:
+            BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
         firstNodeOrder: b.firstNodeGlobalOrderIndex ?? undefined,
         lastNodeOrder: b.lastNodeGlobalOrderIndex ?? undefined,
         topics: [],
@@ -90,6 +92,8 @@ export function mapBeLesson(l: LessonListItemResponse): Lesson {
         furigana: l.japaneseName,
         furiganaMarkup: l.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: l.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: l.lastNodeGlobalOrderIndex ?? undefined,
         canDos: [],
     };
 }
@@ -106,6 +110,8 @@ export function mapBeTopic(
         jpTitle: t.japaneseName,
         furiganaMarkup: t.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: t.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: t.lastNodeGlobalOrderIndex ?? undefined,
         lessons,
     };
 }
@@ -142,6 +148,7 @@ export function mapBeObjective(
                 vocabularyQuestionId: n.vocabularyQuestionId ?? null,
                 chestId: n.chestId ?? null,
                 orderIndex: n.orderIndex,
+                globalOrderIndex: n.globalOrderIndex,
             })),
     };
 }
@@ -159,6 +166,8 @@ export function mapBeLessonDetail(
         furigana: splitMarkup(l.japaneseNameMarkup || l.japaneseName).reading,
         furiganaMarkup: l.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: l.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: l.lastNodeGlobalOrderIndex ?? undefined,
         canDos,
     };
 }

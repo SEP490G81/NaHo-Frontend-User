@@ -35,7 +35,13 @@ export function SandboxStep1({
                 <ol className="mt-4 space-y-3 text-sm">
                     {rules.map((rule, i) => (
                         <li key={i} className="flex items-start gap-3 rounded-lg bg-bgc-page p-3">
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bgc-highlight/15 text-xs font-bold text-bgc-highlight">
+                            <span
+                                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                                style={{
+                                    background: `color-mix(in srgb, ${accent} 15%, transparent)`,
+                                    color: accent,
+                                }}
+                            >
                                 {i + 1}
                             </span>
                             <span className="leading-relaxed text-text-contrast">{rule}</span>
@@ -88,7 +94,13 @@ export function SandboxStep1({
 
                 {micStatus === "good" && (
                     <div className="space-y-3 text-center">
-                        <p className="inline-flex items-center gap-2 rounded-full bg-bgc-highlight/15 px-4 py-1 text-sm font-semibold text-bgc-highlight">
+                        <p
+                            className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm font-semibold"
+                            style={{
+                                background: `color-mix(in srgb, ${accent} 15%, transparent)`,
+                                color: accent,
+                            }}
+                        >
                             <CheckCircle2 className="h-4 w-4" />
                             {t("micStatusGood")}
                         </p>

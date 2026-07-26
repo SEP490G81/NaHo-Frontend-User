@@ -1,13 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import {
-    CalendarClock,
-    ChevronRight,
-    Clock,
-    ListChecks,
-    Mic,
-    Sparkles,
-} from "lucide-react";
+import { ListChecks, Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
@@ -15,14 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
+import { getBookDetail, getTopicDetail } from "@/services/client/book.service";
+import { mapBook } from "@/data/marugoto/mapper";
 import { mapSpeakingReport } from "../utils/speaking.mapper";
+import ReportHero from "../components/report.hero";
 import HistoryDetailOverview from "../components/history.detail.overview";
 import HistoryDetailTabs from "../components/history.detail.tabs";
-
-function formatDate(iso: string): string {
-    const d = new Date(iso);
-    return Number.isNaN(d.getTime()) ? iso : d.toLocaleString();
-}
 
 /** Màn báo cáo chi tiết bài luyện (GET /history/{id}). */
 export function SpeakingResultView({ historyId }: { historyId: string }) {
@@ -41,6 +32,25 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         [data],
     );
 
+    const bookId = data?.bookId ?? searchParams.get("book");
+    const topicId = data?.topicId ?? searchParams.get("topic");
+
+    // Màu chủ đạo theo quyển sách của câu hỏi (đồng bộ tone với lộ trình).
+    const bookQ = useQuery({
+        queryKey: ["book", String(bookId)],
+        queryFn: () => getBookDetail(String(bookId)),
+        enabled: !!bookId,
+    });
+    // Thứ tự chủ đề để hiển thị "Chủ đề N · tên".
+    const topicQ = useQuery({
+        queryKey: ["topic", String(topicId)],
+        queryFn: () => getTopicDetail(String(topicId)),
+        enabled: !!topicId,
+    });
+
+    const accent = bookQ.data
+        ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
+        : "var(--color-bgc-highlight)";
 
     if (isLoading) {
         return (
@@ -76,96 +86,42 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
 
     // Mở lại đúng sandbox câu này: ưu tiên ngữ cảnh từ BE, thiếu thì lấy từ URL.
     const node = data.learningPathNodeId ?? searchParams.get("node");
-    const book = data.bookId ?? searchParams.get("book");
-    const topic = data.topicId ?? searchParams.get("topic");
     const ctx = new URLSearchParams();
     if (node) ctx.set("node", String(node));
-    if (book) ctx.set("book", String(book));
-    if (topic) ctx.set("topic", String(topic));
+    if (bookId) ctx.set("book", String(bookId));
+    if (topicId) ctx.set("topic", String(topicId));
     const qs = ctx.toString();
-    const topicHref =
-        book && topic ? `/books/${book}/topics/${topic}` : null;
+    const topicHref = bookId && topicId ? `/books/${bookId}/topics/${topicId}` : null;
+    const topicLabel =
+        topicQ.data?.orderIndex != null
+            ? t("topicLabel", { index: topicQ.data.orderIndex })
+            : null;
     const retryHref =
         data.questionId != null
             ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
             : "/history";
 
     return (
-        <div className="px-4 py-6 md:px-8">
+        <div
+            className="px-4 py-6 md:px-8"
+            style={{ "--book-accent": accent } as React.CSSProperties}
+        >
             <div className="mx-auto max-w-6xl space-y-6">
-                {/* Hero + thông tin phiên luyện (gộp làm một) */}
-                <div className="border-bdc-primary bg-bgc-app rounded-2xl border px-5 py-4">
-                    <div className="flex items-center gap-3">
-                        <span className="bg-bgc-highlight/15 text-bgc-highlight flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
-                            <Sparkles className="h-5 w-5" />
-                        </span>
-                        <div>
-                            <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
-                                {t("reportTitle")}
-                            </h1>
-                            <p className="text-text-muted text-sm">
-                                {t("reportSubtitle")}
-                            </p>
-                        </div>
-                    </div>
-                    {data.speakingQuestionTitle && (
-                        <div className="border-bdc-primary mt-3 border-t pt-3">
-                            <p className="text-text-muted text-[11px] font-bold tracking-[0.14em] uppercase">
-                                {t("questionTitle")}
-                            </p>
-                            <p className="text-text-contrast mt-0.5 font-semibold">
-                                {data.speakingQuestionTitle}
-                            </p>
-                            {data.topicName &&
-                                (topicHref ? (
-                                    <Link
-                                        href={topicHref as AllRoute}
-                                        className="text-text-highlight hover:text-bgc-highlight inline-flex items-center gap-1 text-xs font-medium"
-                                    >
-                                        {data.topicName}
-                                        <ChevronRight className="h-3 w-3" />
-                                    </Link>
-                                ) : (
-                                    <p className="text-text-muted text-xs">
-                                        {data.topicName}
-                                    </p>
-                                ))}
-                        </div>
-                    )}
-
-                    <div className="border-bdc-primary text-text-muted mt-3 flex flex-wrap gap-x-5 gap-y-1 border-t pt-3 text-sm">
-                        <span className="inline-flex items-center gap-1.5">
-                            <CalendarClock className="h-4 w-4" />
-                            {t("practicedAtLabel")}: {formatDate(data.practicedAt)}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5">
-                            <Clock className="h-4 w-4" />
-                            {t("durationLabel")}: {data.durationSec}s
-                        </span>
-                    </div>
-                </div>
-
-                {data.audioUrl && (
-                    <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
-                        <p className="text-text-contrast mb-2 text-sm font-semibold">
-                            {t("yourSpeech")}
-                        </p>
-                        <audio
-                            controls
-                            src={data.audioUrl}
-                            className="w-full"
-                            preload="none"
-                        />
-                    </div>
-                )}
-
-                <HistoryDetailOverview report={report} t={t} />
-
-                <HistoryDetailTabs
-                    report={report}
-                    showFurigana={showFurigana}
-                    t={t}
+                <ReportHero
+                    average={report.average}
+                    questionTitle={data.speakingQuestionTitle}
+                    topicName={data.topicName}
+                    topicLabel={topicLabel}
+                    topicHref={topicHref}
+                    practicedAt={data.practicedAt}
+                    durationSec={data.durationSec}
+                    audioUrl={data.audioUrl}
+                    accent={accent}
                 />
+
+                <HistoryDetailOverview report={report} accent={accent} />
+
+                <HistoryDetailTabs report={report} showFurigana={showFurigana} />
 
                 <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
                     <Button
@@ -193,13 +149,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                         startIcon={<Mic className="h-4 w-4" />}
                         sx={{
                             textTransform: "none",
-                            backgroundColor: "var(--color-bgc-highlight)",
-                            color: "var(--color-text-pure)",
+                            backgroundColor: accent,
+                            color: "#fff",
                             fontWeight: 700,
-                            "&:hover": {
-                                backgroundColor: "var(--color-bgc-highlight)",
-                                filter: "brightness(0.95)",
-                            },
+                            "&:hover": { backgroundColor: accent, filter: "brightness(0.95)" },
                         }}
                     >
                         {t("retryBtn")}

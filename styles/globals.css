@@ -194,34 +194,56 @@ input::-ms-clear {
 .Toastify__toast-container {
     padding: 16px !important;
 }
+
 .Toastify__toast {
-    background-color: var(--color-bgc-app) !important;
+    /* Màu nhấn theo loại thông báo (đặt lại ở các lớp --success/--error/... bên dưới). */
+    --toast-accent: var(--color-bgc-highlight);
+    background: color-mix(in srgb, var(--toast-accent) 7%, var(--color-bgc-app)) !important;
     color: var(--color-text-contrast) !important;
-    border: 1px solid var(--color-bdc-primary) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+    border: 1px solid
+        color-mix(in srgb, var(--toast-accent) 22%, var(--color-bdc-primary)) !important;
+    border-left: 5px solid var(--toast-accent) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.18),
+        0 4px 10px -4px rgba(0, 0, 0, 0.08) !important;
     font-family: var(--app-font), sans-serif !important;
-    padding: 14px 18px !important;
+    padding: 16px 18px !important;
 }
+.Toastify__toast-body {
+    font-weight: 500 !important;
+}
+.Toastify__toast-icon {
+    width: 22px !important;
+    margin-inline-end: 12px !important;
+}
+
 .Toastify__toast--success {
-    border-left: 4px solid var(--color-bgc-highlight) !important;
+    --toast-accent: var(--color-text-success);
 }
+
 .Toastify__toast--error {
-    border-left: 4px solid var(--color-text-error) !important;
+    --toast-accent: var(--color-text-error);
 }
+
 .Toastify__toast--info {
-    border-left: 4px solid var(--color-bgc-highlight) !important;
+    --toast-accent: #3b82f6;
 }
+
 .Toastify__toast--warning {
-    border-left: 4px solid #f59e0b !important;
+    --toast-accent: #f59e0b;
 }
+
 .Toastify__progress-bar {
-    background: var(--color-bgc-highlight) !important;
+    background: var(--toast-accent) !important;
+    height: 4px !important;
+    opacity: 0.9 !important;
 }
+
 .Toastify__close-button {
     color: var(--color-text-contrast) !important;
     opacity: 0.5;
 }
+
 .Toastify__close-button:hover {
     opacity: 0.9;
 }

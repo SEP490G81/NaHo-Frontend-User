@@ -48,7 +48,8 @@ export function TopicPathHeader({
                         className="text-[11px] font-bold tracking-[0.14em] uppercase"
                         style={{ color: accent }}
                     >
-                        {book.level} · {t("topic.label", { index: topic.order })}
+                        {book.level} ·{" "}
+                        {t("topic.label", { index: topic.order })}
                     </span>
                     <h1 className="text-text-contrast truncate text-lg leading-tight font-bold">
                         {topic.furiganaMarkup ? (
@@ -93,11 +94,15 @@ export function TopicPathHeader({
                 <div className="bg-bgc-page h-2 flex-1 overflow-hidden rounded-full">
                     <div
                         className="h-full rounded-full transition-all duration-500"
-                        style={{ width: `${overallPercent}%`, background: accent }}
+                        style={{
+                            width: `${overallPercent}%`,
+                            background: accent,
+                        }}
                     />
                 </div>
                 <span className="text-text-muted shrink-0 text-xs font-semibold">
-                    {overallPercent}% · {t("books.lessonCount", { count: lessonCount })}
+                    {overallPercent}% ·{" "}
+                    {t("books.lessonCount", { count: lessonCount })}
                 </span>
             </div>
         </header>

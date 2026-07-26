@@ -6,7 +6,10 @@ import { useTranslations } from "next-intl";
 const NotificationButton = () => {
     const t = useTranslations();
     return (
-        <TooltipCustom arrow title={t("common.layout.header.notificationButton")}>
+        <TooltipCustom
+            arrow
+            title={t("common.layout.header.notificationButton")}
+        >
             <Button
                 variant="outlined"
                 color="primary"

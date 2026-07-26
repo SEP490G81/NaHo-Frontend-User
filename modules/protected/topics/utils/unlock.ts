@@ -14,47 +14,49 @@ export interface TopicView {
     lessons: LessonView[];
 }
 
-function lessonPercent(
-    lesson: Lesson,
-    scores: Record<string, number>,
-    pass: number,
-): { percent: number; done: boolean } {
-    const qs = lesson.canDos.flatMap((c) => c.questions);
-    if (qs.length === 0) return { percent: 0, done: false };
-    const passed = qs.filter((q) => (scores[q.id] ?? 0) >= pass).length;
-    return {
-        percent: Math.round((passed / qs.length) * 100),
-        done: passed === qs.length,
-    };
-}
-
-function topicStatus(lessons: LessonView[]): NodeStatus {
-    // TẠM THỜI bỏ khóa: mọi chủ đề đều mở (đã học hết = completed, còn lại = active).
-    if (lessons.length > 0 && lessons.every((l) => l.status === "completed")) {
-        return "completed";
-    }
-    return "active";
+interface NodeRange {
+    firstNodeOrder?: number;
+    lastNodeOrder?: number;
 }
 
 /**
- * Trạng thái topic/lesson cho màn chi tiết sách. BE trả toàn bộ nội dung và
- * không gate lesson theo progress → lesson để duyệt mở (đã học = completed,
- * còn lại = active); việc khóa/mở thật nằm ở tầng node trong lộ trình luyện tập.
+ * Trạng thái của một khối (chủ đề / bài học) so với mốc tiến độ `frontier`
+ * (global order index của node xa nhất người dùng được phép học).
+ *
+ * Toàn bộ node của khối nằm trước mốc → completed; mốc rơi vào trong khối →
+ * active; khối bắt đầu sau mốc → locked. Thiếu dữ liệu mốc → mở để không chặn nhầm.
+ */
+function rangeStatus(r: NodeRange, frontier: number | null): NodeStatus {
+    if (frontier == null || r.firstNodeOrder == null) return "active";
+    if (r.lastNodeOrder != null && r.lastNodeOrder < frontier) return "completed";
+    return r.firstNodeOrder <= frontier ? "active" : "locked";
+}
+
+/** Phần trăm hoàn thành của khối, suy từ vị trí mốc trong dải node của khối. */
+function rangePercent(r: NodeRange, frontier: number | null): number {
+    if (frontier == null || r.firstNodeOrder == null || r.lastNodeOrder == null) {
+        return 0;
+    }
+    const total = r.lastNodeOrder - r.firstNodeOrder + 1;
+    if (total <= 0) return 0;
+    const done = frontier - r.firstNodeOrder;
+    return Math.max(0, Math.min(100, Math.round((done / total) * 100)));
+}
+
+/**
+ * Trạng thái topic/lesson cho màn chi tiết sách, khóa theo tiến độ thật của
+ * người dùng: mọi node có global order index lớn hơn mốc đều chưa mở.
  */
 export function buildBookView(
     topics: BookTopic[],
-    scores: Record<string, number>,
-    pass: number,
+    frontier: number | null,
 ): TopicView[] {
     return topics.map((topic) => {
-        const lessons: LessonView[] = topic.lessons.map((lesson) => {
-            const { percent, done } = lessonPercent(lesson, scores, pass);
-            return {
-                lesson,
-                status: done ? "completed" : "active",
-                percent,
-            };
-        });
-        return { topic, status: topicStatus(lessons), lessons };
+        const lessons: LessonView[] = topic.lessons.map((lesson) => ({
+            lesson,
+            status: rangeStatus(lesson, frontier),
+            percent: rangePercent(lesson, frontier),
+        }));
+        return { topic, status: rangeStatus(topic, frontier), lessons };
     });
 }

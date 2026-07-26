@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { dailyPractice } from "@/data/mockLearnerDashboard";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { CHART_COLOR, CHART_HOVER_FILL } from "../constants/dashboard.constant";
 
 export function PracticeTimeChart() {
     const t = useTranslations("dashboard");

@@ -20,6 +20,8 @@ export interface LessonPathNodeMeta {
     vocabularyQuestionId: number | null;
     chestId: number | null;
     orderIndex: number;
+    /** Thứ tự toàn cục trong giáo trình — dùng để khóa/mở theo tiến độ BE. */
+    globalOrderIndex: number;
 }
 
 /** Một mục tiêu giao tiếp (Can-do) — đơn vị nhỏ nhất chứa câu hỏi luyện nói. */
@@ -51,6 +53,9 @@ export interface Lesson {
     /** Markup furigana của BE ("[漢字](かな)…"); ưu tiên hơn `furigana` khi render. */
     furiganaMarkup?: string;
     enTitle: string;
+    /** Global order index node đầu/cuối của bài (khóa/mở theo tiến độ). */
+    firstNodeOrder?: number;
+    lastNodeOrder?: number;
     canDos: CanDo[];
 }
 
@@ -63,6 +68,9 @@ export interface BookTopic {
     /** Markup furigana của BE ("[漢字](かな)…"); ưu tiên hơn `jpTitle` khi render. */
     furiganaMarkup?: string;
     enTitle: string;
+    /** Global order index node đầu/cuối của chủ đề (khóa/mở theo tiến độ). */
+    firstNodeOrder?: number;
+    lastNodeOrder?: number;
     lessons: Lesson[];
 }
 
@@ -74,6 +82,8 @@ export interface MarugotoBook {
     level: string;
     /** Khung CEFR gốc, ví dụ "A2". */
     cefr: string;
+    /** Cấp JLPT tương ứng, ví dụ "N5". */
+    jlpt?: string;
     /** Thứ tự trình độ để quyết định khóa/mở (nhỏ = dễ hơn). */
     cefrOrder: number;
     order: number;

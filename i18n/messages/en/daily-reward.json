@@ -1,0 +1,35 @@
+{
+    "dailyReward": {
+        "triggerTooltip": "Daily attendance to get rewards",
+        "triggerBtn": "Check-in",
+        "title": "Daily Attendance Calendar",
+        "close": "Close",
+        "monthFormat": "Month {month}, {year}",
+        "retry": "Try again",
+        "fetchError": "Failed to fetch daily attendance rewards",
+        "infoTooltip": "Reward details",
+        "expectedReward": "Expected reward {min}~{max} pts",
+        "dayFormat": "Day {day}",
+        "chest": {
+            "bronze": "Bronze Chest",
+            "silver": "Silver Chest",
+            "gold": "Gold Chest",
+            "none": "Direct Points"
+        },
+        "status": {
+            "label": "Status:",
+            "today": "Today",
+            "locked": "Locked",
+            "passed": "Passed",
+            "attended": "Attended",
+            "missed": "Missed"
+        },
+        "tooltip": {
+            "chestLabel": "Chest type:",
+            "rewardLabel": "Reward:"
+        },
+        "claimSuccess": "Reward claimed successfully! You earned +{points} points.",
+        "claimError": "Failed to claim daily reward",
+        "claiming": "Claiming..."
+    }
+}

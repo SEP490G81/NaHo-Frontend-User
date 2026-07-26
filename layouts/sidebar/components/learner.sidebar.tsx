@@ -13,8 +13,15 @@ const DRAWER_WIDTH = 260;
 
 export function LearnerSidebar() {
     const pathname = usePathname();
-    const { isSidebarOpen, isSidebarCollapsed, toggleSidebarCollapse, closeSidebar } = useUiStore();
-    const [openSubMenus, setOpenSubMenus] = React.useState<Record<string, boolean>>({});
+    const {
+        isSidebarOpen,
+        isSidebarCollapsed,
+        toggleSidebarCollapse,
+        closeSidebar,
+    } = useUiStore();
+    const [openSubMenus, setOpenSubMenus] = React.useState<
+        Record<string, boolean>
+    >({});
 
     React.useEffect(() => {
         const initialOpenState: Record<string, boolean> = {};
@@ -22,7 +29,9 @@ export function LearnerSidebar() {
         NAV_ITEMS.forEach((item) => {
             if (item.children) {
                 const hasActiveChild = item.children.some(
-                    (child) => pathname === child.url || pathname.startsWith(child.url + "/")
+                    (child) =>
+                        pathname === child.url ||
+                        pathname.startsWith(child.url + "/"),
                 );
 
                 if (hasActiveChild) {
@@ -47,7 +56,7 @@ export function LearnerSidebar() {
             <div
                 className={cn(
                     "border-bdc-primary flex min-h-[66px] items-center justify-center border-b py-3.5",
-                    isCollapsed ? "px-2" : "px-4"
+                    isCollapsed ? "px-2" : "px-4",
                 )}
             >
                 <SidebarLogoButton>
@@ -61,7 +70,10 @@ export function LearnerSidebar() {
 
             {/* Menu items */}
             <Box className="flex-1 overflow-y-auto py-4">
-                <List disablePadding className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}>
+                <List
+                    disablePadding
+                    className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}
+                >
                     {NAV_ITEMS.map((item) => (
                         <SidebarItem
                             key={item.title}

@@ -1,12 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { BarChart3, Mic, Search } from "lucide-react";
+import { BarChart3, ChevronRight, Mic, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQueries, useQuery } from "@tanstack/react-query";
 import { Button, Pagination } from "@mui/material";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryList } from "@/services/client/speaking.service";
+import { getTopicDetail } from "@/services/client/book.service";
 import type { SpeakingHistoryListItem } from "@/types/responses/speaking.response";
 import HistoryHeader from "./history.header";
 import HistoryEmptyState from "./history.empty.state";
@@ -51,6 +52,22 @@ export function History() {
         ? items.reduce((s, e) => s + e.score, 0) / items.length
         : 0;
 
+    // Tra số thứ tự chủ đề (orderIndex) để hiện "Chủ đề N · tên" như màn Báo cáo.
+    const topicIds = Array.from(
+        new Set(
+            items.map((e) => e.topicId).filter((x): x is number => x != null),
+        ),
+    );
+    const topicQs = useQueries({
+        queries: topicIds.map((id) => ({
+            queryKey: ["topic", String(id)],
+            queryFn: () => getTopicDetail(String(id)),
+        })),
+    });
+    const topicOrderMap = new Map(
+        topicIds.map((id, i) => [id, topicQs[i]?.data?.orderIndex]),
+    );
+
     const applySearch = () => {
         setSearch(term.trim());
         setPage(1);
@@ -66,6 +83,12 @@ export function History() {
         return `/sandbox/${e.speakingQuestionId}${qs ? `?${qs}` : ""}` as AllRoute;
     };
 
+    // Chủ đề bấm được → về lộ trình chủ đề (cần cả bookId lẫn topicId).
+    const topicHref = (e: SpeakingHistoryListItem) =>
+        e.bookId && e.topicId
+            ? (`/books/${e.bookId}/topics/${e.topicId}` as AllRoute)
+            : null;
+
     if (isLoading) {
         return (
             <div className="flex h-[50vh] items-center justify-center">
@@ -77,7 +100,11 @@ export function History() {
     return (
         <div className="px-4 py-6 md:px-8">
             <div className="mx-auto max-w-6xl space-y-6">
-                <HistoryHeader totalCount={totalCount} avgScore={avgScore} t={t} />
+                <HistoryHeader
+                    totalCount={totalCount}
+                    avgScore={avgScore}
+                    t={t}
+                />
 
                 <div className="border-bdc-primary bg-bgc-app flex items-center gap-2 rounded-2xl border px-4 py-3">
                     <Search className="text-text-muted h-4 w-4 shrink-0" />
@@ -138,15 +165,39 @@ export function History() {
                                             <td className="text-text-muted px-4 py-3 whitespace-nowrap tabular-nums">
                                                 {formatDate(e.practicedAt)}
                                             </td>
-                                            <td className="text-text-contrast px-4 py-3">
-                                                {e.topicName || "—"}
+                                            <td className="px-4 py-3">
+                                                {(() => {
+                                                    const order =
+                                                        e.topicId != null
+                                                            ? topicOrderMap.get(e.topicId)
+                                                            : undefined;
+                                                    const label =
+                                                        order != null
+                                                            ? `${t("topicLabel", { index: order })} · ${e.topicName || "—"}`
+                                                            : e.topicName || "—";
+                                                    return topicHref(e) ? (
+                                                        <Link
+                                                            href={topicHref(e)!}
+                                                            className="text-text-contrast hover:text-bgc-highlight inline-flex items-center gap-1 font-medium transition-colors"
+                                                        >
+                                                            {label}
+                                                            <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-50" />
+                                                        </Link>
+                                                    ) : (
+                                                        <span className="text-text-contrast">
+                                                            {label}
+                                                        </span>
+                                                    );
+                                                })()}
                                             </td>
                                             <td className="text-text-contrast max-w-80 truncate px-4 py-3">
                                                 {e.speakingQuestionTitle || "—"}
                                             </td>
                                             <td className="px-4 py-3">
                                                 {e.audioUrl ? (
-                                                    <AudioPlayButton src={e.audioUrl} />
+                                                    <AudioPlayButton
+                                                        src={e.audioUrl}
+                                                    />
                                                 ) : (
                                                     <span className="text-text-muted">
                                                         —
@@ -167,7 +218,8 @@ export function History() {
                                                             <BarChart3 className="h-3.5 w-3.5" />
                                                         }
                                                         sx={{
-                                                            textTransform: "none",
+                                                            textTransform:
+                                                                "none",
                                                             borderColor:
                                                                 "var(--color-bdc-muted)",
                                                             color: "var(--color-text-contrast)",
@@ -175,10 +227,13 @@ export function History() {
                                                     >
                                                         {t("viewReport")}
                                                     </Button>
-                                                    {e.speakingQuestionId != null && (
+                                                    {e.speakingQuestionId !=
+                                                        null && (
                                                         <Button
                                                             component={Link}
-                                                            href={practiceHref(e)}
+                                                            href={practiceHref(
+                                                                e,
+                                                            )}
                                                             size="small"
                                                             variant="contained"
                                                             startIcon={

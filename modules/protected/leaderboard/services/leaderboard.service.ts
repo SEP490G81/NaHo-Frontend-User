@@ -1,13 +1,9 @@
-import {
-    getMockLeaderboardEntries,
-    getMockUserProgress,
-    mockLeagues,
-} from "@/data/mockLeaderboard";
+import { getMockLeaderboardEntries, getMockUserProgress, mockLeagues } from "@/data/mockLeaderboard";
 import {
     LeaderboardEntry,
     LeagueLeaderboardEntryResponse,
     LeagueResponse,
-    UserLearningProgressResponse,
+    UserLearningProgressResponse
 } from "@/types/responses/league.response";
 import { resolveAvatarUrl } from "../utils/leaderboard.util";
 
@@ -30,7 +26,10 @@ function toLeaderboardEntries(
         rank: index + 1,
         userId: entry.id,
         fullName: entry.fullName,
-        avatarUrl: resolveAvatarUrl(entry.avatarObjectKey, entry.oAuthAvatarUrl),
+        avatarUrl: resolveAvatarUrl(
+            entry.avatarObjectKey,
+            entry.oAuthAvatarUrl,
+        ),
         point: entry.totalPoint,
     }));
 }

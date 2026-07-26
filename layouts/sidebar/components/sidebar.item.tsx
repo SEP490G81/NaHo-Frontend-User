@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Collapse, List, ListItem, ListItemButton, Box } from "@mui/material";
+import { Box, Collapse, List, ListItem, ListItemButton } from "@mui/material";
 import { ChevronDown } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
@@ -19,13 +19,18 @@ interface SidebarItemProps {
 }
 
 // Helper function to generate clean class names based on state
-export const getItemClassName = (active: boolean, isCollapsed: boolean, isSubItem: boolean = false) => {
+export const getItemClassName = (
+    active: boolean,
+    isCollapsed: boolean,
+    isSubItem: boolean = false,
+) => {
     if (isSubItem) {
         return cn(
             "relative flex w-full items-center rounded-lg text-xs transition-all duration-200 ease-in-out gap-3 px-3 py-2",
             active
                 ? "bg-bgc-highlight/10 text-bgc-highlight font-semibold"
-                : "text-text-contrast hover:bg-hbgc-app" + (isCollapsed ? "" : " hover:translate-x-1")
+                : "text-text-contrast hover:bg-hbgc-app" +
+                      (isCollapsed ? "" : " hover:translate-x-1"),
         );
     }
     return cn(
@@ -33,7 +38,8 @@ export const getItemClassName = (active: boolean, isCollapsed: boolean, isSubIte
         isCollapsed ? "justify-center px-0" : "gap-3 px-3",
         active
             ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
-            : "text-text-contrast hover:bg-hbgc-app" + (isCollapsed ? "" : " hover:translate-x-1")
+            : "text-text-contrast hover:bg-hbgc-app" +
+                  (isCollapsed ? "" : " hover:translate-x-1"),
     );
 };
 
@@ -50,31 +56,42 @@ export const SidebarItem = ({
 
     // Check if parent or any child route is active
     const active = item.url
-        ? pathname === item.url || (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
+        ? pathname === item.url ||
+          (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
         : item.children?.some(
-            (child) => pathname === child.url || pathname.startsWith(child.url + "/")
-        );
+              (child) =>
+                  pathname === child.url ||
+                  pathname.startsWith(child.url + "/"),
+          );
 
     // 1. Render Disabled / Coming soon items
     if (item.disabled) {
         return (
             <ListItem disablePadding>
                 <TooltipCustom
-                    title={isCollapsed ? `${item.title} (Sắp ra mắt)` : "Sắp ra mắt"}
+                    title={
+                        isCollapsed
+                            ? `${item.title} (Sắp ra mắt)`
+                            : "Sắp ra mắt"
+                    }
                     placement="right"
                 >
                     <Box
                         component="span"
                         className={cn(
                             "flex w-full items-center rounded-lg text-sm",
-                            isCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5",
-                            "text-text-muted cursor-not-allowed bg-transparent opacity-50"
+                            isCollapsed
+                                ? "justify-center px-0 py-2.5"
+                                : "gap-3 px-3 py-2.5",
+                            "text-text-muted cursor-not-allowed bg-transparent opacity-50",
                         )}
                     >
                         <item.icon className="h-4.5 w-4.5 shrink-0" />
                         {!isCollapsed && (
                             <>
-                                <span className="flex-1 truncate font-medium">{item.title}</span>
+                                <span className="flex-1 truncate font-medium">
+                                    {item.title}
+                                </span>
                                 <span className="border-bdc-muted bg-bgc-page text-text-muted rounded-md border px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase">
                                     Mới
                                 </span>
@@ -104,7 +121,10 @@ export const SidebarItem = ({
                                     }
                                     onToggleSubMenu();
                                 }}
-                                className={getItemClassName(!!active, isCollapsed)}
+                                className={getItemClassName(
+                                    !!active,
+                                    isCollapsed,
+                                )}
                                 sx={{
                                     paddingTop: "10px",
                                     paddingBottom: "10px",
@@ -121,7 +141,9 @@ export const SidebarItem = ({
                                 <item.icon
                                     className={cn(
                                         "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
-                                        active ? "text-bgc-highlight" : "text-text-muted"
+                                        active
+                                            ? "text-bgc-highlight"
+                                            : "text-text-muted",
                                     )}
                                 />
                                 {!isCollapsed && (
@@ -131,15 +153,15 @@ export const SidebarItem = ({
                                                 "flex-1 text-sm font-medium transition-all duration-200",
                                                 active
                                                     ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
-                                                    : "text-text-contrast truncate"
+                                                    : "text-text-contrast truncate",
                                             )}
                                         >
                                             {item.title}
                                         </span>
                                         <ChevronDown
                                             className={cn(
-                                                "h-4 w-4 shrink-0 text-text-muted transition-transform duration-200",
-                                                isOpen && "rotate-180"
+                                                "text-text-muted h-4 w-4 shrink-0 transition-transform duration-200",
+                                                isOpen && "rotate-180",
                                             )}
                                         />
                                     </>
@@ -149,28 +171,41 @@ export const SidebarItem = ({
                     </TooltipCustom>
                 </ListItem>
 
-                <Collapse in={isOpen && !isCollapsed} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding className="space-y-1 mt-1 pl-6">
+                <Collapse
+                    in={isOpen && !isCollapsed}
+                    timeout="auto"
+                    unmountOnExit
+                >
+                    <List
+                        component="div"
+                        disablePadding
+                        className="mt-1 space-y-1 pl-6"
+                    >
                         {item.children!.map((child) => {
                             const childActive =
-                                pathname === child.url || pathname.startsWith(child.url + "/");
+                                pathname === child.url ||
+                                pathname.startsWith(child.url + "/");
                             return (
                                 <ListItem key={child.title} disablePadding>
                                     <ListItemButton
                                         component={Link as any}
                                         href={child.url}
                                         onClick={onCloseSidebar}
-                                        className={getItemClassName(childActive, isCollapsed, true)}
+                                        className={getItemClassName(
+                                            childActive,
+                                            isCollapsed,
+                                            true,
+                                        )}
                                     >
                                         {childActive && (
                                             <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
                                         )}
                                         <span
                                             className={cn(
-                                                "flex-1 text-xs font-medium transition-all duration-200 truncate",
+                                                "flex-1 truncate text-xs font-medium transition-all duration-200",
                                                 childActive
                                                     ? "text-bgc-highlight font-semibold"
-                                                    : "text-text-muted"
+                                                    : "text-text-muted",
                                             )}
                                         >
                                             {child.title}
@@ -215,7 +250,9 @@ export const SidebarItem = ({
                         <item.icon
                             className={cn(
                                 "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
-                                active ? "text-bgc-highlight" : "text-text-muted"
+                                active
+                                    ? "text-bgc-highlight"
+                                    : "text-text-muted",
                             )}
                         />
                         {!isCollapsed && (
@@ -224,7 +261,7 @@ export const SidebarItem = ({
                                     "flex-1 text-sm font-medium transition-all duration-200",
                                     active
                                         ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
-                                        : "text-text-contrast truncate"
+                                        : "text-text-contrast truncate",
                                 )}
                             >
                                 {item.title}

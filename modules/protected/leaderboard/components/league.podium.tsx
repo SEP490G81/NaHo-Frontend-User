@@ -3,8 +3,14 @@ import React from "react";
 import { Crown } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import { LeaderboardEntry, LeagueResponse } from "@/types/responses/league.response";
-import { MEDAL_CLASSES, PODIUM_STYLES } from "../constants/leaderboard.constant";
+import {
+    LeaderboardEntry,
+    LeagueResponse,
+} from "@/types/responses/league.response";
+import {
+    MEDAL_CLASSES,
+    PODIUM_STYLES,
+} from "../constants/leaderboard.constant";
 import { getLeagueTheme, toLeagueSlug } from "../utils/leaderboard.util";
 import { useLeagueLabel } from "../utils/use.league.label";
 import LearnerAvatar from "./learner.avatar";
@@ -28,7 +34,12 @@ function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
                 <Crown className="text-league-gold mb-1 h-6 w-6 fill-current" />
             )}
 
-            <div className={cn("relative rounded-full border-[3px]", style.border)}>
+            <div
+                className={cn(
+                    "relative rounded-full border-[3px]",
+                    style.border,
+                )}
+            >
                 {entry ? (
                     <LearnerAvatar
                         fullName={entry.fullName}

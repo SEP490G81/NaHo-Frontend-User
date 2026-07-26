@@ -1,8 +1,4 @@
-import {
-    LeaderboardEntry,
-    LeagueResponse,
-    UserLearningProgressResponse,
-} from "@/types/responses/league.response";
+import { LeaderboardEntry, LeagueResponse, UserLearningProgressResponse } from "@/types/responses/league.response";
 
 /** Khớp seed V4__leagues_data.sql của BE. */
 export const mockLeagues: LeagueResponse[] = [
@@ -41,7 +37,9 @@ const NAME_POOL = [
  * Điểm tích lũy giảm dần theo thứ hạng, nằm trong dải điểm của chính hạng đó
  * (Đồng 0–499, Kim Cương 45.000+...) để bảng xếp hạng trông thật.
  */
-export function getMockLeaderboardEntries(leagueId: number): LeaderboardEntry[] {
+export function getMockLeaderboardEntries(
+    leagueId: number,
+): LeaderboardEntry[] {
     const league =
         mockLeagues.find((item) => item.id === leagueId) ?? mockLeagues[0];
     const top = league.maxPoint ?? league.minPoint + 20000;
@@ -61,7 +59,9 @@ export function getMockUserProgress(): UserLearningProgressResponse {
     return {
         id: MOCK_USER_ID,
         farthestAvailableNodeId: 1,
+        farthestAvailableNodeGlobalOrderIndex: 1,
         lastLearningNodeId: null,
+        lastLearningNodeGlobalOrderIndex: null,
         lastLearningAt: null,
         currentStreak: MOCK_USER_STREAK,
         longestStreak: MOCK_USER_STREAK,

@@ -47,8 +47,7 @@ export function validateUsername(value: string): string | undefined {
     if (v.length === 0) return "register.form.pleaseEnterUsername";
     if (v.length < USERNAME_MIN_LENGTH || v.length > USERNAME_MAX_LENGTH)
         return "register.form.usernameInvalidLength";
-    if (!USERNAME_REGEX.test(v))
-        return "register.form.usernameInvalidFormat";
+    if (!USERNAME_REGEX.test(v)) return "register.form.usernameInvalidFormat";
     return undefined;
 }
 
@@ -72,8 +71,7 @@ export function validateConfirmPassword(
 ): string | undefined {
     if (confirmPassword.length === 0)
         return "register.form.pleaseConfirmPassword";
-    if (confirmPassword !== password)
-        return "register.form.passwordNotMatch";
+    if (confirmPassword !== password) return "register.form.passwordNotMatch";
     return undefined;
 }
 

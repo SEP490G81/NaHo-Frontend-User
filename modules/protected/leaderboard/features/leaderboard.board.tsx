@@ -51,7 +51,9 @@ export function LeaderboardBoard() {
 
     // Progress lỗi/xong mà vẫn chưa có hạng của mình -> mặc định hạng đầu để
     // bảng vẫn xem được thay vì treo skeleton mãi.
-    const fallbackLeagueId = isProgressPending ? null : (leagues[0]?.id ?? null);
+    const fallbackLeagueId = isProgressPending
+        ? null
+        : (leagues[0]?.id ?? null);
     const activeLeagueId = selectedLeagueId ?? myLeagueId ?? fallbackLeagueId;
 
     const {

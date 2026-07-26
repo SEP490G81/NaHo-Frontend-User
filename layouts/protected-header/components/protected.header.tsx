@@ -21,7 +21,7 @@ const ProtectedHeader = () => {
         useUiStore();
 
     return (
-        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between border-b px-3 py-3.5 overflow-hidden">
+        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between overflow-hidden border-b px-3 py-3.5">
             <HeaderDecoration />
 
             {/* Left: collapse toggle (desktop) + mobile menu button */}

@@ -1,4 +1,10 @@
-import { Gender, JlptLevel, UserStatus, RoleName, OAuthProviderName } from "@/types/enums/user.enum";
+import {
+    Gender,
+    JlptLevel,
+    OAuthProviderName,
+    RoleName,
+    UserStatus,
+} from "@/types/enums/user.enum";
 import { FileResult } from "./file.response";
 
 export interface PointSummaryResult {
@@ -63,4 +69,3 @@ export interface TokenExpResponse {
     expiresAt: string;
     expiresIn: number;
 }
-

@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, Compass } from "lucide-react";
+import {Compass, Home} from "lucide-react";
 
 /**
  * Giao diện 404 mang thương hiệu NaHo, render trực tiếp tại chỗ (không dùng
@@ -13,7 +13,7 @@ export function NotFoundView() {
                 className="bg-bgc-highlight pointer-events-none absolute top-8 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full opacity-15 blur-[120px]"
             />
 
-            <div className="pointer-events-none flex select-none items-center justify-center gap-3 leading-none">
+            <div className="pointer-events-none flex items-center justify-center gap-3 leading-none select-none">
                 <span className="text-text-muted/15 text-[9rem] font-black md:text-[13rem]">
                     4
                 </span>
@@ -29,8 +29,8 @@ export function NotFoundView() {
                 Trang không tồn tại
             </h1>
             <p className="text-text-muted mt-3 max-w-md text-sm md:text-base">
-                Có vẻ như bạn đã lạc đường. Trang bạn tìm không có trong hệ thống
-                hoặc đã được di chuyển.
+                Có vẻ như bạn đã lạc đường. Trang bạn tìm không có trong hệ
+                thống hoặc đã được di chuyển.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -51,7 +51,9 @@ export function NotFoundView() {
             </div>
 
             <div className="border-bdc-primary bg-bgc-app text-text-muted mt-10 rounded-xl border px-4 py-2 text-sm">
-                <span className="text-bgc-highlight font-noto-jp font-bold">迷</span>{" "}
+                <span className="text-bgc-highlight font-noto-jp font-bold">
+                    迷
+                </span>{" "}
                 (めい / mê) — nghĩa là &quot;lạc đường, bối rối&quot;
             </div>
         </div>

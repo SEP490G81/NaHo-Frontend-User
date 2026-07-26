@@ -30,8 +30,8 @@ const RegisterPasswordHint = ({
         const joined =
             labels.length > 1
                 ? labels.slice(0, -1).join(", ") +
-                t("register.form.passwordNeed.and") +
-                labels[labels.length - 1]
+                  t("register.form.passwordNeed.and") +
+                  labels[labels.length - 1]
                 : labels[0];
         message = t("register.form.passwordNeed.prefix") + joined;
     }

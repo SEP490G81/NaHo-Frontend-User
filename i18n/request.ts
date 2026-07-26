@@ -18,6 +18,7 @@ const MESSAGE_FILES = [
     "marugoto",
     "leaderboard",
     "point-history",
+    "daily-reward",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

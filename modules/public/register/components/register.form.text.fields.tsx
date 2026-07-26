@@ -62,9 +62,7 @@ const RegisterTextField = ({
         endAdornment
     );
     const slotProps = {
-        ...(finalAdornment
-            ? { input: { endAdornment: finalAdornment } }
-            : {}),
+        ...(finalAdornment ? { input: { endAdornment: finalAdornment } } : {}),
         ...(maxLength ? { htmlInput: { maxLength } } : {}),
     };
     return (
@@ -86,10 +84,10 @@ const RegisterTextField = ({
                 sx={
                     isValid
                         ? {
-                            "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "var(--color-text-success)",
-                            },
-                        }
+                              "& .MuiOutlinedInput-notchedOutline": {
+                                  borderColor: "var(--color-text-success)",
+                              },
+                          }
                         : undefined
                 }
                 helperText={

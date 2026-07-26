@@ -10,7 +10,9 @@ import { ProblemDetail } from "@/types/responses/base.response";
 export async function proxyGet(path: string, search?: URLSearchParams) {
     if (!process.env.API_URL) {
         return NextResponse.json(
-            { detail: "API_URL chưa được cấu hình trên server." } as ProblemDetail,
+            {
+                detail: "API_URL chưa được cấu hình trên server.",
+            } as ProblemDetail,
             { status: 500 },
         );
     }
@@ -39,7 +41,9 @@ export async function proxyGet(path: string, search?: URLSearchParams) {
 export async function proxyPostForm(path: string, request: Request) {
     if (!process.env.API_URL) {
         return NextResponse.json(
-            { detail: "API_URL chưa được cấu hình trên server." } as ProblemDetail,
+            {
+                detail: "API_URL chưa được cấu hình trên server.",
+            } as ProblemDetail,
             { status: 500 },
         );
     }
@@ -67,7 +71,9 @@ export async function proxyPostForm(path: string, request: Request) {
 export async function proxyPostJson(path: string, request: Request) {
     if (!process.env.API_URL) {
         return NextResponse.json(
-            { detail: "API_URL chưa được cấu hình trên server." } as ProblemDetail,
+            {
+                detail: "API_URL chưa được cấu hình trên server.",
+            } as ProblemDetail,
             { status: 500 },
         );
     }

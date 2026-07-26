@@ -1,0 +1,35 @@
+{
+    "dailyReward": {
+        "triggerTooltip": "毎日ログインしてポイントを獲得",
+        "triggerBtn": "チェックイン",
+        "title": "毎日の出席カレンダー",
+        "close": "閉じる",
+        "monthFormat": "{year}年{month}月",
+        "retry": "再試行",
+        "fetchError": "毎日の出席報酬を取得できませんでした",
+        "infoTooltip": "特典の詳細",
+        "expectedReward": "予想報酬 {min}~{max} pt",
+        "dayFormat": "{day}日",
+        "chest": {
+            "bronze": "ブロンズ宝箱",
+            "silver": "シルバー宝箱",
+            "gold": "ゴールド宝箱",
+            "none": "直接ポイント"
+        },
+        "status": {
+            "label": "ステータス:",
+            "today": "今日",
+            "locked": "未開放",
+            "passed": "過去の日",
+            "attended": "出席済み",
+            "missed": "欠席"
+        },
+        "tooltip": {
+            "chestLabel": "宝箱の種類:",
+            "rewardLabel": "予想報酬:"
+        },
+        "claimSuccess": "報酬を受け取りました！ +{points} ポイント獲得。",
+        "claimError": "デイリー報酬の受け取りに失敗しました",
+        "claiming": "取得中..."
+    }
+}
