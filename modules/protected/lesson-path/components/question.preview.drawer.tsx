@@ -19,6 +19,7 @@ interface Props {
     bestScore: number;
     href: string;
     showFurigana: boolean;
+    accent: string;
 }
 
 export function QuestionPreviewDrawer({
@@ -30,6 +31,7 @@ export function QuestionPreviewDrawer({
     bestScore,
     href,
     showFurigana,
+    accent,
 }: Props) {
     const t = useTranslations("marugoto");
 
@@ -39,7 +41,9 @@ export function QuestionPreviewDrawer({
             open={open}
             onClose={() => onOpenChange(false)}
             sx={{
+                // Gieo màu sách vào Paper (dialog/drawer render portal ngoài cây DOM).
                 "& .MuiDrawer-paper": {
+                    "--book-accent": accent,
                     width: { xs: "100%", sm: 440 },
                     backgroundColor: "var(--color-bgc-app)",
                     backgroundImage: "none",
@@ -50,7 +54,14 @@ export function QuestionPreviewDrawer({
             <div className="flex h-full flex-col">
                 <div className="flex items-start justify-between gap-3 p-5 pb-3">
                     <div className="flex flex-wrap items-center gap-2">
-                        <span className="bg-bgc-highlight/15 text-bgc-highlight rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase">
+                        <span
+                            className="rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase"
+                            style={{
+                                background:
+                                    "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 15%, transparent)",
+                                color: "var(--book-accent, var(--color-bgc-highlight))",
+                            }}
+                        >
                             {t("preview.title")}
                         </span>
                         {bestScore > 0 && (
@@ -125,7 +136,10 @@ export function QuestionPreviewDrawer({
                 <div className="border-bdc-primary border-t p-4">
                     <Link
                         href={href as AllRoute}
-                        className="bg-bgc-highlight hover:bg-bgc-highlight/90 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-colors"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                        style={{
+                            background: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     >
                         <Mic className="h-4 w-4" />
                         {t("preview.practiceNow")}

@@ -7,9 +7,9 @@
             "streak": "Daily streak",
             "currentLevel": "Current level",
             "totalPoints": "Total points",
-            "streakValue": "{days} day streak! 🔥",
-            "levelValue": "Level: {level}",
-            "pointsValue": "{points} L-Point 🌟"
+            "streakValue": "{days} days 🔥",
+            "levelValue": "{level}",
+            "pointsValue": "{points} L-Point"
         },
         "books": {
             "chooseBook": "Choose a book",
@@ -73,11 +73,17 @@
             "chestTitle": "Reward chest",
             "chestHint": "Open to earn a reward",
             "chestReward": "+{point} L-Point",
+            "chestMystery": "+? L-Point",
+            "chestRangeHint": "Open the chest to randomly get",
+            "chestRange": "{min} – {max} L-Point",
+            "chestGotLabel": "You received",
             "chestClaimBtn": "Claim reward",
             "chestOpened": "Chest opened",
             "chestClaimed": "You got +{reward} L-Point! 🎁",
             "chestAlready": "You already opened this chest.",
-            "chestFailed": "Could not open the chest, please try again."
+            "chestFailed": "Could not open the chest, please try again.",
+            "vocabDone": "Vocabulary completed",
+            "vocabFailed": "Could not complete, please try again."
         },
         "preview": {
             "title": "Question detail",
@@ -107,7 +113,9 @@
             "prev": "Prev",
             "next": "Next",
             "learned": "Learned",
-            "finish": "Finish"
+            "finish": "Finish",
+            "done": "Completed",
+            "finishHint": "Go through all cards to finish"
         }
     }
 }

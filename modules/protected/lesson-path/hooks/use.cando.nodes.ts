@@ -13,6 +13,8 @@ export interface PathNode {
     lessonId: string;
     index?: number;
     speakingQuestionId?: number | null;
+    /** Id câu hỏi từ vựng (để gọi hoàn thành node từ vựng, đẩy mốc). */
+    vocabularyQuestionId?: number | null;
     /** Thứ tự toàn cục — mốc so sánh với tiến độ BE để khóa/mở. */
     globalOrderIndex: number;
     status: NodeStatus;
@@ -27,12 +29,6 @@ export interface CanDoBlock {
     total: number;
     percent: number;
     status: NodeStatus;
-}
-
-export interface LessonNodes {
-    blocks: CanDoBlock[];
-    overallPercent: number;
-    currentNodeId?: string;
 }
 
 export interface LessonGroup {
@@ -61,6 +57,7 @@ function buildRawNodes(cando: CanDo, lessonId: string): RawNode[] {
             lessonId,
             index: n.kind === "question" ? qIdx : undefined,
             speakingQuestionId: n.speakingQuestionId,
+            vocabularyQuestionId: n.vocabularyQuestionId,
             globalOrderIndex: n.globalOrderIndex,
         };
     });
@@ -163,26 +160,6 @@ function overallOf(blocks: CanDoBlock[]): number {
     const total = blocks.reduce((s, b) => s + b.total, 0);
     const done = blocks.reduce((s, b) => s + b.done, 0);
     return total ? Math.round((done / total) * 100) : 0;
-}
-
-/** Node lộ trình cho MỘT bài học (trang bài học lẻ). */
-export function useLessonNodes(
-    lesson: Lesson,
-    beFrontier: number | null = null,
-): LessonNodes {
-    const scores = useMarugotoStore((s) => s.questionScores);
-    const completedNodes = useMarugotoStore((s) => s.completedNodes);
-
-    return useMemo(() => {
-        const raw = buildLessonBlocks(
-            lesson.canDos,
-            lesson.id,
-            scores,
-            completedNodes,
-        );
-        const { blocks, currentNodeId } = applyLock(raw, beFrontier);
-        return { blocks, overallPercent: overallOf(blocks), currentNodeId };
-    }, [lesson, scores, completedNodes, beFrontier]);
 }
 
 /** Node lộ trình cho CẢ chủ đề (mọi bài học · Can-do · câu hỏi), khóa tuần tự. */

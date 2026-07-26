@@ -90,3 +90,23 @@ export async function openChest(learningPathNodeId: number): Promise<number> {
     }
     return (result as ApiResponse<{ earnedPoint: number }>)?.data?.earnedPoint ?? 0;
 }
+
+/**
+ * Hoàn thành node từ vựng → BE cộng điểm & đẩy mốc sang node kế (idempotent: đã học
+ * thì bỏ qua). Body dùng `vocabularyQuestionId`, userId lấy từ token.
+ */
+export async function completeVocabularyQuestion(
+    vocabularyQuestionId: number,
+): Promise<void> {
+    const response = await fetch("/api/vocabulary-questions/completion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vocabularyQuestionId }),
+    });
+    if (!response.ok) {
+        const result = (await response.json().catch(() => null)) as
+            | ProblemDetail
+            | null;
+        throw new Error(result?.detail || "Hoàn thành từ vựng thất bại");
+    }
+}

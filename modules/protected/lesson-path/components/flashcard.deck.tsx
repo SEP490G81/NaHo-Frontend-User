@@ -17,15 +17,22 @@ function speak(text: string) {
 export function FlashcardDeck({
     vocab,
     showFurigana,
+    onReachedLast,
 }: {
     vocab: Vocab[];
     showFurigana: boolean;
+    /** Gọi khi người dùng đã lướt tới thẻ cuối (để mở nút hoàn thành). */
+    onReachedLast?: () => void;
 }) {
     const t = useTranslations("marugoto");
     const [i, setI] = useState(0);
     const [flipped, setFlipped] = useState(false);
 
     const total = vocab.length;
+
+    useEffect(() => {
+        if (total > 0 && i >= total - 1) onReachedLast?.();
+    }, [i, total, onReachedLast]);
     const go = (d: number) => {
         setFlipped(false);
         setI((p) => Math.min(Math.max(p + d, 0), total - 1));
@@ -77,9 +84,20 @@ export function FlashcardDeck({
                         <span className="text-text-muted text-xs">{t("vocab.flip")}</span>
                     </div>
                     {/* Back */}
-                    <div className="border-bgc-highlight/40 bg-bgc-highlight/10 absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                    <div
+                        className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                        style={{
+                            borderColor:
+                                "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 40%, transparent)",
+                            background:
+                                "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 10%, transparent)",
+                        }}
+                    >
                         {v.reading && (
-                            <p className="text-bgc-highlight font-noto-jp text-2xl font-bold">
+                            <p
+                                className="font-noto-jp text-2xl font-bold"
+                                style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                            >
                                 {v.reading}
                             </p>
                         )}
@@ -105,7 +123,7 @@ export function FlashcardDeck({
                     type="button"
                     onClick={() => speak(v.japanese)}
                     aria-label={t("vocab.speak")}
-                    className="bg-bgc-highlight/15 text-bgc-highlight hover:bg-bgc-highlight hover:text-white inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold transition-all"
+                    className="bg-bgc-page inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-[var(--book-accent,var(--color-bgc-highlight))] transition-all hover:bg-[var(--book-accent,var(--color-bgc-highlight))] hover:text-white"
                 >
                     <Volume2 className="h-4 w-4" />
                     {i + 1}/{total}
@@ -128,10 +146,16 @@ export function FlashcardDeck({
                         key={idx}
                         className={cn(
                             "h-1.5 rounded-full transition-all",
-                            idx === i
-                                ? "bg-bgc-highlight w-5"
-                                : "bg-bdc-primary w-1.5",
+                            idx === i ? "w-5" : "bg-bdc-primary w-1.5",
                         )}
+                        style={
+                            idx === i
+                                ? {
+                                      background:
+                                          "var(--book-accent, var(--color-bgc-highlight))",
+                                  }
+                                : undefined
+                        }
                     />
                 ))}
             </div>
