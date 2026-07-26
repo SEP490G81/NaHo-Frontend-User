@@ -1,11 +1,11 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import Billing from "@/modules/protected/settings/billing/components/billing";
+import Orders from "@/modules/protected/settings/orders/components/orders";
 
 export async function generateMetadata({
     params,
 }: {
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }): Promise<{
     title: string;
 }> {
@@ -16,12 +16,12 @@ export async function generateMetadata({
     });
 
     return {
-        title: t("billing"),
+        title: t("orders"),
     };
 }
 
-const BillingPage = () => {
-    return <Billing />;
+const OrdersPage = () => {
+    return <Orders />;
 };
 
-export default BillingPage;
+export default OrdersPage;

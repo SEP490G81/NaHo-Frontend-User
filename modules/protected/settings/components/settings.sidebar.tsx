@@ -11,7 +11,7 @@ const SettingsSidebar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="flex w-52 flex-col gap-y-0.5 p-5">
+        <div className="flex w-full flex-col gap-y-0.5 p-5">
             <SettingsSearchBox />
 
             <Divider sx={{ marginBlock: "20px" }} />

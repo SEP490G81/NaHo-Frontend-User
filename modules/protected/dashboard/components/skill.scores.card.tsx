@@ -21,10 +21,10 @@ export function SkillScoresCard() {
     return (
         <div className="border-bdc-primary bg-bgc-app rounded-md border p-6">
             <h3 className="text-text-contrast text-lg font-semibold">
-                {tHome("skillScoresTitle")}
+                {tHome("skillScoresTitle" as any)}
             </h3>
             <p className="text-text-muted mt-1 text-sm">
-                {tHome("skillScoresSubtitle")}
+                {tHome("skillScoresSubtitle" as any)}
             </p>
             <div className="mt-6 space-y-5">
                 {items.map((item) => (

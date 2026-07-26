@@ -29,7 +29,9 @@
                 "report": "Report",
                 "liveChatroom": "ライブチャットルーム",
                 "dialogueSetup": "会話設定",
-                "leaderboard": "ランキング"
+                "leaderboard": "ランキング",
+                "settings": "設定",
+                "orders": "取引履歴"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -53,6 +55,7 @@
                 "registerButton": "Đăng ký trải nghiệm ngay",
                 "accountMenu": {
                     "settings": "Settings",
+                    "orders": "取引履歴",
                     "language": "Language",
                     "getHelp": "Help & Support",
                     "report": "Report"
