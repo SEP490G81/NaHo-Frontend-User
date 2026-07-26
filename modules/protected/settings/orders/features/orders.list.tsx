@@ -32,11 +32,22 @@ import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
+const getEffectiveStatus = (order: PaymentOrderResponse, currentTime: number): PaymentOrderStatus => {
+    if (order.status === "PENDING" && order.expiresTime) {
+        const expiresAt = new Date(order.expiresTime).getTime();
+        if (!isNaN(expiresAt) && expiresAt <= currentTime) {
+            return "EXPIRED";
+        }
+    }
+    return order.status;
+};
+
 const OrdersList: React.FC = () => {
     const t = useTranslations("settings.orders");
 
     const [orders, setOrders] = useState<PaymentOrderResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [now, setNow] = useState<number>(Date.now());
 
     // Status filter state
     const [statusFilter, setStatusFilter] = useState<string>("ALL");
@@ -46,8 +57,8 @@ const OrdersList: React.FC = () => {
     const [orderToCancel, setOrderToCancel] = useState<string | null>(null);
     const [cancelling, setCancelling] = useState<boolean>(false);
 
-    const fetchOrders = async () => {
-        setLoading(true);
+    const fetchOrders = async (silent: boolean = false) => {
+        if (!silent) setLoading(true);
         try {
             const data = await getMyPaymentOrders();
             // Sort by creation time descending (newest first)
@@ -56,15 +67,26 @@ const OrdersList: React.FC = () => {
             );
             setOrders(sorted);
         } catch (err: any) {
-            console.error("Failed to load payment orders:", err);
-            toast.error(err.message || "Không thể lấy danh sách lịch sử giao dịch.");
+            if (!silent) {
+                console.error("Failed to load payment orders:", err);
+                toast.error(err.message || "Không thể lấy danh sách lịch sử giao dịch.");
+            }
         } finally {
-            setLoading(false);
+            if (!silent) setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchOrders();
+
+        // Real-time ticker to auto expire orders client-side when time passes
+        const timer = setInterval(() => {
+            setNow(Date.now());
+        }, 3000);
+
+        return () => {
+            clearInterval(timer);
+        };
     }, []);
 
     const handleContinuePayment = (order: PaymentOrderResponse) => {
@@ -151,17 +173,22 @@ const OrdersList: React.FC = () => {
         }
     };
 
+    const processedOrders = orders.map((order) => ({
+        ...order,
+        effectiveStatus: getEffectiveStatus(order, now),
+    }));
+
     const filterTabs = [
-        { key: "ALL", label: "Tất cả", count: orders.length },
-        { key: "PAID", label: t("statusPaid"), count: orders.filter((o) => o.status === "PAID").length },
-        { key: "PENDING", label: t("statusPending"), count: orders.filter((o) => o.status === "PENDING").length },
-        { key: "CANCELLED", label: t("statusCancelled"), count: orders.filter((o) => o.status === "CANCELLED").length },
-        { key: "EXPIRED", label: t("statusExpired"), count: orders.filter((o) => o.status === "EXPIRED").length },
+        { key: "ALL", label: "Tất cả", count: processedOrders.length },
+        { key: "PAID", label: t("statusPaid"), count: processedOrders.filter((o) => o.effectiveStatus === "PAID").length },
+        { key: "PENDING", label: t("statusPending"), count: processedOrders.filter((o) => o.effectiveStatus === "PENDING").length },
+        { key: "CANCELLED", label: t("statusCancelled"), count: processedOrders.filter((o) => o.effectiveStatus === "CANCELLED").length },
+        { key: "EXPIRED", label: t("statusExpired"), count: processedOrders.filter((o) => o.effectiveStatus === "EXPIRED").length },
     ];
 
     const filteredOrders = statusFilter === "ALL"
-        ? orders
-        : orders.filter((o) => o.status === statusFilter);
+        ? processedOrders
+        : processedOrders.filter((o) => o.effectiveStatus === statusFilter);
 
     if (loading) {
         return (
@@ -212,15 +239,15 @@ const OrdersList: React.FC = () => {
                 </div>
             ) : (
                 <TableContainer component={Paper} elevation={0} className="rounded-xl border border-bdc-primary overflow-hidden">
-                    <Table sx={{ minWidth: 650 }} aria-label="payment orders table">
+                    <Table sx={{ minWidth: "100%", "& .MuiTableCell-root": { px: 1.5, py: 1.5 } }} aria-label="payment orders table">
                         <TableHead className="bg-bgc-subtle">
                             <TableRow>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("orderCode")}</TableCell>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("amount")}</TableCell>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("provider")}</TableCell>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("status")}</TableCell>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("createdTime")}</TableCell>
-                                <TableCell align="center" className="font-bold text-text-primary">{t("actions")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("orderCode")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("amount")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("provider")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("status")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("createdTime")}</TableCell>
+                                <TableCell align="center" className="font-bold text-text-primary whitespace-nowrap">{t("actions")}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -229,19 +256,19 @@ const OrdersList: React.FC = () => {
                                     key={order.id || order.orderCode}
                                     className="hover:bg-bgc-subtle/50 transition-colors"
                                 >
-                                    <TableCell align="center" className="font-mono font-medium text-text-primary">
+                                    <TableCell align="center" className="font-mono font-medium text-text-primary whitespace-nowrap">
                                         {order.orderCode}
                                     </TableCell>
-                                    <TableCell align="center" className="font-bold text-primary">
+                                    <TableCell align="center" className="font-bold text-primary whitespace-nowrap">
                                         {new Intl.NumberFormat("vi-VN").format(order.amount)} {order.currency}
                                     </TableCell>
-                                    <TableCell align="center" className="text-text-contrast font-medium text-xs sm:text-sm">
+                                    <TableCell align="center" className="text-text-contrast font-medium text-xs sm:text-sm whitespace-nowrap">
                                         {order.provider}
                                     </TableCell>
-                                    <TableCell align="center">
-                                        {getStatusChip(order.status)}
+                                    <TableCell align="center" className="whitespace-nowrap">
+                                        {getStatusChip(order.effectiveStatus)}
                                     </TableCell>
-                                    <TableCell align="center" className="text-xs text-text-contrast/80 font-medium">
+                                    <TableCell align="center" className="text-xs text-text-contrast/80 font-medium whitespace-nowrap">
                                         {new Date(order.createdTime).toLocaleString("vi-VN", {
                                             day: "2-digit",
                                             month: "2-digit",
@@ -250,8 +277,8 @@ const OrdersList: React.FC = () => {
                                             minute: "2-digit",
                                         })}
                                     </TableCell>
-                                    <TableCell align="center">
-                                        {order.status === "PENDING" ? (
+                                    <TableCell align="center" className="whitespace-nowrap">
+                                        {order.effectiveStatus === "PENDING" ? (
                                             <div className="flex items-center justify-center gap-2">
                                                 <Button
                                                     variant="contained"
@@ -259,7 +286,7 @@ const OrdersList: React.FC = () => {
                                                     color="primary"
                                                     startIcon={<PaymentOutlinedIcon fontSize="small" />}
                                                     onClick={() => handleContinuePayment(order)}
-                                                    className="normal-case font-bold text-xs shadow-sm"
+                                                    className="normal-case font-bold text-xs shadow-sm whitespace-nowrap"
                                                 >
                                                     {t("continuePayment")}
                                                 </Button>
@@ -269,7 +296,7 @@ const OrdersList: React.FC = () => {
                                                     color="error"
                                                     startIcon={<CancelOutlinedIcon fontSize="small" />}
                                                     onClick={() => handleOpenCancelDialog(order.orderCode)}
-                                                    className="normal-case font-semibold text-xs"
+                                                    className="normal-case font-semibold text-xs whitespace-nowrap"
                                                 >
                                                     {t("cancelOrder")}
                                                 </Button>

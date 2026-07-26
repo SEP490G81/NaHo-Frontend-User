@@ -88,29 +88,31 @@ const AccountMenu = ({
                         </Avatar>
                     )}
 
-                    <div className="text-left">
-                        <div className="flex items-center gap-1.5">
-                            <h2 className="text-sm font-semibold">
-                                {getUserFullName(user)}
-                            </h2>
-                            {tier === "PREMIUM" && (
+                    <div className="text-left min-w-0 flex-1">
+                        <h2 className="text-sm font-semibold text-text-primary truncate">
+                            {getUserFullName(user)}
+                        </h2>
+                        <p className="text-tc-muted text-xs font-medium mt-0.5 truncate">
+                            {user ? user.email : ""}
+                        </p>
+                        {tier === "PREMIUM" && (
+                            <div className="mt-1">
                                 <Chip
                                     label="PREMIUM 👑"
                                     size="small"
-                                    className="bg-gradient-to-r from-amber-400 to-rose-500 text-[10px] font-black text-white h-5 px-1 shadow"
+                                    className="bg-gradient-to-r from-amber-400 to-rose-500 text-[10px] font-black text-white h-4.5 px-1.5 shadow-sm"
                                 />
-                            )}
-                            {tier === "BASIC" && (
+                            </div>
+                        )}
+                        {tier === "BASIC" && (
+                            <div className="mt-1">
                                 <Chip
                                     label="BASIC ★"
                                     size="small"
-                                    className="bg-indigo-600 text-[10px] font-bold text-white h-5 px-1 shadow"
+                                    className="bg-gradient-to-r from-purple-600 to-indigo-600 text-[10px] font-bold text-white h-4.5 px-1.5 shadow-sm"
                                 />
-                            )}
-                        </div>
-                        <p className="text-tc-muted text-xs font-semibold mt-0.5">
-                            {user ? user.email : ""}
-                        </p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
