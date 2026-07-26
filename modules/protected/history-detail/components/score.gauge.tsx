@@ -5,9 +5,11 @@ import { getGaugeColor } from "../constants/history-detail.constant";
 
 interface ScoreGaugeProps {
     score: number;
+    /** Màu vòng điểm & con số; mặc định theo thang điểm. Truyền màu sách để đồng bộ. */
+    color?: string;
 }
 
-export function ScoreGauge({ score }: ScoreGaugeProps) {
+export function ScoreGauge({ score, color }: ScoreGaugeProps) {
     const t = useTranslations("historyDetail");
     const size = 120;
     const strokeWidth = 10;
@@ -16,7 +18,7 @@ export function ScoreGauge({ score }: ScoreGaugeProps) {
     const progress = Math.min(10, Math.max(0, score)) / 10;
     const strokeDashoffset = circumference - progress * circumference;
 
-    const strokeColor = getGaugeColor(score);
+    const strokeColor = color ?? getGaugeColor(score);
 
     return (
         <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
@@ -46,7 +48,10 @@ export function ScoreGauge({ score }: ScoreGaugeProps) {
                 />
             </svg>
             <div className="absolute text-center">
-                <span className="text-3xl font-bold tabular-nums leading-none text-text-contrast">
+                <span
+                    className="text-3xl font-bold tabular-nums leading-none"
+                    style={{ color: color ?? "var(--color-text-contrast)" }}
+                >
                     {score.toFixed(1)}
                 </span>
                 <span className="mt-0.5 block text-[10px] uppercase tracking-wider text-text-muted">{t("pointsLabel")}</span>

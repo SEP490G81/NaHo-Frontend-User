@@ -29,7 +29,10 @@ export function TranscriptView({
             {/* User Speech */}
             <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
-                    <MessageSquare className="text-bgc-highlight h-4 w-4" />
+                    <MessageSquare
+                        className="h-4 w-4"
+                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                    />
                     {t("yourSpeech")}
                 </h3>
                 <div className="bg-bgc-page border-bdc-primary rounded-md border p-4">
@@ -87,7 +90,10 @@ export function TranscriptView({
 
             {/* AI Correction */}
             <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
-                <h3 className="text-bgc-highlight flex items-center gap-2 text-sm font-semibold">
+                <h3
+                    className="flex items-center gap-2 text-sm font-semibold"
+                    style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                >
                     <CheckCircle2 className="h-4 w-4" />
                     {t("aiCorrection")}
                 </h3>
@@ -112,8 +118,19 @@ export function TranscriptView({
                     </div>
 
                     {aiSuggestion.explanation && (
-                        <div className="bg-bgc-highlight/5 border-bgc-highlight/10 rounded-md border p-4">
-                            <h4 className="text-bgc-highlight text-xs font-semibold tracking-wide uppercase">
+                        <div
+                            className="rounded-md border p-4"
+                            style={{
+                                background:
+                                    "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 5%, transparent)",
+                                borderColor:
+                                    "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 12%, transparent)",
+                            }}
+                        >
+                            <h4
+                                className="text-xs font-semibold tracking-wide uppercase"
+                                style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                            >
                                 {t("aiDetailedExplanation")}
                             </h4>
                             <p className="text-text-contrast mt-2 text-sm leading-relaxed">

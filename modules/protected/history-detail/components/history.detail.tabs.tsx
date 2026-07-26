@@ -1,24 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
+import { useTranslations } from "next-intl";
+import type { ReportDetail } from "@/data/mockReports";
 import TranscriptView from "../features/transcript.view";
 import PronunciationView from "../features/pronunciation.view";
 import AdvancedHintsView from "../features/advanced.hints.view";
 
 interface HistoryDetailTabsProps {
-    report: {
-        userTranscript: any;
-        aiSuggestion: any;
-        pronunciation: any;
-        pronunciationNote: string;
-        expressions: any;
-        itVocab: any;
-    };
+    report: ReportDetail;
     showFurigana: boolean;
-    t: any;
 }
 
-export function HistoryDetailTabs({ report, showFurigana, t }: HistoryDetailTabsProps) {
+export function HistoryDetailTabs({ report, showFurigana }: HistoryDetailTabsProps) {
+    const t = useTranslations("historyDetail");
     const [tabIndex, setTabIndex] = useState(0);
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -38,11 +33,11 @@ export function HistoryDetailTabs({ report, showFurigana, t }: HistoryDetailTabs
                         fontWeight: "bold",
                         color: "var(--color-text-muted)",
                         "&.Mui-selected": {
-                            color: "var(--color-bgc-highlight)",
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
                         },
                     },
                     "& .MuiTabs-indicator": {
-                        backgroundColor: "var(--color-bgc-highlight)",
+                        backgroundColor: "var(--book-accent, var(--color-bgc-highlight))",
                     },
                 }}
             >
