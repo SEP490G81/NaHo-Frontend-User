@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { CanDo, Lesson } from "@/data/marugoto/types";
-import { useMarugotoStore, PASS_SCORE } from "@/store/marugotoStore";
+import { PASS_SCORE, useMarugotoStore } from "@/store/marugotoStore";
 import type { NodeStatus } from "@/components/ui/status.badge";
 
 export type NodeKind = "vocab" | "question" | "chest";
@@ -80,8 +80,9 @@ export function buildLessonBlocks(
         const nodes: PathNode[] = buildRawNodes(cando, lessonId).map((r) => {
             const done = isDone(r);
             const bestScore = r.kind === "question" ? scoreOf(r) : undefined;
-            const progress =
-                done ? 100 : Math.round(((bestScore ?? 0) / 10) * 100);
+            const progress = done
+                ? 100
+                : Math.round(((bestScore ?? 0) / 10) * 100);
             // Trạng thái tạm: done → completed, còn lại → active (khóa áp ở bước sau).
             return {
                 ...r,
@@ -192,8 +193,13 @@ export function useTopicNodes(
             rawGroups.slice(0, i).reduce((s, g) => s + g.blocks.length, 0),
         );
         const groups: LessonGroup[] = rawGroups.map((g, i) => {
-            const blocks = lockedFlat.slice(offsets[i], offsets[i] + g.blocks.length);
-            const status: NodeStatus = blocks.every((b) => b.status === "completed")
+            const blocks = lockedFlat.slice(
+                offsets[i],
+                offsets[i] + g.blocks.length,
+            );
+            const status: NodeStatus = blocks.every(
+                (b) => b.status === "completed",
+            )
                 ? "completed"
                 : blocks.some((b) => b.status !== "locked")
                   ? "active"

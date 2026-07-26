@@ -30,7 +30,11 @@ function parse(markup: string): { base: string; reading?: string }[] {
  * Hiển thị tiếng Nhật kèm furigana từ chuỗi markup của BE. Mỗi đoạn `[漢字](かな)`
  * render ruby riêng, phần còn lại giữ nguyên. `showFurigana=false` chỉ hiện chữ gốc.
  */
-export function FuriganaMarkup({ markup, className, showFurigana = true }: Props) {
+export function FuriganaMarkup({
+    markup,
+    className,
+    showFurigana = true,
+}: Props) {
     const parts = parse(markup);
     return (
         <span

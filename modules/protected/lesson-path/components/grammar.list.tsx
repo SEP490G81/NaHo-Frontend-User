@@ -23,7 +23,12 @@ function parseGrammar(lines: string[]): GrammarGroup[] {
                 body = g[1];
                 gloss = g[2];
             }
-            groups.push({ num: numMatch[1], pattern: body, gloss, examples: [] });
+            groups.push({
+                num: numMatch[1],
+                pattern: body,
+                gloss,
+                examples: [],
+            });
         } else if (groups.length) {
             const ex = line.replace(/^[-•]\s*/, "").replace(/^例[：:]\s*/, "");
             groups[groups.length - 1].examples.push(ex);

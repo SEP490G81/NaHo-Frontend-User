@@ -3,7 +3,11 @@ import { Dispatch, SetStateAction } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getFirstCharacter, getUserAvatarUrl, getUserFullName } from "@/layouts/protected-header/utils/header.util";
+import {
+    getFirstCharacter,
+    getUserAvatarUrl,
+    getUserFullName,
+} from "@/layouts/protected-header/utils/header.util";
 import { ACCOUNT_MENU_ITEMS } from "@/layouts/protected-header/constants/protected.header.constant";
 import LogoutButton from "@/layouts/protected-header/features/logout.button";
 import { useReportStore } from "@/store/reportStore";

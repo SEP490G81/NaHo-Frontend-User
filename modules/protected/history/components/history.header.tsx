@@ -13,7 +13,7 @@ interface HistoryHeaderProps {
 
 export function HistoryHeader({ totalCount, avgScore, t }: HistoryHeaderProps) {
     return (
-        <header className="border-bdc-primary bg-bgc-app rounded-xl border flex flex-wrap items-end justify-between gap-4 p-6 shadow-sm">
+        <header className="border-bdc-primary bg-bgc-app flex flex-wrap items-end justify-between gap-4 rounded-xl border p-6 shadow-sm">
             <div>
                 <h1 className="text-text-contrast flex items-center gap-2 text-2xl font-bold md:text-3xl">
                     <HistoryIcon className="text-bgc-highlight h-6 w-6" />

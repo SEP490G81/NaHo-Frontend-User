@@ -1,13 +1,12 @@
 import React from "react";
 import {
-    LayoutDashboard,
-    Mic,
-    History,
-    MessagesSquare,
     Headphones,
+    History,
+    LayoutDashboard,
     LineChart,
+    MessagesSquare,
+    Mic,
     Trophy,
-    UserCog,
 } from "lucide-react";
 
 export interface SubNavItem {

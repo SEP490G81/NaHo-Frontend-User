@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { MessageSquare, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Tooltip, Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import FuriganaText from "@/components/ui/furigana.text";
 import type { TranscriptSegment } from "@/data/mockReports";
 

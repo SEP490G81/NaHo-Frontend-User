@@ -31,7 +31,9 @@ export function SandboxStep3({
             <h2 className="text-text-contrast text-lg font-semibold">
                 {t("playbackTitle")}
             </h2>
-            <p className="text-text-muted mt-1 text-sm">{t("playbackSubtitle")}</p>
+            <p className="text-text-muted mt-1 text-sm">
+                {t("playbackSubtitle")}
+            </p>
 
             <div className="mt-4">
                 <PlaybackPlayer
@@ -100,7 +102,10 @@ export function SandboxStep3({
                         backgroundColor: accent,
                         color: "var(--color-text-pure)",
                         fontWeight: 700,
-                        "&:hover": { backgroundColor: accent, filter: "brightness(0.95)" },
+                        "&:hover": {
+                            backgroundColor: accent,
+                            filter: "brightness(0.95)",
+                        },
                     }}
                 >
                     {t("playbackSubmit")}

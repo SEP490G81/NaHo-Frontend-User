@@ -49,6 +49,7 @@ export default async function proxy(request: NextRequest) {
             const redirectResponse = NextResponse.redirect(
                 new URL("/login", request.url),
             );
+            console.log(">>> refresh token failed!");
             redirectResponse.cookies.delete(ACCESS_TOKEN_NAME);
             redirectResponse.cookies.delete(REFRESH_TOKEN_NAME);
             return redirectResponse;
@@ -73,7 +74,7 @@ export default async function proxy(request: NextRequest) {
                     return handleAuthFailure();
                 }
 
-                console.log(">>> refresh token successfully.");
+                console.log(">>> refresh token successfully!");
                 // Do không thể sửa cookie của request hiện tại
                 // Nên phải redirect lại chính trang đó
                 const redirectResponse = NextResponse.redirect(

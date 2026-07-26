@@ -31,9 +31,7 @@ const LoginFormTextFields = ({ state }: { state: LoginState }) => {
                     helperText={
                         state.usernameOrEmail.error ? (
                             <span className="text-text-error font-semibold">
-                                {t(
-                                    "login.form.pleaseEnterEmailOrUsername",
-                                )}
+                                {t("login.form.pleaseEnterEmailOrUsername")}
                             </span>
                         ) : null
                     }

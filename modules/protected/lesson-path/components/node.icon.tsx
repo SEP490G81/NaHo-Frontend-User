@@ -55,7 +55,14 @@ export function NodeIcon({ kind, size = 40 }: Props) {
     if (kind === "question") {
         return (
             <svg {...common}>
-                <rect x="17.5" y="6" width="13" height="23" rx="6.5" fill="#fff" />
+                <rect
+                    x="17.5"
+                    y="6"
+                    width="13"
+                    height="23"
+                    rx="6.5"
+                    fill="#fff"
+                />
                 <path
                     d="M20.5 12h7M20.5 16h7M20.5 20h7"
                     stroke={LINE}

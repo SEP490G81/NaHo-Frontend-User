@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Stepper, Step, StepLabel, Box } from "@mui/material";
+import { Box, Step, StepLabel, Stepper } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 interface SandboxStepperProps {
@@ -11,14 +11,10 @@ interface SandboxStepperProps {
 export function SandboxStepper({ step, accent }: SandboxStepperProps) {
     const t = useTranslations("sandbox");
 
-    const steps = [
-        t("step1"),
-        t("step2"),
-        t("step3"),
-    ];
+    const steps = [t("step1"), t("step2"), t("step3")];
 
     return (
-        <Box className="rounded-2xl border border-bdc-primary bg-bgc-app p-5">
+        <Box className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
             <Stepper
                 activeStep={step - 1}
                 alternativeLabel

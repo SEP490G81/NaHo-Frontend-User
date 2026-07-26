@@ -84,11 +84,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l1-c1-q1",
                                 jp: "お名前は何ですか？どんな意味ですか？",
-                                furigana: "お名前は何ですか？どんな意味ですか？",
+                                furigana:
+                                    "お名前は何ですか？どんな意味ですか？",
                                 vi: "Tên bạn là gì? Có ý nghĩa gì?",
                                 modelAnswer: {
                                     jp: "あきこは「あかるいこ」という意味です。",
-                                    furigana: "あきこは「あかるいこ」という意味です。",
+                                    furigana:
+                                        "あきこは「あかるいこ」という意味です。",
                                     vi: "Tự giới thiệu bản thân, nói về tên, ý nghĩa của tên và công việc...",
                                     durationSec: 8,
                                 },
@@ -100,7 +102,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Công việc của bạn là gì? Bạn sống ở đâu?",
                                 modelAnswer: {
                                     jp: "あきこは「あかるいこ」という意味です。",
-                                    furigana: "あきこは「あかるいこ」という意味です。",
+                                    furigana:
+                                        "あきこは「あかるいこ」という意味です。",
                                     vi: "Tự giới thiệu bản thân, nói về tên, ý nghĩa của tên và công việc...",
                                     durationSec: 8,
                                 },
@@ -176,11 +179,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l1-c2-q1",
                                 jp: "趣味は何ですか？どんなジャンルが好きですか？",
-                                furigana: "趣味は何ですか？どんなジャンルが好きですか？",
+                                furigana:
+                                    "趣味は何ですか？どんなジャンルが好きですか？",
                                 vi: "Sở thích của bạn là gì? Bạn thích thể loại nào?",
                                 modelAnswer: {
                                     jp: "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
-                                    furigana: "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
+                                    furigana:
+                                        "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
                                     vi: "Nói chi tiết hơn về bản thân như sở thích, trải nghiệm...",
                                     durationSec: 8,
                                 },
@@ -192,7 +197,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Gần đây bạn có xem sách hay phim gì không?",
                                 modelAnswer: {
                                     jp: "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
-                                    furigana: "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
+                                    furigana:
+                                        "日本のアニメとマンガが好きです。漫画を読むのが好きです。",
                                     vi: "Nói chi tiết hơn về bản thân như sở thích, trải nghiệm...",
                                     durationSec: 8,
                                 },
@@ -292,7 +298,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn của Yamada là người nào thế?",
                                 modelAnswer: {
                                     jp: "髪が長い男の人です。白いシャツを着ている人です。",
-                                    furigana: "髪が長い男の人です。白いシャツを着ている人です。",
+                                    furigana:
+                                        "髪が長い男の人です。白いシャツを着ている人です。",
                                     vi: "Mô tả trang phục và ngoại hình của ai đó",
                                     durationSec: 8,
                                 },
@@ -304,7 +311,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Người kia đang mặc trang phục như thế nào?",
                                 modelAnswer: {
                                     jp: "髪が長い男の人です。白いシャツを着ている人です。",
-                                    furigana: "髪が長い男の人です。白いシャツを着ている人です。",
+                                    furigana:
+                                        "髪が長い男の人です。白いシャツを着ている人です。",
                                     vi: "Mô tả trang phục và ngoại hình của ai đó",
                                     durationSec: 8,
                                 },
@@ -377,7 +385,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Người đó trông có vẻ như thế nào?",
                                 modelAnswer: {
                                     jp: "やさしそうな人ですね。あの人は真面目そうですね。",
-                                    furigana: "やさしそうな人ですね。あの人は真面目そうですね。",
+                                    furigana:
+                                        "やさしそうな人ですね。あの人は真面目そうですね。",
                                     vi: "Nêu ấn tượng ban đầu về người chưa quen biết",
                                     durationSec: 8,
                                 },
@@ -389,7 +398,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Ấn tượng về giáo viên mới như thế nào?",
                                 modelAnswer: {
                                     jp: "やさしそうな人ですね。あの人は真面目そうですね。",
-                                    furigana: "やさしそうな人ですね。あの人は真面目そうですね。",
+                                    furigana:
+                                        "やさしそうな人ですね。あの人は真面目そうですね。",
                                     vi: "Nêu ấn tượng ban đầu về người chưa quen biết",
                                     durationSec: 8,
                                 },
@@ -479,7 +489,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Chào mừng quý khách, đi mấy người ạ?",
                                 modelAnswer: {
                                     jp: "3人です。テーブルでおねがいします。",
-                                    furigana: "3人です。テーブルでおねがいします。",
+                                    furigana:
+                                        "3人です。テーブルでおねがいします。",
                                     vi: "Vào nhà hàng, báo số người và yêu cầu chỗ ngồi",
                                     durationSec: 8,
                                 },
@@ -491,7 +502,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Quý khách muốn ngồi bàn nào?",
                                 modelAnswer: {
                                     jp: "3人です。テーブルでおねがいします。",
-                                    furigana: "3人です。テーブルでおねがいします。",
+                                    furigana:
+                                        "3人です。テーブルでおねがいします。",
                                     vi: "Vào nhà hàng, báo số người và yêu cầu chỗ ngồi",
                                     durationSec: 8,
                                 },
@@ -532,7 +544,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l3-c2-q1",
                                 jp: "縦書きのメニューを読んで、日本語で注文を考えてください。",
-                                furigana: "縦書きのメニューを読んで、日本語で注文を考えてください。",
+                                furigana:
+                                    "縦書きのメニューを読んで、日本語で注文を考えてください。",
                                 vi: "Hãy đọc menu viết dọc và chuẩn bị gọi món bằng tiếng Nhật.",
                             } as Question,
                         ],
@@ -596,7 +609,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Món ăn khuyên dùng của quán này là gì?",
                                 modelAnswer: {
                                     jp: "この店でいちばんおいしいのは、よせなべです。",
-                                    furigana: "この店でいちばんおいしいのは、よせなべです。",
+                                    furigana:
+                                        "この店でいちばんおいしいのは、よせなべです。",
                                     vi: "Giới thiệu món ăn khuyên dùng tại nhà hàng bạn dẫn bạn bè đến",
                                     durationSec: 8,
                                 },
@@ -608,7 +622,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Món đó có những nguyên liệu gì?",
                                 modelAnswer: {
                                     jp: "この店でいちばんおいしいのは、よせなべです。",
-                                    furigana: "この店でいちばんおいしいのは、よせなべです。",
+                                    furigana:
+                                        "この店でいちばんおいしいのは、よせなべです。",
                                     vi: "Giới thiệu món ăn khuyên dùng tại nhà hàng bạn dẫn bạn bè đến",
                                     durationSec: 8,
                                 },
@@ -674,7 +689,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn có không ăn được món gì không?",
                                 modelAnswer: {
                                     jp: "アレルギーがあるので、かには食べられないんです。",
-                                    furigana: "アレルギーがあるので、かには食べられないんです。",
+                                    furigana:
+                                        "アレルギーがあるので、かには食べられないんです。",
                                     vi: "Nói những thứ không ăn được và lý do ngắn gọn",
                                     durationSec: 8,
                                 },
@@ -686,7 +702,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Tại sao món đó lại không dùng được?",
                                 modelAnswer: {
                                     jp: "アレルギーがあるので、かには食べられないんです。",
-                                    furigana: "アレルギーがあるので、かには食べられないんです。",
+                                    furigana:
+                                        "アレルギーがあるので、かには食べられないんです。",
                                     vi: "Nói những thứ không ăn được và lý do ngắn gọn",
                                     durationSec: 8,
                                 },
@@ -757,7 +774,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Quý khách đã quyết định món chưa?",
                                 modelAnswer: {
                                     jp: "よせなべとてんぷら、1つずつおねがいします。",
-                                    furigana: "よせなべとてんぷら、1つずつおねがいします。",
+                                    furigana:
+                                        "よせなべとてんぷら、1つずつおねがいします。",
                                     vi: "Đặt món ăn, nói rõ số lượng của từng món",
                                     durationSec: 8,
                                 },
@@ -769,7 +787,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Quý khách dùng nước uống gì ạ?",
                                 modelAnswer: {
                                     jp: "よせなべとてんぷら、1つずつおねがいします。",
-                                    furigana: "よせなべとてんぷら、1つずつおねがいします。",
+                                    furigana:
+                                        "よせなべとてんぷら、1つずつおねがいします。",
                                     vi: "Đặt món ăn, nói rõ số lượng của từng món",
                                     durationSec: 8,
                                 },
@@ -841,11 +860,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l4-c1-q1",
                                 jp: "食べる前に、何をしなければなりませんか？",
-                                furigana: "食べる前に、何をしなければなりませんか？",
+                                furigana:
+                                    "食べる前に、何をしなければなりませんか？",
                                 vi: "Trước khi ăn chúng ta phải làm gì?",
                                 modelAnswer: {
                                     jp: "みんなでかんぱいしてから、飲みましょう。",
-                                    furigana: "みんなでかんぱいしてから、飲みましょう。",
+                                    furigana:
+                                        "みんなでかんぱいしてから、飲みましょう。",
                                     vi: "Nói với bạn bè về thứ tự hành động khi ăn uống",
                                     durationSec: 8,
                                 },
@@ -857,7 +878,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Đã được uống rượu chưa?",
                                 modelAnswer: {
                                     jp: "みんなでかんぱいしてから、飲みましょう。",
-                                    furigana: "みんなでかんぱいしてから、飲みましょう。",
+                                    furigana:
+                                        "みんなでかんぱいしてから、飲みましょう。",
                                     vi: "Nói với bạn bè về thứ tự hành động khi ăn uống",
                                     durationSec: 8,
                                 },
@@ -1009,11 +1031,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l4-c3-q1",
                                 jp: "あなたの国の有名な料理の食べ方を説明してください。",
-                                furigana: "あなたの国の有名な料理の食べ方を説明してください。",
+                                furigana:
+                                    "あなたの国の有名な料理の食べ方を説明してください。",
                                 vi: "Hãy giới thiệu cách ăn một món ăn nổi tiếng ở nước bạn.",
                                 modelAnswer: {
                                     jp: "ブンチャーの食べかたを紹介します。ベトナムのブンチャーは、日本のそうめんと似ています。あまくてすっぱいタレをつけて食べます。野菜を入れると、もっとおいしいです。",
-                                    furigana: "ブンチャーの食べかたを紹介します。ベトナムのブンチャーは、日本のそうめんと似ています。あまくてすっぱいタレをつけて食べます。野菜を入れると、もっとおいしいです。",
+                                    furigana:
+                                        "ブンチャーの食べかたを紹介します。ベトナムのブンチャーは、日本のそうめんと似ています。あまくてすっぱいタレをつけて食べます。野菜を入れると、もっとおいしいです。",
                                     vi: "Thuyết trình ngắn về cách ăn một món ăn nước mình",
                                     durationSec: 8,
                                 },
@@ -1092,11 +1116,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l5-c1-q1",
                                 jp: "沖縄はどんなところですか？行ったことがありますか？",
-                                furigana: "沖縄はどんなところですか？行ったことがありますか？",
+                                furigana:
+                                    "沖縄はどんなところですか？行ったことがありますか？",
                                 vi: "Okinawa là nơi thế nào? Bạn từng đi chưa?",
                                 modelAnswer: {
                                     jp: "海もきれいだし、食べ物もおいしいし、いいところですよ。",
-                                    furigana: "海もきれいだし、食べ物もおいしいし、いいところですよ。",
+                                    furigana:
+                                        "海もきれいだし、食べ物もおいしいし、いいところですよ。",
                                     vi: "Hỏi/Kể về một địa danh du lịch như thế nào",
                                     durationSec: 8,
                                 },
@@ -1108,7 +1134,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Đồ ăn và phong cảnh ở đó thế nào?",
                                 modelAnswer: {
                                     jp: "海もきれいだし、食べ物もおいしいし、いいところですよ。",
-                                    furigana: "海もきれいだし、食べ物もおいしいし、いいところですよ。",
+                                    furigana:
+                                        "海もきれいだし、食べ物もおいしいし、いいところですよ。",
                                     vi: "Hỏi/Kể về một địa danh du lịch như thế nào",
                                     durationSec: 8,
                                 },
@@ -1187,11 +1214,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l5-c2-q1",
                                 jp: "沖縄に行くなら、何月がおすすめですか？",
-                                furigana: "沖縄に行くなら、何月がおすすめですか？",
+                                furigana:
+                                    "沖縄に行くなら、何月がおすすめですか？",
                                 vi: "Nếu đi Okinawa thì nên đi tháng mấy?",
                                 modelAnswer: {
                                     jp: "5月はできれば行かないほうがいいですよ。つゆですから。",
-                                    furigana: "5月はできれば行かないほうがいいですよ。つゆですから。",
+                                    furigana:
+                                        "5月はできれば行かないほうがいいですよ。つゆですから。",
                                     vi: "Đưa ra lời khuyên về mùa/thời điểm du lịch từ kinh nghiệm bản thân",
                                     durationSec: 8,
                                 },
@@ -1203,7 +1232,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Thời điểm bão và mùa hè thì sao?",
                                 modelAnswer: {
                                     jp: "5月はできれば行かないほうがいいですよ。つゆですから。",
-                                    furigana: "5月はできれば行かないほうがいいですよ。つゆですから。",
+                                    furigana:
+                                        "5月はできれば行かないほうがいいですよ。つゆですから。",
                                     vi: "Đưa ra lời khuyên về mùa/thời điểm du lịch từ kinh nghiệm bản thân",
                                     durationSec: 8,
                                 },
@@ -1265,11 +1295,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l5-c3-q1",
                                 jp: "沖縄へはどうやって行きましたか？現地では？",
-                                furigana: "沖縄へはどうやって行きましたか？現地では？",
+                                furigana:
+                                    "沖縄へはどうやって行きましたか？現地では？",
                                 vi: "Bạn ra Okinawa bằng gì? Đi lại ở đó ra sao?",
                                 modelAnswer: {
                                     jp: "沖縄に行くとき、ひこうきで行きました。",
-                                    furigana: "沖縄に行くとき、ひこうきで行きました。",
+                                    furigana:
+                                        "沖縄に行くとき、ひこうきで行きました。",
                                     vi: "Kể về phương tiện giao thông đã sử dụng trong chuyến đi",
                                     durationSec: 8,
                                 },
@@ -1281,7 +1313,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Tàu thủy và xe buýt thế nào?",
                                 modelAnswer: {
                                     jp: "沖縄に行くとき、ひこうきで行きました。",
-                                    furigana: "沖縄に行くとき、ひこうきで行きました。",
+                                    furigana:
+                                        "沖縄に行くとき、ひこうきで行きました。",
                                     vi: "Kể về phương tiện giao thông đã sử dụng trong chuyến đi",
                                     durationSec: 8,
                                 },
@@ -1353,11 +1386,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l6-c1-q1",
                                 jp: "ホテルでどんなツアーを申し込みたいですか？",
-                                furigana: "ホテルでどんなツアーを申し込みたいですか？",
+                                furigana:
+                                    "ホテルでどんなツアーを申し込みたいですか？",
                                 vi: "Bạn muốn đăng ký tour nào ở khách sạn?",
                                 modelAnswer: {
                                     jp: "きれいな魚とかイルカを見てみたいんですが。",
-                                    furigana: "きれいな魚とかイルカを見てみたいんですが。",
+                                    furigana:
+                                        "きれいな魚とかイルカを見てみたいんですが。",
                                     vi: "Hỏi và thảo luận về các tour du lịch tại quầy lễ tân khách sạn",
                                     durationSec: 8,
                                 },
@@ -1369,7 +1404,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn muốn trải nghiệm hoạt động gì?",
                                 modelAnswer: {
                                     jp: "きれいな魚とかイルカを見てみたいんですが。",
-                                    furigana: "きれいな魚とかイルカを見てみたいんですが。",
+                                    furigana:
+                                        "きれいな魚とかイルカを見てみたいんですが。",
                                     vi: "Hỏi và thảo luận về các tour du lịch tại quầy lễ tân khách sạn",
                                     durationSec: 8,
                                 },
@@ -1428,7 +1464,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Tour trải nghiệm hôm nay thế nào?",
                                 modelAnswer: {
                                     jp: "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
-                                    furigana: "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
+                                    furigana:
+                                        "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
                                     vi: "Nêu cảm tưởng sau khi tham gia tour",
                                     durationSec: 8,
                                 },
@@ -1440,7 +1477,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn có thấy vui không?",
                                 modelAnswer: {
                                     jp: "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
-                                    furigana: "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
+                                    furigana:
+                                        "イルカのショーも見られたし、イルカといっしょに泳げたし、一日中楽しめました。",
                                     vi: "Nêu cảm tưởng sau khi tham gia tour",
                                     durationSec: 8,
                                 },
@@ -1493,7 +1531,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l6-c3-q1",
                                 jp: "アンケートを読んで、参加者の感想を理解してください。",
-                                furigana: "アンケートを読んで、参加者の感想を理解してください。",
+                                furigana:
+                                    "アンケートを読んで、参加者の感想を理解してください。",
                                 vi: "Đọc phiếu khảo sát để hiểu đánh giá của khách tham gia.",
                             } as Question,
                         ],
@@ -1565,11 +1604,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l7-c1-q1",
                                 jp: "日本まつりの手伝いをお願いできませんか？",
-                                furigana: "日本まつりの手伝いをお願いできませんか？",
+                                furigana:
+                                    "日本まつりの手伝いをお願いできませんか？",
                                 vi: "Bạn có thể giúp một tay ở lễ hội Nhật Bản không?",
                                 modelAnswer: {
                                     jp: "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
-                                    furigana: "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
+                                    furigana:
+                                        "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
                                     vi: "Nhờ vả bạn bè làm tình nguyện viên và phản hồi lời nhờ vả",
                                     durationSec: 8,
                                 },
@@ -1581,7 +1622,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn có thể làm được việc gì?",
                                 modelAnswer: {
                                     jp: "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
-                                    furigana: "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
+                                    furigana:
+                                        "今、日本まつりでヨサコイが教えられる人を探してるんですが…おねがいできませんか？",
                                     vi: "Nhờ vả bạn bè làm tình nguyện viên và phản hồi lời nhờ vả",
                                     durationSec: 8,
                                 },
@@ -1655,7 +1697,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l7-c2-q2",
                                 jp: "雨が降ったら、スケジュールはどうなりますか？",
-                                furigana: "雨が降ったら、スケジュールはどうなりますか？",
+                                furigana:
+                                    "雨が降ったら、スケジュールはどうなりますか？",
                                 vi: "Nếu trời mưa thì lịch trình thế nào?",
                                 modelAnswer: {
                                     jp: "雨がふったら、どうしますか？",
@@ -1712,7 +1755,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l7-c3-q1",
                                 jp: "ボランティアカードに必要な情報を記入してください。",
-                                furigana: "ボランティアカードに必要な情報を記入してください。",
+                                furigana:
+                                    "ボランティアカードに必要な情報を記入してください。",
                                 vi: "Hãy điền thông tin cần thiết vào thẻ tình nguyện viên.",
                             } as Question,
                         ],
@@ -1775,11 +1819,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l8-c1-q1",
                                 jp: "カラオケコンテストは何時にどこで始まりますか？",
-                                furigana: "カラオケコンテストは何時にどこで始まりますか？",
+                                furigana:
+                                    "カラオケコンテストは何時にどこで始まりますか？",
                                 vi: "Cuộc thi Karaoke bắt đầu lúc mấy giờ ở đâu?",
                                 modelAnswer: {
                                     jp: "Jポップコンサート、何時からはじまるか、知ってますか？",
-                                    furigana: "Jポップコンサート、何時からはじまるか、知ってますか？",
+                                    furigana:
+                                        "Jポップコンサート、何時からはじまるか、知ってますか？",
                                     vi: "Hỏi thông tin về thời gian và địa điểm tại quầy lễ tân",
                                     durationSec: 8,
                                 },
@@ -1791,7 +1837,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Hãy hỏi ở quầy lễ tân.",
                                 modelAnswer: {
                                     jp: "Jポップコンサート、何時からはじまるか、知ってますか？",
-                                    furigana: "Jポップコンサート、何時からはじまるか、知ってますか？",
+                                    furigana:
+                                        "Jポップコンサート、何時からはじまるか、知ってますか？",
                                     vi: "Hỏi thông tin về thời gian và địa điểm tại quầy lễ tân",
                                     durationSec: 8,
                                 },
@@ -1849,7 +1896,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l8-c2-q1",
                                 jp: "空手デモンストレーションはもう始まりましたか？",
-                                furigana: "空手デモンストレーションはもう始まりましたか？",
+                                furigana:
+                                    "空手デモンストレーションはもう始まりましたか？",
                                 vi: "Buổi biểu diễn Karate đã bắt đầu chưa?",
                                 modelAnswer: {
                                     jp: "もうはじまりました。",
@@ -1925,11 +1973,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l8-c3-q1",
                                 jp: "カラオケコンテストの司会をしてください。",
-                                furigana: "カラオケコンテストの司会をしてください。",
+                                furigana:
+                                    "カラオケコンテストの司会をしてください。",
                                 vi: "Hãy làm MC cho cuộc thi Karaoke.",
                                 modelAnswer: {
                                     jp: "みなさん、本日はお忙しい中、カラオケコンテストにおいでくださって、ありがとうございます。はじめにみなさんにお願いがあります。この会場では飲食はご遠慮ください。よろしくお願いいたします。",
-                                    furigana: "みなさん、本日はお忙しい中、カラオケコンテストにおいでくださって、ありがとうございます。はじめにみなさんにお願いがあります。この会場では飲食はご遠慮ください。よろしくお願いいたします。",
+                                    furigana:
+                                        "みなさん、本日はお忙しい中、カラオケコンテストにおいでくださって、ありがとうございます。はじめにみなさんにお願いがあります。この会場では飲食はご遠慮ください。よろしくお願いいたします。",
                                     vi: "Làm MC dẫn chương trình, chào hỏi và đưa ra yêu cầu nội quy bằng tiếng Nhật",
                                     durationSec: 8,
                                 },
@@ -2010,11 +2060,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l9-c1-q1",
                                 jp: "お正月はいつも何をしますか？準備は大変ですか？",
-                                furigana: "お正月はいつも何をしますか？準備は大変ですか？",
+                                furigana:
+                                    "お正月はいつも何をしますか？準備は大変ですか？",
                                 vi: "Ngày tết bạn thường làm gì? Chuẩn bị có vất vả không?",
                                 modelAnswer: {
                                     jp: "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
-                                    furigana: "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
+                                    furigana:
+                                        "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
                                     vi: "Nói về việc thường làm trong ngày tết và cảm nghĩ về tết",
                                     durationSec: 8,
                                 },
@@ -2026,7 +2078,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn nghĩ thế nào về ngày tết?",
                                 modelAnswer: {
                                     jp: "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
-                                    furigana: "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
+                                    furigana:
+                                        "お正月は買い物とか料理とか準備がたくさんありますから、大変です。",
                                     vi: "Nói về việc thường làm trong ngày tết và cảm nghĩ về tết",
                                     durationSec: 8,
                                 },
@@ -2088,11 +2141,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l9-c2-q1",
                                 jp: "正月休みはどこに行きましたか？どう過ごしましたか？",
-                                furigana: "正月休みはどこに行きましたか？どう過ごしましたか？",
+                                furigana:
+                                    "正月休みはどこに行きましたか？どう過ごしましたか？",
                                 vi: "Kỳ nghỉ tết bạn đã đi đâu? Trải qua thế nào?",
                                 modelAnswer: {
                                     jp: "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
-                                    furigana: "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
+                                    furigana:
+                                        "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
                                     vi: "Kể cho bạn bè nghe về kỳ nghỉ tết đã qua",
                                     durationSec: 8,
                                 },
@@ -2104,7 +2159,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn có gặp được họ hàng không?",
                                 modelAnswer: {
                                     jp: "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
-                                    furigana: "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
+                                    furigana:
+                                        "正月休みはどうしていましたか？- ずっとフランスに帰っていました。",
                                     vi: "Kể cho bạn bè nghe về kỳ nghỉ tết đã qua",
                                     durationSec: 8,
                                 },
@@ -2151,7 +2207,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l9-c3-q1",
                                 jp: "年賀状を読んで、メッセージの内容を理解してください。",
-                                furigana: "年賀状を読んで、メッセージの内容を理解してください。",
+                                furigana:
+                                    "年賀状を読んで、メッセージの内容を理解してください。",
                                 vi: "Hãy đọc thiệp nengajo và hiểu nội dung chúc mừng.",
                             } as Question,
                         ],
@@ -2190,7 +2247,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l9-c4-q1",
                                 jp: "友達や先生に日本語で年賀状を書いてください。",
-                                furigana: "友達や先生に日本語で年賀状を書いてください。",
+                                furigana:
+                                    "友達や先生に日本語で年賀状を書いてください。",
                                 vi: "Hãy viết thiệp chúc tết bằng tiếng Nhật gửi cho bạn bè hoặc thầy cô.",
                             } as Question,
                         ],
@@ -2266,11 +2324,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l10-c1-q1",
                                 jp: "ひなまつり（または七五三など）は何のために何をしますか？",
-                                furigana: "ひなまつり（または七五三など）は何のために何をしますか？",
+                                furigana:
+                                    "ひなまつり（または七五三など）は何のために何をしますか？",
                                 vi: "Lễ hội Hinamatsuri hoặc Shichigosan làm gì và vì mục đích gì?",
                                 modelAnswer: {
                                     jp: "女の子がしあわせになるように願います。病気にならないように祈ります。",
-                                    furigana: "女の子がしあわせになるように願います。病気にならないように祈ります。",
+                                    furigana:
+                                        "女の子がしあわせになるように願います。病気にならないように祈ります。",
                                     vi: "Nói về sự kiện lễ hội theo mùa: mục đích và hoạt động chính",
                                     durationSec: 8,
                                 },
@@ -2282,7 +2342,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Mọi người thường cầu nguyện điều gì?",
                                 modelAnswer: {
                                     jp: "女の子がしあわせになるように願います。病気にならないように祈ります。",
-                                    furigana: "女の子がしあわせになるように願います。病気にならないように祈ります。",
+                                    furigana:
+                                        "女の子がしあわせになるように願います。病気にならないように祈ります。",
                                     vi: "Nói về sự kiện lễ hội theo mùa: mục đích và hoạt động chính",
                                     durationSec: 8,
                                 },
@@ -2330,11 +2391,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l10-c2-q1",
                                 jp: "あなたの国や町の有名なお祭りについて紹介してください。",
-                                furigana: "あなたの国や町の有名なお祭りについて紹介してください。",
+                                furigana:
+                                    "あなたの国や町の有名なお祭りについて紹介してください。",
                                 vi: "Hãy giới thiệu về một lễ hội nổi tiếng ở quê hương bạn.",
                                 modelAnswer: {
                                     jp: "これは私の町の「秋まつり」です。毎年10月にあります。まつりのとき、きれいな飾りを作ったり、おどったりして、豊作を感謝します。",
-                                    furigana: "これは私の町の「秋まつり」です。毎年10月にあります。まつりのとき、きれいな飾りを作ったり、おどったりして、豊作を感謝します。",
+                                    furigana:
+                                        "これは私の町の「秋まつり」です。毎年10月にあります。まつりのとき、きれいな飾りを作ったり、おどったりして、豊作を感謝します。",
                                     vi: "Thuyết trình về một lễ hội ở quê hương bạn, dựa trên ghi chú",
                                     durationSec: 8,
                                 },
@@ -2411,7 +2474,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn đang tìm mua gì trên mạng thế?",
                                 modelAnswer: {
                                     jp: "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
-                                    furigana: "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
+                                    furigana:
+                                        "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
                                     vi: "Nói về thứ định mua và lý do tại sao mua",
                                     durationSec: 8,
                                 },
@@ -2423,7 +2487,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Tại sao bạn lại cần mua đồ mới?",
                                 modelAnswer: {
                                     jp: "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
-                                    furigana: "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
+                                    furigana:
+                                        "掃除機がこわれてしまったんです。エアコンの調子が悪くなってしまったんです。",
                                     vi: "Nói về thứ định mua và lý do tại sao mua",
                                     durationSec: 8,
                                 },
@@ -2478,11 +2543,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l11-c2-q1",
                                 jp: "ネットショッピングについてどう思いますか？良い点と悪い点は？",
-                                furigana: "ネットショッピングについてどう思いますか？良い点と悪い点は？",
+                                furigana:
+                                    "ネットショッピングについてどう思いますか？良い点と悪い点は？",
                                 vi: "Bạn nghĩ thế nào về mua sắm online? Điểm tốt và chưa tốt là gì?",
                                 modelAnswer: {
                                     jp: "店に行かないで買い物できますから、とても便利だと思います。",
-                                    furigana: "店に行かないで買い物できますから、とても便利だと思います。",
+                                    furigana:
+                                        "店に行かないで買い物できますから、とても便利だと思います。",
                                     vi: "Bày tỏ quan điểm về mua sắm trực tuyến",
                                     durationSec: 8,
                                 },
@@ -2554,11 +2621,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l12-c1-q1",
                                 jp: "この新しい冷蔵庫やアイロンはどうですか？",
-                                furigana: "この新しい冷蔵庫やアイロンはどうですか？",
+                                furigana:
+                                    "この新しい冷蔵庫やアイロンはどうですか？",
                                 vi: "Chiếc tủ lạnh hoặc bàn là mới này thế nào?",
                                 modelAnswer: {
                                     jp: "このアイロンは軽くて、使いやすそうですよ。",
-                                    furigana: "このアイロンは軽くて、使いやすそうですよ。",
+                                    furigana:
+                                        "このアイロンは軽くて、使いやすそうですよ。",
                                     vi: "Trao đổi ý kiến về một món đồ điện gia dụng",
                                     durationSec: 8,
                                 },
@@ -2570,7 +2639,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Kích thước và trọng lượng thế nào?",
                                 modelAnswer: {
                                     jp: "このアイロンは軽くて、使いやすそうですよ。",
-                                    furigana: "このアイロンは軽くて、使いやすそうですよ。",
+                                    furigana:
+                                        "このアイロンは軽くて、使いやすそうですよ。",
                                     vi: "Trao đổi ý kiến về một món đồ điện gia dụng",
                                     durationSec: 8,
                                 },
@@ -2632,11 +2702,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l12-c2-q1",
                                 jp: "AモデルとBモデル、どちらがおすすめですか？",
-                                furigana: "AモデルとBモデル、どちらがおすすめですか？",
+                                furigana:
+                                    "AモデルとBモデル、どちらがおすすめですか？",
                                 vi: "Model A và B, loại nào khuyên dùng hơn?",
                                 modelAnswer: {
                                     jp: "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
-                                    furigana: "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
+                                    furigana:
+                                        "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
                                     vi: "So sánh hai sản phẩm và đưa ra nhận xét, quyết định mua",
                                     durationSec: 8,
                                 },
@@ -2644,11 +2716,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l12-c2-q2",
                                 jp: "値段や省エネの機能はどう違いますか？",
-                                furigana: "値段や省エネの機能はどう違いますか？",
+                                furigana:
+                                    "値段や省エネの機能はどう違いますか？",
                                 vi: "Giá cả và tính năng tiết kiệm điện khác nhau thế nào?",
                                 modelAnswer: {
                                     jp: "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
-                                    furigana: "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
+                                    furigana:
+                                        "AモデルとBモデルと、どちらが安いですか。- Bモデルのほうが安いです。",
                                     vi: "So sánh hai sản phẩm và đưa ra nhận xét, quyết định mua",
                                     durationSec: 8,
                                 },
@@ -2722,11 +2796,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l13-c1-q1",
                                 jp: "京都（またはこのお寺）は初めてですか？",
-                                furigana: "京都（またはこのお寺）は初めてですか？",
+                                furigana:
+                                    "京都（またはこのお寺）は初めてですか？",
                                 vi: "Đây là lần đầu bạn đến Kyoto hoặc ngôi chùa này phải không?",
                                 modelAnswer: {
                                     jp: "京都はいつ来ても自然がきれいですね。",
-                                    furigana: "京都はいつ来ても自然がきれいですね。",
+                                    furigana:
+                                        "京都はいつ来ても自然がきれいですね。",
                                     vi: "Hỏi/Trả lời người trong đoàn xem đây có phải lần đầu ghé thăm địa điểm này không",
                                     durationSec: 8,
                                 },
@@ -2738,7 +2814,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Lần trước đến là lần thứ mấy?",
                                 modelAnswer: {
                                     jp: "京都はいつ来ても自然がきれいですね。",
-                                    furigana: "京都はいつ来ても自然がきれいですね。",
+                                    furigana:
+                                        "京都はいつ来ても自然がきれいですね。",
                                     vi: "Hỏi/Trả lời người trong đoàn xem đây có phải lần đầu ghé thăm địa điểm này không",
                                     durationSec: 8,
                                 },
@@ -2794,11 +2871,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l13-c2-q1",
                                 jp: "このお寺はいつ、だれによって建てられましたか？",
-                                furigana: "このお寺はいつ、だれによって建てられましたか？",
+                                furigana:
+                                    "このお寺はいつ、だれによって建てられましたか？",
                                 vi: "Ngôi chùa này được xây khi nào, bởi ai?",
                                 modelAnswer: {
                                     jp: "このお寺は14世紀の終わりに、将軍によって建てられました。",
-                                    furigana: "このお寺は14世紀の終わりに、将軍によって建てられました。",
+                                    furigana:
+                                        "このお寺は14世紀の終わりに、将軍によって建てられました。",
                                     vi: "Giới thiệu ngắn gọn về một địa điểm nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -2810,7 +2889,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Khu vực xung quanh nổi tiếng về cái gì?",
                                 modelAnswer: {
                                     jp: "このお寺は14世紀の終わりに、将軍によって建てられました。",
-                                    furigana: "このお寺は14世紀の終わりに、将軍によって建てられました。",
+                                    furigana:
+                                        "このお寺は14世紀の終わりに、将軍によって建てられました。",
                                     vi: "Giới thiệu ngắn gọn về một địa điểm nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -2857,7 +2937,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l13-c3-q1",
                                 jp: "観光地のノートに書いてある外国人の感想を読んでください。",
-                                furigana: "観光地のノートに書いてある外国人の感想を読んでください。",
+                                furigana:
+                                    "観光地のノートに書いてある外国人の感想を読んでください。",
                                 vi: "Đọc cảm nghĩ của người nước ngoài ghi trong sổ lưu niệm.",
                             } as Question,
                         ],
@@ -2896,7 +2977,8 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l13-c4-q1",
                                 jp: "ノートに日本語で簡単なコメントを書いてください。",
-                                furigana: "ノートに日本語で簡単なコメントを書いてください。",
+                                furigana:
+                                    "ノートに日本語で簡単なコメントを書いてください。",
                                 vi: "Hãy viết một dòng bình luận ngắn bằng tiếng Nhật vào sổ.",
                             } as Question,
                         ],
@@ -2961,11 +3043,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l14-c1-q1",
                                 jp: "この絵はいつ書かれましたか？何を表していますか？",
-                                furigana: "この絵はいつ書かれましたか？何を表していますか？",
+                                furigana:
+                                    "この絵はいつ書かれましたか？何を表していますか？",
                                 vi: "Bức tranh này được vẽ khi nào? Biểu thị điều gì?",
                                 modelAnswer: {
                                     jp: "この絵はとても有名だそうです。17世紀に書かれたそうです。",
-                                    furigana: "この絵はとても有名だそうです。17世紀に書かれたそうです。",
+                                    furigana:
+                                        "この絵はとても有名だそうです。17世紀に書かれたそうです。",
                                     vi: "Truyền đạt lại nội dung thuyết minh vật trưng bày ở bảo tàng cho bạn bè bằng ngôn từ đơn giản",
                                     durationSec: 8,
                                 },
@@ -2973,11 +3057,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l14-c1-q2",
                                 jp: "誰のために、何のために作られましたか？",
-                                furigana: "誰のために、何のために作られましたか？",
+                                furigana:
+                                    "誰のために、何のために作られましたか？",
                                 vi: "Nó được làm cho ai, vì mục đích gì?",
                                 modelAnswer: {
                                     jp: "この絵はとても有名だそうです。17世紀に書かれたそうです。",
-                                    furigana: "この絵はとても有名だそうです。17世紀に書かれたそうです。",
+                                    furigana:
+                                        "この絵はとても有名だそうです。17世紀に書かれたそうです。",
                                     vi: "Truyền đạt lại nội dung thuyết minh vật trưng bày ở bảo tàng cho bạn bè bằng ngôn từ đơn giản",
                                     durationSec: 8,
                                 },
@@ -3119,11 +3205,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l15-c1-q1",
                                 jp: "会議室のエアコンや電気がつけっぱなしですよ。",
-                                furigana: "会議室のエアコンや電気がつけっぱなしですよ。",
+                                furigana:
+                                    "会議室のエアコンや電気がつけっぱなしですよ。",
                                 vi: "Điều hòa/điện phòng họp vẫn bật nguyên kìa.",
                                 modelAnswer: {
                                     jp: "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
-                                    furigana: "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
+                                    furigana:
+                                        "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
                                     vi: "Phát hiện hành động lãng phí, gây hại môi trường để nhắc nhở và phản hồi",
                                     durationSec: 8,
                                 },
@@ -3135,7 +3223,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Xin lỗi, tôi nên làm thế nào?",
                                 modelAnswer: {
                                     jp: "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
-                                    furigana: "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
+                                    furigana:
+                                        "会議室のエアコンがついたままですよ。/ すみません。消すのを忘れました。すぐ消します。",
                                     vi: "Phát hiện hành động lãng phí, gây hại môi trường để nhắc nhở và phản hồi",
                                     durationSec: 8,
                                 },
@@ -3190,11 +3279,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l15-c2-q1",
                                 jp: "普段、どんなエコ活動をしていますか？",
-                                furigana: "普段、どんなエコ活動をしていますか？",
+                                furigana:
+                                    "普段、どんなエコ活動をしていますか？",
                                 vi: "Bình thường bạn làm hoạt động bảo vệ môi trường nào?",
                                 modelAnswer: {
                                     jp: "買い物のとき、自分のバッグを持っていくようにしています。",
-                                    furigana: "買い物のとき、自分のバッグを持っていくようにしています。",
+                                    furigana:
+                                        "買い物のとき、自分のバッグを持っていくようにしています。",
                                     vi: "Kể về hoạt động bảo vệ môi trường mà bản thân đang thực hiện",
                                     durationSec: 8,
                                 },
@@ -3202,11 +3293,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l15-c2-q2",
                                 jp: "プラスチックごみを減らすために何をしますか？",
-                                furigana: "プラスチックごみを減らすために何をしますか？",
+                                furigana:
+                                    "プラスチックごみを減らすために何をしますか？",
                                 vi: "Để giảm rác thải nhựa bạn làm gì?",
                                 modelAnswer: {
                                     jp: "買い物のとき、自分のバッグを持っていくようにしています。",
-                                    furigana: "買い物のとき、自分のバッグを持っていくようにしています。",
+                                    furigana:
+                                        "買い物のとき、自分のバッグを持っていくようにしています。",
                                     vi: "Kể về hoạt động bảo vệ môi trường mà bản thân đang thực hiện",
                                     durationSec: 8,
                                 },
@@ -3271,11 +3364,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l16-c1-q1",
                                 jp: "着られなくなった服や使わないカバンはどうしますか？",
-                                furigana: "着られなくなった服や使わないカバンはどうしますか？",
+                                furigana:
+                                    "着られなくなった服や使わないカバンはどうしますか？",
                                 vi: "Quần áo không mặc vừa hoặc túi xách không dùng nữa bạn sẽ làm thế nào?",
                                 modelAnswer: {
                                     jp: "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
-                                    furigana: "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
+                                    furigana:
+                                        "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
                                     vi: "Nói về việc bạn làm để tránh lãng phí đồ đạc trước khi vứt bỏ",
                                     durationSec: 8,
                                 },
@@ -3287,7 +3382,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Vứt đi thì lãng phí quá phải không?",
                                 modelAnswer: {
                                     jp: "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
-                                    furigana: "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
+                                    furigana:
+                                        "服が着られなくなったら、どうしますか？- 私はフリーマーケットで売ります。",
                                     vi: "Nói về việc bạn làm để tránh lãng phí đồ đạc trước khi vứt bỏ",
                                     durationSec: 8,
                                 },
@@ -3342,11 +3438,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l16-c2-q1",
                                 jp: "その素敵なカバンやスカートは何から作りましたか？",
-                                furigana: "その素敵なカバンやスカートは何から作りましたか？",
+                                furigana:
+                                    "その素敵なカバンやスカートは何から作りましたか？",
                                 vi: "Chiếc túi xách/váy đẹp này làm từ gì thế?",
                                 modelAnswer: {
                                     jp: "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
-                                    furigana: "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
+                                    furigana:
+                                        "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
                                     vi: "Kể về một món đồ thủ công tự tái chế từ đồ không dùng nữa",
                                     durationSec: 8,
                                 },
@@ -3358,7 +3456,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Bạn đã tái chế quần áo cũ à?",
                                 modelAnswer: {
                                     jp: "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
-                                    furigana: "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
+                                    furigana:
+                                        "すてきなスカートですね。- ありがとう。古い着物をスカートにしたんです。",
                                     vi: "Kể về một món đồ thủ công tự tái chế từ đồ không dùng nữa",
                                     durationSec: 8,
                                 },
@@ -3432,11 +3531,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l17-c1-q1",
                                 jp: "山下泰裕さんという人を知っていますか？",
-                                furigana: "山下泰裕さんという人を知っていますか？",
+                                furigana:
+                                    "山下泰裕さんという人を知っていますか？",
                                 vi: "Bạn có biết người tên là Yamashita Yasuhiro không?",
                                 modelAnswer: {
                                     jp: "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
-                                    furigana: "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
+                                    furigana:
+                                        "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
                                     vi: "Nói những điều bạn biết về một nhân vật nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -3444,11 +3545,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l17-c1-q2",
                                 jp: "その人は何をした人で、どんな業績がありますか？",
-                                furigana: "その人は何をした人で、どんな業績がありますか？",
+                                furigana:
+                                    "その人は何をした人で、どんな業績がありますか？",
                                 vi: "Người đó là người thế nào, có thành tựu gì?",
                                 modelAnswer: {
                                     jp: "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
-                                    furigana: "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
+                                    furigana:
+                                        "山下泰裕さんですね。日本の柔道の選手ですね。オリンピックで金メダルをとった人ですね。",
                                     vi: "Nói những điều bạn biết về một nhân vật nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -3509,11 +3612,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l17-c2-q1",
                                 jp: "いつから村上春樹（または黒澤明）のファンですか？",
-                                furigana: "いつから村上春樹（または黒澤明）のファンですか？",
+                                furigana:
+                                    "いつから村上春樹（または黒澤明）のファンですか？",
                                 vi: "Bạn là fan của Murakami Haruki từ khi nào?",
                                 modelAnswer: {
                                     jp: "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
-                                    furigana: "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
+                                    furigana:
+                                        "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
                                     vi: "Chia sẻ về cơ duyên/lý do bắt đầu yêu thích một người nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -3525,7 +3630,8 @@ export const a22Topics: BookTopic[] = [
                                 vi: "Cơ duyên nào khiến bạn yêu thích?",
                                 modelAnswer: {
                                     jp: "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
-                                    furigana: "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
+                                    furigana:
+                                        "大学のとき、初めて黒澤明の映画を見てから、ずっとファンです。",
                                     vi: "Chia sẻ về cơ duyên/lý do bắt đầu yêu thích một người nổi tiếng",
                                     durationSec: 8,
                                 },
@@ -3579,11 +3685,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l17-c3-q1",
                                 jp: "あなたの国の歴史的な有名人について紹介してください。",
-                                furigana: "あなたの国の歴史的な有名人について紹介してください。",
+                                furigana:
+                                    "あなたの国の歴史的な有名人について紹介してください。",
                                 vi: "Hãy giới thiệu về một người nổi tiếng lịch sử ở nước bạn.",
                                 modelAnswer: {
                                     jp: "私は津田梅子という人について話します。津田梅子は教育者として有名です。梅子は1864年に東京で生まれました。6歳のとき、アメリカに留学しました。帰国して、女性のための大学を作りました。",
-                                    furigana: "私は津田梅子という人について話します。津田梅子は教育者として有名です。梅子は1864年に東京で生まれました。6歳のとき、アメリカに留学しました。帰国して、女性のための大学を作りました。",
+                                    furigana:
+                                        "私は津田梅子という人について話します。津田梅子は教育者として有名です。梅子は1864年に東京で生まれました。6歳のとき、アメリカに留学しました。帰国して、女性のための大学を作りました。",
                                     vi: "Dựa vào ghi chú để thuyết trình về một vĩ nhân/người nổi tiếng ở nước mình",
                                     durationSec: 8,
                                 },
@@ -3657,11 +3765,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l18-c1-q1",
                                 jp: "子どものとき、どんな子どもでしたか？よく何をしましたか？",
-                                furigana: "子どものとき、どんな子どもでしたか？よく何をしましたか？",
+                                furigana:
+                                    "子どものとき、どんな子どもでしたか？よく何をしましたか？",
                                 vi: "Hồi nhỏ bạn là đứa trẻ thế nào? Thường làm gì?",
                                 modelAnswer: {
                                     jp: "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
-                                    furigana: "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
+                                    furigana:
+                                        "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
                                     vi: "Kể lại kỷ niệm thời thơ ấu hoặc thời học sinh",
                                     durationSec: 8,
                                 },
@@ -3669,11 +3779,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l18-c1-q2",
                                 jp: "親や先生によく怒られたり、褒められたりしましたか？",
-                                furigana: "親や先生によく怒られたり、褒められたりしましたか？",
+                                furigana:
+                                    "親や先生によく怒られたり、褒められたりしましたか？",
                                 vi: "Có hay bị bố mẹ mắng hay được khen không?",
                                 modelAnswer: {
                                     jp: "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
-                                    furigana: "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
+                                    furigana:
+                                        "家に帰るのが遅くなって、両親にしかられました (Bị bố mẹ mắng).",
                                     vi: "Kể lại kỷ niệm thời thơ ấu hoặc thời học sinh",
                                     durationSec: 8,
                                 },
@@ -3736,11 +3848,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l18-c2-q1",
                                 jp: "どうして日本語の勉強（または柔道）を始めたんですか？",
-                                furigana: "どうして日本語の勉強（または柔道）を始めたんですか？",
+                                furigana:
+                                    "どうして日本語の勉強（または柔道）を始めたんですか？",
                                 vi: "Tại sao bạn lại bắt đầu học tiếng Nhật/văn hóa Nhật?",
                                 modelAnswer: {
                                     jp: "日本語を勉強してから、日本語が少し話せるようになりました。",
-                                    furigana: "日本語を勉強してから、日本語が少し話せるようになりました。",
+                                    furigana:
+                                        "日本語を勉強してから、日本語が少し話せるようになりました。",
                                     vi: "Nói về cơ duyên bắt đầu một thói quen mới và sự thay đổi của bản thân sau đó",
                                     durationSec: 8,
                                 },
@@ -3748,11 +3862,13 @@ export const a22Topics: BookTopic[] = [
                             {
                                 id: "m-a22-l18-c2-q2",
                                 jp: "勉強を始めてから, 何か変化はありましたか？",
-                                furigana: "勉強を始めてから, 何か変化はありましたか？",
+                                furigana:
+                                    "勉強を始めてから, 何か変化はありましたか？",
                                 vi: "Sau khi học có thay đổi gì không?",
                                 modelAnswer: {
                                     jp: "日本語を勉強してから、日本語が少し話せるようになりました。",
-                                    furigana: "日本語を勉強してから、日本語が少し話せるようになりました。",
+                                    furigana:
+                                        "日本語を勉強してから、日本語が少し話せるようになりました。",
                                     vi: "Nói về cơ duyên bắt đầu một thói quen mới và sự thay đổi của bản thân sau đó",
                                     durationSec: 8,
                                 },

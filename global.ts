@@ -13,6 +13,7 @@ import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
 import marugoto from "@/i18n/messages/vi/marugoto.json";
 import leaderboard from "@/i18n/messages/vi/leaderboard.json";
 import pointHistory from "@/i18n/messages/vi/point-history.json";
+import dailyReward from "@/i18n/messages/vi/daily-reward.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -30,6 +31,7 @@ declare module "next-intl" {
             typeof dialogueSetup &
             typeof marugoto &
             typeof leaderboard &
-            typeof pointHistory;
+            typeof pointHistory &
+            typeof dailyReward;
     }
 }

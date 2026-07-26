@@ -25,7 +25,11 @@ const BAR_HEIGHTS = Array.from({ length: 32 }, (_, i) => {
     return 30 + Math.round(r * 70);
 });
 
-export function MockAudioPlayer({ src, durationSec, autoPlay = false }: MockAudioPlayerProps) {
+export function MockAudioPlayer({
+    src,
+    durationSec,
+    autoPlay = false,
+}: MockAudioPlayerProps) {
     const [playing, setPlaying] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [duration, setDuration] = useState(durationSec);
@@ -65,7 +69,8 @@ export function MockAudioPlayer({ src, durationSec, autoPlay = false }: MockAudi
         setElapsed(audio.currentTime);
 
         if (autoPlay) {
-            audio.play()
+            audio
+                .play()
                 .then(() => setPlaying(true))
                 .catch((err) => console.log("Auto-play failed", err));
         } else {

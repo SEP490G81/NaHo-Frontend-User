@@ -37,7 +37,8 @@ export function CircularNode({ node, title, caption, onClick }: Props) {
                 aria-label={`${title} — ${caption}`}
                 className={cn(
                     "rounded-full transition-transform duration-100",
-                    !locked && "hover:-translate-y-0.5 active:translate-y-[3px]",
+                    !locked &&
+                        "hover:-translate-y-0.5 active:translate-y-[3px]",
                     locked && "cursor-not-allowed",
                 )}
             >
@@ -62,11 +63,12 @@ export function CircularNode({ node, title, caption, onClick }: Props) {
                     )}
                 >
                     {title}
-                    {typeof node.bestScore === "number" && node.bestScore > 0 && (
-                        <span className="text-text-highlight ml-1">
-                            · {node.bestScore.toFixed(1)}
-                        </span>
-                    )}
+                    {typeof node.bestScore === "number" &&
+                        node.bestScore > 0 && (
+                            <span className="text-text-highlight ml-1">
+                                · {node.bestScore.toFixed(1)}
+                            </span>
+                        )}
                 </p>
                 <p className="text-text-muted text-xs font-medium">{caption}</p>
             </div>

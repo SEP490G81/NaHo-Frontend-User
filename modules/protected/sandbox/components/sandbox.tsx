@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { splitMarkup, mapBook } from "@/data/marugoto/mapper";
+import { mapBook, splitMarkup } from "@/data/marugoto/mapper";
 import type { QuestionHints } from "@/data/mockHints";
 import { useMarugotoStore } from "@/store/marugotoStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -126,7 +126,9 @@ function SandboxContent() {
         onSuccess: (result) => {
             setAnalyzing(false);
             // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
-            useMarugotoStore.getState().setQuestionScore(questionId, result.score);
+            useMarugotoStore
+                .getState()
+                .setQuestionScore(questionId, result.score);
             // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],

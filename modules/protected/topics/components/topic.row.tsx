@@ -48,7 +48,10 @@ export function TopicRow({ view, bookId, accent }: Props) {
                     {topic.furiganaMarkup ? (
                         <FuriganaMarkup markup={topic.furiganaMarkup} />
                     ) : (
-                        <FuriganaText text={topic.jpTitle} furigana={topic.jpTitle} />
+                        <FuriganaText
+                            text={topic.jpTitle}
+                            furigana={topic.jpTitle}
+                        />
                     )}
                 </p>
             </div>

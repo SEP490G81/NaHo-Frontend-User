@@ -7,7 +7,7 @@ import {
     getTopicDetail,
     listTopicsByBook,
 } from "@/services/client/book.service";
-import { mapBook, mapBeLesson, mapBeTopic } from "@/data/marugoto/mapper";
+import { mapBeLesson, mapBeTopic, mapBook } from "@/data/marugoto/mapper";
 import type { MarugotoBook } from "@/data/marugoto/types";
 import NotFoundView from "@/components/ui/not.found.view";
 import TopicRoadmap from "./topic.roadmap";

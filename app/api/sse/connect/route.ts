@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
                 });
 
                 if (!response.ok || !response.body) {
-                    const errorMsg = "event: error\ndata: Failed to connect to backend sse\n\n";
+                    const errorMsg =
+                        "event: error\ndata: Failed to connect to backend sse\n\n";
                     controller.enqueue(new TextEncoder().encode(errorMsg));
                     controller.close();
                     return;
@@ -53,7 +54,7 @@ export async function GET(request: NextRequest) {
         headers: {
             "Content-Type": "text/event-stream",
             "Cache-Control": "no-cache, no-transform",
-            "Connection": "keep-alive",
+            Connection: "keep-alive",
         },
     });
 }

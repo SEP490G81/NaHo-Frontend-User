@@ -43,7 +43,9 @@ export function NodeDisc({
         <div
             className={cn(
                 "relative flex items-center justify-center overflow-hidden rounded-full",
-                locked ? "border-bdc-primary text-text-muted border" : "text-white",
+                locked
+                    ? "border-bdc-primary text-text-muted border"
+                    : "text-white",
                 className,
             )}
             style={{

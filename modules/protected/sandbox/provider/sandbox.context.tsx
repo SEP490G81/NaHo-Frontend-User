@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { MicStatus, SandboxStep } from "../types/sandbox.type";
 import { blobToWav } from "../utils/wav.encoder";
 
@@ -25,7 +31,9 @@ interface SandboxContextProps {
     audioUrl: string | null;
 }
 
-const SandboxContext = createContext<SandboxContextProps | undefined>(undefined);
+const SandboxContext = createContext<SandboxContextProps | undefined>(
+    undefined,
+);
 
 export function SandboxProvider({ children }: { children: React.ReactNode }) {
     const [step, setStep] = useState<SandboxStep>(1);
@@ -59,13 +67,18 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
         setVolume(0);
 
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+            });
             micTestStreamRef.current = stream;
 
             const AudioContextClass =
                 window.AudioContext ||
-                (window as unknown as { webkitAudioContext: typeof AudioContext })
-                    .webkitAudioContext;
+                (
+                    window as unknown as {
+                        webkitAudioContext: typeof AudioContext;
+                    }
+                ).webkitAudioContext;
             const audioContext = new AudioContextClass();
             micTestContextRef.current = audioContext;
 
@@ -117,7 +130,10 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
     const toggleRecord = async () => {
         if (recording) {
             // Stop recording
-            if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+            if (
+                mediaRecorderRef.current &&
+                mediaRecorderRef.current.state !== "inactive"
+            ) {
                 mediaRecorderRef.current.stop();
             }
             if (recordRef.current) clearInterval(recordRef.current);
@@ -127,7 +143,9 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
         } else {
             // Start recording
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                });
                 const mediaRecorder = new MediaRecorder(stream);
                 mediaRecorderRef.current = mediaRecorder;
                 const chunks: Blob[] = [];
@@ -146,7 +164,10 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
                         const wav = await blobToWav(raw);
                         setAudioUrl(URL.createObjectURL(wav));
                     } catch (err) {
-                        console.error("Không chuyển được WAV, dùng bản gốc:", err);
+                        console.error(
+                            "Không chuyển được WAV, dùng bản gốc:",
+                            err,
+                        );
                         setAudioUrl(URL.createObjectURL(raw));
                     }
                 };
@@ -159,10 +180,14 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
                 recordRef.current = setInterval(() => {
                     setElapsed((e) => {
                         if (e >= 60) {
-                            if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+                            if (
+                                mediaRecorderRef.current &&
+                                mediaRecorderRef.current.state !== "inactive"
+                            ) {
                                 mediaRecorderRef.current.stop();
                             }
-                            if (recordRef.current) clearInterval(recordRef.current);
+                            if (recordRef.current)
+                                clearInterval(recordRef.current);
                             recordRef.current = null;
                             setRecording(false);
                             setStep(3);

@@ -53,8 +53,13 @@ export const useMarugotoStore = create<MarugotoState>()(
                 if (score <= prev) return;
                 const gained = score >= PASS_SCORE && prev < PASS_SCORE;
                 set((s) => ({
-                    questionScores: { ...s.questionScores, [questionId]: score },
-                    lPoints: gained ? s.lPoints + Math.round(score * 10) : s.lPoints,
+                    questionScores: {
+                        ...s.questionScores,
+                        [questionId]: score,
+                    },
+                    lPoints: gained
+                        ? s.lPoints + Math.round(score * 10)
+                        : s.lPoints,
                 }));
             },
             markNodeDone: (nodeId) =>

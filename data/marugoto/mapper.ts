@@ -4,7 +4,7 @@ import type {
     LessonDetailResponse,
     LessonListItemResponse,
     ObjectiveListItemResponse,
-    TopicListItemResponse,
+    TopicListItemResponse
 } from "@/types/responses/book.response";
 import type { LearningPathNodeListItemResponse } from "@/types/responses/learning.response";
 import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
@@ -74,7 +74,8 @@ export function mapBook(b: BookResponse): MarugotoBook {
         title: b.title,
         subtitle: b.description,
         coverImage: b.coverImage?.objectKey ?? b.coverImage?.fileUrl,
-        coverColor: BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
+        coverColor:
+            BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
         firstNodeOrder: b.firstNodeGlobalOrderIndex ?? undefined,
         lastNodeOrder: b.lastNodeGlobalOrderIndex ?? undefined,
         topics: [],

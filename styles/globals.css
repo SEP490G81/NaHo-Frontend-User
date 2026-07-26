@@ -194,6 +194,7 @@ input::-ms-clear {
 .Toastify__toast-container {
     padding: 16px !important;
 }
+
 .Toastify__toast {
     /* Màu nhấn theo loại thông báo (đặt lại ở các lớp --success/--error/... bên dưới). */
     --toast-accent: var(--color-bgc-highlight);
@@ -215,27 +216,34 @@ input::-ms-clear {
     width: 22px !important;
     margin-inline-end: 12px !important;
 }
+
 .Toastify__toast--success {
     --toast-accent: var(--color-text-success);
 }
+
 .Toastify__toast--error {
     --toast-accent: var(--color-text-error);
 }
+
 .Toastify__toast--info {
     --toast-accent: #3b82f6;
 }
+
 .Toastify__toast--warning {
     --toast-accent: #f59e0b;
 }
+
 .Toastify__progress-bar {
     background: var(--toast-accent) !important;
     height: 4px !important;
     opacity: 0.9 !important;
 }
+
 .Toastify__close-button {
     color: var(--color-text-contrast) !important;
     opacity: 0.5;
 }
+
 .Toastify__close-button:hover {
     opacity: 0.9;
 }

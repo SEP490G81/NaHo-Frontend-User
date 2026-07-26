@@ -1,7 +1,10 @@
 import { Avatar } from "@mui/material";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getFirstCharacter, getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
+import {
+    getFirstCharacter,
+    getUserAvatarUrl,
+} from "@/layouts/protected-header/utils/header.util";
 import AccountMenu from "@/layouts/protected-header/components/account.menu";
 
 const UserAvatar = () => {
@@ -24,7 +27,6 @@ const UserAvatar = () => {
                 >
                     {getFirstCharacter(user)}
                 </Avatar>
-
             </button>
 
             <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />

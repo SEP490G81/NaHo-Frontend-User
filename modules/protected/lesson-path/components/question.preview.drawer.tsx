@@ -90,7 +90,10 @@ export function QuestionPreviewDrawer({
                             <div>
                                 <h3 className="text-text-contrast text-2xl leading-snug font-bold">
                                     <FuriganaMarkup
-                                        markup={question.titleMarkup || question.title}
+                                        markup={
+                                            question.titleMarkup ||
+                                            question.title
+                                        }
                                         showFurigana={showFurigana}
                                     />
                                 </h3>
@@ -117,7 +120,9 @@ export function QuestionPreviewDrawer({
                                     icon={<BookOpen className="h-4 w-4" />}
                                     title={t("path.vocabShort")}
                                 >
-                                    <NodeTermList items={question.vocabularies} />
+                                    <NodeTermList
+                                        items={question.vocabularies}
+                                    />
                                 </PreviewSection>
                             )}
 

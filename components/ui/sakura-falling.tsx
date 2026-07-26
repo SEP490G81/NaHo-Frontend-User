@@ -43,7 +43,7 @@ const PETALS: Petal[] = [
 
 export function SakuraFalling() {
     return (
-        <div className="pointer-events-none absolute -top-[72px] left-0 right-0 bottom-0 overflow-hidden -z-10">
+        <div className="pointer-events-none absolute -top-[72px] right-0 bottom-0 left-0 -z-10 overflow-hidden">
             {PETALS.map((petal) => (
                 <span
                     key={petal.id}

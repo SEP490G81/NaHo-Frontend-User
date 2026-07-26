@@ -17,7 +17,12 @@ interface LeagueIconProps {
  * offline) thì hiện placeholder hình viên ngọc tô theo màu hạng — không cần
  * asset local. `unoptimized` vì nguồn là SVG/CDN, qua optimizer không lợi ích.
  */
-export function LeagueIcon({ league, label, size, className }: LeagueIconProps) {
+export function LeagueIcon({
+    league,
+    label,
+    size,
+    className,
+}: LeagueIconProps) {
     const src = getLeagueIconSrc(league);
 
     if (!src) {

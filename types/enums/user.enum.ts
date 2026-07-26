@@ -32,6 +32,5 @@ export const OAuthProviderName = Object.freeze({
     FACEBOOK: "FACEBOOK",
     APPLE: "APPLE",
 });
-export type OAuthProviderName = (typeof OAuthProviderName)[keyof typeof OAuthProviderName];
-
-
+export type OAuthProviderName =
+    (typeof OAuthProviderName)[keyof typeof OAuthProviderName];

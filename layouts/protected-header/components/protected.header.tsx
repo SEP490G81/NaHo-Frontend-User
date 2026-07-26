@@ -6,6 +6,7 @@ import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.b
 import UserAvatar from "@/layouts/protected-header/components/user.avatar";
 import { IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
+import DailyRewardCalendar from "../features/daily.reward.calendar";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
@@ -16,7 +17,7 @@ const ProtectedHeader = () => {
         useUiStore();
 
     return (
-        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between border-b px-3 py-3.5 overflow-hidden">
+        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between overflow-hidden border-b px-3 py-3.5">
             <HeaderDecoration />
 
             {/* Left: collapse toggle (desktop) + mobile menu button */}
@@ -57,6 +58,7 @@ const ProtectedHeader = () => {
 
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
+                <DailyRewardCalendar />
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"
