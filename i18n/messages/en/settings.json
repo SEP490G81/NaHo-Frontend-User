@@ -58,7 +58,9 @@
             },
             "errors": {
                 "createPaymentFailed": "Failed to initiate VNPAY payment. Please try again.",
-                "fetchPlansFailed": "Unable to load subscription plans."
+                "fetchPlansFailed": "Unable to load subscription plans, please try again later.",
+                "fetchPlansFailedTitle": "Unable to Load Subscription Plans",
+                "retryFetchPlans": "Retry Loading"
             }
         }
     }
