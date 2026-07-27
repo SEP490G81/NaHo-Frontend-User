@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
 import { proxyGet } from "@/services/server/backend.proxy";
 
-/** Lớp 1: /api/history/[historyId] → BE /histories/{historyId} (chi tiết báo cáo). */
+/** Lớp 1: /api/history/[historyId] → BE /speaking-histories/{historyId} (chi tiết). */
 export async function GET(
     _req: NextRequest,
     { params }: { params: Promise<{ historyId: string }> },
 ) {
     const { historyId } = await params;
-    return proxyGet(`/histories/${historyId}`);
+    return proxyGet(`/speaking-histories/${historyId}`);
 }
