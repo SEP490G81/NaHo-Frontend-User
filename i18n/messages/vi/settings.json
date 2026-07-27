@@ -58,7 +58,9 @@
             },
             "errors": {
                 "createPaymentFailed": "Không thể khởi tạo thanh toán VNPAY. Vui lòng thử lại.",
-                "fetchPlansFailed": "Không thể lấy danh sách gói dịch vụ."
+                "fetchPlansFailed": "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
+                "fetchPlansFailedTitle": "Không thể tải danh sách gói cước",
+                "retryFetchPlans": "Tải lại danh sách"
             }
         }
     }

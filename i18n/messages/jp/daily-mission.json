@@ -1,0 +1,33 @@
+{
+    "dailyMission": {
+        "triggerTooltip": "デイリーミッション",
+        "triggerBtn": "ミッション",
+        "title": "デイリーミッション",
+        "subtitle": "今日のミッションをクリアしてボーナスポイントを獲得しましょう",
+        "close": "閉じる",
+        "progressText": "達成状況 {completed}/{total}",
+        "totalPoints": "+{points}pt",
+        "status": {
+            "completed": "完了",
+            "pending": "未完了"
+        },
+        "types": {
+            "COMPLETE_SPEAKING_QUESTION_NODE": {
+                "title": "スピーキング練習をクリア",
+                "desc": "発音・会話の練習問題を1つクリアする"
+            },
+            "TALK_WITH_AI": {
+                "title": "AIと会話する",
+                "desc": "Kai AIと対話練習を行う"
+            },
+            "default": {
+                "title": "デイリーミッション",
+                "desc": "ミッションを完了して報酬ポイントを獲得する"
+            }
+        },
+        "empty": "本日のミッションはありません。",
+        "fetchError": "ミッションを取得できませんでした。",
+        "actionBtn": "今すぐ挑戦",
+        "doneText": "達成"
+    }
+}

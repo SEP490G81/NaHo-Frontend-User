@@ -19,6 +19,7 @@ const MESSAGE_FILES = [
     "leaderboard",
     "point-history",
     "daily-reward",
+    "daily-mission",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {
