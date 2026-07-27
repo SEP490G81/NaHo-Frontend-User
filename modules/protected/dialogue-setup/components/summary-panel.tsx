@@ -5,27 +5,22 @@ import { Avatar, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
+import { getStyleKey } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
 import type { Companion } from "@/modules/protected/live-chatroom/types/live-chatroom.type";
 import { startConversation } from "@/services/client/speaking.service";
-import {
-    type ChatKeigo,
-    type ChatTone,
-    useChatStore,
-} from "@/store/chatStore";
+import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
 
 interface SummaryPanelProps {
     companion: Companion;
-    tone: ChatTone;
-    keigo: ChatKeigo;
+    conversationStyleId: number;
     voiceSpeed: number;
     showHints: boolean;
 }
 
 export function SummaryPanel({
     companion,
-    tone,
-    keigo,
+    conversationStyleId,
     voiceSpeed,
     showHints,
 }: SummaryPanelProps) {
@@ -40,8 +35,10 @@ export function SummaryPanel({
 
     const rows: { label: string; value: string }[] = [
         { label: t("summaryCompanion"), value: companion.name },
-        { label: t("summaryTone"), value: t(`tone_${tone}`) },
-        { label: t("summaryKeigo"), value: t(`keigo_${keigo}`) },
+        {
+            label: t("summaryStyle"),
+            value: t(`style_${getStyleKey(conversationStyleId)}`),
+        },
         { label: t("summarySpeed"), value: `${voiceSpeed.toFixed(1)}x` },
     ];
 
@@ -52,10 +49,8 @@ export function SummaryPanel({
             const res = await startConversation(personaId);
             setConfig({
                 companionId: companion.id,
-                tone,
-                keigo,
+                conversationStyleId,
                 voiceSpeed,
-                showTranslation: false,
                 showHints,
             });
             setSession({
@@ -67,15 +62,13 @@ export function SummaryPanel({
             });
             router.push("/live-chatroom");
         } catch (err) {
-            toast.error(
-                err instanceof Error ? err.message : t("startError"),
-            );
+            toast.error(err instanceof Error ? err.message : t("startError"));
             setStarting(false);
         }
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-page/40 sticky top-6 space-y-5 rounded-2xl border p-5 shadow-sm">
+        <div className="border-bdc-primary bg-bgc-app sticky top-6 space-y-5 rounded-2xl border p-5 shadow-sm">
             <h2 className="text-text-muted text-xs font-bold tracking-[0.16em] uppercase">
                 {t("summaryTitle")}
             </h2>

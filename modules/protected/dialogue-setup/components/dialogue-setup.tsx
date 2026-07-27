@@ -8,17 +8,17 @@ import { SummaryPanel } from "./summary-panel";
 import { AdvancedSettingsForm } from "../features/advanced-settings-form";
 import {
     COMPANIONS,
+    DEFAULT_STYLE_ID,
     resolveCompanions,
 } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
 import { getPersonas } from "@/services/client/speaking.service";
 import { useAuthStore } from "@/store/authStore";
-import { type ChatKeigo, type ChatTone } from "@/store/chatStore";
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
     const level = useAuthStore((s) => s.profile?.level);
 
-    // Hybrid: giữ metadata UI đẹp, gắn personaId thật từ GET /personas.
+    // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
     const { data: personas, isLoading } = useQuery({
         queryKey: ["personas"],
         queryFn: getPersonas,
@@ -31,13 +31,25 @@ export function DialogueSetup() {
     );
 
     const [companionId, setCompanionId] = useState(COMPANIONS[0].id);
-    const [tone, setTone] = useState<ChatTone>("casual");
-    const [keigo, setKeigo] = useState<ChatKeigo>("auto");
+    // null = theo style mặc định của persona; khác null = người dùng đã tự đổi.
+    const [styleOverride, setStyleOverride] = useState<number | null>(null);
     const [voiceSpeed, setVoiceSpeed] = useState(1.0);
     const [showHints, setShowHints] = useState(true);
 
     const selected =
         companions.find((c) => c.id === companionId) ?? companions[0];
+
+    // Style hiệu dụng: ưu tiên lựa chọn tay, mặc định lấy của persona.
+    const conversationStyleId =
+        styleOverride ??
+        selected?.suggestedConversationStyleId ??
+        DEFAULT_STYLE_ID;
+
+    // Đổi companion → bỏ override để quay về style mặc định của persona mới.
+    const handleSelectCompanion = (id: string) => {
+        setCompanionId(id);
+        setStyleOverride(null);
+    };
 
     return (
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
@@ -49,12 +61,6 @@ export function DialogueSetup() {
                 />
                 <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 pl-2">
                     <div className="space-y-2">
-                        <span className="text-bgc-highlight inline-flex items-center gap-2 text-xs font-bold tracking-[0.18em] uppercase">
-                            <span className="bg-bgc-highlight flex h-6 w-6 items-center justify-center rounded-full text-white">
-                                桜
-                            </span>
-                            {t("brand")}
-                        </span>
                         <h1 className="text-text-contrast text-2xl font-bold tracking-tight sm:text-3xl">
                             {t("title")}
                         </h1>
@@ -91,18 +97,16 @@ export function DialogueSetup() {
                         <CompanionList
                             companions={companions}
                             selectedId={companionId}
-                            onSelect={setCompanionId}
+                            onSelect={handleSelectCompanion}
                             loading={isLoading}
                         />
                     </div>
 
                     <AdvancedSettingsForm
-                        tone={tone}
-                        keigo={keigo}
+                        conversationStyleId={conversationStyleId}
                         voiceSpeed={voiceSpeed}
                         showHints={showHints}
-                        onToneChange={setTone}
-                        onKeigoChange={setKeigo}
+                        onStyleChange={setStyleOverride}
                         onVoiceSpeedChange={setVoiceSpeed}
                         onShowHintsChange={setShowHints}
                     />
@@ -112,8 +116,7 @@ export function DialogueSetup() {
                 <div className="lg:col-span-1">
                     <SummaryPanel
                         companion={selected}
-                        tone={tone}
-                        keigo={keigo}
+                        conversationStyleId={conversationStyleId}
                         voiceSpeed={voiceSpeed}
                         showHints={showHints}
                     />

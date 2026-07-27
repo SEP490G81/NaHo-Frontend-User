@@ -1,37 +1,30 @@
 "use client";
-import {
-    FormControl,
-    MenuItem,
-    Select,
-    Slider,
-    Switch,
-    ToggleButton,
-    ToggleButtonGroup,
-} from "@mui/material";
+import { Crown, MessagesSquare, Smile } from "lucide-react";
+import { Slider, Switch } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { type ChatKeigo, type ChatTone } from "@/store/chatStore";
+import { cn } from "@/libs/utils";
+import { CONVERSATION_STYLES } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
 
 interface AdvancedSettingsFormProps {
-    tone: ChatTone;
-    keigo: ChatKeigo;
+    conversationStyleId: number;
     voiceSpeed: number;
     showHints: boolean;
-    onToneChange: (v: ChatTone) => void;
-    onKeigoChange: (v: ChatKeigo) => void;
+    onStyleChange: (id: number) => void;
     onVoiceSpeedChange: (v: number) => void;
     onShowHintsChange: (v: boolean) => void;
 }
 
-const TOGGLE_CLASS =
-    "border-bdc-primary !text-text-contrast [&.Mui-selected]:!border-bgc-highlight [&.Mui-selected]:!bg-bgc-highlight/15 [&.Mui-selected]:!text-bgc-highlight !rounded-md border !px-3 !py-1.5 !text-xs !font-medium !capitalize";
+const STYLE_ICON: Record<string, React.ReactNode> = {
+    informal: <Smile className="h-5 w-5" />,
+    neutral: <MessagesSquare className="h-5 w-5" />,
+    formal: <Crown className="h-5 w-5" />,
+};
 
 export function AdvancedSettingsForm({
-    tone,
-    keigo,
+    conversationStyleId,
     voiceSpeed,
     showHints,
-    onToneChange,
-    onKeigoChange,
+    onStyleChange,
     onVoiceSpeedChange,
     onShowHintsChange,
 }: AdvancedSettingsFormProps) {
@@ -46,70 +39,51 @@ export function AdvancedSettingsForm({
                 {t("advancedSubtitle")}
             </p>
 
-            <div className="mt-5 grid gap-6 lg:grid-cols-2">
-                {/* Tone */}
-                <div className="flex flex-col justify-start space-y-2">
-                    <span className="text-text-contrast text-sm font-medium">
-                        {t("toneLabel")}
-                    </span>
-                    <ToggleButtonGroup
-                        value={tone}
-                        exclusive
-                        onChange={(_e, v) => v && onToneChange(v as ChatTone)}
-                        size="small"
-                        className="justify-start gap-2"
-                    >
-                        <ToggleButton value="casual" className={TOGGLE_CLASS}>
-                            {t("toneCasual")}
-                        </ToggleButton>
-                        <ToggleButton value="business" className={TOGGLE_CLASS}>
-                            {t("toneBusiness")}
-                        </ToggleButton>
-                        <ToggleButton value="interview" className={TOGGLE_CLASS}>
-                            {t("toneInterview")}
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+            {/* Style hội thoại — 3 thẻ */}
+            <div className="mt-5">
+                <span className="text-text-contrast text-sm font-medium">
+                    {t("styleLabel")}
+                </span>
+                <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                    {CONVERSATION_STYLES.map((s) => {
+                        const selected = conversationStyleId === s.id;
+                        return (
+                            <button
+                                key={s.id}
+                                type="button"
+                                onClick={() => onStyleChange(s.id)}
+                                className={cn(
+                                    "flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition-all",
+                                    selected
+                                        ? "border-bgc-highlight ring-bgc-highlight/30 bg-bgc-highlight/5 ring-2"
+                                        : "border-bdc-primary hover:border-bgc-highlight/60 bg-bgc-page/40",
+                                )}
+                            >
+                                <span
+                                    className={cn(
+                                        "flex h-9 w-9 items-center justify-center rounded-lg",
+                                        selected
+                                            ? "bg-bgc-highlight text-white"
+                                            : "bg-bgc-highlight/15 text-bgc-highlight",
+                                    )}
+                                >
+                                    {STYLE_ICON[s.key]}
+                                </span>
+                                <span className="text-text-contrast text-sm font-semibold">
+                                    {t(`style_${s.key}`)}
+                                </span>
+                                <span className="text-text-muted text-xs leading-relaxed">
+                                    {t(`styleDesc_${s.key}`)}
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
+            </div>
 
-                {/* Keigo */}
-                <div className="space-y-2">
-                    <span className="text-text-contrast mb-1 block text-sm font-medium">
-                        {t("keigoLabel")}
-                    </span>
-                    <FormControl fullWidth size="small">
-                        <Select
-                            value={keigo}
-                            onChange={(e) =>
-                                onKeigoChange(e.target.value as ChatKeigo)
-                            }
-                            className="text-text-contrast bg-bgc-app"
-                            sx={{
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "var(--color-bdc-primary)",
-                                },
-                                "&:hover .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "var(--color-bgc-highlight)",
-                                },
-                                "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                    {
-                                        borderColor:
-                                            "var(--color-bgc-highlight)",
-                                    },
-                            }}
-                        >
-                            <MenuItem value="auto">{t("keigoAuto")}</MenuItem>
-                            <MenuItem value="sonkeigo">
-                                {t("keigoSonkeigo")}
-                            </MenuItem>
-                            <MenuItem value="kenjougo">
-                                {t("keigoKenjougo")}
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-
+            <div className="border-bdc-primary mt-6 grid gap-6 border-t pt-6 lg:grid-cols-2">
                 {/* Voice speed */}
-                <div className="space-y-2 lg:col-span-2">
+                <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <span className="text-text-contrast text-sm font-medium">
                             {t("speedLabel")}
@@ -133,7 +107,7 @@ export function AdvancedSettingsForm({
                 </div>
 
                 {/* Hints toggle */}
-                <label className="border-bdc-primary bg-bgc-page/50 flex cursor-pointer items-start justify-between gap-3 rounded-md border p-3 lg:col-span-2">
+                <label className="border-bdc-primary bg-bgc-page/50 flex cursor-pointer items-center justify-between gap-3 rounded-xl border p-4">
                     <span className="flex-1">
                         <span className="text-text-contrast block text-sm font-medium">
                             {t("hintsTitle")}
