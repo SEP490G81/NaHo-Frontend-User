@@ -2,7 +2,7 @@
 import React from "react";
 import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/libs/utils";
+import { cn, formatPoints } from "@/libs/utils";
 import type {
     PointSortColumn,
     SortDirection,
@@ -127,7 +127,7 @@ export function PointHistoryTable({ rows, sortColumn, sortDirection, onSort }: P
                                     )}
                                 >
                                     {positive ? "+" : ""}
-                                    {Math.round(it.point)}
+                                    {formatPoints(it.point)}
                                 </td>
                             </tr>
                         );

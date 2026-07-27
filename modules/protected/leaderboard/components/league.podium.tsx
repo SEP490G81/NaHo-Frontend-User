@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { Crown } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
-import { cn } from "@/libs/utils";
+import { useTranslations } from "next-intl";
+import { cn, formatPoints } from "@/libs/utils";
 import {
     LeaderboardEntry,
     LeagueResponse,
@@ -22,7 +22,6 @@ interface PodiumColumnProps {
 }
 
 function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
-    const format = useFormatter();
     const style = PODIUM_STYLES[place];
     const isFirst = place === 1;
     const avatarSize = isFirst ? 76 : 60;
@@ -72,7 +71,7 @@ function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
             </p>
             {entry && (
                 <p className={cn("text-xs font-bold", style.text)}>
-                    {format.number(Math.round(entry.point))}{" "}
+                    {formatPoints(entry.point)}{" "}
                     <span className="text-text-muted font-medium">L-Point</span>
                 </p>
             )}
