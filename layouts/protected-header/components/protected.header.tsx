@@ -11,6 +11,7 @@ import { ChevronRight, Flame } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
 import DailyRewardCalendar from "../features/daily.reward.calendar";
+import DailyMissionButton from "../features/daily.mission.button";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
@@ -64,6 +65,7 @@ const ProtectedHeader = () => {
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
                 <DailyRewardCalendar />
+                <DailyMissionButton />
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"
