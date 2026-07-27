@@ -18,9 +18,21 @@ import {
  */
 
 async function unwrap<T>(response: Response): Promise<T> {
-    const result = await response.json();
+    const text = await response.text();
+    let result: unknown = null;
+    if (text) {
+        try {
+            result = JSON.parse(text);
+        } catch {
+            // Phản hồi không phải JSON (vd trang lỗi HTML) → báo lỗi rõ ràng.
+            throw new Error(`Máy chủ phản hồi lỗi (HTTP ${response.status}).`);
+        }
+    }
     if (!response.ok) {
-        throw new Error((result as ProblemDetail).detail || "Yêu cầu thất bại");
+        throw new Error(
+            (result as ProblemDetail)?.detail ||
+                `Yêu cầu thất bại (HTTP ${response.status}).`,
+        );
     }
     return (result as ApiResponse<T>).data;
 }
