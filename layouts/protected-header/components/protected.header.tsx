@@ -10,11 +10,12 @@ import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { ChevronRight, Flame } from "lucide-react";
 import { currentLearner } from "@/data/mockLearnerDashboard";
 import { AllRoute } from "@/i18n/type";
-import DailyRewardCalendar from "./daily.reward.calendar";
+import DailyRewardCalendar from "../features/daily.reward.calendar";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
 import { ReportModal } from "@/modules/protected/report/features/report-modal";
+
 
 const ProtectedHeader = () => {
     const { toggleSidebar, toggleSidebarCollapse, isSidebarCollapsed } =
