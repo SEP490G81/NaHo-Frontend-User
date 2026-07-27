@@ -11,7 +11,7 @@ export function TypingIndicator({ companion }: { companion: Companion }) {
 
     return (
         <div className="flex items-start gap-3">
-            <Avatar className={`h-9 w-9 shrink-0 ${companion.accent}`}>
+            <Avatar className={`h-10 w-10 shrink-0 ${companion.accent}`}>
                 {getInitials(companion.name)}
             </Avatar>
             <div className="flex max-w-[80%] flex-col gap-1.5">

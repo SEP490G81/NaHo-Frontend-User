@@ -41,7 +41,7 @@ export function LiveChatroom() {
     const setReport = useChatStore((s) => s.setReport);
 
     const companion = getCompanion(config?.companionId ?? "sakura");
-    const showHints = config?.showHints ?? true;
+    const conversationStyleId = config?.conversationStyleId ?? 1;
 
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState("");
@@ -49,6 +49,7 @@ export function LiveChatroom() {
     const [audioProcessing, setAudioProcessing] = useState(false);
     const [ending, setEnding] = useState(false);
     const [voiceSpeed, setVoiceSpeed] = useState(config?.voiceSpeed ?? 1);
+    const [showHints, setShowHints] = useState(config?.showHints ?? true);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -69,7 +70,9 @@ export function LiveChatroom() {
                     role: "ai",
                     text: session.aiGreeting,
                     audioBase64: session.greetingAudioBase64,
-                    autoPlay: false,
+                    // Tự phát câu chào khi vào phòng (trình duyệt có thể chặn
+                    // nếu thiếu tương tác — khi đó nút play vẫn còn để bấm tay).
+                    autoPlay: true,
                     timestamp: nowTime(),
                 },
             ]);
@@ -83,10 +86,19 @@ export function LiveChatroom() {
         });
     }, [messages, isTyping, audioProcessing]);
 
-    const appendAiReply = (text: string) => {
+    // audioBase64: khi BE bổ sung TTS cho reply thì truyền vào → tự phát nối tiếp
+    // để luồng nói liền mạch, không phải bấm nút.
+    const appendAiReply = (text: string, audioBase64?: string) => {
         setMessages((m) => [
             ...m,
-            { id: nextId("ai"), role: "ai", text, timestamp: nowTime() },
+            {
+                id: nextId("ai"),
+                role: "ai",
+                text,
+                audioBase64,
+                autoPlay: !!audioBase64,
+                timestamp: nowTime(),
+            },
         ]);
     };
 
@@ -178,14 +190,17 @@ export function LiveChatroom() {
 
     const sidebarProps = {
         companion,
+        conversationStyleId,
         voiceSpeed,
         onVoiceSpeedChange: setVoiceSpeed,
+        showHints,
+        onShowHintsChange: setShowHints,
         onEndSession: handleEndSession,
         ending,
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app flex h-[calc(100vh-140px)] w-full overflow-hidden rounded-xl border shadow-sm">
+        <div className="border-bdc-primary bg-bgc-app flex h-[calc(100vh-120px)] w-full overflow-hidden rounded-2xl border shadow-sm">
             {/* Desktop sidebar */}
             <div className="hidden w-72 shrink-0 lg:block">
                 <ChatSidebar {...sidebarProps} />
@@ -222,7 +237,7 @@ export function LiveChatroom() {
                 />
 
                 <div className="border-bdc-primary bg-bgc-app border-t px-4 py-4 sm:px-6">
-                    <div className="mx-auto flex max-w-3xl flex-col gap-3">
+                    <div className="mx-auto flex max-w-6xl flex-col gap-3">
                         {showHints && (
                             <SuggestionPills
                                 suggestions={suggestions}

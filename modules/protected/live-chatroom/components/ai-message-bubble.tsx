@@ -13,7 +13,7 @@ interface Props {
 export function AiMessageBubble({ message, companion, voiceSpeed }: Props) {
     return (
         <div className="flex gap-3">
-            <Avatar className={`h-9 w-9 shrink-0 ${companion.accent}`}>
+            <Avatar className={`h-10 w-10 shrink-0 ${companion.accent}`}>
                 {getInitials(companion.name)}
             </Avatar>
             <div className="max-w-[80%] space-y-2">
@@ -23,7 +23,7 @@ export function AiMessageBubble({ message, companion, voiceSpeed }: Props) {
                     </span>
                     <span>{message.timestamp}</span>
                 </div>
-                <div className="border-bdc-primary bg-bgc-app rounded-2xl rounded-tl-sm border px-4 py-3 shadow-sm">
+                <div className="border-bdc-primary bg-bgc-app rounded-2xl rounded-tl-sm border px-5 py-3.5 shadow-sm">
                     <div className="font-noto-jp text-base leading-relaxed">
                         {message.text}
                     </div>

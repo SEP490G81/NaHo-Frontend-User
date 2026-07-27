@@ -1,7 +1,8 @@
 "use client";
 import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import { cn } from "@/libs/utils";
 import { getInitials } from "../utils/get-initials";
 import type { UserChatMessage } from "../types/live-chatroom.type";
@@ -17,8 +18,9 @@ function scoreTone(score: number): string {
 
 export function UserMessageBubble({ message }: { message: UserChatMessage }) {
     const t = useTranslations("liveChatroom");
-    const profile = useAuthStore((s) => s.profile);
-    const name = profile?.fullName ?? "Bạn";
+    const { data: user } = useCurrentUser();
+    const name = user?.fullName || "Bạn";
+    const avatarUrl = getUserAvatarUrl(user);
     const score = message.pronunciationScore;
 
     return (
@@ -30,7 +32,7 @@ export function UserMessageBubble({ message }: { message: UserChatMessage }) {
                         {name}
                     </span>
                 </div>
-                <div className="bg-bgc-highlight rounded-2xl rounded-tr-sm px-4 py-3 text-white shadow-sm">
+                <div className="bg-bgc-highlight rounded-2xl rounded-tr-sm px-5 py-3.5 text-white shadow-sm">
                     <div className="font-noto-jp text-base leading-relaxed">
                         {message.text}
                     </div>
@@ -47,7 +49,10 @@ export function UserMessageBubble({ message }: { message: UserChatMessage }) {
                     </div>
                 )}
             </div>
-            <Avatar className="bg-bgc-page text-bgc-highlight h-9 w-9 shrink-0 text-xs font-semibold">
+            <Avatar
+                src={avatarUrl}
+                className="bg-bgc-page text-bgc-highlight h-10 w-10 shrink-0 text-xs font-semibold"
+            >
                 {getInitials(name)}
             </Avatar>
         </div>

@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Mic } from "lucide-react";
 import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import { getInitials } from "../utils/get-initials";
 
 /** Chỉ báo (phía người dùng) đang xử lý bản ghi của bạn: lọc nhiễu → STT → phân tích. */
 export function UserAudioProcessing() {
     const t = useTranslations("liveChatroom");
-    const profile = useAuthStore((s) => s.profile);
-    const name = profile?.fullName ?? "Bạn";
+    const { data: user } = useCurrentUser();
+    const name = user?.fullName || "Bạn";
+    const avatarUrl = getUserAvatarUrl(user);
     const [stepIdx, setStepIdx] = useState(0);
 
     const steps = [
@@ -44,7 +46,10 @@ export function UserAudioProcessing() {
                     </span>
                 </div>
             </div>
-            <Avatar className="bg-bgc-page text-bgc-highlight h-9 w-9 shrink-0 text-xs font-semibold">
+            <Avatar
+                src={avatarUrl}
+                className="bg-bgc-page text-bgc-highlight h-10 w-10 shrink-0 text-xs font-semibold"
+            >
                 {getInitials(name)}
             </Avatar>
         </div>
