@@ -2,24 +2,20 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { SessionScoringResponse } from "@/types/responses/speaking.response";
 
-export type ChatTone = "casual" | "business" | "interview";
-export type ChatKeigo = "auto" | "sonkeigo" | "kenjougo";
+/** Khớp bảng conversation_styles: 1=Lịch sự(ます), 2=Thân mật(casual), 3=Kính ngữ(keigo). */
+export type ConversationStyleId = number;
 
 export interface ChatConfig {
     companionId: string;
-    tone: ChatTone;
-    keigo: ChatKeigo;
+    conversationStyleId: ConversationStyleId;
     voiceSpeed: number;
-    showTranslation: boolean;
     showHints: boolean;
 }
 
 export const defaultChatConfig: ChatConfig = {
     companionId: "sakura",
-    tone: "casual",
-    keigo: "auto",
+    conversationStyleId: 1,
     voiceSpeed: 1,
-    showTranslation: true,
     showHints: true,
 };
 

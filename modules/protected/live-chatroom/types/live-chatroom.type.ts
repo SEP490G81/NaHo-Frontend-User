@@ -9,6 +9,8 @@ export interface Companion {
     matchKeyword: string;
     /** ID persona thật sau khi resolve từ API (null nếu chưa map được). */
     personaId?: number | null;
+    /** Style hội thoại mặc định của persona (conversation_styles.id). */
+    suggestedConversationStyleId?: number | null;
 }
 
 export type AiChatMessage = {
@@ -33,15 +35,3 @@ export type UserChatMessage = {
 };
 
 export type ChatMessage = AiChatMessage | UserChatMessage;
-
-export type ChatTone = "casual" | "business" | "interview";
-export type ChatKeigo = "auto" | "sonkeigo" | "kenjougo";
-
-export interface ChatConfig {
-    companionId: string;
-    tone: ChatTone;
-    keigo: ChatKeigo;
-    voiceSpeed: number;
-    showTranslation: boolean;
-    showHints: boolean;
-}

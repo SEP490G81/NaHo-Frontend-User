@@ -1,5 +1,28 @@
 import type { Companion } from "../types/live-chatroom.type";
 
+/**
+ * Style hội thoại — khớp bảng conversation_styles bên BE.
+ * Thứ tự hiển thị: Thân mật (2) → Lịch sự (1) → Kính ngữ (3).
+ */
+export interface ConversationStyle {
+    id: number;
+    key: "informal" | "neutral" | "formal";
+}
+
+export const CONVERSATION_STYLES: ConversationStyle[] = [
+    { id: 2, key: "informal" },
+    { id: 1, key: "neutral" },
+    { id: 3, key: "formal" },
+];
+
+export const DEFAULT_STYLE_ID = 1;
+
+export function getStyleKey(
+    id: number | null | undefined,
+): ConversationStyle["key"] {
+    return CONVERSATION_STYLES.find((s) => s.id === id)?.key ?? "neutral";
+}
+
 export const COMPANIONS: Companion[] = [
     {
         id: "sakura",
@@ -10,6 +33,7 @@ export const COMPANIONS: Companion[] = [
         level: "Tất cả",
         accent: "bg-bgc-highlight/15 text-bgc-highlight",
         matchKeyword: "sakura",
+        suggestedConversationStyleId: 1,
     },
     {
         id: "kenji",
@@ -20,6 +44,7 @@ export const COMPANIONS: Companion[] = [
         level: "N3 – N1",
         accent: "bg-sky-500/15 text-sky-600 dark:text-sky-300",
         matchKeyword: "kenji",
+        suggestedConversationStyleId: 1,
     },
     {
         id: "yuki",
@@ -29,6 +54,7 @@ export const COMPANIONS: Companion[] = [
         level: "N2 – N1",
         accent: "bg-amber-500/15 text-amber-600 dark:text-amber-300",
         matchKeyword: "yuki",
+        suggestedConversationStyleId: 3,
     },
     {
         id: "tanaka",
@@ -39,6 +65,7 @@ export const COMPANIONS: Companion[] = [
         level: "N1",
         accent: "bg-violet-500/15 text-violet-600 dark:text-violet-300",
         matchKeyword: "tanaka",
+        suggestedConversationStyleId: 3,
     },
 ];
 
@@ -52,7 +79,11 @@ export function getCompanion(id: string): Companion {
  * Persona nào không khớp companion nào sẽ được thêm mới với metadata mặc định.
  */
 export function resolveCompanions(
-    personas: { id: number; name: string }[],
+    personas: {
+        id: number;
+        name: string;
+        suggestedConversationStyleId?: number | null;
+    }[],
 ): Companion[] {
     const used = new Set<number>();
 
@@ -63,7 +94,15 @@ export function resolveCompanions(
                 p.name?.toLowerCase().includes(c.matchKeyword),
         );
         if (match) used.add(match.id);
-        return { ...c, personaId: match ? match.id : null };
+        return {
+            ...c,
+            personaId: match ? match.id : null,
+            // Ưu tiên style từ BE, thiếu thì dùng mặc định của companion.
+            suggestedConversationStyleId:
+                match?.suggestedConversationStyleId ??
+                c.suggestedConversationStyleId ??
+                DEFAULT_STYLE_ID,
+        };
     });
 
     const extras: Companion[] = personas
@@ -77,6 +116,8 @@ export function resolveCompanions(
             accent: EXTRA_ACCENTS[i % EXTRA_ACCENTS.length],
             matchKeyword: "",
             personaId: p.id,
+            suggestedConversationStyleId:
+                p.suggestedConversationStyleId ?? DEFAULT_STYLE_ID,
         }));
 
     return [...mapped, ...extras];
