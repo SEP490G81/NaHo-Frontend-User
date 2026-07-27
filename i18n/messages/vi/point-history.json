@@ -36,7 +36,9 @@
             "LESSON_COMPLETION": "Hoàn thành bài học",
             "TOPIC_COMPLETION": "Hoàn thành chủ đề",
             "BOOK_COMPLETION": "Hoàn thành quyển sách",
-            "DAILY_REWARD": "Thưởng hằng ngày",
+            "LEARNING_PATH_NODE_RETAKE": "Luyện lại mốc học",
+            "DAILY_LOGIN_REWARD": "Thưởng đăng nhập",
+            "DAILY_MISSION_REWARD": "Thưởng nhiệm vụ",
             "STREAK_BONUS": "Thưởng chuỗi ngày",
             "ACHIEVEMENT_REWARD": "Thưởng thành tích",
             "PENALTY": "Trừ điểm"

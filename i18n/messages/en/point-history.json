@@ -36,7 +36,9 @@
             "LESSON_COMPLETION": "Lesson completed",
             "TOPIC_COMPLETION": "Topic completed",
             "BOOK_COMPLETION": "Book completed",
-            "DAILY_REWARD": "Daily reward",
+            "LEARNING_PATH_NODE_RETAKE": "Milestone retake",
+            "DAILY_LOGIN_REWARD": "Daily login reward",
+            "DAILY_MISSION_REWARD": "Daily mission reward",
             "STREAK_BONUS": "Streak bonus",
             "ACHIEVEMENT_REWARD": "Achievement reward",
             "PENALTY": "Penalty"

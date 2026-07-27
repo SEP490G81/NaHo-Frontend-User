@@ -36,7 +36,9 @@
             "LESSON_COMPLETION": "レッスン達成",
             "TOPIC_COMPLETION": "トピック達成",
             "BOOK_COMPLETION": "教材達成",
-            "DAILY_REWARD": "デイリー報酬",
+            "LEARNING_PATH_NODE_RETAKE": "マイルストーン再挑戦",
+            "DAILY_LOGIN_REWARD": "ログイン報酬",
+            "DAILY_MISSION_REWARD": "ミッション報酬",
             "STREAK_BONUS": "連続ボーナス",
             "ACHIEVEMENT_REWARD": "実績報酬",
             "PENALTY": "減点"
