@@ -8,8 +8,9 @@
         "progressText": "Completed {completed}/{total}",
         "totalPoints": "+{points} Points",
         "status": {
+            "inProgress": "In Progress",
             "completed": "Completed",
-            "pending": "In Progress"
+            "earned": "Earned"
         },
         "types": {
             "COMPLETE_SPEAKING_QUESTION_NODE": {
@@ -28,6 +29,8 @@
         "empty": "No daily missions available today.",
         "fetchError": "Unable to load daily missions.",
         "actionBtn": "Do now",
-        "doneText": "Done"
+        "claimBtn": "Claim reward",
+        "doneText": "Done",
+        "claimSuccess": "Reward claimed successfully!"
     }
 }

@@ -8,8 +8,9 @@
         "progressText": "達成状況 {completed}/{total}",
         "totalPoints": "+{points}pt",
         "status": {
+            "inProgress": "進行中",
             "completed": "完了",
-            "pending": "未完了"
+            "earned": "受取済み"
         },
         "types": {
             "COMPLETE_SPEAKING_QUESTION_NODE": {
@@ -28,6 +29,8 @@
         "empty": "本日のミッションはありません。",
         "fetchError": "ミッションを取得できませんでした。",
         "actionBtn": "今すぐ挑戦",
-        "doneText": "達成"
+        "claimBtn": "報酬を受け取る",
+        "doneText": "達成",
+        "claimSuccess": "報酬を受け取りました！"
     }
 }
