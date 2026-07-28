@@ -7,7 +7,7 @@ export type PointTransactionType =
     | "BOOK_COMPLETION"
     | "DAILY_LOGIN_REWARD"
     | "DAILY_MISSION_REWARD"
-    | "RETAKE"
+    | "LEARNING_PATH_NODE_RETAKE"
     | "STREAK_BONUS"
     | "ACHIEVEMENT_REWARD"
     | "PENALTY";
