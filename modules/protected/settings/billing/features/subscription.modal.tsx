@@ -15,6 +15,9 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutlined";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 interface SubscriptionModalProps {
     open: boolean;
@@ -32,12 +35,33 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
     const [plans, setPlans] = useState<SubscriptionPlanResponse[]>([]);
     const [loadingPlans, setLoadingPlans] = useState<boolean>(false);
+    const [fetchPlansError, setFetchPlansError] = useState<boolean>(false);
     const [checkoutLoadingCode, setCheckoutLoadingCode] = useState<string | null>(null);
 
     // Idempotency state: UUID generated when user initiates a checkout attempt, reused on Retry
     const [activeIdempotencyKey, setActiveIdempotencyKey] = useState<string | null>(null);
     const [lastFailedPlanCode, setLastFailedPlanCode] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const fetchPlans = async () => {
+        setLoadingPlans(true);
+        setFetchPlansError(false);
+        setErrorMessage(null);
+        try {
+            const data = await getSubscriptionPlans();
+            // Sort plans by price or tier level (FREE -> BASIC -> PREMIUM)
+            const tierOrder: Record<PlanTier, number> = { FREE: 0, BASIC: 1, PREMIUM: 2 };
+            const sorted = [...data].sort(
+                (a, b) => (tierOrder[a.tier] ?? 0) - (tierOrder[b.tier] ?? 0),
+            );
+            setPlans(sorted);
+        } catch (err: any) {
+            setFetchPlansError(true);
+            setErrorMessage(err.message || t("errors.fetchPlansFailed"));
+        } finally {
+            setLoadingPlans(false);
+        }
+    };
 
     useEffect(() => {
         if (!open) return;
@@ -46,26 +70,10 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         setActiveIdempotencyKey(null);
         setLastFailedPlanCode(null);
         setErrorMessage(null);
-
-        const fetchPlans = async () => {
-            setLoadingPlans(true);
-            try {
-                const data = await getSubscriptionPlans();
-                // Sort plans by price or tier level (FREE -> BASIC -> PREMIUM)
-                const tierOrder: Record<PlanTier, number> = { FREE: 0, BASIC: 1, PREMIUM: 2 };
-                const sorted = [...data].sort(
-                    (a, b) => (tierOrder[a.tier] ?? 0) - (tierOrder[b.tier] ?? 0),
-                );
-                setPlans(sorted);
-            } catch (err: any) {
-                setErrorMessage(err.message || t("errors.fetchPlansFailed"));
-            } finally {
-                setLoadingPlans(false);
-            }
-        };
+        setFetchPlansError(false);
 
         fetchPlans();
-    }, [open, t]);
+    }, [open]);
 
     const handleCheckout = async (planCode: string, isRetry = false) => {
         let key = activeIdempotencyKey;
@@ -152,7 +160,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                 </IconButton>
 
                 <DialogContent className="mt-4 p-0">
-                    {errorMessage && (
+                    {errorMessage && !fetchPlansError && (
                         <div className="mb-4">
                             <Alert severity="error" onClose={() => setErrorMessage(null)}>
                                 {errorMessage}
@@ -163,6 +171,27 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                     {loadingPlans ? (
                         <div className="flex h-64 items-center justify-center">
                             <CircularProgress />
+                        </div>
+                    ) : fetchPlansError || plans.length === 0 ? (
+                        <div className="my-6 flex flex-col items-center justify-center rounded-2xl border border-rose-200 bg-rose-50/50 p-8 text-center dark:border-rose-900/30 dark:bg-rose-950/20">
+                            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
+                                <ErrorOutlineIcon style={{ fontSize: 32 }} />
+                            </div>
+                            <h3 className="text-lg font-bold text-text-primary">
+                                {t("errors.fetchPlansFailedTitle")}
+                            </h3>
+                            <p className="mt-1 max-w-md text-sm text-text-muted">
+                                {errorMessage || t("errors.fetchPlansFailed")}
+                            </p>
+                            <Button
+                                variant="contained"
+                                onClick={fetchPlans}
+                                startIcon={<RefreshIcon />}
+                                disabled={loadingPlans}
+                                className="mt-5 bg-primary font-semibold text-white shadow-md hover:bg-primary-dark"
+                            >
+                                {t("errors.retryFetchPlans")}
+                            </Button>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

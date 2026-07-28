@@ -44,11 +44,16 @@ export async function getSubscriptionPlans(): Promise<SubscriptionPlanResponse[]
         cache: "no-store",
     });
 
-    const result = await response.json();
+    let result: any;
+    try {
+        result = await response.json();
+    } catch (e) {
+        throw new Error("Không thể tải danh sách gói cước, vui lòng thử lại sau.");
+    }
 
     if (!response.ok) {
         const problem = result as ProblemDetail;
-        throw new Error(problem.detail || "Không lấy được danh sách gói dịch vụ.");
+        throw new Error(problem.detail || "Không thể tải danh sách gói cước, vui lòng thử lại sau.");
     }
 
     const api = result as ApiResponse<SubscriptionPlanResponse[]>;
