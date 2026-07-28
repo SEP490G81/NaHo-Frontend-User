@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { Check, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import FuriganaText from "@/components/ui/furigana.text";
@@ -15,7 +14,7 @@ interface Props {
     showFurigana: boolean;
 }
 
-/** Mốc "bài học" trên lộ trình (checkpoint): tên bài + trạng thái. */
+/** Mốc "bài học" trên lộ trình (Lesson Title Banner): chỉ chứa nhãn bài & tiêu đề. */
 export function LessonBand({ lesson, status, accent, showFurigana }: Props) {
     const t = useTranslations("marugoto");
     const completed = status === "completed";
@@ -26,61 +25,53 @@ export function LessonBand({ lesson, status, accent, showFurigana }: Props) {
           ? t("lesson.markerLocked")
           : t("lesson.markerActive");
     const color = completed
-        ? "var(--color-text-success)"
+        ? "#10b981"
         : locked
-          ? "var(--color-text-muted)"
+          ? "#94a3b8"
           : accent;
 
     return (
-        <div className="flex flex-col items-center gap-1.5 pb-1 text-center">
-            <span
+        <div className="relative z-10 mx-auto flex flex-col items-center text-center select-none">
+            <div
                 className={cn(
-                    "flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm",
-                    locked &&
-                        "border-bdc-primary border-2 border-dashed bg-transparent",
-                )}
-                style={
+                    "flex flex-col items-center gap-1.5 rounded-3xl border-2 px-6 py-3.5 shadow-lg backdrop-blur-md transition-transform hover:-translate-y-0.5 max-w-lg min-w-[320px]",
                     locked
-                        ? undefined
-                        : {
-                              background: `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 72%, #000))`,
-                          }
-                }
-            >
-                {completed ? (
-                    <Check className="h-5 w-5" strokeWidth={3} />
-                ) : locked ? (
-                    <Lock className="text-text-muted h-4 w-4" />
-                ) : (
-                    <span className="h-2.5 w-2.5 rounded-full bg-white" />
+                        ? "border-slate-300 bg-slate-100/90 text-slate-500 opacity-75"
+                        : "border-slate-200 bg-white/95 text-slate-800 shadow-md",
                 )}
-            </span>
+                style={{
+                    borderBottomWidth: "5px",
+                    borderBottomColor: locked
+                        ? "#cbd5e1"
+                        : `color-mix(in srgb, ${color} 65%, #000)`,
+                }}
+            >
+                <div className="flex items-center gap-2">
+                    <span
+                        className="rounded-full px-3 py-0.5 text-[10px] font-black tracking-widest uppercase text-white shadow-xs"
+                        style={{
+                            background: `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 75%, #000))`,
+                        }}
+                    >
+                        📖 {t("lesson.label", { number: lesson.order })} · {statusLabel}
+                    </span>
+                </div>
 
-            <p
-                className="text-[11px] font-bold tracking-[0.16em] uppercase"
-                style={{ color }}
-            >
-                {t("lesson.label", { number: lesson.order })} · {statusLabel}
-            </p>
-            <h2
-                className={cn(
-                    "text-lg leading-tight font-bold md:text-xl",
-                    locked ? "text-text-muted" : "text-text-contrast",
-                )}
-            >
-                {lesson.furiganaMarkup ? (
-                    <FuriganaMarkup
-                        markup={lesson.furiganaMarkup}
-                        showFurigana={showFurigana}
-                    />
-                ) : (
-                    <FuriganaText
-                        text={lesson.jpTitle}
-                        furigana={lesson.furigana}
-                        showFurigana={showFurigana}
-                    />
-                )}
-            </h2>
+                <h2 className="text-base font-extrabold sm:text-lg text-slate-800 leading-snug">
+                    {lesson.furiganaMarkup ? (
+                        <FuriganaMarkup
+                            markup={lesson.furiganaMarkup}
+                            showFurigana={showFurigana}
+                        />
+                    ) : (
+                        <FuriganaText
+                            text={lesson.jpTitle}
+                            furigana={lesson.furigana}
+                            showFurigana={showFurigana}
+                        />
+                    )}
+                </h2>
+            </div>
         </div>
     );
 }
