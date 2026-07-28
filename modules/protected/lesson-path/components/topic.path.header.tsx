@@ -31,79 +31,90 @@ export function TopicPathHeader({
 
     return (
         <header
-            className="bg-bgc-app/95 sticky top-0 z-30 rounded-2xl border shadow-sm backdrop-blur"
+            className="sticky top-2 z-30 mx-auto max-w-3xl overflow-hidden rounded-3xl border bg-white/95 p-4 shadow-xl backdrop-blur-2xl transition-all sm:p-5"
             style={{
-                borderColor: `color-mix(in srgb, ${accent} 26%, var(--color-bdc-primary))`,
+                borderColor: `color-mix(in srgb, ${accent} 35%, #e2e8f0)`,
+                background: `linear-gradient(135deg, color-mix(in srgb, ${accent} 10%, #ffffff) 0%, #ffffff 100%)`,
             }}
         >
-            <div className="flex items-center gap-3 px-4 py-3 sm:px-5">
+            {/* Top Bar: Action Controls Dock */}
+            <div className="flex items-center justify-between gap-3">
                 <BackButton
                     href={`/books/${book.id}`}
                     label={t("path.backToTopic")}
-                    className="bg-bgc-page shrink-0"
+                    className="shrink-0 rounded-2xl bg-slate-100/90 text-slate-700 shadow-xs hover:bg-slate-200"
                 />
 
-                <div className="min-w-0 flex-1 text-center">
+                <div className="flex items-center gap-2">
                     <span
-                        className="text-[11px] font-bold tracking-[0.14em] uppercase"
-                        style={{ color: accent }}
-                    >
-                        {book.level} ·{" "}
-                        {t("topic.label", { index: topic.order })}
-                    </span>
-                    <h1 className="text-text-contrast truncate text-lg leading-tight font-bold">
-                        {topic.furiganaMarkup ? (
-                            <FuriganaMarkup
-                                markup={topic.furiganaMarkup}
-                                showFurigana={showFurigana}
-                            />
-                        ) : (
-                            <FuriganaText
-                                text={topic.jpTitle}
-                                furigana={topic.jpTitle}
-                                showFurigana={showFurigana}
-                            />
-                        )}
-                    </h1>
-                </div>
-
-                <label className="flex shrink-0 cursor-pointer items-center gap-1">
-                    <span className="text-text-muted hidden text-xs font-medium sm:inline">
-                        {t("path.showFurigana")}
-                    </span>
-                    <Switch
-                        size="small"
-                        checked={showFurigana}
-                        onChange={(e) => setShowFurigana(e.target.checked)}
-                        sx={{
-                            "& .Mui-checked": { color: accent },
-                            "& .Mui-checked + .MuiSwitch-track": {
-                                backgroundColor: accent,
-                            },
+                        className="rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase text-white shadow-sm"
+                        style={{
+                            background: `linear-gradient(135deg, ${accent}, color-mix(in srgb, ${accent} 75%, #000))`,
                         }}
-                    />
-                </label>
+                    >
+                        {book.level} · {t("topic.label", { index: topic.order })}
+                    </span>
+
+                    <label className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-slate-200 bg-white/90 px-3 py-1 shadow-xs transition-all hover:bg-white">
+                        <span className="text-slate-600 text-xs font-bold sm:inline">
+                            {t("path.showFurigana")}
+                        </span>
+                        <Switch
+                            size="small"
+                            checked={showFurigana}
+                            onChange={(e) => setShowFurigana(e.target.checked)}
+                            sx={{
+                                "& .Mui-checked": { color: accent },
+                                "& .Mui-checked + .MuiSwitch-track": {
+                                    backgroundColor: accent,
+                                },
+                            }}
+                        />
+                    </label>
+                </div>
             </div>
 
-            <div
-                className="flex items-center gap-3 border-t px-4 py-2 sm:px-5"
-                style={{
-                    borderColor: `color-mix(in srgb, ${accent} 18%, var(--color-bdc-primary))`,
-                }}
-            >
-                <div className="bg-bgc-page h-2 flex-1 overflow-hidden rounded-full">
+            {/* Center Hero Unit Title */}
+            <div className="mt-3 text-center">
+                <h1 className="text-2xl font-black leading-tight sm:text-3xl text-slate-800 tracking-tight">
+                    {topic.furiganaMarkup ? (
+                        <FuriganaMarkup
+                            markup={topic.furiganaMarkup}
+                            showFurigana={showFurigana}
+                        />
+                    ) : (
+                        <FuriganaText
+                            text={topic.jpTitle}
+                            furigana={topic.jpTitle}
+                            showFurigana={showFurigana}
+                        />
+                    )}
+                </h1>
+            </div>
+
+            {/* Integrated 3D Progress Bar */}
+            <div className="mt-3.5 flex items-center gap-3">
+                <div className="relative h-4 flex-1 overflow-hidden rounded-full border border-slate-200 bg-slate-100 p-0.5 shadow-inner">
                     <div
-                        className="h-full rounded-full transition-all duration-500"
+                        className="relative h-full rounded-full transition-all duration-700 shadow-xs"
                         style={{
                             width: `${overallPercent}%`,
-                            background: accent,
+                            background: `linear-gradient(90deg, ${accent}, color-mix(in srgb, ${accent} 82%, #fff))`,
                         }}
-                    />
+                    >
+                        {/* Top Lens Highlight */}
+                        <span className="pointer-events-none absolute inset-x-1 top-0.5 h-1.5 rounded-full bg-white/40" />
+                    </div>
                 </div>
-                <span className="text-text-muted shrink-0 text-xs font-semibold">
-                    {overallPercent}% ·{" "}
-                    {t("books.lessonCount", { count: lessonCount })}
-                </span>
+
+                <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-0.5 shadow-2xs">
+                    <span className="text-xs font-black text-slate-800">
+                        🏆 {overallPercent}%
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-400">
+                        · {t("books.lessonCount", { count: lessonCount })}
+                    </span>
+                </div>
             </div>
         </header>
     );

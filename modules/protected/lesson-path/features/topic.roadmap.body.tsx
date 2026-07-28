@@ -34,7 +34,7 @@ interface Props {
     currentNodeId?: string;
 }
 
-/** Thân lộ trình theo chủ đề: mọi bài học · Can-do · node, xếp ngang tự xuống dòng. */
+/** Thân lộ trình theo chủ đề: 3 cột trên Desktop (Mục lục | Lộ trình Zigzag | Tiến độ & Thưởng). */
 export function TopicRoadmapBody({
     groups,
     bookId,
@@ -137,7 +137,7 @@ export function TopicRoadmapBody({
     };
 
     return (
-        <div className="space-y-3">
+        <div className="relative flex flex-col items-center">
             <TopicSnakePath
                 groups={groups}
                 accent={accent}

@@ -5,31 +5,28 @@ import type {
     LessonGroup,
     PathNode,
 } from "../hooks/use.cando.nodes";
-import LessonBand from "./lesson.band";
-import CanDoSectionHeader from "./cando.section.header";
+import FlagNode from "./flag.node";
 import CircularNode from "./circular.node";
 import ChestNode from "./chest.node";
 import StartBubble from "./start.bubble";
 
-const W = 600; // bề rộng dải lộ trình (px), canh giữa
+const W = 940; // bề rộng dải lộ trình rộng (px), tràn màn hình
 const CX = W / 2;
-const WAVE = [0, 1, 1.6, 1, 0, -1, -1.6, -1];
-const WAVE_UNIT = 42;
-const H_LESSON = 104; // chiều cao ô mốc bài
-const H_CANDO = 96; // chiều cao ô nhãn can-do
-const H_NODE = 148; // chiều cao ô node
-const OFF_LESSON = 20; // tâm chấm mốc bài so với đỉnh ô
-const OFF_NODE = 46; // tâm đĩa node so với đỉnh ô
-const TOP_PAD = 10;
-const BOTTOM_PAD = 28;
-const CANDO_W = 500;
+const WAVE = [0, 1.1, 1.8, 1.1, 0, -1.1, -1.8, -1.1];
+const WAVE_UNIT = 220; // Biên độ lượn sóng quét ngang rộng (750px sweep)
+const H_LESSON = 110; // Chiều cao ô Cờ Bài học 3D Graphic
+const H_CANDO = 100; // Chiều cao ô Cờ Can-Do 3D Graphic
+const H_NODE = 145; // Chiều cao ô node 3D
+const OFF_ITEM = 38; // Tâm waypoint so với đỉnh ô
+const TOP_PAD = 18;
+const BOTTOM_PAD = 40;
 
 interface Pt {
     x: number;
     y: number;
 }
 
-/** Đường cong mượt (Catmull-Rom → Bézier) đi xuyên qua tâm các mốc/node. */
+/** Đường cong mượt (Catmull-Rom → Bézier) đi xuyên qua tâm tất cả các waypoint mốc trên lộ trình. */
 function smoothPath(pts: Pt[]): string {
     if (pts.length < 2) return "";
     let d = `M ${pts[0].x},${pts[0].y}`;
@@ -48,9 +45,16 @@ function smoothPath(pts: Pt[]): string {
 }
 
 type Item =
-    | { kind: "lesson"; key: string; group: LessonGroup }
-    | { kind: "cando"; key: string; block: CanDoBlock }
-    | { kind: "node"; key: string; node: PathNode; block: CanDoBlock };
+    | { kind: "lesson"; key: string; group: LessonGroup; itemIndex: number }
+    | { kind: "cando"; key: string; block: CanDoBlock; itemIndex: number }
+    | {
+          kind: "node";
+          key: string;
+          node: PathNode;
+          block: CanDoBlock;
+          nodeIndex: number;
+          itemIndex: number;
+      };
 
 interface Props {
     groups: LessonGroup[];
@@ -63,8 +67,8 @@ interface Props {
 }
 
 /**
- * Lộ trình cả chủ đề như MỘT con rắn liền mạch: mốc bài · nhãn Can-do · node xếp
- * theo ô cố định, một đường SVG duy nhất chạy xuyên tâm các mốc & node (sau nhãn).
+ * Lộ trình cả chủ đề: Tất cả các mốc (Cờ Bài học ➔ Cờ Can-Do ➔ Đồng xu Từ vựng/Nói ➔ Rương)
+ * đều là các Waypoints uốn lượn S-Curve nối liền 100%.
  */
 export function TopicSnakePath({
     groups,
@@ -75,15 +79,38 @@ export function TopicSnakePath({
     nodeCaption,
     onNodeClick,
 }: Props) {
-    const items: Item[] = groups.flatMap((g) => [
-        { kind: "lesson", key: `l-${g.lesson.id}`, group: g } as Item,
-        ...g.blocks.flatMap((b) => [
-            { kind: "cando", key: `c-${b.cando.id}`, block: b } as Item,
-            ...b.nodes.map(
-                (n) => ({ kind: "node", key: n.id, node: n, block: b }) as Item,
-            ),
-        ]),
-    ]);
+    let globalIndex = 0;
+    let nodeCounter = 0;
+
+    const items: Item[] = groups.flatMap((g) => {
+        const lessonItem: Item = {
+            kind: "lesson",
+            key: `l-${g.lesson.id}`,
+            group: g,
+            itemIndex: globalIndex++,
+        };
+        const blockItems = g.blocks.flatMap((b) => {
+            const candoItem: Item = {
+                kind: "cando",
+                key: `c-${b.cando.id}`,
+                block: b,
+                itemIndex: globalIndex++,
+            };
+            const nodeItems = b.nodes.map((n) => {
+                const idx = nodeCounter++;
+                return {
+                    kind: "node",
+                    key: n.id,
+                    node: n,
+                    block: b,
+                    nodeIndex: idx,
+                    itemIndex: globalIndex++,
+                } as Item;
+            });
+            return [candoItem, ...nodeItems];
+        });
+        return [lessonItem, ...blockItems];
+    });
 
     const heightOf = (it: Item) =>
         it.kind === "lesson"
@@ -91,17 +118,16 @@ export function TopicSnakePath({
             : it.kind === "cando"
               ? H_CANDO
               : H_NODE;
-    const isWaypoint = (it: Item) => it.kind !== "cando";
 
     const tops = items.map(
         (_, i) =>
             TOP_PAD + items.slice(0, i).reduce((s, it) => s + heightOf(it), 0),
     );
-    const dxAt = (i: number) => {
-        const w = items.slice(0, i).filter(isWaypoint).length;
-        return WAVE[w % WAVE.length] * WAVE_UNIT;
+
+    const xAt = (it: Item) => {
+        const waveVal = WAVE[it.itemIndex % WAVE.length];
+        return CX + waveVal * WAVE_UNIT;
     };
-    const xAt = (i: number) => CX + dxAt(i);
 
     const totalHeight = items.length
         ? tops[items.length - 1] +
@@ -109,13 +135,11 @@ export function TopicSnakePath({
           BOTTOM_PAD
         : TOP_PAD;
 
-    const points: Pt[] = items
-        .map((it, i) => ({ it, i }))
-        .filter(({ it }) => isWaypoint(it))
-        .map(({ it, i }) => ({
-            x: xAt(i),
-            y: tops[i] + (it.kind === "lesson" ? OFF_LESSON : OFF_NODE),
-        }));
+    // Đường cong đứt nét SVG nối liền TẤT CẢ các mốc Waypoint trên lộ trình
+    const points: Pt[] = items.map((it, i) => ({
+        x: xAt(it),
+        y: tops[i] + OFF_ITEM,
+    }));
 
     return (
         <div
@@ -123,54 +147,47 @@ export function TopicSnakePath({
             style={{ width: W, height: totalHeight, overflow: "visible" }}
         >
             <svg
-                className="pointer-events-none absolute top-0 left-0"
+                className="pointer-events-none absolute top-0 left-0 drop-shadow-sm"
                 width={W}
                 height={totalHeight}
                 aria-hidden
             >
+                {/* Lớp 1: Đường ray đệm 3D phía sau */}
                 <path
                     d={smoothPath(points)}
                     fill="none"
-                    stroke="var(--color-bdc-primary)"
-                    strokeWidth={4}
+                    stroke={`color-mix(in srgb, ${accent} 22%, transparent)`}
+                    strokeWidth={14}
                     strokeLinecap="round"
-                    strokeDasharray="1 13"
+                />
+
+                {/* Lớp 2: Đường vạch đứt chính nổi bật */}
+                <path
+                    d={smoothPath(points)}
+                    fill="none"
+                    stroke={accent}
+                    strokeWidth={7}
+                    strokeLinecap="round"
+                    strokeDasharray="12 14"
+                    className="opacity-90"
                 />
             </svg>
 
             {items.map((it, i) => {
-                if (it.kind === "cando") {
-                    return (
-                        <div
-                            key={it.key}
-                            className="absolute"
-                            style={{
-                                top: tops[i],
-                                left: CX,
-                                width: CANDO_W,
-                                transform: "translateX(-50%)",
-                            }}
-                        >
-                            <CanDoSectionHeader
-                                block={it.block}
-                                accent={accent}
-                                showFurigana={showFurigana}
-                            />
-                        </div>
-                    );
-                }
                 if (it.kind === "lesson") {
                     return (
                         <div
                             key={it.key}
-                            className="absolute"
+                            id={`lesson-${it.group.lesson.id}`}
+                            className="absolute scroll-mt-28 flex flex-col items-center"
                             style={{
                                 top: tops[i],
-                                left: xAt(i),
+                                left: xAt(it),
                                 transform: "translateX(-50%)",
                             }}
                         >
-                            <LessonBand
+                            <FlagNode
+                                kind="lesson"
                                 lesson={it.group.lesson}
                                 status={it.group.status}
                                 accent={accent}
@@ -179,18 +196,40 @@ export function TopicSnakePath({
                         </div>
                     );
                 }
+
+                if (it.kind === "cando") {
+                    return (
+                        <div
+                            key={it.key}
+                            className="absolute flex flex-col items-center"
+                            style={{
+                                top: tops[i],
+                                left: xAt(it),
+                                transform: "translateX(-50%)",
+                            }}
+                        >
+                            <FlagNode
+                                kind="cando"
+                                block={it.block}
+                                accent={accent}
+                                showFurigana={showFurigana}
+                            />
+                        </div>
+                    );
+                }
+
                 return (
                     <div
                         key={it.key}
                         className="absolute flex flex-col items-center"
                         style={{
                             top: tops[i],
-                            left: xAt(i),
+                            left: xAt(it),
                             transform: "translateX(-50%)",
                         }}
                     >
                         {it.node.id === currentNodeId && (
-                            <div className="absolute -top-7 left-1/2 -translate-x-1/2">
+                            <div className="absolute -top-8 left-1/2 z-20 -translate-x-1/2">
                                 <StartBubble />
                             </div>
                         )}
@@ -204,6 +243,7 @@ export function TopicSnakePath({
                                 node={it.node}
                                 title={nodeTitle(it.node)}
                                 caption={nodeCaption(it.node)}
+                                accent={accent}
                                 onClick={() => onNodeClick(it.block, it.node)}
                             />
                         )}
