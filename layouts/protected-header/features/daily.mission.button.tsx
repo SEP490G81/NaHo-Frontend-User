@@ -5,39 +5,27 @@ import { Dialog, DialogContent } from "@mui/material";
 import { Target, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
-import {
-    getTodayDailyMissions,
-    getUserDailyMissions,
-} from "@/services/client/daily.mission.service";
-import {
-    DailyMissionResponse,
-    UserDailyMissionResponse,
-} from "@/types/responses/daily.mission.response";
+import { getTodayUserDailyMissions } from "@/services/client/daily.mission.service";
+import { UserDailyMissionResponse } from "@/types/responses/daily.mission.response";
 import DailyMissionHeader from "../components/daily.mission.header";
 import DailyMissionItem from "../components/daily.mission.item";
 import DailyMissionLoading from "../components/daily.mission.loading";
-import {
-    calculateMissionProgress,
-    getCompletedMissionIdsSet,
-} from "../utils/daily.mission.util";
+import { calculateUserMissionProgress } from "../utils/daily.mission.util";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 
 const DailyMissionButton = () => {
     const t = useTranslations("dailyMission");
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [todayMissions, setTodayMissions] = useState<DailyMissionResponse[]>([]);
-    const [userMissions, setUserMissions] = useState<UserDailyMissionResponse[]>([]);
+    const [userMissions, setUserMissions] = useState<
+        UserDailyMissionResponse[]
+    >([]);
 
     const fetchDailyMissionsData = async () => {
         setLoading(true);
         try {
-            const [missions, userCompleted] = await Promise.all([
-                getTodayDailyMissions(),
-                getUserDailyMissions(),
-            ]);
-            setTodayMissions(missions);
-            setUserMissions(userCompleted);
+            const missions = await getTodayUserDailyMissions();
+            setUserMissions(missions);
         } catch (e) {
             console.error("Fetch Daily Missions Error:", e);
             if (e instanceof Error) {
@@ -57,22 +45,25 @@ const DailyMissionButton = () => {
         setIsOpen(false);
     };
 
-    const completedMissionIdsSet = useMemo(
-        () => getCompletedMissionIdsSet(userMissions),
-        [userMissions],
-    );
+    const handleEarnSuccess = (updatedMission: UserDailyMissionResponse) => {
+        setUserMissions((prev) =>
+            prev.map((m) => (m.id === updatedMission.id ? updatedMission : m)),
+        );
+    };
 
     const {
         completedCount,
+        claimableCount,
+        inProgressCount,
         totalCount,
         progressPercentage,
         totalPointsEarned,
     } = useMemo(
-        () => calculateMissionProgress(todayMissions, completedMissionIdsSet),
-        [todayMissions, completedMissionIdsSet],
+        () => calculateUserMissionProgress(userMissions),
+        [userMissions],
     );
 
-    const pendingCount = totalCount - completedCount;
+    const pendingCount = claimableCount + inProgressCount;
 
     return (
         <>
@@ -136,7 +127,7 @@ const DailyMissionButton = () => {
                 <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
                     {loading ? (
                         <DailyMissionLoading />
-                    ) : todayMissions.length === 0 ? (
+                    ) : userMissions.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-8 text-center">
                             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10 text-amber-500">
                                 <CheckCircle2 className="h-6 w-6" />
@@ -147,19 +138,14 @@ const DailyMissionButton = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-3">
-                            {todayMissions.map((mission) => {
-                                const isCompleted = completedMissionIdsSet.has(
-                                    mission.id,
-                                );
-                                return (
-                                    <DailyMissionItem
-                                        key={mission.id}
-                                        mission={mission}
-                                        isCompleted={isCompleted}
-                                        onActionClick={handleClose}
-                                    />
-                                );
-                            })}
+                            {userMissions.map((userMission) => (
+                                <DailyMissionItem
+                                    key={userMission.id}
+                                    userMission={userMission}
+                                    onActionClick={handleClose}
+                                    onEarnSuccess={handleEarnSuccess}
+                                />
+                            ))}
                         </div>
                     )}
                 </DialogContent>

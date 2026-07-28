@@ -1,46 +1,32 @@
-import {
-    DailyMissionResponse,
-    UserDailyMissionResponse,
-} from "@/types/responses/daily.mission.response";
+import { UserDailyMissionResponse } from "@/types/responses/daily.mission.response";
 
 /**
- * Converts array of user daily missions into a Set of completed dailyMissionIds
+ * Computes progress stats from user's daily missions list today
  */
-export function getCompletedMissionIdsSet(
+export function calculateUserMissionProgress(
     userMissions: UserDailyMissionResponse[],
-): Set<number> {
-    return new Set(userMissions.map((um) => um.dailyMissionId));
-}
-
-/**
- * Checks if a specific daily mission ID is completed
- */
-export function isMissionCompleted(
-    missionId: number,
-    completedMissionIdsSet: Set<number>,
-): boolean {
-    return completedMissionIdsSet.has(missionId);
-}
-
-/**
- * Computes progress stats (completed count, total count, progress %, total earned & total available points)
- */
-export function calculateMissionProgress(
-    missions: DailyMissionResponse[],
-    completedMissionIdsSet: Set<number>,
 ) {
-    const totalCount = missions.length;
+    const totalCount = userMissions.length;
     let completedCount = 0;
+    let earnedCount = 0;
+    let claimableCount = 0;
+    let inProgressCount = 0;
     let totalPointsEarned = 0;
     let totalPointsPossible = 0;
 
-    missions.forEach((m) => {
-        const points = m.point || 0;
+    userMissions.forEach((um) => {
+        const points = um.dailyMission?.point || 0;
         totalPointsPossible += points;
 
-        if (completedMissionIdsSet.has(m.id)) {
+        if (um.status === "EARNED") {
+            earnedCount += 1;
             completedCount += 1;
             totalPointsEarned += points;
+        } else if (um.status === "COMPLETED") {
+            claimableCount += 1;
+            completedCount += 1;
+        } else if (um.status === "IN_PROGRESS") {
+            inProgressCount += 1;
         }
     });
 
@@ -49,6 +35,9 @@ export function calculateMissionProgress(
 
     return {
         completedCount,
+        earnedCount,
+        claimableCount,
+        inProgressCount,
         totalCount,
         progressPercentage,
         totalPointsEarned,
