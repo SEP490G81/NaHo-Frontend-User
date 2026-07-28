@@ -8,8 +8,9 @@
         "progressText": "Hoàn thành {completed}/{total}",
         "totalPoints": "+{points} Điểm",
         "status": {
-            "completed": "Đã hoàn thành",
-            "pending": "Chưa hoàn thành"
+            "inProgress": "Chưa hoàn thành",
+            "completed": "Hoàn thành",
+            "earned": "Đã nhận"
         },
         "types": {
             "COMPLETE_SPEAKING_QUESTION_NODE": {
@@ -28,6 +29,8 @@
         "empty": "Không có nhiệm vụ nào cho ngày hôm nay.",
         "fetchError": "Không thể lấy danh sách nhiệm vụ hàng ngày.",
         "actionBtn": "Làm ngay",
-        "doneText": "Hoàn tất"
+        "claimBtn": "Nhận thưởng",
+        "doneText": "Hoàn tất",
+        "claimSuccess": "Nhận phần thưởng nhiệm vụ hàng ngày thành công!"
     }
 }

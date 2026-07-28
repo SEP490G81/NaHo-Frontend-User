@@ -3,16 +3,22 @@ export type MissionType =
     | "TALK_WITH_AI"
     | string;
 
+export type MissionStatus = "COMPLETED" | "IN_PROGRESS" | "EARNED";
+
 export interface DailyMissionResponse {
     id: number;
+    title: string;
+    description: string;
     point: number;
-    missionDate: string;
     missionType: MissionType;
 }
 
 export interface UserDailyMissionResponse {
     id: number;
     userId: number;
-    dailyMissionId: number;
-    completedAt: string;
+    dailyMission: DailyMissionResponse;
+    status: MissionStatus;
+    startedDate: string;
+    completedDate: string | null;
+    earnedDate: string | null;
 }
