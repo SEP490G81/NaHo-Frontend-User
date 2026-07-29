@@ -43,6 +43,16 @@ function humanizeKey(key: string): string {
         .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+const DIM_KEYS = new Set<string>([
+    "fluency",
+    "pronunciation",
+    "grammar",
+    "vocabulary",
+    "interaction",
+    "naturalness",
+    "coherence",
+]);
+
 function barTone(v: number): string {
     if (v >= 80) return "bg-emerald-500";
     if (v >= 60) return "bg-amber-500";
@@ -166,7 +176,11 @@ export function SessionReport() {
                                 className="border-bdc-primary bg-bgc-page/40 rounded-xl border p-4"
                             >
                                 <div className="text-bgc-highlight mb-1 text-xs font-bold tracking-wide uppercase">
-                                    {humanizeKey(k)}
+                                    {DIM_KEYS.has(k)
+                                        ? t(
+                                              `dim_${k as keyof SessionScoreBreakdown}`,
+                                          )
+                                        : humanizeKey(k)}
                                 </div>
                                 <p className="text-text-contrast text-sm leading-relaxed">
                                     {v}
