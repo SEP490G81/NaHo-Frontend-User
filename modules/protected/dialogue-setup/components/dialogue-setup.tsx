@@ -8,11 +8,16 @@ import { SummaryPanel } from "./summary-panel";
 import { AdvancedSettingsForm } from "../features/advanced-settings-form";
 import {
     COMPANIONS,
-    DEFAULT_STYLE_ID,
+    DEFAULT_FORMALITY,
+    DEFAULT_MARUGOTO,
     resolveCompanions,
 } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
 import { getPersonas } from "@/services/client/speaking.service";
 import { useAuthStore } from "@/store/authStore";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
@@ -31,24 +36,29 @@ export function DialogueSetup() {
     );
 
     const [companionId, setCompanionId] = useState(COMPANIONS[0].id);
-    // null = theo style mặc định của persona; khác null = người dùng đã tự đổi.
-    const [styleOverride, setStyleOverride] = useState<number | null>(null);
+    // null = theo mặc định của persona; khác null = người dùng đã tự đổi.
+    const [styleOverride, setStyleOverride] = useState<FormalityLevel | null>(
+        null,
+    );
+    const [marugotoOverride, setMarugotoOverride] =
+        useState<MarugotoLevel | null>(null);
     const [voiceSpeed, setVoiceSpeed] = useState(1.0);
     const [showHints, setShowHints] = useState(true);
 
     const selected =
         companions.find((c) => c.id === companionId) ?? companions[0];
 
-    // Style hiệu dụng: ưu tiên lựa chọn tay, mặc định lấy của persona.
-    const conversationStyleId =
-        styleOverride ??
-        selected?.suggestedConversationStyleId ??
-        DEFAULT_STYLE_ID;
+    // Giá trị hiệu dụng: ưu tiên lựa chọn tay, mặc định lấy của persona.
+    const conversationStyle =
+        styleOverride ?? selected?.defaultFormality ?? DEFAULT_FORMALITY;
+    const marugotoLevel =
+        marugotoOverride ?? selected?.defaultMarugotoLevel ?? DEFAULT_MARUGOTO;
 
-    // Đổi companion → bỏ override để quay về style mặc định của persona mới.
+    // Đổi companion → bỏ override để quay về mặc định của persona mới.
     const handleSelectCompanion = (id: string) => {
         setCompanionId(id);
         setStyleOverride(null);
+        setMarugotoOverride(null);
     };
 
     return (
@@ -103,10 +113,12 @@ export function DialogueSetup() {
                     </div>
 
                     <AdvancedSettingsForm
-                        conversationStyleId={conversationStyleId}
+                        conversationStyle={conversationStyle}
+                        marugotoLevel={marugotoLevel}
                         voiceSpeed={voiceSpeed}
                         showHints={showHints}
                         onStyleChange={setStyleOverride}
+                        onMarugotoChange={setMarugotoOverride}
                         onVoiceSpeedChange={setVoiceSpeed}
                         onShowHintsChange={setShowHints}
                     />
@@ -116,7 +128,8 @@ export function DialogueSetup() {
                 <div className="lg:col-span-1">
                     <SummaryPanel
                         companion={selected}
-                        conversationStyleId={conversationStyleId}
+                        conversationStyle={conversationStyle}
+                        marugotoLevel={marugotoLevel}
                         voiceSpeed={voiceSpeed}
                         showHints={showHints}
                     />

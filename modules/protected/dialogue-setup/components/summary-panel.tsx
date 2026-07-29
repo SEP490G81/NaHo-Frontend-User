@@ -5,22 +5,31 @@ import { Avatar, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
-import { getStyleKey } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import {
+    marugotoLabel,
+    styleKeyOf,
+} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
 import type { Companion } from "@/modules/protected/live-chatroom/types/live-chatroom.type";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 import { startConversation } from "@/services/client/speaking.service";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
 
 interface SummaryPanelProps {
     companion: Companion;
-    conversationStyleId: number;
+    conversationStyle: FormalityLevel;
+    marugotoLevel: MarugotoLevel;
     voiceSpeed: number;
     showHints: boolean;
 }
 
 export function SummaryPanel({
     companion,
-    conversationStyleId,
+    conversationStyle,
+    marugotoLevel,
     voiceSpeed,
     showHints,
 }: SummaryPanelProps) {
@@ -37,8 +46,9 @@ export function SummaryPanel({
         { label: t("summaryCompanion"), value: companion.name },
         {
             label: t("summaryStyle"),
-            value: t(`style_${getStyleKey(conversationStyleId)}`),
+            value: t(`style_${styleKeyOf(conversationStyle)}`),
         },
+        { label: t("summaryLevel"), value: marugotoLabel(marugotoLevel) },
         { label: t("summarySpeed"), value: `${voiceSpeed.toFixed(1)}x` },
     ];
 
@@ -46,10 +56,14 @@ export function SummaryPanel({
         if (personaId == null) return;
         setStarting(true);
         try {
-            const res = await startConversation(personaId);
+            const res = await startConversation(personaId, {
+                formalityLevel: conversationStyle,
+                marugotoLevel,
+            });
             setConfig({
                 companionId: companion.id,
-                conversationStyleId,
+                conversationStyle,
+                marugotoLevel,
                 voiceSpeed,
                 showHints,
             });
@@ -58,6 +72,8 @@ export function SummaryPanel({
                 personaId,
                 companionId: companion.id,
                 aiGreeting: res.aiGreeting,
+                greetingTranslation: res.aiGreetingTranslation,
+                greetingGrammar: res.grammarExplanation,
                 greetingAudioBase64: res.audioBase64,
             });
             router.push("/live-chatroom");

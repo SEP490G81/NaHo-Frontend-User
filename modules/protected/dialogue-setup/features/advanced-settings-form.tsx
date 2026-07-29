@@ -1,15 +1,25 @@
 "use client";
 import { Crown, MessagesSquare, Smile } from "lucide-react";
-import { Slider, Switch } from "@mui/material";
+import { FormControl, MenuItem, Select, Slider, Switch } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import { CONVERSATION_STYLES } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import {
+    CONVERSATION_STYLES,
+    MARUGOTO_LEVELS,
+    marugotoLabel,
+} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 
 interface AdvancedSettingsFormProps {
-    conversationStyleId: number;
+    conversationStyle: FormalityLevel;
+    marugotoLevel: MarugotoLevel;
     voiceSpeed: number;
     showHints: boolean;
-    onStyleChange: (id: number) => void;
+    onStyleChange: (formality: FormalityLevel) => void;
+    onMarugotoChange: (level: MarugotoLevel) => void;
     onVoiceSpeedChange: (v: number) => void;
     onShowHintsChange: (v: boolean) => void;
 }
@@ -21,10 +31,12 @@ const STYLE_ICON: Record<string, React.ReactNode> = {
 };
 
 export function AdvancedSettingsForm({
-    conversationStyleId,
+    conversationStyle,
+    marugotoLevel,
     voiceSpeed,
     showHints,
     onStyleChange,
+    onMarugotoChange,
     onVoiceSpeedChange,
     onShowHintsChange,
 }: AdvancedSettingsFormProps) {
@@ -46,12 +58,12 @@ export function AdvancedSettingsForm({
                 </span>
                 <div className="mt-2 grid gap-3 sm:grid-cols-3">
                     {CONVERSATION_STYLES.map((s) => {
-                        const selected = conversationStyleId === s.id;
+                        const selected = conversationStyle === s.formality;
                         return (
                             <button
-                                key={s.id}
+                                key={s.formality}
                                 type="button"
-                                onClick={() => onStyleChange(s.id)}
+                                onClick={() => onStyleChange(s.formality)}
                                 className={cn(
                                     "flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition-all",
                                     selected
@@ -78,6 +90,43 @@ export function AdvancedSettingsForm({
                             </button>
                         );
                     })}
+                </div>
+
+                {/* Cấp độ Marugoto */}
+                <div className="mt-4 space-y-1.5">
+                    <span className="text-text-contrast block text-sm font-medium">
+                        {t("levelLabel")}
+                    </span>
+                    <FormControl fullWidth size="small">
+                        <Select
+                            value={marugotoLevel}
+                            onChange={(e) =>
+                                onMarugotoChange(
+                                    e.target.value as MarugotoLevel,
+                                )
+                            }
+                            className="text-text-contrast bg-bgc-app"
+                            sx={{
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "var(--color-bdc-primary)",
+                                },
+                                "&:hover .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "var(--color-bgc-highlight)",
+                                },
+                                "&.Mui-focused .MuiOutlinedInput-notchedOutline":
+                                    {
+                                        borderColor:
+                                            "var(--color-bgc-highlight)",
+                                    },
+                            }}
+                        >
+                            {MARUGOTO_LEVELS.map((lv) => (
+                                <MenuItem key={lv} value={lv}>
+                                    {marugotoLabel(lv)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </div>
             </div>
 
