@@ -14,7 +14,7 @@ export function UpgradeBanner() {
     const t = useTranslations("dashboard");
 
     return (
-        <ContainerBox className="relative overflow-hidden border border-[#ff99ac]/50 bg-gradient-to-br from-[#ff99ac]/15 via-bgc-card to-bgc-card shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="relative overflow-hidden border border-[#ff99ac]/50 bg-gradient-to-br from-[#ff99ac]/15 via-bgc-card to-bgc-card">
             <div className="space-y-3">
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-[#ff99ac]/20 px-3 py-0.5 text-xs font-extrabold uppercase tracking-wider border border-[#ff99ac]/40 text-[#ff758f]">
                     <AutoAwesomeIcon style={{ fontSize: 13 }} />

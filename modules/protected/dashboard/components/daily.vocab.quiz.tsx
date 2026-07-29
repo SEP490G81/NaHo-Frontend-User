@@ -104,7 +104,7 @@ export function DailyVocabQuiz() {
     };
 
     return (
-        <ContainerBox className="border border-bdc-primary shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="border border-bdc-primary">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-bdc-primary/60">
                 <div className="flex items-center gap-3">

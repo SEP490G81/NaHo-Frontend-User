@@ -60,7 +60,7 @@ export function KanjiQuoteCard() {
     };
 
     return (
-        <ContainerBox className="relative overflow-hidden border border-bdc-primary shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="relative overflow-hidden border border-bdc-primary">
 
             <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
                 {/* Header tag & refresh button */}

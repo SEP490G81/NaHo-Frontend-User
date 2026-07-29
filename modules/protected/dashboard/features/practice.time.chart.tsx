@@ -30,7 +30,7 @@ export function PracticeTimeChart() {
 
     if (!mounted) {
         return (
-            <ContainerBox className="border border-bdc-primary shadow-sm">
+            <ContainerBox className="border border-bdc-primary">
                 <div className="h-6 w-48 bg-bdc-primary/30 rounded animate-pulse" />
                 <div className="mt-6 flex h-64 w-full items-center justify-center rounded-lg bg-bgc-subtle text-text-muted text-xs">
                     {t("loadingChart")}
@@ -40,7 +40,7 @@ export function PracticeTimeChart() {
     }
 
     return (
-        <ContainerBox className="border border-bdc-primary shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="border border-bdc-primary">
             {/* Header & Quick stats */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
