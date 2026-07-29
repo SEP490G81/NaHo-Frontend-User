@@ -41,7 +41,7 @@ export function LiveChatroom() {
     const setReport = useChatStore((s) => s.setReport);
 
     const companion = getCompanion(config?.companionId ?? "sakura");
-    const conversationStyleId = config?.conversationStyleId ?? 1;
+    const conversationStyle = config?.conversationStyle ?? "NEUTRAL";
 
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState("");
@@ -60,7 +60,7 @@ export function LiveChatroom() {
         if (!session) router.replace("/dialogue-setup");
     }, [session, router]);
 
-    // Seed câu chào của AI (kèm audio TTS nếu còn trong bộ nhớ).
+    // Seed câu chào của AI (kèm audio TTS + bản dịch + ngữ pháp).
     useEffect(() => {
         if (session && !seeded.current) {
             seeded.current = true;
@@ -69,6 +69,8 @@ export function LiveChatroom() {
                     id: nextId("greet"),
                     role: "ai",
                     text: session.aiGreeting,
+                    translation: session.greetingTranslation,
+                    grammar: session.greetingGrammar,
                     audioBase64: session.greetingAudioBase64,
                     // Tự phát câu chào khi vào phòng (trình duyệt có thể chặn
                     // nếu thiếu tương tác — khi đó nút play vẫn còn để bấm tay).
@@ -86,35 +88,76 @@ export function LiveChatroom() {
         });
     }, [messages, isTyping, audioProcessing]);
 
-    // audioBase64: khi BE bổ sung TTS cho reply thì truyền vào → tự phát nối tiếp
-    // để luồng nói liền mạch, không phải bấm nút.
-    const appendAiReply = (text: string, audioBase64?: string) => {
+    interface AiReplyPayload {
+        text: string;
+        translation?: string | null;
+        grammar?: string | null;
+        audioBase64?: string | null;
+    }
+
+    // Reply của AI kèm bản dịch / ngữ pháp / TTS. Có audio → tự phát nối tiếp.
+    const appendAiReply = (p: AiReplyPayload) => {
         setMessages((m) => [
             ...m,
             {
                 id: nextId("ai"),
                 role: "ai",
-                text,
-                audioBase64,
-                autoPlay: !!audioBase64,
+                text: p.text,
+                translation: p.translation,
+                grammar: p.grammar,
+                audioBase64: p.audioBase64 ?? undefined,
+                autoPlay: !!p.audioBase64,
                 timestamp: nowTime(),
             },
         ]);
     };
 
-    // Gửi text → BE /message (chỉ trả reply text).
+    // Gắn đề xuất sửa lỗi vào một tin nhắn người dùng (theo id).
+    const attachCorrection = (
+        id: string,
+        corrected: string | null,
+        explanation: string | null,
+    ) => {
+        if (!explanation) return;
+        setMessages((m) =>
+            m.map((msg) =>
+                msg.id === id && msg.role === "user"
+                    ? {
+                          ...msg,
+                          correction: {
+                              correctedText: corrected ?? msg.text,
+                              explanation,
+                          },
+                      }
+                    : msg,
+            ),
+        );
+    };
+
+    // Gửi text → BE /message (reply + bản dịch + ngữ pháp + sửa lỗi + TTS).
     const handleSendText = async () => {
         const text = input.trim();
         if (!text || !session || isTyping) return;
         setInput("");
+        const userId = nextId("u");
         setMessages((m) => [
             ...m,
-            { id: nextId("u"), role: "user", text, timestamp: nowTime() },
+            { id: userId, role: "user", text, timestamp: nowTime() },
         ]);
         setIsTyping(true);
         try {
             const res = await sendTextMessage(session.sessionId, text);
-            appendAiReply(res.assistantReply);
+            attachCorrection(
+                userId,
+                res.correctedUserText,
+                res.correctionExplanation,
+            );
+            appendAiReply({
+                text: res.assistantReply,
+                translation: res.assistantReplyTranslation,
+                grammar: res.grammarExplanation,
+                audioBase64: res.aiReplyAudio,
+            });
         } catch (err) {
             toast.error(err instanceof Error ? err.message : t("sendError"));
         } finally {
@@ -122,9 +165,8 @@ export function LiveChatroom() {
         }
     };
 
-    // Gửi audio → BE /audio (transcript + điểm phát âm + reply).
-    // BE trả cả transcript lẫn reply trong 1 lần; UI tách 2 nhịp cho tự nhiên:
-    // (1) xử lý giọng nói của bạn, (2) câu của bạn lên, (3) Tanaka soạn trả lời.
+    // Gửi audio → BE /audio (transcript + điểm + sửa lỗi + reply + TTS).
+    // Tách 2 nhịp cho tự nhiên: (1) câu của bạn lên, (2) AI soạn trả lời.
     const handleSendAudio = async (blob: Blob) => {
         if (!session) return;
         setAudioProcessing(true);
@@ -138,12 +180,24 @@ export function LiveChatroom() {
                     role: "user",
                     text: res.transcribedText,
                     pronunciationScore: res.pronunciationScore,
+                    correction: res.correctionExplanation
+                        ? {
+                              correctedText:
+                                  res.correctedUserText ?? res.transcribedText,
+                              explanation: res.correctionExplanation,
+                          }
+                        : null,
                     timestamp: nowTime(),
                 },
             ]);
             setIsTyping(true);
             await new Promise((r) => setTimeout(r, 700));
-            appendAiReply(res.assistantReply);
+            appendAiReply({
+                text: res.assistantReply,
+                translation: res.assistantReplyTranslation,
+                grammar: res.grammarExplanation,
+                audioBase64: res.aiReplyAudio,
+            });
         } catch (err) {
             toast.error(err instanceof Error ? err.message : t("sendError"));
         } finally {
@@ -190,7 +244,7 @@ export function LiveChatroom() {
 
     const sidebarProps = {
         companion,
-        conversationStyleId,
+        conversationStyle,
         voiceSpeed,
         onVoiceSpeedChange: setVoiceSpeed,
         showHints,

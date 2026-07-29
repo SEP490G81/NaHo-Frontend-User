@@ -15,11 +15,12 @@ import {
 import { useTranslations } from "next-intl";
 import type { Companion } from "../types/live-chatroom.type";
 import { getInitials } from "../utils/get-initials";
-import { getStyleKey } from "../constants/live-chatroom.constant";
+import { styleKeyOf } from "../constants/live-chatroom.constant";
+import type { FormalityLevel } from "@/types/responses/persona.response";
 
 interface ChatSidebarProps {
     companion: Companion;
-    conversationStyleId: number;
+    conversationStyle: FormalityLevel;
     voiceSpeed: number;
     onVoiceSpeedChange: (v: number) => void;
     showHints: boolean;
@@ -32,7 +33,7 @@ interface ChatSidebarProps {
 
 export function ChatSidebar({
     companion,
-    conversationStyleId,
+    conversationStyle,
     voiceSpeed,
     onVoiceSpeedChange,
     showHints,
@@ -82,7 +83,7 @@ export function ChatSidebar({
                     {ts("styleLabel")}
                 </span>
                 <div className="bg-bgc-highlight/10 text-bgc-highlight inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-semibold">
-                    {ts(`style_${getStyleKey(conversationStyleId)}`)}
+                    {ts(`style_${styleKeyOf(conversationStyle)}`)}
                 </div>
             </div>
 
