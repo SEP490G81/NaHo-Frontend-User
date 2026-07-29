@@ -4,8 +4,14 @@ import { ChevronRight, Crown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn, formatPoints } from "@/libs/utils";
-import { LeaderboardEntry, LeagueResponse } from "@/types/responses/league.response";
-import { MEDAL_CLASSES, PODIUM_STYLES } from "../constants/leaderboard.constant";
+import {
+    LeaderboardEntry,
+    LeagueResponse,
+} from "@/types/responses/league.response";
+import {
+    MEDAL_CLASSES,
+    PODIUM_STYLES,
+} from "../constants/leaderboard.constant";
 import { getLeagueTheme, toLeagueSlug } from "../utils/leaderboard.util";
 import { useLeagueLabel } from "../utils/use.league.label";
 import LearnerAvatar from "./learner.avatar";

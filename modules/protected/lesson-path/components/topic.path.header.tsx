@@ -47,16 +47,17 @@ export function TopicPathHeader({
 
                 <div className="flex items-center gap-2">
                     <span
-                        className="rounded-full px-3 py-1 text-[11px] font-black tracking-widest uppercase text-white shadow-sm"
+                        className="rounded-full px-3 py-1 text-[11px] font-black tracking-widest text-white uppercase shadow-sm"
                         style={{
                             background: `linear-gradient(135deg, ${accent}, color-mix(in srgb, ${accent} 75%, #000))`,
                         }}
                     >
-                        {book.level} · {t("topic.label", { index: topic.order })}
+                        {book.level} ·{" "}
+                        {t("topic.label", { index: topic.order })}
                     </span>
 
                     <label className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-slate-200 bg-white/90 px-3 py-1 shadow-xs transition-all hover:bg-white">
-                        <span className="text-slate-600 text-xs font-bold sm:inline">
+                        <span className="text-xs font-bold text-slate-600 sm:inline">
                             {t("path.showFurigana")}
                         </span>
                         <Switch
@@ -76,7 +77,7 @@ export function TopicPathHeader({
 
             {/* Center Hero Unit Title */}
             <div className="mt-3 text-center">
-                <h1 className="text-2xl font-black leading-tight sm:text-3xl text-slate-800 tracking-tight">
+                <h1 className="text-2xl leading-tight font-black tracking-tight text-slate-800 sm:text-3xl">
                     {topic.furiganaMarkup ? (
                         <FuriganaMarkup
                             markup={topic.furiganaMarkup}
@@ -96,7 +97,7 @@ export function TopicPathHeader({
             <div className="mt-3.5 flex items-center gap-3">
                 <div className="relative h-4 flex-1 overflow-hidden rounded-full border border-slate-200 bg-slate-100 p-0.5 shadow-inner">
                     <div
-                        className="relative h-full rounded-full transition-all duration-700 shadow-xs"
+                        className="relative h-full rounded-full shadow-xs transition-all duration-700"
                         style={{
                             width: `${overallPercent}%`,
                             background: `linear-gradient(90deg, ${accent}, color-mix(in srgb, ${accent} 82%, #fff))`,

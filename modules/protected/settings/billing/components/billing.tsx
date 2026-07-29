@@ -15,7 +15,8 @@ const Billing = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const [subscription, setSubscription] = useState<UserSubscriptionResponse | null>(null);
+    const [subscription, setSubscription] =
+        useState<UserSubscriptionResponse | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -41,14 +42,20 @@ const Billing = () => {
         if (!status) return;
 
         if (status === "PAID") {
-            toast.success("🎉 Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!", {
-                autoClose: 5000,
-            });
+            toast.success(
+                "🎉 Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!",
+                {
+                    autoClose: 5000,
+                },
+            );
             fetchSub();
         } else {
-            toast.error("Thanh toán không thành công. Vui lòng kiểm tra lại giao dịch.", {
-                autoClose: 5000,
-            });
+            toast.error(
+                "Thanh toán không thành công. Vui lòng kiểm tra lại giao dịch.",
+                {
+                    autoClose: 5000,
+                },
+            );
         }
 
         // Clean up query parameters from URL
@@ -60,10 +67,10 @@ const Billing = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-extrabold text-text-primary">
+                <h1 className="text-text-primary text-2xl font-extrabold">
                     {t("currentPlanTitle")}
                 </h1>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="text-text-muted mt-1 text-sm">
                     Quản lý gói đăng ký dịch vụ và quyền hạn sử dụng của bạn
                 </p>
             </div>

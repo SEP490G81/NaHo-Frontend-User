@@ -71,7 +71,9 @@ export function SandboxAnalyzingOverlay({
                             background: `conic-gradient(${accent} 0deg, ${accent} 110deg, color-mix(in srgb, ${accent} 16%, transparent) 110deg)`,
                         }}
                     />
-                    <span className="bg-bgc-app relative flex h-16 w-16 items-center justify-center rounded-full text-2xl"> </span>
+                    <span className="bg-bgc-app relative flex h-16 w-16 items-center justify-center rounded-full text-2xl">
+                        {" "}
+                    </span>
                 </div>
 
                 <div>
@@ -99,8 +101,8 @@ export function SandboxAnalyzingOverlay({
                                 style={
                                     done || activeNow
                                         ? {
-                                            background: `color-mix(in srgb, ${accent} 12%, transparent)`,
-                                        }
+                                              background: `color-mix(in srgb, ${accent} 12%, transparent)`,
+                                          }
                                         : undefined
                                 }
                             >

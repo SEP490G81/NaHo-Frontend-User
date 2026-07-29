@@ -11,7 +11,10 @@ export function DialogueSetup() {
 
     return (
         <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6">
-            <ContainerBox as="header" className="border-bdc-primary space-y-4 border shadow-sm">
+            <ContainerBox
+                as="header"
+                className="border-bdc-primary space-y-4 border shadow-sm"
+            >
                 <h1 className="text-text-contrast text-2xl font-bold tracking-tight">
                     {t("title")}
                 </h1>

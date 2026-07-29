@@ -1,6 +1,6 @@
-import { ProblemDetail } from "@/types/responses/base.response";
-import { UserDailyMissionResponse } from "@/types/responses/daily.mission.response";
-import { EarnDailyMissionRequest } from "@/types/requests/daily.mission.request";
+import {ProblemDetail} from "@/types/responses/base.response";
+import {UserDailyMissionResponse} from "@/types/responses/daily.mission.response";
+import {EarnDailyMissionRequest} from "@/types/requests/daily.mission.request";
 
 /**
  * Lấy danh sách nhiệm vụ hàng ngày hôm nay của người dùng

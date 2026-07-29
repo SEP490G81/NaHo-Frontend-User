@@ -3,10 +3,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { getSubscriptionPlans } from "@/services/client/subscription.service";
 import { createPaymentOrder } from "@/services/client/payment.service";
-import {
-    PlanTier,
-    SubscriptionPlanResponse,
-} from "@/types/responses/subscription.response";
+import { PlanTier, SubscriptionPlanResponse } from "@/types/responses/subscription.response";
 import PlanCard from "@/modules/protected/settings/billing/components/plan.card";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";

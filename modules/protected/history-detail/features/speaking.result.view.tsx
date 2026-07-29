@@ -91,7 +91,8 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
     if (bookId) ctx.set("book", String(bookId));
     if (topicId) ctx.set("topic", String(topicId));
     const qs = ctx.toString();
-    const topicHref = bookId && topicId ? `/books/${bookId}/topics/${topicId}` : null;
+    const topicHref =
+        bookId && topicId ? `/books/${bookId}/topics/${topicId}` : null;
     const topicLabel =
         topicQ.data?.orderIndex != null
             ? t("topicLabel", { index: topicQ.data.orderIndex })
@@ -121,7 +122,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
 
                 <HistoryDetailOverview report={report} accent={accent} />
 
-                <HistoryDetailTabs report={report} showFurigana={showFurigana} />
+                <HistoryDetailTabs
+                    report={report}
+                    showFurigana={showFurigana}
+                />
 
                 <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
                     <Button
@@ -152,7 +156,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                             backgroundColor: accent,
                             color: "#fff",
                             fontWeight: 700,
-                            "&:hover": { backgroundColor: accent, filter: "brightness(0.95)" },
+                            "&:hover": {
+                                backgroundColor: accent,
+                                filter: "brightness(0.95)",
+                            },
                         }}
                     >
                         {t("retryBtn")}

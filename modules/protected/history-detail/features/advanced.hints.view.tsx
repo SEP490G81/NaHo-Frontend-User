@@ -64,7 +64,9 @@ export function AdvancedHintsView({
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
                     <Sparkles
                         className="h-4 w-4"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     {t("hintsTitle")}
                 </h3>
@@ -98,7 +100,9 @@ export function AdvancedHintsView({
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
                     <BookOpen
                         className="h-4 w-4"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     {t("hintsItVocab")}
                 </h3>

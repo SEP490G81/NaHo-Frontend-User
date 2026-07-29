@@ -42,7 +42,7 @@ const DailyMissionClaimButton: React.FC<DailyMissionClaimButtonProps> = ({
         <button
             onClick={handleClaim}
             disabled={loading}
-            className="group relative inline-flex cursor-pointer items-center gap-1.5 overflow-hidden rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-amber-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/30 active:scale-95 disabled:opacity-70 disabled:pointer-events-none"
+            className="group relative inline-flex cursor-pointer items-center gap-1.5 overflow-hidden rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-amber-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/30 active:scale-95 disabled:pointer-events-none disabled:opacity-70"
         >
             {loading ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />

@@ -67,7 +67,10 @@ export function ChestDialog({
                             }}
                         >
                             {revealed ? (
-                                <Check className="h-10 w-10" strokeWidth={2.6} />
+                                <Check
+                                    className="h-10 w-10"
+                                    strokeWidth={2.6}
+                                />
                             ) : (
                                 <Gift className="h-10 w-10" strokeWidth={2.4} />
                             )}
@@ -85,7 +88,9 @@ export function ChestDialog({
                                     className="text-3xl font-black"
                                     style={{ color: ACCENT }}
                                 >
-                                    {t("node.chestReward", { point: earned ?? 0 })}
+                                    {t("node.chestReward", {
+                                        point: earned ?? 0,
+                                    })}
                                 </p>
                                 <Button
                                     onClick={() => onOpenChange(false)}
@@ -98,7 +103,10 @@ export function ChestDialog({
                                         borderRadius: "12px",
                                         backgroundColor: ACCENT,
                                         color: "var(--color-text-pure)",
-                                        "&:hover": { backgroundColor: ACCENT, opacity: 0.92 },
+                                        "&:hover": {
+                                            backgroundColor: ACCENT,
+                                            opacity: 0.92,
+                                        },
                                     }}
                                 >
                                     {t("vocab.close")}
@@ -150,7 +158,10 @@ export function ChestDialog({
                                         borderRadius: "12px",
                                         backgroundColor: ACCENT,
                                         color: "var(--color-text-pure)",
-                                        "&:hover": { backgroundColor: ACCENT, opacity: 0.92 },
+                                        "&:hover": {
+                                            backgroundColor: ACCENT,
+                                            opacity: 0.92,
+                                        },
                                     }}
                                 >
                                     {t("node.chestClaimBtn")}

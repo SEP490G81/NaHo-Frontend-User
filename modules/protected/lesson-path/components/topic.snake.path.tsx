@@ -179,7 +179,7 @@ export function TopicSnakePath({
                         <div
                             key={it.key}
                             id={`lesson-${it.group.lesson.id}`}
-                            className="absolute scroll-mt-28 flex flex-col items-center"
+                            className="absolute flex scroll-mt-28 flex-col items-center"
                             style={{
                                 top: tops[i],
                                 left: xAt(it),

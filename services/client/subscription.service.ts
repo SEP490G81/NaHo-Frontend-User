@@ -1,8 +1,5 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    SubscriptionPlanResponse,
-    UserSubscriptionResponse,
-} from "@/types/responses/subscription.response";
+import {ApiResponse, ProblemDetail} from "@/types/responses/base.response";
+import {SubscriptionPlanResponse, UserSubscriptionResponse,} from "@/types/responses/subscription.response";
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
@@ -23,7 +20,9 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
 
         if (!response.ok) {
             const problem = result as ProblemDetail;
-            throw new Error(problem.detail || "Không lấy được thông tin gói dịch vụ.");
+            throw new Error(
+                problem.detail || "Không lấy được thông tin gói dịch vụ.",
+            );
         }
 
         const api = result as ApiResponse<UserSubscriptionResponse>;
@@ -37,7 +36,9 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
 /**
  * Lấy danh sách các gói dịch vụ active (FREE, BASIC, PREMIUM).
  */
-export async function getSubscriptionPlans(): Promise<SubscriptionPlanResponse[]> {
+export async function getSubscriptionPlans(): Promise<
+    SubscriptionPlanResponse[]
+> {
     const response = await fetch("/api/subscription-plans", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -48,12 +49,17 @@ export async function getSubscriptionPlans(): Promise<SubscriptionPlanResponse[]
     try {
         result = await response.json();
     } catch (e) {
-        throw new Error("Không thể tải danh sách gói cước, vui lòng thử lại sau.");
+        throw new Error(
+            "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
+        );
     }
 
     if (!response.ok) {
         const problem = result as ProblemDetail;
-        throw new Error(problem.detail || "Không thể tải danh sách gói cước, vui lòng thử lại sau.");
+        throw new Error(
+            problem.detail ||
+                "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
+        );
     }
 
     const api = result as ApiResponse<SubscriptionPlanResponse[]>;

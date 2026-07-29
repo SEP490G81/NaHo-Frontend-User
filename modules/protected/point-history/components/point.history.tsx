@@ -7,7 +7,7 @@ import type {
     PointAmountType,
     PointSortColumn,
     PointTransactionType,
-    SortDirection
+    SortDirection,
 } from "@/types/responses/point.response";
 import { usePointRows } from "../hooks/use.point.rows";
 import { ContainerBox } from "@/components/ui/container.box";

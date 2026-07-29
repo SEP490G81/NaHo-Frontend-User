@@ -7,7 +7,7 @@ import {
     getLeagueProgressPercent,
     getLeagueTheme,
     getPointToNextLeague,
-    toLeagueSlug
+    toLeagueSlug,
 } from "../utils/leaderboard.util";
 
 interface LeagueProgressProps {

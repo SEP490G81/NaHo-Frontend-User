@@ -22,10 +22,19 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
 
     if (loading) {
         return (
-            <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm">
+            <div className="border-bdc-primary bg-bgc-card rounded-2xl border p-6 shadow-sm">
                 <Skeleton variant="text" width={200} height={32} />
-                <Skeleton variant="text" width={300} height={20} className="mt-2" />
-                <Skeleton variant="rectangular" height={100} className="mt-4 rounded-xl" />
+                <Skeleton
+                    variant="text"
+                    width={300}
+                    height={20}
+                    className="mt-2"
+                />
+                <Skeleton
+                    variant="rectangular"
+                    height={100}
+                    className="mt-4 rounded-xl"
+                />
             </div>
         );
     }
@@ -48,27 +57,31 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         tier === "PREMIUM"
             ? "bg-amber-500 text-white"
             : tier === "BASIC"
-            ? "bg-indigo-600 text-white"
-            : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
+              ? "bg-indigo-600 text-white"
+              : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm">
+        <div className="border-bdc-primary bg-bgc-card rounded-2xl border p-6 shadow-sm">
             {/* Header section */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-xl">
                         <WorkspacePremiumIcon fontSize="large" />
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
-                            <h2 className="text-xl font-bold text-text-primary">{planName}</h2>
+                            <h2 className="text-text-primary text-xl font-bold">
+                                {planName}
+                            </h2>
                             <Chip
                                 label={tier}
                                 size="small"
                                 className={`font-bold ${tierBadgeColor}`}
                             />
                             <Chip
-                                icon={<CheckCircleIcon style={{ fontSize: 14 }} />}
+                                icon={
+                                    <CheckCircleIcon style={{ fontSize: 14 }} />
+                                }
                                 label={t("active")}
                                 size="small"
                                 color="success"
@@ -76,10 +89,12 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                                 className="font-medium"
                             />
                         </div>
-                        <p className="mt-1 text-xs text-text-muted">
+                        <p className="text-text-muted mt-1 text-xs">
                             {isFree || !formattedExpiryDate
                                 ? t("permanent")
-                                : t("planExpiry", { date: formattedExpiryDate })}
+                                : t("planExpiry", {
+                                      date: formattedExpiryDate,
+                                  })}
                         </p>
                     </div>
                 </div>
@@ -100,31 +115,36 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
 
             {/* Quota details if available */}
             {plan && (
-                <div className="mt-6 grid grid-cols-1 gap-4 rounded-xl bg-bgc-subtle p-4 sm:grid-cols-3">
+                <div className="bg-bgc-subtle mt-6 grid grid-cols-1 gap-4 rounded-xl p-4 sm:grid-cols-3">
                     <div className="flex flex-col">
-                        <span className="text-xs text-text-muted">
-                            {t("features.assessmentLimit", { count: "" }).replace("/ tháng", "").trim()}
+                        <span className="text-text-muted text-xs">
+                            {t("features.assessmentLimit", { count: "" })
+                                .replace("/ tháng", "")
+                                .trim()}
                         </span>
-                        <span className="mt-1 text-base font-bold text-text-primary">
+                        <span className="text-text-primary mt-1 text-base font-bold">
                             {plan.monthlyAssessmentLimit} bài / tháng
                         </span>
                     </div>
 
                     <div className="flex flex-col">
-                        <span className="text-xs text-text-muted">
+                        <span className="text-text-muted text-xs">
                             Luyện hội thoại
                         </span>
-                        <span className="mt-1 text-base font-bold text-text-primary">
-                            {Math.round(plan.monthlyConversationSeconds / 60)} phút / tháng
+                        <span className="text-text-primary mt-1 text-base font-bold">
+                            {Math.round(plan.monthlyConversationSeconds / 60)}{" "}
+                            phút / tháng
                         </span>
                     </div>
 
                     <div className="flex flex-col">
-                        <span className="text-xs text-text-muted">
+                        <span className="text-text-muted text-xs">
                             Giáo trình
                         </span>
-                        <span className="mt-1 text-base font-bold text-text-primary">
-                            {plan.fullCurriculumAccess ? "Toàn bộ bài học" : "Cơ bản"}
+                        <span className="text-text-primary mt-1 text-base font-bold">
+                            {plan.fullCurriculumAccess
+                                ? "Toàn bộ bài học"
+                                : "Cơ bản"}
                         </span>
                     </div>
                 </div>

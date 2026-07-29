@@ -13,7 +13,11 @@ export function PreviewSection({
     return (
         <section className="border-bdc-primary bg-bgc-page space-y-2 rounded-xl border p-4">
             <h4 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
-                <span style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}>
+                <span
+                    style={{
+                        color: "var(--book-accent, var(--color-bgc-highlight))",
+                    }}
+                >
                     {icon}
                 </span>
                 {title}

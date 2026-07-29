@@ -4,7 +4,7 @@ import {
     LEAGUE_SLUGS,
     LEAGUE_THEMES,
     LeagueSlug,
-    LeagueTheme,
+    LeagueTheme
 } from "../constants/leaderboard.constant";
 
 /** Avatar thật: ưu tiên object key (URL CDN của BE), rồi tới avatar OAuth. */

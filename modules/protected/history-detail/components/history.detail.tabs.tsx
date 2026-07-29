@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
 import type { ReportDetail } from "@/data/mockReports";
 import TranscriptView from "../features/transcript.view";
@@ -12,7 +12,10 @@ interface HistoryDetailTabsProps {
     showFurigana: boolean;
 }
 
-export function HistoryDetailTabs({ report, showFurigana }: HistoryDetailTabsProps) {
+export function HistoryDetailTabs({
+    report,
+    showFurigana,
+}: HistoryDetailTabsProps) {
     const t = useTranslations("historyDetail");
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -37,7 +40,8 @@ export function HistoryDetailTabs({ report, showFurigana }: HistoryDetailTabsPro
                         },
                     },
                     "& .MuiTabs-indicator": {
-                        backgroundColor: "var(--book-accent, var(--color-bgc-highlight))",
+                        backgroundColor:
+                            "var(--book-accent, var(--color-bgc-highlight))",
                     },
                 }}
             >
@@ -55,7 +59,7 @@ export function HistoryDetailTabs({ report, showFurigana }: HistoryDetailTabsPro
                     />
                 )}
                 {tabIndex === 1 && (
-                    <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5">
+                    <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
                         <PronunciationView
                             pronunciation={report.pronunciation}
                             note={report.pronunciationNote}

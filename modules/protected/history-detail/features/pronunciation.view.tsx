@@ -112,7 +112,9 @@ export function PronunciationView({
                 <h4 className="text-text-muted flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
                     <AlertCircle
                         className="h-4 w-4"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     {t("aiPronunciationNoteLabel")}
                 </h4>

@@ -1,5 +1,5 @@
 import React from "react";
-import type { NodeVocabularyItem } from "@/types/responses/learning.response";
+import type {NodeVocabularyItem} from "@/types/responses/learning.response";
 
 /** Danh sách thuật ngữ (từ vựng / mẫu ngữ pháp) BE: tiếng Nhật + cách đọc + nghĩa. */
 export function NodeTermList({ items }: { items: NodeVocabularyItem[] }) {
