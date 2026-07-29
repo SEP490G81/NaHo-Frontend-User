@@ -120,7 +120,7 @@ export function TopicPath() {
 
     return (
         <div className="px-4 py-6">
-            <div className="mx-auto flex max-w-5xl flex-col gap-4">
+            <div className="mx-auto flex max-w-5xl flex-col gap-6">
                 <TopicPathHeader
                     book={book}
                     topic={topic}

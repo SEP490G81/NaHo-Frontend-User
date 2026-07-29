@@ -1,7 +1,6 @@
-import { NextRequest } from "next/server";
-import { proxyGet } from "@/services/server/backend.proxy";
+import { proxyPostJson } from "@/services/server/backend.proxy";
 
-/** Danh sách lịch sử luyện nói của user (userId lấy từ token ở BE). */
-export async function GET(request: NextRequest) {
-    return proxyGet("/histories", request.nextUrl.searchParams);
+/** Danh sách lịch sử luyện nói (POST /speaking-histories, userId lấy từ token). */
+export async function POST(request: Request) {
+    return proxyPostJson("/speaking-histories", request);
 }

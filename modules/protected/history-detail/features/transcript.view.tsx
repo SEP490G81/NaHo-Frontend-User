@@ -71,11 +71,12 @@ export function TranscriptView({
                                     placement="top"
                                 >
                                     <span
-                                        className="cursor-help rounded bg-red-500/15 px-1 font-semibold text-red-500 underline decoration-red-500/70 decoration-wavy underline-offset-4"
+                                        className="inline-block origin-bottom cursor-help rounded bg-red-500/15 px-1 font-semibold text-red-500 underline decoration-red-500/70 decoration-wavy underline-offset-4 transition-all duration-150 hover:scale-110 hover:bg-red-500/30 hover:font-bold hover:text-red-600 hover:decoration-red-600 focus-visible:scale-110 focus-visible:bg-red-500/30 focus-visible:text-red-600 focus-visible:outline-none"
                                         tabIndex={0}
                                     >
                                         {seg.text}
                                     </span>
+
                                 </Tooltip>
                             ) : (
                                 <span key={i}>{seg.text}</span>

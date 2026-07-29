@@ -25,47 +25,48 @@ export function NodeDisc({
     className,
     children,
 }: Props) {
-    const d = depth ?? Math.round(size * 0.11);
-    const shade = `color-mix(in srgb, ${color} 52%, #000)`;
-    const face = `radial-gradient(120% 120% at 50% 22%, color-mix(in srgb, ${color} 82%, #fff) 0%, ${color} 46%, color-mix(in srgb, ${color} 84%, #000) 100%)`;
-    const raised = [
-        `0 ${d}px 0 0 ${shade}`,
-        `0 ${d + 8}px 14px -4px rgba(0,0,0,0.45)`,
-        "inset 0 5px 6px rgba(255,255,255,0.6)",
-        "inset 0 -8px 12px rgba(0,0,0,0.3)",
+    const d = depth ?? 11;
+    const darkShade = `color-mix(in srgb, ${color} 62%, #000)`;
+    const faceColor = color;
+    const shadow3d = [
+        `0 ${d}px 0 0 ${darkShade}`,
+        `0 ${d + 6}px 14px -2px rgba(0,0,0,0.32)`,
+        "inset 0 4px 6px rgba(255,255,255,0.45)",
+        "inset 0 -6px 8px rgba(0,0,0,0.22)",
     ].join(", ");
+
     const sunken = [
-        `0 3px 0 0 var(--color-bdc-primary)`,
-        "inset 0 3px 7px rgba(0,0,0,0.35)",
+        "0 4px 0 0 #cbd5e1",
+        "inset 0 3px 6px rgba(0,0,0,0.15)",
     ].join(", ");
 
     return (
         <div
             className={cn(
-                "relative flex items-center justify-center overflow-hidden rounded-full",
+                "relative flex items-center justify-center rounded-full transition-transform active:translate-y-[6px]",
                 locked
-                    ? "border-bdc-primary text-text-muted border"
-                    : "text-white",
+                    ? "border-2 border-slate-300 bg-slate-200 text-slate-400"
+                    : "text-white select-none",
                 className,
             )}
             style={{
                 width: size,
                 height: size,
-                marginBottom: locked ? 3 : d,
-                background: locked ? "var(--color-bgc-app)" : face,
-                boxShadow: locked ? sunken : raised,
+                marginBottom: locked ? 4 : d,
+                background: locked ? "#e2e8f0" : faceColor,
+                boxShadow: locked ? sunken : shadow3d,
             }}
         >
             {!locked && (
                 <span
-                    className="pointer-events-none absolute inset-x-2 top-1.5 h-2/5 rounded-full"
+                    className="pointer-events-none absolute inset-x-3 top-2 h-2/5 rounded-full"
                     style={{
                         background:
-                            "linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0))",
+                            "linear-gradient(to bottom, rgba(255,255,255,0.45), rgba(255,255,255,0))",
                     }}
                 />
             )}
-            <span className="relative flex items-center justify-center drop-shadow-sm">
+            <span className="relative flex items-center justify-center">
                 {children}
             </span>
         </div>

@@ -4,7 +4,7 @@ import { ChevronRight, Flame, Sparkles, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/libs/utils";
+import { cn, formatPoints } from "@/libs/utils";
 import { useCurrentLevelLabel } from "@/hooks/use.current.level";
 import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
 
@@ -55,7 +55,7 @@ export function RoadmapHeader() {
         queryKey: ["user-learning-progress"],
         queryFn: getUserLearningProgress,
     });
-    const totalPoint = Math.round(progress?.totalPoint ?? 0);
+    const totalPoint = formatPoints(progress?.totalPoint ?? 0);
     const streakDays = progress?.currentStreak ?? 0;
     // Trình độ = quyển đang học theo mốc tiến độ; user mới luôn là quyển đầu (N5 · A1).
     const level = useCurrentLevelLabel();
