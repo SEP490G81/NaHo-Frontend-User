@@ -1,5 +1,9 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { PersonaResponse } from "@/types/responses/persona.response";
+import {
+    FormalityLevel,
+    MarugotoLevel,
+    PersonaResponse,
+} from "@/types/responses/persona.response";
 import {
     AudioChatResponse,
     ChatReplyResponse,
@@ -152,13 +156,32 @@ export async function getPersonas(): Promise<PersonaResponse[]> {
     return unwrap<PersonaResponse[]>(response);
 }
 
-/** Bắt đầu hội thoại với persona → { sessionId, audioBase64, aiGreeting }. */
+export interface StartConversationInput {
+    /** Override thể lịch sự (khác mặc định của persona). */
+    formalityLevel?: FormalityLevel | null;
+    /** Override cấp độ Marugoto. */
+    marugotoLevel?: MarugotoLevel | null;
+}
+
+/** Bắt đầu hội thoại với persona (kèm override style tuỳ chọn). */
 export async function startConversation(
     personaId: number,
+    input: StartConversationInput = {},
 ): Promise<StartConversationResponse> {
-    const response = await apiRequest(`/api/speaking/session/${personaId}`, {
-        method: "POST",
-    });
+    const hasOverride = !!(input.formalityLevel || input.marugotoLevel);
+    const response = await apiRequest(
+        `/api/speaking/session/${personaId}`,
+        hasOverride
+            ? {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                      formalityLevel: input.formalityLevel ?? undefined,
+                      marugotoLevel: input.marugotoLevel ?? undefined,
+                  }),
+              }
+            : { method: "POST" },
+    );
     return unwrap<StartConversationResponse>(response);
 }
 

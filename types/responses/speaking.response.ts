@@ -12,21 +12,40 @@ export interface StartConversationResponse {
     /** WAV base64 (không có tiền tố data:) của câu chào — phát bằng TTS. */
     audioBase64: string;
     aiGreeting: string;
+    /** Bản dịch tiếng Việt của câu chào. */
+    aiGreetingTranslation: string | null;
+    /** Giải thích ngữ pháp của câu chào. */
+    grammarExplanation: string | null;
 }
 
-/** POST /speaking/session/{sessionId}/audio — STT + điểm phát âm + reply. */
+/** POST /speaking/session/{sessionId}/audio — STT + điểm phát âm + reply + phụ trợ học. */
 export interface AudioChatResponse {
     transcribedText: string;
     assistantReply: string;
+    /** Bản dịch tiếng Việt của câu AI trả lời. */
+    assistantReplyTranslation: string | null;
+    /** Giải thích ngữ pháp câu AI. */
+    grammarExplanation: string | null;
+    /** Câu của người dùng sau khi sửa lỗi. */
+    correctedUserText: string | null;
+    /** Giải thích lỗi/sửa của câu người dùng. */
+    correctionExplanation: string | null;
+    /** WAV base64 giọng AI đọc câu trả lời (TTS). */
+    aiReplyAudio: string | null;
     accuracyScore: number | null;
     fluencyScore: number | null;
     completenessScore: number | null;
     pronunciationScore: number | null;
 }
 
-/** POST /speaking/session/{sessionId}/message — reply cho tin nhắn text. */
+/** POST /speaking/session/{sessionId}/message — reply text (kèm phụ trợ học). */
 export interface ChatReplyResponse {
     assistantReply: string;
+    assistantReplyTranslation: string | null;
+    grammarExplanation: string | null;
+    correctedUserText: string | null;
+    correctionExplanation: string | null;
+    aiReplyAudio: string | null;
 }
 
 /** 7 chiều điểm trong báo cáo cuối phiên. */

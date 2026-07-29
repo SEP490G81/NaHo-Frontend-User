@@ -1,27 +1,58 @@
 import type { Companion } from "../types/live-chatroom.type";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+    PersonaResponse,
+} from "@/types/responses/persona.response";
 
 /**
- * Style hội thoại — khớp bảng conversation_styles bên BE.
- * Thứ tự hiển thị: Thân mật (2) → Lịch sự (1) → Kính ngữ (3).
+ * Style hội thoại — khớp enum FormalityLevel bên BE.
+ * Thứ tự hiển thị: Thân mật (INFORMAL) → Lịch sự (NEUTRAL) → Kính ngữ (FORMAL).
  */
 export interface ConversationStyle {
-    id: number;
+    formality: FormalityLevel;
     key: "informal" | "neutral" | "formal";
 }
 
 export const CONVERSATION_STYLES: ConversationStyle[] = [
-    { id: 2, key: "informal" },
-    { id: 1, key: "neutral" },
-    { id: 3, key: "formal" },
+    { formality: "INFORMAL", key: "informal" },
+    { formality: "NEUTRAL", key: "neutral" },
+    { formality: "FORMAL", key: "formal" },
 ];
 
-export const DEFAULT_STYLE_ID = 1;
+export const DEFAULT_FORMALITY: FormalityLevel = "NEUTRAL";
 
-export function getStyleKey(
-    id: number | null | undefined,
+export function styleKeyOf(
+    formality: FormalityLevel | null | undefined,
 ): ConversationStyle["key"] {
-    return CONVERSATION_STYLES.find((s) => s.id === id)?.key ?? "neutral";
+    return (
+        CONVERSATION_STYLES.find((s) => s.formality === formality)?.key ??
+        "neutral"
+    );
 }
+
+/** Nhãn cấp độ Marugoto để hiển thị badge trình độ. */
+const MARUGOTO_LABEL: Record<MarugotoLevel, string> = {
+    STARTER_A1: "A1 · Nhập môn",
+    ELEMENTARY_1_A2: "A2.1 · Sơ cấp 1",
+    ELEMENTARY_2_A2: "A2.2 · Sơ cấp 2",
+    PRE_INTERMEDIATE_A2_B1: "A2/B1 · Tiền trung cấp",
+    INTERMEDIATE_1_B1: "B1.1 · Trung cấp 1",
+    INTERMEDIATE_2_B1: "B1.2 · Trung cấp 2",
+};
+
+export function marugotoLabel(
+    level: MarugotoLevel | null | undefined,
+): string {
+    return level ? MARUGOTO_LABEL[level] : "";
+}
+
+/** Danh sách cấp độ Marugoto để dựng dropdown (đúng thứ tự). */
+export const MARUGOTO_LEVELS = Object.keys(
+    MARUGOTO_LABEL,
+) as MarugotoLevel[];
+
+export const DEFAULT_MARUGOTO: MarugotoLevel = "STARTER_A1";
 
 export const COMPANIONS: Companion[] = [
     {
@@ -33,7 +64,8 @@ export const COMPANIONS: Companion[] = [
         level: "Tất cả",
         accent: "bg-bgc-highlight/15 text-bgc-highlight",
         matchKeyword: "sakura",
-        suggestedConversationStyleId: 1,
+        defaultFormality: "NEUTRAL",
+        defaultMarugotoLevel: "STARTER_A1",
     },
     {
         id: "kenji",
@@ -44,7 +76,8 @@ export const COMPANIONS: Companion[] = [
         level: "N3 – N1",
         accent: "bg-sky-500/15 text-sky-600 dark:text-sky-300",
         matchKeyword: "kenji",
-        suggestedConversationStyleId: 1,
+        defaultFormality: "NEUTRAL",
+        defaultMarugotoLevel: "PRE_INTERMEDIATE_A2_B1",
     },
     {
         id: "yuki",
@@ -54,7 +87,8 @@ export const COMPANIONS: Companion[] = [
         level: "N2 – N1",
         accent: "bg-amber-500/15 text-amber-600 dark:text-amber-300",
         matchKeyword: "yuki",
-        suggestedConversationStyleId: 3,
+        defaultFormality: "FORMAL",
+        defaultMarugotoLevel: "INTERMEDIATE_2_B1",
     },
     {
         id: "tanaka",
@@ -65,7 +99,8 @@ export const COMPANIONS: Companion[] = [
         level: "N1",
         accent: "bg-violet-500/15 text-violet-600 dark:text-violet-300",
         matchKeyword: "tanaka",
-        suggestedConversationStyleId: 3,
+        defaultFormality: "FORMAL",
+        defaultMarugotoLevel: "INTERMEDIATE_2_B1",
     },
 ];
 
@@ -78,13 +113,7 @@ export function getCompanion(id: string): Companion {
  * Khớp theo `matchKeyword` xuất hiện trong tên persona (không phân biệt hoa/thường).
  * Persona nào không khớp companion nào sẽ được thêm mới với metadata mặc định.
  */
-export function resolveCompanions(
-    personas: {
-        id: number;
-        name: string;
-        suggestedConversationStyleId?: number | null;
-    }[],
-): Companion[] {
+export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
     const used = new Set<number>();
 
     const mapped = COMPANIONS.map((c) => {
@@ -97,27 +126,34 @@ export function resolveCompanions(
         return {
             ...c,
             personaId: match ? match.id : null,
-            // Ưu tiên style từ BE, thiếu thì dùng mặc định của companion.
-            suggestedConversationStyleId:
-                match?.suggestedConversationStyleId ??
-                c.suggestedConversationStyleId ??
-                DEFAULT_STYLE_ID,
+            // Ưu tiên thể lịch sự + cấp độ từ BE, thiếu thì mặc định companion.
+            defaultFormality:
+                match?.conversationStyle?.formalityLevel ??
+                c.defaultFormality ??
+                DEFAULT_FORMALITY,
+            defaultMarugotoLevel:
+                match?.conversationStyle?.marugotoLevel ??
+                c.defaultMarugotoLevel ??
+                DEFAULT_MARUGOTO,
         };
     });
 
+    // Persona chưa khớp companion nào → dựng thẻ từ dữ liệu BE (mô tả + cấp độ).
     const extras: Companion[] = personas
         .filter((p) => !used.has(p.id))
         .map((p, i) => ({
             id: `persona-${p.id}`,
             name: p.name,
             role: "AI Companion",
-            description: "",
-            level: "",
+            description: p.conversationStyle?.description ?? "",
+            level: marugotoLabel(p.conversationStyle?.marugotoLevel),
             accent: EXTRA_ACCENTS[i % EXTRA_ACCENTS.length],
             matchKeyword: "",
             personaId: p.id,
-            suggestedConversationStyleId:
-                p.suggestedConversationStyleId ?? DEFAULT_STYLE_ID,
+            defaultFormality:
+                p.conversationStyle?.formalityLevel ?? DEFAULT_FORMALITY,
+            defaultMarugotoLevel:
+                p.conversationStyle?.marugotoLevel ?? DEFAULT_MARUGOTO,
         }));
 
     return [...mapped, ...extras];

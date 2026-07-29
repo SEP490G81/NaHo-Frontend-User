@@ -1,20 +1,25 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { SessionScoringResponse } from "@/types/responses/speaking.response";
-
-/** Khớp bảng conversation_styles: 1=Lịch sự(ます), 2=Thân mật(casual), 3=Kính ngữ(keigo). */
-export type ConversationStyleId = number;
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 
 export interface ChatConfig {
     companionId: string;
-    conversationStyleId: ConversationStyleId;
+    /** Thể lịch sự: INFORMAL (Thân mật) / NEUTRAL (Lịch sự) / FORMAL (Kính ngữ). */
+    conversationStyle: FormalityLevel;
+    /** Cấp độ Marugoto của phiên. */
+    marugotoLevel: MarugotoLevel;
     voiceSpeed: number;
     showHints: boolean;
 }
 
 export const defaultChatConfig: ChatConfig = {
     companionId: "sakura",
-    conversationStyleId: 1,
+    conversationStyle: "NEUTRAL",
+    marugotoLevel: "STARTER_A1",
     voiceSpeed: 1,
     showHints: true,
 };
@@ -25,6 +30,9 @@ export interface ChatSession {
     personaId: number;
     companionId: string;
     aiGreeting: string;
+    /** Bản dịch + giải thích ngữ pháp câu chào. */
+    greetingTranslation?: string | null;
+    greetingGrammar?: string | null;
     /** WAV base64 câu chào — không persist (chỉ dùng trong bộ nhớ). */
     greetingAudioBase64?: string;
 }
