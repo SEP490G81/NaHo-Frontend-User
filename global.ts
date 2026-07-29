@@ -15,6 +15,7 @@ import marugoto from "@/i18n/messages/vi/marugoto.json";
 import leaderboard from "@/i18n/messages/vi/leaderboard.json";
 import pointHistory from "@/i18n/messages/vi/point-history.json";
 import dailyReward from "@/i18n/messages/vi/daily-reward.json";
+import dailyMission from "@/i18n/messages/vi/daily-mission.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -34,6 +35,7 @@ declare module "next-intl" {
             typeof marugoto &
             typeof leaderboard &
             typeof pointHistory &
-            typeof dailyReward;
+            typeof dailyReward &
+            typeof dailyMission;
     }
 }

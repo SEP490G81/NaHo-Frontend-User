@@ -7,9 +7,9 @@
             "streak": "連続学習",
             "currentLevel": "現在のレベル",
             "totalPoints": "累計ポイント",
-            "streakValue": "{days}日連続！🔥",
-            "levelValue": "レベル：{level}",
-            "pointsValue": "{points} L-Point 🌟"
+            "streakValue": "{days}日 🔥",
+            "levelValue": "{level}",
+            "pointsValue": "{points} L-Point"
         },
         "books": {
             "chooseBook": "教材を選ぶ",
@@ -73,11 +73,17 @@
             "chestTitle": "ごほうび箱",
             "chestHint": "開けてごほうびをゲット",
             "chestReward": "+{point} L-Point",
+            "chestMystery": "+? L-Point",
+            "chestRangeHint": "宝箱を開けてランダムに獲得",
+            "chestRange": "{min} – {max} L-Point",
+            "chestGotLabel": "獲得しました",
             "chestClaimBtn": "ごほうびを受け取る",
             "chestOpened": "開封済み",
             "chestClaimed": "+{reward} L-Point を獲得！🎁",
             "chestAlready": "この箱はすでに開けています。",
-            "chestFailed": "宝箱を開けられませんでした。もう一度お試しください。"
+            "chestFailed": "宝箱を開けられませんでした。もう一度お試しください。",
+            "vocabDone": "語彙学習が完了しました",
+            "vocabFailed": "完了できませんでした。もう一度お試しください。"
         },
         "preview": {
             "title": "問題の詳細",
@@ -107,7 +113,9 @@
             "prev": "前へ",
             "next": "次へ",
             "learned": "覚えた",
-            "finish": "完了"
+            "finish": "完了",
+            "done": "完了済み",
+            "finishHint": "すべてのカードを見て完了"
         }
     }
 }

@@ -11,6 +11,7 @@ import { queryKeys } from "@/libs/query.keys";
 import LearnerSidebar from "@/layouts/sidebar/components/learner.sidebar";
 import SakuraFalling from "@/components/ui/sakura-falling";
 import JapanBackground from "@/components/ui/japan-background";
+import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
 
 const ProtectedLayout = async ({
     children,
@@ -27,6 +28,7 @@ const ProtectedLayout = async ({
 
     return (
         <HydrationBoundary state={dehydratedState}>
+            <MarugotoUserScope userId={String(user.id)} />
             <div className="relative flex min-h-screen">
                 <LearnerSidebar />
                 <div className="flex min-w-0 flex-1 flex-col">

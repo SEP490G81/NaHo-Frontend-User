@@ -16,6 +16,8 @@
                 "learnerFeedback": "Đánh giá từ người học",
                 "frequentlyQuestions": "Câu hỏi thường gặp",
                 "dashboard": "Dashboard",
+                "leaderboard": "Leaderboard",
+                "settings": "Settings",
                 "topics": "Practice Topics",
                 "topicDetail": "Topic Detail",
                 "lessonPath": "Lesson Path",
@@ -30,7 +32,8 @@
                 "liveChatroom": "Live Chatroom",
                 "dialogueSetup": "Free AI Conversation",
                 "speakingResult": "Session Report",
-                "leaderboard": "Competitive Leaderboard"
+                "leaderboard": "Competitive Leaderboard",
+                "orders": "Order History"
             },
             "language": {
                 "vi": "Tiếng Việt",
@@ -54,6 +57,7 @@
                 "registerButton": "Đăng ký trải nghiệm ngay",
                 "accountMenu": {
                     "settings": "Settings",
+                    "orders": "Order History",
                     "language": "Language",
                     "getHelp": "Help & Support",
                     "report": "Report"

@@ -1,0 +1,36 @@
+{
+    "dailyMission": {
+        "triggerTooltip": "Daily Missions",
+        "triggerBtn": "Missions",
+        "title": "Daily Missions",
+        "subtitle": "Complete today's tasks to earn extra bonus points",
+        "close": "Close",
+        "progressText": "Completed {completed}/{total}",
+        "totalPoints": "+{points} Points",
+        "status": {
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "earned": "Earned"
+        },
+        "types": {
+            "COMPLETE_SPEAKING_QUESTION_NODE": {
+                "title": "Complete Speaking Practice",
+                "desc": "Practice and complete a speaking practice node"
+            },
+            "TALK_WITH_AI": {
+                "title": "Talk with AI",
+                "desc": "Have a conversation practice session with Kai AI"
+            },
+            "default": {
+                "title": "Daily Task",
+                "desc": "Complete task to earn bonus reward points"
+            }
+        },
+        "empty": "No daily missions available today.",
+        "fetchError": "Unable to load daily missions.",
+        "actionBtn": "Do now",
+        "claimBtn": "Claim reward",
+        "doneText": "Done",
+        "claimSuccess": "Reward claimed successfully!"
+    }
+}

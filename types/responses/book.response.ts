@@ -45,6 +45,8 @@ export interface LessonDetailResponse {
     japaneseDescriptionMarkup: string;
     status: TopicStatus;
     orderIndex: number;
+    firstNodeGlobalOrderIndex: number | null;
+    lastNodeGlobalOrderIndex: number | null;
     objectives: ObjectiveResponse[];
 }
 
@@ -56,6 +58,8 @@ export interface LessonResponse {
     japaneseDescriptionMarkup: string;
     status: TopicStatus;
     orderIndex: number;
+    firstNodeGlobalOrderIndex: number | null;
+    lastNodeGlobalOrderIndex: number | null;
 }
 
 export interface ObjectiveDetailResponse {
@@ -104,4 +108,6 @@ export interface TopicResponse {
     japaneseDescriptionMarkup: string;
     status: TopicStatus;
     orderIndex: number;
+    firstNodeGlobalOrderIndex: number | null;
+    lastNodeGlobalOrderIndex: number | null;
 }

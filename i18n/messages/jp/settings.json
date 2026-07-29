@@ -1,16 +1,67 @@
 {
     "settings": {
         "page": {
-            "general": "Chung",
-            "account": "Tài khoản",
-            "security": "Bảo mật",
-            "billing": "Thanh toán"
+            "general": "一般",
+            "account": "アカウント",
+            "security": "セキュリティ",
+            "billing": "お支払いプラン",
+            "orders": "取引履歴"
         },
-        "searchPlaceholder": "Tìm kiếm",
+        "searchPlaceholder": "設定を検索",
+
+        "orders": {
+            "title": "決済注文履歴",
+            "subtitle": "サブスクリプション決済請求書の表示と管理",
+            "orderCode": "注文コード",
+            "plan": "プラン",
+            "amount": "金額",
+            "provider": "決済プロバイダー",
+            "status": "ステータス",
+            "createdTime": "作成日時",
+            "actions": "操作",
+            "continuePayment": "決済を継続",
+            "cancelOrder": "注文キャンセル",
+            "confirmCancelTitle": "注文キャンセルの確認",
+            "confirmCancelMessage": "注文 {orderCode} をキャンセルしてもよろしいですか？この操作は取り消せません。",
+            "cancelSuccess": "注文を正常にキャンセルしました！",
+            "cancelFailed": "注文のキャンセルに失敗しました。もう一度お試しください。",
+            "noOrders": "決済履歴がありません。",
+            "statusPaid": "支払い済み",
+            "statusPending": "支払い待ち",
+            "statusCancelled": "キャンセル済み",
+            "statusExpired": "期限切れ"
+        },
         "billing": {
-            "currentPlan": "Naho Go",
-            "planExpiry": "Gói của bạn sẽ tự động gia hạn vào 30 thg 6, 2026",
-            "updatePlan": "Nâng cấp gói"
+            "currentPlan": "現在のプラン",
+            "currentPlanTitle": "ご利用中のサブスクリプション",
+            "planStatus": "ステータス",
+            "active": "有効",
+            "planExpiry": "有効期限: {date}",
+            "permanent": "無制限プラン",
+            "updatePlan": "プランをアップグレード",
+            "modalTitle": "NaHoサブスクリプションのアップグレード",
+            "modalSubtitle": "あなたの日本語学習ニーズに最適なプランをお選びください",
+            "buyNow": "今すぐ購入",
+            "currentPlanLabel": "現在のプラン",
+            "includedLabel": "所有済み",
+            "processing": "処理中...",
+            "retry": "再試行",
+            "perMonth": "ドン / 月",
+            "freePrice": "0 ドン",
+            "popular": "一番人気",
+            "features": {
+                "assessmentLimit": "月 {count} 回のスピーキング評価",
+                "conversationMinutes": "月 {minutes} 分の会話練習",
+                "fullCurriculum": "全カリキュラムへの完全アクセス",
+                "analytics": "詳細な学習進捗分析",
+                "sampleAnswer": "AIスマート回答ヒント"
+            },
+            "errors": {
+                "createPaymentFailed": "VNPAY決済の開始に失敗しました。もう一度お試しください。",
+                "fetchPlansFailed": "サブスクリプションプランを読み込めませんでした。後でもう一度お試しください。",
+                "fetchPlansFailedTitle": "サブスクリプションプランの読み込みエラー",
+                "retryFetchPlans": "再読み込み"
+            }
         }
     }
 }

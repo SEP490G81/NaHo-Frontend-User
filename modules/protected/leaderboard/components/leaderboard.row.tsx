@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { Flame, Sparkles } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
-import { cn } from "@/libs/utils";
+import { useTranslations } from "next-intl";
+import { cn, formatPoints } from "@/libs/utils";
 import LearnerAvatar from "./learner.avatar";
 import RankBadge from "./rank.badge";
 
@@ -32,7 +32,6 @@ export function LeaderboardRow({
     withHashPrefix = false,
 }: LeaderboardRowProps) {
     const t = useTranslations("leaderboard");
-    const format = useFormatter();
 
     const showStreak = isCurrentUser && streakDays !== undefined;
 
@@ -75,7 +74,7 @@ export function LeaderboardRow({
 
             <div className="text-text-contrast flex shrink-0 items-center gap-1.5 font-bold">
                 <Sparkles className="text-bgc-highlight h-4 w-4" />
-                {format.number(Math.round(point))}
+                {formatPoints(point)}
                 <span className="text-text-muted text-xs font-medium">
                     {t("list.columnPoint")}
                 </span>

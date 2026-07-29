@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMarugotoStore } from "@/store/marugotoStore";
 import {
+    completeVocabularyQuestion,
     getLearningPathNodeDetail,
     openChest,
 } from "@/services/client/book.service";
@@ -33,7 +34,7 @@ interface Props {
     currentNodeId?: string;
 }
 
-/** Thân lộ trình theo chủ đề: mọi bài học · Can-do · node, xếp ngang tự xuống dòng. */
+/** Thân lộ trình theo chủ đề: 3 cột trên Desktop (Mục lục | Lộ trình Zigzag | Tiến độ & Thưởng). */
 export function TopicRoadmapBody({
     groups,
     bookId,
@@ -45,7 +46,6 @@ export function TopicRoadmapBody({
     const t = useTranslations("marugoto");
     const queryClient = useQueryClient();
     const markNodeDone = useMarugotoStore((s) => s.markNodeDone);
-    const completedNodes = useMarugotoStore((s) => s.completedNodes);
     const [active, setActive] = useState<{
         node: PathNode;
         block: CanDoBlock;
@@ -57,23 +57,40 @@ export function TopicRoadmapBody({
         enabled: !!active,
     });
     const detail = nodeQ.data;
-    const closeDialog = () => setActive(null);
+    // Điểm thực nhận sau khi mở rương — hiển thị ngay trong dialog (không chỉ toast).
+    const [earnedChest, setEarnedChest] = useState<number | null>(null);
+    const closeDialog = () => {
+        setActive(null);
+        setEarnedChest(null);
+    };
 
     const openMutation = useMutation({
-        mutationFn: (vars: {
-            chestId: number;
-            nodeId: string;
-            reward: number;
-        }) => openChest(vars.chestId),
-        onSuccess: (_data, vars) => {
-            markNodeDone(vars.nodeId); // đánh dấu đã mở (UI)
+        // BE nhận id NODE lộ trình (không phải chestId) và trả điểm ngẫu nhiên thực nhận.
+        mutationFn: (vars: { nodeId: number; uiId: string }) =>
+            openChest(vars.nodeId),
+        onSuccess: (earned, vars) => {
+            markNodeDone(vars.uiId); // đánh dấu đã mở (UI)
+            setEarnedChest(Math.round(earned)); // reveal ngay trong dialog
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],
             });
-            toast.success(t("node.chestClaimed", { reward: vars.reward }));
-            closeDialog();
         },
         onError: () => toast.error(t("node.chestFailed")),
+    });
+
+    // Hoàn thành node từ vựng → BE cộng điểm & đẩy mốc sang node kế (mở node sau).
+    const vocabMutation = useMutation({
+        mutationFn: (vars: { vqId: number; uiId: string }) =>
+            completeVocabularyQuestion(vars.vqId),
+        onSuccess: (_data, vars) => {
+            markNodeDone(vars.uiId);
+            queryClient.invalidateQueries({
+                queryKey: ["user-learning-progress"],
+            });
+            toast.success(t("node.vocabDone"));
+            closeDialog();
+        },
+        onError: () => toast.error(t("node.vocabFailed")),
     });
 
     const nodeTitle = (n: PathNode) => t(TITLE_KEY[n.kind]);
@@ -87,9 +104,20 @@ export function TopicRoadmapBody({
             toast.info(t("lockedToastDesc"));
             return;
         }
-        if (n.kind === "vocab") markNodeDone(n.id);
         setActive({ node: n, block });
     };
+
+    // Bấm "Hoàn thành" ở phần từ vựng → gọi BE để đẩy mốc, mở node kế.
+    const finishVocab = () => {
+        if (!active) return;
+        const vqId =
+            active.node.vocabularyQuestionId ?? detail?.vocabularyQuestion?.id;
+        if (!vqId) return;
+        vocabMutation.mutate({ vqId, uiId: active.node.id });
+    };
+    // "Đã hoàn thành" bám trạng thái thật từ BE (GOI < mốc), không dùng cờ cục bộ.
+    const vocabDone = active?.node.status === "completed";
+    const chestClaimed = active?.node.status === "completed";
 
     // Vào thẳng sandbox: nodeId để nạp đúng đề bài; book+topic để tô màu & quay lại.
     const practiceHref = active?.node.speakingQuestionId
@@ -98,19 +126,18 @@ export function TopicRoadmapBody({
 
     const claimActiveChest = () => {
         if (!active || !detail?.chest) return;
-        if (completedNodes.includes(active.node.id)) {
+        if (chestClaimed) {
             toast.info(t("node.chestAlready"));
             return;
         }
         openMutation.mutate({
-            chestId: detail.chest.id,
-            nodeId: active.node.id,
-            reward: detail.chest.point,
+            nodeId: active.node.nodeId,
+            uiId: active.node.id,
         });
     };
 
     return (
-        <div className="space-y-3">
+        <div className="relative flex flex-col items-center">
             <TopicSnakePath
                 groups={groups}
                 accent={accent}
@@ -130,6 +157,10 @@ export function TopicRoadmapBody({
                 vocab={detail?.vocabularyQuestion?.vocabularies ?? []}
                 loading={nodeQ.isLoading}
                 showFurigana={showFurigana}
+                onFinish={finishVocab}
+                finishing={vocabMutation.isPending}
+                finished={vocabDone}
+                accent={accent}
             />
 
             <QuestionPreviewDrawer
@@ -141,6 +172,7 @@ export function TopicRoadmapBody({
                 bestScore={active?.node.bestScore ?? 0}
                 href={practiceHref}
                 showFurigana={showFurigana}
+                accent={accent}
             />
 
             <ChestDialog
@@ -148,8 +180,10 @@ export function TopicRoadmapBody({
                 onOpenChange={(o) => !o && closeDialog()}
                 chest={detail?.chest ?? null}
                 loading={nodeQ.isLoading || openMutation.isPending}
-                claimed={!!active && completedNodes.includes(active.node.id)}
+                claimed={chestClaimed}
+                earned={earnedChest}
                 onClaim={claimActiveChest}
+                accent={accent}
             />
         </div>
     );

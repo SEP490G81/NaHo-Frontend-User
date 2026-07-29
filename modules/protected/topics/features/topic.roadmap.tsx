@@ -2,19 +2,19 @@
 import React, { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import type { MarugotoBook } from "@/data/marugoto/types";
-import { PASS_SCORE, useMarugotoStore } from "@/store/marugotoStore";
+import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import { buildBookView } from "../utils/unlock";
 import BookHero from "../components/book.hero";
 import TopicRow from "../components/topic.row";
 
 export function TopicRoadmap({ book }: { book: MarugotoBook }) {
     const t = useTranslations("marugoto");
-    const scores = useMarugotoStore((s) => s.questionScores);
+    const { frontier } = useLearningFrontier();
     const accent = book.coverColor ?? "var(--color-bgc-highlight)";
 
     const views = useMemo(
-        () => buildBookView(book.topics, scores, PASS_SCORE),
-        [book, scores],
+        () => buildBookView(book.topics, frontier),
+        [book, frontier],
     );
 
     return (

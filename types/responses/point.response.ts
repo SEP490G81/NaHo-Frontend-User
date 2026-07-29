@@ -5,7 +5,9 @@ export type PointTransactionType =
     | "LESSON_COMPLETION"
     | "TOPIC_COMPLETION"
     | "BOOK_COMPLETION"
-    | "DAILY_REWARD"
+    | "DAILY_LOGIN_REWARD"
+    | "DAILY_MISSION_REWARD"
+    | "LEARNING_PATH_NODE_RETAKE"
     | "STREAK_BONUS"
     | "ACHIEVEMENT_REWARD"
     | "PENALTY";

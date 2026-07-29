@@ -4,7 +4,7 @@ import {
     LessonDetailResponse,
     ObjectiveDetailResponse,
     TopicDetailResponse,
-    TopicListItemResponse
+    TopicListItemResponse,
 } from "@/types/responses/book.response";
 import { LearningPathNodeDetailResponse } from "@/types/responses/learning.response";
 
@@ -71,17 +71,42 @@ export function getLearningPathNodeDetail(
     );
 }
 
-/** Mở rương thưởng → BE cộng L-Point (userId lấy từ token, chỉ 1 lần). */
-export async function openChest(chestId: number): Promise<void> {
+/**
+ * Mở rương thưởng → BE cộng L-Point (userId lấy từ token, chỉ 1 lần) và đẩy mốc
+ * tiến độ sang node kế. Body dùng `learningPathNodeId` (id node lộ trình, không phải
+ * chestId). Trả về số điểm ngẫu nhiên thực nhận.
+ */
+export async function openChest(learningPathNodeId: number): Promise<number> {
     const response = await fetch("/api/chests/open", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chestId }),
+        body: JSON.stringify({ learningPathNodeId }),
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok) {
+        throw new Error(
+            (result as ProblemDetail | null)?.detail || "Mở rương thất bại",
+        );
+    }
+    return (result as ApiResponse<{ earnedPoint: number }>)?.data?.earnedPoint ?? 0;
+}
+
+/**
+ * Hoàn thành node từ vựng → BE cộng điểm & đẩy mốc sang node kế (idempotent: đã học
+ * thì bỏ qua). Body dùng `vocabularyQuestionId`, userId lấy từ token.
+ */
+export async function completeVocabularyQuestion(
+    vocabularyQuestionId: number,
+): Promise<void> {
+    const response = await fetch("/api/vocabulary-questions/completion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vocabularyQuestionId }),
     });
     if (!response.ok) {
-        const result = (await response
-            .json()
-            .catch(() => null)) as ProblemDetail | null;
-        throw new Error(result?.detail || "Mở rương thất bại");
+        const result = (await response.json().catch(() => null)) as
+            | ProblemDetail
+            | null;
+        throw new Error(result?.detail || "Hoàn thành từ vựng thất bại");
     }
 }

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Gift } from "lucide-react";
+import { Check, Gift } from "lucide-react";
 import { Button, Dialog, DialogContent } from "@mui/material";
 import { useTranslations } from "next-intl";
 import type { LearningPathNodeDetailResponseChestDetailResponse } from "@/types/responses/learning.response";
@@ -11,20 +11,31 @@ interface Props {
     chest: LearningPathNodeDetailResponseChestDetailResponse | null;
     loading?: boolean;
     claimed: boolean;
+    /** Điểm thực nhận sau khi mở (reveal ngay trong dialog); null = chưa mở. */
+    earned?: number | null;
     onClaim: () => void;
+    accent: string;
 }
 
-/** Hộp thoại rương thưởng: hiện điểm nhận được từ BE và nút nhận thưởng. */
+const ACCENT = "var(--book-accent, var(--color-bgc-highlight))";
+
+/** Hộp thoại rương thưởng: khoe khoảng điểm trước khi mở, hiện điểm thật sau khi mở. */
 export function ChestDialog({
     open,
     onOpenChange,
     chest,
     loading,
     claimed,
+    earned,
     onClaim,
+    accent,
 }: Props) {
     const t = useTranslations("marugoto");
-    const point = chest?.point ?? 0;
+    const revealed = earned != null;
+
+    // Khoảng điểm ngẫu nhiên rút từ mô tả của BE (vd "…từ 30 đến 50 điểm").
+    const nums = chest?.description?.match(/\d+/g)?.map(Number) ?? [];
+    const hasRange = nums.length >= 2;
 
     return (
         <Dialog
@@ -34,6 +45,7 @@ export function ChestDialog({
             fullWidth
             sx={{
                 "& .MuiPaper-root": {
+                    "--book-accent": accent,
                     backgroundColor: "var(--color-bgc-app)",
                     color: "var(--color-text-contrast)",
                     border: "1px solid var(--color-bdc-primary)",
@@ -42,7 +54,7 @@ export function ChestDialog({
             }}
         >
             <DialogContent>
-                {loading ? (
+                {loading && !revealed ? (
                     <div className="bg-bgc-page h-40 animate-pulse rounded-xl" />
                 ) : (
                     <div className="flex flex-col items-center gap-3 py-2 text-center">
@@ -54,41 +66,97 @@ export function ChestDialog({
                                 boxShadow: "0 8px 0 0 #b9791a",
                             }}
                         >
-                            <Gift className="h-10 w-10" strokeWidth={2.4} />
+                            {revealed ? (
+                                <Check className="h-10 w-10" strokeWidth={2.6} />
+                            ) : (
+                                <Gift className="h-10 w-10" strokeWidth={2.4} />
+                            )}
                         </span>
                         <h2 className="text-text-contrast mt-2 text-lg font-bold">
                             {chest?.title || t("node.chestTitle")}
                         </h2>
-                        {chest?.description && (
-                            <p className="text-text-muted text-sm">
-                                {chest.description}
-                            </p>
+
+                        {revealed ? (
+                            <>
+                                <p className="text-text-muted text-sm">
+                                    {t("node.chestGotLabel")}
+                                </p>
+                                <p
+                                    className="text-3xl font-black"
+                                    style={{ color: ACCENT }}
+                                >
+                                    {t("node.chestReward", { point: earned ?? 0 })}
+                                </p>
+                                <Button
+                                    onClick={() => onOpenChange(false)}
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        mt: 1,
+                                        textTransform: "none",
+                                        fontWeight: 700,
+                                        borderRadius: "12px",
+                                        backgroundColor: ACCENT,
+                                        color: "var(--color-text-pure)",
+                                        "&:hover": { backgroundColor: ACCENT, opacity: 0.92 },
+                                    }}
+                                >
+                                    {t("vocab.close")}
+                                </Button>
+                            </>
+                        ) : claimed ? (
+                            <>
+                                <p className="text-text-muted text-2xl font-black">
+                                    {t("node.chestOpened")}
+                                </p>
+                                <Button
+                                    disabled
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        mt: 1,
+                                        textTransform: "none",
+                                        fontWeight: 700,
+                                        borderRadius: "12px",
+                                    }}
+                                >
+                                    {t("node.chestOpened")}
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <p className="text-text-muted text-sm">
+                                    {t("node.chestRangeHint")}
+                                </p>
+                                <p
+                                    className="text-3xl font-black"
+                                    style={{ color: ACCENT }}
+                                >
+                                    {hasRange
+                                        ? t("node.chestRange", {
+                                              min: nums[0],
+                                              max: nums[1],
+                                          })
+                                        : t("node.chestMystery")}
+                                </p>
+                                <Button
+                                    onClick={onClaim}
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        mt: 1,
+                                        textTransform: "none",
+                                        fontWeight: 700,
+                                        borderRadius: "12px",
+                                        backgroundColor: ACCENT,
+                                        color: "var(--color-text-pure)",
+                                        "&:hover": { backgroundColor: ACCENT, opacity: 0.92 },
+                                    }}
+                                >
+                                    {t("node.chestClaimBtn")}
+                                </Button>
+                            </>
                         )}
-                        <p className="text-text-highlight text-2xl font-black">
-                            {t("node.chestReward", { point })}
-                        </p>
-                        <Button
-                            onClick={onClaim}
-                            disabled={claimed}
-                            variant="contained"
-                            fullWidth
-                            sx={{
-                                mt: 1,
-                                textTransform: "none",
-                                fontWeight: 700,
-                                borderRadius: "12px",
-                                backgroundColor: "var(--color-bgc-highlight)",
-                                "&:hover": {
-                                    backgroundColor:
-                                        "var(--color-bgc-highlight)",
-                                    filter: "brightness(0.95)",
-                                },
-                            }}
-                        >
-                            {claimed
-                                ? t("node.chestOpened")
-                                : t("node.chestClaimBtn")}
-                        </Button>
                     </div>
                 )}
             </DialogContent>

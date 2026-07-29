@@ -1,12 +1,8 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
-import {
-    getLearningPathNodeDetail,
-    listBooks,
-} from "@/services/client/book.service";
-import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
+import { listBooks } from "@/services/client/book.service";
+import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import { getBooks, mapBookList } from "@/data/marugoto";
 import type { MarugotoBook } from "@/data/marugoto/types";
 import BookCard from "../components/book.card";
@@ -44,28 +40,8 @@ export function BookLibrary() {
         };
     }, []);
 
-    // Tiến độ thật + node "biên giới" xa nhất để quyết định khóa/mở sách.
-    const { data: progress } = useQuery({
-        queryKey: ["user-learning-progress"],
-        queryFn: getUserLearningProgress,
-    });
-    const farthestId = progress?.farthestAvailableNodeId ?? 0;
-    const { data: frontierNode } = useQuery({
-        queryKey: ["learning-node", farthestId],
-        queryFn: () => getLearningPathNodeDetail(farthestId),
-        enabled: farthestId > 0,
-    });
-
-    // GOI biên giới: node xa nhất đã mở; chưa học → mốc nhỏ nhất (mở quyển đầu).
-    const frontier = useMemo(() => {
-        if (frontierNode?.globalOrderIndex != null) {
-            return frontierNode.globalOrderIndex;
-        }
-        const firsts = (books ?? [])
-            .map((b) => b.firstNodeOrder)
-            .filter((v): v is number => v != null);
-        return firsts.length ? Math.min(...firsts) : undefined;
-    }, [frontierNode, books]);
+    // Mốc tiến độ thật của người dùng để quyết định khóa/mở sách.
+    const { frontier } = useLearningFrontier();
 
     // Chỉ khóa khi có dữ liệu node thật từ BE; mock/thiếu dữ liệu → mở tất cả.
     const hasNodeData = !!books?.some((b) => b.firstNodeOrder != null);

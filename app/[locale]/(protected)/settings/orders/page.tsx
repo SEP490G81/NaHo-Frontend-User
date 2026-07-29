@@ -1,25 +1,27 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import LessonPath from "@/modules/protected/lesson-path/features/lesson.path";
+import Orders from "@/modules/protected/settings/orders/components/orders";
 
 export async function generateMetadata({
     params,
 }: {
     params: Promise<{ locale: string }>;
-}): Promise<{ title: string }> {
+}): Promise<{
+    title: string;
+}> {
     const { locale } = await params;
     const t = await getTranslations({
         locale,
-        namespace: "common.metadata.title",
+        namespace: "settings.page",
     });
 
     return {
-        title: t("lessonPath"),
+        title: t("orders"),
     };
 }
 
-const LessonPathPage = () => {
-    return <LessonPath />;
+const OrdersPage = () => {
+    return <Orders />;
 };
 
-export default LessonPathPage;
+export default OrdersPage;

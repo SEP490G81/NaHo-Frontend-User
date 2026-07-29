@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import Billing from "@/modules/protected/settings/nested/billing/components/billing";
+import Billing from "@/modules/protected/settings/billing/components/billing";
 
 export async function generateMetadata({
     params,

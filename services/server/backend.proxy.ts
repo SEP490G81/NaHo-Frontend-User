@@ -100,14 +100,18 @@ export async function proxyPostJson(path: string, request: Request) {
     }
 
     const accessToken = (await cookies()).get(ACCESS_TOKEN_NAME)?.value;
+    const idempotencyKey = request.headers.get("Idempotency-Key");
     const body = await request.text();
+
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
+    };
 
     const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        },
+        headers,
         body,
         cache: "no-store",
     });

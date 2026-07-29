@@ -6,11 +6,17 @@ import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.b
 import UserAvatar from "@/layouts/protected-header/components/user.avatar";
 import { IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
+import { LABELS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
+import { ChevronRight, Flame } from "lucide-react";
+import { currentLearner } from "@/data/mockLearnerDashboard";
+import { AllRoute } from "@/i18n/type";
 import DailyRewardCalendar from "../features/daily.reward.calendar";
+import DailyMissionButton from "../features/daily.mission.button";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import HeaderDecoration from "./header-decoration";
 import { ReportModal } from "@/modules/protected/report/features/report-modal";
+
 
 const ProtectedHeader = () => {
     const { toggleSidebar, toggleSidebarCollapse, isSidebarCollapsed } =
@@ -59,6 +65,7 @@ const ProtectedHeader = () => {
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
                 <DailyRewardCalendar />
+                <DailyMissionButton />
                 <NotificationButton />
                 <LanguageSwitch
                     variant="icon-button"

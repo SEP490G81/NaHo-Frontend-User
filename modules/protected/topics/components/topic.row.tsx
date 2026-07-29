@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { ArrowRight, BookText } from "lucide-react";
+import { ArrowRight, BookText, Lock } from "lucide-react";
+import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import FuriganaText from "@/components/ui/furigana.text";
@@ -18,28 +19,28 @@ export function TopicRow({ view, bookId, accent }: Props) {
     const t = useTranslations("marugoto");
     const { topic } = view;
     const lessonCount = topic.lessons.length;
+    const locked = view.status === "locked";
+    const tone = locked ? "var(--color-text-muted)" : accent;
 
-    return (
-        <Link
-            href={`/books/${bookId}/topics/${topic.id}`}
-            className="group bg-bgc-app flex items-center gap-4 rounded-2xl border px-5 py-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
-            style={{
-                borderColor: `color-mix(in srgb, ${accent} 22%, var(--color-bdc-primary))`,
-            }}
-        >
+    const inner = (
+        <>
             <div
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-base font-black text-white shadow-sm"
                 style={{
-                    background: `linear-gradient(135deg, ${accent}, color-mix(in srgb, ${accent} 72%, #000))`,
+                    background: `linear-gradient(135deg, ${tone}, color-mix(in srgb, ${tone} 72%, #000))`,
                 }}
             >
-                {String(topic.order).padStart(2, "0")}
+                {locked ? (
+                    <Lock className="h-5 w-5" />
+                ) : (
+                    String(topic.order).padStart(2, "0")
+                )}
             </div>
 
             <div className="min-w-0 flex-1">
                 <p
                     className="text-[11px] font-bold tracking-[0.16em] uppercase"
-                    style={{ color: accent }}
+                    style={{ color: tone }}
                 >
                     {t("topic.label", { index: topic.order })}
                 </p>
@@ -64,11 +65,44 @@ export function TopicRow({ view, bookId, accent }: Props) {
 
             <span
                 className="inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white shadow-sm transition-transform group-hover:scale-[1.03]"
-                style={{ background: accent }}
+                style={{ background: tone }}
             >
-                {t("lesson.enter")}
-                <ArrowRight className="h-4 w-4" />
+                {locked ? t("lesson.needUnlock") : t("lesson.enter")}
+                {locked ? (
+                    <Lock className="h-4 w-4" />
+                ) : (
+                    <ArrowRight className="h-4 w-4" />
+                )}
             </span>
+        </>
+    );
+
+    const className =
+        "group bg-bgc-app flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left shadow-sm transition-all";
+    const style = {
+        borderColor: `color-mix(in srgb, ${tone} 22%, var(--color-bdc-primary))`,
+    };
+
+    if (locked) {
+        return (
+            <button
+                type="button"
+                onClick={() => toast.info(t("lockedToastDesc"))}
+                className={`${className} opacity-60`}
+                style={style}
+            >
+                {inner}
+            </button>
+        );
+    }
+
+    return (
+        <Link
+            href={`/books/${bookId}/topics/${topic.id}`}
+            className={`${className} hover:-translate-y-0.5 hover:shadow-md`}
+            style={style}
+        >
+            {inner}
         </Link>
     );
 }

@@ -119,19 +119,24 @@ export interface SpeakingHistoryListPage {
     totalElements: number;
 }
 
-/** Danh sách lịch sử luyện nói (GET /history) — BE trả Spring Page trong `data`. */
+/**
+ * Danh sách lịch sử luyện nói (POST /speaking-histories) — BE trả `data` là mảng,
+ * phân trang nằm ở `meta.pageMeta`. userId lấy từ token ở BE.
+ */
 export async function getSpeakingHistoryList(
     query: SpeakingHistoryListQuery = {},
 ): Promise<SpeakingHistoryListPage> {
-    const params = new URLSearchParams();
-    params.set("page", String(query.page ?? 0));
-    params.set("size", String(query.size ?? 10));
-    if (query.topicId != null) params.set("topicId", String(query.topicId));
-    if (query.speakingQuestionId != null)
-        params.set("speakingQuestionId", String(query.speakingQuestionId));
-    if (query.search) params.set("search", query.search);
-
-    const response = await fetch(`/api/history?${params.toString()}`);
+    const response = await fetch("/api/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            page: query.page ?? 0,
+            size: query.size ?? 10,
+            topicId: query.topicId ?? null,
+            speakingQuestionId: query.speakingQuestionId ?? null,
+            search: query.search || null,
+        }),
+    });
     const result = await response.json();
     if (!response.ok) {
         throw new Error(
@@ -139,12 +144,11 @@ export async function getSpeakingHistoryList(
                 "Không tải được lịch sử luyện tập",
         );
     }
-    const page = (result as ApiResponse<SpringPage<SpeakingHistoryListItem>>)
-        .data;
+    const api = result as ApiResponse<SpeakingHistoryListItem[]>;
     return {
-        items: page?.content ?? [],
-        totalPages: page?.totalPages ?? 0,
-        totalElements: page?.totalElements ?? 0,
+        items: api.data ?? [],
+        totalPages: api.meta?.pageMeta?.totalPages ?? 0,
+        totalElements: api.meta?.pageMeta?.totalElements ?? 0,
     };
 }
 

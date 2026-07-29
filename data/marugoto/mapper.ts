@@ -68,6 +68,7 @@ export function mapBook(b: BookResponse): MarugotoBook {
         code: b.title,
         level: band,
         cefr: band,
+        jlpt: b.jlptLevel,
         cefrOrder: CEFR_ORDER[b.cefrLevel] ?? 99,
         order: b.orderIndex ?? 0,
         title: b.title,
@@ -91,6 +92,8 @@ export function mapBeLesson(l: LessonListItemResponse): Lesson {
         furigana: l.japaneseName,
         furiganaMarkup: l.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: l.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: l.lastNodeGlobalOrderIndex ?? undefined,
         canDos: [],
     };
 }
@@ -107,6 +110,8 @@ export function mapBeTopic(
         jpTitle: t.japaneseName,
         furiganaMarkup: t.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: t.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: t.lastNodeGlobalOrderIndex ?? undefined,
         lessons,
     };
 }
@@ -143,6 +148,7 @@ export function mapBeObjective(
                 vocabularyQuestionId: n.vocabularyQuestionId ?? null,
                 chestId: n.chestId ?? null,
                 orderIndex: n.orderIndex,
+                globalOrderIndex: n.globalOrderIndex,
             })),
     };
 }
@@ -160,6 +166,8 @@ export function mapBeLessonDetail(
         furigana: splitMarkup(l.japaneseNameMarkup || l.japaneseName).reading,
         furiganaMarkup: l.japaneseNameMarkup,
         enTitle: "",
+        firstNodeOrder: l.firstNodeGlobalOrderIndex ?? undefined,
+        lastNodeOrder: l.lastNodeGlobalOrderIndex ?? undefined,
         canDos,
     };
 }

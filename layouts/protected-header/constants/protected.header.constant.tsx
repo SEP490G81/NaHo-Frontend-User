@@ -3,6 +3,7 @@ import {
     AccountMenuStaticItem,
 } from "@/layouts/protected-header/types/protected.header.type";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
 
@@ -10,25 +11,33 @@ export const ACCOUNT_MENU_ITEMS: (
     | AccountMenuLinkItem
     | AccountMenuStaticItem
 )[] = [
-    {
-        id: "i-1",
-        titleKey: "settings",
-        redirectLink: "/settings",
-        icon: <SettingsOutlinedIcon fontSize="small" />,
-        type: "LINK",
-    },
-    {
-        id: "i-2",
-        titleKey: "getHelp",
-        redirectLink: "/get-help",
-        icon: <HelpOutlineOutlinedIcon fontSize="small" />,
-        type: "LINK",
-    },
-    {
-        id: "report-menu-item",
-        titleKey: "report",
-        redirectLink: "/",
-        icon: <OutlinedFlagIcon fontSize="small" />,
-        type: "LINK",
-    },
-];
+        {
+            id: "i-1",
+            titleKey: "settings",
+            redirectLink: "/settings",
+            icon: <SettingsOutlinedIcon fontSize="small" />,
+            type: "LINK",
+        },
+        {
+            id: "i-orders",
+            titleKey: "orders",
+            redirectLink: "/settings/orders",
+            icon: <ReceiptLongOutlinedIcon fontSize="small" />,
+            type: "LINK",
+        },
+        {
+            id: "i-2",
+            titleKey: "getHelp",
+            redirectLink: "/get-help",
+            icon: <HelpOutlineOutlinedIcon fontSize="small" />,
+            type: "LINK",
+        },
+        {
+            id: "report-menu-item",
+            titleKey: "report",
+            redirectLink: "/",
+            icon: <OutlinedFlagIcon fontSize="small" />,
+            type: "LINK",
+        },
+    ];
+

@@ -1,0 +1,36 @@
+{
+    "dailyMission": {
+        "triggerTooltip": "Nhiệm vụ hàng ngày",
+        "triggerBtn": "Nhiệm vụ",
+        "title": "Nhiệm Vụ Hàng Ngày",
+        "subtitle": "Hoàn thành các nhiệm vụ hôm nay để tích lũy thêm điểm thưởng",
+        "close": "Đóng",
+        "progressText": "Hoàn thành {completed}/{total}",
+        "totalPoints": "+{points} Điểm",
+        "status": {
+            "inProgress": "Chưa hoàn thành",
+            "completed": "Hoàn thành",
+            "earned": "Đã nhận"
+        },
+        "types": {
+            "COMPLETE_SPEAKING_QUESTION_NODE": {
+                "title": "Hoàn thành bài luyện nói",
+                "desc": "Luyện tập và hoàn thành 1 câu hỏi phát âm hoặc hội thoại"
+            },
+            "TALK_WITH_AI": {
+                "title": "Trò chuyện cùng AI",
+                "desc": "Thực hiện hội thoại giao tiếp trực tiếp với Kai AI"
+            },
+            "default": {
+                "title": "Nhiệm vụ hàng ngày",
+                "desc": "Hoàn thành nhiệm vụ để nhận phần thưởng hấp dẫn"
+            }
+        },
+        "empty": "Không có nhiệm vụ nào cho ngày hôm nay.",
+        "fetchError": "Không thể lấy danh sách nhiệm vụ hàng ngày.",
+        "actionBtn": "Làm ngay",
+        "claimBtn": "Nhận thưởng",
+        "doneText": "Hoàn tất",
+        "claimSuccess": "Nhận phần thưởng nhiệm vụ hàng ngày thành công!"
+    }
+}
