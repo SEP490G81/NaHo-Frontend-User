@@ -69,7 +69,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                 <p className="text-text-muted">{t("notFoundSubtitle")}</p>
                 <Button
                     component={Link}
-                    href="/history"
+                    href="/speaking-history"
                     variant="contained"
                     sx={{
                         textTransform: "none",
@@ -99,7 +99,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
     const retryHref =
         data.questionId != null
             ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
-            : "/history";
+            : "/speaking-history";
 
     return (
         <div
@@ -126,7 +126,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                 <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
                     <Button
                         component={Link}
-                        href="/history"
+                        href="/speaking-history"
                         variant="outlined"
                         startIcon={<ListChecks className="h-4 w-4" />}
                         sx={{

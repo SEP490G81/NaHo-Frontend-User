@@ -6,6 +6,7 @@ import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import { getBooks, mapBookList } from "@/data/marugoto";
 import type { MarugotoBook } from "@/data/marugoto/types";
 import BookCard from "../components/book.card";
+import ContainerBox from "@/components/ui/container.box";
 
 function LibrarySkeleton() {
     return (
@@ -59,7 +60,7 @@ export function BookLibrary() {
         frontier <= b.lastNodeOrder;
 
     return (
-        <div className="border-bdc-primary bg-bgc-app space-y-6 rounded-2xl border p-6">
+        <ContainerBox>
             <div>
                 <p className="text-text-muted text-[11px] font-semibold tracking-[0.22em] uppercase">
                     {t("books.chooseBook")}
@@ -83,7 +84,7 @@ export function BookLibrary() {
                     ))}
                 </div>
             )}
-        </div>
+        </ContainerBox>
     );
 }
 

@@ -32,6 +32,8 @@ import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 const getEffectiveStatus = (order: PaymentOrderResponse, currentTime: number): PaymentOrderStatus => {
     if (order.status === "PENDING" && order.expiresTime) {
         const expiresAt = new Date(order.expiresTime).getTime();
@@ -202,17 +204,17 @@ const OrdersList: React.FC = () => {
 
     if (orders.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-bdc-primary bg-bgc-card p-12 text-center">
+            <ContainerBox className="flex flex-col items-center justify-center border border-bdc-primary text-center">
                 <ReceiptLongOutlinedIcon className="text-text-muted text-6xl mb-3 opacity-40" />
                 <p className="text-base font-semibold text-text-primary">
                     {t("noOrders")}
                 </p>
-            </div>
+            </ContainerBox>
         );
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-5">
             {/* Centered Status Filter Tabs */}
             <div className="flex flex-wrap items-center justify-center gap-2">
                 {filterTabs.map((tab) => {
@@ -234,9 +236,9 @@ const OrdersList: React.FC = () => {
             </div>
 
             {filteredOrders.length === 0 ? (
-                <div className="rounded-xl border border-bdc-primary/40 bg-bgc-card p-8 text-center text-text-muted text-sm font-medium">
+                <ContainerBox className="border border-bdc-primary/40 text-center text-text-muted text-sm font-medium">
                     Không có đơn hàng nào thuộc trạng thái này.
-                </div>
+                </ContainerBox>
             ) : (
                 <TableContainer component={Paper} elevation={0} className="rounded-xl border border-bdc-primary overflow-hidden">
                     <Table sx={{ minWidth: "100%", "& .MuiTableCell-root": { px: 1.5, py: 1.5 } }} aria-label="payment orders table">

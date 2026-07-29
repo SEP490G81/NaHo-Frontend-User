@@ -15,6 +15,7 @@ import { dailyPractice } from "@/data/mockLearnerDashboard";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { CHART_COLOR, CHART_HOVER_FILL } from "../constants/dashboard.constant";
+import { ContainerBox } from "@/components/ui/container.box";
 
 export function PracticeTimeChart() {
     const t = useTranslations("dashboard");
@@ -29,17 +30,17 @@ export function PracticeTimeChart() {
 
     if (!mounted) {
         return (
-            <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm">
+            <ContainerBox className="border border-bdc-primary shadow-sm">
                 <div className="h-6 w-48 bg-bdc-primary/30 rounded animate-pulse" />
                 <div className="mt-6 flex h-64 w-full items-center justify-center rounded-lg bg-bgc-subtle text-text-muted text-xs">
                     {t("loadingChart")}
                 </div>
-            </div>
+            </ContainerBox>
         );
     }
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="border border-bdc-primary shadow-sm transition-all hover:shadow-md">
             {/* Header & Quick stats */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -138,7 +139,7 @@ export function PracticeTimeChart() {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

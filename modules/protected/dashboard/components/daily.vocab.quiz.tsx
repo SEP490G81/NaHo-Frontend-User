@@ -9,6 +9,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 interface QuizQuestion {
     id: number;
     word: string;
@@ -102,7 +104,7 @@ export function DailyVocabQuiz() {
     };
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="border border-bdc-primary shadow-sm transition-all hover:shadow-md">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-bdc-primary/60">
                 <div className="flex items-center gap-3">
@@ -188,7 +190,7 @@ export function DailyVocabQuiz() {
                     </div>
                 )}
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

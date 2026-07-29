@@ -7,6 +7,8 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import IconButton from "@mui/material/IconButton";
 import Chip from "@mui/material/Chip";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 interface QuoteItem {
     kanji: string;
     romaji: string;
@@ -58,7 +60,7 @@ export function KanjiQuoteCard() {
     };
 
     return (
-        <div className="relative overflow-hidden rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="relative overflow-hidden border border-bdc-primary shadow-sm transition-all hover:shadow-md">
 
             <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
                 {/* Header tag & refresh button */}
@@ -104,7 +106,7 @@ export function KanjiQuoteCard() {
                     />
                 </div>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

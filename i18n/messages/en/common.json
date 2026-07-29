@@ -57,6 +57,8 @@
                 "accountMenu": {
                     "settings": "Settings",
                     "orders": "Order History",
+                    "pointHistory": "Point History",
+                    "speakingHistory": "Speaking History by Book",
                     "language": "Language",
                     "getHelp": "Help & Support",
                     "report": "Report"

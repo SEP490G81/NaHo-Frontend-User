@@ -43,12 +43,12 @@ export function LeaderboardContent({
     lbUser,
     totalPoint,
     streakDays,
-}: LeaderboardContentProps) {
+}: Readonly<LeaderboardContentProps>) {
     const label = useLeagueLabel();
 
     const myLeague = leagues.find((league) => league.id === myLeagueId) ?? null;
     const isViewingMyLeague = activeLeague.id === myLeagueId;
-    const myEntry = entries.find((entry) => entry.userId === myUserId);
+    const myEntry = entries.some((entry) => entry.userId === myUserId);
     const isEmpty = !isLoading && entries.length === 0;
     const showMyPosition =
         isViewingMyLeague && !myEntry && lbUser != null && !isLoading;

@@ -7,7 +7,9 @@ interface OtherLeagueNoticeProps {
     myLeagueName: string;
 }
 
-export function OtherLeagueNotice({ myLeagueName }: OtherLeagueNoticeProps) {
+export function OtherLeagueNotice({
+    myLeagueName,
+}: Readonly<OtherLeagueNoticeProps>) {
     const t = useTranslations("leaderboard");
 
     return (

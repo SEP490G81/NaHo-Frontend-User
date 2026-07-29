@@ -4,16 +4,18 @@ import { History as HistoryIcon, Sparkles } from "lucide-react";
 import { Button } from "@mui/material";
 import { Link } from "@/i18n/navigation";
 import ScoreBadge from "./score.badge";
+import ContainerBox from "@/components/ui/container.box";
+import { useTranslations } from "next-intl";
 
 interface HistoryHeaderProps {
     totalCount: number;
     avgScore: number;
-    t: any;
 }
 
-export function HistoryHeader({ totalCount, avgScore, t }: HistoryHeaderProps) {
+export function HistoryHeader({ totalCount, avgScore }: HistoryHeaderProps) {
+    const t = useTranslations("history");
     return (
-        <header className="border-bdc-primary bg-bgc-app flex flex-wrap items-end justify-between gap-4 rounded-xl border p-6 shadow-sm">
+        <ContainerBox className="flex items-center justify-between">
             <div>
                 <h1 className="text-text-contrast flex items-center gap-2 text-2xl font-bold md:text-3xl">
                     <HistoryIcon className="text-bgc-highlight h-6 w-6" />
@@ -53,7 +55,7 @@ export function HistoryHeader({ totalCount, avgScore, t }: HistoryHeaderProps) {
             >
                 {t("practiceNew")}
             </Button>
-        </header>
+        </ContainerBox>
     );
 }
 

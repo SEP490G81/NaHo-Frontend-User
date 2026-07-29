@@ -14,6 +14,7 @@ import {
 import { useTranslations } from "next-intl";
 import { type ChatKeigo, type ChatTone, useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
+import { ContainerBox } from "@/components/ui/container.box";
 
 interface AdvancedSettingsFormProps {
     companionId: string;
@@ -45,7 +46,7 @@ export function AdvancedSettingsForm({
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app rounded-xl border p-5 shadow-sm sm:p-6">
+        <ContainerBox className="border-bdc-primary border shadow-sm">
             <h2 className="text-text-contrast text-base font-semibold">
                 {t("advancedTitle")}
             </h2>
@@ -193,7 +194,7 @@ export function AdvancedSettingsForm({
                     {t("startButton")}
                 </Button>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

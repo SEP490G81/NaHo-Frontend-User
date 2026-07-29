@@ -1,7 +1,8 @@
 import { Avatar, Chip, Divider, Popover } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { cn } from "@/libs/utils";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import { useMySubscription } from "@/hooks/use.my.subscription";
 import { getFirstCharacter, getUserAvatarUrl, getUserFullName } from "@/layouts/protected-header/utils/header.util";
@@ -17,6 +18,7 @@ const AccountMenu = ({
     setAnchorEl: Dispatch<SetStateAction<HTMLButtonElement | null>>;
 }) => {
     const t = useTranslations();
+    const pathname = usePathname();
     const { data: user } = useCurrentUser();
     const { data: subscription } = useMySubscription();
     const openReportModal = useReportStore((s) => s.openModal);
@@ -118,11 +120,18 @@ const AccountMenu = ({
 
                 <Divider />
 
-                <div className="flex flex-col gap-y-1 px-1 py-2">
+                <div className="flex flex-col gap-y-1 px-1.5 py-2">
                     {ACCOUNT_MENU_ITEMS.map((item) => {
                         if (item.type === "STATIC") {
                             return <div key={item.id}>{item.component}</div>;
                         }
+
+                        const isActive =
+                            item.type === "LINK" &&
+                            item.redirectLink !== "/" &&
+                            (pathname === item.redirectLink ||
+                                pathname.startsWith(item.redirectLink + "/"));
+
                         if (item.titleKey === "report") {
                             return (
                                 <button
@@ -131,9 +140,9 @@ const AccountMenu = ({
                                         handleClose();
                                         openReportModal("SYSTEM");
                                     }}
-                                    className="hover:text-text-highlight hover:bg-hbgc-page text-text-contrast flex h-10 w-full cursor-pointer items-center justify-start rounded-md px-5 transition-all duration-150"
+                                    className="group hover:text-text-highlight hover:bg-hbgc-page text-text-contrast flex h-10 w-full cursor-pointer items-center justify-start rounded-md px-3.5 transition-all duration-150"
                                 >
-                                    <span className="flex h-10 w-10 items-center">
+                                    <span className="text-text-muted group-hover:text-text-highlight flex h-10 w-8 items-center transition-colors">
                                         {item.icon}
                                     </span>
                                     <p className="text-left text-sm font-semibold whitespace-nowrap">
@@ -144,14 +153,27 @@ const AccountMenu = ({
                                 </button>
                             );
                         }
+
                         return (
                             <Link
                                 href={item.redirectLink}
                                 key={item.id}
                                 onClick={handleClose}
-                                className="hover:text-text-highlight hover:bg-hbgc-page flex h-10 items-center justify-start rounded-md px-5 transition-all duration-150"
+                                className={cn(
+                                    "group relative flex h-10 items-center justify-start rounded-md px-3.5 transition-all duration-150",
+                                    isActive
+                                        ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
+                                        : "text-text-contrast hover:text-text-highlight hover:bg-hbgc-page",
+                                )}
                             >
-                                <span className="flex h-10 w-10 items-center">
+                                <span
+                                    className={cn(
+                                        "flex h-10 w-8 items-center transition-colors",
+                                        isActive
+                                            ? "text-bgc-highlight"
+                                            : "text-text-muted group-hover:text-text-highlight",
+                                    )}
+                                >
                                     {item.icon}
                                 </span>
                                 <p className="text-sm font-semibold whitespace-nowrap">

@@ -9,6 +9,8 @@ import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import CompassCalibrationIcon from "@mui/icons-material/CompassCalibration";
 import LinearProgress from "@mui/material/LinearProgress";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 interface WelcomeBannerProps {
     name: string;
     t: any;
@@ -29,7 +31,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
     const goalPercentage = Math.min(100, Math.round((currentMinutes / goalMinutes) * 100));
 
     return (
-        <div className="relative overflow-hidden rounded-3xl border border-bdc-primary bg-gradient-to-br from-bgc-card via-bgc-card to-[#ff99ac]/10 p-6 sm:p-8 shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="relative overflow-hidden border border-bdc-primary bg-gradient-to-br from-bgc-card via-bgc-card to-[#ff99ac]/10 shadow-sm transition-all hover:shadow-md">
             {/* Sakura ambient glow circles */}
             <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-[#ff99ac]/15 blur-3xl pointer-events-none" />
             <div className="absolute -left-12 -bottom-12 h-48 w-48 rounded-full bg-[#ff758f]/10 blur-2xl pointer-events-none" />
@@ -109,7 +111,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                     </Button>
                 </div>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

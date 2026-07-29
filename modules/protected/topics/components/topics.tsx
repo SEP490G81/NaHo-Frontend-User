@@ -5,11 +5,9 @@ import BookLibrary from "../features/book.library";
 
 export function Topics() {
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-6xl space-y-8">
-                <RoadmapHeader />
-                <BookLibrary />
-            </div>
+        <div className="mx-auto max-w-6xl space-y-5">
+            <RoadmapHeader />
+            <BookLibrary />
         </div>
     );
 }
