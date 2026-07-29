@@ -1,51 +1,49 @@
 "use client";
-import { useState } from "react";
-import { MessagesSquare } from "lucide-react";
-import {
-    Button,
-    FormControl,
-    MenuItem,
-    Select,
-    Slider,
-    Switch,
-    ToggleButton,
-    ToggleButtonGroup,
-} from "@mui/material";
+import { Crown, MessagesSquare, Smile } from "lucide-react";
+import { FormControl, MenuItem, Select, Slider, Switch } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { type ChatKeigo, type ChatTone, useChatStore } from "@/store/chatStore";
-import { useRouter } from "@/i18n/navigation";
+import { cn } from "@/libs/utils";
+import {
+    CONVERSATION_STYLES,
+    MARUGOTO_LEVELS,
+    marugotoLabel,
+} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 
 interface AdvancedSettingsFormProps {
-    companionId: string;
+    conversationStyle: FormalityLevel;
+    marugotoLevel: MarugotoLevel;
+    voiceSpeed: number;
+    showHints: boolean;
+    onStyleChange: (formality: FormalityLevel) => void;
+    onMarugotoChange: (level: MarugotoLevel) => void;
+    onVoiceSpeedChange: (v: number) => void;
+    onShowHintsChange: (v: boolean) => void;
 }
 
+const STYLE_ICON: Record<string, React.ReactNode> = {
+    informal: <Smile className="h-5 w-5" />,
+    neutral: <MessagesSquare className="h-5 w-5" />,
+    formal: <Crown className="h-5 w-5" />,
+};
+
 export function AdvancedSettingsForm({
-    companionId,
+    conversationStyle,
+    marugotoLevel,
+    voiceSpeed,
+    showHints,
+    onStyleChange,
+    onMarugotoChange,
+    onVoiceSpeedChange,
+    onShowHintsChange,
 }: AdvancedSettingsFormProps) {
     const t = useTranslations("dialogueSetup");
-    const router = useRouter();
-    const setConfig = useChatStore((s) => s.setConfig);
-
-    const [tone, setTone] = useState<ChatTone>("casual");
-    const [keigo, setKeigo] = useState<ChatKeigo>("auto");
-    const [voiceSpeed, setVoiceSpeed] = useState(1.0);
-    const [showTranslation, setShowTranslation] = useState(true);
-    const [showHints, setShowHints] = useState(true);
-
-    const handleStart = () => {
-        setConfig({
-            companionId,
-            tone,
-            keigo,
-            voiceSpeed,
-            showTranslation,
-            showHints,
-        });
-        router.push("/live-chatroom");
-    };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app rounded-xl border p-5 shadow-sm sm:p-6">
+        <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm sm:p-6">
             <h2 className="text-text-contrast text-base font-semibold">
                 {t("advancedTitle")}
             </h2>
@@ -53,50 +51,59 @@ export function AdvancedSettingsForm({
                 {t("advancedSubtitle")}
             </p>
 
-            <div className="mt-5 grid gap-6 lg:grid-cols-2">
-                {/* Tone */}
-                <div className="flex flex-col justify-start space-y-2">
-                    <span className="text-text-contrast text-sm font-medium">
-                        {t("toneLabel")}
-                    </span>
-                    <ToggleButtonGroup
-                        value={tone}
-                        exclusive
-                        onChange={(e, v) => v && setTone(v as ChatTone)}
-                        size="small"
-                        className="justify-start gap-2"
-                    >
-                        <ToggleButton
-                            value="casual"
-                            className="border-bdc-primary !text-text-contrast [&.Mui-selected]:!border-bgc-highlight [&.Mui-selected]:!bg-bgc-highlight/15 [&.Mui-selected]:!text-bgc-highlight !rounded-md border !px-3 !py-1.5 !text-xs !font-medium !capitalize"
-                        >
-                            {t("toneCasual")}
-                        </ToggleButton>
-                        <ToggleButton
-                            value="business"
-                            className="border-bdc-primary !text-text-contrast [&.Mui-selected]:!border-bgc-highlight [&.Mui-selected]:!bg-bgc-highlight/15 [&.Mui-selected]:!text-bgc-highlight !rounded-md border !px-3 !py-1.5 !text-xs !font-medium !capitalize"
-                        >
-                            {t("toneBusiness")}
-                        </ToggleButton>
-                        <ToggleButton
-                            value="interview"
-                            className="border-bdc-primary !text-text-contrast [&.Mui-selected]:!border-bgc-highlight [&.Mui-selected]:!bg-bgc-highlight/15 [&.Mui-selected]:!text-bgc-highlight !rounded-md border !px-3 !py-1.5 !text-xs !font-medium !capitalize"
-                        >
-                            {t("toneInterview")}
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+            {/* Style hội thoại — 3 thẻ */}
+            <div className="mt-5">
+                <span className="text-text-contrast text-sm font-medium">
+                    {t("styleLabel")}
+                </span>
+                <div className="mt-2 grid gap-3 sm:grid-cols-3">
+                    {CONVERSATION_STYLES.map((s) => {
+                        const selected = conversationStyle === s.formality;
+                        return (
+                            <button
+                                key={s.formality}
+                                type="button"
+                                onClick={() => onStyleChange(s.formality)}
+                                className={cn(
+                                    "flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition-all",
+                                    selected
+                                        ? "border-bgc-highlight ring-bgc-highlight/30 bg-bgc-highlight/5 ring-2"
+                                        : "border-bdc-primary hover:border-bgc-highlight/60 bg-bgc-page/40",
+                                )}
+                            >
+                                <span
+                                    className={cn(
+                                        "flex h-9 w-9 items-center justify-center rounded-lg",
+                                        selected
+                                            ? "bg-bgc-highlight text-white"
+                                            : "bg-bgc-highlight/15 text-bgc-highlight",
+                                    )}
+                                >
+                                    {STYLE_ICON[s.key]}
+                                </span>
+                                <span className="text-text-contrast text-sm font-semibold">
+                                    {t(`style_${s.key}`)}
+                                </span>
+                                <span className="text-text-muted text-xs leading-relaxed">
+                                    {t(`styleDesc_${s.key}`)}
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
 
-                {/* Keigo */}
-                <div className="space-y-2">
-                    <span className="text-text-contrast mb-1 block text-sm font-medium">
-                        {t("keigoLabel")}
+                {/* Cấp độ Marugoto */}
+                <div className="mt-4 space-y-1.5">
+                    <span className="text-text-contrast block text-sm font-medium">
+                        {t("levelLabel")}
                     </span>
                     <FormControl fullWidth size="small">
                         <Select
-                            value={keigo}
+                            value={marugotoLevel}
                             onChange={(e) =>
-                                setKeigo(e.target.value as ChatKeigo)
+                                onMarugotoChange(
+                                    e.target.value as MarugotoLevel,
+                                )
                             }
                             className="text-text-contrast bg-bgc-app"
                             sx={{
@@ -113,19 +120,19 @@ export function AdvancedSettingsForm({
                                     },
                             }}
                         >
-                            <MenuItem value="auto">{t("keigoAuto")}</MenuItem>
-                            <MenuItem value="sonkeigo">
-                                {t("keigoSonkeigo")}
-                            </MenuItem>
-                            <MenuItem value="kenjougo">
-                                {t("keigoKenjougo")}
-                            </MenuItem>
+                            {MARUGOTO_LEVELS.map((lv) => (
+                                <MenuItem key={lv} value={lv}>
+                                    {marugotoLabel(lv)}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </div>
+            </div>
 
+            <div className="border-bdc-primary mt-6 grid gap-6 border-t pt-6 lg:grid-cols-2">
                 {/* Voice speed */}
-                <div className="space-y-2 lg:col-span-2">
+                <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <span className="text-text-contrast text-sm font-medium">
                             {t("speedLabel")}
@@ -139,7 +146,7 @@ export function AdvancedSettingsForm({
                         min={0.8}
                         max={1.5}
                         step={0.1}
-                        onChange={(e, v) => setVoiceSpeed(v as number)}
+                        onChange={(_e, v) => onVoiceSpeedChange(v as number)}
                         color="primary"
                     />
                     <div className="text-text-muted flex justify-between text-[11px]">
@@ -148,24 +155,8 @@ export function AdvancedSettingsForm({
                     </div>
                 </div>
 
-                {/* Toggles */}
-                <label className="border-bdc-primary bg-bgc-page flex cursor-pointer items-start justify-between gap-3 rounded-md border p-3">
-                    <span className="flex-1">
-                        <span className="text-text-contrast block text-sm font-medium">
-                            {t("translationTitle")}
-                        </span>
-                        <span className="text-text-muted block text-xs">
-                            {t("translationDesc")}
-                        </span>
-                    </span>
-                    <Switch
-                        checked={showTranslation}
-                        onChange={(e) => setShowTranslation(e.target.checked)}
-                        color="primary"
-                    />
-                </label>
-
-                <label className="border-bdc-primary bg-bgc-page flex cursor-pointer items-start justify-between gap-3 rounded-md border p-3">
+                {/* Hints toggle */}
+                <label className="border-bdc-primary bg-bgc-page/50 flex cursor-pointer items-center justify-between gap-3 rounded-xl border p-4">
                     <span className="flex-1">
                         <span className="text-text-contrast block text-sm font-medium">
                             {t("hintsTitle")}
@@ -176,22 +167,10 @@ export function AdvancedSettingsForm({
                     </span>
                     <Switch
                         checked={showHints}
-                        onChange={(e) => setShowHints(e.target.checked)}
+                        onChange={(e) => onShowHintsChange(e.target.checked)}
                         color="primary"
                     />
                 </label>
-            </div>
-
-            <div className="border-bdc-primary mt-6 flex justify-end border-t pt-4">
-                <Button
-                    onClick={handleStart}
-                    variant="contained"
-                    color="primary"
-                    className="!h-10 !rounded-lg !px-5 font-bold text-white capitalize hover:opacity-90"
-                    startIcon={<MessagesSquare className="h-4 w-4" />}
-                >
-                    {t("startButton")}
-                </Button>
             </div>
         </div>
     );

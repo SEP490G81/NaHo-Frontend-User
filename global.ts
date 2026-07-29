@@ -10,6 +10,7 @@ import sandbox from "@/i18n/messages/vi/sandbox.json";
 import settings from "@/i18n/messages/vi/settings.json";
 import liveChatroom from "@/i18n/messages/vi/live-chatroom.json";
 import dialogueSetup from "@/i18n/messages/vi/dialogue-setup.json";
+import speakingResult from "@/i18n/messages/vi/speaking-result.json";
 import marugoto from "@/i18n/messages/vi/marugoto.json";
 import leaderboard from "@/i18n/messages/vi/leaderboard.json";
 import pointHistory from "@/i18n/messages/vi/point-history.json";
@@ -30,6 +31,7 @@ declare module "next-intl" {
             typeof settings &
             typeof liveChatroom &
             typeof dialogueSetup &
+            typeof speakingResult &
             typeof marugoto &
             typeof leaderboard &
             typeof pointHistory &
