@@ -10,8 +10,8 @@ export function Leaderboard() {
     const t = useTranslations("leaderboard");
 
     return (
-        <div className="mx-auto max-w-6xl space-y-5">
-            <ContainerBox className="flex flex-col items-center">
+        <>
+            <ContainerBox className="mb-5 flex flex-col items-center">
                 <div className="bg-bgc-highlight/10 mb-3 flex h-14 w-14 items-center justify-center rounded-2xl">
                     <Trophy className="text-bgc-highlight h-7 w-7" />
                 </div>
@@ -24,7 +24,7 @@ export function Leaderboard() {
             </ContainerBox>
 
             <LeaderboardBoard />
-        </div>
+        </>
     );
 }
 

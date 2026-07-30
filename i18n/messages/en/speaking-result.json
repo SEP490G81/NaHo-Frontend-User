@@ -1,0 +1,21 @@
+{
+    "speakingResult": {
+        "title": "Session Report",
+        "overall": "Overall",
+        "jlpt": "Estimated JLPT",
+        "breakdownTitle": "Skill Radar",
+        "detailTitle": "Score Detail",
+        "strengths": "Strengths",
+        "weaknesses": "Areas to Improve",
+        "feedbackTitle": "Personalized Tips",
+        "improvedTitle": "Better Expressions",
+        "retry": "Practice Again",
+        "dim_fluency": "Fluency",
+        "dim_pronunciation": "Pronunciation",
+        "dim_grammar": "Grammar",
+        "dim_vocabulary": "Vocabulary",
+        "dim_interaction": "Interaction",
+        "dim_naturalness": "Naturalness",
+        "dim_coherence": "Coherence"
+    }
+}

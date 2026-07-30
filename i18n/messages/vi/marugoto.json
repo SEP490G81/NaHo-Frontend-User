@@ -25,7 +25,8 @@
             "lessonsDone": "{done}/{total} bài đã học",
             "comingSoon": "Sắp cập nhật",
             "current": "Đang học",
-            "backToLibrary": "Quay lại thư viện sách"
+            "backToLibrary": "Quay lại thư viện sách",
+            "lessonCountLabel": "Bài học"
         },
         "bands": {
             "A1": "Nhập môn",
@@ -63,7 +64,12 @@
             "milestoneProgress": "{done}/{total} mốc",
             "vocabShort": "Từ vựng",
             "candoSummary": "{total} Can-do • Đã đạt {done}/{total}",
-            "startBubble": "Bắt đầu"
+            "startBubble": "Bắt đầu",
+            "lessonOutline": "Mục lục bài học",
+            "topicProgress": "Tiến độ chủ đề",
+            "completedNodes": "Đã hoàn thành",
+            "activeGoal": "Mục tiêu hiện tại",
+            "rewardsHint": "Mở rương phần thưởng"
         },
         "node": {
             "vocabTitle": "Từ vựng",

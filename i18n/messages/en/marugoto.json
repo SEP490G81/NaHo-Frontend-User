@@ -25,7 +25,8 @@
             "lessonsDone": "{done}/{total} lessons done",
             "comingSoon": "Coming soon",
             "current": "Learning",
-            "backToLibrary": "Back to book library"
+            "backToLibrary": "Back to book library",
+            "lessonCountLabel": "Lessons"
         },
         "bands": {
             "A1": "Starter",
@@ -63,7 +64,12 @@
             "milestoneProgress": "{done}/{total} milestones",
             "vocabShort": "Vocabulary",
             "candoSummary": "{total} Can-do • {done}/{total} done",
-            "startBubble": "Start"
+            "startBubble": "Start",
+            "lessonOutline": "Lesson Outline",
+            "topicProgress": "Topic Progress",
+            "completedNodes": "Completed",
+            "activeGoal": "Current Goal",
+            "rewardsHint": "Open Reward Chest"
         },
         "node": {
             "vocabTitle": "Vocabulary",

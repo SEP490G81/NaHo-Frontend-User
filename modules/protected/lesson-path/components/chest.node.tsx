@@ -25,7 +25,7 @@ export function ChestNode({ node, onClick }: Props) {
                 aria-label={t("node.chestTitle")}
                 className={cn(
                     "group relative flex flex-col items-center transition-transform active:translate-y-2",
-                    !locked && "cursor-pointer hover:-translate-y-1",
+                    !locked && "hover:-translate-y-1 cursor-pointer",
                     locked && "cursor-not-allowed opacity-75",
                 )}
             >
@@ -40,11 +40,7 @@ export function ChestNode({ node, onClick }: Props) {
                     ) : (
                         // Kích thước riêng theo tỉ lệ từng ảnh (đóng 1.85 · mở 1.14) để không méo.
                         <Image
-                            src={
-                                completed
-                                    ? "/chest-open.png"
-                                    : "/chest-close.png"
-                            }
+                            src={completed ? "/chest-open.png" : "/chest-close.png"}
                             alt={t("node.chestTitle")}
                             width={completed ? 82 : 92}
                             height={completed ? 72 : 50}

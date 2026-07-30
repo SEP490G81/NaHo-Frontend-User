@@ -39,7 +39,7 @@ export function CircularNode({ node, title, caption, accent, onClick }: Props) {
                 aria-label={`${title} — ${caption}`}
                 className={cn(
                     "rounded-full transition-transform duration-100",
-                    !locked && "cursor-pointer hover:-translate-y-1",
+                    !locked && "hover:-translate-y-1 cursor-pointer",
                     locked && "cursor-not-allowed",
                 )}
             >

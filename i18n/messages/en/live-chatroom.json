@@ -1,6 +1,15 @@
 {
     "liveChatroom": {
         "settingsTitle": "Conversation Settings",
+        "online": "Online",
+        "ending": "Ending...",
+        "sendError": "Could not send the message. Please try again.",
+        "endError": "Could not end the session. Please try again.",
+        "pronunciationScore": "Pronunciation",
+        "aiThinking": "Thinking of a reply...",
+        "startBanner": "Chat with {name}",
+        "startBannerHint": "Type a message or tap the mic to start practicing your Japanese.",
+        "startDivider": "Conversation started",
         "speedLabel": "AI Speaking Speed",
         "furiganaToggle": "Show Furigana",
         "translateToggle": "Auto Translate",

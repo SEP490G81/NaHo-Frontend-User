@@ -28,7 +28,8 @@
                 "community-library": "Community Library",
                 "report": "Report",
                 "liveChatroom": "ライブチャットルーム",
-                "dialogueSetup": "会話設定",
+                "dialogueSetup": "AIとの自由会話",
+                "speakingResult": "セッションレポート",
                 "leaderboard": "ランキング",
                 "settings": "設定",
                 "orders": "取引履歴"

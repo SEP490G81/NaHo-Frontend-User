@@ -25,7 +25,8 @@
             "lessonsDone": "{done}/{total} 課 完了",
             "comingSoon": "近日公開",
             "current": "学習中",
-            "backToLibrary": "教材ライブラリーに戻る"
+            "backToLibrary": "教材ライブラリーに戻る",
+            "lessonCountLabel": "レッスン"
         },
         "bands": {
             "A1": "入門",
@@ -63,7 +64,12 @@
             "milestoneProgress": "{done}/{total} マイルストーン",
             "vocabShort": "語彙",
             "candoSummary": "Can-do {total}件 • 達成 {done}/{total}",
-            "startBubble": "スタート"
+            "startBubble": "スタート",
+            "lessonOutline": "レッスン目次",
+            "topicProgress": "トピックの進捗",
+            "completedNodes": "完了済み",
+            "activeGoal": "現在の目標",
+            "rewardsHint": "ごほうび箱を開ける"
         },
         "node": {
             "vocabTitle": "語彙",

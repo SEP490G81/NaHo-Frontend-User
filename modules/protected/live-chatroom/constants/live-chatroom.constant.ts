@@ -1,8 +1,58 @@
+import type { Companion } from "../types/live-chatroom.type";
 import type {
-    AiChatMessage,
-    ChatMessage,
-    Companion,
-} from "../types/live-chatroom.type";
+    FormalityLevel,
+    MarugotoLevel,
+    PersonaResponse,
+} from "@/types/responses/persona.response";
+
+/**
+ * Style hội thoại — khớp enum FormalityLevel bên BE.
+ * Thứ tự hiển thị: Thân mật (INFORMAL) → Lịch sự (NEUTRAL) → Kính ngữ (FORMAL).
+ */
+export interface ConversationStyle {
+    formality: FormalityLevel;
+    key: "informal" | "neutral" | "formal";
+}
+
+export const CONVERSATION_STYLES: ConversationStyle[] = [
+    { formality: "INFORMAL", key: "informal" },
+    { formality: "NEUTRAL", key: "neutral" },
+    { formality: "FORMAL", key: "formal" },
+];
+
+export const DEFAULT_FORMALITY: FormalityLevel = "NEUTRAL";
+
+export function styleKeyOf(
+    formality: FormalityLevel | null | undefined,
+): ConversationStyle["key"] {
+    return (
+        CONVERSATION_STYLES.find((s) => s.formality === formality)?.key ??
+        "neutral"
+    );
+}
+
+/** Nhãn cấp độ Marugoto để hiển thị badge trình độ. */
+const MARUGOTO_LABEL: Record<MarugotoLevel, string> = {
+    STARTER_A1: "A1 · Nhập môn",
+    ELEMENTARY_1_A2: "A2.1 · Sơ cấp 1",
+    ELEMENTARY_2_A2: "A2.2 · Sơ cấp 2",
+    PRE_INTERMEDIATE_A2_B1: "A2/B1 · Tiền trung cấp",
+    INTERMEDIATE_1_B1: "B1.1 · Trung cấp 1",
+    INTERMEDIATE_2_B1: "B1.2 · Trung cấp 2",
+};
+
+export function marugotoLabel(
+    level: MarugotoLevel | null | undefined,
+): string {
+    return level ? MARUGOTO_LABEL[level] : "";
+}
+
+/** Danh sách cấp độ Marugoto để dựng dropdown (đúng thứ tự). */
+export const MARUGOTO_LEVELS = Object.keys(
+    MARUGOTO_LABEL,
+) as MarugotoLevel[];
+
+export const DEFAULT_MARUGOTO: MarugotoLevel = "STARTER_A1";
 
 export const COMPANIONS: Companion[] = [
     {
@@ -13,6 +63,9 @@ export const COMPANIONS: Companion[] = [
             "Nhẹ nhàng, thân thiện, tập trung giao tiếp hàng ngày và sửa ngữ pháp.",
         level: "Tất cả",
         accent: "bg-bgc-highlight/15 text-bgc-highlight",
+        matchKeyword: "sakura",
+        defaultFormality: "NEUTRAL",
+        defaultMarugotoLevel: "STARTER_A1",
     },
     {
         id: "kenji",
@@ -22,6 +75,9 @@ export const COMPANIONS: Companion[] = [
             "Chuyên nghiệp, hội thoại kỹ thuật, mô phỏng họp văn phòng Nhật.",
         level: "N3 – N1",
         accent: "bg-sky-500/15 text-sky-600 dark:text-sky-300",
+        matchKeyword: "kenji",
+        defaultFormality: "NEUTRAL",
+        defaultMarugotoLevel: "PRE_INTERMEDIATE_A2_B1",
     },
     {
         id: "yuki",
@@ -30,6 +86,9 @@ export const COMPANIONS: Companion[] = [
         description: "Nghiêm khắc, phỏng vấn chuẩn, hỏi các câu hành vi khó.",
         level: "N2 – N1",
         accent: "bg-amber-500/15 text-amber-600 dark:text-amber-300",
+        matchKeyword: "yuki",
+        defaultFormality: "FORMAL",
+        defaultMarugotoLevel: "INTERMEDIATE_2_B1",
     },
     {
         id: "tanaka",
@@ -39,6 +98,9 @@ export const COMPANIONS: Companion[] = [
             "Keigo trang trọng, mô phỏng đàm phán và thảo luận kinh doanh.",
         level: "N1",
         accent: "bg-violet-500/15 text-violet-600 dark:text-violet-300",
+        matchKeyword: "tanaka",
+        defaultFormality: "FORMAL",
+        defaultMarugotoLevel: "INTERMEDIATE_2_B1",
     },
 ];
 
@@ -46,77 +108,66 @@ export function getCompanion(id: string): Companion {
     return COMPANIONS.find((c) => c.id === id) ?? COMPANIONS[0];
 }
 
-export const INITIAL_MESSAGES: ChatMessage[] = [
-    {
-        id: "m1",
-        role: "ai",
-        jp: "こんにちは！今日はどんな話をしましょうか？",
-        furigana: "こんにちは！きょうはどんなはなしをしましょうか？",
-        vi: "Xin chào! Hôm nay chúng ta nói về chủ đề gì nhỉ?",
-        grammar:
-            "「〜ましょうか」là cách rủ rê lịch sự, dùng khi đề xuất cùng làm gì đó với người nghe.",
-        timestamp: "09:00",
-    },
-    {
-        id: "m2",
-        role: "user",
-        text: "今日は仕事の話したい。",
-        correction: {
-            fixedJp: "今日は仕事の話をしたいです。",
-            errorVi:
-                "Thiếu trợ từ「を」sau danh từ và thiếu thể lịch sự「です」.",
-        },
-        timestamp: "09:01",
-    },
-    {
-        id: "m3",
-        role: "ai",
-        jp: "いいですね！どんなお仕事をされていますか？",
-        furigana: "いいですね！どんなおしごとをされていますか？",
-        vi: "Hay quá! Bạn đang làm công việc gì vậy?",
-        grammar:
-            "「されています」là thể tôn kính (Sonkeigo) của「しています」, dùng khi hỏi về việc của người khác.",
-        timestamp: "09:01",
-    },
+/**
+ * Hybrid: giữ metadata UI đẹp ở FE, nhưng gắn personaId thật lấy từ GET /personas.
+ * Khớp theo `matchKeyword` xuất hiện trong tên persona (không phân biệt hoa/thường).
+ * Persona nào không khớp companion nào sẽ được thêm mới với metadata mặc định.
+ */
+export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
+    const used = new Set<number>();
+
+    const mapped = COMPANIONS.map((c) => {
+        const match = personas.find(
+            (p) =>
+                !used.has(p.id) &&
+                p.name?.toLowerCase().includes(c.matchKeyword),
+        );
+        if (match) used.add(match.id);
+        return {
+            ...c,
+            personaId: match ? match.id : null,
+            // Ưu tiên thể lịch sự + cấp độ từ BE, thiếu thì mặc định companion.
+            defaultFormality:
+                match?.conversationStyle?.formalityLevel ??
+                c.defaultFormality ??
+                DEFAULT_FORMALITY,
+            defaultMarugotoLevel:
+                match?.conversationStyle?.marugotoLevel ??
+                c.defaultMarugotoLevel ??
+                DEFAULT_MARUGOTO,
+        };
+    });
+
+    // Persona chưa khớp companion nào → dựng thẻ từ dữ liệu BE (mô tả + cấp độ).
+    const extras: Companion[] = personas
+        .filter((p) => !used.has(p.id))
+        .map((p, i) => ({
+            id: `persona-${p.id}`,
+            name: p.name,
+            role: "AI Companion",
+            description: p.conversationStyle?.description ?? "",
+            level: marugotoLabel(p.conversationStyle?.marugotoLevel),
+            accent: EXTRA_ACCENTS[i % EXTRA_ACCENTS.length],
+            matchKeyword: "",
+            personaId: p.id,
+            defaultFormality:
+                p.conversationStyle?.formalityLevel ?? DEFAULT_FORMALITY,
+            defaultMarugotoLevel:
+                p.conversationStyle?.marugotoLevel ?? DEFAULT_MARUGOTO,
+        }));
+
+    return [...mapped, ...extras];
+}
+
+const EXTRA_ACCENTS = [
+    "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300",
+    "bg-rose-500/15 text-rose-600 dark:text-rose-300",
+    "bg-indigo-500/15 text-indigo-600 dark:text-indigo-300",
 ];
 
-export const AI_FOLLOWUPS: AiChatMessage[] = [
-    {
-        id: "f1",
-        role: "ai",
-        jp: "なるほど、面白そうですね。もう少し詳しく教えてください。",
-        furigana:
-            "なるほど、おもしろそうですね。もうすこしくわしくおしえてください。",
-        vi: "Ra vậy, nghe thú vị nhỉ. Bạn có thể kể chi tiết hơn không?",
-        grammar:
-            "「〜てください」là cách nhờ lịch sự. Thêm「もう少し」để đề nghị mềm mại hơn.",
-        timestamp: "—",
-    },
-    {
-        id: "f2",
-        role: "ai",
-        jp: "そのプロジェクトはいつから始まりましたか？",
-        furigana: "そのプロジェクトはいつからはじまりましたか？",
-        vi: "Dự án đó bắt đầu từ khi nào vậy?",
-        grammar: "「いつから」+ động từ quá khứ để hỏi mốc thời gian bắt đầu.",
-        timestamp: "—",
-    },
-    {
-        id: "f3",
-        role: "ai",
-        jp: "チームには何人いますか？",
-        furigana: "チームにはなんにんいますか？",
-        vi: "Trong team có bao nhiêu người?",
-        grammar:
-            "「何人」là lượng từ hỏi số lượng người, đi với「います」(có/tồn tại).",
-        timestamp: "—",
-    },
-];
-
+/** Gợi ý câu trả lời tĩnh (helper UX, không phải dữ liệu từ BE). */
 export const DEFAULT_SUGGESTIONS = [
     "はい、わかりました",
-    "プロジェクトの進捗について話したいです",
     "自己紹介をさせていただきます",
+    "もう一度お願いします",
 ];
-
-export const MOCK_STT_INPUT = "プロジェクトの進捗はどうですか。";

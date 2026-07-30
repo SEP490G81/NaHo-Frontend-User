@@ -22,7 +22,9 @@ export function AudioVisualizer({ stream, isRecording }: AudioVisualizerProps) {
 
         // Set up Web Audio API nodes
         const AudioContextClass =
-            window.AudioContext || (window as any).webkitAudioContext;
+            window.AudioContext ||
+            (window as unknown as { webkitAudioContext: typeof AudioContext })
+                .webkitAudioContext;
         const audioCtx = new AudioContextClass();
         audioCtxRef.current = audioCtx;
 

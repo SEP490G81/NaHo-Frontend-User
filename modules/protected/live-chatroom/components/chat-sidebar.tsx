@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { LogOut } from "lucide-react";
-import { toast } from "react-toastify";
+import { Lightbulb, Loader2, LogOut } from "lucide-react";
 import {
     Avatar,
     Button,
@@ -13,55 +12,49 @@ import {
     Slider,
     Switch,
 } from "@mui/material";
-import { getCompanion } from "../constants/live-chatroom.constant";
-import { getInitials } from "../utils/get-initials";
-import { useChatStore } from "@/store/chatStore";
-import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import type { Companion } from "../types/live-chatroom.type";
+import { getInitials } from "../utils/get-initials";
+import { styleKeyOf } from "../constants/live-chatroom.constant";
+import type { FormalityLevel } from "@/types/responses/persona.response";
 
 interface ChatSidebarProps {
-    showFurigana: boolean;
-    onToggleFurigana: (v: boolean) => void;
-    autoTranslate: boolean;
-    onToggleAutoTranslate: (v: boolean) => void;
+    companion: Companion;
+    conversationStyle: FormalityLevel;
+    voiceSpeed: number;
+    onVoiceSpeedChange: (v: number) => void;
+    showHints: boolean;
+    onShowHintsChange: (v: boolean) => void;
+    onEndSession: () => void;
+    ending: boolean;
     isMobile?: boolean;
     onCloseMobile?: () => void;
 }
 
 export function ChatSidebar({
-    showFurigana,
-    onToggleFurigana,
-    autoTranslate,
-    onToggleAutoTranslate,
-    isMobile = false,
+    companion,
+    conversationStyle,
+    voiceSpeed,
+    onVoiceSpeedChange,
+    showHints,
+    onShowHintsChange,
+    onEndSession,
+    ending,
     onCloseMobile,
 }: ChatSidebarProps) {
     const t = useTranslations("liveChatroom");
-    const router = useRouter();
-    const config = useChatStore((s) => s.config);
-    const setConfig = useChatStore((s) => s.setConfig);
-    const reset = useChatStore((s) => s.reset);
-
-    const companion = getCompanion(config?.companionId ?? "sakura");
-    const [speed, setSpeed] = useState(config?.voiceSpeed ?? 1);
+    const ts = useTranslations("dialogueSetup");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const handleSpeedChange = (event: Event, newValue: number | number[]) => {
-        const next = Array.isArray(newValue) ? newValue[0] : newValue;
-        setSpeed(newValue as number);
-        if (config) setConfig({ ...config, voiceSpeed: next });
-    };
-
-    const handleEnd = () => {
-        reset();
-        toast.success(t("toastEndSuccess"));
+    const handleConfirmEnd = () => {
         setIsDialogOpen(false);
         if (onCloseMobile) onCloseMobile();
-        router.push("/dialogue-setup");
+        onEndSession();
     };
 
     return (
         <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-5 border-r p-5">
+            {/* Companion */}
             <div className="flex flex-col items-center gap-2 text-center">
                 <Avatar
                     className={`h-16 w-16 ${companion.accent} text-lg font-semibold`}
@@ -72,27 +65,44 @@ export function ChatSidebar({
                     <div className="text-text-contrast text-sm font-semibold">
                         {companion.name}
                     </div>
-                    <span className="bg-bgc-highlight/15 text-bgc-highlight mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium">
-                        {companion.role}
+                    {companion.role && (
+                        <div className="text-text-muted text-xs">
+                            {companion.role}
+                        </div>
+                    )}
+                    <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-300">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        {t("online")}
                     </span>
                 </div>
             </div>
 
+            {/* Style hội thoại */}
+            <div className="border-bdc-primary space-y-1.5 border-t pt-4">
+                <span className="text-text-muted text-[11px] font-bold tracking-[0.12em] uppercase">
+                    {ts("styleLabel")}
+                </span>
+                <div className="bg-bgc-highlight/10 text-bgc-highlight inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-semibold">
+                    {ts(`style_${styleKeyOf(conversationStyle)}`)}
+                </div>
+            </div>
+
+            {/* Tốc độ nói */}
             <div className="border-bdc-primary space-y-2 border-t pt-4">
                 <div className="flex items-center justify-between">
                     <span className="text-text-contrast text-xs font-medium">
                         {t("speedLabel")}
                     </span>
                     <span className="bg-bgc-page text-bgc-highlight rounded-md px-2 py-0.5 text-xs font-semibold">
-                        {speed.toFixed(1)}x
+                        {voiceSpeed.toFixed(1)}x
                     </span>
                 </div>
                 <Slider
-                    value={speed}
+                    value={voiceSpeed}
                     min={0.8}
                     max={1.5}
                     step={0.1}
-                    onChange={handleSpeedChange}
+                    onChange={(_e, v) => onVoiceSpeedChange(v as number)}
                     color="primary"
                 />
                 <div className="text-text-muted flex justify-between text-[10px]">
@@ -101,41 +111,42 @@ export function ChatSidebar({
                 </div>
             </div>
 
-            <div className="border-bdc-primary space-y-3 border-t pt-4">
-                <label className="flex cursor-pointer items-center justify-between gap-3">
-                    <span className="text-text-contrast text-sm">
-                        {t("furiganaToggle")}
+            {/* Gợi ý câu trả lời */}
+            <label className="border-bdc-primary bg-bgc-page/40 flex cursor-pointer items-start justify-between gap-3 rounded-xl border p-3">
+                <span className="flex-1">
+                    <span className="text-text-contrast flex items-center gap-1.5 text-sm font-medium">
+                        <Lightbulb className="text-bgc-highlight h-3.5 w-3.5" />
+                        {ts("hintsTitle")}
                     </span>
-                    <Switch
-                        checked={showFurigana}
-                        onChange={(e) => onToggleFurigana(e.target.checked)}
-                        color="primary"
-                    />
-                </label>
-                <label className="flex cursor-pointer items-center justify-between gap-3">
-                    <span className="text-text-contrast text-sm">
-                        {t("translateToggle")}
+                    <span className="text-text-muted mt-0.5 block text-xs">
+                        {ts("hintsDesc")}
                     </span>
-                    <Switch
-                        checked={autoTranslate}
-                        onChange={(e) =>
-                            onToggleAutoTranslate(e.target.checked)
-                        }
-                        color="primary"
-                    />
-                </label>
-            </div>
+                </span>
+                <Switch
+                    checked={showHints}
+                    onChange={(e) => onShowHintsChange(e.target.checked)}
+                    color="primary"
+                />
+            </label>
 
+            {/* End */}
             <div className="border-bdc-primary mt-auto border-t pt-4">
                 <Button
                     variant="outlined"
                     color="error"
                     fullWidth
+                    disabled={ending}
                     onClick={() => setIsDialogOpen(true)}
                     className="!h-10 !rounded-lg font-bold capitalize"
-                    startIcon={<LogOut className="h-4 w-4" />}
+                    startIcon={
+                        ending ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                            <LogOut className="h-4 w-4" />
+                        )
+                    }
                 >
-                    {t("endChatButton")}
+                    {ending ? t("ending") : t("endChatButton")}
                 </Button>
             </div>
 
@@ -165,7 +176,7 @@ export function ChatSidebar({
                         {t("endChatModal.cancel")}
                     </Button>
                     <Button
-                        onClick={handleEnd}
+                        onClick={handleConfirmEnd}
                         variant="contained"
                         color="error"
                         className="!rounded-lg !px-4 !font-bold capitalize hover:opacity-90"

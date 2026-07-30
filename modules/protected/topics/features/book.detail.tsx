@@ -66,17 +66,15 @@ export function BookDetail() {
         (topics.length > 0 && topicDetailQs.some((q) => q.isLoading));
 
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-6xl">
-                {bookQ.isError ? (
-                    <NotFoundView />
-                ) : book && !loading ? (
-                    <TopicRoadmap book={book} />
-                ) : (
-                    <LoadingState />
-                )}
-            </div>
-        </div>
+        <>
+            {bookQ.isError ? (
+                <NotFoundView />
+            ) : book && !loading ? (
+                <TopicRoadmap book={book} />
+            ) : (
+                <LoadingState />
+            )}
+        </>
     );
 }
 

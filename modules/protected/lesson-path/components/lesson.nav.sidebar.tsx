@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { BookOpen, Check, Lock } from "lucide-react";
+import { Check, Lock, BookOpen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import FuriganaText from "@/components/ui/furigana.text";
@@ -26,14 +26,14 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
     return (
         <aside className="sticky top-24 space-y-4">
             <div className="border-bdc-primary/60 bg-bgc-app/95 rounded-2xl border p-4 shadow-sm backdrop-blur-md">
-                <div className="border-bdc-primary/30 mb-3 flex items-center gap-2 border-b pb-2.5">
+                <div className="mb-3 flex items-center gap-2 border-b border-bdc-primary/30 pb-2.5">
                     <BookOpen className="h-4 w-4" style={{ color: accent }} />
                     <h3 className="text-text-contrast text-xs font-bold tracking-wider uppercase">
-                        {t("path.lessonOutline") ?? "Mục lục bài học"}
+                        {t("path.lessonOutline")}
                     </h3>
                 </div>
 
-                <nav className="max-h-[calc(100vh-220px)] space-y-2 overflow-y-auto pr-1">
+                <nav className="space-y-2 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
                     {groups.map((g) => {
                         const { lesson, status } = g;
                         const completed = status === "completed";
@@ -47,10 +47,10 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                                 className={cn(
                                     "flex w-full items-center justify-between gap-2.5 rounded-xl px-3 py-2.5 text-left text-xs font-medium transition-all",
                                     completed
-                                        ? "text-text-success bg-emerald-500/10 hover:bg-emerald-500/15"
+                                        ? "bg-emerald-500/10 text-text-success hover:bg-emerald-500/15"
                                         : locked
-                                          ? "text-text-muted hover:bg-bgc-page/50 opacity-70"
-                                          : "bg-bgc-page text-text-contrast border-bdc-primary/50 hover:border-bdc-primary border shadow-xs",
+                                            ? "text-text-muted hover:bg-bgc-page/50 opacity-70"
+                                            : "bg-bgc-page text-text-contrast border-bdc-primary/50 border shadow-xs hover:border-bdc-primary",
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
@@ -59,7 +59,7 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                                             number: lesson.order,
                                         })}
                                     </p>
-                                    <div className="mt-0.5 truncate text-xs leading-tight font-bold">
+                                    <div className="truncate text-xs font-bold leading-tight mt-0.5">
                                         {lesson.furiganaMarkup ? (
                                             <FuriganaMarkup
                                                 markup={lesson.furiganaMarkup}
@@ -84,10 +84,10 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                                             />
                                         </span>
                                     ) : locked ? (
-                                        <Lock className="text-text-muted h-3.5 w-3.5" />
+                                        <Lock className="h-3.5 w-3.5 text-text-muted" />
                                     ) : (
                                         <span
-                                            className="inline-block h-2.5 w-2.5 animate-pulse rounded-full"
+                                            className="h-2.5 w-2.5 rounded-full animate-pulse inline-block"
                                             style={{ background: accent }}
                                         />
                                     )}
