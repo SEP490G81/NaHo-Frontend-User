@@ -22,7 +22,7 @@ export function LeagueRail({
     myLeagueId,
     totalPoint,
     onSelect,
-}: LeagueRailProps) {
+}: Readonly<LeagueRailProps>) {
     const t = useTranslations("leaderboard");
     const activeRef = useRef<HTMLDivElement>(null);
 
@@ -35,32 +35,27 @@ export function LeagueRail({
     }, [activeLeagueId]);
 
     return (
-        <aside className="border-bdc-primary bg-bgc-app rounded-2xl border p-3 lg:sticky lg:top-4 lg:self-start">
-            <p className="text-text-muted px-1 pb-2 text-[11px] font-bold tracking-wide uppercase">
-                {t("railTitle", { count: leagues.length })}
-            </p>
-            <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
-                {leagues.map((league) => {
-                    const isActive = league.id === activeLeagueId;
-                    return (
-                        <div
-                            key={league.id}
-                            ref={isActive ? activeRef : null}
-                            className="shrink-0 lg:shrink"
-                        >
-                            <LeagueTabItem
-                                league={league}
-                                isActive={isActive}
-                                isMine={league.id === myLeagueId}
-                                isLocked={league.minPoint > totalPoint}
-                                onSelect={onSelect}
-                                className="h-full lg:w-full"
-                            />
-                        </div>
-                    );
-                })}
-            </div>
-        </aside>
+        <div className="space-y-3">
+            {leagues.map((league) => {
+                const isActive = league.id === activeLeagueId;
+                return (
+                    <div
+                        key={league.id}
+                        ref={isActive ? activeRef : null}
+                        className="bg-bgc-app shrink-0 rounded-xl"
+                    >
+                        <LeagueTabItem
+                            league={league}
+                            isActive={isActive}
+                            isMine={league.id === myLeagueId}
+                            isLocked={league.minPoint > totalPoint}
+                            onSelect={onSelect}
+                            className="h-full min-w-60 cursor-pointer lg:w-full"
+                        />
+                    </div>
+                );
+            })}
+        </div>
     );
 }
 

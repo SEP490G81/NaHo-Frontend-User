@@ -200,18 +200,19 @@ input::-ms-clear {
     --toast-accent: var(--color-bgc-highlight);
     background: color-mix(in srgb, var(--toast-accent) 7%, var(--color-bgc-app)) !important;
     color: var(--color-text-contrast) !important;
-    border: 1px solid
-        color-mix(in srgb, var(--toast-accent) 22%, var(--color-bdc-primary)) !important;
+    border: 1px solid color-mix(in srgb, var(--toast-accent) 22%, var(--color-bdc-primary)) !important;
     border-left: 5px solid var(--toast-accent) !important;
     border-radius: 14px !important;
     box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.18),
-        0 4px 10px -4px rgba(0, 0, 0, 0.08) !important;
+    0 4px 10px -4px rgba(0, 0, 0, 0.08) !important;
     font-family: var(--app-font), sans-serif !important;
     padding: 16px 18px !important;
 }
+
 .Toastify__toast-body {
     font-weight: 500 !important;
 }
+
 .Toastify__toast-icon {
     width: 22px !important;
     margin-inline-end: 12px !important;

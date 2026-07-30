@@ -25,7 +25,7 @@
                 "topicDetail": "Topic Detail",
                 "lessonPath": "Lộ trình bài học",
                 "sandbox": "Speaking Room",
-                "history": "Practice History",
+                "history": "Lịch sử luyện nói theo sách",
                 "historyDetail": "Detailed Report",
                 "custom-question": "Custom Questions",
                 "sandbox-custom": "Custom Practice Room",
@@ -62,6 +62,8 @@
                 "accountMenu": {
                     "settings": "Cài đặt",
                     "orders": "Lịch sử giao dịch",
+                    "pointHistory": "Lịch sử nhận điểm",
+                    "speakingHistory": "Lịch sử luyện nói theo sách",
                     "language": "Ngôn ngữ",
                     "getHelp": "Trợ giúp",
                     "report": "Báo cáo"

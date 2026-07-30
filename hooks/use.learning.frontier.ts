@@ -22,7 +22,8 @@ export function useLearningFrontier(): {
 
     const progress = progressQ.data;
     const knownIndex = progress?.farthestAvailableNodeGlobalOrderIndex ?? null;
-    const fallbackId = knownIndex == null ? (progress?.farthestAvailableNodeId ?? 0) : 0;
+    const fallbackId =
+        knownIndex == null ? (progress?.farthestAvailableNodeId ?? 0) : 0;
 
     const nodeQ = useQuery({
         queryKey: ["learning-node", fallbackId],

@@ -34,7 +34,11 @@ const DailyRewardCalendarHeader = ({
                     </span>
                 </div>
 
-                <TooltipCustom title={t("close")}>
+                <TooltipCustom
+                    title={t("close")}
+                    color="--color-hbgc-error"
+                    textColor="#ffffff"
+                >
                     <IconButton
                         onClick={handleClose}
                         sx={{

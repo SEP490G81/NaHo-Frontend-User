@@ -1,10 +1,6 @@
 import { CreatePaymentRequest } from "@/types/requests/payment.request";
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    CancelPaymentResponse,
-    CreatePaymentResponse,
-    PaymentOrderResponse,
-} from "@/types/responses/payment.response";
+import { CancelPaymentResponse, CreatePaymentResponse, PaymentOrderResponse } from "@/types/responses/payment.response";
 
 /**
  * Tạo lệnh thanh toán VNPAY với Idempotency-Key bắt buộc.
@@ -27,7 +23,9 @@ export async function createPaymentOrder(
     if (!response.ok) {
         const problem = result as ProblemDetail;
         throw new Error(
-            problem.detail || result.message || "Không thể tạo giao dịch thanh toán.",
+            problem.detail ||
+                result.message ||
+                "Không thể tạo giao dịch thanh toán.",
         );
     }
 
@@ -52,7 +50,9 @@ export async function getMyPaymentOrders(): Promise<PaymentOrderResponse[]> {
     if (!response.ok) {
         const problem = result as ProblemDetail;
         throw new Error(
-            problem.detail || result.message || "Không thể lấy danh sách hóa đơn thanh toán.",
+            problem.detail ||
+                result.message ||
+                "Không thể lấy danh sách hóa đơn thanh toán.",
         );
     }
 
@@ -78,11 +78,12 @@ export async function cancelPaymentOrder(
     if (!response.ok) {
         const problem = result as ProblemDetail;
         throw new Error(
-            problem.detail || result.message || "Không thể hủy giao dịch thanh toán.",
+            problem.detail ||
+                result.message ||
+                "Không thể hủy giao dịch thanh toán.",
         );
     }
 
     const api = result as ApiResponse<CancelPaymentResponse>;
     return api.data ?? (result as CancelPaymentResponse);
 }
-

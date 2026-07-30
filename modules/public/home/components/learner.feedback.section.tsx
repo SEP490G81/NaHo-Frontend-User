@@ -6,6 +6,8 @@ import Reveal from "@/modules/public/home/components/reveal";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import { useTranslations } from "next-intl";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 const LearnerFeedbackSection = () => {
     const t = useTranslations();
     return (
@@ -31,9 +33,9 @@ const LearnerFeedbackSection = () => {
                     className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3"
                 >
                     {TESTIMONIAL_ITEMS.map((item) => (
-                        <div
+                        <ContainerBox
                             key={item.id}
-                            className="border-bdc-primary bg-bgc-app/60 flex flex-col rounded-2xl border p-6 shadow-[0_8px_30px_-12px_rgba(255,153,172,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_rgba(255,153,172,0.45)]"
+                            className="border-bdc-primary bg-bgc-app/60 flex flex-col border shadow-[0_8px_30px_-12px_rgba(255,153,172,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-15px_rgba(255,153,172,0.45)]"
                         >
                             <FormatQuoteIcon className="text-bgc-highlight rotate-180" />
                             <p className="text-text-contrast mt-3 flex-1 text-sm leading-relaxed">
@@ -62,7 +64,7 @@ const LearnerFeedbackSection = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ContainerBox>
                     ))}
                 </Reveal>
             </div>

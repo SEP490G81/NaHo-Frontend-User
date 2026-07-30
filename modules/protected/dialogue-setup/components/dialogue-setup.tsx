@@ -62,7 +62,7 @@ export function DialogueSetup() {
     };
 
     return (
-        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+        <div>
             {/* Hero */}
             <header className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
                 <span

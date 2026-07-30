@@ -11,10 +11,10 @@ interface DimensionMeterProps {
 
 export function DimensionMeter({ label, score, color }: DimensionMeterProps) {
     return (
-        <div className="space-y-1.5 w-full">
+        <div className="w-full space-y-1.5">
             <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-text-contrast">{label}</span>
-                <span className="font-semibold tabular-nums text-text-contrast">
+                <span className="text-text-contrast font-medium">{label}</span>
+                <span className="text-text-contrast font-semibold tabular-nums">
                     {score}
                     <span className="text-text-muted">/100</span>
                 </span>
@@ -22,7 +22,7 @@ export function DimensionMeter({ label, score, color }: DimensionMeterProps) {
             <LinearProgress
                 variant="determinate"
                 value={score}
-                className="h-2 rounded-full bg-bgc-page [&_.MuiLinearProgress-bar]:rounded-full"
+                className="bg-bgc-page h-2 rounded-full [&_.MuiLinearProgress-bar]:rounded-full"
                 sx={{
                     "& .MuiLinearProgress-bar": {
                         backgroundColor: color ?? "var(--color-bgc-highlight)",

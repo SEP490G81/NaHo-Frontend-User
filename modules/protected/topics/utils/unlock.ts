@@ -28,13 +28,18 @@ interface NodeRange {
  */
 function rangeStatus(r: NodeRange, frontier: number | null): NodeStatus {
     if (frontier == null || r.firstNodeOrder == null) return "active";
-    if (r.lastNodeOrder != null && r.lastNodeOrder < frontier) return "completed";
+    if (r.lastNodeOrder != null && r.lastNodeOrder < frontier)
+        return "completed";
     return r.firstNodeOrder <= frontier ? "active" : "locked";
 }
 
 /** Phần trăm hoàn thành của khối, suy từ vị trí mốc trong dải node của khối. */
 function rangePercent(r: NodeRange, frontier: number | null): number {
-    if (frontier == null || r.firstNodeOrder == null || r.lastNodeOrder == null) {
+    if (
+        frontier == null ||
+        r.firstNodeOrder == null ||
+        r.lastNodeOrder == null
+    ) {
         return 0;
     }
     const total = r.lastNodeOrder - r.firstNodeOrder + 1;

@@ -20,8 +20,8 @@ export async function generateMetadata({
     };
 }
 
-const HistoryDetailPage = () => {
+const SpeakingHistoryDetailPage = () => {
     return <HistoryDetail />;
 };
 
-export default HistoryDetailPage;
+export default SpeakingHistoryDetailPage;

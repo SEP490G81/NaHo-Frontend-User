@@ -33,7 +33,12 @@ function SortHead({
     tooltip: string;
 }) {
     return (
-        <th className={cn("px-4 py-3", align === "right" ? "text-right" : "text-left")}>
+        <th
+            className={cn(
+                "px-4 py-3",
+                align === "right" ? "text-right" : "text-left",
+            )}
+        >
             <button
                 type="button"
                 onClick={onClick}
@@ -61,7 +66,12 @@ function SortHead({
 }
 
 /** Bảng lịch sử điểm với 2 cột sắp xếp được (Thời gian · Điểm). */
-export function PointHistoryTable({ rows, sortColumn, sortDirection, onSort }: Props) {
+export function PointHistoryTable({
+    rows,
+    sortColumn,
+    sortDirection,
+    onSort,
+}: Props) {
     const t = useTranslations("pointHistory");
 
     return (
@@ -123,7 +133,9 @@ export function PointHistoryTable({ rows, sortColumn, sortDirection, onSort }: P
                                 <td
                                     className={cn(
                                         "px-4 py-3.5 text-right font-bold tabular-nums",
-                                        positive ? "text-text-success" : "text-bgc-error",
+                                        positive
+                                            ? "text-text-success"
+                                            : "text-bgc-error",
                                     )}
                                 >
                                     {positive ? "+" : ""}

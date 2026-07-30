@@ -31,7 +31,9 @@ export function TranscriptView({
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
                     <MessageSquare
                         className="h-4 w-4"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     {t("yourSpeech")}
                 </h3>
@@ -93,7 +95,9 @@ export function TranscriptView({
             <div className="border-bdc-primary bg-bgc-app space-y-4 rounded-2xl border p-5">
                 <h3
                     className="flex items-center gap-2 text-sm font-semibold"
-                    style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                    style={{
+                        color: "var(--book-accent, var(--color-bgc-highlight))",
+                    }}
                 >
                     <CheckCircle2 className="h-4 w-4" />
                     {t("aiCorrection")}
@@ -130,7 +134,9 @@ export function TranscriptView({
                         >
                             <h4
                                 className="text-xs font-semibold tracking-wide uppercase"
-                                style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                                style={{
+                                    color: "var(--book-accent, var(--color-bgc-highlight))",
+                                }}
                             >
                                 {t("aiDetailedExplanation")}
                             </h4>

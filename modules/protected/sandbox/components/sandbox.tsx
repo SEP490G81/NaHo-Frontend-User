@@ -139,7 +139,7 @@ function SandboxContent() {
             if (bookParam) ctx.set("book", bookParam);
             if (topicParam) ctx.set("topic", topicParam);
             const qs = ctx.toString();
-            push(`/history/${result.historyId}${qs ? `?${qs}` : ""}`);
+            push(`/speaking-history/${result.historyId}${qs ? `?${qs}` : ""}`);
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
@@ -163,7 +163,7 @@ function SandboxContent() {
             ? `/books/${bookParam}/topics/${topicParam}`
             : bookParam
               ? `/books/${bookParam}`
-              : "/history";
+              : "/speaking-history";
 
     const handleAnalyze = async () => {
         if (!audioUrl) return;

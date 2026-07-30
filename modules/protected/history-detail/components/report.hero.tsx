@@ -59,14 +59,13 @@ export function ReportHero({
                     <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
                         {t("reportTitle")}
                     </h1>
-                    <p className="text-text-muted text-sm">{t("reportSubtitle")}</p>
+                    <p className="text-text-muted text-sm">
+                        {t("reportSubtitle")}
+                    </p>
                 </div>
             </div>
 
-            <div
-                className="border-t pt-5"
-                style={{ borderColor: softBorder }}
-            >
+            <div className="border-t pt-5" style={{ borderColor: softBorder }}>
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
                     <div className="flex shrink-0 justify-center">
                         <ScoreGauge score={average} color={accent} />
@@ -118,11 +117,19 @@ export function ReportHero({
                 </div>
 
                 {audioUrl && (
-                    <div className="mt-5 border-t pt-4" style={{ borderColor: softBorder }}>
+                    <div
+                        className="mt-5 border-t pt-4"
+                        style={{ borderColor: softBorder }}
+                    >
                         <p className="text-text-contrast mb-2 text-sm font-semibold">
                             {t("yourSpeech")}
                         </p>
-                        <audio controls src={audioUrl} className="w-full" preload="none" />
+                        <audio
+                            controls
+                            src={audioUrl}
+                            className="w-full"
+                            preload="none"
+                        />
                     </div>
                 )}
             </div>

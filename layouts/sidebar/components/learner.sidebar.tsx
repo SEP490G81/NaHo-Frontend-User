@@ -69,7 +69,7 @@ export function LearnerSidebar() {
             </div>
 
             {/* Menu items */}
-            <Box className="flex-1 overflow-y-auto py-4">
+            <Box className="flex flex-1 flex-col justify-between overflow-y-auto py-4">
                 <List
                     disablePadding
                     className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}
@@ -80,13 +80,15 @@ export function LearnerSidebar() {
                             item={item}
                             pathname={pathname}
                             isCollapsed={isCollapsed}
-                            isOpen={!!openSubMenus[item.title]}
+                            isOpen={openSubMenus[item.title]}
                             onToggleSubMenu={() => toggleSubMenu(item.title)}
                             onCloseSidebar={closeSidebar}
                             toggleSidebarCollapse={toggleSidebarCollapse}
                         />
                     ))}
                 </List>
+
+                <div className="">Hello</div>
             </Box>
         </>
     );

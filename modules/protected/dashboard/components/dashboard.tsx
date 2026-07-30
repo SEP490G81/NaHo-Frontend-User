@@ -13,14 +13,14 @@ export function Dashboard() {
     const t = useTranslations("dashboard");
 
     return (
-        <div className="mx-auto max-w-7xl space-y-6 pb-10">
+        <div className="mx-auto max-w-7xl space-y-5 pb-10">
             {/* 1. Hero Command Center (Greeting, Goal progress, Quick Resume CTA) */}
             <WelcomeBanner name={currentLearner.name} t={t} />
 
             {/* 2. Main Dashboard Grid (Left 2 cols, Right 1 col) */}
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-5 lg:grid-cols-3">
                 {/* Left Area (2 Columns) */}
-                <div className="space-y-6 lg:col-span-2">
+                <div className="space-y-5 lg:col-span-2">
                     {/* Interactive Vocab Challenge */}
                     <DailyVocabQuiz />
 
@@ -29,7 +29,7 @@ export function Dashboard() {
                 </div>
 
                 {/* Right Sidebar (1 Column) */}
-                <div className="space-y-6 lg:col-span-1">
+                <div className="space-y-5 lg:col-span-1">
                     {/* Kanji Inspiration Quote */}
                     <KanjiQuoteCard />
 

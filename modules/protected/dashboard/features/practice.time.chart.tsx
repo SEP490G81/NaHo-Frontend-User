@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-    AreaChart,
     Area,
+    AreaChart,
     CartesianGrid,
     ResponsiveContainer,
     Tooltip,
@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { dailyPractice } from "@/data/mockLearnerDashboard";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { CHART_COLOR, CHART_HOVER_FILL } from "../constants/dashboard.constant";
+import { ContainerBox } from "@/components/ui/container.box";
 
 export function PracticeTimeChart() {
     const t = useTranslations("dashboard");
@@ -24,51 +24,59 @@ export function PracticeTimeChart() {
         setMounted(true);
     }, []);
 
-    const totalMinutes = dailyPractice.reduce((acc, curr) => acc + curr.minutes, 0);
+    const totalMinutes = dailyPractice.reduce(
+        (acc, curr) => acc + curr.minutes,
+        0,
+    );
     const avgMinutes = Math.round(totalMinutes / dailyPractice.length);
 
     if (!mounted) {
         return (
-            <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm">
-                <div className="h-6 w-48 bg-bdc-primary/30 rounded animate-pulse" />
-                <div className="mt-6 flex h-64 w-full items-center justify-center rounded-lg bg-bgc-subtle text-text-muted text-xs">
+            <ContainerBox className="border-bdc-primary border">
+                <div className="bg-bdc-primary/30 h-6 w-48 animate-pulse rounded" />
+                <div className="bg-bgc-subtle text-text-muted mt-6 flex h-64 w-full items-center justify-center rounded-lg text-xs">
                     {t("loadingChart")}
                 </div>
-            </div>
+            </ContainerBox>
         );
     }
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-card p-6 shadow-sm transition-all hover:shadow-md">
+        <ContainerBox className="border-bdc-primary border">
             {/* Header & Quick stats */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h3 className="text-lg font-bold text-text-primary flex items-center gap-2">
-                        <AccessTimeIcon className="text-[#ff758f]" fontSize="small" />
+                    <h3 className="text-text-primary flex items-center gap-2 text-lg font-bold">
+                        <AccessTimeIcon
+                            className="text-[#ff758f]"
+                            fontSize="small"
+                        />
                         {t("chartTitle")}
                     </h3>
-                    <p className="mt-1 text-xs text-text-muted">{t("chartSubtitle")}</p>
+                    <p className="text-text-muted mt-1 text-xs">
+                        {t("chartSubtitle")}
+                    </p>
                 </div>
 
-                <div className="flex items-center gap-4 rounded-xl bg-bgc-subtle p-3 text-xs">
+                <div className="bg-bgc-subtle flex items-center gap-4 rounded-xl p-3 text-xs">
                     <div>
-                        <span className="text-text-muted block text-[10px] uppercase font-semibold">
+                        <span className="text-text-muted block text-[10px] font-semibold uppercase">
                             {t("chartTotal")}
                         </span>
                         <span className="text-sm font-extrabold text-[#ff758f]">
                             {totalMinutes} {t("chartTooltipMinute")}
                         </span>
                     </div>
-                    <div className="h-8 w-px bg-bdc-primary/50" />
+                    <div className="bg-bdc-primary/50 h-8 w-px" />
                     <div>
-                        <span className="text-text-muted block text-[10px] uppercase font-semibold">
+                        <span className="text-text-muted block text-[10px] font-semibold uppercase">
                             {t("chartAvg")}
                         </span>
-                        <span className="text-sm font-extrabold text-text-primary">
+                        <span className="text-text-primary text-sm font-extrabold">
                             {avgMinutes} {t("chartTooltipMinute")}
                         </span>
                     </div>
-                    <div className="h-8 w-px bg-bdc-primary/50" />
+                    <div className="bg-bdc-primary/50 h-8 w-px" />
                     <div className="flex items-center gap-1 font-bold text-emerald-500">
                         <TrendingUpIcon fontSize="small" />
                         <span>{t("chartTrend")}</span>
@@ -84,9 +92,23 @@ export function PracticeTimeChart() {
                         margin={{ top: 12, right: 12, left: -16, bottom: 0 }}
                     >
                         <defs>
-                            <linearGradient id="colorMinutesSakura" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#ff99ac" stopOpacity={0.5} />
-                                <stop offset="95%" stopColor="#ff99ac" stopOpacity={0.0} />
+                            <linearGradient
+                                id="colorMinutesSakura"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+                                <stop
+                                    offset="5%"
+                                    stopColor="#ff99ac"
+                                    stopOpacity={0.5}
+                                />
+                                <stop
+                                    offset="95%"
+                                    stopColor="#ff99ac"
+                                    stopOpacity={0.0}
+                                />
                             </linearGradient>
                         </defs>
                         <CartesianGrid
@@ -111,7 +133,11 @@ export function PracticeTimeChart() {
                             axisLine={false}
                         />
                         <Tooltip
-                            cursor={{ stroke: "#ff758f", strokeWidth: 1.5, strokeDasharray: "4 4" }}
+                            cursor={{
+                                stroke: "#ff758f",
+                                strokeWidth: 1.5,
+                                strokeDasharray: "4 4",
+                            }}
                             contentStyle={{
                                 backgroundColor: "var(--color-bgc-card)",
                                 border: "1px solid #ff99ac",
@@ -124,7 +150,9 @@ export function PracticeTimeChart() {
                                 `${value} ${t("chartTooltipMinute")}`,
                                 t("chartTooltipTime"),
                             ]}
-                            labelFormatter={(label) => t("chartTooltipDay", { label })}
+                            labelFormatter={(label) =>
+                                t("chartTooltipDay", { label })
+                            }
                         />
                         <Area
                             type="monotone"
@@ -133,12 +161,17 @@ export function PracticeTimeChart() {
                             strokeWidth={3}
                             fillOpacity={1}
                             fill="url(#colorMinutesSakura)"
-                            activeDot={{ r: 6, fill: "#ff758f", stroke: "#fff", strokeWidth: 2 }}
+                            activeDot={{
+                                r: 6,
+                                fill: "#ff758f",
+                                stroke: "#fff",
+                                strokeWidth: 2,
+                            }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

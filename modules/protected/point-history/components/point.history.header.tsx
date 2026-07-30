@@ -4,6 +4,8 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
+import { ContainerBox } from "@/components/ui/container.box";
+
 interface Props {
     totalActivities: number;
 }
@@ -13,8 +15,8 @@ export function PointHistoryHeader({ totalActivities }: Props) {
     const t = useTranslations("pointHistory");
 
     return (
-        <div
-            className="overflow-hidden rounded-2xl border shadow-sm"
+        <ContainerBox
+            className="overflow-hidden border shadow-sm"
             style={{
                 borderColor:
                     "color-mix(in srgb, var(--color-bgc-highlight) 26%, var(--color-bdc-primary))",
@@ -22,7 +24,7 @@ export function PointHistoryHeader({ totalActivities }: Props) {
                     "linear-gradient(180deg, color-mix(in srgb, var(--color-bgc-highlight) 10%, var(--color-bgc-app)) 0%, var(--color-bgc-app) 60%)",
             }}
         >
-            <div className="flex flex-col gap-4 p-6">
+            <div className="flex flex-col gap-4">
                 <Link
                     href="/books"
                     className="text-text-muted hover:text-text-contrast inline-flex w-fit items-center gap-1.5 text-sm font-medium"
@@ -46,7 +48,7 @@ export function PointHistoryHeader({ totalActivities }: Props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

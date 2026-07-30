@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { ChevronRight } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/libs/utils";
 import { LeagueResponse } from "@/types/responses/league.response";
 import {
@@ -26,9 +24,8 @@ export function LeagueProgress({
     league,
     nextLeague,
     totalPoint,
-}: LeagueProgressProps) {
+}: Readonly<LeagueProgressProps>) {
     const t = useTranslations("leaderboard");
-    const tp = useTranslations("pointHistory");
     const format = useFormatter();
     const theme = getLeagueTheme(league.name);
     const percent = getLeagueProgressPercent(totalPoint, league);
@@ -71,14 +68,6 @@ export function LeagueProgress({
                       })
                     : t("progress.maxLeague")}
             </p>
-
-            <Link
-                href="/point-history"
-                className="text-text-highlight hover:text-bgc-highlight mt-2 inline-flex items-center gap-0.5 text-xs font-semibold"
-            >
-                {tp("title")}
-                <ChevronRight className="h-3.5 w-3.5" />
-            </Link>
         </div>
     );
 }

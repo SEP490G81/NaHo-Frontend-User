@@ -76,7 +76,9 @@ export function VocabDialog({
                 <div className="flex items-center gap-2">
                     <BookOpen
                         className="h-5 w-5"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     <span className="text-text-contrast text-lg font-bold">
                         {title}
@@ -124,13 +126,18 @@ export function VocabDialog({
                 {onFinish && (
                     <Button
                         onClick={onFinish}
-                        disabled={loading || finishing || finished || !canFinish}
+                        disabled={
+                            loading || finishing || finished || !canFinish
+                        }
                         variant="contained"
-                        startIcon={finished ? <Check className="h-4 w-4" /> : undefined}
+                        startIcon={
+                            finished ? <Check className="h-4 w-4" /> : undefined
+                        }
                         sx={{
                             textTransform: "none",
                             fontWeight: "bold",
-                            backgroundColor: "var(--book-accent, var(--color-bgc-highlight))",
+                            backgroundColor:
+                                "var(--book-accent, var(--color-bgc-highlight))",
                             color: "var(--color-text-pure)",
                             "&.Mui-disabled": {
                                 backgroundColor: "var(--color-bdc-muted)",

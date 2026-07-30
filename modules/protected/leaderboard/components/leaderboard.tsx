@@ -4,30 +4,27 @@ import { Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LEADERBOARD_TOP_SIZE } from "../constants/leaderboard.constant";
 import LeaderboardBoard from "../features/leaderboard.board";
+import ContainerBox from "@/components/ui/container.box";
 
 export function Leaderboard() {
     const t = useTranslations("leaderboard");
 
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-6xl space-y-5">
-                <header className="text-center">
-                    <div className="mb-3 flex justify-center">
-                        <div className="bg-bgc-highlight/10 flex h-14 w-14 items-center justify-center rounded-2xl">
-                            <Trophy className="text-bgc-highlight h-7 w-7" />
-                        </div>
-                    </div>
-                    <h1 className="text-text-contrast text-2xl font-bold md:text-3xl">
-                        {t("title")}
-                    </h1>
-                    <p className="text-text-muted mt-1 text-sm">
-                        {t("subtitle", { size: LEADERBOARD_TOP_SIZE })}
-                    </p>
-                </header>
+        <>
+            <ContainerBox className="mb-5 flex flex-col items-center">
+                <div className="bg-bgc-highlight/10 mb-3 flex h-14 w-14 items-center justify-center rounded-2xl">
+                    <Trophy className="text-bgc-highlight h-7 w-7" />
+                </div>
+                <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
+                    {t("title")}
+                </h1>
+                <p className="text-text-muted mt-1 text-sm">
+                    {t("subtitle", { size: LEADERBOARD_TOP_SIZE })}
+                </p>
+            </ContainerBox>
 
-                <LeaderboardBoard />
-            </div>
-        </div>
+            <LeaderboardBoard />
+        </>
     );
 }
 

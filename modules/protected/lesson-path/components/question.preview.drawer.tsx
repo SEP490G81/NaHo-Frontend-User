@@ -143,7 +143,8 @@ export function QuestionPreviewDrawer({
                         href={href as AllRoute}
                         className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
                         style={{
-                            background: "var(--book-accent, var(--color-bgc-highlight))",
+                            background:
+                                "var(--book-accent, var(--color-bgc-highlight))",
                         }}
                     >
                         <Mic className="h-4 w-4" />

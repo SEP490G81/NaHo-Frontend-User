@@ -56,7 +56,11 @@ export function FlashcardDeck({
     }, [total]);
 
     if (total === 0)
-        return <p className="text-text-muted py-6 text-center text-sm">{t("vocab.empty")}</p>;
+        return (
+            <p className="text-text-muted py-6 text-center text-sm">
+                {t("vocab.empty")}
+            </p>
+        );
 
     const v = vocab[i];
 
@@ -81,11 +85,13 @@ export function FlashcardDeck({
                                 showFurigana={showFurigana && !!v.reading}
                             />
                         </span>
-                        <span className="text-text-muted text-xs">{t("vocab.flip")}</span>
+                        <span className="text-text-muted text-xs">
+                            {t("vocab.flip")}
+                        </span>
                     </div>
                     {/* Back */}
                     <div
-                        className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                        className="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-center gap-2 rounded-2xl border p-6 [backface-visibility:hidden]"
                         style={{
                             borderColor:
                                 "color-mix(in srgb, var(--book-accent, var(--color-bgc-highlight)) 40%, transparent)",
@@ -96,7 +102,9 @@ export function FlashcardDeck({
                         {v.reading && (
                             <p
                                 className="font-noto-jp text-2xl font-bold"
-                                style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                                style={{
+                                    color: "var(--book-accent, var(--color-bgc-highlight))",
+                                }}
                             >
                                 {v.reading}
                             </p>

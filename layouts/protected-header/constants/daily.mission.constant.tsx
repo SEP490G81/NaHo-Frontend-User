@@ -1,5 +1,5 @@
 import React from "react";
-import { Mic, MessagesSquare, Target } from "lucide-react";
+import { MessagesSquare, Mic, Target } from "lucide-react";
 import { MissionType } from "@/types/responses/daily.mission.response";
 import { AllRoute } from "@/i18n/type";
 
@@ -40,6 +40,8 @@ export const DEFAULT_MISSION_CONFIG: MissionTypeConfig = {
     i18nKey: "default",
 };
 
-export const getMissionConfig = (missionType: MissionType): MissionTypeConfig => {
+export const getMissionConfig = (
+    missionType: MissionType,
+): MissionTypeConfig => {
     return MISSION_TYPE_CONFIGS[missionType] || DEFAULT_MISSION_CONFIG;
 };

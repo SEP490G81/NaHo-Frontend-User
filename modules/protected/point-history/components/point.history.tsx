@@ -10,6 +10,7 @@ import type {
     SortDirection,
 } from "@/types/responses/point.response";
 import { usePointRows } from "../hooks/use.point.rows";
+import { ContainerBox } from "@/components/ui/container.box";
 import PointHistoryHeader from "./point.history.header";
 import PointHistoryToolbar from "./point.history.toolbar";
 import PointHistoryTable from "./point.history.table";
@@ -70,64 +71,69 @@ export function PointHistory() {
     };
 
     return (
-        <div className="px-4 py-6 md:px-8">
-            <div className="mx-auto max-w-5xl space-y-6">
-                <PointHistoryHeader
-                    totalActivities={pageMeta?.totalElements ?? rows.length}
+        <div className="space-y-5">
+            <PointHistoryHeader
+                totalActivities={pageMeta?.totalElements ?? rows.length}
+            />
+
+            <PointHistoryToolbar
+                type={type}
+                amount={amount}
+                from={from}
+                to={to}
+                onType={changeType}
+                onAmount={changeAmount}
+                onFrom={changeFrom}
+                onTo={changeTo}
+                onClearDates={clearDates}
+            />
+
+            {isLoading ? (
+                <p className="text-text-muted py-16 text-center">
+                    {t("loading")}
+                </p>
+            ) : isError ? (
+                <p className="text-text-muted py-16 text-center">
+                    {t("error")}
+                </p>
+            ) : rows.length === 0 ? (
+                <ContainerBox className="border-bdc-muted flex flex-col items-center gap-2 border border-dashed text-center">
+                    <Sparkles className="text-text-muted h-9 w-9" />
+                    <p className="text-text-contrast font-semibold">
+                        {t("empty")}
+                    </p>
+                    <p className="text-text-muted max-w-md text-sm">
+                        {t("emptyHint")}
+                    </p>
+                </ContainerBox>
+            ) : (
+                <PointHistoryTable
+                    rows={rows}
+                    sortColumn={sortColumn}
+                    sortDirection={sortDirection}
+                    onSort={sortBy}
                 />
+            )}
 
-                <PointHistoryToolbar
-                    type={type}
-                    amount={amount}
-                    from={from}
-                    to={to}
-                    onType={changeType}
-                    onAmount={changeAmount}
-                    onFrom={changeFrom}
-                    onTo={changeTo}
-                    onClearDates={clearDates}
-                />
-
-                {isLoading ? (
-                    <p className="text-text-muted py-16 text-center">{t("loading")}</p>
-                ) : isError ? (
-                    <p className="text-text-muted py-16 text-center">{t("error")}</p>
-                ) : rows.length === 0 ? (
-                    <div className="border-bdc-muted bg-bgc-app flex flex-col items-center gap-2 rounded-2xl border border-dashed p-12 text-center">
-                        <Sparkles className="text-text-muted h-9 w-9" />
-                        <p className="text-text-contrast font-semibold">{t("empty")}</p>
-                        <p className="text-text-muted max-w-md text-sm">
-                            {t("emptyHint")}
-                        </p>
-                    </div>
-                ) : (
-                    <PointHistoryTable
-                        rows={rows}
-                        sortColumn={sortColumn}
-                        sortDirection={sortDirection}
-                        onSort={sortBy}
-                    />
-                )}
-
-                {pageMeta && pageMeta.totalPages > 1 && (
-                    <div className="flex justify-center">
-                        <Pagination
-                            count={pageMeta.totalPages}
-                            page={page}
-                            onChange={(_, v) => setPage(v)}
-                            sx={{
-                                "& .MuiPaginationItem-root": {
-                                    color: "var(--color-text-contrast)",
-                                    "&.Mui-selected": {
-                                        backgroundColor: "var(--color-bgc-highlight)",
-                                        color: "var(--color-text-pure)",
-                                    },
+            {pageMeta && pageMeta.totalPages > 1 && (
+                <div className="flex justify-center">
+                    <Pagination
+                        count={pageMeta.totalPages}
+                        page={page}
+                        onChange={(_, v) => setPage(v)}
+                        sx={{
+                            "& .MuiPaginationItem-root": {
+                                color: "var(--color-text-contrast)",
+                                "&.Mui-selected": {
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
+                                    color: "var(--color-text-pure)",
                                 },
-                            }}
-                        />
-                    </div>
-                )}
-            </div>
+                            },
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 }

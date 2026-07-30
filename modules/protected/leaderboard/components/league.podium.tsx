@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
-import { Crown } from "lucide-react";
+import { ChevronRight, Crown } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { cn, formatPoints } from "@/libs/utils";
 import {
     LeaderboardEntry,
@@ -103,8 +104,9 @@ export function LeaguePodium({
     entries,
     currentUserId,
     footer,
-}: LeaguePodiumProps) {
+}: Readonly<LeaguePodiumProps>) {
     const t = useTranslations("leaderboard");
+    const tp = useTranslations("pointHistory");
     const label = useLeagueLabel();
     const theme = getLeagueTheme(league.name);
     const cssVar = `--color-league-${toLeagueSlug(league.name)}`;
@@ -119,15 +121,24 @@ export function LeaguePodium({
                 background: `linear-gradient(160deg, color-mix(in srgb, var(${cssVar}) 16%, transparent), transparent 60%), var(--color-bgc-app)`,
             }}
         >
-            <p className="text-text-muted text-[11px] font-bold tracking-wide uppercase">
-                {t("podiumTitle")}
-            </p>
-            <h2 className={cn("mt-1 text-2xl font-bold", theme.text)}>
-                {label.name(league)}
-            </h2>
-            <p className="text-text-muted mt-1 text-sm">
-                {label.description(league)}
-            </p>
+            <div className="flex items-start justify-between gap-4">
+                <div>
+                    <h2 className={cn("mt-1 text-2xl font-bold", theme.text)}>
+                        {label.name(league)}
+                    </h2>
+                    <p className="text-text-muted mt-1 text-sm">
+                        {label.description(league)}
+                    </p>
+                </div>
+
+                <Link
+                    href="/point-history"
+                    className="group border-bdc-primary/60 bg-bgc-app/80 text-text-contrast hover:border-bgc-highlight/50 hover:bg-bgc-highlight/10 hover:text-bgc-highlight mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-xs transition-all duration-200 hover:scale-102"
+                >
+                    <span>{tp("title")}</span>
+                    <ChevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
+            </div>
 
             <div className="mx-auto mt-6 grid max-w-md grid-cols-3 items-end gap-3">
                 <PodiumColumn

@@ -4,7 +4,7 @@ import {
     LessonDetailResponse,
     ObjectiveDetailResponse,
     TopicDetailResponse,
-    TopicListItemResponse,
+    TopicListItemResponse
 } from "@/types/responses/book.response";
 import { LearningPathNodeDetailResponse } from "@/types/responses/learning.response";
 
@@ -88,7 +88,9 @@ export async function openChest(learningPathNodeId: number): Promise<number> {
             (result as ProblemDetail | null)?.detail || "Mở rương thất bại",
         );
     }
-    return (result as ApiResponse<{ earnedPoint: number }>)?.data?.earnedPoint ?? 0;
+    return (
+        (result as ApiResponse<{ earnedPoint: number }>)?.data?.earnedPoint ?? 0
+    );
 }
 
 /**
@@ -104,9 +106,9 @@ export async function completeVocabularyQuestion(
         body: JSON.stringify({ vocabularyQuestionId }),
     });
     if (!response.ok) {
-        const result = (await response.json().catch(() => null)) as
-            | ProblemDetail
-            | null;
+        const result = (await response
+            .json()
+            .catch(() => null)) as ProblemDetail | null;
         throw new Error(result?.detail || "Hoàn thành từ vựng thất bại");
     }
 }

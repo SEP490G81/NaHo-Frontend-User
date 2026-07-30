@@ -14,7 +14,9 @@ export function NotesPanel() {
                 <h3 className="text-text-contrast flex items-center gap-2 text-sm font-semibold">
                     <NotebookPen
                         className="h-4 w-4"
-                        style={{ color: "var(--book-accent, var(--color-bgc-highlight))" }}
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
                     />
                     {t("notesTitle")}
                 </h3>

@@ -22,17 +22,6 @@ const DailyMissionItem: React.FC<DailyMissionItemProps> = ({
     const config = getMissionConfig(mission?.missionType || "");
     const IconComponent = config.icon;
 
-    const titleKey = `types.${config.i18nKey}.title` as Parameters<typeof t>[0];
-    const descKey = `types.${config.i18nKey}.desc` as Parameters<typeof t>[0];
-
-    const title =
-        mission?.title ||
-        (t.has(titleKey) ? t(titleKey) : t("types.default.title"));
-
-    const description =
-        mission?.description ||
-        (t.has(descKey) ? t(descKey) : t("types.default.desc"));
-
     const status = userMission.status;
 
     return (
@@ -41,8 +30,8 @@ const DailyMissionItem: React.FC<DailyMissionItemProps> = ({
                 status === "EARNED"
                     ? "border-emerald-500/20 bg-emerald-500/5 shadow-2xs dark:border-emerald-500/15"
                     : status === "COMPLETED"
-                    ? "border-amber-500/40 bg-amber-500/5 shadow-sm dark:border-amber-500/30"
-                    : "border-bdc-primary bg-bgc-app hover:bg-bgc-page/50 hover:border-amber-500/40 hover:shadow-md"
+                      ? "border-amber-500/40 bg-amber-500/5 shadow-sm dark:border-amber-500/30"
+                      : "border-bdc-primary bg-bgc-app hover:bg-bgc-page/50 hover:border-amber-500/40 hover:shadow-md"
             }`}
         >
             <div className="flex items-start gap-3.5 sm:items-center">
@@ -55,14 +44,16 @@ const DailyMissionItem: React.FC<DailyMissionItemProps> = ({
                 <div className="flex flex-col gap-0.5">
                     <div className="flex items-center gap-2">
                         <h4 className="text-text-contrast text-sm font-semibold tracking-tight">
-                            {title}
+                            {mission.title}
                         </h4>
-                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-bold text-amber-600 dark:text-amber-400">
-                            {t("totalPoints", { points: mission?.point || 0 }).trim()}
+                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-bold text-nowrap text-amber-600 dark:text-amber-400">
+                            {t("totalPoints", {
+                                points: mission?.point || 0,
+                            }).trim()}
                         </span>
                     </div>
                     <p className="text-text-muted text-xs leading-relaxed">
-                        {description}
+                        {mission.description}
                     </p>
                 </div>
             </div>
@@ -75,7 +66,7 @@ const DailyMissionItem: React.FC<DailyMissionItemProps> = ({
                     </div>
                 ) : status === "COMPLETED" ? (
                     <div className="flex items-center gap-2">
-                        <div className="hidden sm:inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                        <div className="hidden items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 sm:inline-flex dark:text-emerald-400">
                             <Sparkles className="h-3 w-3 text-emerald-500" />
                             <span>{t("status.completed")}</span>
                         </div>

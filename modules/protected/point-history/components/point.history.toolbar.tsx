@@ -2,12 +2,13 @@
 import React from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { MenuItem, Select, type MenuProps } from "@mui/material";
+import { MenuItem, type MenuProps, Select } from "@mui/material";
 import type {
     PointAmountType,
     PointTransactionType,
 } from "@/types/responses/point.response";
 import { POINT_TYPES } from "../utils/point.util";
+import { ContainerBox } from "@/components/ui/container.box";
 
 const dateInputCls =
     "border-bdc-primary bg-bgc-app text-text-contrast focus:border-bgc-highlight h-11 rounded-xl border px-3 text-sm shadow-[0_1px_2px_rgba(0,0,0,0.04)] outline-none transition-colors [color-scheme:light] dark:[color-scheme:dark]";
@@ -26,7 +27,8 @@ const selectSx = {
         borderColor: "var(--color-bdc-primary)",
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
-        borderColor: "color-mix(in srgb, var(--color-bgc-highlight) 55%, transparent)",
+        borderColor:
+            "color-mix(in srgb, var(--color-bgc-highlight) 55%, transparent)",
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: "var(--color-bgc-highlight)",
@@ -90,7 +92,7 @@ export function PointHistoryToolbar({
     const t = useTranslations("pointHistory");
 
     return (
-        <div className="flex flex-wrap items-center gap-3">
+        <ContainerBox className="border-bdc-primary flex flex-wrap items-center gap-3 border">
             <span className="text-text-muted inline-flex items-center gap-1.5 pr-1 text-sm font-semibold">
                 <SlidersHorizontal className="h-4 w-4" />
                 {t("filterBy")}
@@ -98,7 +100,9 @@ export function PointHistoryToolbar({
             <Select
                 size="small"
                 value={type}
-                onChange={(e) => onType(e.target.value as PointTransactionType | "ALL")}
+                onChange={(e) =>
+                    onType(e.target.value as PointTransactionType | "ALL")
+                }
                 sx={selectSx}
                 MenuProps={menuProps}
             >
@@ -115,7 +119,9 @@ export function PointHistoryToolbar({
             <Select
                 size="small"
                 value={amount}
-                onChange={(e) => onAmount(e.target.value as PointAmountType | "ALL")}
+                onChange={(e) =>
+                    onAmount(e.target.value as PointAmountType | "ALL")
+                }
                 sx={selectSx}
                 MenuProps={menuProps}
             >
@@ -159,7 +165,7 @@ export function PointHistoryToolbar({
                     </button>
                 )}
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

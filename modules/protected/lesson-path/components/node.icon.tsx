@@ -1,7 +1,12 @@
 "use client";
 import React from "react";
 
-export type NodeIconKind = "vocab" | "question" | "chest" | "chest-opened" | "done";
+export type NodeIconKind =
+    | "vocab"
+    | "question"
+    | "chest"
+    | "chest-opened"
+    | "done";
 
 interface Props {
     kind: NodeIconKind;
@@ -100,9 +105,30 @@ export function NodeIcon({ kind, size = 44 }: Props) {
         return (
             <svg {...common} className="drop-shadow-md">
                 {/* Thân rương gỗ (đã mở) */}
-                <rect x="6" y="24" width="36" height="18" rx="4" fill="#5a3a1e" />
-                <rect x="6" y="20" width="36" height="19" rx="3" fill="#9c6836" />
-                <rect x="8" y="21" width="32" height="3.5" fill="#c68d52" opacity={0.7} />
+                <rect
+                    x="6"
+                    y="24"
+                    width="36"
+                    height="18"
+                    rx="4"
+                    fill="#5a3a1e"
+                />
+                <rect
+                    x="6"
+                    y="20"
+                    width="36"
+                    height="19"
+                    rx="3"
+                    fill="#9c6836"
+                />
+                <rect
+                    x="8"
+                    y="21"
+                    width="32"
+                    height="3.5"
+                    fill="#c68d52"
+                    opacity={0.7}
+                />
                 {/* Đai kim loại vàng đồng */}
                 <rect x="13" y="20" width="4" height="19" fill="#e0a92e" />
                 <rect x="31" y="20" width="4" height="19" fill="#e0a92e" />
@@ -118,8 +144,22 @@ export function NodeIcon({ kind, size = 44 }: Props) {
                 />
                 <path d="M 7 10 L 41 4 L 43 7 L 5 13 Z" fill="#7a4e28" />
                 {/* Đồng xu / lấp lánh */}
-                <circle cx="16" cy="11" r="3" fill="#ffd84d" stroke="#a16207" strokeWidth={0.8} />
-                <circle cx="32" cy="8" r="3.5" fill="#ffd84d" stroke="#a16207" strokeWidth={0.8} />
+                <circle
+                    cx="16"
+                    cy="11"
+                    r="3"
+                    fill="#ffd84d"
+                    stroke="#a16207"
+                    strokeWidth={0.8}
+                />
+                <circle
+                    cx="32"
+                    cy="8"
+                    r="3.5"
+                    fill="#ffd84d"
+                    stroke="#a16207"
+                    strokeWidth={0.8}
+                />
                 <path
                     d="M 24 1 L 25.5 4.5 L 29 5 L 26.5 7.5 L 27 11 L 24 9 L 21 11 L 21.5 7.5 L 19 5 L 22.5 4.5 Z"
                     fill="#fff2b8"
@@ -137,7 +177,14 @@ export function NodeIcon({ kind, size = 44 }: Props) {
             <rect x="6" y="24" width="36" height="18" rx="4" fill="#5a3a1e" />
             {/* Thân gỗ */}
             <rect x="6" y="21" width="36" height="18" rx="3" fill="#9c6836" />
-            <rect x="7" y="22" width="34" height="3" fill="#c68d52" opacity={0.55} />
+            <rect
+                x="7"
+                y="22"
+                width="34"
+                height="3"
+                fill="#c68d52"
+                opacity={0.55}
+            />
             {/* Nắp gỗ cong */}
             <path
                 d="M 5 21 C 5 13 11 10 24 10 C 37 10 43 13 43 21 Z"
@@ -155,7 +202,16 @@ export function NodeIcon({ kind, size = 44 }: Props) {
             <rect x="31" y="11" width="4.5" height="28" fill="#e0a92e" />
             <rect x="6" y="27" width="36" height="3" fill="#e0a92e" />
             {/* Khóa vàng */}
-            <rect x="21" y="24" width="6" height="8" rx="1.5" fill="#f5c542" stroke="#a16207" strokeWidth={1} />
+            <rect
+                x="21"
+                y="24"
+                width="6"
+                height="8"
+                rx="1.5"
+                fill="#f5c542"
+                stroke="#a16207"
+                strokeWidth={1}
+            />
             <circle cx="24" cy="27.5" r="1.4" fill="#7a4e28" />
         </svg>
     );

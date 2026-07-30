@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { cn, formatPoints } from "@/libs/utils";
 import { useCurrentLevelLabel } from "@/hooks/use.current.level";
 import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
+import ContainerBox from "@/components/ui/container.box";
 
 interface StatCardProps {
     icon: React.ReactNode;
@@ -61,7 +62,7 @@ export function RoadmapHeader() {
     const level = useCurrentLevelLabel();
 
     return (
-        <div className="border-bdc-primary bg-bgc-app grid gap-6 rounded-2xl border p-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+        <ContainerBox>
             <div className="min-w-0 space-y-2">
                 <span className="border-bdc-primary bg-bgc-app text-text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-medium tracking-wide uppercase">
                     <span className="bg-bgc-highlight h-1.5 w-1.5 rounded-full" />
@@ -93,7 +94,7 @@ export function RoadmapHeader() {
                     href="/point-history"
                 />
             </div>
-        </div>
+        </ContainerBox>
     );
 }
 

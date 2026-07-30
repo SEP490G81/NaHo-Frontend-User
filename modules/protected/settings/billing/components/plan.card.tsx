@@ -40,24 +40,33 @@ const PlanCard: React.FC<PlanCardProps> = ({
 
     const formatCurrency = (amount: number) => {
         if (amount === 0) return t("freePrice");
-        return new Intl.NumberFormat("vi-VN").format(amount) + " " + t("perMonth");
+        return (
+            new Intl.NumberFormat("vi-VN").format(amount) + " " + t("perMonth")
+        );
     };
 
-    const conversationMinutes = Math.round(plan.monthlyConversationSeconds / 60);
+    const conversationMinutes = Math.round(
+        plan.monthlyConversationSeconds / 60,
+    );
 
     return (
         <div
-            className={`relative flex flex-col justify-between rounded-2xl border bg-bgc-card p-6 shadow-sm transition-all hover:shadow-md ${isPopular
-                ? "border-primary shadow-lg ring-2 ring-primary/20"
-                : isCurrentPlan
-                    ? "border-emerald-500/50 bg-emerald-500/5"
-                    : "border-bdc-primary"
-                }`}
+            className={`bg-bgc-card relative flex flex-col justify-between rounded-2xl border p-6 shadow-sm transition-all hover:shadow-md ${
+                isPopular
+                    ? "border-primary ring-primary/20 shadow-lg ring-2"
+                    : isCurrentPlan
+                      ? "border-emerald-500/50 bg-emerald-500/5"
+                      : "border-bdc-primary"
+            }`}
         >
             {isPopular && (
                 <div className="absolute -top-0 left-1/2 -translate-x-1/2">
                     <Chip
-                        icon={<StarOutlinedIcon style={{ fontSize: 14, color: "#fff" }} />}
+                        icon={
+                            <StarOutlinedIcon
+                                style={{ fontSize: 14, color: "#fff" }}
+                            />
+                        }
                         label={t("popular")}
                         size="small"
                         className="bg-primary text-xs font-bold text-white shadow"
@@ -68,25 +77,27 @@ const PlanCard: React.FC<PlanCardProps> = ({
             <div>
                 {/* Header */}
                 <div className="mb-4 text-center">
-                    <h3 className="text-xl font-bold text-text-primary">{plan.name}</h3>
-                    <p className="mt-1 min-h-[36px] text-xs text-text-muted">
+                    <h3 className="text-text-primary text-xl font-bold">
+                        {plan.name}
+                    </h3>
+                    <p className="text-text-muted mt-1 min-h-[36px] text-xs">
                         {plan.description}
                     </p>
                     <div className="mt-3">
-                        <span className="text-3xl font-extrabold text-primary">
+                        <span className="text-primary text-3xl font-extrabold">
                             {formatCurrency(plan.priceAmount)}
                         </span>
                     </div>
                 </div>
 
-                <div className="my-4 h-px bg-bdc-primary/50" />
+                <div className="bg-bdc-primary/50 my-4 h-px" />
 
                 {/* Features List */}
-                <ul className="space-y-3 text-sm text-text-primary">
+                <ul className="text-text-primary space-y-3 text-sm">
                     <li className="flex items-start gap-2.5">
                         <CheckCircleOutlinedIcon
                             fontSize="small"
-                            className="mt-0.5 text-primary"
+                            className="text-primary mt-0.5"
                         />
                         <span>
                             {t("features.assessmentLimit", {
@@ -97,7 +108,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     <li className="flex items-start gap-2.5">
                         <CheckCircleOutlinedIcon
                             fontSize="small"
-                            className="mt-0.5 text-primary"
+                            className="text-primary mt-0.5"
                         />
                         <span>
                             {t("features.conversationMinutes", {
@@ -110,13 +121,15 @@ const PlanCard: React.FC<PlanCardProps> = ({
                             fontSize="small"
                             className={
                                 plan.fullCurriculumAccess
-                                    ? "mt-0.5 text-primary"
-                                    : "mt-0.5 text-text-muted opacity-40"
+                                    ? "text-primary mt-0.5"
+                                    : "text-text-muted mt-0.5 opacity-40"
                             }
                         />
                         <span
                             className={
-                                plan.fullCurriculumAccess ? "" : "line-through opacity-50"
+                                plan.fullCurriculumAccess
+                                    ? ""
+                                    : "line-through opacity-50"
                             }
                         >
                             {t("features.fullCurriculum")}
@@ -127,8 +140,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                             fontSize="small"
                             className={
                                 plan.progressAnalyticsEnabled
-                                    ? "mt-0.5 text-primary"
-                                    : "mt-0.5 text-text-muted opacity-40"
+                                    ? "text-primary mt-0.5"
+                                    : "text-text-muted mt-0.5 opacity-40"
                             }
                         />
                         <span
@@ -146,8 +159,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                             fontSize="small"
                             className={
                                 plan.sampleAnswerEnabled
-                                    ? "mt-0.5 text-primary"
-                                    : "mt-0.5 text-text-muted opacity-40"
+                                    ? "text-primary mt-0.5"
+                                    : "text-text-muted mt-0.5 opacity-40"
                             }
                         />
                         <span
@@ -170,7 +183,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         variant="outlined"
                         fullWidth
                         disabled
-                        className="border-emerald-500 text-emerald-600 font-semibold"
+                        className="border-emerald-500 font-semibold text-emerald-600"
                     >
                         {t("currentPlanLabel")}
                     </Button>
@@ -179,7 +192,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         variant="outlined"
                         fullWidth
                         disabled
-                        className="border-gray-300 text-text-muted"
+                        className="text-text-muted border-gray-300"
                     >
                         {t("includedLabel")}
                     </Button>

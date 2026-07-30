@@ -16,14 +16,12 @@ import {
 } from "@/types/responses/daily.reward.response";
 import DailyRewardItem from "./daily.reward.item";
 import DailyRewardCalendarHeader from "@/layouts/protected-header/components/daily.reward.calendar.header";
-import DailyRewardCalendarLoading from "@/layouts/protected-header/components/daily.reward.calendar.loading";
 import { DAYS_OF_WEEK } from "@/layouts/protected-header/constants/daily.reward.constant";
 import { getDayOfWeekHeaderClass } from "@/layouts/protected-header/utils/daily.reward.util";
 
 const DailyRewardCalendar = () => {
     const t = useTranslations("dailyReward");
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [claimingId, setClaimingId] = useState<number | null>(null);
     const [rewardsData, setRewardsData] = useState<DailyRewardResponse[]>([]);
     const [attendancesData, setAttendancesData] = useState<
@@ -42,8 +40,6 @@ const DailyRewardCalendar = () => {
     const paddingDaysCount = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
 
     const fetchRewards = async () => {
-        setLoading(true);
-
         try {
             const [rewards, attendances] = await Promise.all([
                 getCurrentMonthDailyRewards(),
@@ -57,8 +53,6 @@ const DailyRewardCalendar = () => {
             if (e instanceof Error) {
                 toast.error(e.message);
             }
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -149,44 +143,40 @@ const DailyRewardCalendar = () => {
                         ))}
                     </div>
 
-                    {loading ? (
-                        <DailyRewardCalendarLoading />
-                    ) : (
-                        <div className="grid grid-cols-7 gap-1.5 py-1 sm:gap-2">
-                            {Array.from({ length: paddingDaysCount }).map(
-                                (_, padIdx) => (
-                                    <div
-                                        key={`pad-${padIdx}`}
-                                        className="bg-bgc-page/20 border-bdc-primary/30 pointer-events-none min-h-20.5 rounded-xl border border-dashed opacity-20 sm:min-h-22.5"
-                                    />
-                                ),
-                            )}
+                    <div className="grid grid-cols-7 gap-1.5 py-1 sm:gap-2">
+                        {Array.from({ length: paddingDaysCount }).map(
+                            (_, padIdx) => (
+                                <div
+                                    key={`pad-${padIdx}`}
+                                    className="bg-bgc-page/20 border-bdc-primary/30 pointer-events-none min-h-20.5 rounded-xl border border-dashed opacity-20 sm:min-h-22.5"
+                                />
+                            ),
+                        )}
 
-                            {rewardsData.map((item) => {
-                                const dayNum = item.dayOfMonth;
-                                const isToday = dayNum === currentDay;
-                                const isLocked = dayNum > currentDay;
-                                const isPast = dayNum < currentDay;
-                                const isAttended = attendedRewardIdsSet.has(
-                                    item.id,
-                                );
+                        {rewardsData.map((item) => {
+                            const dayNum = item.dayOfMonth;
+                            const isToday = dayNum === currentDay;
+                            const isLocked = dayNum > currentDay;
+                            const isPast = dayNum < currentDay;
+                            const isAttended = attendedRewardIdsSet.has(
+                                item.id,
+                            );
 
-                                return (
-                                    <DailyRewardItem
-                                        key={item.id || dayNum}
-                                        data={item}
-                                        dayNumber={dayNum}
-                                        isToday={isToday}
-                                        isLocked={isLocked}
-                                        isPast={isPast}
-                                        isAttended={isAttended}
-                                        onClick={() => handleClaimReward(item)}
-                                        isClaiming={claimingId === item.id}
-                                    />
-                                );
-                            })}
-                        </div>
-                    )}
+                            return (
+                                <DailyRewardItem
+                                    key={item.id || dayNum}
+                                    data={item}
+                                    dayNumber={dayNum}
+                                    isToday={isToday}
+                                    isLocked={isLocked}
+                                    isPast={isPast}
+                                    isAttended={isAttended}
+                                    onClick={() => handleClaimReward(item)}
+                                    isClaiming={claimingId === item.id}
+                                />
+                            );
+                        })}
+                    </div>
                 </DialogContent>
             </Dialog>
         </>

@@ -3,10 +3,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { getSubscriptionPlans } from "@/services/client/subscription.service";
 import { createPaymentOrder } from "@/services/client/payment.service";
-import {
-    PlanTier,
-    SubscriptionPlanResponse,
-} from "@/types/responses/subscription.response";
+import { PlanTier, SubscriptionPlanResponse } from "@/types/responses/subscription.response";
 import PlanCard from "@/modules/protected/settings/billing/components/plan.card";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -36,11 +33,17 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
     const [plans, setPlans] = useState<SubscriptionPlanResponse[]>([]);
     const [loadingPlans, setLoadingPlans] = useState<boolean>(false);
     const [fetchPlansError, setFetchPlansError] = useState<boolean>(false);
-    const [checkoutLoadingCode, setCheckoutLoadingCode] = useState<string | null>(null);
+    const [checkoutLoadingCode, setCheckoutLoadingCode] = useState<
+        string | null
+    >(null);
 
     // Idempotency state: UUID generated when user initiates a checkout attempt, reused on Retry
-    const [activeIdempotencyKey, setActiveIdempotencyKey] = useState<string | null>(null);
-    const [lastFailedPlanCode, setLastFailedPlanCode] = useState<string | null>(null);
+    const [activeIdempotencyKey, setActiveIdempotencyKey] = useState<
+        string | null
+    >(null);
+    const [lastFailedPlanCode, setLastFailedPlanCode] = useState<string | null>(
+        null,
+    );
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const fetchPlans = async () => {
@@ -50,7 +53,11 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         try {
             const data = await getSubscriptionPlans();
             // Sort plans by price or tier level (FREE -> BASIC -> PREMIUM)
-            const tierOrder: Record<PlanTier, number> = { FREE: 0, BASIC: 1, PREMIUM: 2 };
+            const tierOrder: Record<PlanTier, number> = {
+                FREE: 0,
+                BASIC: 1,
+                PREMIUM: 2,
+            };
             const sorted = [...data].sort(
                 (a, b) => (tierOrder[a.tier] ?? 0) - (tierOrder[b.tier] ?? 0),
             );
@@ -100,16 +107,24 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
             if (res && res.paymentUrl) {
                 try {
-                    const savedUrls = JSON.parse(localStorage.getItem("naho_payment_urls") || "{}");
+                    const savedUrls = JSON.parse(
+                        localStorage.getItem("naho_payment_urls") || "{}",
+                    );
                     savedUrls[res.orderCode] = res.paymentUrl;
-                    localStorage.setItem("naho_payment_urls", JSON.stringify(savedUrls));
+                    localStorage.setItem(
+                        "naho_payment_urls",
+                        JSON.stringify(savedUrls),
+                    );
                 } catch (e) {
-                    console.error("Failed to save paymentUrl to localStorage:", e);
+                    console.error(
+                        "Failed to save paymentUrl to localStorage:",
+                        e,
+                    );
                 }
 
                 window.open(res.paymentUrl, "_blank");
                 onClose();
-                router.push("/settings/orders");
+                router.push("/orders");
             } else {
                 throw new Error(t("errors.createPaymentFailed"));
             }
@@ -138,10 +153,10 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             }}
         >
             <div className="relative p-4 sm:p-6">
-                <DialogTitle className="p-0 text-center font-extrabold text-2xl text-text-primary">
+                <DialogTitle className="text-text-primary p-0 text-center text-2xl font-extrabold">
                     {t("modalTitle")}
                 </DialogTitle>
-                <p className="mt-1 text-center text-sm text-text-muted">
+                <p className="text-text-muted mt-1 text-center text-sm">
                     {t("modalSubtitle")}
                 </p>
 
@@ -162,7 +177,10 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                 <DialogContent className="mt-4 p-0">
                     {errorMessage && !fetchPlansError && (
                         <div className="mb-4">
-                            <Alert severity="error" onClose={() => setErrorMessage(null)}>
+                            <Alert
+                                severity="error"
+                                onClose={() => setErrorMessage(null)}
+                            >
                                 {errorMessage}
                             </Alert>
                         </div>
@@ -177,10 +195,10 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                             <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-400">
                                 <ErrorOutlineIcon style={{ fontSize: 32 }} />
                             </div>
-                            <h3 className="text-lg font-bold text-text-primary">
+                            <h3 className="text-text-primary text-lg font-bold">
                                 {t("errors.fetchPlansFailedTitle")}
                             </h3>
-                            <p className="mt-1 max-w-md text-sm text-text-muted">
+                            <p className="text-text-muted mt-1 max-w-md text-sm">
                                 {errorMessage || t("errors.fetchPlansFailed")}
                             </p>
                             <Button
@@ -188,7 +206,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                                 onClick={fetchPlans}
                                 startIcon={<RefreshIcon />}
                                 disabled={loadingPlans}
-                                className="mt-5 bg-primary font-semibold text-white shadow-md hover:bg-primary-dark"
+                                className="bg-primary hover:bg-primary-dark mt-5 font-semibold text-white shadow-md"
                             >
                                 {t("errors.retryFetchPlans")}
                             </Button>

@@ -34,4 +34,3 @@ export interface CancelPaymentResponse {
     status: PaymentOrderStatus;
     message?: string;
 }
-

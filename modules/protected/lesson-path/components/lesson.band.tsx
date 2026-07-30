@@ -24,17 +24,13 @@ export function LessonBand({ lesson, status, accent, showFurigana }: Props) {
         : locked
           ? t("lesson.markerLocked")
           : t("lesson.markerActive");
-    const color = completed
-        ? "#10b981"
-        : locked
-          ? "#94a3b8"
-          : accent;
+    const color = completed ? "#10b981" : locked ? "#94a3b8" : accent;
 
     return (
         <div className="relative z-10 mx-auto flex flex-col items-center text-center select-none">
             <div
                 className={cn(
-                    "flex flex-col items-center gap-1.5 rounded-3xl border-2 px-6 py-3.5 shadow-lg backdrop-blur-md transition-transform hover:-translate-y-0.5 max-w-lg min-w-[320px]",
+                    "flex max-w-lg min-w-[320px] flex-col items-center gap-1.5 rounded-3xl border-2 px-6 py-3.5 shadow-lg backdrop-blur-md transition-transform hover:-translate-y-0.5",
                     locked
                         ? "border-slate-300 bg-slate-100/90 text-slate-500 opacity-75"
                         : "border-slate-200 bg-white/95 text-slate-800 shadow-md",
@@ -48,16 +44,17 @@ export function LessonBand({ lesson, status, accent, showFurigana }: Props) {
             >
                 <div className="flex items-center gap-2">
                     <span
-                        className="rounded-full px-3 py-0.5 text-[10px] font-black tracking-widest uppercase text-white shadow-xs"
+                        className="rounded-full px-3 py-0.5 text-[10px] font-black tracking-widest text-white uppercase shadow-xs"
                         style={{
                             background: `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 75%, #000))`,
                         }}
                     >
-                        📖 {t("lesson.label", { number: lesson.order })} · {statusLabel}
+                        📖 {t("lesson.label", { number: lesson.order })} ·{" "}
+                        {statusLabel}
                     </span>
                 </div>
 
-                <h2 className="text-base font-extrabold sm:text-lg text-slate-800 leading-snug">
+                <h2 className="text-base leading-snug font-extrabold text-slate-800 sm:text-lg">
                     {lesson.furiganaMarkup ? (
                         <FuriganaMarkup
                             markup={lesson.furiganaMarkup}

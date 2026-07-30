@@ -29,7 +29,7 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                 <div className="mb-3 flex items-center gap-2 border-b border-bdc-primary/30 pb-2.5">
                     <BookOpen className="h-4 w-4" style={{ color: accent }} />
                     <h3 className="text-text-contrast text-xs font-bold tracking-wider uppercase">
-                        {t("path.lessonOutline") ?? "Mục lục bài học"}
+                        {t("path.lessonOutline")}
                     </h3>
                 </div>
 
@@ -49,8 +49,8 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                                     completed
                                         ? "bg-emerald-500/10 text-text-success hover:bg-emerald-500/15"
                                         : locked
-                                          ? "text-text-muted hover:bg-bgc-page/50 opacity-70"
-                                          : "bg-bgc-page text-text-contrast border-bdc-primary/50 border shadow-xs hover:border-bdc-primary",
+                                            ? "text-text-muted hover:bg-bgc-page/50 opacity-70"
+                                            : "bg-bgc-page text-text-contrast border-bdc-primary/50 border shadow-xs hover:border-bdc-primary",
                                 )}
                             >
                                 <div className="min-w-0 flex-1">
