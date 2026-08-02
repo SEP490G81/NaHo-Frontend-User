@@ -21,6 +21,7 @@ const MESSAGE_FILES = [
     "point-history",
     "daily-reward",
     "daily-mission",
+    "legal",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

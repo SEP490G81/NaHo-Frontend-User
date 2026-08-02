@@ -1,3 +1,4 @@
+import { Link } from "@/i18n/navigation";
 import { Checkbox } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -27,14 +28,22 @@ const RegisterAgreeTerms = ({
                 >
                     {t.rich("register.form.agreement", {
                         terms: (chunks) => (
-                            <span className="text-text-highlight cursor-pointer hover:underline">
+                            <Link
+                                href={"/terms"}
+                                target="_blank"
+                                className="text-text-highlight cursor-pointer hover:underline"
+                            >
                                 {chunks}
-                            </span>
+                            </Link>
                         ),
                         privacy: (chunks) => (
-                            <span className="text-text-highlight cursor-pointer hover:underline">
+                            <Link
+                                href={"/privacy"}
+                                target="_blank"
+                                className="text-text-highlight cursor-pointer hover:underline"
+                            >
                                 {chunks}
-                            </span>
+                            </Link>
                         ),
                     })}
                 </label>
