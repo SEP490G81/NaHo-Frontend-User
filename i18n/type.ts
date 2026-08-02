@@ -10,6 +10,7 @@ export type AllRoute =
     | "/introduction"
     | "/forgot-password"
     | "/register"
+    | "/verify-email"
     | "/topics"
     | "/books"
     | `/books/${string}` // "/books/[bookId]"
@@ -31,7 +32,9 @@ export type AllRoute =
     | "/get-help"
     | "/features"
     | "/learner-feedback"
-    | "/frequently-questions";
+    | "/frequently-questions"
+    | "/terms"
+    | "/privacy";
 
 export type RemoveDynamic<T> = T extends `${string}[${string}` ? never : T;
 export type StaticRoute = RemoveDynamic<AllRoute>;

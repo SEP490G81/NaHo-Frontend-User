@@ -1,4 +1,6 @@
 "use client";
+import { USER_ERROR_CODES } from "@/constants/error.code.constants";
+import { getErrorCode } from "@/libs/api.error";
 import LoginFormButtons from "@/modules/public/login/features/login.form.buttons";
 import LoginFormTextFields from "@/modules/public/login/components/login.form.text.fields";
 import { LoginState } from "@/modules/public/login/types/login.ui.type";
@@ -51,6 +53,20 @@ const LoginForm = () => {
                 replace("/dashboard");
             } catch (error) {
                 console.log(error);
+
+                const usernameOrEmail = newState.usernameOrEmail.value.trim();
+                // tài khoản chưa xác thực email: backend đã gửi lại OTP,
+                // chỉ chuyển sang màn nhập OTP khi người dùng đăng nhập bằng email
+                if (
+                    getErrorCode(error) === USER_ERROR_CODES.EMAIL_UNVERIFIED &&
+                    usernameOrEmail.includes("@")
+                ) {
+                    replace(
+                        `/verify-email?email=${encodeURIComponent(usernameOrEmail)}`,
+                    );
+                    return;
+                }
+
                 if (error instanceof Error) {
                     setErrorMessage(error.message);
                 }

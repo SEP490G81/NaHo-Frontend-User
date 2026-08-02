@@ -85,12 +85,14 @@ const RegisterForm = () => {
 
         try {
             setSubmitting(true);
+            const email = values.email.trim();
             await register({
                 username: values.username.trim(),
-                email: values.email.trim(),
+                email,
                 password: values.password,
             });
-            replace("/login");
+            // backend đã gửi OTP khi đăng ký thành công, chuyển sang màn nhập OTP
+            replace(`/verify-email?email=${encodeURIComponent(email)}`);
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(

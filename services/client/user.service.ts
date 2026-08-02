@@ -1,6 +1,9 @@
+import { ApiError } from "@/libs/api.error";
 import {
     CredentialsLoginRequest,
     RegisterRequest,
+    ResendOtpRequest,
+    VerifyEmailRequest,
 } from "@/types/requests/user.request";
 import { ProblemDetail } from "@/types/responses/base.response";
 import { UserResponse } from "@/types/responses/user.response";
@@ -19,7 +22,7 @@ export async function credentialsLogin(
     if (!response.ok) {
         const result = await response.json();
         const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.detail);
+        throw new ApiError(problemDetail);
     }
 }
 
@@ -35,7 +38,39 @@ export async function register(request: RegisterRequest): Promise<void> {
     if (!response.ok) {
         const result = await response.json();
         const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.detail);
+        throw new ApiError(problemDetail);
+    }
+}
+
+export async function verifyEmail(request: VerifyEmailRequest): Promise<void> {
+    const response = await fetch("/api/auth/verify-email", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+}
+
+export async function resendOtp(request: ResendOtpRequest): Promise<void> {
+    const response = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
     }
 }
 
