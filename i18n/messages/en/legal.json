@@ -1,0 +1,361 @@
+{
+    "legal": {
+        "meta": {
+            "effective": "Effective {date}",
+            "effectiveDate": "August 1, 2026",
+            "tableOfContents": "Table of contents",
+            "backToTop": "Back to top",
+            "termsLink": "Read the Terms of Service",
+            "privacyLink": "Read the Privacy Policy"
+        },
+        "terms": {
+            "title": "Terms of Service",
+            "summary": "The agreement between you and NaHo covering your use of our Japanese speaking practice platform.",
+            "intro": [
+                "NaHo is an AI-assisted Japanese speaking (Kaiwa) practice platform built by Group G81 as a capstone project for the SEP490 course at FPT University.",
+                "These Terms of Service (the \"Terms\") form an agreement between you and NaHo governing your access to and use of our website, application and all related features (the \"Services\"). By creating an account, verifying your email or using any NaHo feature, you confirm that you have read, understood and agreed to be bound by these Terms. If you do not agree, please stop using the Services.",
+                "Please also read our Privacy Policy to understand how we collect and process your personal data."
+            ],
+            "sections": [
+                {
+                    "id": "about",
+                    "heading": "Who we are",
+                    "paragraphs": [
+                        "NaHo is built and operated by student Group G81, course SEP490, FPT University. The Services help learners build Japanese speaking reflexes through curriculum-based practice sessions, free conversation with AI, automated pronunciation scoring, and motivational features such as daily missions, reward points and leaderboards.",
+                        "Because this is an academic capstone product, some features may run in a test environment, change, or be discontinued once the project ends."
+                    ]
+                },
+                {
+                    "id": "account",
+                    "heading": "Accounts and access",
+                    "paragraphs": [
+                        "You can create an account with a username and email address, or sign in with your Google account. If you register by email, you must enter a 6-digit one-time password (OTP) sent to your inbox to activate the account. The code is valid for 5 minutes and is cancelled after 5 incorrect attempts.",
+                        "You are responsible for all activity that takes place on your account."
+                    ],
+                    "items": [
+                        "You must be at least 16 years old to register on your own. Anyone under 16 may use the Services only with the consent and supervision of a parent or legal guardian.",
+                        "Provide accurate registration details and use a working email address so you can receive verification codes and important notices.",
+                        "Keep your password and OTP confidential. Never share your account or verification codes with anyone, including people claiming to be NaHo staff.",
+                        "Each email address and each username may be used for one account only.",
+                        "Notify us immediately if you discover unauthorised access to your account."
+                    ],
+                    "subsections": [
+                        {
+                            "heading": "Login sessions",
+                            "paragraphs": [
+                                "For safety reasons, each account keeps only one active login session at a time. When you sign in on a new device, the session on the previous device is revoked automatically and that device receives a warning. You can also sign out of all devices yourself from Settings."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "use",
+                    "heading": "Rules for using the Services",
+                    "paragraphs": [
+                        "NaHo is provided for personal, non-commercial learning. When using the Services, you agree not to:"
+                    ],
+                    "items": [
+                        "Post or distribute content that is unlawful, hateful, violent, harassing, discriminatory, sexually explicit, or that infringes the rights of others.",
+                        "Impersonate other users, instructors or the NaHo team.",
+                        "Use automated tools, scripts or bots to access, scrape, harvest data in bulk, or overload the system.",
+                        "Tamper with, reverse engineer, exploit security vulnerabilities in, or attempt to gain unauthorised access to NaHo accounts, data or infrastructure.",
+                        "Manipulate scores, learning streaks, daily missions or leaderboard rankings in any way.",
+                        "Copy, redistribute or sell NaHo learning materials, questions or data without prior written permission.",
+                        "Use the outputs of the Services to train other artificial intelligence models or to build a competing product.",
+                        "Sell, rent or transfer your account to a third party."
+                    ]
+                },
+                {
+                    "id": "content",
+                    "heading": "Your content and AI-generated outputs",
+                    "subsections": [
+                        {
+                            "heading": "Content you provide",
+                            "paragraphs": [
+                                "\"Inputs\" include the audio you record during practice sessions, the text you type when talking to the AI, comments, feedback and any other data you submit to the Services.",
+                                "You retain full ownership of your Inputs. You grant NaHo a non-exclusive, royalty-free, worldwide licence to store, process, reproduce and display your Inputs to the extent needed to operate the Services, for example to score pronunciation, generate practice reports, or display content publicly when you choose to share it with the community.",
+                                "You confirm that you hold all necessary rights to your Inputs and that using them does not infringe the rights of any third party."
+                            ]
+                        },
+                        {
+                            "heading": "AI-generated outputs",
+                            "paragraphs": [
+                                "\"Outputs\" are the results the Services return to you, including transcripts, pronunciation scores, grammar and vocabulary feedback, suggested answers, AI character dialogue and session reports. To the extent permitted by law, NaHo assigns to you the right to use Outputs for your personal learning.",
+                                "Because of how language models work, Outputs generated from identical or similar requests may be similar across different users and are not treated as exclusive to anyone.",
+                                "Outputs may be inaccurate or unsuitable for a given context. They are a practice aid and do not replace a teacher, a language expert, or the results of official examinations such as the JLPT. Please review Outputs yourself before relying on them for anything important."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "community",
+                    "heading": "Community and content moderation",
+                    "paragraphs": [
+                        "NaHo includes community features such as comments, reactions. Content posted by users does not reflect the views of the NaHo team.",
+                        "You can flag violating content using the reporting function in the app. We may hide or remove content, or restrict features on accounts that breach these Terms, and we may do so without prior notice where the content is harmful or unlawful."
+                    ]
+                },
+                {
+                    "id": "plans",
+                    "heading": "Plans, fees and payment",
+                    "paragraphs": [
+                        "NaHo offers a free plan and paid monthly plans. Each plan comes with its own allowances, such as the number of pronunciation assessments and minutes of AI conversation per month, access to the full curriculum, in-depth progress analytics and AI sample answers. The benefits and price of each plan are shown at the time of purchase."
+                    ],
+                    "items": [
+                        "Payments are processed through the VNPAY gateway. NaHo does not collect or store your card number or payment credentials.",
+                        "During the capstone period the payment gateway runs in a sandbox environment and no real-money transactions take place.",
+                        "Orders awaiting payment can be cancelled by you under Transaction history. Expired orders lapse automatically.",
+                        "Plan benefits last until the end of the period you purchased and do not renew automatically unless you make a new payment.",
+                        "Unless the law requires otherwise, fees already paid are not refunded for any unused portion of a period.",
+                        "Unused allowances do not roll over to the next period."
+                    ]
+                },
+                {
+                    "id": "third-party",
+                    "heading": "Third-party services",
+                    "paragraphs": [
+                        "To operate the Services, NaHo integrates several third-party providers, including Google (sign-in), VNPAY (payments), OpenAI (language models for conversation and scoring), Microsoft Azure Speech (speech recognition, pronunciation assessment and speech synthesis) and Amazon Web Services (storage of audio and image files).",
+                        "Your use of those services is also governed by each provider's own terms and policies. NaHo does not control and is not responsible for the content, quality or availability of third-party services."
+                    ]
+                },
+                {
+                    "id": "ip",
+                    "heading": "Intellectual property",
+                    "paragraphs": [
+                        "The Services, including the source code, interface, images, icons, name and NaHo branding, belong to the development team and are protected by intellectual property law. These Terms do not transfer any ownership of the Services to you.",
+                        "Learning materials on NaHo reference third-party Japanese textbooks such as the Marugoto series. Rights in those materials remain with their respective owners and are used within the scope of the non-commercial academic research and learning purposes of this project."
+                    ]
+                },
+                {
+                    "id": "feedback",
+                    "heading": "Feedback",
+                    "paragraphs": [
+                        "We welcome your feedback on the product. When you send ideas, improvement suggestions or bug reports, NaHo may use them to develop the Services without payment, without needing further permission and without any obligation of confidentiality, unless the parties agree otherwise in writing."
+                    ]
+                },
+                {
+                    "id": "disclaimer",
+                    "heading": "Disclaimers and limitation of liability",
+                    "paragraphs": [
+                        "The Services are provided \"as is\" and \"as available\". To the extent permitted by law, NaHo makes no promise that the Services will run without interruption or error, or that AI scoring will always be perfectly accurate.",
+                        "Because this is an academic capstone product, we offer no service level agreement (SLA). The Services may be suspended for maintenance, changed, or shut down after the project ends. We recommend keeping your own copy of any learning results that matter to you.",
+                        "To the extent permitted by law, NaHo is not liable for indirect, incidental or consequential damages arising from your use of, or inability to use, the Services. Our total liability, if any, will not exceed the fees you paid to NaHo in the 6 months immediately before the event giving rise to the claim."
+                    ]
+                },
+                {
+                    "id": "termination",
+                    "heading": "Suspension and termination",
+                    "paragraphs": [
+                        "You may stop using the Services at any time and request deletion of your account as described in the Privacy Policy.",
+                        "We may suspend or terminate an account if we detect breaches of these Terms, fraud, or harm to other users or to the system. When an account is terminated, access to learning data and any remaining plan benefits end as well."
+                    ]
+                },
+                {
+                    "id": "changes",
+                    "heading": "Changes to these Terms",
+                    "paragraphs": [
+                        "These Terms may be updated as the product evolves or as legal requirements change. New versions are published on this page with an effective date. For material changes, we will notify you in the app or by email before they take effect.",
+                        "Continuing to use the Services after the effective date means you accept the updated Terms."
+                    ]
+                },
+                {
+                    "id": "law",
+                    "heading": "Governing law and disputes",
+                    "paragraphs": [
+                        "These Terms are governed by and interpreted under the laws of Vietnam. If a dispute arises, the parties will first try to resolve it through good-faith negotiation. If no agreement is reached within 30 days, the dispute will be submitted to the competent court in Vietnam.",
+                        "If any provision is held invalid, the remaining provisions stay in full force."
+                    ]
+                }
+            ],
+            "contact": {
+                "heading": "Contact",
+                "paragraphs": [
+                    "If you have questions about these Terms of Service, please contact the NaHo team through the in-app support channel.",
+                    "NaHo - Group G81, course SEP490, FPT University. This is an academic product; the content on this page was written for the scope of the capstone project and is not a substitute for professional legal advice."
+                ]
+            }
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "summary": "How NaHo collects, uses, shares and protects your personal data.",
+            "intro": [
+                "NaHo respects learners' privacy. This Privacy Policy describes the personal data we collect when you use the NaHo Japanese speaking practice platform, the purposes and legal bases for processing it, who we share it with, how long we keep it, and the rights you have over your own data.",
+                "This policy is written with reference to Vietnam's Decree 13/2023/ND-CP on personal data protection and forms an integral part of the Terms of Service."
+            ],
+            "sections": [
+                {
+                    "id": "collect",
+                    "heading": "Personal data we collect",
+                    "subsections": [
+                        {
+                            "heading": "Data you provide directly",
+                            "items": [
+                                "Account information: username, email address and password. Passwords are always stored as a one-way hash, so the NaHo team cannot read your original password.",
+                                "Profile information (optional): full name, gender, date of birth, JLPT level and avatar.",
+                                "Content you create: comments, reactions, chatroom messages and any violation reports you submit."
+                            ]
+                        },
+                        {
+                            "heading": "Data generated as you learn",
+                            "items": [
+                                "Voice recordings from practice sessions and their transcripts.",
+                                "Assessment results: pronunciation and fluency scores, grammar and vocabulary feedback, and reports for each practice session.",
+                                "Learning progress: completed lessons, curriculum path and speaking history.",
+                                "Motivation data: reward points, attendance streaks, daily missions, reward chests and league rankings."
+                            ]
+                        },
+                        {
+                            "heading": "Data collected automatically",
+                            "items": [
+                                "Session data: IP address, browser and device information (User-Agent), device identifier, and the times you sign in, sign out or have a session revoked.",
+                                "Technical logs used for troubleshooting and detecting unusual activity."
+                            ]
+                        },
+                        {
+                            "heading": "Data from third parties",
+                            "items": [
+                                "If you sign in with Google, we receive your email address, full name, avatar and Google account identifier from Google.",
+                                "When you pay, we receive the order code, amount and transaction status from VNPAY. We do not receive or store card numbers or payment credentials."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "purpose",
+                    "heading": "How we use your data",
+                    "items": [
+                        "Create, verify and manage your account, including sending OTP codes to your email.",
+                        "Provide learning features: curriculum-based speaking practice, free conversation with AI, pronunciation scoring and session reports.",
+                        "Personalise your learning path based on your level and progress.",
+                        "Run motivational features such as reward points, daily missions and leaderboards. When you take part in a leaderboard, your username, avatar and score are visible to other users.",
+                        "Process payments and manage plans and usage allowances.",
+                        "Keep the platform safe: detect unusual sign-ins and prevent fraud and abuse.",
+                        "Improve product quality using aggregated statistics or anonymised data.",
+                        "Send notices about your account, transactions and important changes to the Services."
+                    ],
+                    "paragraphs": [
+                        "We do not use your personal data to train NaHo's own artificial intelligence models, and we do not sell personal data to anyone."
+                    ]
+                },
+                {
+                    "id": "legal-basis",
+                    "heading": "Legal bases for processing",
+                    "items": [
+                        "Your consent: when you create an account, record your voice or choose to share content with the community. You may withdraw consent at any time.",
+                        "Performance of a contract: processing needed to deliver the Services you signed up for, including managing paid plans.",
+                        "Legal obligations: retaining transaction records and providing information on lawful request from competent authorities.",
+                        "Legitimate interests: protecting system security, preventing fraud and improving the Services, where those interests do not override your rights."
+                    ]
+                },
+                {
+                    "id": "sharing",
+                    "heading": "Sharing data with third parties",
+                    "paragraphs": [
+                        "We share only the minimum data needed to operate the Services, with the following processors:"
+                    ],
+                    "items": [
+                        "OpenAI: conversation text and transcripts are sent to language models to generate responses, suggest answers and score practice sessions.",
+                        "Microsoft Azure Speech: your audio is processed for speech recognition, pronunciation assessment and speech synthesis.",
+                        "Amazon Web Services (S3): storage of audio files, avatars and other static files.",
+                        "Google: identity verification when you choose to sign in with a Google account.",
+                        "VNPAY: processing of plan payments.",
+                        "Email service provider: delivery of OTP codes and account-related notices."
+                    ],
+                    "subsections": [
+                        {
+                            "heading": "Other disclosures",
+                            "paragraphs": [
+                                "We may disclose data on lawful request from a competent authority, where needed to protect the rights, property and safety of users or of NaHo, or where you expressly permit it. We do not sell or trade your personal data to third parties for advertising."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "transfer",
+                    "heading": "International data transfers",
+                    "paragraphs": [
+                        "Some of our providers host their infrastructure abroad, so your data may be processed outside Vietnam: speech recognition and assessment run in the Japan region, file storage is in the Singapore region, and the language model service is operated by a provider in the United States.",
+                        "In those cases we transfer only the data needed for processing and require our partners to apply appropriate safeguards under their service agreements."
+                    ]
+                },
+                {
+                    "id": "retention",
+                    "heading": "How long we keep data",
+                    "items": [
+                        "OTP codes: stored for at most 5 minutes and deleted immediately after successful verification. Failed attempt counters are temporary and deleted with the code.",
+                        "Login sessions: access tokens are valid for 5 minutes and refresh automatically; refresh tokens are valid for up to 14 days. Sessions are revoked when you sign out or sign in on another device.",
+                        "Account and learning data: kept for as long as your account remains active.",
+                        "Recordings and scoring results: kept so you can review your practice history, until you delete the session or your account.",
+                        "Transaction records: kept for the period required by accounting and tax law.",
+                        "After account deletion we delete or anonymise personal data within 30 days, except data we are legally required to retain."
+                    ]
+                },
+                {
+                    "id": "security",
+                    "heading": "Security measures",
+                    "items": [
+                        "Passwords are one-way hashed before storage and cannot be reversed to their original form.",
+                        "Access and refresh tokens are kept in cookies with a security prefix, set as HttpOnly and Secure so browser JavaScript cannot read them.",
+                        "Access tokens are short-lived (5 minutes) and rotate automatically, reducing the risk if a token is exposed.",
+                        "Each account keeps one active session; the system warns you and revokes the old session when a sign-in happens elsewhere.",
+                        "OTP codes are cancelled after 5 incorrect attempts and expire quickly to limit brute-force attacks.",
+                        "Traffic between your browser and our servers is encrypted with HTTPS."
+                    ],
+                    "paragraphs": [
+                        "Even so, no system is completely secure. Please use a strong password, avoid reusing passwords from other services, and never share your OTP with anyone."
+                    ]
+                },
+                {
+                    "id": "cookies",
+                    "heading": "Cookies and similar technologies",
+                    "items": [
+                        "Session cookies: store access and refresh tokens to keep you signed in. These are strictly necessary for the Services to work.",
+                        "Language cookie: remembers the display language you selected.",
+                        "Theme cookie: remembers your light or dark interface preference."
+                    ],
+                    "paragraphs": [
+                        "NaHo does not use third-party advertising cookies and does not track you across other websites. If you block cookies in your browser, features such as staying signed in will not work correctly."
+                    ]
+                },
+                {
+                    "id": "rights",
+                    "heading": "Your rights over your personal data",
+                    "items": [
+                        "The right to know what data of yours is processed and for what purposes.",
+                        "The right to give and withdraw consent at any time, without affecting the lawfulness of processing carried out beforehand.",
+                        "The right to access and correct your personal data, or ask us to correct it, from Settings.",
+                        "The right to request deletion of your data and of your account.",
+                        "The right to restrict or object to processing where the law allows.",
+                        "The right to request a copy of your personal data.",
+                        "The right to complain to us or to a competent authority."
+                    ],
+                    "paragraphs": [
+                        "You can exercise most of these rights directly in Settings, or by contacting NaHo support. We will respond within 72 hours of receiving a valid request, in line with Decree 13/2023/ND-CP."
+                    ]
+                },
+                {
+                    "id": "children",
+                    "heading": "Children's data",
+                    "paragraphs": [
+                        "The Services are not intended for independent use by anyone under 16. Personal data of children is processed only with the consent of a parent or legal guardian.",
+                        "If you are a parent or guardian and find that a child has given us data without your consent, please contact us so we can delete it."
+                    ]
+                },
+                {
+                    "id": "changes",
+                    "heading": "Changes to this Privacy Policy",
+                    "paragraphs": [
+                        "This policy may be updated as the Services gain new features or as legal requirements change. New versions are published on this page with an effective date. For changes that materially affect your rights, we will notify you in advance in the app or by email."
+                    ]
+                }
+            ],
+            "contact": {
+                "heading": "Contact",
+                "paragraphs": [
+                    "If you have questions or requests about your personal data, please contact the NaHo team through the in-app support channel.",
+                    "NaHo - Group G81, course SEP490, FPT University. This is an academic product; the content on this page was written for the scope of the capstone project and is not a substitute for professional legal advice."
+                ]
+            }
+        }
+    }
+}

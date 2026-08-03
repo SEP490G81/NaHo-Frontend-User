@@ -13,11 +13,14 @@ const publicPaths = [
     "/",
     "/login",
     "/register",
+    "/verify-email",
     "/forgot-password",
     "/features",
     "/learner-feedback",
     "/frequently-questions",
     "/home",
+    "/terms",
+    "/privacy",
 ];
 
 export default async function proxy(request: NextRequest) {

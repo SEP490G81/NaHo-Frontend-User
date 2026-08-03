@@ -11,6 +11,7 @@
                 "login": "Đăng nhập",
                 "forgotPassword": "Quên mật khẩu",
                 "register": "Đăng ký",
+                "verifyEmail": "メール認証",
                 "getHelp": "Trợ giúp",
                 "features": "Tính năng nổi bật",
                 "learnerFeedback": "Đánh giá từ người học",
@@ -32,7 +33,9 @@
                 "speakingResult": "セッションレポート",
                 "leaderboard": "ランキング",
                 "settings": "設定",
-                "orders": "取引履歴"
+                "orders": "取引履歴",
+                "terms": "利用規約",
+                "privacy": "プライバシーポリシー"
             },
             "language": {
                 "vi": "Tiếng Việt",

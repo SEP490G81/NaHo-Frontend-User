@@ -16,6 +16,7 @@
                 "login": "Đăng nhập",
                 "forgotPassword": "Quên mật khẩu",
                 "register": "Đăng ký",
+                "verifyEmail": "Xác thực email",
                 "getHelp": "Trợ giúp",
                 "features": "Tính năng nổi bật",
                 "learnerFeedback": "Đánh giá từ người học",
@@ -37,7 +38,9 @@
                 "speakingResult": "Báo cáo phiên luyện",
                 "leaderboard": "Bảng xếp hạng thi đua",
                 "settings": "Cài đặt",
-                "orders": "Lịch sử giao dịch"
+                "orders": "Lịch sử giao dịch",
+                "terms": "Điều khoản sử dụng",
+                "privacy": "Chính sách bảo mật"
             },
             "language": {
                 "vi": "Tiếng Việt",

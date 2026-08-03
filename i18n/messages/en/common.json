@@ -11,12 +11,13 @@
                 "login": "Đăng nhập",
                 "forgotPassword": "Quên mật khẩu",
                 "register": "Đăng ký",
+                "verifyEmail": "Email Verification",
                 "getHelp": "Trợ giúp",
                 "features": "Tính năng nổi bật",
                 "learnerFeedback": "Đánh giá từ người học",
                 "frequentlyQuestions": "Câu hỏi thường gặp",
                 "dashboard": "Dashboard",
-                "leaderboard": "Leaderboard",
+                "leaderboard": "Competitive Leaderboard",
                 "settings": "Settings",
                 "topics": "Practice Topics",
                 "topicDetail": "Topic Detail",
@@ -32,8 +33,9 @@
                 "liveChatroom": "Live Chatroom",
                 "dialogueSetup": "Free AI Conversation",
                 "speakingResult": "Session Report",
-                "leaderboard": "Competitive Leaderboard",
-                "orders": "Order History"
+                "orders": "Order History",
+                "terms": "Terms of Service",
+                "privacy": "Privacy Policy"
             },
             "language": {
                 "vi": "Tiếng Việt",
