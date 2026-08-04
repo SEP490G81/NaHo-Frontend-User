@@ -23,3 +23,19 @@ export interface VerifyEmailRequest {
 export interface ResendOtpRequest {
     email: string;
 }
+
+export interface ForgotPasswordRequest {
+    email: string;
+}
+
+export interface VerifyForgotPasswordOtpRequest {
+    email: string;
+    otpCode: string;
+}
+
+export interface ResetPasswordRequest {
+    email: string;
+    resetToken: string;
+    newPassword: string;
+    confirmPassword: string;
+}

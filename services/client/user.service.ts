@@ -1,12 +1,18 @@
 import { ApiError } from "@/libs/api.error";
 import {
     CredentialsLoginRequest,
+    ForgotPasswordRequest,
     RegisterRequest,
     ResendOtpRequest,
+    ResetPasswordRequest,
     VerifyEmailRequest,
+    VerifyForgotPasswordOtpRequest,
 } from "@/types/requests/user.request";
 import { ProblemDetail } from "@/types/responses/base.response";
-import { UserResponse } from "@/types/responses/user.response";
+import {
+    ResetPasswordTokenResponse,
+    UserResponse,
+} from "@/types/responses/user.response";
 
 export async function credentialsLogin(
     request: CredentialsLoginRequest,
@@ -60,6 +66,63 @@ export async function verifyEmail(request: VerifyEmailRequest): Promise<void> {
 
 export async function resendOtp(request: ResendOtpRequest): Promise<void> {
     const response = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+}
+
+export async function forgotPassword(
+    request: ForgotPasswordRequest,
+): Promise<void> {
+    const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+}
+
+export async function verifyForgotPasswordOtp(
+    request: VerifyForgotPasswordOtpRequest,
+): Promise<ResetPasswordTokenResponse> {
+    const response = await fetch("/api/auth/forgot-password-otp", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+
+    return result as ResetPasswordTokenResponse;
+}
+
+export async function resetPassword(
+    request: ResetPasswordRequest,
+): Promise<void> {
+    const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

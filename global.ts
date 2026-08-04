@@ -1,6 +1,7 @@
 import common from "@/i18n/messages/vi/common.json";
 import login from "@/i18n/messages/vi/login.json";
 import register from "@/i18n/messages/vi/register.json";
+import forgotPassword from "@/i18n/messages/vi/forgot-password.json";
 import home from "@/i18n/messages/vi/home.json";
 import dashboard from "@/i18n/messages/vi/dashboard.json";
 import history from "@/i18n/messages/vi/history.json";
@@ -23,6 +24,7 @@ declare module "next-intl" {
         Messages: typeof common &
             typeof login &
             typeof register &
+            typeof forgotPassword &
             typeof home &
             typeof dashboard &
             typeof history &

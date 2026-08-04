@@ -1,4 +1,4 @@
-import { OTP_LENGTH } from "@/modules/public/verify-email/constants/verify.email.constant";
+import { OTP_LENGTH } from "@/constants/otp.constants";
 
 export function createEmptyOtp(): string[] {
     return Array.from({ length: OTP_LENGTH }, () => "");

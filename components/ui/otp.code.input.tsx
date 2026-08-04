@@ -1,6 +1,6 @@
 "use client";
-import { OTP_LENGTH } from "@/modules/public/verify-email/constants/verify.email.constant";
-import { onlyDigits } from "@/modules/public/verify-email/utils/verify.email.util";
+import { OTP_LENGTH } from "@/constants/otp.constants";
+import { onlyDigits } from "@/libs/otp";
 import { ClipboardEvent, KeyboardEvent, useEffect, useRef } from "react";
 
 const OtpCodeInput = ({
@@ -113,9 +113,7 @@ const OtpCodeInput = ({
                     maxLength={OTP_LENGTH}
                     value={value}
                     disabled={disabled}
-                    onChange={(event) =>
-                        handleChange(index, event.target.value)
-                    }
+                    onChange={(event) => handleChange(index, event.target.value)}
                     onKeyDown={(event) => handleKeyDown(index, event)}
                     onPaste={(event) => handlePaste(index, event)}
                     onFocus={(event) => event.target.select()}
