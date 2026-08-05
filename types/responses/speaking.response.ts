@@ -1,7 +1,10 @@
+import { FileResponse } from "@/types/responses/file.response";
+
 /** Response của POST /analysis (chấm điểm phát âm). */
 export interface SpeakingAnalysisResponse {
-    historyId: number;
-    score: number;
+    answerHistoryId: number;
+    overallScore: number;
+    audioFile: FileResponse;
 }
 
 /* ─── AI 1:1 Dialogue (luồng nói chuyện với persona) ─────────────── */

@@ -1,18 +1,32 @@
+export const OperationType = {
+    UPLOAD: "UPLOAD",
+    DELETE: "DELETE",
+    DOWNLOAD: "DOWNLOAD",
+} as const;
+
+export type OperationType = (typeof OperationType)[keyof typeof OperationType];
+
+export const OperationStatus = {
+    COMPLETED: "COMPLETED",
+    PROCESSING: "PROCESSING",
+    FAILED: "FAILED",
+    RETRY_LIMIT_EXCEEDED: "RETRY_LIMIT_EXCEEDED",
+} as const;
+
+export type OperationStatus =
+    (typeof OperationStatus)[keyof typeof OperationStatus];
+
 export interface FileResponse {
     id: number;
-    objectKey: string;
-    originalName: string;
-    contentType: string;
+
+    accessUrl: string;
+    originalFileName: string;
+
     size: number;
-    /** Các trường cũ (giữ optional để tương thích ngược). */
-    fileUrl?: string;
-    previewUrl?: string;
+    checksum: string;
+
+    operationType: OperationType;
+    operationStatus: OperationStatus;
 }
 
-export interface FileResult {
-    id: number;
-    objectKey: string;
-    originalName: string;
-    contentType: string;
-    size: number;
-}
+export type FileResult = FileResponse;

@@ -86,6 +86,10 @@
         },
         "report": {
             "modalTitle": "Submit Feedback & Report",
+            "pageTitle": "Reports & Feedback",
+            "pageSubtitle": "Submit system issue reports and track your report resolution history.",
+            "createReportSectionTitle": "Create New Report",
+            "historySectionTitle": "Report History",
             "fieldReportType": "Report Type",
             "typeQuestion": "Question",
             "typeComment": "Comment",
@@ -96,13 +100,29 @@
             "descriptionPlaceholder": "Please describe in detail the issue you encountered...",
             "fieldImage": "Attachment Image",
             "uploadImageBtn": "Upload Image",
+            "uploadImagesBtn": "Upload Images (select one or multiple)",
             "imageAttached": "Image attached",
+            "imagesAttachedCount": "{count} 枚の画像を添付しました",
             "removeBtn": "Remove Image",
             "cancelBtn": "Cancel",
             "submitBtn": "Submit Report",
+            "submitting": "Submitting...",
             "submitSuccess": "Report submitted successfully! Thank you for your feedback.",
             "errorOnlyImage": "Please select only image files!",
-            "errorRequired": "Please fill in both title and description!"
+            "errorRequired": "Please fill in both title and description!",
+            "statusResolved": "Resolved",
+            "statusPending": "Pending",
+            "filterAll": "All",
+            "noReports": "No reports found.",
+            "noReportsFiltered": "No reports found for this status.",
+            "tableHeaderId": "ID",
+            "tableHeaderType": "Report Type",
+            "tableHeaderContent": "Report Content",
+            "tableHeaderStatus": "Status",
+            "tableHeaderImages": "Attached Images",
+            "tableHeaderDate": "Created Date",
+            "viewImages": "View images ({count})",
+            "noImages": "No images"
         }
     }
 }

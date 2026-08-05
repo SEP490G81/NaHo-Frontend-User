@@ -21,8 +21,8 @@ export const getUserAvatarUrl = (
     if (!user) {
         return undefined;
     }
-    if (user.avatar?.objectKey) {
-        return user.avatar.objectKey;
+    if (user.avatar?.accessUrl) {
+        return user.avatar.accessUrl;
     }
 
     if (user.oAuthProviders && user.oAuthProviders.length > 0) {

@@ -23,6 +23,7 @@ const MESSAGE_FILES = [
     "daily-reward",
     "daily-mission",
     "legal",
+    "help",
 ];
 
 export default getRequestConfig(async ({ requestLocale }) => {

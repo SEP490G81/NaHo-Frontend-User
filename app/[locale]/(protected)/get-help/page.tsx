@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import HelpCenter from "@/modules/protected/get-help/features/help.center";
 
 export async function generateMetadata({
     params,
@@ -20,7 +21,7 @@ export async function generateMetadata({
 }
 
 const GetHelpPage = () => {
-    return <div>get help</div>;
+    return <HelpCenter />;
 };
 
 export default GetHelpPage;
