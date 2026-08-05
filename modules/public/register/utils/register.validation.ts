@@ -5,6 +5,10 @@ const USERNAME_MAX_LENGTH = 36;
 const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 16;
 
+// Bộ ký tự đặc biệt phải khớp với regex của backend (value object Password),
+// nếu nới rộng hơn thì backend sẽ trả USER_006 dù frontend báo hợp lệ.
+const SPECIAL_REGEX = /[@#$%^&+=!_~-]/;
+
 export interface PasswordRule {
     needKey: string;
     test: (value: string) => boolean;
@@ -29,7 +33,7 @@ export const PASSWORD_RULES: PasswordRule[] = [
     },
     {
         needKey: "register.form.passwordNeed.special",
-        test: (v) => /[^A-Za-z0-9]/.test(v),
+        test: (v) => SPECIAL_REGEX.test(v),
     },
 ];
 
