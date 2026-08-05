@@ -1,0 +1,523 @@
+{
+    "help": {
+        "hero": {
+            "title": "How can we help you?",
+            "subtitle": "Find answers about learning paths, AI speaking practice, rewards, plans and your NaHo account.",
+            "searchPlaceholder": "Type a question or keyword, for example: microphone not working...",
+            "searchLabel": "Search the help center",
+            "popularLabel": "Popular searches",
+            "popularQueries": [
+                "microphone",
+                "upgrade plan",
+                "L-Point",
+                "change password"
+            ]
+        },
+        "search": {
+            "resultsTitle": "{count} results for “{query}”",
+            "clear": "Clear search",
+            "groupGuide": "Guides",
+            "groupFaq": "Frequently asked questions",
+            "groupTroubleshooting": "Troubleshooting",
+            "emptyTitle": "No results found for “{query}”",
+            "emptyDescription": "Try a shorter keyword, or send a report so the NaHo team can help you directly.",
+            "emptyAction": "Send a report to support"
+        },
+        "categories": {
+            "title": "Browse by topic",
+            "description": "Pick a topic to filter the frequently asked questions below.",
+            "questionCount": "{count} questions",
+            "all": "All topics",
+            "items": [
+                {
+                    "id": "getting-started",
+                    "title": "Getting started",
+                    "description": "Learning paths, the Marugoto coursebook and your first steps."
+                },
+                {
+                    "id": "speaking-ai",
+                    "title": "Speaking & AI dialogue",
+                    "description": "How scoring works, choosing companions and reviewing sessions."
+                },
+                {
+                    "id": "rewards",
+                    "title": "Points, missions & ranking",
+                    "description": "L-Point, daily check-in, reward chests and the competition leaderboard."
+                },
+                {
+                    "id": "billing",
+                    "title": "Plans & payments",
+                    "description": "Upgrades, invoices, refunds and transaction history."
+                },
+                {
+                    "id": "account",
+                    "title": "Account & security",
+                    "description": "Passwords, email verification, login sessions and privacy."
+                }
+            ]
+        },
+        "guides": {
+            "title": "Getting started guides",
+            "description": "Four short guides to get you comfortable with NaHo in your very first session.",
+            "stepLabel": "Step {index}",
+            "items": [
+                {
+                    "id": "kaiwa-path",
+                    "title": "Start the Kaiwa learning path",
+                    "description": "Practise speaking with the Marugoto coursebook, moving from topics to individual dialogues.",
+                    "duration": "About 5 minutes",
+                    "steps": [
+                        "Open “Kaiwa learning path” in the left sidebar and pick the book that matches your level.",
+                        "Choose a topic, then open the first unlocked dialogue in the path.",
+                        "Grant microphone permission when your browser asks, then press record and speak along with the prompt.",
+                        "When the lesson ends, read the pronunciation report and redo the sentences marked for improvement."
+                    ],
+                    "action": {
+                        "label": "Open the Kaiwa path",
+                        "href": "/books"
+                    }
+                },
+                {
+                    "id": "ai-dialogue",
+                    "title": "Run a free AI dialogue session",
+                    "description": "Choose your own scenario and AI companion to practise speaking beyond the coursebook.",
+                    "duration": "About 3 minutes",
+                    "steps": [
+                        "Open “Free AI dialogue” in the left sidebar.",
+                        "Pick an AI companion whose role and level match your goal for the session.",
+                        "Set the topic, difficulty and advanced options, then start the session.",
+                        "Speak naturally as in a real conversation, then end the session to receive overall feedback."
+                    ],
+                    "action": {
+                        "label": "Open free AI dialogue",
+                        "href": "/dialogue-setup"
+                    }
+                },
+                {
+                    "id": "speaking-report",
+                    "title": "Read your speaking report",
+                    "description": "Learn how to use the report after each session so you improve faster.",
+                    "duration": "About 4 minutes",
+                    "steps": [
+                        "Open the account menu in the top right corner and choose “Speaking history”.",
+                        "Select a completed session to open its detailed report.",
+                        "Compare what you said with the model sentence to spot mispronounced or missing sounds.",
+                        "Redo the lowest-scoring sentences before moving on to a new lesson."
+                    ],
+                    "action": {
+                        "label": "View speaking history",
+                        "href": "/speaking-history"
+                    }
+                },
+                {
+                    "id": "daily-routine",
+                    "title": "Build a daily habit",
+                    "description": "Check in, complete missions and hold your place on the competition leaderboard.",
+                    "duration": "About 2 minutes",
+                    "steps": [
+                        "Press “Check in” in the top bar every day to earn streak rewards.",
+                        "Open “Missions” to see today's tasks and the reward attached to each one.",
+                        "Complete a mission to earn L-Point, then claim the reward directly in the mission list.",
+                        "Track your position on the competition leaderboard to stay motivated."
+                    ],
+                    "action": {
+                        "label": "View the leaderboard",
+                        "href": "/leaderboard"
+                    }
+                }
+            ]
+        },
+        "faq": {
+            "title": "Frequently asked questions",
+            "description": "The questions NaHo learners send us most often.",
+            "emptyCategory": "There are no questions in this topic yet.",
+            "items": [
+                {
+                    "id": "what-is-naho",
+                    "categoryId": "getting-started",
+                    "question": "What is NaHo and who is it for?",
+                    "answer": [
+                        "NaHo is a Japanese speaking platform with an AI companion, built around the Marugoto coursebook. You follow a dialogue-based path, speak directly with the AI and get pronunciation feedback after every sentence.",
+                        "It suits beginners who need a clear path, as well as learners who already have a foundation but lack a place to practise speaking regularly."
+                    ]
+                },
+                {
+                    "id": "where-to-start",
+                    "categoryId": "getting-started",
+                    "question": "I am new to Japanese — where should I start?",
+                    "answer": [
+                        "Start in the Kaiwa learning path and pick the lowest-level book. The path unlocks in order, so you never have to decide what to study next.",
+                        "Once you are comfortable speaking into the microphone, add free AI dialogue sessions to practise reacting to content outside the coursebook."
+                    ],
+                    "link": {
+                        "label": "Open the Kaiwa path",
+                        "href": "/books"
+                    }
+                },
+                {
+                    "id": "what-is-marugoto",
+                    "categoryId": "getting-started",
+                    "question": "What is the Marugoto coursebook used in NaHo?",
+                    "answer": [
+                        "Marugoto is a communication-oriented Japanese coursebook organised by level and by everyday topic. NaHo uses its topic-and-dialogue structure as the backbone of the speaking path.",
+                        "Every lesson maps to a concrete communication situation, so you learn patterns you can use immediately instead of isolated grammar points."
+                    ]
+                },
+                {
+                    "id": "change-language",
+                    "categoryId": "getting-started",
+                    "question": "Can I change the interface language?",
+                    "answer": [
+                        "Yes. Press the globe icon in the top bar to switch between Vietnamese, English and Japanese.",
+                        "The language setting only affects the interface and help content; the Japanese lesson material stays unchanged."
+                    ]
+                },
+                {
+                    "id": "how-scoring-works",
+                    "categoryId": "speaking-ai",
+                    "question": "How does NaHo score my pronunciation?",
+                    "answer": [
+                        "After each sentence the system converts your speech to text and compares it with the model sentence to evaluate pronunciation accuracy, completeness and fluency.",
+                        "The score is a reference to show you what to practise again. Read the detailed feedback rather than focusing on the overall number."
+                    ]
+                },
+                {
+                    "id": "kaiwa-vs-free-dialogue",
+                    "categoryId": "speaking-ai",
+                    "question": "How is the Kaiwa path different from free AI dialogue?",
+                    "answer": [
+                        "The Kaiwa path follows the Marugoto coursebook: fixed content, sequential unlocking and a report for every lesson. It keeps you on a structured route.",
+                        "Free AI dialogue is not tied to a lesson: you pick the scenario, companion and difficulty yourself. It is where you apply what you have learned."
+                    ],
+                    "link": {
+                        "label": "Open free AI dialogue",
+                        "href": "/dialogue-setup"
+                    }
+                },
+                {
+                    "id": "choose-companion",
+                    "categoryId": "speaking-ai",
+                    "question": "Can I choose the AI companion and the difficulty?",
+                    "answer": [
+                        "Yes. On the free AI dialogue setup screen, each companion has its own role and level to suit different situations.",
+                        "In the advanced options you can adjust the topic and difficulty of the session before you start."
+                    ]
+                },
+                {
+                    "id": "review-sessions",
+                    "categoryId": "speaking-ai",
+                    "question": "Where can I review my completed speaking sessions?",
+                    "answer": [
+                        "Open the account menu in the top right corner and choose “Speaking history”. The list shows completed sessions with their time and results.",
+                        "Select any session to open its detailed report."
+                    ],
+                    "link": {
+                        "label": "View speaking history",
+                        "href": "/speaking-history"
+                    }
+                },
+                {
+                    "id": "what-is-lpoint",
+                    "categoryId": "rewards",
+                    "question": "What is L-Point?",
+                    "answer": [
+                        "L-Point is what you earn by completing lessons, daily missions and check-ins. It determines your position on the competition leaderboard.",
+                        "You can review every point transaction in “Point history” in the account menu."
+                    ],
+                    "link": {
+                        "label": "View point history",
+                        "href": "/point-history"
+                    }
+                },
+                {
+                    "id": "daily-missions",
+                    "categoryId": "rewards",
+                    "question": "When do daily missions reset?",
+                    "answer": [
+                        "Missions reset every day. Missions you did not finish yesterday do not carry over to the new day.",
+                        "Once you meet the requirement you still need to claim the reward in the mission list before the L-Point is added to your account."
+                    ]
+                },
+                {
+                    "id": "attendance-chest",
+                    "categoryId": "rewards",
+                    "question": "How do daily check-in and reward chests work?",
+                    "answer": [
+                        "You can check in once per day using the “Check in” button in the top bar. The monthly calendar lets you follow your streak.",
+                        "Certain milestones in the month unlock chests with larger rewards. If you miss a day the streak restarts, but rewards you already claimed are kept."
+                    ]
+                },
+                {
+                    "id": "leaderboard-rules",
+                    "categoryId": "rewards",
+                    "question": "How is the competition leaderboard calculated?",
+                    "answer": [
+                        "Learners are placed into tiered leagues, and your rank inside a league is based on the total L-Point you accumulate during the competition period.",
+                        "Studying a little every day usually beats cramming, because missions and check-ins only award points on a per-day basis."
+                    ],
+                    "link": {
+                        "label": "View the leaderboard",
+                        "href": "/leaderboard"
+                    }
+                },
+                {
+                    "id": "points-not-added",
+                    "categoryId": "rewards",
+                    "question": "I finished a session but my points did not increase",
+                    "answer": [
+                        "First check whether the lesson was recorded as completed — a session you exited halfway is not counted.",
+                        "For daily missions, points only arrive after you claim the reward. If everything looks correct but the points are still missing, reload the page and check “Point history”; if they are still absent, send a report to support."
+                    ],
+                    "link": {
+                        "label": "View point history",
+                        "href": "/point-history"
+                    }
+                },
+                {
+                    "id": "free-plan",
+                    "categoryId": "billing",
+                    "question": "Can I use NaHo for free?",
+                    "answer": [
+                        "You can create an account and explore the open content at no cost. Some advanced content and usage limits require a paid plan.",
+                        "The full list of plans and what each one includes is shown in the billing section of Settings."
+                    ],
+                    "link": {
+                        "label": "View plans",
+                        "href": "/settings/billing"
+                    }
+                },
+                {
+                    "id": "payment-methods",
+                    "categoryId": "billing",
+                    "question": "How do I pay?",
+                    "answer": [
+                        "Choose a plan in the billing section; the system creates an order and takes you to the payment gateway to scan a code or transfer as instructed.",
+                        "Once the transaction succeeds you are returned to NaHo and the plan is activated for the account you are signed in with."
+                    ],
+                    "link": {
+                        "label": "Go to billing",
+                        "href": "/settings/billing"
+                    }
+                },
+                {
+                    "id": "paid-not-upgraded",
+                    "categoryId": "billing",
+                    "question": "I paid but my account has not been upgraded",
+                    "answer": [
+                        "Confirmation from the payment gateway can take a few minutes. Reload the page and check the order status in “Transaction history”.",
+                        "If the order shows as successful but the plan is still not active after about 15 minutes, send a report with the order code and a screenshot of the receipt."
+                    ],
+                    "link": {
+                        "label": "View transaction history",
+                        "href": "/orders"
+                    }
+                },
+                {
+                    "id": "where-invoices",
+                    "categoryId": "billing",
+                    "question": "Where can I find my invoices and past transactions?",
+                    "answer": [
+                        "Open the account menu in the top right corner and choose “Transaction history”. It lists the order code, amount, time and status of every transaction.",
+                        "Keep the order code handy whenever you contact support about a payment issue."
+                    ],
+                    "link": {
+                        "label": "View transaction history",
+                        "href": "/orders"
+                    }
+                },
+                {
+                    "id": "cancel-subscription",
+                    "categoryId": "billing",
+                    "question": "Can I cancel a plan or request a refund?",
+                    "answer": [
+                        "You can cancel an unpaid order directly in “Transaction history”. For an active plan, your benefits remain until the period you paid for ends.",
+                        "Refund requests are reviewed according to the Terms of Service. Send a report with the order code and your reason so the NaHo team can process it."
+                    ],
+                    "link": {
+                        "label": "Read the Terms of Service",
+                        "href": "/terms"
+                    }
+                },
+                {
+                    "id": "change-password",
+                    "categoryId": "account",
+                    "question": "How do I change my password?",
+                    "answer": [
+                        "Go to Settings, open the security section and enter your current password together with the new one.",
+                        "After changing your password, sign out of other devices if you suspect someone else has used your account."
+                    ],
+                    "link": {
+                        "label": "Open security settings",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "forgot-password",
+                    "categoryId": "account",
+                    "question": "What if I forgot my password?",
+                    "answer": [
+                        "On the sign-in screen choose “Forgot password”, enter your registered email and follow the instructions sent to your inbox.",
+                        "The reset link is only valid for a short time. If it expires, start the process again to receive a new one."
+                    ],
+                    "link": {
+                        "label": "Reset your password",
+                        "href": "/forgot-password"
+                    }
+                },
+                {
+                    "id": "otp-not-received",
+                    "categoryId": "account",
+                    "question": "I did not receive the email verification code",
+                    "answer": [
+                        "Check your spam and promotions folders, and make sure the email address you entered has no typo.",
+                        "If nothing arrives after a few minutes, use the resend button on the verification screen. The old code stops working as soon as a new one is sent."
+                    ]
+                },
+                {
+                    "id": "logout-all-devices",
+                    "categoryId": "account",
+                    "question": "How do I sign out of all devices?",
+                    "answer": [
+                        "Go to Settings, open the security section and use the option to sign out of every session. All signed-in devices are returned to the login screen.",
+                        "Use this right after changing your password if you have ever signed in on a public computer."
+                    ],
+                    "link": {
+                        "label": "Open security settings",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "force-logout-warning",
+                    "categoryId": "account",
+                    "question": "Why do I see “your account is signed in elsewhere”?",
+                    "answer": [
+                        "A NaHo account keeps only one active learning session at a time. When another device signs in, the older session ends and this warning appears.",
+                        "If that sign-in was not you, change your password immediately and sign out of all devices."
+                    ],
+                    "link": {
+                        "label": "Open security settings",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "recording-privacy",
+                    "categoryId": "account",
+                    "question": "How are my voice recordings used?",
+                    "answer": [
+                        "Recordings are used to score your pronunciation and to build the report for your own practice session.",
+                        "Details on how NaHo collects, stores and protects your data are set out in the Privacy Policy."
+                    ],
+                    "link": {
+                        "label": "Read the Privacy Policy",
+                        "href": "/privacy"
+                    }
+                }
+            ]
+        },
+        "troubleshooting": {
+            "title": "Microphone & audio troubleshooting",
+            "description": "NaHo needs your microphone to score pronunciation. Here are the most common problems and how to fix them.",
+            "symptomLabel": "Symptom",
+            "browserTitle": "Grant microphone permission by browser",
+            "browserDescription": "Pick the browser you are using to see the exact steps.",
+            "items": [
+                {
+                    "id": "mic-not-detected",
+                    "title": "NaHo does not pick up my voice",
+                    "symptom": "You speak but the waveform stays flat, or the result comes back empty.",
+                    "steps": [
+                        "Check the microphone icon in the browser address bar and make sure permission is set to allow.",
+                        "If your machine has several input devices, select the microphone you are actually using in your system sound settings.",
+                        "Close apps that hold the microphone such as Zoom, Google Meet or Discord, then reload the page.",
+                        "Try a new tab or a different browser to rule out a problem with the current session."
+                    ]
+                },
+                {
+                    "id": "no-sound",
+                    "title": "I cannot hear the AI voice",
+                    "symptom": "The session runs normally but no sound comes out.",
+                    "steps": [
+                        "Check the system volume and make sure the NaHo tab is not muted (right-click the tab to check).",
+                        "If you use Bluetooth headphones, disconnect and reconnect them, or try wired headphones.",
+                        "Select the correct output device in your system sound settings.",
+                        "Reload the page and start the session again."
+                    ]
+                },
+                {
+                    "id": "low-score",
+                    "title": "My pronunciation score is unusually low",
+                    "symptom": "You pronounce correctly but the score comes back far below your usual level.",
+                    "steps": [
+                        "Record in a quiet place; background noise and echo directly reduce recognition accuracy.",
+                        "Keep the microphone about a hand-span from your mouth — neither too close nor too far.",
+                        "Speak the whole sentence at an even pace; hesitating mid-sentence is often recognised as missing words.",
+                        "If you use the built-in laptop microphone, try a headset microphone and compare the results."
+                    ]
+                },
+                {
+                    "id": "recording-cut",
+                    "title": "The recording stops halfway",
+                    "symptom": "The session ends abruptly, or only the beginning of your sentence is captured.",
+                    "steps": [
+                        "Check your network connection; an unstable link can interrupt the session.",
+                        "Keep the NaHo tab visible and do not switch to another tab while recording.",
+                        "Disable extensions that block device access or that throttle background tabs to save battery.",
+                        "If it keeps happening, send a report with the time it occurred so the NaHo team can check the logs."
+                    ]
+                }
+            ],
+            "browsers": [
+                {
+                    "id": "chrome",
+                    "name": "Chrome / Edge",
+                    "steps": [
+                        "Click the lock or device icon at the start of the address bar.",
+                        "Find the Microphone entry and switch it to Allow.",
+                        "Reload the page so the browser applies the new permission."
+                    ]
+                },
+                {
+                    "id": "safari",
+                    "name": "Safari",
+                    "steps": [
+                        "Open Safari in the menu bar, choose Settings and go to the Websites tab.",
+                        "Select Microphone in the left column and set NaHo to Allow.",
+                        "Close the settings window and reload NaHo."
+                    ]
+                },
+                {
+                    "id": "firefox",
+                    "name": "Firefox",
+                    "steps": [
+                        "Click the lock icon at the start of the address bar.",
+                        "Remove the microphone block if you previously chose Block.",
+                        "Reload the page and choose Allow when the browser asks again."
+                    ]
+                }
+            ]
+        },
+        "contact": {
+            "title": "Still cannot find your answer?",
+            "description": "The NaHo team is here to help. Describe your issue in as much detail as possible so we can resolve it quickly.",
+            "responseTime": "Average response time: within 24 working hours.",
+            "channels": {
+                "report": {
+                    "title": "Send an in-app report",
+                    "description": "Describe the issue and attach a screenshot. This is the fastest way to reach the NaHo team.",
+                    "action": "Open the report form",
+                    "historyAction": "View your report history"
+                },
+                "email": {
+                    "title": "Support email",
+                    "description": "Best for payment or account issues that need several documents attached.",
+                    "action": "support@naho.edu.vn"
+                },
+                "legal": {
+                    "title": "Terms & Privacy Policy",
+                    "description": "Understand your rights, how NaHo handles your data and the rules for using the service.",
+                    "action": "Read the documents"
+                }
+            }
+        }
+    }
+}

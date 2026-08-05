@@ -1,0 +1,523 @@
+{
+    "help": {
+        "hero": {
+            "title": "Chúng tôi có thể giúp gì cho bạn?",
+            "subtitle": "Tìm câu trả lời về lộ trình học, luyện nói với AI, điểm thưởng, gói cước và tài khoản NaHo.",
+            "searchPlaceholder": "Nhập câu hỏi hoặc từ khoá, ví dụ: micro không nhận...",
+            "searchLabel": "Tìm kiếm trong trung tâm trợ giúp",
+            "popularLabel": "Được tìm nhiều",
+            "popularQueries": [
+                "micro không nhận",
+                "nâng gói",
+                "L-Point",
+                "đổi mật khẩu"
+            ]
+        },
+        "search": {
+            "resultsTitle": "{count} kết quả cho “{query}”",
+            "clear": "Xoá tìm kiếm",
+            "groupGuide": "Hướng dẫn",
+            "groupFaq": "Câu hỏi thường gặp",
+            "groupTroubleshooting": "Khắc phục sự cố",
+            "emptyTitle": "Không tìm thấy nội dung nào cho “{query}”",
+            "emptyDescription": "Hãy thử từ khoá ngắn hơn, hoặc gửi báo cáo để đội ngũ NaHo hỗ trợ bạn trực tiếp.",
+            "emptyAction": "Gửi báo cáo cho đội hỗ trợ"
+        },
+        "categories": {
+            "title": "Duyệt theo chủ đề",
+            "description": "Chọn một chủ đề để lọc nhanh các câu hỏi thường gặp bên dưới.",
+            "questionCount": "{count} câu hỏi",
+            "all": "Tất cả chủ đề",
+            "items": [
+                {
+                    "id": "getting-started",
+                    "title": "Bắt đầu với NaHo",
+                    "description": "Lộ trình học, giáo trình Marugoto và những bước đầu tiên."
+                },
+                {
+                    "id": "speaking-ai",
+                    "title": "Luyện nói & Trò chuyện AI",
+                    "description": "Cách AI chấm điểm, chọn bạn đồng hành và xem lại buổi luyện."
+                },
+                {
+                    "id": "rewards",
+                    "title": "Điểm, nhiệm vụ & xếp hạng",
+                    "description": "L-Point, điểm danh, rương quà và bảng xếp hạng thi đua."
+                },
+                {
+                    "id": "billing",
+                    "title": "Gói cước & thanh toán",
+                    "description": "Nâng cấp gói, hoá đơn, hoàn tiền và lịch sử giao dịch."
+                },
+                {
+                    "id": "account",
+                    "title": "Tài khoản & bảo mật",
+                    "description": "Mật khẩu, xác thực email, phiên đăng nhập và quyền riêng tư."
+                }
+            ]
+        },
+        "guides": {
+            "title": "Hướng dẫn bắt đầu",
+            "description": "Bốn hướng dẫn ngắn giúp bạn dùng thành thạo NaHo trong buổi học đầu tiên.",
+            "stepLabel": "Bước {index}",
+            "items": [
+                {
+                    "id": "kaiwa-path",
+                    "title": "Bắt đầu Lộ trình Kaiwa",
+                    "description": "Học nói theo giáo trình Marugoto, đi tuần tự từ chủ đề tới từng bài hội thoại.",
+                    "duration": "Khoảng 5 phút",
+                    "steps": [
+                        "Mở “Lộ trình Kaiwa” ở thanh bên trái và chọn quyển sách phù hợp trình độ của bạn.",
+                        "Chọn một chủ đề, sau đó chọn bài hội thoại đang mở khoá đầu tiên trong lộ trình.",
+                        "Cấp quyền micro cho trình duyệt khi được hỏi, rồi nhấn nút ghi âm để nói theo gợi ý.",
+                        "Kết thúc bài, xem báo cáo phát âm và làm lại các câu bị đánh dấu cần cải thiện."
+                    ],
+                    "action": {
+                        "label": "Mở Lộ trình Kaiwa",
+                        "href": "/books"
+                    }
+                },
+                {
+                    "id": "ai-dialogue",
+                    "title": "Buổi trò chuyện tự do với AI",
+                    "description": "Tự chọn bối cảnh và bạn đồng hành AI để luyện phản xạ nói ngoài giáo trình.",
+                    "duration": "Khoảng 3 phút",
+                    "steps": [
+                        "Mở “Trò chuyện tự do AI” ở thanh bên trái.",
+                        "Chọn bạn đồng hành AI có vai và trình độ phù hợp với mục tiêu buổi nói.",
+                        "Thiết lập chủ đề, độ khó và các tuỳ chọn nâng cao rồi bắt đầu phiên trò chuyện.",
+                        "Nói tự nhiên như hội thoại thật; kết thúc phiên để nhận nhận xét tổng hợp."
+                    ],
+                    "action": {
+                        "label": "Mở Trò chuyện tự do AI",
+                        "href": "/dialogue-setup"
+                    }
+                },
+                {
+                    "id": "speaking-report",
+                    "title": "Đọc hiểu báo cáo luyện nói",
+                    "description": "Biết cách khai thác báo cáo sau mỗi phiên để tiến bộ nhanh hơn.",
+                    "duration": "Khoảng 4 phút",
+                    "steps": [
+                        "Vào menu tài khoản ở góc trên bên phải và chọn “Lịch sử luyện nói theo sách”.",
+                        "Chọn một phiên đã hoàn thành để mở báo cáo chi tiết.",
+                        "Đối chiếu câu bạn nói với câu mẫu để tìm âm bị phát sai hoặc nói thiếu.",
+                        "Ưu tiên luyện lại những câu có điểm thấp nhất trước khi sang bài mới."
+                    ],
+                    "action": {
+                        "label": "Xem lịch sử luyện nói",
+                        "href": "/speaking-history"
+                    }
+                },
+                {
+                    "id": "daily-routine",
+                    "title": "Duy trì thói quen mỗi ngày",
+                    "description": "Điểm danh, hoàn thành nhiệm vụ và giữ vị trí trên bảng xếp hạng thi đua.",
+                    "duration": "Khoảng 2 phút",
+                    "steps": [
+                        "Nhấn “Điểm danh” trên thanh trên cùng mỗi ngày để nhận thưởng theo chuỗi ngày liên tiếp.",
+                        "Mở “Nhiệm vụ” để xem các việc cần làm trong ngày và phần thưởng tương ứng.",
+                        "Hoàn thành nhiệm vụ để nhận L-Point, sau đó nhận thưởng ngay tại danh sách nhiệm vụ.",
+                        "Theo dõi thứ hạng của bạn ở “Bảng xếp hạng thi đua” để giữ động lực học đều."
+                    ],
+                    "action": {
+                        "label": "Xem bảng xếp hạng",
+                        "href": "/leaderboard"
+                    }
+                }
+            ]
+        },
+        "faq": {
+            "title": "Câu hỏi thường gặp",
+            "description": "Những thắc mắc người học NaHo gửi về nhiều nhất.",
+            "emptyCategory": "Chủ đề này chưa có câu hỏi nào.",
+            "items": [
+                {
+                    "id": "what-is-naho",
+                    "categoryId": "getting-started",
+                    "question": "NaHo là gì và phù hợp với ai?",
+                    "answer": [
+                        "NaHo là nền tảng luyện nói tiếng Nhật có AI đồng hành, xây dựng quanh giáo trình Marugoto. Bạn học theo lộ trình hội thoại, nói trực tiếp với AI và nhận nhận xét phát âm ngay sau mỗi câu.",
+                        "Nền tảng phù hợp với người mới bắt đầu cần lộ trình rõ ràng, và cả người đã có nền tảng nhưng thiếu môi trường luyện nói thường xuyên."
+                    ]
+                },
+                {
+                    "id": "where-to-start",
+                    "categoryId": "getting-started",
+                    "question": "Tôi mới học tiếng Nhật thì nên bắt đầu từ đâu?",
+                    "answer": [
+                        "Hãy bắt đầu ở “Lộ trình Kaiwa” và chọn quyển sách ở cấp độ thấp nhất. Lộ trình mở khoá tuần tự nên bạn không cần tự quyết định học gì trước.",
+                        "Khi đã quen với việc nói trước micro, hãy dùng thêm “Trò chuyện tự do AI” để luyện phản xạ với nội dung ngoài giáo trình."
+                    ],
+                    "link": {
+                        "label": "Mở Lộ trình Kaiwa",
+                        "href": "/books"
+                    }
+                },
+                {
+                    "id": "what-is-marugoto",
+                    "categoryId": "getting-started",
+                    "question": "Giáo trình Marugoto trong NaHo là gì?",
+                    "answer": [
+                        "Marugoto là bộ giáo trình tiếng Nhật được biên soạn theo hướng giao tiếp, chia theo cấp độ và chủ đề đời sống. NaHo dùng cấu trúc chủ đề — bài hội thoại của Marugoto làm khung cho lộ trình luyện nói.",
+                        "Mỗi bài trong lộ trình gắn với một tình huống giao tiếp cụ thể, nhờ đó bạn học được mẫu câu dùng ngay trong đời sống thay vì học ngữ pháp rời rạc."
+                    ]
+                },
+                {
+                    "id": "change-language",
+                    "categoryId": "getting-started",
+                    "question": "Tôi đổi ngôn ngữ hiển thị của giao diện được không?",
+                    "answer": [
+                        "Được. Nhấn biểu tượng quả địa cầu trên thanh trên cùng để chuyển giữa Tiếng Việt, Tiếng Anh và Tiếng Nhật.",
+                        "Lựa chọn ngôn ngữ chỉ ảnh hưởng tới giao diện và nội dung trợ giúp; nội dung bài học tiếng Nhật vẫn giữ nguyên."
+                    ]
+                },
+                {
+                    "id": "how-scoring-works",
+                    "categoryId": "speaking-ai",
+                    "question": "NaHo chấm điểm phát âm dựa trên tiêu chí nào?",
+                    "answer": [
+                        "Sau mỗi câu, hệ thống chuyển giọng nói của bạn thành văn bản rồi so sánh với câu mẫu để đánh giá độ chính xác của phát âm, mức độ đầy đủ của câu và độ trôi chảy khi nói.",
+                        "Điểm chỉ mang tính tham khảo để bạn biết nên luyện lại phần nào. Hãy ưu tiên đọc phần nhận xét chi tiết thay vì chỉ nhìn con số tổng."
+                    ]
+                },
+                {
+                    "id": "kaiwa-vs-free-dialogue",
+                    "categoryId": "speaking-ai",
+                    "question": "“Lộ trình Kaiwa” và “Trò chuyện tự do AI” khác nhau thế nào?",
+                    "answer": [
+                        "Lộ trình Kaiwa bám sát giáo trình Marugoto: nội dung cố định, mở khoá tuần tự và có báo cáo theo từng bài. Đây là phần giúp bạn đi đúng lộ trình.",
+                        "Trò chuyện tự do AI không giới hạn theo bài học: bạn tự chọn bối cảnh, bạn đồng hành và độ khó để luyện phản xạ. Đây là phần giúp bạn áp dụng những gì đã học."
+                    ],
+                    "link": {
+                        "label": "Mở Trò chuyện tự do AI",
+                        "href": "/dialogue-setup"
+                    }
+                },
+                {
+                    "id": "choose-companion",
+                    "categoryId": "speaking-ai",
+                    "question": "Tôi có chọn được bạn đồng hành AI và độ khó không?",
+                    "answer": [
+                        "Có. Ở màn hình thiết lập của Trò chuyện tự do AI, mỗi bạn đồng hành có vai và cấp độ riêng, phù hợp với các tình huống khác nhau.",
+                        "Trong phần tuỳ chọn nâng cao, bạn có thể điều chỉnh chủ đề và độ khó của phiên nói trước khi bắt đầu."
+                    ]
+                },
+                {
+                    "id": "review-sessions",
+                    "categoryId": "speaking-ai",
+                    "question": "Tôi xem lại các buổi luyện nói đã hoàn thành ở đâu?",
+                    "answer": [
+                        "Mở menu tài khoản ở góc trên bên phải và chọn “Lịch sử luyện nói theo sách”. Danh sách hiển thị các phiên đã hoàn thành kèm thời gian và kết quả.",
+                        "Nhấn vào một phiên bất kỳ để mở báo cáo chi tiết của phiên đó."
+                    ],
+                    "link": {
+                        "label": "Xem lịch sử luyện nói",
+                        "href": "/speaking-history"
+                    }
+                },
+                {
+                    "id": "what-is-lpoint",
+                    "categoryId": "rewards",
+                    "question": "L-Point là gì?",
+                    "answer": [
+                        "L-Point là điểm bạn nhận được khi hoàn thành bài học, nhiệm vụ hằng ngày và điểm danh. Điểm này quyết định thứ hạng của bạn trên bảng xếp hạng thi đua.",
+                        "Bạn có thể xem chi tiết từng lần cộng điểm trong mục “Lịch sử nhận điểm” ở menu tài khoản."
+                    ],
+                    "link": {
+                        "label": "Xem lịch sử nhận điểm",
+                        "href": "/point-history"
+                    }
+                },
+                {
+                    "id": "daily-missions",
+                    "categoryId": "rewards",
+                    "question": "Nhiệm vụ hằng ngày làm mới khi nào?",
+                    "answer": [
+                        "Nhiệm vụ được làm mới mỗi ngày. Nhiệm vụ chưa hoàn thành của ngày hôm trước sẽ không được cộng dồn sang ngày mới.",
+                        "Sau khi đạt điều kiện, bạn cần bấm nhận thưởng ngay trong danh sách nhiệm vụ thì L-Point mới được cộng vào tài khoản."
+                    ]
+                },
+                {
+                    "id": "attendance-chest",
+                    "categoryId": "rewards",
+                    "question": "Điểm danh và rương quà hoạt động ra sao?",
+                    "answer": [
+                        "Mỗi ngày bạn điểm danh một lần qua nút “Điểm danh” trên thanh trên cùng. Lịch điểm danh hiển thị theo tháng để bạn theo dõi chuỗi ngày liên tiếp.",
+                        "Một số mốc trong tháng sẽ mở rương quà với phần thưởng lớn hơn. Nếu bỏ lỡ một ngày, chuỗi sẽ bắt đầu lại nhưng những phần thưởng đã nhận vẫn được giữ."
+                    ]
+                },
+                {
+                    "id": "leaderboard-rules",
+                    "categoryId": "rewards",
+                    "question": "Bảng xếp hạng thi đua được tính như thế nào?",
+                    "answer": [
+                        "Người học được xếp vào các giải đấu theo cấp bậc, và thứ hạng trong mỗi giải dựa trên tổng L-Point bạn tích luỹ trong kỳ thi đua.",
+                        "Học đều mỗi ngày thường hiệu quả hơn việc học dồn, vì nhiệm vụ và điểm danh chỉ cộng điểm theo từng ngày."
+                    ],
+                    "link": {
+                        "label": "Xem bảng xếp hạng",
+                        "href": "/leaderboard"
+                    }
+                },
+                {
+                    "id": "points-not-added",
+                    "categoryId": "rewards",
+                    "question": "Tôi luyện xong nhưng chưa thấy được cộng điểm?",
+                    "answer": [
+                        "Trước hết hãy kiểm tra xem bài học đã được ghi nhận hoàn thành chưa — phiên bị thoát giữa chừng sẽ không được tính.",
+                        "Với nhiệm vụ hằng ngày, điểm chỉ vào tài khoản sau khi bạn bấm nhận thưởng. Nếu đã làm đúng các bước mà điểm vẫn chưa lên, hãy tải lại trang rồi đối chiếu ở “Lịch sử nhận điểm”; nếu vẫn thiếu, gửi báo cáo cho đội hỗ trợ."
+                    ],
+                    "link": {
+                        "label": "Xem lịch sử nhận điểm",
+                        "href": "/point-history"
+                    }
+                },
+                {
+                    "id": "free-plan",
+                    "categoryId": "billing",
+                    "question": "NaHo có dùng miễn phí được không?",
+                    "answer": [
+                        "Bạn có thể tạo tài khoản và trải nghiệm các nội dung mở mà không mất phí. Một số nội dung nâng cao và giới hạn sử dụng sẽ yêu cầu gói trả phí.",
+                        "Danh sách gói cùng quyền lợi từng gói được hiển thị đầy đủ ở phần thanh toán trong Cài đặt."
+                    ],
+                    "link": {
+                        "label": "Xem gói cước",
+                        "href": "/settings/billing"
+                    }
+                },
+                {
+                    "id": "payment-methods",
+                    "categoryId": "billing",
+                    "question": "Tôi thanh toán bằng cách nào?",
+                    "answer": [
+                        "Chọn gói trong phần thanh toán, hệ thống sẽ tạo đơn và chuyển bạn sang cổng thanh toán để quét mã hoặc chuyển khoản theo hướng dẫn.",
+                        "Sau khi giao dịch thành công, bạn được đưa trở lại NaHo và gói sẽ được kích hoạt cho tài khoản đang đăng nhập."
+                    ],
+                    "link": {
+                        "label": "Đi tới phần thanh toán",
+                        "href": "/settings/billing"
+                    }
+                },
+                {
+                    "id": "paid-not-upgraded",
+                    "categoryId": "billing",
+                    "question": "Tôi đã thanh toán nhưng tài khoản chưa được nâng gói?",
+                    "answer": [
+                        "Việc xác nhận từ cổng thanh toán có thể mất vài phút. Hãy tải lại trang và kiểm tra trạng thái đơn trong “Lịch sử giao dịch”.",
+                        "Nếu đơn đã ở trạng thái thành công mà gói vẫn chưa được kích hoạt sau khoảng 15 phút, hãy gửi báo cáo kèm mã đơn hàng và ảnh chụp biên lai để được xử lý nhanh."
+                    ],
+                    "link": {
+                        "label": "Xem lịch sử giao dịch",
+                        "href": "/orders"
+                    }
+                },
+                {
+                    "id": "where-invoices",
+                    "categoryId": "billing",
+                    "question": "Tôi xem lại hoá đơn và các giao dịch đã thực hiện ở đâu?",
+                    "answer": [
+                        "Mở menu tài khoản ở góc trên bên phải và chọn “Lịch sử giao dịch”. Tại đây có mã đơn, số tiền, thời gian và trạng thái của từng giao dịch.",
+                        "Hãy giữ lại mã đơn hàng khi cần liên hệ hỗ trợ về vấn đề thanh toán."
+                    ],
+                    "link": {
+                        "label": "Xem lịch sử giao dịch",
+                        "href": "/orders"
+                    }
+                },
+                {
+                    "id": "cancel-subscription",
+                    "categoryId": "billing",
+                    "question": "Tôi huỷ gói hoặc yêu cầu hoàn tiền được không?",
+                    "answer": [
+                        "Bạn có thể huỷ đơn chưa thanh toán ngay trong “Lịch sử giao dịch”. Với gói đã kích hoạt, quyền lợi được giữ đến hết thời hạn đã mua.",
+                        "Yêu cầu hoàn tiền được xem xét theo Điều khoản sử dụng. Hãy gửi báo cáo kèm mã đơn hàng và lý do để đội ngũ NaHo xử lý."
+                    ],
+                    "link": {
+                        "label": "Đọc Điều khoản sử dụng",
+                        "href": "/terms"
+                    }
+                },
+                {
+                    "id": "change-password",
+                    "categoryId": "account",
+                    "question": "Tôi đổi mật khẩu như thế nào?",
+                    "answer": [
+                        "Vào Cài đặt, mở mục bảo mật và nhập mật khẩu hiện tại cùng mật khẩu mới để cập nhật.",
+                        "Sau khi đổi mật khẩu, bạn nên đăng xuất khỏi các thiết bị khác nếu nghi ngờ tài khoản từng bị người khác sử dụng."
+                    ],
+                    "link": {
+                        "label": "Mở cài đặt bảo mật",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "forgot-password",
+                    "categoryId": "account",
+                    "question": "Tôi quên mật khẩu thì làm sao?",
+                    "answer": [
+                        "Ở màn hình đăng nhập, chọn “Quên mật khẩu”, nhập email đã đăng ký và làm theo hướng dẫn được gửi tới hộp thư của bạn.",
+                        "Liên kết đặt lại mật khẩu chỉ có hiệu lực trong thời gian ngắn. Nếu hết hạn, hãy thực hiện lại từ đầu để nhận liên kết mới."
+                    ],
+                    "link": {
+                        "label": "Đặt lại mật khẩu",
+                        "href": "/forgot-password"
+                    }
+                },
+                {
+                    "id": "otp-not-received",
+                    "categoryId": "account",
+                    "question": "Tôi không nhận được mã OTP xác thực email?",
+                    "answer": [
+                        "Hãy kiểm tra hộp thư rác và mục quảng cáo, đồng thời xác nhận địa chỉ email bạn nhập không bị sai chính tả.",
+                        "Nếu sau vài phút vẫn chưa nhận được, dùng nút gửi lại mã ở màn hình xác thực. Mã cũ sẽ hết hiệu lực ngay khi mã mới được gửi."
+                    ]
+                },
+                {
+                    "id": "logout-all-devices",
+                    "categoryId": "account",
+                    "question": "Tôi đăng xuất khỏi tất cả thiết bị bằng cách nào?",
+                    "answer": [
+                        "Vào Cài đặt, mở mục bảo mật và chọn chức năng đăng xuất khỏi mọi phiên đăng nhập. Toàn bộ thiết bị đang đăng nhập sẽ bị đưa về màn hình đăng nhập.",
+                        "Nên dùng chức năng này ngay sau khi đổi mật khẩu nếu bạn từng đăng nhập trên máy tính công cộng."
+                    ],
+                    "link": {
+                        "label": "Mở cài đặt bảo mật",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "force-logout-warning",
+                    "categoryId": "account",
+                    "question": "Vì sao tôi nhận cảnh báo “tài khoản đang được đăng nhập ở nơi khác”?",
+                    "answer": [
+                        "Mỗi tài khoản NaHo chỉ duy trì một phiên học tại một thời điểm. Khi có thiết bị khác đăng nhập, phiên cũ sẽ bị kết thúc và hiện cảnh báo này.",
+                        "Nếu bạn không phải người thực hiện lần đăng nhập đó, hãy đổi mật khẩu ngay và đăng xuất khỏi tất cả thiết bị."
+                    ],
+                    "link": {
+                        "label": "Mở cài đặt bảo mật",
+                        "href": "/settings/security"
+                    }
+                },
+                {
+                    "id": "recording-privacy",
+                    "categoryId": "account",
+                    "question": "Bản ghi âm của tôi được sử dụng thế nào?",
+                    "answer": [
+                        "Bản ghi âm được dùng để chấm điểm phát âm và tạo báo cáo cho chính phiên luyện của bạn.",
+                        "Chi tiết về cách NaHo thu thập, lưu trữ và bảo vệ dữ liệu được nêu trong Chính sách bảo mật."
+                    ],
+                    "link": {
+                        "label": "Đọc Chính sách bảo mật",
+                        "href": "/privacy"
+                    }
+                }
+            ]
+        },
+        "troubleshooting": {
+            "title": "Khắc phục sự cố micro & âm thanh",
+            "description": "NaHo cần micro để chấm phát âm. Dưới đây là các sự cố thường gặp và cách xử lý.",
+            "symptomLabel": "Dấu hiệu",
+            "browserTitle": "Cấp quyền micro theo trình duyệt",
+            "browserDescription": "Chọn trình duyệt bạn đang dùng để xem đúng các bước cần làm.",
+            "items": [
+                {
+                    "id": "mic-not-detected",
+                    "title": "NaHo không thu được giọng nói của tôi",
+                    "symptom": "Bạn nói nhưng thanh sóng âm không nhúc nhích, hoặc kết quả trả về trống.",
+                    "steps": [
+                        "Kiểm tra biểu tượng micro trên thanh địa chỉ của trình duyệt và bảo đảm quyền đang ở trạng thái cho phép.",
+                        "Nếu máy có nhiều thiết bị thu âm, hãy chọn đúng micro đang cắm trong cài đặt âm thanh của hệ điều hành.",
+                        "Đóng các ứng dụng đang chiếm micro như Zoom, Google Meet hoặc Discord rồi tải lại trang.",
+                        "Thử một tab mới hoặc trình duyệt khác để loại trừ lỗi của phiên làm việc hiện tại."
+                    ]
+                },
+                {
+                    "id": "no-sound",
+                    "title": "Tôi không nghe được giọng của AI",
+                    "symptom": "Phiên luyện vẫn chạy nhưng không có tiếng phát ra.",
+                    "steps": [
+                        "Kiểm tra âm lượng hệ thống và bảo đảm tab NaHo không bị tắt tiếng (chuột phải vào tab để kiểm tra).",
+                        "Nếu đang dùng tai nghe Bluetooth, hãy ngắt kết nối rồi kết nối lại, hoặc thử tai nghe có dây.",
+                        "Chọn đúng thiết bị phát trong cài đặt âm thanh của hệ điều hành.",
+                        "Tải lại trang và bắt đầu lại phiên luyện."
+                    ]
+                },
+                {
+                    "id": "low-score",
+                    "title": "Điểm phát âm thấp bất thường",
+                    "symptom": "Bạn nói đúng nhưng điểm trả về thấp hơn nhiều so với thường ngày.",
+                    "steps": [
+                        "Ghi âm ở nơi yên tĩnh; tiếng ồn nền và tiếng vọng ảnh hưởng trực tiếp tới độ chính xác nhận dạng.",
+                        "Giữ micro cách miệng khoảng một gang tay, tránh nói quá sát hoặc quá xa.",
+                        "Nói trọn câu với tốc độ đều; ngập ngừng giữa câu dễ bị nhận dạng thành thiếu từ.",
+                        "Nếu dùng micro tích hợp của laptop, hãy thử tai nghe có micro để so sánh kết quả."
+                    ]
+                },
+                {
+                    "id": "recording-cut",
+                    "title": "Bản ghi bị ngắt giữa chừng",
+                    "symptom": "Phiên dừng đột ngột hoặc chỉ ghi được phần đầu câu nói.",
+                    "steps": [
+                        "Kiểm tra kết nối mạng; đường truyền chập chờn có thể làm gián đoạn phiên luyện.",
+                        "Giữ tab NaHo ở chế độ hiển thị, không chuyển sang tab khác trong lúc ghi âm.",
+                        "Tắt các tiện ích mở rộng chặn quyền truy cập thiết bị hoặc tiết kiệm pin của trình duyệt.",
+                        "Nếu sự cố lặp lại, hãy gửi báo cáo kèm thời điểm xảy ra để đội ngũ NaHo kiểm tra nhật ký."
+                    ]
+                }
+            ],
+            "browsers": [
+                {
+                    "id": "chrome",
+                    "name": "Chrome / Edge",
+                    "steps": [
+                        "Nhấn biểu tượng ổ khoá hoặc biểu tượng thiết bị ở đầu thanh địa chỉ.",
+                        "Tìm mục Micro và chuyển sang trạng thái Cho phép.",
+                        "Tải lại trang để trình duyệt áp dụng quyền vừa cấp."
+                    ]
+                },
+                {
+                    "id": "safari",
+                    "name": "Safari",
+                    "steps": [
+                        "Mở Safari ở thanh menu, chọn Cài đặt rồi vào thẻ Trang web.",
+                        "Chọn mục Micro ở cột bên trái và đặt quyền cho NaHo thành Cho phép.",
+                        "Đóng cửa sổ cài đặt và tải lại trang NaHo."
+                    ]
+                },
+                {
+                    "id": "firefox",
+                    "name": "Firefox",
+                    "steps": [
+                        "Nhấn biểu tượng ổ khoá ở đầu thanh địa chỉ.",
+                        "Xoá mục chặn micro nếu trước đó bạn đã chọn Chặn.",
+                        "Tải lại trang rồi chọn Cho phép khi trình duyệt hỏi lại quyền."
+                    ]
+                }
+            ]
+        },
+        "contact": {
+            "title": "Vẫn chưa tìm được câu trả lời?",
+            "description": "Đội ngũ NaHo luôn sẵn sàng hỗ trợ bạn. Hãy mô tả càng chi tiết càng tốt để được xử lý nhanh.",
+            "responseTime": "Thời gian phản hồi trung bình: trong vòng 24 giờ làm việc.",
+            "channels": {
+                "report": {
+                    "title": "Gửi báo cáo trong ứng dụng",
+                    "description": "Mô tả sự cố kèm ảnh chụp màn hình. Đây là cách nhanh nhất để đội ngũ NaHo tiếp nhận vấn đề của bạn.",
+                    "action": "Mở biểu mẫu báo cáo",
+                    "historyAction": "Xem lịch sử báo cáo của bạn"
+                },
+                "email": {
+                    "title": "Email hỗ trợ",
+                    "description": "Phù hợp với các vấn đề về thanh toán hoặc tài khoản cần đính kèm nhiều tài liệu.",
+                    "action": "support@naho.edu.vn"
+                },
+                "legal": {
+                    "title": "Điều khoản & Chính sách bảo mật",
+                    "description": "Tìm hiểu quyền lợi của bạn, cách NaHo xử lý dữ liệu và các quy định khi sử dụng dịch vụ.",
+                    "action": "Đọc tài liệu"
+                }
+            }
+        }
+    }
+}
