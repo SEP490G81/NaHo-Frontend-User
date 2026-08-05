@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import {
-    PLAN_TIER_LEVEL,
     PlanTier,
     SubscriptionPlanResponse,
 } from "@/types/responses/subscription.response";
@@ -28,8 +27,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
 }) => {
     const t = useTranslations("settings.billing");
 
-    const planLevel = PLAN_TIER_LEVEL[plan.tier] ?? 0;
-    const currentLevel = PLAN_TIER_LEVEL[currentTier] ?? 0;
+    const planLevel = PlanTier[plan.tier]?.level ?? 0;
+    const currentLevel = PlanTier[currentTier]?.level ?? 0;
 
     const isCurrentPlan = plan.tier === currentTier;
     const isOwnedOrLower = planLevel <= currentLevel;

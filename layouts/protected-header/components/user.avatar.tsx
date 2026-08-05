@@ -13,7 +13,7 @@ const UserAvatar = () => {
     const { data: user } = useCurrentUser();
     const { data: subscription } = useMySubscription();
 
-    const tier = subscription?.plan?.tier || "FREE";
+    const tier = subscription?.tier || "FREE";
 
     return (
         <>

@@ -1,20 +1,15 @@
-import {ApiResponse, ProblemDetail} from "@/types/responses/base.response";
-import {SubscriptionPlanResponse, UserSubscriptionResponse,} from "@/types/responses/subscription.response";
+import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { SubscriptionPlanResponse } from "@/types/responses/subscription.response";
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
  */
-export async function getMySubscription(): Promise<UserSubscriptionResponse | null> {
+export async function getMySubscription(): Promise<SubscriptionPlanResponse> {
     try {
         const response = await fetch("/api/subscriptions/me", {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
             cache: "no-store",
         });
-
-        if (response.status === 404) {
-            return null;
-        }
 
         const result = await response.json();
 
@@ -25,11 +20,11 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
             );
         }
 
-        const api = result as ApiResponse<UserSubscriptionResponse>;
-        return api.data ?? (result as UserSubscriptionResponse);
+        const api = result as ApiResponse<SubscriptionPlanResponse>;
+        return api.data;
     } catch (error) {
         console.error("Error fetching my subscription:", error);
-        return null;
+        throw error;
     }
 }
 
