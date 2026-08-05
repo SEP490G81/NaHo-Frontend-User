@@ -17,6 +17,7 @@ import pointHistory from "@/i18n/messages/vi/point-history.json";
 import dailyReward from "@/i18n/messages/vi/daily-reward.json";
 import dailyMission from "@/i18n/messages/vi/daily-mission.json";
 import legal from "@/i18n/messages/vi/legal.json";
+import help from "@/i18n/messages/vi/help.json";
 
 declare module "next-intl" {
     interface AppConfig {
@@ -38,6 +39,7 @@ declare module "next-intl" {
             typeof pointHistory &
             typeof dailyReward &
             typeof dailyMission &
-            typeof legal;
+            typeof legal &
+            typeof help;
     }
 }
