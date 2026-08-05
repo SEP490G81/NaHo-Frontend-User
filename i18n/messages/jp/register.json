@@ -26,7 +26,7 @@
             "invalidEmail": "Địa chỉ email không hợp lệ!",
             "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
             "passwordTooWeak": "Mật khẩu chưa đáp ứng đủ điều kiện!",
-            "passwordHint": "Mật khẩu gồm 8–16 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt.",
+            "passwordHint": "Mật khẩu gồm 8–16 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt (@#$%^&+=!_~-).",
             "passwordNeed": {
                 "prefix": "Mật khẩu cần thêm ",
                 "and": " và ",
@@ -34,7 +34,7 @@
                 "lowercase": "chữ thường",
                 "uppercase": "chữ hoa",
                 "number": "chữ số",
-                "special": "ký tự đặc biệt"
+                "special": "ký tự đặc biệt (@#$%^&+=!_~-)"
             },
             "pleaseConfirmPassword": "Vui lòng nhập lại mật khẩu!",
             "passwordNotMatch": "Mật khẩu xác nhận không khớp!",

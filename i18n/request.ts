@@ -6,6 +6,7 @@ const MESSAGE_FILES = [
     "common",
     "login",
     "register",
+    "forgot-password",
     "home",
     "dashboard",
     "history",

@@ -1,28 +1,36 @@
 "use client";
-import { USER_ERROR_CODES } from "@/constants/error.code.constants";
-import { Link, useRouter } from "@/i18n/navigation";
-import { getErrorCode } from "@/libs/api.error";
-import { queryKeys } from "@/libs/query.keys";
 import OtpCodeInput from "@/components/ui/otp.code.input";
+import { USER_ERROR_CODES } from "@/constants/error.code.constants";
 import {
     OTP_EXPIRES_SECONDS,
     OTP_LENGTH,
     RESEND_COOLDOWN_SECONDS,
 } from "@/constants/otp.constants";
+import { getErrorCode } from "@/libs/api.error";
 import { createEmptyOtp, formatCountdown, maskEmail } from "@/libs/otp";
-import { resendOtp, verifyEmail } from "@/services/client/user.service";
+import {
+    forgotPassword,
+    verifyForgotPasswordOtp,
+} from "@/services/client/user.service";
 import { Button } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { FormEvent, useEffect, useRef, useState } from "react";
 
-const VerifyEmailForm = ({ email }: { email: string }) => {
+const OtpStep = ({
+    email,
+    initialErrorMessage = "",
+    onVerified,
+    onChangeEmail,
+}: {
+    email: string;
+    initialErrorMessage?: string;
+    onVerified: (resetToken: string) => void;
+    onChangeEmail: () => void;
+}) => {
     const t = useTranslations();
-    const { replace } = useRouter();
-    const queryClient = useQueryClient();
 
     const [otpValues, setOtpValues] = useState<string[]>(createEmptyOtp);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
     const [successMessage, setSuccessMessage] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [resending, setResending] = useState(false);
@@ -55,13 +63,13 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
 
         if (code.length < OTP_LENGTH) {
             setSuccessMessage("");
-            setErrorMessage(t("register.verifyEmail.pleaseEnterOtp"));
+            setErrorMessage(t("forgotPassword.otp.pleaseEnterOtp"));
             return;
         }
 
         if (isExpired) {
             setSuccessMessage("");
-            setErrorMessage(t("register.verifyEmail.otpExpired"));
+            setErrorMessage(t("forgotPassword.otp.otpExpired"));
             return;
         }
 
@@ -71,26 +79,26 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
         setSuccessMessage("");
 
         try {
-            await verifyEmail({ email, otpCode: code });
-
-            await queryClient.invalidateQueries({
-                queryKey: queryKeys.auth.currentUser,
+            const result = await verifyForgotPasswordOtp({
+                email,
+                otpCode: code,
             });
-
-            replace("/dashboard");
+            onVerified(result.resetToken);
         } catch (error) {
             const errorCode = getErrorCode(error);
 
             if (errorCode === USER_ERROR_CODES.OTP_ATTEMPTS_EXCEEDED) {
                 resetOtp();
                 setExpiresIn(0);
-                setErrorMessage(t("register.verifyEmail.attemptsExceeded"));
+                // backend đã xoá mã nên cho gửi lại ngay, không cần chờ cooldown
+                setResendIn(0);
+                setErrorMessage(t("forgotPassword.otp.attemptsExceeded"));
             } else if (errorCode === USER_ERROR_CODES.INVALID_OTP) {
                 resetOtp();
-                setErrorMessage(t("register.verifyEmail.invalidOtp"));
+                setErrorMessage(t("forgotPassword.otp.invalidOtp"));
             } else if (error instanceof Error) {
                 setErrorMessage(
-                    error.message || t("register.verifyEmail.verifyFailed"),
+                    error.message || t("forgotPassword.otp.verifyFailed"),
                 );
             }
         } finally {
@@ -107,21 +115,22 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
         setSuccessMessage("");
 
         try {
-            await resendOtp({ email });
+            // gửi lại mã cho luồng quên mật khẩu dùng chung endpoint bước 1
+            await forgotPassword({ email });
 
             resetOtp();
             setExpiresIn(OTP_EXPIRES_SECONDS);
             setResendIn(RESEND_COOLDOWN_SECONDS);
-            setSuccessMessage(t("register.verifyEmail.resendSuccess"));
+            setSuccessMessage(t("forgotPassword.otp.resendSuccess"));
         } catch (error) {
             const errorCode = getErrorCode(error);
 
             if (errorCode === USER_ERROR_CODES.OTP_COOLDOWN) {
                 setResendIn(RESEND_COOLDOWN_SECONDS);
-                setErrorMessage(t("register.verifyEmail.resendCooldown"));
+                setErrorMessage(t("forgotPassword.otp.resendCooldown"));
             } else if (error instanceof Error) {
                 setErrorMessage(
-                    error.message || t("register.verifyEmail.resendFailed"),
+                    error.message || t("forgotPassword.otp.resendFailed"),
                 );
             }
         } finally {
@@ -141,7 +150,7 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
             className="flex w-full flex-col items-center gap-y-4"
         >
             <p className="text-text-muted w-full text-sm">
-                {t.rich("register.verifyEmail.sentTo", {
+                {t.rich("forgotPassword.otp.sentTo", {
                     email: maskEmail(email),
                     strong: (chunks) => (
                         <span className="text-text-highlight font-semibold">
@@ -165,8 +174,8 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
 
             <p className="text-text-muted w-full text-center text-sm">
                 {isExpired
-                    ? t("register.verifyEmail.otpExpired")
-                    : t("register.verifyEmail.expiresIn", {
+                    ? t("forgotPassword.otp.otpExpired")
+                    : t("forgotPassword.otp.expiresIn", {
                           time: formatCountdown(expiresIn),
                       })}
             </p>
@@ -180,7 +189,7 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
                     color="primary"
                     variant="contained"
                 >
-                    {t("register.verifyEmail.verifyButton")}
+                    {t("forgotPassword.otp.verifyButton")}
                 </Button>
 
                 {errorMessage && (
@@ -199,7 +208,7 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
             <div className="flex w-full flex-col items-center gap-y-1 text-sm">
                 <div className="flex items-center gap-x-1">
                     <p className="text-text-muted">
-                        {t("register.verifyEmail.notReceived")}
+                        {t("forgotPassword.otp.notReceived")}
                     </p>
                     <button
                         type="button"
@@ -208,24 +217,25 @@ const VerifyEmailForm = ({ email }: { email: string }) => {
                         className="text-text-highlight disabled:text-text-muted cursor-pointer hover:underline disabled:cursor-not-allowed disabled:no-underline"
                     >
                         {resendIn > 0
-                            ? t("register.verifyEmail.resendIn", {
+                            ? t("forgotPassword.otp.resendIn", {
                                   seconds: resendIn,
                               })
-                            : t("register.verifyEmail.resend")}
+                            : t("forgotPassword.otp.resend")}
                     </button>
                 </div>
                 <p className="text-text-muted text-center text-xs">
-                    {t("register.verifyEmail.checkSpam")}
+                    {t("forgotPassword.otp.checkSpam")}
                 </p>
-                <Link
-                    href={"/register"}
-                    className="text-text-highlight mt-2 hover:underline"
+                <button
+                    type="button"
+                    onClick={onChangeEmail}
+                    className="text-text-highlight mt-2 cursor-pointer hover:underline"
                 >
-                    {t("register.verifyEmail.useAnotherEmail")}
-                </Link>
+                    {t("forgotPassword.otp.reEnterEmail")}
+                </button>
             </div>
         </form>
     );
 };
 
-export default VerifyEmailForm;
+export default OtpStep;

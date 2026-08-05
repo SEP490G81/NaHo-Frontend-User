@@ -65,6 +65,10 @@ export interface TokenResponse {
     expiresIn: number;
 }
 
+export interface ResetPasswordTokenResponse {
+    resetToken: string;
+}
+
 export interface TokenExpResponse {
     expiresAt: string;
     expiresIn: number;
