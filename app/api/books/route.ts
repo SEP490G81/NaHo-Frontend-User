@@ -1,4 +1,4 @@
-import {proxyGet} from "@/services/server/backend.proxy";
+import { proxyGet } from "@/services/server/backend.proxy";
 
 /** Lớp 1: /api/books → BE /books (danh sách sách). */
 export function GET() {

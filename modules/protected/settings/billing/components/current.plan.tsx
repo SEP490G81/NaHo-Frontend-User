@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { UserSubscriptionResponse } from "@/types/responses/subscription.response";
+import { SubscriptionPlanResponse } from "@/types/responses/subscription.response";
 import UpdatePlanButton from "@/modules/protected/settings/billing/components/update.plan.button";
 import Chip from "@mui/material/Chip";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -8,7 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Skeleton from "@mui/material/Skeleton";
 
 interface CurrentPlanProps {
-    subscription: UserSubscriptionResponse | null;
+    subscription: SubscriptionPlanResponse | null;
     loading: boolean;
     onOpenModal: () => void;
 }
@@ -39,19 +39,11 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         );
     }
 
-    const plan = subscription?.plan;
-    const tier = plan?.tier || "FREE";
-    const planName = plan?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
+    const tier = subscription?.tier || "FREE";
+    const planName =
+        subscription?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
 
     const isFree = tier === "FREE";
-
-    const formattedExpiryDate = subscription?.endTime
-        ? new Date(subscription.endTime).toLocaleDateString("vi-VN", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-          })
-        : null;
 
     const tierBadgeColor =
         tier === "PREMIUM"
@@ -90,11 +82,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                             />
                         </div>
                         <p className="text-text-muted mt-1 text-xs">
-                            {isFree || !formattedExpiryDate
-                                ? t("permanent")
-                                : t("planExpiry", {
-                                      date: formattedExpiryDate,
-                                  })}
+                            {isFree ? t("permanent") : t("active")}
                         </p>
                     </div>
                 </div>
@@ -114,7 +102,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
             </div>
 
             {/* Quota details if available */}
-            {plan && (
+            {subscription && (
                 <div className="bg-bgc-subtle mt-6 grid grid-cols-1 gap-4 rounded-xl p-4 sm:grid-cols-3">
                     <div className="flex flex-col">
                         <span className="text-text-muted text-xs">
@@ -123,7 +111,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                                 .trim()}
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {plan.monthlyAssessmentLimit} bài / tháng
+                            {subscription.monthlyAssessmentLimit} bài / tháng
                         </span>
                     </div>
 
@@ -132,7 +120,9 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                             Luyện hội thoại
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {Math.round(plan.monthlyConversationSeconds / 60)}{" "}
+                            {Math.round(
+                                subscription.monthlyConversationSeconds / 60,
+                            )}{" "}
                             phút / tháng
                         </span>
                     </div>
@@ -142,7 +132,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                             Giáo trình
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {plan.fullCurriculumAccess
+                            {subscription.fullCurriculumAccess
                                 ? "Toàn bộ bài học"
                                 : "Cơ bản"}
                         </span>

@@ -36,9 +36,9 @@ export function getLeagueTheme(leagueName: string): LeagueTheme {
  * Chỉ nhận objectKey dạng URL tuyệt đối để tránh dựng ra `src` hỏng.
  */
 export function getLeagueIconSrc(league: LeagueResponse): string | null {
-    const objectKey = league.iconFile?.objectKey;
-    if (objectKey && /^https?:\/\//.test(objectKey)) {
-        return objectKey;
+    const accessUrl = league.iconFile?.accessUrl;
+    if (accessUrl && /^https?:\/\//.test(accessUrl)) {
+        return accessUrl;
     }
     return null;
 }

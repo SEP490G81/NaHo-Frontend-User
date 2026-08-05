@@ -6,8 +6,8 @@ import type {
     ObjectiveListItemResponse,
     TopicListItemResponse
 } from "@/types/responses/book.response";
-import type {LearningPathNodeListItemResponse} from "@/types/responses/learning.response";
-import type {BookTopic, CanDo, Lesson, MarugotoBook} from "./types";
+import type { LearningPathNodeListItemResponse } from "@/types/responses/learning.response";
+import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
 
 /** Tách markup "[漢字](かな)…" thành text gốc và chuỗi đọc (reading) tương ứng. */
 export function splitMarkup(markup: string): { text: string; reading: string } {
@@ -73,7 +73,7 @@ export function mapBook(b: BookResponse): MarugotoBook {
         order: b.orderIndex ?? 0,
         title: b.title,
         subtitle: b.description,
-        coverImage: b.coverImage?.objectKey ?? b.coverImage?.fileUrl,
+        coverImage: b.coverImage?.accessUrl,
         coverColor:
             BOOK_COLOR_BY_ORDER[b.orderIndex] ?? CEFR_COLOR[b.cefrLevel],
         firstNodeOrder: b.firstNodeGlobalOrderIndex ?? undefined,

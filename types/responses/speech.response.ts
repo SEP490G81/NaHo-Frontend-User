@@ -61,10 +61,9 @@ export interface ScoringResponseImprovedExpression {
     improved: string;
 }
 
-export interface SpeakingAnalysisResponse {
-    historyId: string;
-    score: number;
-}
+import { SpeakingAnalysisResponse } from "./speaking.response";
+
+export type { SpeakingAnalysisResponse };
 
 export interface SpeakingHistoryDetailResponse {
     historyId: string;

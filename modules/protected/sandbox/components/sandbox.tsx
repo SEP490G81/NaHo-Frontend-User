@@ -128,7 +128,7 @@ function SandboxContent() {
             // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
             useMarugotoStore
                 .getState()
-                .setQuestionScore(questionId, result.score);
+                .setQuestionScore(questionId, result.overallScore);
             // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],
@@ -139,7 +139,9 @@ function SandboxContent() {
             if (bookParam) ctx.set("book", bookParam);
             if (topicParam) ctx.set("topic", topicParam);
             const qs = ctx.toString();
-            push(`/speaking-history/${result.historyId}${qs ? `?${qs}` : ""}`);
+            push(
+                `/speaking-history/${result.answerHistoryId}${qs ? `?${qs}` : ""}`,
+            );
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
