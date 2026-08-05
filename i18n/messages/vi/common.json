@@ -91,6 +91,10 @@
         },
         "report": {
             "modalTitle": "Gửi phản hồi & báo cáo",
+            "pageTitle": "Báo cáo & Phản hồi",
+            "pageSubtitle": "Gửi báo cáo sự cố hệ thống và theo dõi lịch sử xử lý báo cáo của bạn.",
+            "createReportSectionTitle": "Tạo báo cáo mới",
+            "historySectionTitle": "Lịch sử báo cáo",
             "fieldReportType": "Loại báo cáo",
             "typeQuestion": "Câu hỏi",
             "typeComment": "Bình luận",
@@ -101,13 +105,29 @@
             "descriptionPlaceholder": "Vui lòng mô tả chi tiết vấn đề bạn gặp phải...",
             "fieldImage": "Ảnh đính kèm",
             "uploadImageBtn": "Tải lên hình ảnh",
+            "uploadImagesBtn": "Tải lên hình ảnh (chọn 1 hoặc nhiều ảnh)",
             "imageAttached": "Ảnh đã đính kèm",
+            "imagesAttachedCount": "Đã đính kèm {count} ảnh",
             "removeBtn": "Xóa ảnh",
             "cancelBtn": "Hủy",
             "submitBtn": "Gửi báo cáo",
+            "submitting": "Đang gửi...",
             "submitSuccess": "Gửi báo cáo thành công! Cảm ơn đóng góp của bạn.",
             "errorOnlyImage": "Vui lòng chỉ chọn tệp hình ảnh!",
-            "errorRequired": "Vui lòng nhập đầy đủ tiêu đề và mô tả!"
+            "errorRequired": "Vui lòng nhập đầy đủ tiêu đề và mô tả!",
+            "statusResolved": "Đã xử lý",
+            "statusPending": "Đang xử lý",
+            "filterAll": "Tất cả",
+            "noReports": "Chưa có báo cáo nào.",
+            "noReportsFiltered": "Không có báo cáo nào thuộc trạng thái này.",
+            "tableHeaderId": "ID",
+            "tableHeaderType": "Loại báo cáo",
+            "tableHeaderContent": "Nội dung báo cáo",
+            "tableHeaderStatus": "Trạng thái",
+            "tableHeaderImages": "Hình ảnh đính kèm",
+            "tableHeaderDate": "Thời gian",
+            "viewImages": "Xem ảnh ({count})",
+            "noImages": "Không có ảnh"
         }
     }
 }

@@ -28,6 +28,7 @@ export type AllRoute =
     | "/settings/security"
     | "/settings/billing"
     | "/orders"
+    | "/reports"
     | "/dialogue-setup"
     | "/get-help"
     | "/features"
