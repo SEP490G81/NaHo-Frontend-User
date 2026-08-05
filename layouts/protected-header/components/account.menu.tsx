@@ -136,28 +136,6 @@ const AccountMenu = ({
                             (pathname === item.redirectLink ||
                                 pathname.startsWith(item.redirectLink + "/"));
 
-                        if (item.titleKey === "report") {
-                            return (
-                                <button
-                                    key={item.id}
-                                    onClick={() => {
-                                        handleClose();
-                                        openReportModal("SYSTEM");
-                                    }}
-                                    className="group hover:text-text-highlight hover:bg-hbgc-page text-text-contrast flex h-10 w-full cursor-pointer items-center justify-start rounded-md px-3.5 transition-all duration-150"
-                                >
-                                    <span className="text-text-muted group-hover:text-text-highlight flex h-10 w-8 items-center transition-colors">
-                                        {item.icon}
-                                    </span>
-                                    <p className="text-left text-sm font-semibold whitespace-nowrap">
-                                        {t(
-                                            `common.layout.header.accountMenu.${item.titleKey}`,
-                                        )}
-                                    </p>
-                                </button>
-                            );
-                        }
-
                         return (
                             <Link
                                 href={item.redirectLink}

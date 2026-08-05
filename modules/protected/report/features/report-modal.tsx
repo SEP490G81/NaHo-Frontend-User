@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
     Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -11,60 +12,66 @@ import {
 } from "@mui/material";
 import { X } from "lucide-react";
 import { useReportStore } from "@/store/reportStore";
-import { useAuthStore } from "@/store/authStore";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import ReportFormFields from "../components/report-form-fields";
+import ReportTypeChip from "../components/report-type-chip";
+import { createReport } from "@/services/client/report.service";
 
 export function ReportModal() {
     const t = useTranslations("common.report");
     const modalState = useReportStore((s) => s.modalState);
     const closeModal = useReportStore((s) => s.closeModal);
-    const submitReport = useReportStore((s) => s.submitReport);
-
-    const userEmail = useAuthStore((s) => s.userEmail);
-    const currentUserId = userEmail || "u01";
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+    const [files, setFiles] = useState<File[]>([]);
+    const [filePreviews, setFilePreviews] = useState<string[]>([]);
+    const [submitting, setSubmitting] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (modalState.isOpen) {
             setTitle("");
             setDescription("");
-            setImageUrl(undefined);
+            setFiles([]);
+            setFilePreviews([]);
+            setSubmitting(false);
         }
     }, [modalState.isOpen]);
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+    const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFiles = Array.from(e.target.files || []);
+        if (selectedFiles.length === 0) return;
 
-        if (!file.type.startsWith("image/")) {
+        const invalidFile = selectedFiles.find(
+            (file) => !file.type.startsWith("image/"),
+        );
+        if (invalidFile) {
             toast.error(t("errorOnlyImage"));
             return;
         }
 
-        const reader = new FileReader();
-
-        reader.onload = (event) => {
-            setImageUrl(event.target?.result as string);
-        };
-
-        reader.readAsDataURL(file);
+        const newPreviews = selectedFiles.map((file) =>
+            URL.createObjectURL(file),
+        );
+        setFiles((prev) => [...prev, ...selectedFiles]);
+        setFilePreviews((prev) => [...prev, ...newPreviews]);
     };
 
-    const handleRemoveImage = () => {
-        setImageUrl(undefined);
+    const handleRemoveFile = (index: number) => {
+        setFiles((prev) => prev.filter((_, i) => i !== index));
+        setFilePreviews((prev) => {
+            URL.revokeObjectURL(prev[index]);
+            return prev.filter((_, i) => i !== index);
+        });
 
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!title.trim() || !description.trim()) {
@@ -72,20 +79,30 @@ export function ReportModal() {
             return;
         }
 
-        submitReport(
-            {
-                title,
-                description,
-                reportType: modalState.type,
-                questionId: modalState.questionId,
-                commentId: modalState.commentId,
-                imageUrl,
-            },
-            currentUserId,
-        );
+        setSubmitting(true);
+        try {
+            const formData = new FormData();
+            formData.append("title", title.trim());
+            formData.append("description", description.trim());
+            formData.append("reportType", modalState.type);
+            if (modalState.questionId) {
+                formData.append("questionId", String(modalState.questionId));
+            }
+            if (modalState.commentId) {
+                formData.append("commentId", String(modalState.commentId));
+            }
+            files.forEach((file) => {
+                formData.append("files", file);
+            });
 
-        toast.success(t("submitSuccess"));
-        closeModal();
+            await createReport(formData);
+            toast.success(t("submitSuccess"));
+            closeModal();
+        } catch (err: any) {
+            toast.error(err.message || t("errorRequired"));
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const getReportTypeLabel = (type: typeof modalState.type) => {
@@ -94,14 +111,10 @@ export function ReportModal() {
         return t("typeSystem");
     };
 
-    const translateKey = (key: string): string => {
-        return t(key as Parameters<typeof t>[0]);
-    };
-
     return (
         <Dialog
             open={modalState.isOpen}
-            onClose={closeModal}
+            onClose={() => !submitting && closeModal()}
             maxWidth="sm"
             fullWidth
             slotProps={{
@@ -133,6 +146,7 @@ export function ReportModal() {
 
                 <IconButton
                     onClick={closeModal}
+                    disabled={submitting}
                     sx={{
                         color: "var(--color-text-muted)",
                         "&:hover": { color: "var(--color-text-contrast)" },
@@ -152,9 +166,7 @@ export function ReportModal() {
                             {t("fieldReportType")}:
                         </span>
 
-                        <span className="bg-bgc-highlight/15 text-bgc-highlight border-bgc-highlight/25 rounded-full border px-3 py-1 text-xs font-bold">
-                            {getReportTypeLabel(modalState.type)}
-                        </span>
+                        <ReportTypeChip reportType={modalState.type} />
                     </div>
 
                     <ReportFormFields
@@ -162,11 +174,11 @@ export function ReportModal() {
                         setTitle={setTitle}
                         description={description}
                         setDescription={setDescription}
-                        imageUrl={imageUrl}
-                        handleImageChange={handleImageChange}
-                        handleRemoveImage={handleRemoveImage}
+                        files={files}
+                        filePreviews={filePreviews}
+                        handleFilesChange={handleFilesChange}
+                        handleRemoveFile={handleRemoveFile}
                         fileInputRef={fileInputRef}
-                        t={translateKey}
                     />
                 </DialogContent>
 
@@ -180,6 +192,7 @@ export function ReportModal() {
                     <Button
                         type="button"
                         onClick={closeModal}
+                        disabled={submitting}
                         variant="text"
                         sx={{
                             textTransform: "none",
@@ -197,6 +210,12 @@ export function ReportModal() {
                     <Button
                         type="submit"
                         variant="contained"
+                        disabled={submitting}
+                        startIcon={
+                            submitting ? (
+                                <CircularProgress size={16} color="inherit" />
+                            ) : null
+                        }
                         sx={{
                             textTransform: "none",
                             bgcolor: "var(--color-bgc-highlight)",
@@ -207,7 +226,7 @@ export function ReportModal() {
                             "&:hover": { opacity: 0.9 },
                         }}
                     >
-                        {t("submitBtn")}
+                        {submitting ? t("submitting") : t("submitBtn")}
                     </Button>
                 </DialogActions>
             </form>
