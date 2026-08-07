@@ -12,6 +12,8 @@ import LearnerSidebar from "@/layouts/sidebar/components/learner.sidebar";
 import SakuraFalling from "@/components/ui/sakura-falling";
 import JapanBackground from "@/components/ui/japan-background";
 import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
+import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigana.provider";
+import UserLearningProgressProvider from "@/components/providers/user.learning.progress.provider";
 
 const ProtectedLayout = async ({
     children,
@@ -28,18 +30,22 @@ const ProtectedLayout = async ({
 
     return (
         <HydrationBoundary state={dehydratedState}>
-            <MarugotoUserScope userId={String(user.id)} />
-            <div className="relative flex min-h-screen">
-                <LearnerSidebar />
-                <div className="flex min-w-0 flex-1 flex-col">
-                    <ProtectedHeader />
-                    <div className="bg-bgc-page relative isolate w-full flex-1 p-5">
-                        <SakuraFalling />
-                        <JapanBackground />
-                        {children}
+            <UserLearningProgressProvider>
+                <AppToggleFuriganaProvider>
+                    <MarugotoUserScope userId={String(user.id)} />
+                    <div className="relative flex min-h-screen">
+                        <LearnerSidebar />
+                        <div className="flex min-w-0 flex-1 flex-col">
+                            <ProtectedHeader />
+                            <div className="bg-bgc-page relative isolate w-full flex-1 p-5">
+                                <SakuraFalling />
+                                <JapanBackground />
+                                {children}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </AppToggleFuriganaProvider>
+            </UserLearningProgressProvider>
         </HydrationBoundary>
     );
 };

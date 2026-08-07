@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
 import { ArrowRight, BookText, Lock } from "lucide-react";
-import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import FuriganaText from "@/components/ui/furigana.text";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { TopicView } from "../utils/unlock";
 
 interface Props {
@@ -45,14 +43,10 @@ export function TopicRow({ view, bookId, accent }: Props) {
                     {t("topic.label", { index: topic.order })}
                 </p>
                 <p className="text-text-contrast truncate text-base font-bold">
-                    {topic.furiganaMarkup ? (
-                        <FuriganaMarkup markup={topic.furiganaMarkup} />
-                    ) : (
-                        <FuriganaText
-                            text={topic.jpTitle}
-                            furigana={topic.jpTitle}
-                        />
-                    )}
+                    <FuriganaHtml
+                        text={topic.jpTitle}
+                        markup={topic.furiganaMarkup}
+                    />
                 </p>
             </div>
 
@@ -85,14 +79,12 @@ export function TopicRow({ view, bookId, accent }: Props) {
 
     if (locked) {
         return (
-            <button
-                type="button"
-                onClick={() => toast.info(t("lockedToastDesc"))}
-                className={`${className} opacity-60`}
+            <div
+                className={`${className} opacity-60 cursor-not-allowed`}
                 style={style}
             >
                 {inner}
-            </button>
+            </div>
         );
     }
 

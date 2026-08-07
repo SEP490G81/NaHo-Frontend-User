@@ -2,24 +2,16 @@
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import {
-    getBookDetail,
-    getLessonDetail,
-    getObjectiveDetail,
-    getTopicDetail,
-} from "@/services/client/book.service";
-import {
-    mapBeLessonDetail,
-    mapBeObjective,
-    mapBook,
-} from "@/data/marugoto/mapper";
+import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail } from "@/services/client/book.service";
+import { mapBeLessonDetail, mapBeObjective, mapBook } from "@/data/marugoto/mapper";
 import type { BookTopic, Lesson } from "@/data/marugoto/types";
-import { useMarugotoStore } from "@/store/marugotoStore";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useTopicNodes } from "../hooks/use.cando.nodes";
 import TopicPathHeader from "../components/topic.path.header";
 import TopicRoadmapBody from "./topic.roadmap.body";
+
+import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 
 function LoadingState() {
     return (
@@ -37,8 +29,7 @@ export function TopicPath() {
     const params = useParams();
     const bookId = params?.bookId as string;
     const topicId = params?.topicId as string;
-    const showFurigana = useMarugotoStore((s) => s.showFurigana);
-    const setShowFurigana = useMarugotoStore((s) => s.setShowFurigana);
+    const { showFurigana } = useFurigana();
 
     const bookQ = useQuery({
         queryKey: ["book", bookId],
@@ -115,30 +106,39 @@ export function TopicPath() {
         (lessons.length > 0 && lessonQs.some((q) => q.isLoading)) ||
         (objRefs.length > 0 && objQs.some((q) => q.isLoading));
 
+    const allNodes = useMemo(
+        () => groups.flatMap((g) => g.blocks).flatMap((b) => b.nodes),
+        [groups],
+    );
+    const completedCount = useMemo(
+        () => allNodes.filter((n) => n.status === "completed").length,
+        [allNodes],
+    );
+    const totalCount = allNodes.length;
+
     if (bookQ.isError || topicQ.isError) return <NotFoundView />;
     if (!book || !topic || loading) return <LoadingState />;
 
     return (
-        <div className="px-4 py-6">
-            <div className="mx-auto flex max-w-5xl flex-col gap-6">
-                <TopicPathHeader
-                    book={book}
-                    topic={topic}
-                    accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                    overallPercent={overallPercent}
-                    lessonCount={lessonModels.length}
-                    showFurigana={showFurigana}
-                    setShowFurigana={setShowFurigana}
-                />
-                <TopicRoadmapBody
-                    groups={groups}
-                    bookId={bookId}
-                    topicId={topicId}
-                    accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                    showFurigana={showFurigana}
-                    currentNodeId={currentNodeId}
-                />
-            </div>
+        <div className="mx-auto flex max-w-5xl flex-col gap-6">
+            <TopicPathHeader
+                book={book}
+                topic={topic}
+                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
+                overallPercent={overallPercent}
+                lessonCount={lessonModels.length}
+                showFurigana={showFurigana}
+                completedCount={completedCount}
+                totalCount={totalCount}
+            />
+            <TopicRoadmapBody
+                groups={groups}
+                bookId={bookId}
+                topicId={topicId}
+                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
+                showFurigana={showFurigana}
+                currentNodeId={currentNodeId}
+            />
         </div>
     );
 }

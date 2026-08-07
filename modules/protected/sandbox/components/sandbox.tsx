@@ -23,6 +23,8 @@ import SandboxStep3 from "./sandbox.step3";
 import SandboxAnalyzingOverlay from "./sandbox.analyzing.overlay";
 import { useRouter } from "@/i18n/navigation";
 
+import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
+
 const EMPTY_HINTS: QuestionHints = { vocab: [], structures: [] };
 
 export function Sandbox() {
@@ -44,6 +46,8 @@ function SandboxContent() {
     const bookParam = searchParams.get("book");
     const topicParam = searchParams.get("topic");
 
+    const { showFurigana } = useFurigana();
+
     // Đề bài + từ vựng + ngữ pháp lấy THẬT từ learning-path-node detail.
     const nodeQ = useQuery({
         queryKey: ["sandbox-node", nodeId],
@@ -64,20 +68,21 @@ function SandboxContent() {
 
     const question = useMemo(() => {
         if (sq) {
-            const { text, reading } = splitMarkup(sq.titleMarkup || sq.title);
             return {
                 id: questionId,
-                jp: text,
-                furigana: reading,
+                jp: sq.japaneseName,
+                markup: sq.japaneseNameMarkup,
                 vi: sq.description ?? "",
+                viMarkup: sq.descriptionMarkup ?? undefined,
             };
         }
         // Chưa nạp được node → placeholder tối thiểu để vẫn ghi âm/gửi chấm được.
         return {
             id: questionId,
             jp: "録音して発音を分析しましょう",
-            furigana: "ろくおんしてはつおんをぶんせきしましょう",
+            markup: undefined,
             vi: "",
+            viMarkup: undefined,
         };
     }, [sq, questionId]);
 
@@ -113,8 +118,6 @@ function SandboxContent() {
         retrySpeaking,
         audioUrl,
     } = useSandbox();
-
-    const showFurigana = true;
 
     const mutation = useMutation({
         mutationFn: (vars: { audioBlob: Blob; durationSec: number }) =>
@@ -192,8 +195,9 @@ function SandboxContent() {
 
                 <SandboxQuestionBanner
                     jp={question.jp}
-                    furigana={question.furigana}
+                    markup={question.markup}
                     vi={question.vi}
+                    viMarkup={question.viMarkup}
                     accent={accent}
                     showFurigana={showFurigana}
                 />

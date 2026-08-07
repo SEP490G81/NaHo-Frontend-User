@@ -7,5 +7,5 @@ export async function GET(
     { params }: { params: Promise<{ historyId: string }> },
 ) {
     const { historyId } = await params;
-    return proxyGet(`/speaking-histories/${historyId}`);
+    return proxyGet(`/answer-histories/${historyId}/speaking-question`);
 }

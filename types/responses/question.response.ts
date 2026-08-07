@@ -6,14 +6,30 @@ export type QuestionStatus =
     | "PRIVATE"
     | "PENDING_REVIEW";
 
+export interface VocabularyDetailResponse {
+    id: number;
+    reading: string | null;
+    japanese: string;
+    vietnameseMeaningText: string | null;
+    englishMeaningText: string | null;
+}
+
+export type GrammarDetailResponse = VocabularyDetailResponse;
+
 export interface SpeakingQuestionDetailResponse {
     id: number;
     userId: number;
-    title: string;
-    titleMarkup: string;
+    japaneseName: string;
+    japaneseNameMarkup: string;
+    vietnameseName: string;
     description: string;
     descriptionMarkup: string;
+    japaneseSampleAnswer: string;
+    japaneseSampleAnswerMarkup: string;
+    vietnameseSampleAnswer: string;
     status: QuestionStatus;
+    vocabularies: VocabularyDetailResponse[];
+    grammars: GrammarDetailResponse[];
 }
 
 export interface SpeakingQuestionListItemResponse {

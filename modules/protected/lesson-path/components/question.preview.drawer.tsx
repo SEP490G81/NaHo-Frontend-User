@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import type { LearningPathNodeDetailResponseSpeakingQuestionDetailResponse } from "@/types/responses/learning.response";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import PreviewSection from "./preview.section";
 import NodeTermList from "./node.term.list";
 
@@ -89,17 +89,19 @@ export function QuestionPreviewDrawer({
                         <>
                             <div>
                                 <h3 className="text-text-contrast text-2xl leading-snug font-bold">
-                                    <FuriganaMarkup
-                                        markup={
-                                            question.titleMarkup ||
-                                            question.title
-                                        }
+                                    <FuriganaHtml
+                                        text={question.japaneseName}
+                                        markup={question.japaneseNameMarkup}
                                         showFurigana={showFurigana}
                                     />
                                 </h3>
-                                {question.description && (
+                                {(question.descriptionMarkup || question.description) && (
                                     <p className="text-text-muted mt-1 text-sm">
-                                        {question.description}
+                                        <FuriganaHtml
+                                            text={question.description}
+                                            markup={question.descriptionMarkup}
+                                            showFurigana={showFurigana}
+                                        />
                                     </p>
                                 )}
                             </div>

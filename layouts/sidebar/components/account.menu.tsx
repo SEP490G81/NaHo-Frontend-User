@@ -43,8 +43,20 @@ const AccountMenu = ({
                 horizontal: "right",
             }}
             transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: "bottom",
+                horizontal: "left",
+            }}
+            slotProps={{
+                paper: {
+                    sx: {
+                        ml: 1.5,
+                        boxShadow:
+                            "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+                        borderRadius: "16px",
+                        border: "1px solid var(--color-bdc-primary)",
+                        backgroundColor: "var(--color-bgc-app)",
+                    },
+                },
             }}
         >
             <div>
@@ -106,7 +118,13 @@ const AccountMenu = ({
                                 <Chip
                                     label="PREMIUM 👑"
                                     size="small"
-                                    className="h-4.5 bg-gradient-to-r from-amber-400 to-rose-500 px-1.5 text-[10px] font-black text-white shadow-sm"
+                                    sx={{
+                                        height: 18,
+                                        fontSize: "9px",
+                                        fontWeight: 900,
+                                        "& .MuiChip-label": { px: 1, py: 0 },
+                                    }}
+                                    className="bg-gradient-to-r from-amber-400 to-rose-500 text-white shadow-xs"
                                 />
                             </div>
                         )}
@@ -115,7 +133,13 @@ const AccountMenu = ({
                                 <Chip
                                     label="BASIC ★"
                                     size="small"
-                                    className="h-4.5 bg-gradient-to-r from-purple-600 to-indigo-600 px-1.5 text-[10px] font-bold text-white shadow-sm"
+                                    sx={{
+                                        height: 18,
+                                        fontSize: "9px",
+                                        fontWeight: 800,
+                                        "& .MuiChip-label": { px: 1, py: 0 },
+                                    }}
+                                    className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-xs"
                                 />
                             </div>
                         )}

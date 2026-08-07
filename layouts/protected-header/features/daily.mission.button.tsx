@@ -50,12 +50,12 @@ const DailyMissionButton = () => {
             <TooltipCustom title={t("triggerTooltip")} placement="bottom">
                 <button
                     onClick={handleOpen}
-                    className="text-text-contrast bg-bgc-app border-bdc-primary group relative flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-2xs transition-all duration-300 hover:border-amber-400 hover:bg-amber-500/5"
+                    className="group relative flex cursor-pointer items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-emerald-700 shadow-2xs transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300"
                 >
                     <div className="relative flex items-center justify-center">
-                        <Target className="h-4 w-4 text-amber-500 transition-transform duration-300 group-hover:scale-110" />
+                        <Target className="h-4 w-4 text-emerald-500 transition-transform duration-300 group-hover:scale-110" />
                     </div>
-                    <span className="hidden font-bold sm:inline">
+                    <span className="hidden font-extrabold sm:inline">
                         {t("triggerBtn")}
                     </span>
                 </button>

@@ -116,22 +116,24 @@ export function ReportHero({
                     </div>
                 </div>
 
-                {audioUrl && (
-                    <div
-                        className="mt-5 border-t pt-4"
-                        style={{ borderColor: softBorder }}
-                    >
-                        <p className="text-text-contrast mb-2 text-sm font-semibold">
-                            {t("yourSpeech")}
-                        </p>
+                <div
+                    className="mt-5 border-t pt-4"
+                    style={{ borderColor: softBorder }}
+                >
+                    <p className="text-text-contrast mb-2 text-sm font-semibold">
+                        {t("yourSpeech")}
+                    </p>
+                    {audioUrl ? (
                         <audio
                             controls
                             src={audioUrl}
-                            className="w-full"
+                            className="w-full cursor-pointer"
                             preload="none"
                         />
-                    </div>
-                )}
+                    ) : (
+                        <span className="text-text-muted">—</span>
+                    )}
+                </div>
             </div>
         </div>
     );

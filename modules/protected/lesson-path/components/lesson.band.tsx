@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
 import { useTranslations } from "next-intl";
-import { cn } from "@/libs/utils";
-import FuriganaText from "@/components/ui/furigana.text";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { Lesson } from "@/data/marugoto/types";
 import type { NodeStatus } from "@/components/ui/status.badge";
+import { cn } from "@/libs/utils";
 
 interface Props {
     lesson: Lesson;
@@ -55,18 +54,11 @@ export function LessonBand({ lesson, status, accent, showFurigana }: Props) {
                 </div>
 
                 <h2 className="text-base leading-snug font-extrabold text-slate-800 sm:text-lg">
-                    {lesson.furiganaMarkup ? (
-                        <FuriganaMarkup
-                            markup={lesson.furiganaMarkup}
-                            showFurigana={showFurigana}
-                        />
-                    ) : (
-                        <FuriganaText
-                            text={lesson.jpTitle}
-                            furigana={lesson.furigana}
-                            showFurigana={showFurigana}
-                        />
-                    )}
+                    <FuriganaHtml
+                        text={lesson.jpTitle}
+                        markup={lesson.furiganaMarkup}
+                        showFurigana={showFurigana}
+                    />
                 </h2>
             </div>
         </div>

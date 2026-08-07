@@ -3,7 +3,6 @@ import React from "react";
 import { CheckCircle2, MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Box, Tooltip, Typography } from "@mui/material";
-import FuriganaText from "@/components/ui/furigana.text";
 import type { TranscriptSegment } from "@/data/mockReports";
 
 interface TranscriptViewProps {
@@ -106,11 +105,9 @@ export function TranscriptView({
                 <div className="space-y-3">
                     <div className="bg-bgc-page border-bdc-primary space-y-2 rounded-md border p-4">
                         <div className="text-lg leading-relaxed">
-                            <FuriganaText
-                                text={aiSuggestion.jp}
-                                furigana={aiSuggestion.furigana}
-                                showFurigana={showFurigana}
-                            />
+                            <span className="font-noto-jp text-text-contrast">
+                                {aiSuggestion.jp}
+                            </span>
                         </div>
                         <div className="border-bdc-primary border-t border-dashed pt-2">
                             <p className="text-text-muted text-xs font-medium tracking-wide uppercase">

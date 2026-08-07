@@ -17,7 +17,8 @@
         "emptyTitle": "Chưa có bài luyện nào phù hợp",
         "emptySubtitle": "Thử bỏ bộ lọc hoặc bắt đầu luyện một chủ đề mới để xem kết quả ở đây.",
         "emptyBtn": "Bắt đầu luyện ngay",
-        "retryBtn": "Luyện lại"
+        "retryBtn": "Luyện lại",
+        "audioUploadFailed": "音声ファイルのアップロードに失敗しました。後ほど再アップロードされます"
     },
     "historyDetail": {
         "breadcrumbHistory": "Lịch sử",
@@ -41,6 +42,7 @@
         "tabHints": "Gợi ý nâng cao",
         "retryBtn": "Luyện tập lại câu này",
         "yourSpeech": "Bản ghi âm của bạn",
+        "audioUploadFailed": "音声ファイルのアップロードに失敗しました。後ほど再アップロードされます",
         "aiCorrection": "Đề xuất sửa lỗi của AI",
         "pronunciationLabel": "Đánh giá chi tiết phát âm",
         "pronunciationWord": "Từ vựng",

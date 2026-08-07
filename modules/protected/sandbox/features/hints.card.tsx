@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import FuriganaText from "@/components/ui/furigana.text";
 import type { QuestionHints } from "@/data/mockHints";
 
 interface HintsCardProps {
@@ -85,12 +84,9 @@ export function HintsCard({ hints, showFurigana, accent }: HintsCardProps) {
                                     className="border-bdc-primary bg-bgc-page rounded-md border px-2.5 py-1.5 text-xs"
                                     title={v.vi}
                                 >
-                                    <FuriganaText
-                                        text={v.jp}
-                                        furigana={v.furigana}
-                                        showFurigana={showFurigana}
-                                        className="text-text-contrast text-sm"
-                                    />
+                                    <span className="font-noto-jp text-text-contrast text-sm font-semibold">
+                                        {v.jp}
+                                    </span>
                                     <span className="text-text-muted ml-1">
                                         · {v.vi}
                                     </span>

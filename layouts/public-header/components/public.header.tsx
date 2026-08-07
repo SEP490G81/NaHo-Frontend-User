@@ -6,7 +6,7 @@ import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.b
 import AuthButtons from "@/layouts/public-header/components/auth.buttons";
 import PublicHeaderLinks from "@/layouts/public-header/components/public.header.links";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import UserAvatar from "@/layouts/protected-header/components/user.avatar";
+import UserAvatar from "@/layouts/sidebar/components/user.avatar";
 
 const PublicHeader = () => {
     const t = useTranslations();

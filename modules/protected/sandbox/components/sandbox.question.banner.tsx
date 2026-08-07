@@ -2,12 +2,13 @@
 import React from "react";
 import { Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
-import FuriganaText from "@/components/ui/furigana.text";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 
 interface Props {
     jp: string;
-    furigana: string;
+    markup?: string;
     vi: string;
+    viMarkup?: string;
     accent: string;
     showFurigana: boolean;
 }
@@ -15,8 +16,9 @@ interface Props {
 /** Dải tiêu đề câu hỏi (hiện xuyên suốt 3 bước) — tô màu sách để nhận biết ngữ cảnh. */
 export function SandboxQuestionBanner({
     jp,
-    furigana,
+    markup,
     vi,
+    viMarkup,
     accent,
     showFurigana,
 }: Props) {
@@ -41,13 +43,21 @@ export function SandboxQuestionBanner({
                 {t("speakQuestion")}
             </div>
             <h1 className="text-text-contrast text-xl leading-snug font-bold md:text-2xl">
-                <FuriganaText
+                <FuriganaHtml
                     text={jp}
-                    furigana={furigana}
+                    markup={markup}
                     showFurigana={showFurigana}
                 />
             </h1>
-            {vi && <p className="text-text-muted mt-1 text-sm">{vi}</p>}
+            {(viMarkup || vi) && (
+                <div className="text-text-muted mt-1 text-sm">
+                    <FuriganaHtml
+                        text={vi}
+                        markup={viMarkup}
+                        showFurigana={showFurigana}
+                    />
+                </div>
+            )}
         </div>
     );
 }

@@ -78,7 +78,7 @@ export function usePointRows(input: PointRowsInput) {
         const d = nodeMap.get(nodeId);
         if (!d) return "…";
         if (d.nodeType === "SPEAKING_QUESTION")
-            return d.speakingQuestion?.title || "—";
+            return d.speakingQuestion?.japaneseName || "—";
         if (d.nodeType === "CHEST") return d.chest?.title || t("ctxChest");
         if (d.nodeType === "VOCABULARY_QUESTION") return t("ctxVocab");
         return "—";

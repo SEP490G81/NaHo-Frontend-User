@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Volume2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import FuriganaText from "@/components/ui/furigana.text";
 import type { Vocab } from "@/data/marugoto/types";
 
 function speak(text: string) {
@@ -79,11 +78,7 @@ export function FlashcardDeck({
                     {/* Front */}
                     <div className="border-bdc-primary bg-bgc-page absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-2xl border p-6 shadow-sm [backface-visibility:hidden]">
                         <span className="text-text-contrast font-noto-jp text-4xl font-bold">
-                            <FuriganaText
-                                text={v.japanese}
-                                furigana={v.reading ?? v.japanese}
-                                showFurigana={showFurigana && !!v.reading}
-                            />
+                            {v.japanese}
                         </span>
                         <span className="text-text-muted text-xs">
                             {t("vocab.flip")}

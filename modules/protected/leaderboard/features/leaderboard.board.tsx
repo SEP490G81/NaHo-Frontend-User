@@ -6,10 +6,10 @@ import LeaderboardContent from "../components/leaderboard.content";
 import LeaderboardError from "../components/leaderboard.error";
 import { LeaderboardSkeleton } from "../components/leaderboard.skeleton";
 import LeagueRail from "../components/league.rail";
+import { useUserLearningProgress } from "@/components/providers/user.learning.progress.provider";
 import {
     getLeagueLeaderboard,
     getLeagues,
-    getUserLearningProgress,
 } from "../services/leaderboard.service";
 import { findLeagueByTotalPoint } from "../utils/leaderboard.util";
 
@@ -19,12 +19,7 @@ export function LeaderboardBoard() {
     );
     const { data: currentUser } = useCurrentUser();
 
-    const { data: progress, isPending: isProgressPending } = useQuery({
-        queryKey: ["user-learning-progress"],
-        queryFn: getUserLearningProgress,
-        staleTime: 1000 * 60 * 5,
-        retry: 1,
-    });
+    const { progress, isLoading: isProgressPending } = useUserLearningProgress();
 
     const {
         data: leagues = [],

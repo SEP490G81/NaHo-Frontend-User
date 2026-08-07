@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { ArrowRight, Lock } from "lucide-react";
-import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/libs/utils";
@@ -87,13 +86,9 @@ export function BookCard({ book, unlocked, current }: BookCardProps) {
 
     if (!navigable) {
         return (
-            <button
-                type="button"
-                onClick={() => toast.info(t("books.lockedDesc"))}
-                className="w-full cursor-not-allowed text-left"
-            >
+            <div className="w-full cursor-not-allowed text-left">
                 {inner}
-            </button>
+            </div>
         );
     }
 

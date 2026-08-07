@@ -101,7 +101,6 @@ export function TopicRoadmapBody({
 
     const handleClick = (block: CanDoBlock) => (n: PathNode) => {
         if (n.status === "locked") {
-            toast.info(t("lockedToastDesc"));
             return;
         }
         setActive({ node: n, block });

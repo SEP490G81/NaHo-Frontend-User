@@ -179,6 +179,6 @@ export interface SpeakingHistoryDetailResponse {
     practicedAt: string;
     durationSec: number;
     score: number;
-    audioUrl: string;
+    audioUrl: string | null;
     report: SpeakingReport;
 }

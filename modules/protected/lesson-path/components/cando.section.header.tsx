@@ -2,7 +2,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { CanDoBlock } from "../hooks/use.cando.nodes";
 
 interface Props {
@@ -43,14 +43,11 @@ export function CanDoSectionHeader({ block, accent, showFurigana }: Props) {
                     locked ? "text-text-muted" : "text-text-contrast",
                 )}
             >
-                {cando.furiganaMarkup ? (
-                    <FuriganaMarkup
-                        markup={cando.furiganaMarkup}
-                        showFurigana={showFurigana}
-                    />
-                ) : (
-                    cando.viDesc
-                )}
+                <FuriganaHtml
+                    text={cando.jpDesc || cando.viDesc}
+                    markup={cando.furiganaMarkup}
+                    showFurigana={showFurigana}
+                />
             </h3>
         </div>
     );

@@ -2,7 +2,6 @@
 import React from "react";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import FuriganaText from "@/components/ui/furigana.text";
 
 export interface Expression {
     jp: string;
@@ -78,11 +77,7 @@ export function AdvancedHintsView({
                             className="bg-bgc-page border-bdc-primary space-y-2 rounded-md border p-4"
                         >
                             <div className="text-text-contrast text-base leading-relaxed font-semibold">
-                                <FuriganaText
-                                    text={e.jp}
-                                    furigana={e.furigana}
-                                    showFurigana={showFurigana}
-                                />
+                                <span className="font-noto-jp">{e.jp}</span>
                             </div>
                             <p className="text-text-contrast text-sm">{e.vi}</p>
                             {e.note && (
@@ -120,11 +115,7 @@ export function AdvancedHintsView({
                             >
                                 <div className="flex-1 space-y-1">
                                     <div className="text-text-contrast text-base leading-none font-semibold">
-                                        <FuriganaText
-                                            text={v.jp}
-                                            furigana={v.furigana}
-                                            showFurigana={showFurigana}
-                                        />
+                                        <span className="font-noto-jp">{v.jp}</span>
                                     </div>
                                     <p className="text-text-muted text-xs">
                                         {v.romaji} {v.romaji && v.vi ? "·" : ""}{" "}
