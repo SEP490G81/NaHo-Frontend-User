@@ -3,7 +3,7 @@ import React from "react";
 import { Trophy, Target, Gift } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { LessonGroup } from "../hooks/use.cando.nodes";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 
 interface Props {
     groups: LessonGroup[];
@@ -108,14 +108,11 @@ export function TopicStatsWidget({
                     </p>
 
                     <div className="text-text-contrast text-xs font-bold leading-snug">
-                        {activeBlock.cando.furiganaMarkup ? (
-                            <FuriganaMarkup
-                                markup={activeBlock.cando.furiganaMarkup}
-                                showFurigana={showFurigana}
-                            />
-                        ) : (
-                            activeBlock.cando.viDesc
-                        )}
+                        <FuriganaHtml
+                            text={activeBlock.cando.jpDesc || activeBlock.cando.viDesc}
+                            markup={activeBlock.cando.furiganaMarkup}
+                            showFurigana={showFurigana}
+                        />
                     </div>
                 </div>
             )}

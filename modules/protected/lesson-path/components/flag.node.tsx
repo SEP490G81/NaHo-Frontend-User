@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
-import FuriganaText from "@/components/ui/furigana.text";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { Lesson } from "@/data/marugoto/types";
 import type { CanDoBlock } from "../hooks/use.cando.nodes";
 import type { NodeStatus } from "@/components/ui/status.badge";
@@ -64,18 +63,11 @@ export function FlagNode(props: FlagNodeProps) {
                         Bài {lesson.order}
                     </span>
                     <h3 className="text-text-contrast mt-1.5 text-sm leading-snug font-bold">
-                        {lesson.furiganaMarkup ? (
-                            <FuriganaMarkup
-                                markup={lesson.furiganaMarkup}
-                                showFurigana={showFurigana}
-                            />
-                        ) : (
-                            <FuriganaText
-                                text={lesson.jpTitle}
-                                furigana={lesson.furigana}
-                                showFurigana={showFurigana}
-                            />
-                        )}
+                        <FuriganaHtml
+                            text={lesson.jpTitle}
+                            markup={lesson.furiganaMarkup}
+                            showFurigana={showFurigana}
+                        />
                     </h3>
                     {firstCando?.viDesc && (
                         <p className="text-text-muted border-bdc-primary mt-1.5 border-t pt-1.5 text-xs leading-snug">
@@ -139,14 +131,11 @@ export function FlagNode(props: FlagNodeProps) {
                     Can-do {cando.orderInLesson} · {done}/{total}
                 </span>
                 <p className="text-text-contrast mt-1.5 text-xs leading-snug font-semibold">
-                    {cando.furiganaMarkup ? (
-                        <FuriganaMarkup
-                            markup={cando.furiganaMarkup}
-                            showFurigana={showFurigana}
-                        />
-                    ) : (
-                        cando.viDesc
-                    )}
+                    <FuriganaHtml
+                        text={cando.jpDesc || cando.viDesc}
+                        markup={cando.furiganaMarkup}
+                        showFurigana={showFurigana}
+                    />
                 </p>
             </FlagTooltip>
 

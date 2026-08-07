@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { cn, formatPoints } from "@/libs/utils";
 import { useCurrentLevelLabel } from "@/hooks/use.current.level";
-import { getUserLearningProgress } from "@/modules/protected/leaderboard/services/leaderboard.service";
+import { useUserLearningProgress } from "@/components/providers/user.learning.progress.provider";
 import ContainerBox from "@/components/ui/container.box";
 
 interface StatCardProps {
@@ -51,11 +51,8 @@ function StatCard({ icon, label, value, href }: StatCardProps) {
 
 export function RoadmapHeader() {
     const t = useTranslations("marugoto.roadmap");
-    // Tiến độ thật của người dùng (điểm · streak) — theo suốt hành trình học.
-    const { data: progress } = useQuery({
-        queryKey: ["user-learning-progress"],
-        queryFn: getUserLearningProgress,
-    });
+    // Tiến độ thật của người dùng (điểm · streak) — lấy từ context.
+    const { progress } = useUserLearningProgress();
     const totalPoint = formatPoints(progress?.totalPoint ?? 0);
     const streakDays = progress?.currentStreak ?? 0;
     // Trình độ = quyển đang học theo mốc tiến độ; user mới luôn là quyển đầu (N5 · A1).

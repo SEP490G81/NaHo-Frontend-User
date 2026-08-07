@@ -96,10 +96,10 @@ const DailyRewardCalendar = () => {
         <>
             <button
                 onClick={handleOpen}
-                className="text-text-contrast bg-bgc-app border-bdc-primary group relative flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold shadow-2xs transition-all duration-300 hover:border-pink-400 hover:bg-pink-500/5"
+                className="group relative flex cursor-pointer items-center gap-1.5 rounded-full border border-pink-500/40 bg-pink-500/10 px-3 py-1.5 text-xs font-bold text-pink-700 shadow-2xs transition-all duration-300 hover:border-pink-500 hover:bg-pink-500/20 dark:border-pink-400/40 dark:bg-pink-500/15 dark:text-pink-300"
             >
                 <Gift className="h-4 w-4 text-pink-500 transition-transform duration-300 group-hover:scale-110" />
-                <span className="hidden font-bold sm:inline">
+                <span className="hidden font-extrabold sm:inline">
                     {t("triggerBtn")}
                 </span>
             </button>

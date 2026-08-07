@@ -46,7 +46,7 @@ export function AudioPlayButton({ src, className }: Props) {
                 onClick={toggle}
                 aria-label="play"
                 className={cn(
-                    "border-bdc-primary bg-bgc-page text-bgc-highlight hover:border-bgc-highlight/60 inline-flex h-8 w-8 items-center justify-center rounded-full border transition-colors",
+                    "border-bdc-primary bg-bgc-page text-bgc-highlight hover:border-bgc-highlight/60 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border transition-colors",
                     className,
                 )}
             >

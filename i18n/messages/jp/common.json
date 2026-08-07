@@ -54,6 +54,10 @@
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"
                 },
+                "furiganaSwitchButton": {
+                    "showFurigana": "ふりがなを表示",
+                    "hideFurigana": "ふりがなを非表示"
+                },
                 "loginButton": "Đăng nhập",
                 "logoutButton": "Đăng xuất",
                 "registerButton": "Đăng ký trải nghiệm ngay",

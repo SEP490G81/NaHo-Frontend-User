@@ -1,21 +1,28 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "@/i18n/navigation";
-import { Box, Drawer, List } from "@mui/material";
+import { Link, usePathname } from "@/i18n/navigation";
+import { Box, Divider, Drawer, List } from "@mui/material";
+import { Pin, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
+import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import SidebarLogoButton from "./sidebar.logo.button";
 import SidebarItem from "./sidebar.item";
+import UserAvatar from "./user.avatar";
 
 const DRAWER_WIDTH = 260;
 
 export function LearnerSidebar() {
     const pathname = usePathname();
+    const t = useTranslations("marugoto");
     const {
         isSidebarOpen,
         isSidebarCollapsed,
+        pinnedTopics,
+        unpinTopic,
         toggleSidebarCollapse,
         closeSidebar,
     } = useUiStore();
@@ -51,11 +58,11 @@ export function LearnerSidebar() {
     };
 
     const renderDrawerContent = (isCollapsed: boolean) => (
-        <>
-            {/* Header: chỉ còn logo (nút thu gọn đã chuyển lên header trên) */}
+        <div className="flex h-full flex-col justify-between overflow-hidden">
+            {/* Header: chỉ còn logo */}
             <div
                 className={cn(
-                    "border-bdc-primary flex min-h-[66px] items-center justify-center border-b py-3.5",
+                    "border-bdc-primary flex min-h-[66px] shrink-0 items-center justify-center border-b py-3.5",
                     isCollapsed ? "px-2" : "px-4",
                 )}
             >
@@ -69,7 +76,7 @@ export function LearnerSidebar() {
             </div>
 
             {/* Menu items */}
-            <Box className="flex flex-1 flex-col justify-between overflow-y-auto py-4">
+            <Box className="flex flex-1 flex-col overflow-y-auto py-4">
                 <List
                     disablePadding
                     className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}
@@ -88,9 +95,117 @@ export function LearnerSidebar() {
                     ))}
                 </List>
 
-                <div className="">Hello</div>
+                {/* Pinned Topics Section */}
+                {pinnedTopics.length > 0 && (
+                    <div className="mt-4">
+                        {/* Divider + Section Header on the same row */}
+                        {!isCollapsed ? (
+                            <div className="my-3 flex items-center gap-2 px-3">
+                                <span className="shrink-0 text-[10px] font-black uppercase tracking-wider text-text-muted">
+                                    {t("path.pinnedSection")}
+                                </span>
+                                <div className="h-px flex-1 bg-bdc-primary opacity-60" />
+                            </div>
+                        ) : (
+                            <Divider className="my-3 border-bdc-primary opacity-60" />
+                        )}
+
+                        {/* List of up to 3 pinned topics */}
+                        <div
+                            className={cn(
+                                "space-y-1",
+                                isCollapsed ? "px-1.5" : "px-3",
+                            )}
+                        >
+                            {pinnedTopics.slice(0, 3).map((pinned) => {
+                                const isActive =
+                                    pathname === pinned.url ||
+                                    pathname.startsWith(pinned.url + "/");
+
+                                if (isCollapsed) {
+                                    // Collapsed state: Icon only with Tooltip popover showing title & unpin button
+                                    return (
+                                        <TooltipCustom
+                                            key={pinned.id}
+                                            placement="right"
+                                            title={
+                                                <div className="flex items-center gap-2.5 p-1">
+                                                    <span className="text-xs font-extrabold text-text-contrast">
+                                                        {pinned.title}
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            unpinTopic(pinned.id);
+                                                        }}
+                                                        title={t("path.unpinTopic")}
+                                                        className="rounded-md p-1 text-text-muted hover:bg-black/10 hover:text-text-error dark:hover:bg-white/10"
+                                                    >
+                                                        <X className="h-3.5 w-3.5" />
+                                                    </button>
+                                                </div>
+                                            }
+                                        >
+                                            <Link
+                                                href={pinned.url}
+                                                onClick={closeSidebar}
+                                                className={cn(
+                                                    "flex h-9 w-full items-center justify-center rounded-lg transition-all duration-200",
+                                                    isActive
+                                                        ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
+                                                        : "text-text-contrast hover:bg-hbgc-app",
+                                                )}
+                                            >
+                                                <Pin className="h-4 w-4 shrink-0 rotate-45 text-bgc-highlight" />
+                                            </Link>
+                                        </TooltipCustom>
+                                    );
+                                }
+
+                                // Expanded state: Icon + Title link + Unpin button (3 parts)
+                                return (
+                                    <div
+                                        key={pinned.id}
+                                        className={cn(
+                                            "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
+                                            isActive
+                                                ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
+                                                : "text-text-contrast hover:bg-hbgc-app",
+                                        )}
+                                    >
+                                        <Link
+                                            href={pinned.url}
+                                            onClick={closeSidebar}
+                                            className="flex flex-1 min-w-0 items-center gap-2.5"
+                                        >
+                                            <Pin className="h-3.5 w-3.5 shrink-0 rotate-45 text-bgc-highlight" />
+                                            <span className="truncate font-semibold text-text-contrast group-hover:text-bgc-highlight">
+                                                {pinned.title}
+                                            </span>
+                                        </Link>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => unpinTopic(pinned.id)}
+                                            title={t("path.unpinTopic")}
+                                            className="rounded p-1 text-text-muted opacity-60 hover:bg-black/10 hover:text-text-error hover:opacity-100 dark:hover:bg-white/10 transition-all"
+                                        >
+                                            <X className="h-3.5 w-3.5" />
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
             </Box>
-        </>
+
+            {/* User Avatar Footer */}
+            <div className={cn("border-bdc-primary shrink-0 border-t")}>
+                <UserAvatar isCollapsed={isCollapsed} />
+            </div>
+        </div>
     );
 
     return (

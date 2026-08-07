@@ -3,8 +3,7 @@ import React from "react";
 import { Check, Lock, BookOpen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import FuriganaText from "@/components/ui/furigana.text";
-import FuriganaMarkup from "@/components/ui/furigana.markup";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { LessonGroup } from "../hooks/use.cando.nodes";
 
 interface Props {
@@ -60,18 +59,11 @@ export function LessonNavSidebar({ groups, showFurigana, accent }: Props) {
                                         })}
                                     </p>
                                     <div className="truncate text-xs font-bold leading-tight mt-0.5">
-                                        {lesson.furiganaMarkup ? (
-                                            <FuriganaMarkup
-                                                markup={lesson.furiganaMarkup}
-                                                showFurigana={showFurigana}
-                                            />
-                                        ) : (
-                                            <FuriganaText
-                                                text={lesson.jpTitle}
-                                                furigana={lesson.furigana}
-                                                showFurigana={showFurigana}
-                                            />
-                                        )}
+                                        <FuriganaHtml
+                                            text={lesson.jpTitle}
+                                            markup={lesson.furiganaMarkup}
+                                            showFurigana={showFurigana}
+                                        />
                                     </div>
                                 </div>
 

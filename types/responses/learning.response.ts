@@ -28,10 +28,14 @@ export type NodeGrammarItem = NodeVocabularyItem;
 export interface LearningPathNodeDetailResponseSpeakingQuestionDetailResponse {
     id: number;
     userId: number;
-    title: string;
-    titleMarkup: string;
+    japaneseName: string;
+    japaneseNameMarkup: string;
+    vietnameseName: string;
     description: string;
     descriptionMarkup: string;
+    japaneseSampleAnswer: string;
+    japaneseSampleAnswerMarkup: string;
+    vietnameseSampleAnswer: string;
     status: QuestionStatus;
     vocabularies: NodeVocabularyItem[];
     grammars: NodeGrammarItem[];
@@ -68,13 +72,4 @@ export interface LearningPathNodeListItemResponse {
     nodeType: NodeType;
 }
 
-export interface UserLearningProgressResponse {
-    id: number;
-    farthestAvailableNodeId: number;
-    lastLearningNodeId: number;
-    lastLearningAt: string;
-    currentStreak: number;
-    longestStreak: number;
-    totalPoint: number;
-    leaderboardUser: LeaderboardUserResponse;
-}
+export type { UserLearningProgressResponse } from "./league.response";
