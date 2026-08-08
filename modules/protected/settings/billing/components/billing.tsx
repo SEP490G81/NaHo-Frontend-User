@@ -68,13 +68,13 @@ const Billing = () => {
     const currentTier = subscription?.tier;
 
     return (
-        <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto pb-12">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-6 pb-12">
             {/* Part 4 Header */}
             <div>
-                <h1 className="text-2xl font-bold text-text-contrast">
+                <h1 className="text-text-contrast text-2xl font-bold">
                     {t("title")}
                 </h1>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="text-text-muted mt-1 text-sm">
                     {t("description")}
                 </p>
             </div>

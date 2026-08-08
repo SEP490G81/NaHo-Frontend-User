@@ -42,7 +42,8 @@ const EmailStep = ({
             if (errorCode === USER_ERROR_CODES.NOT_FOUND) {
                 setErrorKey("forgotPassword.email.emailNotFound");
             } else if (
-                errorCode === USER_ERROR_CODES.SOCIAL_LOGIN_CANNOT_RESET_PASSWORD
+                errorCode ===
+                USER_ERROR_CODES.SOCIAL_LOGIN_CANNOT_RESET_PASSWORD
             ) {
                 setErrorMessage(t("forgotPassword.email.socialLoginAccount"));
             } else if (errorCode === USER_ERROR_CODES.OTP_COOLDOWN) {

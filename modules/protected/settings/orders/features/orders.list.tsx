@@ -77,7 +77,9 @@ const OrdersList: React.FC = () => {
             if (!silent) {
                 console.error("Failed to load payment orders:", err);
                 toast.error(
-                    err instanceof Error ? err.message : "Không thể lấy danh sách lịch sử giao dịch.",
+                    err instanceof Error
+                        ? err.message
+                        : "Không thể lấy danh sách lịch sử giao dịch.",
                 );
             }
         } finally {

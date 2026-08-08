@@ -63,7 +63,7 @@ function CircleProgress({
                     className="transition-all duration-700 ease-out"
                 />
             </svg>
-            <span className="absolute text-xs font-black text-text-contrast sm:text-sm">
+            <span className="text-text-contrast absolute text-xs font-black sm:text-sm">
                 {percent}%
             </span>
         </div>
@@ -117,9 +117,9 @@ export function TopicPathHeader({
     };
 
     return (
-        <header className="group sticky top-16 z-10 mx-auto w-full max-w-4xl select-none px-2 sm:px-0">
+        <header className="group sticky top-16 z-10 mx-auto w-full max-w-4xl px-2 select-none sm:px-0">
             <div
-                className="overflow-hidden rounded-2xl border border-bdc-primary bg-bgc-app/95 shadow-md backdrop-blur-xl transition-all duration-500 ease-out group-hover:shadow-2xl dark:bg-bgc-modal/95"
+                className="border-bdc-primary bg-bgc-app/95 dark:bg-bgc-modal/95 overflow-hidden rounded-2xl border shadow-md backdrop-blur-xl transition-all duration-500 ease-out group-hover:shadow-2xl"
                 style={{
                     borderColor: `color-mix(in srgb, ${accent} 35%, var(--color-bdc-primary))`,
                     background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 14%, var(--color-bgc-app)) 0%, var(--color-bgc-app) 75%)`,
@@ -156,7 +156,11 @@ export function TopicPathHeader({
                         <button
                             type="button"
                             onClick={handlePinToggle}
-                            title={isPinned ? t("path.unpinTopic") : t("path.pinTopic")}
+                            title={
+                                isPinned
+                                    ? t("path.unpinTopic")
+                                    : t("path.pinTopic")
+                            }
                             className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-xl border p-2 text-xs font-bold shadow-2xs transition-all duration-300 hover:scale-[1.05] active:scale-[0.95]"
                             style={{
                                 borderColor: `color-mix(in srgb, ${accent} 45%, var(--color-bdc-primary))`,
@@ -166,7 +170,9 @@ export function TopicPathHeader({
                                 color: isPinned ? "#ffffff" : accent,
                             }}
                         >
-                            <Pin className={`h-4 w-4 ${isPinned ? "rotate-45 fill-current" : ""}`} />
+                            <Pin
+                                className={`h-4 w-4 ${isPinned ? "rotate-45 fill-current" : ""}`}
+                            />
                         </button>
                     </div>
                 </div>
@@ -181,9 +187,10 @@ export function TopicPathHeader({
                                     className="text-[11px] font-black tracking-[0.16em] uppercase"
                                     style={{ color: accent }}
                                 >
-                                    {t("topic.label", { index: topic.order })} · {book.level}
+                                    {t("topic.label", { index: topic.order })} ·{" "}
+                                    {book.level}
                                 </p>
-                                <h2 className="text-text-contrast text-2xl font-black leading-tight md:text-3xl">
+                                <h2 className="text-text-contrast text-2xl leading-tight font-black md:text-3xl">
                                     <FuriganaHtml
                                         text={topic.jpTitle}
                                         markup={topic.furiganaMarkup}
@@ -192,13 +199,16 @@ export function TopicPathHeader({
                                 </h2>
                                 <div className="flex flex-wrap gap-2 pt-1">
                                     <span
-                                        className="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold text-text-contrast"
+                                        className="text-text-contrast inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold"
                                         style={{
                                             borderColor: `color-mix(in srgb, ${accent} 35%, var(--color-bdc-primary))`,
                                             background: `color-mix(in srgb, ${accent} 12%, var(--color-bgc-app))`,
                                         }}
                                     >
-                                        <LayoutGrid className="h-3.5 w-3.5" style={{ color: accent }} />
+                                        <LayoutGrid
+                                            className="h-3.5 w-3.5"
+                                            style={{ color: accent }}
+                                        />
                                         {t("books.lessonCount", {
                                             count: lessonCount,
                                         })}
@@ -222,7 +232,7 @@ export function TopicPathHeader({
                                     <p className="text-text-muted text-xs font-bold">
                                         {t("path.topicProgress")}
                                     </p>
-                                    <p className="truncate text-sm font-black text-text-contrast">
+                                    <p className="text-text-contrast truncate text-sm font-black">
                                         {t("books.lessonsDone", {
                                             done: completedCount,
                                             total: totalCount,

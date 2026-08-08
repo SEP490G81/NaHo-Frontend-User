@@ -46,4 +46,3 @@ export interface UpdateUserInfoRequest {
     gender?: string | null;
     dob?: string | null;
 }
-

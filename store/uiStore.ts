@@ -54,7 +54,9 @@ export const useUiStore = create<UiState>()(
             pinTopicForUser: (topic, userKey) =>
                 set((state) => {
                     const currentList = state.pinnedTopicsByUser[userKey] || [];
-                    const filtered = currentList.filter((t) => t.id !== topic.id);
+                    const filtered = currentList.filter(
+                        (t) => t.id !== topic.id,
+                    );
                     const updated =
                         filtered.length >= 3
                             ? [...filtered.slice(1), topic]
@@ -117,8 +119,7 @@ export const useUiStore = create<UiState>()(
                     get().pinTopic(topic);
                 }
             },
-            isTopicPinned: (id) =>
-                get().pinnedTopics.some((t) => t.id === id),
+            isTopicPinned: (id) => get().pinnedTopics.some((t) => t.id === id),
         }),
         {
             name: "naho-ui-store",

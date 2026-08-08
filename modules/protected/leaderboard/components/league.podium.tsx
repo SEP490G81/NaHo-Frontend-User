@@ -32,11 +32,15 @@ function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
     const { data: currentUser } = useCurrentUser();
 
     const effectiveAvatarUrl =
-        entry?.avatarUrl || (isCurrentUser ? getUserAvatarUrl(currentUser) ?? null : null);
+        entry?.avatarUrl ||
+        (isCurrentUser ? (getUserAvatarUrl(currentUser) ?? null) : null);
     const effectiveFullName =
         entry?.fullName ||
         (isCurrentUser
-            ? currentUser?.fullName || currentUser?.username || currentUser?.email || null
+            ? currentUser?.fullName ||
+              currentUser?.username ||
+              currentUser?.email ||
+              null
             : null);
 
     return (

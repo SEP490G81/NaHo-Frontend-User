@@ -67,7 +67,11 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             setPlans(sorted);
         } catch (err: unknown) {
             setFetchPlansError(true);
-            setErrorMessage(err instanceof Error ? err.message : t("errors.fetchPlansFailed"));
+            setErrorMessage(
+                err instanceof Error
+                    ? err.message
+                    : t("errors.fetchPlansFailed"),
+            );
         } finally {
             setLoadingPlans(false);
         }
@@ -134,7 +138,11 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         } catch (error: unknown) {
             console.error("Payment order creation error:", error);
             setLastFailedPlanCode(planCode);
-            setErrorMessage(error instanceof Error ? error.message : t("errors.createPaymentFailed"));
+            setErrorMessage(
+                error instanceof Error
+                    ? error.message
+                    : t("errors.createPaymentFailed"),
+            );
         } finally {
             setCheckoutLoadingCode(null);
         }

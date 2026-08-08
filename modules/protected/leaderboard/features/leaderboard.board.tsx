@@ -19,7 +19,8 @@ export function LeaderboardBoard() {
     );
     const { data: currentUser } = useCurrentUser();
 
-    const { progress, isLoading: isProgressPending } = useUserLearningProgress();
+    const { progress, isLoading: isProgressPending } =
+        useUserLearningProgress();
 
     const {
         data: leagues = [],

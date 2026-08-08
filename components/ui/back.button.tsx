@@ -14,7 +14,12 @@ interface BackButtonProps {
 }
 
 /** Nút "Quay lại" dạng pill dùng chung, đồng bộ trên mọi màn. */
-export function BackButton({ href, label, className, onClick }: BackButtonProps) {
+export function BackButton({
+    href,
+    label,
+    className,
+    onClick,
+}: BackButtonProps) {
     const router = useRouter();
 
     const handleClick = (e: React.MouseEvent) => {

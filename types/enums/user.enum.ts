@@ -37,4 +37,3 @@ export type OAuthProviderName =
 
 export const AuthProviderName = OAuthProviderName;
 export type AuthProviderName = OAuthProviderName;
-

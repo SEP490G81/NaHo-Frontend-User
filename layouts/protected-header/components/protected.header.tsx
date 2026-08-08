@@ -4,7 +4,6 @@ import NotificationButton from "@/layouts/protected-header/features/notification
 import SettingsButton from "./settings.button";
 import { Button, Divider } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
-import { PanelLeftClose } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import { useTranslations } from "next-intl";
 import FuriganaSwitchButton from "./furigana.switch.button";
@@ -14,7 +13,7 @@ import DailyRewardCalendar from "@/layouts/protected-header/features/daily.rewar
 import DailyMissionButton from "@/layouts/protected-header/features/daily.mission.button";
 import DailyStreakButton from "@/layouts/protected-header/features/daily.streak.button";
 import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
-import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
+import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 
 const ProtectedHeader = () => {
     const t = useTranslations();

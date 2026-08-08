@@ -37,11 +37,15 @@ export function LeaderboardRow({
     const { data: currentUser } = useCurrentUser();
 
     const effectiveAvatarUrl =
-        avatarUrl || (isCurrentUser ? getUserAvatarUrl(currentUser) ?? null : null);
+        avatarUrl ||
+        (isCurrentUser ? (getUserAvatarUrl(currentUser) ?? null) : null);
     const effectiveFullName =
         fullName ||
         (isCurrentUser
-            ? currentUser?.fullName || currentUser?.username || currentUser?.email || null
+            ? currentUser?.fullName ||
+              currentUser?.username ||
+              currentUser?.email ||
+              null
             : null);
 
     const showStreak = isCurrentUser && streakDays !== undefined;
@@ -62,7 +66,10 @@ export function LeaderboardRow({
             ) : (
                 <RankBadge rank={rank} withHashPrefix={withHashPrefix} />
             )}
-            <LearnerAvatar fullName={effectiveFullName} avatarUrl={effectiveAvatarUrl} />
+            <LearnerAvatar
+                fullName={effectiveFullName}
+                avatarUrl={effectiveAvatarUrl}
+            />
 
             <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex items-center gap-2">

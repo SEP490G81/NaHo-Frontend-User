@@ -1,5 +1,4 @@
 import { FileResult } from "./file.response";
-import { AuthProviderResponse } from "./user.response";
 
 export interface LeagueResponse {
     id: number;

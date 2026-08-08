@@ -113,7 +113,9 @@ const OtpCodeInput = ({
                     maxLength={OTP_LENGTH}
                     value={value}
                     disabled={disabled}
-                    onChange={(event) => handleChange(index, event.target.value)}
+                    onChange={(event) =>
+                        handleChange(index, event.target.value)
+                    }
                     onKeyDown={(event) => handleKeyDown(index, event)}
                     onPaste={(event) => handlePaste(index, event)}
                     onFocus={(event) => event.target.select()}

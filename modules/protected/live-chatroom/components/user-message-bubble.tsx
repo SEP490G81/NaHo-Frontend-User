@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getUserAvatarUrl, getFirstCharacter } from "@/layouts/protected-header/utils/header.util";
+import { getFirstCharacter, getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import { cn } from "@/libs/utils";
 import { getInitials } from "../utils/get-initials";
 import type { UserChatMessage } from "../types/live-chatroom.type";

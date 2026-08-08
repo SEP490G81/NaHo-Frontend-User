@@ -18,12 +18,16 @@ export function resolveAvatarUrl(
 
     if (Array.isArray(authAvatarUrl) && authAvatarUrl.length > 0) {
         const found = authAvatarUrl.find(
-            (url) => url != null && typeof url === "string" && url.trim() !== "",
+            (url) =>
+                url != null && typeof url === "string" && url.trim() !== "",
         );
         if (found) {
             return found;
         }
-    } else if (typeof authAvatarUrl === "string" && authAvatarUrl.trim() !== "") {
+    } else if (
+        typeof authAvatarUrl === "string" &&
+        authAvatarUrl.trim() !== ""
+    ) {
         return authAvatarUrl;
     }
 

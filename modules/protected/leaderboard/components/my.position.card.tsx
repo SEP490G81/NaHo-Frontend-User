@@ -7,7 +7,7 @@ import {
     getUserAvatarUrl,
     getUserFullName,
 } from "@/layouts/protected-header/utils/header.util";
-import { cn, formatPoints } from "@/libs/utils";
+import { formatPoints } from "@/libs/utils";
 import LearnerAvatar from "./learner.avatar";
 import RankBadge from "./rank.badge";
 
@@ -56,7 +56,7 @@ export function MyPositionCard({
                     {t("myPosition.outsideTop", { size: topSize })}
                 </span>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-transparent bg-bgc-highlight/10 px-4 py-3 sm:gap-4">
+            <div className="bg-bgc-highlight/10 flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 sm:gap-4">
                 {rank === undefined ? (
                     <div className="bg-bgc-page text-text-muted border-bdc-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-bold">
                         –

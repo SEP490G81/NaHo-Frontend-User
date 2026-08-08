@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Divider, Button, InputAdornment, IconButton } from "@mui/material";
+import { Button, Divider, IconButton, InputAdornment } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -41,13 +41,13 @@ const SecuritySettings = () => {
     };
 
     return (
-        <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto pb-12">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-6 pb-12">
             {/* Part 3 Header */}
             <div>
-                <h1 className="text-2xl font-bold text-text-contrast">
+                <h1 className="text-text-contrast text-2xl font-bold">
                     {t("title")}
                 </h1>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="text-text-muted mt-1 text-sm">
                     {t("description")}
                 </p>
             </div>
@@ -55,18 +55,21 @@ const SecuritySettings = () => {
             <Divider className="border-bdc-primary/50" />
 
             {/* Section 1: Đổi mật khẩu (Change Password) */}
-            <form onSubmit={handleUpdatePassword} className="flex flex-col gap-y-6">
+            <form
+                onSubmit={handleUpdatePassword}
+                className="flex flex-col gap-y-6"
+            >
                 <div
                     id="setting-change-password"
                     data-setting-id="setting-change-password"
-                    className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300 flex flex-col gap-y-5"
+                    className="border-bdc-primary/60 bg-bgc-app flex flex-col gap-y-5 rounded-xl border p-6 transition-all duration-300"
                 >
                     <div>
-                        <h2 className="text-base font-bold text-text-contrast flex items-center gap-2">
+                        <h2 className="text-text-contrast flex items-center gap-2 text-base font-bold">
                             <LockOutlinedIcon fontSize="small" />
                             {t("changePasswordTitle")}
                         </h2>
-                        <p className="text-xs text-text-muted mt-1">
+                        <p className="text-text-muted mt-1 text-xs">
                             {t("changePasswordDesc")}
                         </p>
                     </div>
@@ -75,7 +78,7 @@ const SecuritySettings = () => {
 
                     {/* Current Password Field */}
                     <div>
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("currentPassword")}
                         </label>
                         <TextFieldCustom
@@ -89,7 +92,11 @@ const SecuritySettings = () => {
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                onClick={() => setShowCurrentPassword((prev) => !prev)}
+                                                onClick={() =>
+                                                    setShowCurrentPassword(
+                                                        (prev) => !prev,
+                                                    )
+                                                }
                                                 edge="end"
                                                 size="small"
                                             >
@@ -108,7 +115,7 @@ const SecuritySettings = () => {
 
                     {/* New Password Field */}
                     <div>
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("newPassword")}
                         </label>
                         <TextFieldCustom
@@ -122,7 +129,11 @@ const SecuritySettings = () => {
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                onClick={() => setShowNewPassword((prev) => !prev)}
+                                                onClick={() =>
+                                                    setShowNewPassword(
+                                                        (prev) => !prev,
+                                                    )
+                                                }
                                                 edge="end"
                                                 size="small"
                                             >
@@ -141,7 +152,7 @@ const SecuritySettings = () => {
 
                     {/* Confirm New Password Field */}
                     <div>
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("confirmPassword")}
                         </label>
                         <TextFieldCustom
@@ -155,7 +166,11 @@ const SecuritySettings = () => {
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                onClick={() =>
+                                                    setShowConfirmPassword(
+                                                        (prev) => !prev,
+                                                    )
+                                                }
                                                 edge="end"
                                                 size="small"
                                             >

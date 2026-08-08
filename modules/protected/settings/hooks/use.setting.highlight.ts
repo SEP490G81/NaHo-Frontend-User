@@ -6,7 +6,9 @@ export function useSettingHighlight() {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const highlightId = searchParams.get("highlight") || window.location.hash.replace("#", "");
+        const highlightId =
+            searchParams.get("highlight") ||
+            window.location.hash.replace("#", "");
         if (!highlightId) return;
 
         const timer = setTimeout(() => {
@@ -24,7 +26,7 @@ export function useSettingHighlight() {
                     "ring-pink-500",
                     "shadow-md",
                     "transition-all",
-                    "duration-500"
+                    "duration-500",
                 );
 
                 const removeTimer = setTimeout(() => {
@@ -32,7 +34,7 @@ export function useSettingHighlight() {
                         "ring-2",
                         "ring-inset",
                         "ring-pink-500",
-                        "shadow-md"
+                        "shadow-md",
                     );
                 }, 3500);
 

@@ -6,7 +6,6 @@ import {
     RoleName,
     UserStatus,
 } from "@/types/enums/user.enum";
-import { FileResult } from "./file.response";
 
 export interface PointSummaryResult {
     id: number;

@@ -17,10 +17,10 @@ export const getFirstCharacter = (
         user.fullName && user.fullName.trim() !== ""
             ? user.fullName
             : user.username && user.username.trim() !== ""
-            ? user.username
-            : user.email && user.email.trim() !== ""
-            ? user.email
-            : "";
+              ? user.username
+              : user.email && user.email.trim() !== ""
+                ? user.email
+                : "";
 
     return name ? name.trim().charAt(0).toUpperCase() : "";
 };
@@ -38,7 +38,8 @@ export const getUserAvatarUrl = (
     const providers = user.authProviders || user.oAuthProviders;
     if (providers && providers.length > 0) {
         const providerWithAvatar = providers.find(
-            (provider) => provider.avatarUrl && provider.avatarUrl.trim() !== "",
+            (provider) =>
+                provider.avatarUrl && provider.avatarUrl.trim() !== "",
         );
         if (providerWithAvatar?.avatarUrl) {
             return providerWithAvatar.avatarUrl;

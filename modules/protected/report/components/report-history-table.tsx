@@ -75,13 +75,15 @@ export function ReportHistoryTable({
                                 #{report.id}
                             </TableCell>
                             <TableCell className="whitespace-nowrap">
-                                <ReportTypeChip reportType={report.reportType} />
+                                <ReportTypeChip
+                                    reportType={report.reportType}
+                                />
                             </TableCell>
                             <TableCell>
                                 <p className="text-text-primary text-sm font-bold">
                                     {report.title}
                                 </p>
-                                <p className="text-text-muted mt-1 text-xs leading-relaxed line-clamp-2">
+                                <p className="text-text-muted mt-1 line-clamp-2 text-xs leading-relaxed">
                                     {report.description}
                                 </p>
                             </TableCell>
@@ -89,7 +91,9 @@ export function ReportHistoryTable({
                                 align="center"
                                 className="whitespace-nowrap"
                             >
-                                <ReportStatusChip isResolved={report.isResolved} />
+                                <ReportStatusChip
+                                    isResolved={report.isResolved}
+                                />
                             </TableCell>
                             <TableCell
                                 align="center"
@@ -106,7 +110,7 @@ export function ReportHistoryTable({
                                             onClick={() =>
                                                 onViewFiles(report.files || [])
                                             }
-                                            className="border-bdc-primary text-text-contrast border rounded-md text-xs font-semibold normal-case hover:bg-hbgc-app"
+                                            className="border-bdc-primary text-text-contrast hover:bg-hbgc-app rounded-md border text-xs font-semibold normal-case"
                                         >
                                             {t("viewImages", {
                                                 count: report.files.length,
@@ -126,15 +130,14 @@ export function ReportHistoryTable({
                                                         onClick={() =>
                                                             onViewFiles(
                                                                 report.files ||
-                                                                [],
+                                                                    [],
                                                             )
                                                         }
                                                         sx={{
                                                             width: 28,
                                                             height: 28,
                                                             objectFit: "cover",
-                                                            borderRadius:
-                                                                "4px",
+                                                            borderRadius: "4px",
                                                             cursor: "pointer",
                                                             border: "1px solid var(--color-bdc-primary)",
                                                         }}

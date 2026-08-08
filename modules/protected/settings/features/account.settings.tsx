@@ -1,20 +1,20 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
-    Divider,
-    Button,
-    Select,
-    MenuItem,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    DialogContentText,
-    IconButton,
-    Tooltip,
     Avatar,
+    Button,
     CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
+    IconButton,
+    MenuItem,
+    Select,
+    Tooltip,
 } from "@mui/material";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -32,12 +32,15 @@ import {
 } from "@/layouts/protected-header/utils/header.util";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
-import { updateUserInfoClient, uploadUserAvatarClient } from "@/services/client/user.service";
+import {
+    updateUserInfoClient,
+    uploadUserAvatarClient,
+} from "@/services/client/user.service";
 import { ApiError } from "@/libs/api.error";
 import { queryKeys } from "@/libs/query.keys";
 import {
-    validateUsername,
     validateAge,
+    validateUsername,
 } from "@/modules/protected/settings/utils/settings.util";
 
 const AccountSettings = () => {
@@ -82,7 +85,9 @@ const AccountSettings = () => {
         getFirstCharacter(user) ||
         (fullName ? fullName.charAt(0).toUpperCase() : "U");
 
-    const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAvatarChange = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -191,13 +196,13 @@ const AccountSettings = () => {
     };
 
     return (
-        <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto pb-12">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-6 pb-12">
             {/* Part 2 Header */}
             <div>
-                <h1 className="text-2xl font-bold text-text-contrast">
+                <h1 className="text-text-contrast text-2xl font-bold">
                     {t("title")}
                 </h1>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="text-text-muted mt-1 text-sm">
                     {t("description")}
                 </p>
             </div>
@@ -205,12 +210,15 @@ const AccountSettings = () => {
             <Divider className="border-bdc-primary/50" />
 
             {/* Section 1: Thông tin cá nhân (Profile Information) */}
-            <form onSubmit={handleUpdateProfile} className="flex flex-col gap-y-6">
+            <form
+                onSubmit={handleUpdateProfile}
+                className="flex flex-col gap-y-6"
+            >
                 <div className="mb-2">
-                    <h2 className="text-base font-bold text-text-contrast">
+                    <h2 className="text-text-contrast text-base font-bold">
                         {t("profileTitle")}
                     </h2>
-                    <p className="text-xs text-text-muted">
+                    <p className="text-text-muted text-xs">
                         {t("profileDesc")}
                     </p>
                 </div>
@@ -219,15 +227,19 @@ const AccountSettings = () => {
                 <div
                     id="setting-avatar"
                     data-setting-id="setting-avatar"
-                    className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                    className="border-bdc-primary/60 bg-bgc-app flex flex-col items-start justify-between gap-4 rounded-xl border p-6 transition-all duration-300 sm:flex-row sm:items-center"
                 >
                     <div className="flex items-center gap-4">
-                        <Tooltip title={t("avatarHoverTooltip")} arrow placement="top">
+                        <Tooltip
+                            title={t("avatarHoverTooltip")}
+                            arrow
+                            placement="top"
+                        >
                             <button
                                 type="button"
                                 onClick={() => setIsPreviewOpen(true)}
                                 disabled={isAvatarUploading}
-                                className="group relative h-20 w-20 overflow-hidden rounded-full border-2 border-bdc-muted bg-bgc-modal flex items-center justify-center shrink-0 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-bgc-highlight transition-all duration-200 hover:scale-105 disabled:opacity-80"
+                                className="group border-bdc-muted bg-bgc-modal focus:ring-bgc-highlight relative flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 shadow-sm transition-all duration-200 hover:scale-105 focus:ring-2 focus:outline-none disabled:opacity-80"
                             >
                                 <Avatar
                                     src={activeAvatarUrl}
@@ -244,14 +256,17 @@ const AccountSettings = () => {
                                 </Avatar>
                                 {/* Overlay: Uploading Spinner or Zoom Icon */}
                                 <div
-                                    className={`absolute inset-0 bg-black/40 transition-opacity duration-200 flex items-center justify-center text-white backdrop-blur-[1px] ${
+                                    className={`absolute inset-0 flex items-center justify-center bg-black/40 text-white backdrop-blur-[1px] transition-opacity duration-200 ${
                                         isAvatarUploading
                                             ? "opacity-100"
                                             : "opacity-0 group-hover:opacity-100"
                                     }`}
                                 >
                                     {isAvatarUploading ? (
-                                        <CircularProgress size={24} color="inherit" />
+                                        <CircularProgress
+                                            size={24}
+                                            color="inherit"
+                                        />
                                     ) : (
                                         <ZoomInIcon fontSize="medium" />
                                     )}
@@ -259,10 +274,10 @@ const AccountSettings = () => {
                             </button>
                         </Tooltip>
                         <div>
-                            <h3 className="text-sm font-semibold text-text-contrast">
+                            <h3 className="text-text-contrast text-sm font-semibold">
                                 {t("avatarTitle")}
                             </h3>
-                            <p className="text-xs text-text-muted mt-0.5">
+                            <p className="text-text-muted mt-0.5 text-xs">
                                 {t("avatarDesc")}
                             </p>
                         </div>
@@ -284,7 +299,10 @@ const AccountSettings = () => {
                             size="small"
                             startIcon={
                                 isAvatarUploading ? (
-                                    <CircularProgress size={16} color="inherit" />
+                                    <CircularProgress
+                                        size={16}
+                                        color="inherit"
+                                    />
                                 ) : (
                                     <AddAPhotoOutlinedIcon fontSize="small" />
                                 )
@@ -300,7 +318,8 @@ const AccountSettings = () => {
                                 boxShadow: "none",
                                 "&:hover": {
                                     opacity: 0.9,
-                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
                                     boxShadow: "none",
                                 },
                                 "&.Mui-disabled": {
@@ -309,7 +328,9 @@ const AccountSettings = () => {
                                 },
                             }}
                         >
-                            {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
+                            {isAvatarUploading
+                                ? "Đang tải..."
+                                : t("changeAvatar")}
                         </Button>
 
                         {avatarUrl && (
@@ -320,8 +341,13 @@ const AccountSettings = () => {
                                 variant="outlined"
                                 size="small"
                                 color="error"
-                                startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
-                                sx={{ textTransform: "none", borderRadius: "8px" }}
+                                startIcon={
+                                    <DeleteOutlineOutlinedIcon fontSize="small" />
+                                }
+                                sx={{
+                                    textTransform: "none",
+                                    borderRadius: "8px",
+                                }}
                             >
                                 {t("removeAvatar")}
                             </Button>
@@ -330,16 +356,16 @@ const AccountSettings = () => {
                 </div>
 
                 {/* Username & Email Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div
                         id="setting-username"
                         data-setting-id="setting-username"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-1">
+                        <label className="text-text-contrast mb-1 block text-sm font-semibold">
                             {t("usernameLabel")}
                         </label>
-                        <p className="text-xs text-text-muted mb-2">
+                        <p className="text-text-muted mb-2 text-xs">
                             {t("usernameDesc")}
                         </p>
                         <TextFieldCustom
@@ -365,31 +391,33 @@ const AccountSettings = () => {
                     <div
                         id="setting-email"
                         data-setting-id="setting-email"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-1">
+                        <label className="text-text-contrast mb-1 block text-sm font-semibold">
                             {t("emailLabel")}
                         </label>
-                        <p className="text-xs text-text-muted mb-2">
+                        <p className="text-text-muted mb-2 text-xs">
                             {t("emailDesc")}
                         </p>
                         <TextFieldCustom
                             fullWidth
                             disabled
                             variant="filled"
-                            value={user?.email || userEmail || "user@example.com"}
+                            value={
+                                user?.email || userEmail || "user@example.com"
+                            }
                         />
                     </div>
                 </div>
 
                 {/* Full Name & Gender */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div
                         id="setting-fullname"
                         data-setting-id="setting-fullname"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("fullNameLabel")}
                         </label>
                         <TextFieldCustom
@@ -403,9 +431,9 @@ const AccountSettings = () => {
                     <div
                         id="setting-gender"
                         data-setting-id="setting-gender"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("genderLabel")}
                         </label>
                         <Select
@@ -423,21 +451,25 @@ const AccountSettings = () => {
                                 },
                             }}
                         >
-                            <MenuItem value="">{t("genderUnspecified")}</MenuItem>
+                            <MenuItem value="">
+                                {t("genderUnspecified")}
+                            </MenuItem>
                             <MenuItem value="MALE">{t("genderMale")}</MenuItem>
-                            <MenuItem value="FEMALE">{t("genderFemale")}</MenuItem>
+                            <MenuItem value="FEMALE">
+                                {t("genderFemale")}
+                            </MenuItem>
                         </Select>
                     </div>
                 </div>
 
                 {/* Date of Birth & JLPT Level */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div
                         id="setting-dob"
                         data-setting-id="setting-dob"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-2">
+                        <label className="text-text-contrast mb-2 block text-sm font-semibold">
                             {t("dobLabel")}
                         </label>
                         <TextFieldCustom
@@ -463,12 +495,12 @@ const AccountSettings = () => {
                     <div
                         id="setting-jlpt"
                         data-setting-id="setting-jlpt"
-                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                        className="border-bdc-primary/60 bg-bgc-app rounded-xl border p-6 transition-all duration-300"
                     >
-                        <label className="block text-sm font-semibold text-text-contrast mb-1">
+                        <label className="text-text-contrast mb-1 block text-sm font-semibold">
                             {t("jlptLabel")}
                         </label>
-                        <p className="text-xs text-text-muted mb-2">
+                        <p className="text-text-muted mb-2 text-xs">
                             {t("jlptDesc")}
                         </p>
                         <Select
@@ -540,15 +572,15 @@ const AccountSettings = () => {
             <div
                 id="setting-delete-account"
                 data-setting-id="setting-delete-account"
-                className="rounded-xl border border-red-200 dark:border-red-950/80 bg-red-50/20 dark:bg-red-950/10 p-6 transition-all duration-300"
+                className="rounded-xl border border-red-200 bg-red-50/20 p-6 transition-all duration-300 dark:border-red-950/80 dark:bg-red-950/10"
             >
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h2 className="text-base font-bold text-red-600 dark:text-red-400 flex items-center gap-2">
+                        <h2 className="flex items-center gap-2 text-base font-bold text-red-600 dark:text-red-400">
                             <WarningAmberOutlinedIcon fontSize="small" />
                             {t("deleteAccountTitle")}
                         </h2>
-                        <p className="text-xs text-text-muted mt-1">
+                        <p className="text-text-muted mt-1 text-xs">
                             {t("deleteAccountDesc")}
                         </p>
                     </div>
@@ -558,7 +590,9 @@ const AccountSettings = () => {
                         onClick={() => setIsDeleteDialogOpen(true)}
                         variant="outlined"
                         color="error"
-                        startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
+                        startIcon={
+                            <DeleteOutlineOutlinedIcon fontSize="small" />
+                        }
                         sx={{
                             textTransform: "none",
                             fontWeight: 600,
@@ -584,12 +618,12 @@ const AccountSettings = () => {
                     },
                 }}
             >
-                <DialogTitle className="text-lg font-bold text-text-contrast flex items-center gap-2">
+                <DialogTitle className="text-text-contrast flex items-center gap-2 text-lg font-bold">
                     <WarningAmberOutlinedIcon color="error" />
                     {t("confirmDeleteTitle")}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText className="text-sm text-text-muted">
+                    <DialogContentText className="text-text-muted text-sm">
                         {t("confirmDeleteMessage")}
                     </DialogContentText>
                 </DialogContent>
@@ -597,7 +631,10 @@ const AccountSettings = () => {
                     <Button
                         onClick={() => setIsDeleteDialogOpen(false)}
                         variant="outlined"
-                        sx={{ textTransform: "none", color: "var(--color-text-contrast)" }}
+                        sx={{
+                            textTransform: "none",
+                            color: "var(--color-text-contrast)",
+                        }}
                     >
                         Hủy
                     </Button>
@@ -638,7 +675,7 @@ const AccountSettings = () => {
                 }}
             >
                 <div className="flex items-center justify-between px-6 pt-5 pb-3">
-                    <h3 className="text-base font-bold text-text-contrast">
+                    <h3 className="text-text-contrast text-base font-bold">
                         {t("avatarPreviewTitle")}
                     </h3>
                     <IconButton
@@ -657,7 +694,7 @@ const AccountSettings = () => {
                 </div>
 
                 <DialogContent className="flex flex-col items-center justify-center p-6 pt-2 pb-6">
-                    <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-bgc-highlight/40 shadow-2xl flex items-center justify-center bg-bgc-app ring-4 ring-bgc-highlight/10">
+                    <div className="border-bgc-highlight/40 bg-bgc-app ring-bgc-highlight/10 relative flex h-64 w-64 items-center justify-center overflow-hidden rounded-full border-4 shadow-2xl ring-4 sm:h-72 sm:w-72">
                         <Avatar
                             src={activeAvatarUrl}
                             sx={{
@@ -674,7 +711,7 @@ const AccountSettings = () => {
                     </div>
                 </DialogContent>
 
-                <DialogActions className="flex items-center justify-between px-6 pb-6 pt-3 bg-bgc-app/40 border-t border-bdc-primary/40 gap-2 flex-wrap">
+                <DialogActions className="bg-bgc-app/40 border-bdc-primary/40 flex flex-wrap items-center justify-between gap-2 border-t px-6 pt-3 pb-6">
                     <div className="flex items-center gap-2">
                         <Button
                             type="button"
@@ -686,7 +723,10 @@ const AccountSettings = () => {
                             size="small"
                             startIcon={
                                 isAvatarUploading ? (
-                                    <CircularProgress size={16} color="inherit" />
+                                    <CircularProgress
+                                        size={16}
+                                        color="inherit"
+                                    />
                                 ) : (
                                     <AddAPhotoOutlinedIcon fontSize="small" />
                                 )
@@ -702,7 +742,8 @@ const AccountSettings = () => {
                                 boxShadow: "none",
                                 "&:hover": {
                                     opacity: 0.9,
-                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
                                     boxShadow: "none",
                                 },
                                 "&.Mui-disabled": {
@@ -711,7 +752,9 @@ const AccountSettings = () => {
                                 },
                             }}
                         >
-                            {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
+                            {isAvatarUploading
+                                ? "Đang tải..."
+                                : t("changeAvatar")}
                         </Button>
                         {avatarUrl && (
                             <Button
@@ -722,8 +765,13 @@ const AccountSettings = () => {
                                 variant="outlined"
                                 size="small"
                                 color="error"
-                                startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
-                                sx={{ textTransform: "none", borderRadius: "8px" }}
+                                startIcon={
+                                    <DeleteOutlineOutlinedIcon fontSize="small" />
+                                }
+                                sx={{
+                                    textTransform: "none",
+                                    borderRadius: "8px",
+                                }}
                             >
                                 {t("removeAvatar")}
                             </Button>
@@ -749,4 +797,3 @@ const AccountSettings = () => {
 };
 
 export default AccountSettings;
-

@@ -86,9 +86,7 @@ export function BookCard({ book, unlocked, current }: BookCardProps) {
 
     if (!navigable) {
         return (
-            <div className="w-full cursor-not-allowed text-left">
-                {inner}
-            </div>
+            <div className="w-full cursor-not-allowed text-left">{inner}</div>
         );
     }
 

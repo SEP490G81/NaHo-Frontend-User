@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { mapBook, splitMarkup } from "@/data/marugoto/mapper";
+import { mapBook } from "@/data/marugoto/mapper";
 import type { QuestionHints } from "@/data/mockHints";
 import { useMarugotoStore } from "@/store/marugotoStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

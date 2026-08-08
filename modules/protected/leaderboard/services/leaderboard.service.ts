@@ -26,10 +26,7 @@ function toLeaderboardEntries(
         rank: entry.rank ?? index + 1,
         userId: entry.id,
         fullName: entry.fullName || entry.username || entry.email || "",
-        avatarUrl: resolveAvatarUrl(
-            entry.avatarUrl,
-            entry.authAvatarUrl,
-        ),
+        avatarUrl: resolveAvatarUrl(entry.avatarUrl, entry.authAvatarUrl),
         point: entry.totalPoint,
     }));
 }

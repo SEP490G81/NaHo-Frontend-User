@@ -9,7 +9,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
                 <div className="border-bdc-primary/40 h-full w-56 shrink-0 border-r pr-5">
                     <SettingsSidebar />
                 </div>
-                <div className="flex h-full flex-1 flex-col overflow-y-auto px-4 md:px-8 py-2">
+                <div className="flex h-full flex-1 flex-col overflow-y-auto px-4 py-2 md:px-8">
                     <div className="w-full flex-1">{children}</div>
                 </div>
             </div>

@@ -236,4 +236,3 @@ export async function uploadUserAvatarClient(
     const apiResponse = result as ApiResponse<UserResponse>;
     return apiResponse.data || (result as UserResponse);
 }
-

@@ -31,7 +31,7 @@ export function FuriganaHtml({
         return (
             <Component
                 className={cn(
-                    "font-noto-jp [&>p]:inline [&>p]:m-0 [&>ruby>rt]:text-text-muted [&>ruby>rt]:text-[0.6em] [&>ruby>rt]:font-normal",
+                    "font-noto-jp [&>ruby>rt]:text-text-muted [&>p]:m-0 [&>p]:inline [&>ruby>rt]:text-[0.6em] [&>ruby>rt]:font-normal",
                     className,
                 )}
                 dangerouslySetInnerHTML={{ __html: markup }}
@@ -40,9 +40,7 @@ export function FuriganaHtml({
     }
 
     return (
-        <Component className={cn("font-noto-jp", className)}>
-            {text}
-        </Component>
+        <Component className={cn("font-noto-jp", className)}>{text}</Component>
     );
 }
 
