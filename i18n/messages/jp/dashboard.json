@@ -27,9 +27,24 @@
         "vocabQuizSubtitle": "会話語彙力をテストしてサクラポイントを獲得しましょう",
         "wordOfDayTitle": "本日のピックアップ単語",
         "wordOfDaySubtitle": "毎日1単語学んで会話表現を豊かにしましょう",
-        "correctAnswer": "正解！+10 サクラポイント ✨",
+        "correctAnswer": "正解！✨",
         "wrongAnswer": "残念！次の問題に挑戦しましょう。",
         "nextQuestion": "次の問題",
-        "checkAnswer": "回答を確認"
+        "checkAnswer": "回答を確認",
+        "subscriptionLabel": "現在のプラン: {name}",
+        "subscriptionExpireDate": "有効期限: {date}",
+        "subscriptionExpireDetail": "有効期間: {days}日 (Due: {date})",
+        "subscriptionDueDate": "Due date: {date}",
+        "subscriptionPermanent": "無期限",
+        "upgradeBannerBtnNow": "Premiumにアップグレード 🚀",
+        "highestPlanBadge": "最高プラン 👑",
+        "nextLessonTag": "⚡ 次のレッスン",
+        "continuePracticeBtn": "今すぐ練習を続ける",
+        "defaultNextTopic": "日本語会話学習ロードマップ",
+        "defaultNextSubtitle": "次のノードで会話練習を始める",
+        "nodeVocabTitle": "単語: {name}",
+        "nodeVocabSubtitle": "語彙と表現の復習",
+        "nodeChestTitle": "宝箱報酬",
+        "nodeChestSubtitle": "ボーナスポイントを獲得"
     }
 }

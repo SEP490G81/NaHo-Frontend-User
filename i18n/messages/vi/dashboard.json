@@ -30,6 +30,21 @@
         "correctAnswer": "Chính xác!✨",
         "wrongAnswer": "Tiếc quá! Hãy thử lại câu khác nhé.",
         "nextQuestion": "Câu hỏi tiếp theo",
-        "checkAnswer": "Kiểm tra đáp án"
+        "checkAnswer": "Kiểm tra đáp án",
+        "subscriptionLabel": "Gói dịch vụ: {name}",
+        "subscriptionExpireDate": "Hạn dùng: {date}",
+        "subscriptionExpireDetail": "Hạn dùng: {days} ngày (Due: {date})",
+        "subscriptionDueDate": "Due date: {date}",
+        "subscriptionPermanent": "Vô thời hạn",
+        "upgradeBannerBtnNow": "Nâng cấp gói Premium ngay 🚀",
+        "highestPlanBadge": "Gói cao nhất 👑",
+        "nextLessonTag": "⚡ BÀI HỌC TIẾP THEO",
+        "continuePracticeBtn": "Tiếp tục luyện tập ngay",
+        "defaultNextTopic": "Lộ trình học Kaiwa tiếng Nhật",
+        "defaultNextSubtitle": "Luyện phản xạ giao tiếp theo node tiếp theo",
+        "nodeVocabTitle": "Từ vựng: {name}",
+        "nodeVocabSubtitle": "Ôn tập vốn câu và từ vựng giao tiếp",
+        "nodeChestTitle": "Mở rương phần thưởng",
+        "nodeChestSubtitle": "Nhận điểm thưởng lộ trình"
     }
 }

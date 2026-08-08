@@ -27,9 +27,24 @@
         "vocabQuizSubtitle": "Test your Kaiwa vocabulary and earn Sakura bonus points",
         "wordOfDayTitle": "Word of the Day",
         "wordOfDaySubtitle": "Learn 1 new word daily to enrich your conversation skills",
-        "correctAnswer": "Correct! +10 Sakura Points ✨",
+        "correctAnswer": "Correct! ✨",
         "wrongAnswer": "Oops! Try another question.",
         "nextQuestion": "Next Question",
-        "checkAnswer": "Check Answer"
+        "checkAnswer": "Check Answer",
+        "subscriptionLabel": "Current Plan: {name}",
+        "subscriptionExpireDate": "Expires: {date}",
+        "subscriptionExpireDetail": "Valid: {days} days (Due: {date})",
+        "subscriptionDueDate": "Due date: {date}",
+        "subscriptionPermanent": "Lifetime",
+        "upgradeBannerBtnNow": "Upgrade to Premium 🚀",
+        "highestPlanBadge": "Highest Tier 👑",
+        "nextLessonTag": "⚡ NEXT LESSON",
+        "continuePracticeBtn": "Continue Practice Now",
+        "defaultNextTopic": "Japanese Kaiwa Learning Path",
+        "defaultNextSubtitle": "Practice speaking at the next node",
+        "nodeVocabTitle": "Vocabulary: {name}",
+        "nodeVocabSubtitle": "Review vocabulary and phrases",
+        "nodeChestTitle": "Reward Chest",
+        "nodeChestSubtitle": "Claim bonus points"
     }
 }
