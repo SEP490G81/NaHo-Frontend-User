@@ -20,6 +20,8 @@ interface SandboxContextProps {
     setRecording: (r: boolean) => void;
     elapsed: number;
     setElapsed: (sec: number) => void;
+    /** Giới hạn thời gian nói tối đa (giây) theo gói đăng ký. */
+    maxSeconds: number;
     playing: boolean;
     setPlaying: (p: boolean) => void;
     analyzing: boolean;
@@ -35,7 +37,16 @@ const SandboxContext = createContext<SandboxContextProps | undefined>(
     undefined,
 );
 
-export function SandboxProvider({ children }: { children: React.ReactNode }) {
+interface SandboxProviderProps {
+    children: React.ReactNode;
+    /** Số giây tối đa được nói (từ gói đăng ký); mặc định 60. */
+    maxSeconds?: number;
+}
+
+export function SandboxProvider({
+    children,
+    maxSeconds = 60,
+}: SandboxProviderProps) {
     const [step, setStep] = useState<SandboxStep>(1);
     const [micStatus, setMicStatus] = useState<MicStatus>("idle");
     const [volume, setVolume] = useState(0);
@@ -49,6 +60,11 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const micTestStreamRef = useRef<MediaStream | null>(null);
     const micTestContextRef = useRef<AudioContext | null>(null);
+    // Giữ giá trị mới nhất để closure trong setInterval luôn dừng đúng mốc.
+    const maxSecondsRef = useRef(maxSeconds);
+    useEffect(() => {
+        maxSecondsRef.current = maxSeconds;
+    }, [maxSeconds]);
 
     useEffect(() => {
         return () => {
@@ -179,7 +195,9 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
 
                 recordRef.current = setInterval(() => {
                     setElapsed((e) => {
-                        if (e >= 60) {
+                        const max = maxSecondsRef.current;
+                        // Hết giờ: tự dừng ghi âm rồi sang bước xem lại (step 3).
+                        if (e + 1 >= max) {
                             if (
                                 mediaRecorderRef.current &&
                                 mediaRecorderRef.current.state !== "inactive"
@@ -191,7 +209,7 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
                             recordRef.current = null;
                             setRecording(false);
                             setStep(3);
-                            return 60;
+                            return max;
                         }
                         return e + 1;
                     });
@@ -222,6 +240,7 @@ export function SandboxProvider({ children }: { children: React.ReactNode }) {
                 setRecording,
                 elapsed,
                 setElapsed,
+                maxSeconds,
                 playing,
                 setPlaying,
                 analyzing,

@@ -3,26 +3,41 @@ import React from "react";
 import { Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { QuestionHints } from "@/data/mockHints";
+import SampleAnswerCard from "@/components/ui/sample.answer.card";
 import RecordButton from "../features/record.button";
 import HintsCard from "../features/hints.card";
 import NotesPanel from "./notes.panel";
 
+export interface SandboxSampleAnswer {
+    japanese: string;
+    japaneseMarkup?: string | null;
+    vietnamese?: string | null;
+}
+
 interface SandboxStep2Props {
     recording: boolean;
     elapsed: number;
+    maxSeconds: number;
     toggleRecord: () => void;
     hints: QuestionHints;
     showFurigana: boolean;
     accent: string;
+    /** Câu trả lời mẫu (ẩn sau nút gợi ý); null nếu câu hỏi không có. */
+    sampleAnswer: SandboxSampleAnswer | null;
+    /** Gói đăng ký có cho xem câu mẫu không. */
+    sampleAnswerEnabled: boolean;
 }
 
 export function SandboxStep2({
     recording,
     elapsed,
+    maxSeconds,
     toggleRecord,
     hints,
     showFurigana,
     accent,
+    sampleAnswer,
+    sampleAnswerEnabled,
 }: SandboxStep2Props) {
     const t = useTranslations("sandbox");
     return (
@@ -60,6 +75,7 @@ export function SandboxStep2({
                     <RecordButton
                         recording={recording}
                         elapsed={elapsed}
+                        maxSeconds={maxSeconds}
                         onToggle={toggleRecord}
                         accent={accent}
                     />
@@ -72,6 +88,17 @@ export function SandboxStep2({
                     showFurigana={showFurigana}
                     accent={accent}
                 />
+                {sampleAnswer && (
+                    <SampleAnswerCard
+                        japanese={sampleAnswer.japanese}
+                        japaneseMarkup={sampleAnswer.japaneseMarkup}
+                        vietnamese={sampleAnswer.vietnamese}
+                        showFurigana={showFurigana}
+                        accent={accent}
+                        collapsible
+                        locked={!sampleAnswerEnabled}
+                    />
+                )}
                 <NotesPanel />
             </aside>
         </section>

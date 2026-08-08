@@ -7,6 +7,8 @@ import { cn } from "@/libs/utils";
 interface RecordButtonProps {
     recording: boolean;
     elapsed: number;
+    /** Thời gian nói tối đa (giây) theo gói đăng ký. */
+    maxSeconds: number;
     onToggle: () => void;
     accent?: string;
 }
@@ -24,10 +26,15 @@ function formatTime(sec: number) {
 export function RecordButton({
     recording,
     elapsed,
+    maxSeconds,
     onToggle,
     accent = "var(--color-bgc-highlight)",
 }: RecordButtonProps) {
     const t = useTranslations("sandbox");
+    // Đếm ngược: khi chưa ghi hiện đủ ngân sách; đang ghi hiện số giây còn lại.
+    const remaining = Math.max(maxSeconds - elapsed, 0);
+    const display = recording ? remaining : maxSeconds;
+    const urgent = recording && remaining <= 5;
 
     return (
         <div className="flex flex-col items-center gap-3">
@@ -72,8 +79,15 @@ export function RecordButton({
                 </button>
             </div>
 
-            <div className="text-text-contrast font-mono text-2xl tabular-nums">
-                {formatTime(elapsed)}
+            <div
+                className={cn(
+                    "font-mono text-2xl tabular-nums transition-colors",
+                    urgent
+                        ? "text-bgc-error font-bold"
+                        : "text-text-contrast",
+                )}
+            >
+                {formatTime(display)}
             </div>
 
             {recording && (
@@ -83,7 +97,9 @@ export function RecordButton({
                             key={i}
                             className="w-1 rounded-full"
                             style={{
-                                background: accent,
+                                background: urgent
+                                    ? "var(--color-bgc-error)"
+                                    : accent,
                                 height: `${20 + Math.abs(Math.sin((elapsed * 2 + i) * 0.5)) * 80}%`,
                                 transition: "height 180ms ease-out",
                             }}
@@ -93,7 +109,9 @@ export function RecordButton({
             )}
 
             <p className="text-text-muted text-xs">
-                {recording ? t("recordingHintActive") : t("recordingHintIdle")}
+                {recording
+                    ? t("recordingRemaining")
+                    : t("recordingBudget", { seconds: maxSeconds })}
             </p>
         </div>
     );

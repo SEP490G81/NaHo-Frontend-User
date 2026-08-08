@@ -76,7 +76,10 @@
             "topicProgress": "Topic Progress",
             "completedNodes": "Completed",
             "activeGoal": "Current Goal",
-            "rewardsHint": "Open Reward Chest"
+            "rewardsHint": "Open Reward Chest",
+            "loadingQuestion": "Loading question...",
+            "hoverOpen": "Click to view detail",
+            "hoverRelearn": "Click to practice again"
         },
         "node": {
             "vocabTitle": "Vocabulary",
@@ -129,6 +132,47 @@
             "finish": "Finish",
             "done": "Completed",
             "finishHint": "Go through all cards to finish"
+        },
+        "sampleAnswer": {
+            "title": "Sample answer",
+            "speak": "Pronounce",
+            "reveal": "Show sample answer",
+            "hide": "Hide sample answer",
+            "translation": "Translation",
+            "locked": "Upgrade your plan to see the sample answer",
+            "empty": "This question has no sample answer yet."
+        },
+        "questionDetail": {
+            "back": "Back to path",
+            "badge": "Question detail",
+            "practiceNow": "Practice this question now",
+            "vocab": "Vocabulary",
+            "grammar": "Key grammar",
+            "discussion": "Discussion & interaction",
+            "commentsCount": "{count} comments",
+            "commentPlaceholder": "Write your comment...",
+            "postComment": "Post comment",
+            "replyPlaceholder": "Write a reply...",
+            "send": "Send",
+            "reply": "Reply",
+            "report": "Report",
+            "like": "Like",
+            "you": "You",
+            "commenter": "Learner #{id}",
+            "justNow": "Just now",
+            "minutesAgo": "{count} min ago",
+            "hoursAgo": "{count} h ago",
+            "noComments": "No comments yet. Be the first!",
+            "loadFailed": "Could not load comments.",
+            "commentFailed": "Could not post comment, please try again.",
+            "reactionFailed": "Could not update reaction."
+        },
+        "sideRail": {
+            "leaderboardTitle": "Weekly leaderboard",
+            "yourRank": "Your rank",
+            "points": "{points} pts",
+            "questsTitle": "Today's quests",
+            "achievementTitle": "Next achievement"
         }
     }
 }
