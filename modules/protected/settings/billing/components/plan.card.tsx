@@ -4,11 +4,14 @@ import {
     PlanTier,
     SubscriptionPlanResponse,
 } from "@/types/responses/subscription.response";
-import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import StarIcon from "@mui/icons-material/Star";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 
 interface PlanCardProps {
     plan: SubscriptionPlanResponse;
@@ -27,162 +30,323 @@ const PlanCard: React.FC<PlanCardProps> = ({
 }) => {
     const t = useTranslations("settings.billing");
 
-    const planLevel = PlanTier[plan.tier]?.level ?? 0;
+    const tierCode = plan.tier || plan.code || "FREE";
+    const planLevel = PlanTier[tierCode]?.level ?? 0;
     const currentLevel = PlanTier[currentTier]?.level ?? 0;
 
-    const isCurrentPlan = plan.tier === currentTier;
+    const isCurrentPlan = tierCode === currentTier;
     const isOwnedOrLower = planLevel <= currentLevel;
-    const canUpgrade = planLevel > currentLevel;
 
     const isLoadingThisPlan = checkoutLoadingCode === plan.code;
-    const isPopular = plan.tier === "PREMIUM";
 
-    const formatCurrency = (amount: number) => {
-        if (amount === 0) return t("freePrice");
-        return (
-            new Intl.NumberFormat("vi-VN").format(amount) + " " + t("perMonth")
-        );
+    const formatPrice = (amount: number) => {
+        if (amount === 0) return "0 đ";
+        return new Intl.NumberFormat("vi-VN").format(amount) + " đ";
     };
 
-    const conversationMinutes = Math.round(
-        plan.monthlyConversationSeconds / 60,
-    );
+    const formatDurationText = (seconds: number) => {
+        if (seconds >= 99999) return "Không giới hạn";
+        const mins = Math.round(seconds / 60);
+        if (mins >= 60) {
+            const hrs = (mins / 60).toFixed(1).replace(".0", "");
+            return `${hrs} giờ`;
+        }
+        return `${mins} phút`;
+    };
+
+    const formatLimitCount = (count: number) => {
+        if (count >= 9999) return "Không giới hạn";
+        return `${count} lượt`;
+    };
+
+    // Tier specific styling configuration
+    const isFree = tierCode === "FREE";
+    const isBasic = tierCode === "BASIC";
+    const isPremium = tierCode === "PREMIUM";
+
+    const cardContainerStyles = isPremium
+        ? "relative flex flex-col justify-between rounded-3xl border-2 border-amber-400 dark:border-amber-500/80 bg-gradient-to-b from-amber-500/10 via-rose-500/5 to-bgc-card p-6 shadow-xl shadow-amber-500/15 hover:shadow-2xl hover:shadow-amber-500/25 hover:-translate-y-1 transition-all duration-300 ring-1 ring-amber-400/30 overflow-hidden"
+        : isBasic
+          ? "relative flex flex-col justify-between rounded-3xl border-2 border-indigo-500/60 dark:border-indigo-400/60 bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-bgc-card p-6 shadow-lg shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-1 transition-all duration-300"
+          : "relative flex flex-col justify-between rounded-3xl border border-bdc-primary bg-gradient-to-b from-slate-100/50 via-bgc-card to-bgc-card dark:from-slate-800/30 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300";
+
+    const featureIconColor = isPremium
+        ? "text-rose-500 dark:text-rose-400"
+        : isBasic
+          ? "text-indigo-600 dark:text-indigo-400"
+          : "text-emerald-600 dark:text-emerald-400";
 
     return (
-        <div
-            className={`bg-bgc-card relative flex flex-col justify-between rounded-2xl border p-6 shadow-sm transition-all hover:shadow-md ${
-                isPopular
-                    ? "border-primary ring-primary/20 shadow-lg ring-2"
-                    : isCurrentPlan
-                      ? "border-emerald-500/50 bg-emerald-500/5"
-                      : "border-bdc-primary"
-            }`}
-        >
-            {isPopular && (
-                <div className="absolute -top-0 left-1/2 -translate-x-1/2">
-                    <Chip
-                        icon={
-                            <StarOutlinedIcon
-                                style={{ fontSize: 14, color: "#fff" }}
-                            />
-                        }
-                        label={t("popular")}
-                        size="small"
-                        className="bg-primary text-xs font-bold text-white shadow"
-                    />
-                </div>
+        <div className={cardContainerStyles}>
+            {/* Ambient glowing light for Premium */}
+            {isPremium && (
+                <div className="pointer-events-none absolute -top-14 -right-14 h-40 w-40 rounded-full bg-gradient-to-tr from-amber-400/30 via-rose-400/20 to-transparent blur-2xl" />
             )}
 
             <div>
-                {/* Header */}
+                {/* Badge Header */}
                 <div className="mb-4 text-center">
-                    <h3 className="text-text-primary text-xl font-bold">
+                    <div className="mb-3 flex justify-center">
+                        {isPremium ? (
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md animate-pulse">
+                                <WorkspacePremiumIcon style={{ fontSize: 15 }} />
+                                <span>GÓI CAO CẤP NHẤT 👑</span>
+                            </span>
+                        ) : isBasic ? (
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 px-3.5 py-1 text-xs font-extrabold text-white shadow-md">
+                                <StarIcon style={{ fontSize: 14 }} />
+                                <span>GÓI KHUYÊN DÙNG ★</span>
+                            </span>
+                        ) : (
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-300">
+                                <SentimentSatisfiedAltIcon
+                                    style={{ fontSize: 14 }}
+                                />
+                                <span>GÓI MIỄN PHÍ</span>
+                            </span>
+                        )}
+                    </div>
+
+                    <h3 className="text-text-primary text-2xl font-black tracking-tight">
                         {plan.name}
                     </h3>
-                    <p className="text-text-muted mt-1 min-h-[36px] text-xs">
+                    <p className="text-text-muted mt-1.5 min-h-[38px] text-xs font-medium leading-relaxed">
                         {plan.description}
                     </p>
-                    <div className="mt-3">
-                        <span className="text-primary text-3xl font-extrabold">
-                            {formatCurrency(plan.priceAmount)}
+
+                    {/* Price Tag */}
+                    <div className="mt-4 flex items-baseline justify-center gap-1">
+                        {isPremium ? (
+                            <span className="text-3xl font-black tracking-tight bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
+                                {formatPrice(plan.priceAmount)}
+                            </span>
+                        ) : isBasic ? (
+                            <span className="text-3xl font-black tracking-tight text-indigo-600 dark:text-indigo-400">
+                                {formatPrice(plan.priceAmount)}
+                            </span>
+                        ) : (
+                            <span className="text-3xl font-black tracking-tight text-slate-800 dark:text-slate-200">
+                                {formatPrice(plan.priceAmount)}
+                            </span>
+                        )}
+
+                        <span className="text-text-muted text-xs font-semibold">
+                            {plan.priceAmount === 0
+                                ? "/ vĩnh viễn"
+                                : ` / ${plan.durationDays} ngày`}
                         </span>
                     </div>
                 </div>
 
-                <div className="bg-bdc-primary/50 my-4 h-px" />
+                <div className="my-4 h-px w-full bg-bdc-primary/40" />
 
-                {/* Features List */}
-                <ul className="text-text-primary space-y-3 text-sm">
-                    <li className="flex items-start gap-2.5">
-                        <CheckCircleOutlinedIcon
-                            fontSize="small"
-                            className="text-primary mt-0.5"
-                        />
-                        <span>
-                            {t("features.assessmentLimit", {
-                                count: plan.monthlyAssessmentLimit,
-                            })}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                        <CheckCircleOutlinedIcon
-                            fontSize="small"
-                            className="text-primary mt-0.5"
-                        />
-                        <span>
-                            {t("features.conversationMinutes", {
-                                minutes: conversationMinutes,
-                            })}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                        <CheckCircleOutlinedIcon
-                            fontSize="small"
-                            className={
-                                plan.fullCurriculumAccess
-                                    ? "text-primary mt-0.5"
-                                    : "text-text-muted mt-0.5 opacity-40"
-                            }
-                        />
-                        <span
-                            className={
-                                plan.fullCurriculumAccess
-                                    ? ""
-                                    : "line-through opacity-50"
-                            }
-                        >
-                            {t("features.fullCurriculum")}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                        <CheckCircleOutlinedIcon
-                            fontSize="small"
-                            className={
-                                plan.progressAnalyticsEnabled
-                                    ? "text-primary mt-0.5"
-                                    : "text-text-muted mt-0.5 opacity-40"
-                            }
-                        />
-                        <span
-                            className={
-                                plan.progressAnalyticsEnabled
-                                    ? ""
-                                    : "line-through opacity-50"
-                            }
-                        >
-                            {t("features.analytics")}
-                        </span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                        <CheckCircleOutlinedIcon
-                            fontSize="small"
-                            className={
-                                plan.sampleAnswerEnabled
-                                    ? "text-primary mt-0.5"
-                                    : "text-text-muted mt-0.5 opacity-40"
-                            }
-                        />
-                        <span
-                            className={
-                                plan.sampleAnswerEnabled
-                                    ? ""
-                                    : "line-through opacity-50"
-                            }
-                        >
-                            {t("features.sampleAnswer")}
-                        </span>
-                    </li>
-                </ul>
+                {/* Detailed Features List */}
+                <div className="space-y-4">
+                    {/* Section 1: Đánh giá & Hội thoại */}
+                    <div>
+                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
+                            ⚡ Đánh giá phát âm & AI
+                        </div>
+                        <ul className="space-y-2 text-xs">
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    Đánh giá phát âm:{" "}
+                                    <strong className="font-extrabold">
+                                        {formatLimitCount(
+                                            plan.monthlyAssessmentLimit,
+                                        )}
+                                    </strong>
+                                    {plan.monthlyAssessmentLimit < 9999 && (
+                                        <span className="text-text-muted">
+                                            {" "}
+                                            / tháng
+                                        </span>
+                                    )}
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    Ghi âm tối đa:{" "}
+                                    <strong className="font-extrabold">
+                                        {plan.maxAssessmentAudioSeconds}s
+                                    </strong>
+                                    <span className="text-text-muted">
+                                        {" "}
+                                        / lượt bài
+                                    </span>
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    Luyện hội thoại AI:{" "}
+                                    <strong className="font-extrabold">
+                                        {formatDurationText(
+                                            plan.monthlyConversationSeconds,
+                                        )}
+                                    </strong>
+                                    {plan.monthlyConversationSeconds <
+                                        99999 && (
+                                        <span className="text-text-muted">
+                                            {" "}
+                                            / tháng
+                                        </span>
+                                    )}
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    Tối đa 1 phiên AI:{" "}
+                                    <strong className="font-extrabold">
+                                        {formatDurationText(
+                                            plan.maxConversationSessionSeconds,
+                                        )}
+                                    </strong>{" "}
+                                    ({plan.maxConversationTurnsPerSession} lượt
+                                    nói)
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    Thời gian trả lời câu:{" "}
+                                    <strong className="font-extrabold">
+                                        {plan.maxAnswerTimeSeconds}s
+                                    </strong>
+                                    <span className="text-text-muted">
+                                        {" "}
+                                        / câu
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Section 2: Tiện ích & Quyền truy cập */}
+                    <div>
+                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
+                            🎁 Tiện ích & Quyền lợi
+                        </div>
+                        <ul className="space-y-2 text-xs">
+                            <li className="flex items-start gap-2 text-text-primary">
+                                {plan.fullCurriculumAccess ? (
+                                    <CheckCircleIcon
+                                        style={{ fontSize: 16 }}
+                                        className={`${featureIconColor} mt-0.5 shrink-0`}
+                                    />
+                                ) : (
+                                    <CancelIcon
+                                        style={{ fontSize: 16 }}
+                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                    />
+                                )}
+                                <span
+                                    className={
+                                        plan.fullCurriculumAccess
+                                            ? "font-medium"
+                                            : "text-text-muted/60 line-through"
+                                    }
+                                >
+                                    Mở khóa toàn bộ giáo trình
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                {plan.sampleAnswerEnabled ? (
+                                    <CheckCircleIcon
+                                        style={{ fontSize: 16 }}
+                                        className={`${featureIconColor} mt-0.5 shrink-0`}
+                                    />
+                                ) : (
+                                    <CancelIcon
+                                        style={{ fontSize: 16 }}
+                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                    />
+                                )}
+                                <span
+                                    className={
+                                        plan.sampleAnswerEnabled
+                                            ? "font-medium"
+                                            : "text-text-muted/60 line-through"
+                                    }
+                                >
+                                    Gợi ý đáp án mẫu AI thông minh
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                {plan.progressAnalyticsEnabled ? (
+                                    <CheckCircleIcon
+                                        style={{ fontSize: 16 }}
+                                        className={`${featureIconColor} mt-0.5 shrink-0`}
+                                    />
+                                ) : (
+                                    <CancelIcon
+                                        style={{ fontSize: 16 }}
+                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                    />
+                                )}
+                                <span
+                                    className={
+                                        plan.progressAnalyticsEnabled
+                                            ? "font-medium"
+                                            : "text-text-muted/60 line-through"
+                                    }
+                                >
+                                    Phân tích tiến độ học tập
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                {plan.saveAnswerHistoryEnabled ? (
+                                    <CheckCircleIcon
+                                        style={{ fontSize: 16 }}
+                                        className={`${featureIconColor} mt-0.5 shrink-0`}
+                                    />
+                                ) : (
+                                    <CancelIcon
+                                        style={{ fontSize: 16 }}
+                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                    />
+                                )}
+                                <span
+                                    className={
+                                        plan.saveAnswerHistoryEnabled
+                                            ? "font-medium"
+                                            : "text-text-muted/60 line-through"
+                                    }
+                                >
+                                    Lưu trữ lịch sử câu trả lời
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             {/* Action Button */}
-            <div className="mt-6">
+            <div className="mt-6 pt-2">
                 {isCurrentPlan ? (
                     <Button
                         variant="outlined"
                         fullWidth
                         disabled
-                        className="border-emerald-500 font-semibold text-emerald-600"
+                        className="rounded-xl border-emerald-500 py-2.5 font-bold text-emerald-600 dark:border-emerald-400 dark:text-emerald-400"
                     >
                         {t("currentPlanLabel")}
                     </Button>
@@ -191,7 +355,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         variant="outlined"
                         fullWidth
                         disabled
-                        className="text-text-muted border-gray-300"
+                        className="text-text-muted border-bdc-primary rounded-xl py-2.5 font-semibold"
                     >
                         {t("includedLabel")}
                     </Button>
@@ -201,17 +365,30 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         fullWidth
                         disabled={checkoutLoadingCode !== null}
                         onClick={() => onCheckout(plan.code, isFailed)}
-                        className="bg-primary hover:bg-primary/90 py-2.5 font-bold text-white shadow-md transition-transform active:scale-95"
+                        className={
+                            isPremium
+                                ? "rounded-xl bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 py-3 text-sm font-black text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-rose-500/30 active:scale-[0.98]"
+                                : isBasic
+                                  ? "rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-sm font-black text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-indigo-500/30 active:scale-[0.98]"
+                                  : "rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-900 active:scale-[0.98]"
+                        }
+                        sx={{
+                            color: "#ffffff !important",
+                            "& .MuiButton-startIcon": { color: "#ffffff !important" },
+                        }}
                     >
                         {isLoadingThisPlan ? (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 text-white">
                                 <CircularProgress size={18} color="inherit" />
-                                <span>{t("processing")}</span>
+                                <span className="text-white font-bold">{t("processing")}</span>
                             </div>
                         ) : isFailed ? (
-                            t("retry")
+                            <span className="text-white font-bold">{t("retry")}</span>
                         ) : (
-                            t("buyNow")
+                            <span className="flex items-center justify-center gap-1.5 text-white font-black">
+                                <AutoAwesomeIcon style={{ fontSize: 16, color: "#ffffff" }} />
+                                <span className="text-white">{t("buyNow")}</span>
+                            </span>
                         )}
                     </Button>
                 )}
