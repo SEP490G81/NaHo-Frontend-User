@@ -17,6 +17,9 @@ export function Dashboard() {
             {/* 1. Hero Command Center (Greeting, Goal progress, Quick Resume CTA) */}
             <WelcomeBanner name={currentLearner.name} t={t} />
 
+            {/* Kanji Inspiration Quote */}
+            <KanjiQuoteCard />
+
             {/* 2. Main Dashboard Grid (Left 2 cols, Right 1 col) */}
             <div className="grid gap-5 lg:grid-cols-3">
                 {/* Left Area (2 Columns) */}
@@ -30,8 +33,6 @@ export function Dashboard() {
 
                 {/* Right Sidebar (1 Column) */}
                 <div className="space-y-5 lg:col-span-1">
-                    {/* Kanji Inspiration Quote */}
-                    <KanjiQuoteCard />
 
                     {/* Subscription Upgrade Promo Card */}
                     <UpgradeBanner />

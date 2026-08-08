@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -8,107 +8,113 @@ import IconButton from "@mui/material/IconButton";
 import Chip from "@mui/material/Chip";
 
 import { ContainerBox } from "@/components/ui/container.box";
+import { getRandomQuote } from "@/services/client/quote.service";
+import { QuoteItem } from "@/types/responses/quote.response";
 
-interface QuoteItem {
-    kanji: string;
-    romaji: string;
-    translation: string;
-    kanjiDetail: string;
-}
-
-const QUOTES: QuoteItem[] = [
-    {
-        kanji: "継続は力なり",
-        romaji: "Keizoku wa chikara nari",
-        translation:
-            "Sự kiên trì tạo nên sức mạnh — Luyện tập Kaiwa mỗi ngày từng chút một sẽ mang lại sự tự tin vượt bậc.",
-        kanjiDetail: "継続 (Keizoku): Tiếp tục • 力 (Chikara): Sức mạnh",
-    },
-    {
-        kanji: "七転び八起き",
-        romaji: "Nanakorobi yaoki",
-        translation:
-            "Vấp ngã 7 lần, đứng dậy 8 lần — Đừng ngại phát âm sai, mỗi bài học sẽ hoàn thiện kỹ năng giao tiếp của bạn.",
-        kanjiDetail:
-            "七転 (Nanakorobi): 7 lần ngã • 八起 (Yaoki): 8 lần đứng dậy",
-    },
-    {
-        kanji: "一期一会",
-        romaji: "Ichigo ichie",
-        translation:
-            "Nhất kỳ nhất hội — Trân trọng từng cuộc hội thoại Kaiwa và khoảnh khắc học tập quý giá.",
-        kanjiDetail: "一期 (Ichigo): Một đời • Một lần gặp gỡ",
-    },
-    {
-        kanji: "塵も積もれば山となる",
-        romaji: "Chiri mo tsumoreba yama to naru",
-        translation:
-            "Tích tiểu thành đại — Mỗi từ vựng tích lũy hôm nay là nền tảng vững chắc cho tương lai.",
-        kanjiDetail: "塵 (Chiri): Hạt bụi nhỏ • 山 (Yama): Ngọn núi lớn",
-    },
-    {
-        kanji: "初心忘るべからず",
-        romaji: "Shoshin wasurubekarazu",
-        translation:
-            "Không quên ý nguyện ban đầu — Giữ vững đam mê chinh phục tiếng Nhật Kaiwa giao tiếp tự nhiên.",
-        kanjiDetail: "初心 (Shoshin): Sơ tâm, tâm thế ban đầu",
-    },
-];
+const FALLBACK_QUOTE: QuoteItem = {
+    id: 0,
+    kanji: "継続は力なり",
+    hiragana: "けいぞくはちからなり",
+    romaji: "Keizoku wa chikara nari",
+    translation:
+        "Sự kiên trì tạo nên sức mạnh — Luyện tập Kaiwa mỗi ngày từng chút một sẽ mang lại sự tự tin vượt bậc.",
+    kanjiDetail: "継続 (Keizoku): Tiếp tục • 力 (Chikara): Sức mạnh",
+};
 
 export function KanjiQuoteCard() {
     const t = useTranslations("dashboard");
-    const [index, setIndex] = useState(0);
+    const [quote, setQuote] = useState<QuoteItem | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const quote = QUOTES[index];
+    const fetchQuote = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await getRandomQuote();
+            setQuote(data);
+        } catch (error) {
+            console.error("Lỗi khi tải quote ngẫu nhiên:", error);
+            if (!quote) {
+                setQuote(FALLBACK_QUOTE);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [quote]);
 
-    const handleNextQuote = () => {
-        setIndex((prev) => (prev + 1) % QUOTES.length);
-    };
+    useEffect(() => {
+        fetchQuote();
+    }, []);
+
+    const currentQuote = quote || FALLBACK_QUOTE;
 
     return (
-        <ContainerBox className="border-bdc-primary relative overflow-hidden border">
-            <div className="relative z-10 flex h-full flex-col justify-between space-y-4">
+        <ContainerBox className="relative overflow-hidden border border-bdc-primary bg-gradient-to-br from-bgc-card via-bgc-card to-[#ff99ac]/10 p-5 md:p-6">
+            {/* Sakura ambient glow circles phủ toàn bộ ContainerBox */}
+            <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-[#ff99ac]/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-[#ff758f]/10 blur-2xl" />
+
+            <div className="relative z-10 flex h-full flex-col justify-between space-y-6">
                 {/* Header tag & refresh button */}
-                <div className="border-bdc-primary/60 flex items-center justify-between border-b pb-3">
+                <div className="flex items-center justify-between border-b border-bdc-primary/60 pb-3">
                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ff99ac]/20 text-[#ff758f]">
                             <MenuBookIcon style={{ fontSize: 20 }} />
                         </div>
-                        <span className="text-text-primary text-lg font-extrabold">
+                        <span className="text-lg font-extrabold text-text-primary">
                             {t("dailyQuoteTitle")}
                         </span>
                     </div>
 
                     <IconButton
                         size="small"
-                        onClick={handleNextQuote}
-                        className="text-text-muted transition-transform hover:bg-[#ff99ac]/10 hover:text-[#ff758f] active:rotate-180"
+                        disabled={loading}
+                        onClick={fetchQuote}
+                        className="text-text-muted transition-transform hover:bg-[#ff99ac]/10 hover:text-[#ff758f]"
                         title={t("nextQuote")}
                     >
-                        <RefreshIcon style={{ fontSize: 20 }} />
+                        <RefreshIcon
+                            style={{ fontSize: 20 }}
+                            className={loading ? "animate-spin" : ""}
+                        />
                     </IconButton>
                 </div>
 
                 {/* Main Kanji quote display */}
-                <div className="my-2 space-y-2">
-                    <h2 className="text-3xl font-black tracking-wide text-[#ff758f] sm:text-4xl">
-                        {quote.kanji}
+                <div
+                    className={`my-auto space-y-4 text-center py-4 transition-opacity duration-300 ${
+                        loading ? "opacity-40" : "opacity-100"
+                    }`}
+                >
+                    {/* Chữ Kanji chính */}
+                    <h2 className="text-4xl font-black tracking-tighter text-[#ff758f] sm:text-6xl md:text-7xl lg:text-9xl">
+                        {currentQuote.kanji}
                     </h2>
-                    <p className="text-text-muted text-xs font-semibold">
-                        ({quote.romaji})
-                    </p>
-                    <p className="text-text-primary pt-1 text-sm leading-relaxed font-medium">
-                        {quote.translation}
-                    </p>
-                </div>
 
-                {/* Kanji detail badge */}
-                <div className="border-bdc-primary/60 flex flex-wrap items-center gap-2 border-t pt-3">
-                    <Chip
-                        label={quote.kanjiDetail}
-                        size="small"
-                        className="border border-[#ff99ac]/40 bg-[#ff99ac]/20 text-xs font-bold text-[#ff758f]"
-                    />
+                    {/* Nhóm phần tử bên dưới sát nhau */}
+                    <div className="space-y-1.5">
+                        {currentQuote.romaji && (
+                            <p className="text-sm font-semibold tracking-wider text-text-muted">
+                                ({currentQuote.romaji})
+                            </p>
+                        )}
+
+                        {/* Kanji detail badge */}
+                        {currentQuote.kanjiDetail && (
+                            <div className="pt-0.5">
+                                <Chip
+                                    label={currentQuote.kanjiDetail}
+                                    size="small"
+                                    className="border border-[#ff99ac]/40 bg-[#ff99ac]/20 text-xs font-bold text-[#ff758f]"
+                                />
+                            </div>
+                        )}
+
+                        {currentQuote.translation && (
+                            <p className="text-base font-medium leading-relaxed text-text-primary">
+                                {currentQuote.translation}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </ContainerBox>
