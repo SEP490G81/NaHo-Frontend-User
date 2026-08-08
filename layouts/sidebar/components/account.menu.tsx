@@ -27,7 +27,9 @@ const AccountMenu = ({
     const { data: subscription } = useMySubscription();
     const openReportModal = useReportStore((s) => s.openModal);
 
-    const tier = subscription?.tier || "FREE";
+    const subAny = subscription as any;
+    const planObj = subAny?.plan || subAny;
+    const tier = planObj?.tier || subAny?.tier || "FREE";
 
     const handleClose = () => {
         setAnchorEl(null);
