@@ -51,7 +51,9 @@
         },
         "layout": {
             "header": {
-                "notificationButton": "Thông báo",
+                "collapseSidebar": "サイドバーを折りたたむ",
+                "expandSidebar": "サイドバーを展開する",
+                "notificationButton": "通知",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"

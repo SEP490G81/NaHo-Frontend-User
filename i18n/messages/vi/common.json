@@ -56,6 +56,8 @@
         },
         "layout": {
             "header": {
+                "collapseSidebar": "Thu gọn thanh bên",
+                "expandSidebar": "Mở rộng thanh bên",
                 "notificationButton": "Thông báo",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",

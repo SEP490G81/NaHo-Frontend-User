@@ -51,7 +51,9 @@
         },
         "layout": {
             "header": {
-                "notificationButton": "Thông báo",
+                "collapseSidebar": "Collapse sidebar",
+                "expandSidebar": "Expand sidebar",
+                "notificationButton": "Notifications",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"

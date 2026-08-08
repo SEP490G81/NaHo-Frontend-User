@@ -2,20 +2,23 @@
 import React from "react";
 import NotificationButton from "@/layouts/protected-header/features/notification.button";
 import SettingsButton from "./settings.button";
-import { Divider, IconButton } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
-import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { PanelLeftClose } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
+import { useTranslations } from "next-intl";
 import FuriganaSwitchButton from "./furigana.switch.button";
 import HeaderDecoration from "./header.decoration";
 import { ReportModal } from "@/modules/protected/report/features/report-modal";
 import DailyRewardCalendar from "@/layouts/protected-header/features/daily.reward.calendar";
 import DailyMissionButton from "@/layouts/protected-header/features/daily.mission.button";
 import DailyStreakButton from "@/layouts/protected-header/features/daily.streak.button";
+import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
 
 const ProtectedHeader = () => {
-    const { toggleSidebar, toggleSidebarCollapse, isSidebarCollapsed } =
-        useUiStore();
+    const t = useTranslations();
+    const { toggleSidebarCollapse, isSidebarCollapsed } = useUiStore();
 
     return (
         <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between overflow-hidden border-b px-3 py-3.5">
@@ -24,38 +27,35 @@ const ProtectedHeader = () => {
             {/* Left: collapse toggle (desktop) + mobile menu button */}
             <div className="z-10 flex min-w-0 items-center justify-start gap-x-3">
                 <TooltipCustom
-                    title={isSidebarCollapsed ? "Mở rộng" : "Thu gọn"}
+                    arrow
+                    title={
+                        isSidebarCollapsed
+                            ? t("common.layout.header.expandSidebar")
+                            : t("common.layout.header.collapseSidebar")
+                    }
                     placement="bottom"
                 >
-                    <IconButton
+                    <Button
                         onClick={toggleSidebarCollapse}
+                        variant="outlined"
+                        color="primary"
                         sx={{
+                            width: "40px",
+                            minWidth: "40px",
+                            height: "40px",
                             display: { xs: "none", md: "inline-flex" },
-                            color: "var(--color-text-contrast)",
-                            "&:hover": {
-                                backgroundColor: "var(--color-hbgc-app)",
-                            },
                         }}
                     >
                         {isSidebarCollapsed ? (
-                            <PanelLeftOpen className="h-5 w-5" />
+                            <KeyboardDoubleArrowLeftOutlinedIcon className="h-5 w-5" />
                         ) : (
-                            <PanelLeftClose className="h-5 w-5" />
+                            <KeyboardDoubleArrowRightOutlinedIcon className="h-5 w-5" />
                         )}
-                    </IconButton>
+                    </Button>
                 </TooltipCustom>
+            </div>
 
-                <IconButton
-                    onClick={toggleSidebar}
-                    sx={{
-                        display: { xs: "inline-flex", md: "none" },
-                        color: "var(--color-text-contrast)",
-                        "&:hover": { backgroundColor: "var(--color-hbgc-app)" },
-                    }}
-                >
-                    <MenuIcon className="h-6 w-6" />
-                </IconButton>
-
+            <div className="flex items-center justify-center gap-x-3">
                 <DailyStreakButton />
 
                 <DailyRewardCalendar />
@@ -69,7 +69,11 @@ const ProtectedHeader = () => {
                 <Divider
                     orientation="vertical"
                     flexItem
-                    sx={{ height: 24, my: "auto", borderColor: "var(--color-bdc-primary)" }}
+                    sx={{
+                        height: 24,
+                        my: "auto",
+                        borderColor: "var(--color-bdc-primary)",
+                    }}
                 />
                 <NotificationButton />
                 <SettingsButton />

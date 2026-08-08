@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import {
     Divider,
@@ -14,6 +14,7 @@ import {
     IconButton,
     Tooltip,
     Avatar,
+    CircularProgress,
 } from "@mui/material";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -22,6 +23,7 @@ import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import {
@@ -30,41 +32,88 @@ import {
 } from "@/layouts/protected-header/utils/header.util";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
+import { updateUserInfoClient, uploadUserAvatarClient } from "@/services/client/user.service";
+import { ApiError } from "@/libs/api.error";
+import { queryKeys } from "@/libs/query.keys";
+import {
+    validateUsername,
+    validateAge,
+} from "@/modules/protected/settings/utils/settings.util";
 
 const AccountSettings = () => {
     const t = useTranslations("settings.account");
+    const queryClient = useQueryClient();
     const { userEmail, profile, setProfile } = useAuthStore();
     const { data: user } = useCurrentUser();
     useSettingHighlight();
 
-    // Local form states initialized with profile data or fallback
-    const [fullName, setFullName] = useState(profile?.fullName || "Nguyễn Văn A");
-    const [gender, setGender] = useState("male");
-    const [dob, setDob] = useState("1998-05-20");
-    const [level, setLevel] = useState(profile?.level || "N3");
+    // Local form states initialized with profile data or logged in user data
+    const [username, setUsername] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [gender, setGender] = useState("");
+    const [dob, setDob] = useState("");
+    const [level, setLevel] = useState("N5");
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isAvatarUploading, setIsAvatarUploading] = useState(false);
+
+    // Validation error states
+    const [usernameError, setUsernameError] = useState<string | null>(null);
+    const [dobError, setDobError] = useState<string | null>(null);
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Sync logged in user data to input fields when user query resolves
+    useEffect(() => {
+        if (user) {
+            setUsername(user.username || "");
+            setFullName(user.fullName || "");
+            setGender(user.gender || "");
+            setDob(user.dob || "");
+            setLevel(user.jlptLevel || profile?.level || "N5");
+        }
+    }, [user, profile?.level]);
 
     const activeAvatarUrl = avatarUrl || getUserAvatarUrl(user);
     const initialChar =
         getFirstCharacter(user) ||
         (fullName ? fullName.charAt(0).toUpperCase() : "U");
 
-    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            if (file.size > 2 * 1024 * 1024) {
-                toast.error(t("avatarDesc"));
-                return;
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) {
+            toast.error(t("avatarDesc"));
+            return;
+        }
+
+        setIsAvatarUploading(true);
+        try {
+            const updatedUser = await uploadUserAvatarClient(file);
+            if (updatedUser.avatarUrl) {
+                setAvatarUrl(updatedUser.avatarUrl);
             }
-            const reader = new FileReader();
-            reader.onload = () => {
-                setAvatarUrl(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            await queryClient.invalidateQueries({
+                queryKey: queryKeys.auth.currentUser,
+            });
+            toast.success(t("avatarUploadSuccess"));
+        } catch (error: unknown) {
+            if (error instanceof ApiError) {
+                toast.error(error.message);
+            } else if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("Tải lên ảnh đại diện thất bại!");
+            }
+        } finally {
+            setIsAvatarUploading(false);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
         }
     };
 
@@ -72,14 +121,68 @@ const AccountSettings = () => {
         setAvatarUrl(null);
     };
 
-    const handleUpdateProfile = (e: React.FormEvent) => {
+    const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
-        setProfile({
-            fullName,
-            level,
-            goal: profile?.goal || "Kaiwa Daily Practice",
-        });
-        toast.success(t("profileUpdateSuccess"));
+        setUsernameError(null);
+        setDobError(null);
+
+        let hasError = false;
+
+        const uErrorKey = validateUsername(username);
+        if (uErrorKey) {
+            setUsernameError(t(uErrorKey));
+            hasError = true;
+        }
+
+        const dErrorKey = validateAge(dob);
+        if (dErrorKey) {
+            setDobError(t(dErrorKey));
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        setIsSubmitting(true);
+        try {
+            const payload = {
+                username: username.trim() || undefined,
+                fullName: fullName.trim() || undefined,
+                gender: gender ? (gender as "MALE" | "FEMALE") : null,
+                dob: dob || null,
+            };
+
+            const updatedUser = await updateUserInfoClient(payload);
+
+            // Synchronize Zustand profile store
+            setProfile({
+                fullName: updatedUser.fullName || fullName,
+                level: updatedUser.jlptLevel || level,
+                goal: profile?.goal || "Kaiwa Daily Practice",
+            });
+
+            // Invalidate React Query currentUser cache to refetch across app header/menu
+            await queryClient.invalidateQueries({
+                queryKey: queryKeys.auth.currentUser,
+            });
+
+            toast.success(t("profileUpdateSuccess"));
+        } catch (error: unknown) {
+            if (error instanceof ApiError) {
+                if (error.status === 409 || error.errorCode === "USER_A006") {
+                    const msg = error.message || t("usernameAlreadyExists");
+                    setUsernameError(msg);
+                    toast.error(msg);
+                } else {
+                    toast.error(error.message);
+                }
+            } else if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("Cập nhật thông tin thất bại!");
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleDeleteAccount = () => {
@@ -123,7 +226,8 @@ const AccountSettings = () => {
                             <button
                                 type="button"
                                 onClick={() => setIsPreviewOpen(true)}
-                                className="group relative h-20 w-20 overflow-hidden rounded-full border-2 border-bdc-muted bg-bgc-modal flex items-center justify-center shrink-0 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-bgc-highlight transition-all duration-200 hover:scale-105"
+                                disabled={isAvatarUploading}
+                                className="group relative h-20 w-20 overflow-hidden rounded-full border-2 border-bdc-muted bg-bgc-modal flex items-center justify-center shrink-0 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-bgc-highlight transition-all duration-200 hover:scale-105 disabled:opacity-80"
                             >
                                 <Avatar
                                     src={activeAvatarUrl}
@@ -138,9 +242,19 @@ const AccountSettings = () => {
                                 >
                                     {initialChar}
                                 </Avatar>
-                                {/* Hover Overlay with Zoom Icon */}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white backdrop-blur-[1px]">
-                                    <ZoomInIcon fontSize="medium" />
+                                {/* Overlay: Uploading Spinner or Zoom Icon */}
+                                <div
+                                    className={`absolute inset-0 bg-black/40 transition-opacity duration-200 flex items-center justify-center text-white backdrop-blur-[1px] ${
+                                        isAvatarUploading
+                                            ? "opacity-100"
+                                            : "opacity-0 group-hover:opacity-100"
+                                    }`}
+                                >
+                                    {isAvatarUploading ? (
+                                        <CircularProgress size={24} color="inherit" />
+                                    ) : (
+                                        <ZoomInIcon fontSize="medium" />
+                                    )}
                                 </div>
                             </button>
                         </Tooltip>
@@ -164,31 +278,50 @@ const AccountSettings = () => {
                         />
                         <Button
                             type="button"
+                            disabled={isAvatarUploading}
                             onClick={() => fileInputRef.current?.click()}
                             variant="contained"
                             size="small"
-                            startIcon={<AddAPhotoOutlinedIcon fontSize="small" />}
+                            startIcon={
+                                isAvatarUploading ? (
+                                    <CircularProgress size={16} color="inherit" />
+                                ) : (
+                                    <AddAPhotoOutlinedIcon fontSize="small" />
+                                )
+                            }
                             sx={{
-                                backgroundColor: "var(--color-text-contrast)",
-                                color: "var(--color-bgc-app)",
+                                backgroundColor: "var(--color-bgc-highlight)",
+                                color: "#ffffff",
                                 textTransform: "none",
+                                fontWeight: 600,
+                                borderRadius: "8px",
+                                px: 2,
+                                py: 0.75,
+                                boxShadow: "none",
                                 "&:hover": {
                                     opacity: 0.9,
+                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    boxShadow: "none",
+                                },
+                                "&.Mui-disabled": {
+                                    opacity: 0.7,
+                                    color: "#ffffff",
                                 },
                             }}
                         >
-                            {t("changeAvatar")}
+                            {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
                         </Button>
 
                         {avatarUrl && (
                             <Button
                                 type="button"
+                                disabled={isAvatarUploading}
                                 onClick={handleRemoveAvatar}
                                 variant="outlined"
                                 size="small"
                                 color="error"
                                 startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
-                                sx={{ textTransform: "none" }}
+                                sx={{ textTransform: "none", borderRadius: "8px" }}
                             >
                                 {t("removeAvatar")}
                             </Button>
@@ -196,24 +329,57 @@ const AccountSettings = () => {
                     </div>
                 </div>
 
-                {/* Email Field (Read-only) */}
-                <div
-                    id="setting-email"
-                    data-setting-id="setting-email"
-                    className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
-                >
-                    <label className="block text-sm font-semibold text-text-contrast mb-1">
-                        {t("emailLabel")}
-                    </label>
-                    <p className="text-xs text-text-muted mb-3">
-                        {t("emailDesc")}
-                    </p>
-                    <TextFieldCustom
-                        fullWidth
-                        disabled
-                        variant="filled"
-                        value={userEmail || "user@example.com"}
-                    />
+                {/* Username & Email Fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div
+                        id="setting-username"
+                        data-setting-id="setting-username"
+                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                    >
+                        <label className="block text-sm font-semibold text-text-contrast mb-1">
+                            {t("usernameLabel")}
+                        </label>
+                        <p className="text-xs text-text-muted mb-2">
+                            {t("usernameDesc")}
+                        </p>
+                        <TextFieldCustom
+                            fullWidth
+                            variant="filled"
+                            value={username}
+                            placeholder={t("usernamePlaceholder")}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                                if (usernameError) setUsernameError(null);
+                            }}
+                            error={Boolean(usernameError)}
+                            helperText={
+                                usernameError ? (
+                                    <span className="text-text-error font-semibold">
+                                        {usernameError}
+                                    </span>
+                                ) : null
+                            }
+                        />
+                    </div>
+
+                    <div
+                        id="setting-email"
+                        data-setting-id="setting-email"
+                        className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300"
+                    >
+                        <label className="block text-sm font-semibold text-text-contrast mb-1">
+                            {t("emailLabel")}
+                        </label>
+                        <p className="text-xs text-text-muted mb-2">
+                            {t("emailDesc")}
+                        </p>
+                        <TextFieldCustom
+                            fullWidth
+                            disabled
+                            variant="filled"
+                            value={user?.email || userEmail || "user@example.com"}
+                        />
+                    </div>
                 </div>
 
                 {/* Full Name & Gender */}
@@ -247,6 +413,7 @@ const AccountSettings = () => {
                             size="small"
                             value={gender}
                             onChange={(e) => setGender(e.target.value)}
+                            displayEmpty
                             sx={{
                                 borderRadius: "6px",
                                 backgroundColor: "var(--color-bgc-modal)",
@@ -256,9 +423,9 @@ const AccountSettings = () => {
                                 },
                             }}
                         >
-                            <MenuItem value="male">{t("genderMale")}</MenuItem>
-                            <MenuItem value="female">{t("genderFemale")}</MenuItem>
-                            <MenuItem value="other">{t("genderOther")}</MenuItem>
+                            <MenuItem value="">{t("genderUnspecified")}</MenuItem>
+                            <MenuItem value="MALE">{t("genderMale")}</MenuItem>
+                            <MenuItem value="FEMALE">{t("genderFemale")}</MenuItem>
                         </Select>
                     </div>
                 </div>
@@ -278,7 +445,18 @@ const AccountSettings = () => {
                             type="date"
                             variant="filled"
                             value={dob}
-                            onChange={(e) => setDob(e.target.value)}
+                            onChange={(e) => {
+                                setDob(e.target.value);
+                                if (dobError) setDobError(null);
+                            }}
+                            error={Boolean(dobError)}
+                            helperText={
+                                dobError ? (
+                                    <span className="text-text-error font-semibold">
+                                        {dobError}
+                                    </span>
+                                ) : null
+                            }
                         />
                     </div>
 
@@ -325,7 +503,14 @@ const AccountSettings = () => {
                     <Button
                         type="submit"
                         variant="contained"
-                        startIcon={<SaveOutlinedIcon fontSize="small" />}
+                        disabled={isSubmitting}
+                        startIcon={
+                            isSubmitting ? (
+                                <CircularProgress size={18} color="inherit" />
+                            ) : (
+                                <SaveOutlinedIcon fontSize="small" />
+                            )
+                        }
                         sx={{
                             backgroundColor: "var(--color-bgc-highlight)",
                             color: "#ffffff",
@@ -338,9 +523,13 @@ const AccountSettings = () => {
                                 opacity: 0.9,
                                 backgroundColor: "var(--color-bgc-highlight)",
                             },
+                            "&.Mui-disabled": {
+                                opacity: 0.7,
+                                color: "#ffffff",
+                            },
                         }}
                     >
-                        {t("updateProfileBtn")}
+                        {isSubmitting ? "Đang xử lý..." : t("updateProfileBtn")}
                     </Button>
                 </div>
             </form>
@@ -489,24 +678,40 @@ const AccountSettings = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             type="button"
+                            disabled={isAvatarUploading}
                             onClick={() => {
                                 fileInputRef.current?.click();
                             }}
                             variant="contained"
                             size="small"
-                            startIcon={<AddAPhotoOutlinedIcon fontSize="small" />}
+                            startIcon={
+                                isAvatarUploading ? (
+                                    <CircularProgress size={16} color="inherit" />
+                                ) : (
+                                    <AddAPhotoOutlinedIcon fontSize="small" />
+                                )
+                            }
                             sx={{
-                                backgroundColor: "var(--color-text-contrast)",
-                                color: "var(--color-bgc-app)",
+                                backgroundColor: "var(--color-bgc-highlight)",
+                                color: "#ffffff",
                                 textTransform: "none",
                                 fontWeight: 600,
                                 borderRadius: "8px",
+                                px: 2,
+                                py: 0.75,
+                                boxShadow: "none",
                                 "&:hover": {
                                     opacity: 0.9,
+                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    boxShadow: "none",
+                                },
+                                "&.Mui-disabled": {
+                                    opacity: 0.7,
+                                    color: "#ffffff",
                                 },
                             }}
                         >
-                            {t("changeAvatar")}
+                            {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
                         </Button>
                         {avatarUrl && (
                             <Button
