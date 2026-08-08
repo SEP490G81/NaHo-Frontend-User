@@ -2,14 +2,16 @@
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail } from "@/services/client/book.service";
+import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail, listTopicsByBook } from "@/services/client/book.service";
 import { mapBeLessonDetail, mapBeObjective, mapBook } from "@/data/marugoto/mapper";
 import type { BookTopic, Lesson } from "@/data/marugoto/types";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
+import { accessVerdict } from "@/modules/protected/topics/utils/unlock";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useTopicNodes } from "../hooks/use.cando.nodes";
 import TopicPathHeader from "../components/topic.path.header";
 import TopicRoadmapBody from "./topic.roadmap.body";
+import RoadmapSideRail from "./roadmap.side.rail";
 
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 
@@ -40,6 +42,12 @@ export function TopicPath() {
         queryKey: ["topic", topicId],
         queryFn: () => getTopicDetail(topicId),
         enabled: !!topicId,
+    });
+    // Danh sách chủ đề của quyển — để xác minh topic THUỘC quyển trong URL + mốc khóa.
+    const bookTopicsQ = useQuery({
+        queryKey: ["topics", bookId],
+        queryFn: () => listTopicsByBook(bookId),
+        enabled: !!bookId,
     });
 
     const lessons = useMemo(() => topicQ.data?.lessons ?? [], [topicQ.data]);
@@ -103,6 +111,7 @@ export function TopicPath() {
         frontierLoading ||
         bookQ.isLoading ||
         topicQ.isLoading ||
+        bookTopicsQ.isLoading ||
         (lessons.length > 0 && lessonQs.some((q) => q.isLoading)) ||
         (objRefs.length > 0 && objQs.some((q) => q.isLoading));
 
@@ -119,26 +128,51 @@ export function TopicPath() {
     if (bookQ.isError || topicQ.isError) return <NotFoundView />;
     if (!book || !topic || loading) return <LoadingState />;
 
+    // Guard: chủ đề phải THUỘC quyển trong URL và đã mở khóa theo mốc tiến độ.
+    // Chặn cả /books/6/topics/1 (topic không nằm trong quyển 6) lẫn topic chưa mở.
+    const bookTopic = bookTopicsQ.data?.find(
+        (tp) => String(tp.id) === topicId,
+    );
+    if (bookTopicsQ.isSuccess && frontier != null) {
+        const verdict = bookTopic
+            ? accessVerdict(
+                  {
+                      firstNodeOrder: bookTopic.firstNodeGlobalOrderIndex,
+                      lastNodeOrder: bookTopic.lastNodeGlobalOrderIndex,
+                  },
+                  frontier,
+              )
+            : "denied";
+        if (verdict === "denied") return <NotFoundView />;
+    }
+
+    const accent = book.coverColor ?? "var(--color-bgc-highlight)";
+
     return (
-        <div className="mx-auto flex max-w-5xl flex-col gap-6">
-            <TopicPathHeader
-                book={book}
-                topic={topic}
-                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                overallPercent={overallPercent}
-                lessonCount={lessonModels.length}
-                showFurigana={showFurigana}
-                completedCount={completedCount}
-                totalCount={totalCount}
-            />
-            <TopicRoadmapBody
-                groups={groups}
-                bookId={bookId}
-                topicId={topicId}
-                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                showFurigana={showFurigana}
-                currentNodeId={currentNodeId}
-            />
+        <div className="mx-auto max-w-6xl px-4">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+                <div className="flex min-w-0 flex-col gap-6">
+                    <TopicPathHeader
+                        book={book}
+                        topic={topic}
+                        accent={accent}
+                        overallPercent={overallPercent}
+                        lessonCount={lessonModels.length}
+                        showFurigana={showFurigana}
+                        completedCount={completedCount}
+                        totalCount={totalCount}
+                    />
+                    <TopicRoadmapBody
+                        groups={groups}
+                        bookId={bookId}
+                        topicId={topicId}
+                        accent={accent}
+                        showFurigana={showFurigana}
+                        currentNodeId={currentNodeId}
+                    />
+                </div>
+                <RoadmapSideRail accent={accent} />
+            </div>
         </div>
     );
 }

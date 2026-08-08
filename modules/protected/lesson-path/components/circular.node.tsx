@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
-import { Lock } from "lucide-react";
+import React, { useState } from "react";
+import { Check, Lock } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
+import { getLearningPathNodeDetail } from "@/services/client/book.service";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { NodeKind, PathNode } from "../hooks/use.cando.nodes";
-import NodeDisc from "./node.disc";
+import SakuraDisc from "./sakura.disc";
 import NodeIcon from "./node.icon";
+import NodeTooltip from "./node.tooltip";
 
-const SIZE = 84;
+const SIZE = 66;
 
 interface Props {
     node: PathNode;
@@ -14,15 +19,25 @@ interface Props {
     caption: string;
     /** Màu chủ đạo của quyển sách — node dùng chính màu này. */
     accent: string;
+    showFurigana: boolean;
     onClick: () => void;
 }
 
 /**
- * Node tròn nổi khối trên lộ trình, tô theo MÀU SÁCH:
- * đang học = màu sách tươi · đã xong = màu sách trầm hơn · khóa = xám (ở NodeDisc).
- * Loại node (từ vựng / luyện nói / đã xong) phân biệt bằng icon, không đổi màu.
+ * Node tròn nổi khối trên lộ trình, tô theo MÀU SÁCH. Loại node phân biệt bằng
+ * ICON (từ vựng = sách · luyện nói = mic) — GIỮ NGUYÊN cả khi đã hoàn thành, chỉ
+ * gắn thêm badge tích để biết đã xong (giúp người dùng biết node nào luyện lại).
+ * Rê chuột vào node luyện nói → tooltip hiện đề bài (nạp lười, cache lại).
  */
-export function CircularNode({ node, title, caption, accent, onClick }: Props) {
+export function CircularNode({
+    node,
+    title,
+    caption,
+    accent,
+    showFurigana,
+    onClick,
+}: Props) {
+    const t = useTranslations("marugoto");
     const { status } = node;
     const locked = status === "locked";
     const completed = status === "completed";
@@ -31,8 +46,68 @@ export function CircularNode({ node, title, caption, accent, onClick }: Props) {
         ? `color-mix(in srgb, ${accent} 82%, #000)`
         : accent;
 
+    const [hovered, setHovered] = useState(false);
+    // Chỉ nạp đề bài khi rê vào node LUYỆN NÓI; cache dùng chung với trang chi tiết.
+    const detailQ = useQuery({
+        queryKey: ["learning-node", node.nodeId],
+        queryFn: () => getLearningPathNodeDetail(node.nodeId),
+        enabled: hovered && kind === "question" && !locked,
+        staleTime: 5 * 60 * 1000,
+    });
+    const question = detailQ.data?.speakingQuestion;
+
     return (
-        <div className="relative z-10 flex flex-col items-center">
+        <div
+            className="group relative z-10 flex flex-col items-center"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
+            {!locked && (
+                <NodeTooltip>
+                    <span
+                        className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
+                        style={{ background: color }}
+                    >
+                        {title}
+                    </span>
+                    {kind === "question" ? (
+                        detailQ.isLoading ? (
+                            <p className="text-text-muted mt-1.5 text-xs">
+                                {t("path.loadingQuestion")}
+                            </p>
+                        ) : question ? (
+                            <p className="text-text-contrast mt-1.5 text-sm leading-snug font-semibold">
+                                <FuriganaHtml
+                                    text={question.japaneseName}
+                                    markup={question.japaneseNameMarkup}
+                                    showFurigana={showFurigana}
+                                />
+                            </p>
+                        ) : (
+                            <p className="text-text-muted mt-1.5 text-xs">
+                                {caption}
+                            </p>
+                        )
+                    ) : (
+                        <p className="text-text-muted mt-1.5 text-xs">
+                            {caption}
+                        </p>
+                    )}
+                    {(node.bestScore ?? 0) > 0 && (
+                        <p className="text-text-highlight mt-1 text-[11px] font-bold">
+                            {t("preview.bestScore", {
+                                score: (node.bestScore ?? 0).toFixed(1),
+                            })}
+                        </p>
+                    )}
+                    <p className="text-text-muted border-bdc-primary mt-1.5 border-t pt-1.5 text-[11px]">
+                        {completed
+                            ? t("path.hoverRelearn")
+                            : t("path.hoverOpen")}
+                    </p>
+                </NodeTooltip>
+            )}
+
             <button
                 type="button"
                 onClick={onClick}
@@ -43,13 +118,38 @@ export function CircularNode({ node, title, caption, accent, onClick }: Props) {
                     locked && "cursor-not-allowed",
                 )}
             >
-                <NodeDisc color={color} locked={locked} size={SIZE}>
-                    {locked ? (
-                        <Lock className="h-6 w-6 text-slate-400" />
-                    ) : (
-                        <NodeIcon kind={completed ? "done" : kind} size={44} />
+                <span className="relative inline-block">
+                    <SakuraDisc color={color} locked={locked} size={SIZE}>
+                        {locked ? (
+                            <Lock className="h-4 w-4 text-slate-400" />
+                        ) : (
+                            <NodeIcon kind={kind} size={30} />
+                        )}
+                    </SakuraDisc>
+                    {completed && !locked && (
+                        <span
+                            className="absolute z-20 flex items-center justify-center rounded-full"
+                            style={{
+                                right: 0,
+                                top: SIZE - 20,
+                                width: 22,
+                                height: 22,
+                                background:
+                                    "linear-gradient(145deg, color-mix(in srgb, var(--color-text-success) 72%, #fff), var(--color-text-success))",
+                                border: "2px solid #fff",
+                                boxShadow:
+                                    "0 2px 5px rgba(0,0,0,0.28), inset 0 1px 1px rgba(255,255,255,0.55)",
+                            }}
+                        >
+                            <Check
+                                className="h-3 w-3 text-white"
+                                strokeWidth={3.5}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </span>
                     )}
-                </NodeDisc>
+                </span>
             </button>
         </div>
     );
