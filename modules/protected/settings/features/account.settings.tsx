@@ -11,19 +11,30 @@ import {
     DialogContent,
     DialogActions,
     DialogContentText,
+    IconButton,
+    Tooltip,
+    Avatar,
 } from "@mui/material";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import {
+    getFirstCharacter,
+    getUserAvatarUrl,
+} from "@/layouts/protected-header/utils/header.util";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
 
 const AccountSettings = () => {
     const t = useTranslations("settings.account");
     const { userEmail, profile, setProfile } = useAuthStore();
+    const { data: user } = useCurrentUser();
     useSettingHighlight();
 
     // Local form states initialized with profile data or fallback
@@ -34,7 +45,13 @@ const AccountSettings = () => {
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const activeAvatarUrl = avatarUrl || getUserAvatarUrl(user);
+    const initialChar =
+        getFirstCharacter(user) ||
+        (fullName ? fullName.charAt(0).toUpperCase() : "U");
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -102,19 +119,31 @@ const AccountSettings = () => {
                     className="rounded-xl border border-bdc-primary/60 bg-bgc-app p-6 transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
                 >
                     <div className="flex items-center gap-4">
-                        <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-bdc-muted bg-bgc-modal flex items-center justify-center shrink-0">
-                            {avatarUrl ? (
-                                <img
-                                    src={avatarUrl}
-                                    alt="Avatar"
-                                    className="h-full w-full object-cover"
-                                />
-                            ) : (
-                                <span className="text-2xl font-bold text-text-highlight">
-                                    {fullName ? fullName.charAt(0).toUpperCase() : "U"}
-                                </span>
-                            )}
-                        </div>
+                        <Tooltip title={t("avatarHoverTooltip")} arrow placement="top">
+                            <button
+                                type="button"
+                                onClick={() => setIsPreviewOpen(true)}
+                                className="group relative h-20 w-20 overflow-hidden rounded-full border-2 border-bdc-muted bg-bgc-modal flex items-center justify-center shrink-0 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-bgc-highlight transition-all duration-200 hover:scale-105"
+                            >
+                                <Avatar
+                                    src={activeAvatarUrl}
+                                    sx={{
+                                        width: "100%",
+                                        height: "100%",
+                                        bgcolor: "var(--color-bgc-highlight)",
+                                        color: "#ffffff",
+                                        fontSize: "1.75rem",
+                                        fontWeight: 700,
+                                    }}
+                                >
+                                    {initialChar}
+                                </Avatar>
+                                {/* Hover Overlay with Zoom Icon */}
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white backdrop-blur-[1px]">
+                                    <ZoomInIcon fontSize="medium" />
+                                </div>
+                            </button>
+                        </Tooltip>
                         <div>
                             <h3 className="text-sm font-semibold text-text-contrast">
                                 {t("avatarTitle")}
@@ -393,8 +422,126 @@ const AccountSettings = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* Avatar Preview Modal */}
+            <Dialog
+                open={isPreviewOpen}
+                onClose={() => setIsPreviewOpen(false)}
+                maxWidth="xs"
+                fullWidth
+                slotProps={{
+                    backdrop: {
+                        sx: {
+                            backgroundColor: "rgba(0, 0, 0, 0.7)",
+                            backdropFilter: "blur(8px)",
+                        },
+                    },
+                    paper: {
+                        sx: {
+                            borderRadius: "24px",
+                            backgroundColor: "var(--color-bgc-modal)",
+                            color: "var(--color-text-contrast)",
+                            boxShadow: "0 24px 48px rgba(0, 0, 0, 0.3)",
+                            overflow: "hidden",
+                            border: "1px solid var(--color-bdc-primary)",
+                        },
+                    },
+                }}
+            >
+                <div className="flex items-center justify-between px-6 pt-5 pb-3">
+                    <h3 className="text-base font-bold text-text-contrast">
+                        {t("avatarPreviewTitle")}
+                    </h3>
+                    <IconButton
+                        onClick={() => setIsPreviewOpen(false)}
+                        size="small"
+                        sx={{
+                            color: "var(--color-text-muted)",
+                            "&:hover": {
+                                color: "var(--color-text-contrast)",
+                                backgroundColor: "var(--color-hbgc-app)",
+                            },
+                        }}
+                    >
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                </div>
+
+                <DialogContent className="flex flex-col items-center justify-center p-6 pt-2 pb-6">
+                    <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-bgc-highlight/40 shadow-2xl flex items-center justify-center bg-bgc-app ring-4 ring-bgc-highlight/10">
+                        <Avatar
+                            src={activeAvatarUrl}
+                            sx={{
+                                width: "100%",
+                                height: "100%",
+                                bgcolor: "var(--color-bgc-highlight)",
+                                color: "#ffffff",
+                                fontSize: "4.5rem",
+                                fontWeight: 700,
+                            }}
+                        >
+                            {initialChar}
+                        </Avatar>
+                    </div>
+                </DialogContent>
+
+                <DialogActions className="flex items-center justify-between px-6 pb-6 pt-3 bg-bgc-app/40 border-t border-bdc-primary/40 gap-2 flex-wrap">
+                    <div className="flex items-center gap-2">
+                        <Button
+                            type="button"
+                            onClick={() => {
+                                fileInputRef.current?.click();
+                            }}
+                            variant="contained"
+                            size="small"
+                            startIcon={<AddAPhotoOutlinedIcon fontSize="small" />}
+                            sx={{
+                                backgroundColor: "var(--color-text-contrast)",
+                                color: "var(--color-bgc-app)",
+                                textTransform: "none",
+                                fontWeight: 600,
+                                borderRadius: "8px",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                },
+                            }}
+                        >
+                            {t("changeAvatar")}
+                        </Button>
+                        {avatarUrl && (
+                            <Button
+                                type="button"
+                                onClick={() => {
+                                    handleRemoveAvatar();
+                                }}
+                                variant="outlined"
+                                size="small"
+                                color="error"
+                                startIcon={<DeleteOutlineOutlinedIcon fontSize="small" />}
+                                sx={{ textTransform: "none", borderRadius: "8px" }}
+                            >
+                                {t("removeAvatar")}
+                            </Button>
+                        )}
+                    </div>
+                    <Button
+                        onClick={() => setIsPreviewOpen(false)}
+                        variant="outlined"
+                        size="small"
+                        sx={{
+                            textTransform: "none",
+                            color: "var(--color-text-contrast)",
+                            borderColor: "var(--color-bdc-muted)",
+                            borderRadius: "8px",
+                        }}
+                    >
+                        {t("closeModal")}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
 
 export default AccountSettings;
+

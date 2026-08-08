@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
+import { getUserAvatarUrl, getFirstCharacter } from "@/layouts/protected-header/utils/header.util";
 import { cn } from "@/libs/utils";
 import { getInitials } from "../utils/get-initials";
 import type { UserChatMessage } from "../types/live-chatroom.type";
@@ -69,7 +69,7 @@ export function UserMessageBubble({ message }: { message: UserChatMessage }) {
                 src={avatarUrl}
                 className="bg-bgc-page text-bgc-highlight h-10 w-10 shrink-0 text-xs font-semibold"
             >
-                {getInitials(name)}
+                {getFirstCharacter(user) || getInitials(name)}
             </Avatar>
         </div>
     );

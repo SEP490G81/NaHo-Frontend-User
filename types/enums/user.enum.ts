@@ -34,3 +34,7 @@ export const OAuthProviderName = Object.freeze({
 });
 export type OAuthProviderName =
     (typeof OAuthProviderName)[keyof typeof OAuthProviderName];
+
+export const AuthProviderName = OAuthProviderName;
+export type AuthProviderName = OAuthProviderName;
+

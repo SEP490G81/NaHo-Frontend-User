@@ -7,16 +7,27 @@ import {
     LeagueTheme
 } from "../constants/leaderboard.constant";
 
-/** Avatar thật: ưu tiên object key (URL CDN của BE), rồi tới avatar OAuth. */
+/** Avatar thật: ưu tiên avatarUrl chính của người dùng, tiếp theo tới authAvatarUrl (bên thứ 3 như Google/Facebook...). */
 export function resolveAvatarUrl(
-    objectKey: string | null,
-    oAuthAvatarUrl: string[] | undefined,
+    avatarUrl?: string | null,
+    authAvatarUrl?: (string | null | undefined)[] | string | null,
 ): string | null {
-    if (objectKey && /^https?:\/\//.test(objectKey)) {
-        return objectKey;
+    if (avatarUrl && avatarUrl.trim() !== "") {
+        return avatarUrl;
     }
-    const oauth = oAuthAvatarUrl?.find((url) => /^https?:\/\//.test(url));
-    return oauth ?? null;
+
+    if (Array.isArray(authAvatarUrl) && authAvatarUrl.length > 0) {
+        const found = authAvatarUrl.find(
+            (url) => url != null && typeof url === "string" && url.trim() !== "",
+        );
+        if (found) {
+            return found;
+        }
+    } else if (typeof authAvatarUrl === "string" && authAvatarUrl.trim() !== "") {
+        return authAvatarUrl;
+    }
+
+    return null;
 }
 
 export function toLeagueSlug(leagueName: string): LeagueSlug {

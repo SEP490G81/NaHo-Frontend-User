@@ -4,7 +4,7 @@ import { Mic } from "lucide-react";
 import { Avatar } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCurrentUser } from "@/hooks/use.current.user";
-import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
+import { getUserAvatarUrl, getFirstCharacter } from "@/layouts/protected-header/utils/header.util";
 import { getInitials } from "../utils/get-initials";
 
 /** Chỉ báo (phía người dùng) đang xử lý bản ghi của bạn: lọc nhiễu → STT → phân tích. */
@@ -50,7 +50,7 @@ export function UserAudioProcessing() {
                 src={avatarUrl}
                 className="bg-bgc-page text-bgc-highlight h-10 w-10 shrink-0 text-xs font-semibold"
             >
-                {getInitials(name)}
+                {getFirstCharacter(user) || getInitials(name)}
             </Avatar>
         </div>
     );

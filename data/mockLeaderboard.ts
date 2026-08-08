@@ -74,8 +74,8 @@ export function getMockUserProgress(): UserLearningProgressResponse {
             username: "minhtuan",
             email: "minhtuan@naho.org",
             fullName: "Nguyễn Minh Tuấn",
-            avatarObjectKey: null,
-            oAuthAvatarUrl: [],
+            avatarUrl: null,
+            authAvatarUrl: [],
             totalPoint: MOCK_USER_POINT,
         },
     };

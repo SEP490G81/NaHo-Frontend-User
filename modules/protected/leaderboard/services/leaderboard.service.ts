@@ -23,12 +23,12 @@ function toLeaderboardEntries(
     raw: LeagueLeaderboardEntryResponse[],
 ): LeaderboardEntry[] {
     return raw.map((entry, index) => ({
-        rank: index + 1,
+        rank: entry.rank ?? index + 1,
         userId: entry.id,
-        fullName: entry.fullName,
+        fullName: entry.fullName || entry.username || entry.email || "",
         avatarUrl: resolveAvatarUrl(
-            entry.avatarObjectKey,
-            entry.oAuthAvatarUrl,
+            entry.avatarUrl,
+            entry.authAvatarUrl,
         ),
         point: entry.totalPoint,
     }));
