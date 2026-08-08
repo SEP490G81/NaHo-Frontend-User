@@ -21,8 +21,8 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
         hour < 12
             ? "greetingMorning"
             : hour < 18
-              ? "greetingAfternoon"
-              : "greetingEvening";
+                ? "greetingAfternoon"
+                : "greetingEvening";
 
     // Daily goal stats (e.g. 15/20 minutes = 75%)
     const goalMinutes = 20;
@@ -46,14 +46,6 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                             <CompassCalibrationIcon style={{ fontSize: 14 }} />
                             <span>{t(greetingKey)}</span>
                         </span>
-
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-600 dark:text-amber-400">
-                            <LocalFireDepartmentIcon
-                                fontSize="small"
-                                className="animate-pulse text-amber-500"
-                            />
-                            <span>{t("streakCount", { days: 5 })}</span>
-                        </span>
                     </div>
 
                     <h1 className="text-text-primary text-2xl font-black tracking-tight sm:text-3xl lg:text-4xl">
@@ -63,32 +55,6 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                     <p className="text-text-muted text-sm leading-relaxed font-medium">
                         {t("slogan")}
                     </p>
-
-                    {/* Daily Goal Mini Progress */}
-                    <div className="max-w-md pt-2">
-                        <div className="text-text-primary mb-1.5 flex items-center justify-between text-xs font-bold">
-                            <span className="text-text-muted flex items-center gap-1">
-                                🎯 Mục tiêu hàng ngày
-                            </span>
-                            <span className="text-[#ff758f]">
-                                {currentMinutes}/{goalMinutes} phút (
-                                {goalPercentage}%)
-                            </span>
-                        </div>
-                        <LinearProgress
-                            variant="determinate"
-                            value={goalPercentage}
-                            sx={{
-                                height: 8,
-                                borderRadius: 4,
-                                backgroundColor: "var(--color-bdc-primary)",
-                                "& .MuiLinearProgress-bar": {
-                                    backgroundColor: "#ff758f",
-                                    borderRadius: 4,
-                                },
-                            }}
-                        />
-                    </div>
                 </div>
 
                 {/* Quick Action CTA Card */}

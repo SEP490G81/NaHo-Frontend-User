@@ -81,9 +81,8 @@ export function KanjiQuoteCard() {
 
                 {/* Main Kanji quote display */}
                 <div
-                    className={`my-auto space-y-4 text-center py-4 transition-opacity duration-300 ${
-                        loading ? "opacity-40" : "opacity-100"
-                    }`}
+                    className={`my-auto space-y-4 text-center py-4 transition-opacity duration-300 ${loading ? "opacity-40" : "opacity-100"
+                        }`}
                 >
                     {/* Chữ Kanji chính */}
                     <h2 className="text-4xl font-black tracking-tighter text-[#ff758f] sm:text-6xl md:text-7xl lg:text-9xl">
@@ -92,10 +91,12 @@ export function KanjiQuoteCard() {
 
                     {/* Nhóm phần tử bên dưới sát nhau */}
                     <div className="space-y-1.5">
-                        {currentQuote.romaji && (
+
+                        {currentQuote.hiragana && (
                             <p className="text-sm font-semibold tracking-wider text-text-muted">
-                                ({currentQuote.romaji})
+                                ({currentQuote.hiragana})
                             </p>
+
                         )}
 
                         {/* Kanji detail badge */}
