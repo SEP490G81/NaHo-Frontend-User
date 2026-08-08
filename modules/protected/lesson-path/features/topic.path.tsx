@@ -2,17 +2,8 @@
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import {
-    getBookDetail,
-    getLessonDetail,
-    getObjectiveDetail,
-    getTopicDetail,
-} from "@/services/client/book.service";
-import {
-    mapBeLessonDetail,
-    mapBeObjective,
-    mapBook,
-} from "@/data/marugoto/mapper";
+import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail } from "@/services/client/book.service";
+import { mapBeLessonDetail, mapBeObjective, mapBook } from "@/data/marugoto/mapper";
 import type { BookTopic, Lesson } from "@/data/marugoto/types";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import NotFoundView from "@/components/ui/not.found.view";
