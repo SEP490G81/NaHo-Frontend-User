@@ -122,10 +122,6 @@ const AccountSettings = () => {
         }
     };
 
-    const handleRemoveAvatar = () => {
-        setAvatarUrl(null);
-    };
-
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
         setUsernameError(null);
@@ -332,26 +328,6 @@ const AccountSettings = () => {
                                 ? "Đang tải..."
                                 : t("changeAvatar")}
                         </Button>
-
-                        {avatarUrl && (
-                            <Button
-                                type="button"
-                                disabled={isAvatarUploading}
-                                onClick={handleRemoveAvatar}
-                                variant="outlined"
-                                size="small"
-                                color="error"
-                                startIcon={
-                                    <DeleteOutlineOutlinedIcon fontSize="small" />
-                                }
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "8px",
-                                }}
-                            >
-                                {t("removeAvatar")}
-                            </Button>
-                        )}
                     </div>
                 </div>
 
@@ -756,26 +732,6 @@ const AccountSettings = () => {
                                 ? "Đang tải..."
                                 : t("changeAvatar")}
                         </Button>
-                        {avatarUrl && (
-                            <Button
-                                type="button"
-                                onClick={() => {
-                                    handleRemoveAvatar();
-                                }}
-                                variant="outlined"
-                                size="small"
-                                color="error"
-                                startIcon={
-                                    <DeleteOutlineOutlinedIcon fontSize="small" />
-                                }
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "8px",
-                                }}
-                            >
-                                {t("removeAvatar")}
-                            </Button>
-                        )}
                     </div>
                     <Button
                         onClick={() => setIsPreviewOpen(false)}

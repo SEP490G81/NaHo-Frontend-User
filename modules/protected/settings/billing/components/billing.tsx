@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { Divider } from "@mui/material";
 import { getMySubscription } from "@/services/client/subscription.service";
-import { UserSubscriptionResponse } from "@/types/responses/subscription.response";
+import {
+    SubscriptionPlanResponse,
+    UserSubscriptionResponse,
+} from "@/types/responses/subscription.response";
 import CurrentPlan from "@/modules/protected/settings/billing/components/current.plan";
 import SubscriptionModal from "@/modules/protected/settings/billing/features/subscription.modal";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";

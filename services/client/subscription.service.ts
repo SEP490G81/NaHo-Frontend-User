@@ -7,9 +7,7 @@ import {
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
  */
-export async function getMySubscription(): Promise<
-    UserSubscriptionResponse | SubscriptionPlanResponse | null
-> {
+export async function getMySubscription(): Promise<UserSubscriptionResponse | null> {
     try {
         const response = await fetch("/api/subscriptions/me", {
             method: "GET",
@@ -25,9 +23,7 @@ export async function getMySubscription(): Promise<
             );
         }
 
-        const api = result as ApiResponse<
-            UserSubscriptionResponse | SubscriptionPlanResponse
-        >;
+        const api = result as ApiResponse<UserSubscriptionResponse>;
         return api.data ?? null;
     } catch (error) {
         console.error("Error fetching my subscription:", error);
