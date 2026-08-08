@@ -14,9 +14,10 @@ import type {
     LessonGroup,
     PathNode,
 } from "../hooks/use.cando.nodes";
+import { useRouter } from "@/i18n/navigation";
+import { AllRoute } from "@/i18n/type";
 import TopicSnakePath from "../components/topic.snake.path";
 import VocabDialog from "../components/vocab.dialog";
-import QuestionPreviewDrawer from "../components/question.preview.drawer";
 import ChestDialog from "../components/chest.dialog";
 
 const TITLE_KEY = {
@@ -45,6 +46,7 @@ export function TopicRoadmapBody({
 }: Props) {
     const t = useTranslations("marugoto");
     const queryClient = useQueryClient();
+    const { push } = useRouter();
     const markNodeDone = useMarugotoStore((s) => s.markNodeDone);
     const [active, setActive] = useState<{
         node: PathNode;
@@ -103,6 +105,13 @@ export function TopicRoadmapBody({
         if (n.status === "locked") {
             return;
         }
+        // Node câu hỏi: mở trang chi tiết (câu mẫu + thảo luận) thay cho drawer cũ.
+        if (n.kind === "question") {
+            push(
+                `/books/${bookId}/topics/${topicId}/nodes/${n.nodeId}` as AllRoute,
+            );
+            return;
+        }
         setActive({ node: n, block });
     };
 
@@ -117,11 +126,6 @@ export function TopicRoadmapBody({
     // "Đã hoàn thành" bám trạng thái thật từ BE (GOI < mốc), không dùng cờ cục bộ.
     const vocabDone = active?.node.status === "completed";
     const chestClaimed = active?.node.status === "completed";
-
-    // Vào thẳng sandbox: nodeId để nạp đúng đề bài; book+topic để tô màu & quay lại.
-    const practiceHref = active?.node.speakingQuestionId
-        ? `/sandbox/${active.node.speakingQuestionId}?node=${active.node.nodeId}&book=${bookId}&topic=${topicId}`
-        : "/books";
 
     const claimActiveChest = () => {
         if (!active || !detail?.chest) return;
@@ -159,18 +163,6 @@ export function TopicRoadmapBody({
                 onFinish={finishVocab}
                 finishing={vocabMutation.isPending}
                 finished={vocabDone}
-                accent={accent}
-            />
-
-            <QuestionPreviewDrawer
-                open={active?.node.kind === "question"}
-                onOpenChange={(o) => !o && closeDialog()}
-                question={detail?.speakingQuestion ?? null}
-                loading={nodeQ.isLoading}
-                context={active?.block.cando.viDesc ?? ""}
-                bestScore={active?.node.bestScore ?? 0}
-                href={practiceHref}
-                showFurigana={showFurigana}
                 accent={accent}
             />
 
