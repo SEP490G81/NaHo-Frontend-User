@@ -22,7 +22,7 @@ import {
     DEFAULT_CHART_HISTORY_PAGE_SIZE,
 } from "../constants/dashboard.constant";
 
-export function PracticeTimeChart() {
+export function PracticeTimeChart({ className = "" }: { className?: string }) {
     const t = useTranslations("dashboard");
     const [mounted, setMounted] = useState(false);
 
@@ -44,14 +44,10 @@ export function PracticeTimeChart() {
         [data],
     );
 
-    // Tính toán dữ liệu 7 ngày gần nhất theo đơn vị GIÂY dựa trên lịch sử API
     const { chartData, totalSec, avgSec, trendPercent } = useMemo(() => {
         const now = new Date();
-
-        // Lưu trữ thông tin tích lũy theo ngày YYYY-MM-DD
         const dateMap = new Map<string, { totalSec: number; count: number }>();
 
-        // Mốc thời gian 7 ngày hiện tại và 7 ngày trước đó để tính tỉ lệ tăng trưởng
         const todayEnd = new Date(
             now.getFullYear(),
             now.getMonth(),
@@ -108,7 +104,6 @@ export function PracticeTimeChart() {
             }
         });
 
-        // Tạo mảng 7 ngày tính từ (Hôm nay - 6 ngày) đến (Hôm nay)
         const result = [];
         for (let i = 6; i >= 0; i--) {
             const d = new Date(
@@ -151,7 +146,7 @@ export function PracticeTimeChart() {
 
     if (!mounted || isLoading) {
         return (
-            <ContainerBox className="border-bdc-primary border">
+            <ContainerBox className={`border-bdc-primary border h-full ${className}`}>
                 <div className="bg-bdc-primary/30 h-6 w-48 animate-pulse rounded" />
                 <div className="bg-bgc-subtle text-text-muted mt-6 flex h-64 w-full items-center justify-center rounded-lg text-xs">
                     {t("loadingChart")}
@@ -162,8 +157,8 @@ export function PracticeTimeChart() {
 
     if (isError) {
         return (
-            <ContainerBox className="border-bdc-primary border">
-                <div className="flex flex-col items-center justify-center py-12 text-center">
+            <ContainerBox className={`border-bdc-primary border h-full ${className}`}>
+                <div className="flex flex-col items-center justify-center py-12 text-center h-full">
                     <p className="text-text-muted text-sm">
                         {t("errorLoadingChart")}
                     </p>
@@ -180,7 +175,7 @@ export function PracticeTimeChart() {
     }
 
     return (
-        <ContainerBox className="border-bdc-primary border">
+        <ContainerBox className={`border-bdc-primary border h-full flex flex-col justify-between ${className}`}>
             {/* Header & Quick stats */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -226,9 +221,9 @@ export function PracticeTimeChart() {
                 </div>
             </div>
 
-            {/* Chart Area */}
-            <div className="mt-6 h-64 w-full">
-                <ResponsiveContainer width="100%" height={256} minWidth={0}>
+            {/* Chart Area flex-1 tự giãn bằng độ cao của Quiz */}
+            <div className="mt-6 w-full flex-1 min-h-[220px]">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                     <AreaChart
                         data={chartData}
                         margin={{ top: 12, right: 12, left: -16, bottom: 0 }}
@@ -303,8 +298,8 @@ export function PracticeTimeChart() {
                                 const payload = items?.[0]?.payload;
                                 return payload?.fullLabel
                                     ? t("chartTooltipDate", {
-                                          date: payload.fullLabel,
-                                      })
+                                        date: payload.fullLabel,
+                                    })
                                     : t("chartTooltipDay", { label });
                             }}
                         />
@@ -330,4 +325,3 @@ export function PracticeTimeChart() {
 }
 
 export default PracticeTimeChart;
-

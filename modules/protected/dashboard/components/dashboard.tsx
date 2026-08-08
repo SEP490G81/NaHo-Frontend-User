@@ -11,17 +11,23 @@ export function Dashboard() {
     const t = useTranslations("dashboard");
 
     return (
-        <div className="mx-auto max-w-7xl space-y-5 pb-10">
-            {/* 1. Hero Command Center (Greeting, User Profile, Subscription & Quick Resume CTA) */}
+        <div className="mx-auto max-w-7xl space-y-6 pb-10 px-4 sm:px-6">
+            {/* 1. Hero Banner Top */}
             <WelcomeBanner t={t} />
 
-            {/* Kanji Inspiration Quote */}
+            {/* 2. Kanji Inspiration Quote (Full Width) */}
             <KanjiQuoteCard />
 
-            {/* 2. Interactive Vocab Challenge & Analytics Grid */}
-            <div className="grid gap-5 lg:grid-cols-2">
-                <DailyVocabQuiz />
-                <PracticeTimeChart />
+            {/* 3. Hàng ngang kết hợp Biểu đồ (70%) + Quiz (30%) cao bằng nhau 100% */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-stretch">
+                {/* Biểu đồ luyện tập (Chiếm ~70% - 8 trên 12 cột) */}
+                {/* Quiz từ vựng hàng ngày (Chiếm ~30% - 4 trên 12 cột) */}
+                <div className="flex flex-col lg:col-span-5 xl:col-span-4">
+                    <DailyVocabQuiz />
+                </div>
+                <div className="flex flex-col lg:col-span-7 xl:col-span-8">
+                    <PracticeTimeChart />
+                </div>
             </div>
         </div>
     );
