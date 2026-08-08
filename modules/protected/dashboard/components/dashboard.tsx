@@ -21,7 +21,7 @@ export function Dashboard() {
             {/* 2. Interactive Vocab Challenge & Analytics Grid */}
             <div className="grid gap-5 lg:grid-cols-2">
                 <DailyVocabQuiz />
-                {/* <PracticeTimeChart /> */}
+                <PracticeTimeChart />
             </div>
         </div>
     );

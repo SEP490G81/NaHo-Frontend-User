@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     Area,
     AreaChart,
@@ -11,10 +11,16 @@ import {
     YAxis,
 } from "recharts";
 import { useTranslations } from "next-intl";
-import { dailyPractice } from "@/data/mockLearnerDashboard";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import { useQuery } from "@tanstack/react-query";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { ContainerBox } from "@/components/ui/container.box";
+import { getSpeakingHistoryList } from "@/services/client/speaking.service";
+import type { SpeakingHistoryListItem } from "@/types/responses/speaking.response";
+import {
+    DAY_NAMES_VI,
+    DEFAULT_CHART_HISTORY_PAGE_SIZE,
+} from "../constants/dashboard.constant";
 
 export function PracticeTimeChart() {
     const t = useTranslations("dashboard");
@@ -24,18 +30,150 @@ export function PracticeTimeChart() {
         setMounted(true);
     }, []);
 
-    const totalMinutes = dailyPractice.reduce(
-        (acc, curr) => acc + curr.minutes,
-        0,
-    );
-    const avgMinutes = Math.round(totalMinutes / dailyPractice.length);
+    const { data, isLoading, isError, refetch } = useQuery({
+        queryKey: ["speaking-history-chart"],
+        queryFn: () =>
+            getSpeakingHistoryList({
+                page: 0,
+                size: DEFAULT_CHART_HISTORY_PAGE_SIZE,
+            }),
+    });
 
-    if (!mounted) {
+    const items = useMemo<SpeakingHistoryListItem[]>(
+        () => data?.items ?? [],
+        [data],
+    );
+
+    // Tính toán dữ liệu 7 ngày gần nhất theo đơn vị GIÂY dựa trên lịch sử API
+    const { chartData, totalSec, avgSec, trendPercent } = useMemo(() => {
+        const now = new Date();
+
+        // Lưu trữ thông tin tích lũy theo ngày YYYY-MM-DD
+        const dateMap = new Map<string, { totalSec: number; count: number }>();
+
+        // Mốc thời gian 7 ngày hiện tại và 7 ngày trước đó để tính tỉ lệ tăng trưởng
+        const todayEnd = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            23,
+            59,
+            59,
+            999,
+        ).getTime();
+        const startCurrent7 = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() - 6,
+            0,
+            0,
+            0,
+            0,
+        ).getTime();
+        const startPrev7 = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() - 13,
+            0,
+            0,
+            0,
+            0,
+        ).getTime();
+
+        let current7TotalSec = 0;
+        let prev7TotalSec = 0;
+
+        items.forEach((item) => {
+            if (!item.practicedAt) return;
+            const d = new Date(item.practicedAt);
+            const time = d.getTime();
+            if (Number.isNaN(time)) return;
+
+            const sec = item.durationSec || 0;
+
+            if (time >= startCurrent7 && time <= todayEnd) {
+                current7TotalSec += sec;
+
+                const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+                const prev = dateMap.get(dateKey) || {
+                    totalSec: 0,
+                    count: 0,
+                };
+                dateMap.set(dateKey, {
+                    totalSec: prev.totalSec + sec,
+                    count: prev.count + 1,
+                });
+            } else if (time >= startPrev7 && time < startCurrent7) {
+                prev7TotalSec += sec;
+            }
+        });
+
+        // Tạo mảng 7 ngày tính từ (Hôm nay - 6 ngày) đến (Hôm nay)
+        const result = [];
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate() - i,
+            );
+            const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+            const stat = dateMap.get(dateKey) || { totalSec: 0, count: 0 };
+
+            const dayName = DAY_NAMES_VI[d.getDay()];
+            const fullLabel = `${dayName} (${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")})`;
+
+            result.push({
+                day: dayName,
+                fullLabel,
+                seconds: stat.totalSec,
+                count: stat.count,
+            });
+        }
+
+        const averageSec = Math.round((current7TotalSec / 7) * 10) / 10;
+
+        let trend = 0;
+        if (prev7TotalSec > 0) {
+            trend = Math.round(
+                ((current7TotalSec - prev7TotalSec) / prev7TotalSec) * 100,
+            );
+        } else if (current7TotalSec > 0) {
+            trend = 100;
+        }
+
+        return {
+            chartData: result,
+            totalSec: current7TotalSec,
+            avgSec: averageSec,
+            trendPercent: trend,
+        };
+    }, [items]);
+
+    if (!mounted || isLoading) {
         return (
             <ContainerBox className="border-bdc-primary border">
                 <div className="bg-bdc-primary/30 h-6 w-48 animate-pulse rounded" />
                 <div className="bg-bgc-subtle text-text-muted mt-6 flex h-64 w-full items-center justify-center rounded-lg text-xs">
                     {t("loadingChart")}
+                </div>
+            </ContainerBox>
+        );
+    }
+
+    if (isError) {
+        return (
+            <ContainerBox className="border-bdc-primary border">
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <p className="text-text-muted text-sm">
+                        {t("errorLoadingChart")}
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => refetch()}
+                        className="mt-3 rounded-lg bg-[#ff758f] px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90"
+                    >
+                        {t("retryBtn")}
+                    </button>
                 </div>
             </ContainerBox>
         );
@@ -58,13 +196,13 @@ export function PracticeTimeChart() {
                     </p>
                 </div>
 
-                <div className="bg-bgc-subtle flex items-center gap-4 rounded-xl p-3 text-xs">
+                <div className="bg-bgc-subtle flex flex-wrap items-center gap-3 rounded-xl p-3 text-xs sm:gap-4">
                     <div>
                         <span className="text-text-muted block text-[10px] font-semibold uppercase">
                             {t("chartTotal")}
                         </span>
                         <span className="text-sm font-extrabold text-[#ff758f]">
-                            {totalMinutes} {t("chartTooltipMinute")}
+                            {t("chartSeconds", { count: totalSec })}
                         </span>
                     </div>
                     <div className="bg-bdc-primary/50 h-8 w-px" />
@@ -73,13 +211,17 @@ export function PracticeTimeChart() {
                             {t("chartAvg")}
                         </span>
                         <span className="text-text-primary text-sm font-extrabold">
-                            {avgMinutes} {t("chartTooltipMinute")}
+                            {t("chartSeconds", { count: avgSec })}
                         </span>
                     </div>
                     <div className="bg-bdc-primary/50 h-8 w-px" />
                     <div className="flex items-center gap-1 font-bold text-emerald-500">
                         <TrendingUpIcon fontSize="small" />
-                        <span>{t("chartTrend")}</span>
+                        <span>
+                            {trendPercent >= 0
+                                ? `+${trendPercent}%`
+                                : `${trendPercent}%`}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -88,12 +230,12 @@ export function PracticeTimeChart() {
             <div className="mt-6 h-64 w-full">
                 <ResponsiveContainer width="100%" height={256} minWidth={0}>
                     <AreaChart
-                        data={dailyPractice}
+                        data={chartData}
                         margin={{ top: 12, right: 12, left: -16, bottom: 0 }}
                     >
                         <defs>
                             <linearGradient
-                                id="colorMinutesSakura"
+                                id="colorSecondsSakura"
                                 x1="0"
                                 y1="0"
                                 x2="0"
@@ -146,21 +288,33 @@ export function PracticeTimeChart() {
                                 boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
                                 color: "var(--color-text-primary)",
                             }}
-                            formatter={(value: any) => [
-                                `${value} ${t("chartTooltipMinute")}`,
-                                t("chartTooltipTime"),
-                            ]}
-                            labelFormatter={(label) =>
-                                t("chartTooltipDay", { label })
-                            }
+                            formatter={(value: any, _name: any, item: any) => {
+                                const payload = item?.payload;
+                                const count = payload?.count || 0;
+                                return [
+                                    t("chartTooltipDetail", {
+                                        seconds: value,
+                                        count,
+                                    }),
+                                    t("chartTooltipTime"),
+                                ];
+                            }}
+                            labelFormatter={(label, items) => {
+                                const payload = items?.[0]?.payload;
+                                return payload?.fullLabel
+                                    ? t("chartTooltipDate", {
+                                          date: payload.fullLabel,
+                                      })
+                                    : t("chartTooltipDay", { label });
+                            }}
                         />
                         <Area
                             type="monotone"
-                            dataKey="minutes"
+                            dataKey="seconds"
                             stroke="#ff758f"
                             strokeWidth={3}
                             fillOpacity={1}
-                            fill="url(#colorMinutesSakura)"
+                            fill="url(#colorSecondsSakura)"
                             activeDot={{
                                 r: 6,
                                 fill: "#ff758f",
@@ -176,3 +330,4 @@ export function PracticeTimeChart() {
 }
 
 export default PracticeTimeChart;
+
