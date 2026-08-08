@@ -62,10 +62,10 @@ export function BookLibrary() {
     return (
         <ContainerBox>
             <div>
-                <p className="text-text-muted text-[11px] font-semibold tracking-[0.22em] uppercase">
+                <p className="text-text-muted text-sm font-semibold uppercase">
                     {t("books.chooseBook")}
                 </p>
-                <h2 className="text-text-contrast text-lg font-bold md:text-xl">
+                <h2 className="text-text-contrast my-3 text-lg font-bold md:text-xl">
                     {t("books.library")}
                 </h2>
             </div>

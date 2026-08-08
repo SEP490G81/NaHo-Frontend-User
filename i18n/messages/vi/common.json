@@ -49,8 +49,10 @@
             },
             "action": {
                 "open": "Mở",
-                "close": "Đóng"
-            }
+                "close": "Đóng",
+                "back": "Quay lại"
+            },
+            "back": "Quay lại"
         },
         "layout": {
             "header": {

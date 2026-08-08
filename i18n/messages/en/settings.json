@@ -7,7 +7,64 @@
             "billing": "Billing & Subscription",
             "orders": "Order History"
         },
-        "searchPlaceholder": "Search settings",
+        "searchPlaceholder": "Search settings...",
+        "searchNoResults": "No matching settings found",
+
+        "general": {
+            "title": "General Settings",
+            "description": "Customize your display theme and system language preferences",
+            "appearanceTitle": "Appearance",
+            "appearanceDesc": "Adjust website colors and theme (dark mode, light mode, or system default)",
+            "lightMode": "Light Mode",
+            "darkMode": "Dark Mode",
+            "systemMode": "System Preferences",
+            "languageTitle": "Language",
+            "languageDesc": "Change the display language for the entire website"
+        },
+
+        "account": {
+            "title": "Account Settings",
+            "description": "Manage your personal profile details and user account settings",
+            "profileTitle": "Personal Profile",
+            "profileDesc": "View and update your personal information and profile settings",
+            "avatarTitle": "Avatar Image",
+            "avatarDesc": "Supports PNG, JPEG or GIF formats under 2MB",
+            "changeAvatar": "Change Image",
+            "removeAvatar": "Remove Image",
+            "emailLabel": "Email Address",
+            "emailDesc": "The email address of your logged in account",
+            "fullNameLabel": "Full Name",
+            "genderLabel": "Gender",
+            "genderMale": "Male",
+            "genderFemale": "Female",
+            "genderOther": "Other",
+            "dobLabel": "Date of Birth",
+            "jlptLabel": "JLPT Level",
+            "jlptDesc": "Your current Japanese proficiency level",
+            "updateProfileBtn": "Update Profile",
+            "profileUpdateSuccess": "Account profile updated successfully!",
+            "dangerZoneTitle": "Danger Zone",
+            "dangerZoneDesc": "Warning: The actions below permanently affect your user account",
+            "deleteAccountTitle": "Delete Account",
+            "deleteAccountDesc": "Permanently delete your account and remove all associated data",
+            "deleteAccountBtn": "Delete Account",
+            "confirmDeleteTitle": "Confirm Account Deletion",
+            "confirmDeleteMessage": "Are you sure you want to delete your account? This action cannot be undone.",
+            "deleteSuccess": "Account deletion request processed"
+        },
+
+        "security": {
+            "title": "Security Settings",
+            "description": "Manage your password and account security settings",
+            "changePasswordTitle": "Change Password",
+            "changePasswordDesc": "Enter current password and new password twice to secure your account",
+            "currentPassword": "Current Password",
+            "newPassword": "New Password",
+            "confirmPassword": "Confirm New Password",
+            "updatePasswordBtn": "Update Password",
+            "passwordMatchError": "New password and confirmation password do not match.",
+            "passwordUpdateSuccess": "Password updated successfully!"
+        },
 
         "orders": {
             "title": "Payment Order History",
@@ -31,7 +88,10 @@
             "statusCancelled": "Cancelled",
             "statusExpired": "Expired"
         },
+
         "billing": {
+            "title": "Current Plan & Billing",
+            "description": "View active plan details and available upgrades",
             "currentPlan": "Current Plan",
             "currentPlanTitle": "Your Active Subscription",
             "planStatus": "Status",

@@ -73,11 +73,11 @@ const OrdersList: React.FC = () => {
                     new Date(a.createdTime).getTime(),
             );
             setOrders(sorted);
-        } catch (err: any) {
+        } catch (err: unknown) {
             if (!silent) {
                 console.error("Failed to load payment orders:", err);
                 toast.error(
-                    err.message || "Không thể lấy danh sách lịch sử giao dịch.",
+                    err instanceof Error ? err.message : "Không thể lấy danh sách lịch sử giao dịch.",
                 );
             }
         } finally {
@@ -139,8 +139,8 @@ const OrdersList: React.FC = () => {
             setCancelDialogOpen(false);
             setOrderToCancel(null);
             fetchOrders();
-        } catch (err: any) {
-            toast.error(err.message || t("cancelFailed"));
+        } catch (err: unknown) {
+            toast.error(err instanceof Error ? err.message : t("cancelFailed"));
         } finally {
             setCancelling(false);
         }

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { FuriganaHtml } from "@/components/ui/furigana.html";
 import BackButton from "@/components/ui/back.button";
 import type { BookTopic, MarugotoBook } from "@/data/marugoto/types";
-import { useUiStore } from "@/store/uiStore";
+import { usePinnedTopics } from "@/hooks/use.pinned.topics";
 
 interface Props {
     book: MarugotoBook;
@@ -82,7 +82,7 @@ export function TopicPathHeader({
     totalCount = 0,
 }: Props) {
     const t = useTranslations("marugoto");
-    const { togglePinTopic, isTopicPinned } = useUiStore();
+    const { togglePinTopic, isTopicPinned } = usePinnedTopics();
 
     const topicPinId = `${book.id}-${topic.id}`;
     const isPinned = isTopicPinned(topicPinId);
@@ -100,6 +100,14 @@ export function TopicPathHeader({
             topicId: topic.id,
             title: topic.jpTitle || `Chủ đề ${topic.order}`,
             url: `/books/${book.id}/topics/${topic.id}`,
+            bookTitle: book.title,
+            bookLevel: book.level,
+            bookCoverImage: book.coverImage,
+            bookCoverColor: book.coverColor,
+            topicOrder: topic.order,
+            topicTitle: topic.jpTitle,
+            topicFuriganaMarkup: topic.furiganaMarkup,
+            topicEnTitle: topic.enTitle,
         });
         if (isPinned) {
             toast.info(t("path.unpinnedToast"));
@@ -109,7 +117,7 @@ export function TopicPathHeader({
     };
 
     return (
-        <header className="group sticky top-16 z-20 mx-auto w-full max-w-4xl select-none px-2 sm:px-0">
+        <header className="group sticky top-16 z-10 mx-auto w-full max-w-4xl select-none px-2 sm:px-0">
             <div
                 className="overflow-hidden rounded-2xl border border-bdc-primary bg-bgc-app/95 shadow-md backdrop-blur-xl transition-all duration-500 ease-out group-hover:shadow-2xl dark:bg-bgc-modal/95"
                 style={{

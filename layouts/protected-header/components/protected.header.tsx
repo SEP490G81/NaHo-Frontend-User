@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import NotificationButton from "@/layouts/protected-header/features/notification.button";
-import LanguageSwitch from "@/components/ui/language.switch";
-import ThemeSwitchButton from "@/layouts/public-header/components/theme.switch.button";
-import { IconButton } from "@mui/material";
+import SettingsButton from "./settings.button";
+import { Divider, IconButton } from "@mui/material";
 import { useUiStore } from "@/store/uiStore";
 import { MenuIcon, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
@@ -66,20 +65,14 @@ const ProtectedHeader = () => {
 
             {/* Right */}
             <div className="z-10 flex items-center gap-x-3">
-                <NotificationButton />
-                <LanguageSwitch
-                    variant="icon-button"
-                    anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "center",
-                    }}
-                    transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                    }}
-                />
-                <ThemeSwitchButton />
                 <FuriganaSwitchButton />
+                <Divider
+                    orientation="vertical"
+                    flexItem
+                    sx={{ height: 24, my: "auto", borderColor: "var(--color-bdc-primary)" }}
+                />
+                <NotificationButton />
+                <SettingsButton />
                 <ReportModal />
             </div>
         </div>

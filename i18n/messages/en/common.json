@@ -43,9 +43,11 @@
                 "jp": "Tiếng Nhật"
             },
             "action": {
-                "open": "Mở",
-                "close": "Đóng"
-            }
+                "open": "Open",
+                "close": "Close",
+                "back": "Back"
+            },
+            "back": "Back"
         },
         "layout": {
             "header": {

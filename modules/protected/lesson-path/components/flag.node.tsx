@@ -33,7 +33,7 @@ function toneOf(status: NodeStatus, accent: string): string {
 /** Khung tooltip hiện khi rê chuột vào mốc cờ. */
 function FlagTooltip({ children }: { children: React.ReactNode }) {
     return (
-        <div className="pointer-events-none absolute bottom-full z-30 mb-2 flex flex-col items-center opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
+        <div className="pointer-events-none absolute bottom-full z-50 mb-2 flex flex-col items-center opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
             <div className="border-bdc-primary bg-bgc-app min-w-[200px] max-w-xs rounded-xl border p-3 text-center shadow-lg">
                 {children}
             </div>
@@ -54,7 +54,7 @@ export function FlagNode(props: FlagNodeProps) {
         const firstCando = lesson.canDos?.[0];
 
         return (
-            <div className="group relative z-20 flex flex-col items-center">
+            <div className="group relative z-30 flex flex-col items-center">
                 <FlagTooltip>
                     <span
                         className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
@@ -122,7 +122,7 @@ export function FlagNode(props: FlagNodeProps) {
     const dark = `color-mix(in srgb, ${tone} 70%, #000)`;
 
     return (
-        <div className="group relative z-20 flex flex-col items-center">
+        <div className="group relative z-30 flex flex-col items-center">
             <FlagTooltip>
                 <span
                     className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
