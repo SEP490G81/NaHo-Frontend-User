@@ -157,17 +157,23 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             slotProps={{
                 paper: {
                     style: {
-                        borderRadius: 20,
+                        borderRadius: 24,
                         padding: 8,
+                        backgroundColor: "var(--color-bgc-app)",
+                        backgroundImage: "none",
+                        border: "1px solid var(--color-bdc-primary)",
                     },
                 },
             }}
         >
-            <div className="relative p-4 sm:p-6">
-                <DialogTitle className="text-text-primary p-0 text-center text-2xl font-extrabold">
+            <div className="relative p-4 sm:p-6 lg:p-8">
+                {/* Glowing ambient background header */}
+                <div className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 h-36 w-full max-w-xl rounded-full bg-gradient-to-r from-indigo-500/10 via-[#ff758f]/15 to-amber-500/10 blur-3xl" />
+
+                <DialogTitle className="text-text-primary p-0 text-center text-2xl font-black tracking-tight sm:text-3xl">
                     {t("modalTitle")}
                 </DialogTitle>
-                <p className="text-text-muted mt-1 text-center text-sm">
+                <p className="text-text-muted mt-2 text-center text-sm font-medium">
                     {t("modalSubtitle")}
                 </p>
 
@@ -185,7 +191,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                     <CloseIcon />
                 </IconButton>
 
-                <DialogContent className="mt-4 p-0">
+                <DialogContent className="mt-6 p-0">
                     {errorMessage && !fetchPlansError && (
                         <div className="mb-4">
                             <Alert
@@ -198,7 +204,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                     )}
 
                     {loadingPlans ? (
-                        <div className="flex h-64 items-center justify-center">
+                        <div className="flex h-72 items-center justify-center">
                             <CircularProgress />
                         </div>
                     ) : fetchPlansError || plans.length === 0 ? (

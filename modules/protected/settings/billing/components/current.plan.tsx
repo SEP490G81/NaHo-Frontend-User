@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslations } from "next-intl";
-import { SubscriptionPlanResponse } from "@/types/responses/subscription.response";
+import { UserSubscriptionResponse } from "@/types/responses/subscription.response";
 import UpdatePlanButton from "@/modules/protected/settings/billing/components/update.plan.button";
 import Chip from "@mui/material/Chip";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -8,7 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Skeleton from "@mui/material/Skeleton";
 
 interface CurrentPlanProps {
-    subscription: SubscriptionPlanResponse | null;
+    subscription: UserSubscriptionResponse | null;
     loading: boolean;
     onOpenModal: () => void;
 }
@@ -39,9 +39,10 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         );
     }
 
-    const tier = subscription?.tier || "FREE";
+    const plan = subscription?.plan;
+    const tier = plan?.tier || "FREE";
     const planName =
-        subscription?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
+        plan?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
 
     const isFree = tier === "FREE";
 
@@ -49,8 +50,8 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         tier === "PREMIUM"
             ? "bg-amber-500 text-white"
             : tier === "BASIC"
-              ? "bg-indigo-600 text-white"
-              : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
+                ? "bg-indigo-600 text-white"
+                : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
 
     return (
         <div className="border-bdc-primary bg-bgc-card rounded-2xl border p-6 shadow-sm">
@@ -102,7 +103,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
             </div>
 
             {/* Quota details if available */}
-            {subscription && (
+            {plan && (
                 <div className="bg-bgc-subtle mt-6 grid grid-cols-1 gap-4 rounded-xl p-4 sm:grid-cols-3">
                     <div className="flex flex-col">
                         <span className="text-text-muted text-xs">
@@ -111,7 +112,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                                 .trim()}
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {subscription.monthlyAssessmentLimit} bài / tháng
+                            {plan.monthlyAssessmentLimit} bài / tháng
                         </span>
                     </div>
 
@@ -121,7 +122,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
                             {Math.round(
-                                subscription.monthlyConversationSeconds / 60,
+                                plan.monthlyConversationSeconds / 60,
                             )}{" "}
                             phút / tháng
                         </span>
@@ -132,7 +133,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                             Giáo trình
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {subscription.fullCurriculumAccess
+                            {plan.fullCurriculumAccess
                                 ? "Toàn bộ bài học"
                                 : "Cơ bản"}
                         </span>
