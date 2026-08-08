@@ -14,6 +14,8 @@ import {
 } from "../constants/leaderboard.constant";
 import { getLeagueTheme, toLeagueSlug } from "../utils/leaderboard.util";
 import { useLeagueLabel } from "../utils/use.league.label";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import LearnerAvatar from "./learner.avatar";
 
 interface PodiumColumnProps {
@@ -27,6 +29,19 @@ function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
     const isFirst = place === 1;
     const avatarSize = isFirst ? 76 : 60;
     const pedestalHeight = isFirst ? "h-28" : place === 2 ? "h-20" : "h-16";
+    const { data: currentUser } = useCurrentUser();
+
+    const effectiveAvatarUrl =
+        entry?.avatarUrl ||
+        (isCurrentUser ? (getUserAvatarUrl(currentUser) ?? null) : null);
+    const effectiveFullName =
+        entry?.fullName ||
+        (isCurrentUser
+            ? currentUser?.fullName ||
+              currentUser?.username ||
+              currentUser?.email ||
+              null
+            : null);
 
     return (
         <div className="flex min-w-0 flex-col items-center self-end">
@@ -40,10 +55,10 @@ function PodiumColumn({ entry, place, isCurrentUser }: PodiumColumnProps) {
                     style.border,
                 )}
             >
-                {entry ? (
+                {entry || isCurrentUser ? (
                     <LearnerAvatar
-                        fullName={entry.fullName}
-                        avatarUrl={entry.avatarUrl}
+                        fullName={effectiveFullName}
+                        avatarUrl={effectiveAvatarUrl}
                         size={avatarSize}
                     />
                 ) : (

@@ -7,7 +7,7 @@
             "streak": "Streak hàng ngày",
             "currentLevel": "Trình độ hiện tại",
             "totalPoints": "Tổng điểm tích lũy",
-            "streakValue": "{days} ngày 🔥",
+            "streakValue": "{days} ngày",
             "levelValue": "{level}",
             "pointsValue": "{points} L-Point"
         },

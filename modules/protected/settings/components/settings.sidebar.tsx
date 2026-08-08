@@ -5,13 +5,19 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SettingsSearchBox from "@/modules/protected/settings/components/settings.search.box";
 import { Divider } from "@mui/material";
+import BackButton from "@/components/ui/back.button";
 
 const SettingsSidebar = () => {
-    const t = useTranslations();
+    const tRaw = useTranslations();
+    const t = tRaw as (key: string) => string;
     const pathname = usePathname();
 
     return (
-        <div className="flex w-full flex-col gap-y-0.5 p-5">
+        <div className="flex w-full flex-col gap-y-0.5">
+            <div className="mb-3">
+                <BackButton label={t("common.metadata.back") || "Quay lại"} />
+            </div>
+
             <SettingsSearchBox />
 
             <Divider sx={{ marginBlock: "20px" }} />

@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
-import { Image as ImageIcon, Trash2, Plus } from "lucide-react";
+import { Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 
 interface ReportFormFieldsProps {
     title: string;
@@ -43,9 +43,11 @@ export function ReportFormFields({
                     size="small"
                     placeholder={t("titlePlaceholder")}
                     value={title}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                        setTitle(e.target.value)
-                    }
+                    onChange={(
+                        e: React.ChangeEvent<
+                            HTMLInputElement | HTMLTextAreaElement
+                        >,
+                    ) => setTitle(e.target.value)}
                     required
                 />
             </div>
@@ -62,9 +64,11 @@ export function ReportFormFields({
                     rows={4}
                     placeholder={t("descriptionPlaceholder")}
                     value={description}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                        setDescription(e.target.value)
-                    }
+                    onChange={(
+                        e: React.ChangeEvent<
+                            HTMLInputElement | HTMLTextAreaElement
+                        >,
+                    ) => setDescription(e.target.value)}
                     required
                 />
             </div>
@@ -97,7 +101,7 @@ export function ReportFormFields({
                         onClick={() => fileInputRef.current?.click()}
                         variant="outlined"
                         startIcon={<ImageIcon className="h-4 w-4" />}
-                        className="border-bdc-primary text-text-contrast hover:bg-hbgc-app hover:border-bdc-muted w-full border border-dashed rounded-lg py-3 font-semibold normal-case"
+                        className="border-bdc-primary text-text-contrast hover:bg-hbgc-app hover:border-bdc-muted w-full rounded-lg border border-dashed py-3 font-semibold normal-case"
                     >
                         {t("uploadImagesBtn")}
                     </Button>
@@ -107,12 +111,12 @@ export function ReportFormFields({
                             {files.map((file, idx) => (
                                 <div
                                     key={idx}
-                                    className="border-bdc-primary bg-bgc-page relative group flex flex-col items-center overflow-hidden rounded-lg border p-2 shadow-xs transition-all hover:shadow-md"
+                                    className="border-bdc-primary bg-bgc-page group relative flex flex-col items-center overflow-hidden rounded-lg border p-2 shadow-xs transition-all hover:shadow-md"
                                 >
                                     <img
                                         src={filePreviews[idx]}
                                         alt={file.name}
-                                        className="h-[90px] w-full rounded-md object-cover border border-bdc-primary"
+                                        className="border-bdc-primary h-[90px] w-full rounded-md border object-cover"
                                     />
                                     <div className="mt-2 w-full min-w-0">
                                         <Typography
@@ -131,7 +135,7 @@ export function ReportFormFields({
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveFile(idx)}
-                                        className="bg-red-500/80 hover:bg-red-600 absolute top-2 right-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-white transition-colors"
+                                        className="absolute top-2 right-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-red-500/80 text-white transition-colors hover:bg-red-600"
                                         title={t("removeBtn")}
                                     >
                                         <Trash2 className="h-3.5 w-3.5" />
@@ -146,7 +150,7 @@ export function ReportFormFields({
                             variant="outlined"
                             size="small"
                             startIcon={<Plus className="h-4 w-4" />}
-                            className="border-bdc-primary text-text-contrast hover:bg-hbgc-app hover:border-bdc-muted border rounded-lg font-semibold normal-case"
+                            className="border-bdc-primary text-text-contrast hover:bg-hbgc-app hover:border-bdc-muted rounded-lg border font-semibold normal-case"
                         >
                             {t("uploadImageBtn")}
                         </Button>

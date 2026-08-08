@@ -33,8 +33,8 @@ function toneOf(status: NodeStatus, accent: string): string {
 /** Khung tooltip hiện khi rê chuột vào mốc cờ. */
 function FlagTooltip({ children }: { children: React.ReactNode }) {
     return (
-        <div className="pointer-events-none absolute bottom-full z-30 mb-2 flex flex-col items-center opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
-            <div className="border-bdc-primary bg-bgc-app min-w-[200px] max-w-xs rounded-xl border p-3 text-center shadow-lg">
+        <div className="pointer-events-none absolute bottom-full z-50 mb-2 flex flex-col items-center opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
+            <div className="border-bdc-primary bg-bgc-app max-w-xs min-w-[200px] rounded-xl border p-3 text-center shadow-lg">
                 {children}
             </div>
             <div className="border-bdc-primary bg-bgc-app -mt-1 h-2 w-2 rotate-45 border-r border-b" />
@@ -54,7 +54,7 @@ export function FlagNode(props: FlagNodeProps) {
         const firstCando = lesson.canDos?.[0];
 
         return (
-            <div className="group relative z-20 flex flex-col items-center">
+            <div className="group relative z-30 flex flex-col items-center">
                 <FlagTooltip>
                     <span
                         className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
@@ -79,7 +79,14 @@ export function FlagNode(props: FlagNodeProps) {
                 <div className="flex cursor-pointer flex-col items-center transition-transform group-hover:-translate-y-0.5">
                     {/* Cờ BÀI: kẻ ca-rô như cờ checkpoint */}
                     <svg width={62} height={54} viewBox="0 0 62 54" fill="none">
-                        <rect x="10" y="8" width="3.5" height="42" rx="1.5" fill={dark} />
+                        <rect
+                            x="10"
+                            y="8"
+                            width="3.5"
+                            height="42"
+                            rx="1.5"
+                            fill={dark}
+                        />
                         <circle cx="11.75" cy="7" r="3.5" fill={tone} />
                         <defs>
                             <pattern
@@ -89,8 +96,20 @@ export function FlagNode(props: FlagNodeProps) {
                                 patternUnits="userSpaceOnUse"
                             >
                                 <rect width="10" height="10" fill={tone} />
-                                <rect width="5" height="5" fill="#fff" opacity={0.9} />
-                                <rect x="5" y="5" width="5" height="5" fill="#fff" opacity={0.9} />
+                                <rect
+                                    width="5"
+                                    height="5"
+                                    fill="#fff"
+                                    opacity={0.9}
+                                />
+                                <rect
+                                    x="5"
+                                    y="5"
+                                    width="5"
+                                    height="5"
+                                    fill="#fff"
+                                    opacity={0.9}
+                                />
                             </pattern>
                         </defs>
                         <rect
@@ -122,7 +141,7 @@ export function FlagNode(props: FlagNodeProps) {
     const dark = `color-mix(in srgb, ${tone} 70%, #000)`;
 
     return (
-        <div className="group relative z-20 flex flex-col items-center">
+        <div className="group relative z-30 flex flex-col items-center">
             <FlagTooltip>
                 <span
                     className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
@@ -141,7 +160,14 @@ export function FlagNode(props: FlagNodeProps) {
 
             <div className="flex cursor-pointer flex-col items-center transition-transform group-hover:-translate-y-0.5">
                 <svg width={48} height={46} viewBox="0 0 48 46" fill="none">
-                    <rect x="9" y="8" width="3" height="34" rx="1.5" fill={dark} />
+                    <rect
+                        x="9"
+                        y="8"
+                        width="3"
+                        height="34"
+                        rx="1.5"
+                        fill={dark}
+                    />
                     <circle cx="10.5" cy="7" r="3" fill={tone} />
                     {/* Cờ tam giác đơn */}
                     <path

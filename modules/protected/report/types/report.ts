@@ -24,4 +24,3 @@ export interface Report {
     files?: ReportFile[];
     createdAt?: string;
 }
-

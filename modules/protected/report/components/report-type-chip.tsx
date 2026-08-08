@@ -19,7 +19,7 @@ export function ReportTypeChip({ reportType }: ReportTypeChipProps) {
                 <Chip
                     label={t("typeQuestion")}
                     size="small"
-                    className="!border-sky-500/30 !bg-sky-500/15 !text-sky-600 dark:!text-sky-400 !border font-bold"
+                    className="!border !border-sky-500/30 !bg-sky-500/15 font-bold !text-sky-600 dark:!text-sky-400"
                 />
             );
         case "COMMENT":
@@ -27,7 +27,7 @@ export function ReportTypeChip({ reportType }: ReportTypeChipProps) {
                 <Chip
                     label={t("typeComment")}
                     size="small"
-                    className="!border-purple-500/30 !bg-purple-500/15 !text-purple-600 dark:!text-purple-400 !border font-bold"
+                    className="!border !border-purple-500/30 !bg-purple-500/15 font-bold !text-purple-600 dark:!text-purple-400"
                 />
             );
         case "SYSTEM":
@@ -36,7 +36,7 @@ export function ReportTypeChip({ reportType }: ReportTypeChipProps) {
                 <Chip
                     label={t("typeSystem")}
                     size="small"
-                    className="!border-amber-500/30 !bg-amber-500/15 !text-amber-600 dark:!text-amber-400 !border font-bold"
+                    className="!border !border-amber-500/30 !bg-amber-500/15 font-bold !text-amber-600 dark:!text-amber-400"
                 />
             );
     }

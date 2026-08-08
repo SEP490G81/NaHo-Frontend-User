@@ -136,7 +136,7 @@ export function TopicRoadmapBody({
     };
 
     return (
-        <div className="relative flex flex-col items-center">
+        <div className="relative z-20 flex flex-col items-center">
             <TopicSnakePath
                 groups={groups}
                 accent={accent}

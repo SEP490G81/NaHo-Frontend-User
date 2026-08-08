@@ -1,11 +1,11 @@
 import {
+    AuthProviderName,
     Gender,
     JlptLevel,
     OAuthProviderName,
     RoleName,
     UserStatus,
 } from "@/types/enums/user.enum";
-import { FileResult } from "./file.response";
 
 export interface PointSummaryResult {
     id: number;
@@ -18,11 +18,14 @@ export interface RoleResult {
     description: string | null;
 }
 
-export interface OAuthProviderResult {
+export interface AuthProviderResponse {
     id: number;
-    providerName: OAuthProviderName;
+    providerName: AuthProviderName | OAuthProviderName;
     avatarUrl: string | null;
 }
+
+export type OAuthProviderResult = AuthProviderResponse;
+export type OAuthProviderResponse = AuthProviderResponse;
 
 export interface RoleResponse {
     id: string;
@@ -30,27 +33,22 @@ export interface RoleResponse {
     description: string | null;
 }
 
-export interface OAuthProviderResponse {
-    id: number;
-    providerName: OAuthProviderName;
-    avatarUrl: string | null;
-}
-
 export interface UserResponse {
     id: number;
-    roles: RoleResult[];
-    userSessionIds: number[];
-    oAuthProviders: OAuthProviderResult[];
-    pointSummary: PointSummaryResult | null;
+    roles?: RoleResult[];
+    userSessionIds?: number[];
+    authProviders?: AuthProviderResponse[] | null;
+    oAuthProviders?: AuthProviderResponse[] | null;
+    pointSummary?: PointSummaryResult | null;
     userLearningProgressId: number | null;
-    avatar: FileResult | null;
+    avatarUrl: string | null;
     username: string | null;
     email: string;
     fullName: string | null;
     gender: Gender | null;
     dob: string | null;
     jlptLevel: JlptLevel | null;
-    status: UserStatus;
+    status?: UserStatus;
 }
 
 export interface RegisterResponse {

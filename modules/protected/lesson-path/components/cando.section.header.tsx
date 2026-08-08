@@ -21,7 +21,7 @@ export function CanDoSectionHeader({ block, accent, showFurigana }: Props) {
         <div
             className={cn(
                 "border-bdc-primary/50 bg-bgc-app/90 relative z-10 mx-auto max-w-lg rounded-xl border px-4 py-2 text-center shadow-xs backdrop-blur-md transition-all",
-                locked && "opacity-70 border-dashed",
+                locked && "border-dashed opacity-70",
             )}
         >
             <div className="flex items-center justify-center gap-2">

@@ -4,15 +4,25 @@ export const getUserFullName = (user: UserResponse | null | undefined) => {
     if (!user) {
         return "";
     }
-    return user.fullName || "";
+    return user.fullName || user.username || user.email || "";
 };
 
-export const getFirstCharacter = (user: UserResponse | null | undefined) => {
+export const getFirstCharacter = (
+    user: UserResponse | null | undefined,
+): string => {
     if (!user) {
         return "";
     }
-    const name = user.fullName || user.username || user.email;
-    return name.charAt(0).toUpperCase();
+    const name =
+        user.fullName && user.fullName.trim() !== ""
+            ? user.fullName
+            : user.username && user.username.trim() !== ""
+              ? user.username
+              : user.email && user.email.trim() !== ""
+                ? user.email
+                : "";
+
+    return name ? name.trim().charAt(0).toUpperCase() : "";
 };
 
 export const getUserAvatarUrl = (
@@ -21,16 +31,18 @@ export const getUserAvatarUrl = (
     if (!user) {
         return undefined;
     }
-    if (user.avatar?.accessUrl) {
-        return user.avatar.accessUrl;
+    if (user.avatarUrl && user.avatarUrl.trim() !== "") {
+        return user.avatarUrl;
     }
 
-    if (user.oAuthProviders && user.oAuthProviders.length > 0) {
-        const oauthProvider = user.oAuthProviders.find(
-            (provider) => provider.avatarUrl,
+    const providers = user.authProviders || user.oAuthProviders;
+    if (providers && providers.length > 0) {
+        const providerWithAvatar = providers.find(
+            (provider) =>
+                provider.avatarUrl && provider.avatarUrl.trim() !== "",
         );
-        if (oauthProvider?.avatarUrl) {
-            return oauthProvider.avatarUrl;
+        if (providerWithAvatar?.avatarUrl) {
+            return providerWithAvatar.avatarUrl;
         }
     }
 

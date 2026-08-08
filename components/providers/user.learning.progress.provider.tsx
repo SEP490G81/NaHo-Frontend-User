@@ -20,7 +20,12 @@ export function UserLearningProgressProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const { data: progress, isLoading, isError, refetch } = useQuery({
+    const {
+        data: progress,
+        isLoading,
+        isError,
+        refetch,
+    } = useQuery({
         queryKey: ["user-learning-progress"],
         queryFn: getUserLearningProgress,
         staleTime: 5 * 60 * 1000, // 5 minutes

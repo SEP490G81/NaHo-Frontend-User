@@ -43,13 +43,17 @@
                 "jp": "Tiếng Nhật"
             },
             "action": {
-                "open": "Mở",
-                "close": "Đóng"
-            }
+                "open": "Open",
+                "close": "Close",
+                "back": "Back"
+            },
+            "back": "Back"
         },
         "layout": {
             "header": {
-                "notificationButton": "Thông báo",
+                "collapseSidebar": "Collapse sidebar",
+                "expandSidebar": "Expand sidebar",
+                "notificationButton": "Notifications",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"

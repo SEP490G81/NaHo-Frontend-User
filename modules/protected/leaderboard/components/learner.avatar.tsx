@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import { Avatar } from "@mui/material";
 import { getInitials } from "../utils/leaderboard.util";
 
 interface LearnerAvatarProps {
@@ -14,31 +14,22 @@ export function LearnerAvatar({
     avatarUrl,
     size = 36,
 }: LearnerAvatarProps) {
-    const box = { width: size, height: size };
-
-    if (avatarUrl) {
-        return (
-            <Image
-                src={avatarUrl}
-                alt={fullName ?? ""}
-                width={size}
-                height={size}
-                unoptimized
-                style={box}
-                className="shrink-0 rounded-full object-cover"
-            />
-        );
-    }
-
     return (
-        <div
-            style={box}
-            className="bg-bgc-highlight/20 text-text-highlight flex shrink-0 items-center justify-center rounded-full font-bold"
+        <Avatar
+            src={avatarUrl || undefined}
+            alt={fullName ?? ""}
+            sx={{
+                width: `${size}px`,
+                height: `${size}px`,
+                bgcolor: "var(--color-bgc-highlight)",
+                color: "#ffffff",
+                fontSize: `${Math.round(size * 0.38)}px`,
+                fontWeight: 700,
+            }}
+            className="shrink-0 font-bold shadow-xs"
         >
-            <span style={{ fontSize: Math.round(size * 0.36) }}>
-                {getInitials(fullName)}
-            </span>
-        </div>
+            {getInitials(fullName)}
+        </Avatar>
     );
 }
 

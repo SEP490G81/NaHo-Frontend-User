@@ -8,10 +8,12 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
+import { usePinnedTopics } from "@/hooks/use.pinned.topics";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import SidebarLogoButton from "./sidebar.logo.button";
 import SidebarItem from "./sidebar.item";
 import UserAvatar from "./user.avatar";
+import SidebarPinnedTopicCard from "./sidebar.pinned.topic.card";
 
 const DRAWER_WIDTH = 260;
 
@@ -21,11 +23,10 @@ export function LearnerSidebar() {
     const {
         isSidebarOpen,
         isSidebarCollapsed,
-        pinnedTopics,
-        unpinTopic,
         toggleSidebarCollapse,
         closeSidebar,
     } = useUiStore();
+    const { pinnedTopics, unpinTopic } = usePinnedTopics();
     const [openSubMenus, setOpenSubMenus] = React.useState<
         Record<string, boolean>
     >({});
@@ -62,7 +63,7 @@ export function LearnerSidebar() {
             {/* Header: chỉ còn logo */}
             <div
                 className={cn(
-                    "border-bdc-primary flex min-h-[66px] shrink-0 items-center justify-center border-b py-3.5",
+                    "border-bdc-primary flex min-h-16.5 shrink-0 items-center justify-center border-b py-3.5",
                     isCollapsed ? "px-2" : "px-4",
                 )}
             >
@@ -101,13 +102,13 @@ export function LearnerSidebar() {
                         {/* Divider + Section Header on the same row */}
                         {!isCollapsed ? (
                             <div className="my-3 flex items-center gap-2 px-3">
-                                <span className="shrink-0 text-[10px] font-black uppercase tracking-wider text-text-muted">
+                                <span className="text-text-muted shrink-0 text-[10px] font-black tracking-wider uppercase">
                                     {t("path.pinnedSection")}
                                 </span>
-                                <div className="h-px flex-1 bg-bdc-primary opacity-60" />
+                                <div className="bg-bdc-primary h-px flex-1 opacity-60" />
                             </div>
                         ) : (
-                            <Divider className="my-3 border-bdc-primary opacity-60" />
+                            <Divider className="border-bdc-primary my-3 opacity-60" />
                         )}
 
                         {/* List of up to 3 pinned topics */}
@@ -122,29 +123,27 @@ export function LearnerSidebar() {
                                     pathname === pinned.url ||
                                     pathname.startsWith(pinned.url + "/");
 
+                                const bookLevel = pinned.bookLevel || "A1";
+                                const topicLabel = pinned.topicOrder
+                                    ? t("topic.label", {
+                                          index: pinned.topicOrder,
+                                      })
+                                    : pinned.title;
+                                const displayText =
+                                    pinned.bookLevel && pinned.topicOrder
+                                        ? `${bookLevel} - ${topicLabel}`
+                                        : pinned.title;
+
                                 if (isCollapsed) {
-                                    // Collapsed state: Icon only with Tooltip popover showing title & unpin button
+                                    // Collapsed state: Icon only with Tooltip popover
                                     return (
                                         <TooltipCustom
                                             key={pinned.id}
                                             placement="right"
                                             title={
-                                                <div className="flex items-center gap-2.5 p-1">
-                                                    <span className="text-xs font-extrabold text-text-contrast">
-                                                        {pinned.title}
-                                                    </span>
-                                                    <button
-                                                        type="button"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            unpinTopic(pinned.id);
-                                                        }}
-                                                        title={t("path.unpinTopic")}
-                                                        className="rounded-md p-1 text-text-muted hover:bg-black/10 hover:text-text-error dark:hover:bg-white/10"
-                                                    >
-                                                        <X className="h-3.5 w-3.5" />
-                                                    </button>
-                                                </div>
+                                                <SidebarPinnedTopicCard
+                                                    pinned={pinned}
+                                                />
                                             }
                                         >
                                             <Link
@@ -157,43 +156,54 @@ export function LearnerSidebar() {
                                                         : "text-text-contrast hover:bg-hbgc-app",
                                                 )}
                                             >
-                                                <Pin className="h-4 w-4 shrink-0 rotate-45 text-bgc-highlight" />
+                                                <Pin className="text-bgc-highlight h-4 w-4 shrink-0 rotate-45" />
                                             </Link>
                                         </TooltipCustom>
                                     );
                                 }
 
-                                // Expanded state: Icon + Title link + Unpin button (3 parts)
+                                // Expanded state: Icon + Formatted Text + Unpin button
                                 return (
-                                    <div
+                                    <TooltipCustom
                                         key={pinned.id}
-                                        className={cn(
-                                            "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
-                                            isActive
-                                                ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
-                                                : "text-text-contrast hover:bg-hbgc-app",
-                                        )}
+                                        placement="right"
+                                        title={
+                                            <SidebarPinnedTopicCard
+                                                pinned={pinned}
+                                            />
+                                        }
                                     >
-                                        <Link
-                                            href={pinned.url}
-                                            onClick={closeSidebar}
-                                            className="flex flex-1 min-w-0 items-center gap-2.5"
+                                        <div
+                                            className={cn(
+                                                "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
+                                                isActive
+                                                    ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
+                                                    : "text-text-contrast hover:bg-hbgc-app",
+                                            )}
                                         >
-                                            <Pin className="h-3.5 w-3.5 shrink-0 rotate-45 text-bgc-highlight" />
-                                            <span className="truncate font-semibold text-text-contrast group-hover:text-bgc-highlight">
-                                                {pinned.title}
-                                            </span>
-                                        </Link>
+                                            <Link
+                                                href={pinned.url}
+                                                onClick={closeSidebar}
+                                                className="flex min-w-0 flex-1 items-center gap-2.5"
+                                            >
+                                                <Pin className="text-bgc-highlight h-3.5 w-3.5 shrink-0 rotate-45" />
+                                                <span className="text-text-contrast group-hover:text-bgc-highlight truncate font-semibold">
+                                                    {displayText}
+                                                </span>
+                                            </Link>
 
-                                        <button
-                                            type="button"
-                                            onClick={() => unpinTopic(pinned.id)}
-                                            title={t("path.unpinTopic")}
-                                            className="rounded p-1 text-text-muted opacity-60 hover:bg-black/10 hover:text-text-error hover:opacity-100 dark:hover:bg-white/10 transition-all"
-                                        >
-                                            <X className="h-3.5 w-3.5" />
-                                        </button>
-                                    </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    unpinTopic(pinned.id)
+                                                }
+                                                title={t("path.unpinTopic")}
+                                                className="text-text-muted hover:text-text-error cursor-pointer rounded p-1 opacity-60 transition-all hover:bg-black/10 hover:opacity-100 dark:hover:bg-white/10"
+                                            >
+                                                <X className="h-3.5 w-3.5" />
+                                            </button>
+                                        </div>
+                                    </TooltipCustom>
                                 );
                             })}
                         </div>

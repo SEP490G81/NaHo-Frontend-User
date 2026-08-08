@@ -7,7 +7,7 @@
             "streak": "Daily streak",
             "currentLevel": "Current level",
             "totalPoints": "Total points",
-            "streakValue": "{days} days 🔥",
+            "streakValue": "{days} days",
             "levelValue": "{level}",
             "pointsValue": "{points} L-Point"
         },

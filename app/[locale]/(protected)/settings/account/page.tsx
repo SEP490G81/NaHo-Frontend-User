@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import AccountSettings from "@/modules/protected/settings/features/account.settings";
 
 export async function generateMetadata({
     params,
@@ -20,7 +21,7 @@ export async function generateMetadata({
 }
 
 const SettingsAccountPage = () => {
-    return <div>Account Page</div>;
+    return <AccountSettings />;
 };
 
 export default SettingsAccountPage;

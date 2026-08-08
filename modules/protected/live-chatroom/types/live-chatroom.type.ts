@@ -10,9 +10,13 @@ export interface Companion {
     /** ID persona thật sau khi resolve từ API (null nếu chưa map được). */
     personaId?: number | null;
     /** Thể lịch sự mặc định của persona (từ conversationStyle.formalityLevel). */
-    defaultFormality?: import("@/types/responses/persona.response").FormalityLevel | null;
+    defaultFormality?:
+        | import("@/types/responses/persona.response").FormalityLevel
+        | null;
     /** Cấp độ Marugoto mặc định của persona (từ conversationStyle.marugotoLevel). */
-    defaultMarugotoLevel?: import("@/types/responses/persona.response").MarugotoLevel | null;
+    defaultMarugotoLevel?:
+        | import("@/types/responses/persona.response").MarugotoLevel
+        | null;
 }
 
 export type AiChatMessage = {

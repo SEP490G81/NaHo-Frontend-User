@@ -95,7 +95,8 @@ export function QuestionPreviewDrawer({
                                         showFurigana={showFurigana}
                                     />
                                 </h3>
-                                {(question.descriptionMarkup || question.description) && (
+                                {(question.descriptionMarkup ||
+                                    question.description) && (
                                     <p className="text-text-muted mt-1 text-sm">
                                         <FuriganaHtml
                                             text={question.description}

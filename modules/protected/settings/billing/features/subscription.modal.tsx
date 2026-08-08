@@ -65,9 +65,13 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                 (a, b) => (tierOrder[a.tier] ?? 0) - (tierOrder[b.tier] ?? 0),
             );
             setPlans(sorted);
-        } catch (err: any) {
+        } catch (err: unknown) {
             setFetchPlansError(true);
-            setErrorMessage(err.message || t("errors.fetchPlansFailed"));
+            setErrorMessage(
+                err instanceof Error
+                    ? err.message
+                    : t("errors.fetchPlansFailed"),
+            );
         } finally {
             setLoadingPlans(false);
         }
@@ -131,10 +135,14 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             } else {
                 throw new Error(t("errors.createPaymentFailed"));
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Payment order creation error:", error);
             setLastFailedPlanCode(planCode);
-            setErrorMessage(error.message || t("errors.createPaymentFailed"));
+            setErrorMessage(
+                error instanceof Error
+                    ? error.message
+                    : t("errors.createPaymentFailed"),
+            );
         } finally {
             setCheckoutLoadingCode(null);
         }

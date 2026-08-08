@@ -15,9 +15,7 @@ export async function createReport(formData: FormData): Promise<Report> {
     if (!response.ok) {
         const problem = result as ProblemDetail;
         throw new Error(
-            problem.detail ||
-            result.message ||
-            "Không thể tạo báo cáo.",
+            problem.detail || result.message || "Không thể tạo báo cáo.",
         );
     }
 
@@ -43,8 +41,8 @@ export async function getUserReports(): Promise<Report[]> {
         const problem = result as ProblemDetail;
         throw new Error(
             problem.detail ||
-            result.message ||
-            "Không thể lấy danh sách báo cáo.",
+                result.message ||
+                "Không thể lấy danh sách báo cáo.",
         );
     }
 

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Trophy, Target, Gift } from "lucide-react";
+import { Gift, Target, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { LessonGroup } from "../hooks/use.cando.nodes";
 import { FuriganaHtml } from "@/components/ui/furigana.html";
@@ -37,8 +37,8 @@ export function TopicStatsWidget({
     return (
         <aside className="sticky top-24 space-y-4">
             {/* Progress Card */}
-            <div className="border-bdc-primary/60 bg-bgc-app/95 rounded-2xl border p-4 shadow-sm backdrop-blur-md space-y-3">
-                <div className="flex items-center justify-between border-b border-bdc-primary/30 pb-2.5">
+            <div className="border-bdc-primary/60 bg-bgc-app/95 space-y-3 rounded-2xl border p-4 shadow-sm backdrop-blur-md">
+                <div className="border-bdc-primary/30 flex items-center justify-between border-b pb-2.5">
                     <div className="flex items-center gap-2">
                         <Trophy className="h-4 w-4" style={{ color: accent }} />
                         <h3 className="text-text-contrast text-xs font-bold tracking-wider uppercase">
@@ -55,7 +55,7 @@ export function TopicStatsWidget({
 
                 <div className="bg-bgc-page border-bdc-primary/20 h-3 overflow-hidden rounded-full border p-0.5 shadow-inner">
                     <div
-                        className="h-full rounded-full transition-all duration-500 shadow-xs"
+                        className="h-full rounded-full shadow-xs transition-all duration-500"
                         style={{
                             width: `${percent}%`,
                             background: accent,
@@ -69,7 +69,7 @@ export function TopicStatsWidget({
                             {t("path.completedNodes") ?? "Đã hoàn thành"}
                         </p>
                         <p
-                            className="text-sm font-extrabold mt-0.5"
+                            className="mt-0.5 text-sm font-extrabold"
                             style={{ color: accent }}
                         >
                             {completedNodes.length} / {allNodes.length}
@@ -80,7 +80,7 @@ export function TopicStatsWidget({
                         <p className="text-text-muted text-[10px] font-bold uppercase">
                             {t("books.lessonCountLabel") ?? "Bài học"}
                         </p>
-                        <p className="text-text-contrast text-sm font-extrabold mt-0.5">
+                        <p className="text-text-contrast mt-0.5 text-sm font-extrabold">
                             {groups.length}
                         </p>
                     </div>
@@ -89,8 +89,8 @@ export function TopicStatsWidget({
 
             {/* Current Active Objective Card */}
             {activeBlock && (
-                <div className="border-bdc-primary/60 bg-bgc-app/95 rounded-2xl border p-4 shadow-sm backdrop-blur-md space-y-2">
-                    <div className="flex items-center gap-2 border-b border-bdc-primary/30 pb-2">
+                <div className="border-bdc-primary/60 bg-bgc-app/95 space-y-2 rounded-2xl border p-4 shadow-sm backdrop-blur-md">
+                    <div className="border-bdc-primary/30 flex items-center gap-2 border-b pb-2">
                         <Target className="h-4 w-4 text-emerald-500" />
                         <h3 className="text-text-contrast text-xs font-bold tracking-wider uppercase">
                             {t("path.activeGoal") ?? "Mục tiêu hiện tại"}
@@ -98,7 +98,7 @@ export function TopicStatsWidget({
                     </div>
 
                     <p
-                        className="text-[11px] font-extrabold uppercase tracking-wider"
+                        className="text-[11px] font-extrabold tracking-wider uppercase"
                         style={{ color: accent }}
                     >
                         {t("path.candoLabel", {
@@ -107,9 +107,12 @@ export function TopicStatsWidget({
                         · {activeBlock.done}/{activeBlock.total} MỐC
                     </p>
 
-                    <div className="text-text-contrast text-xs font-bold leading-snug">
+                    <div className="text-text-contrast text-xs leading-snug font-bold">
                         <FuriganaHtml
-                            text={activeBlock.cando.jpDesc || activeBlock.cando.viDesc}
+                            text={
+                                activeBlock.cando.jpDesc ||
+                                activeBlock.cando.viDesc
+                            }
                             markup={activeBlock.cando.furiganaMarkup}
                             showFurigana={showFurigana}
                         />
@@ -118,15 +121,15 @@ export function TopicStatsWidget({
             )}
 
             {/* Rewards Card */}
-            <div className="border-amber-400/40 bg-amber-500/5 rounded-2xl border p-4 shadow-sm backdrop-blur-md flex items-center gap-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-amber-400/40 bg-amber-500/5 p-4 shadow-sm backdrop-blur-md">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-500">
                     <Gift className="h-5 w-5" />
                 </div>
                 <div>
-                    <h4 className="text-amber-600 dark:text-amber-400 text-xs font-bold">
+                    <h4 className="text-xs font-bold text-amber-600 dark:text-amber-400">
                         {t("path.rewardsHint") ?? "Mở rương phần thưởng"}
                     </h4>
-                    <p className="text-text-muted text-[11px] font-medium leading-tight mt-0.5">
+                    <p className="text-text-muted mt-0.5 text-[11px] leading-tight font-medium">
                         Hoàn thành bài học để nhận điểm L-Point hấp dẫn!
                     </p>
                 </div>

@@ -3,6 +3,8 @@ import React from "react";
 import { Flame, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn, formatPoints } from "@/libs/utils";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import { getUserAvatarUrl } from "@/layouts/protected-header/utils/header.util";
 import LearnerAvatar from "./learner.avatar";
 import RankBadge from "./rank.badge";
 
@@ -32,6 +34,19 @@ export function LeaderboardRow({
     withHashPrefix = false,
 }: LeaderboardRowProps) {
     const t = useTranslations("leaderboard");
+    const { data: currentUser } = useCurrentUser();
+
+    const effectiveAvatarUrl =
+        avatarUrl ||
+        (isCurrentUser ? (getUserAvatarUrl(currentUser) ?? null) : null);
+    const effectiveFullName =
+        fullName ||
+        (isCurrentUser
+            ? currentUser?.fullName ||
+              currentUser?.username ||
+              currentUser?.email ||
+              null
+            : null);
 
     const showStreak = isCurrentUser && streakDays !== undefined;
 
@@ -51,12 +66,15 @@ export function LeaderboardRow({
             ) : (
                 <RankBadge rank={rank} withHashPrefix={withHashPrefix} />
             )}
-            <LearnerAvatar fullName={fullName} avatarUrl={avatarUrl} />
+            <LearnerAvatar
+                fullName={effectiveFullName}
+                avatarUrl={effectiveAvatarUrl}
+            />
 
             <div className="flex min-w-0 flex-1 flex-col">
                 <div className="flex items-center gap-2">
                     <span className="text-text-contrast truncate font-medium">
-                        {fullName}
+                        {effectiveFullName}
                     </span>
                     {isCurrentUser && (
                         <span className="bg-bgc-highlight text-text-pure shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold">

@@ -1,9 +1,5 @@
 import type { Companion } from "../types/live-chatroom.type";
-import type {
-    FormalityLevel,
-    MarugotoLevel,
-    PersonaResponse,
-} from "@/types/responses/persona.response";
+import type { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
 
 /**
  * Style hội thoại — khớp enum FormalityLevel bên BE.
@@ -41,16 +37,12 @@ const MARUGOTO_LABEL: Record<MarugotoLevel, string> = {
     INTERMEDIATE_2_B1: "B1.2 · Trung cấp 2",
 };
 
-export function marugotoLabel(
-    level: MarugotoLevel | null | undefined,
-): string {
+export function marugotoLabel(level: MarugotoLevel | null | undefined): string {
     return level ? MARUGOTO_LABEL[level] : "";
 }
 
 /** Danh sách cấp độ Marugoto để dựng dropdown (đúng thứ tự). */
-export const MARUGOTO_LEVELS = Object.keys(
-    MARUGOTO_LABEL,
-) as MarugotoLevel[];
+export const MARUGOTO_LEVELS = Object.keys(MARUGOTO_LABEL) as MarugotoLevel[];
 
 export const DEFAULT_MARUGOTO: MarugotoLevel = "STARTER_A1";
 
