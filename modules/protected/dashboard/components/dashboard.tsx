@@ -6,12 +6,13 @@ import WelcomeBanner from "./welcome.banner";
 import KanjiQuoteCard from "./kanji.quote.card";
 import DailyVocabQuiz from "./daily.vocab.quiz";
 import PracticeTimeChart from "../features/practice.time.chart";
+import ContainerBox from "@/components/ui/container.box";
 
 export function Dashboard() {
     const t = useTranslations("dashboard");
 
     return (
-        <div className="mx-auto max-w-7xl space-y-6 pb-10 px-4 sm:px-6">
+        <div className="mx-auto space-y-6 pb-10 px-4 sm:px-6">
             {/* 1. Hero Banner Top */}
             <WelcomeBanner t={t} />
 
@@ -30,6 +31,7 @@ export function Dashboard() {
                 </div>
             </div>
         </div>
+
     );
 }
 
