@@ -120,8 +120,24 @@ export function TopicPath() {
     if (bookQ.isError || topicQ.isError) return <NotFoundView />;
     if (!book || !topic || loading) return <LoadingState />;
 
-    // Guard: chặn truy cập chủ đề đang KHÓA qua URL. Dùng chính trạng thái node
-    // đã tính theo mốc tiến độ (đáng tin) — topic khóa khi MỌI node đều locked.
+    // Guard 1 — CROSS-BOOK: node của chủ đề phải nằm trong dải node của quyển
+    // (getBookDetail trả dải đáng tin, vd book1 [1,87], book6 [460,558]). Nếu
+    // ngoài dải ⇒ chủ đề thuộc quyển khác (vd /books/6/topics/1) → 404.
+    if (
+        book.firstNodeOrder != null &&
+        book.lastNodeOrder != null &&
+        allNodes.length > 0
+    ) {
+        const gois = allNodes.map((n) => n.globalOrderIndex);
+        if (
+            Math.min(...gois) < book.firstNodeOrder ||
+            Math.max(...gois) > book.lastNodeOrder
+        ) {
+            return <NotFoundView />;
+        }
+    }
+
+    // Guard 2 — LOCKED: mọi node của chủ đề đều khóa (chưa tới mốc tiến độ) → 404.
     if (
         frontier != null &&
         allNodes.length > 0 &&
