@@ -1,4 +1,5 @@
 "use client";
+
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import { Button, useColorScheme } from "@mui/material";
@@ -6,21 +7,23 @@ import { useTranslations } from "next-intl";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 
 const ThemeSwitchButton = () => {
-    const { mode, setMode } = useColorScheme();
+    const { mode, setMode, systemMode } = useColorScheme();
     const t = useTranslations("common.layout.header.themeSwitchButton");
-    if (!mode) {
-        return null;
-    }
+
+    const currentMode = mode === "system" ? systemMode : mode;
 
     const handleChangeMode = () => {
-        if (mode === "light") setMode("dark");
-        if (mode === "dark") setMode("light");
+        if (currentMode === "dark") {
+            setMode("light");
+        } else {
+            setMode("dark");
+        }
     };
 
     return (
         <TooltipCustom
             arrow
-            title={mode === "light" ? t("darkMode") : t("lightMode")}
+            title={currentMode === "light" ? t("darkMode") : t("lightMode")}
         >
             <Button
                 onClick={handleChangeMode}
@@ -32,7 +35,7 @@ const ThemeSwitchButton = () => {
                     height: "40px",
                 }}
             >
-                {mode === "light" ? (
+                {currentMode === "light" ? (
                     <DarkModeOutlinedIcon fontSize="small" />
                 ) : (
                     <LightModeOutlinedIcon fontSize="small" />
