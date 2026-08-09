@@ -46,7 +46,7 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
         placeholderData: keepPreviousData,
     });
 
-    const top = entries.slice(0, 3);
+    const top = entries.slice(0, 10);
     const iAmInTop = top.some((e) => e.userId === myUserId);
 
     // Cuộn dải hạng để hạng hiện tại nằm giữa khung nhìn (không cuộn cả trang).
@@ -62,15 +62,15 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
 
     return (
         <div className="border-bdc-primary bg-bgc-app space-y-3 rounded-2xl border p-4 shadow-sm">
-            <h3 className="text-text-contrast flex items-center gap-2 text-sm font-bold">
+            <h3 className="text-text-contrast flex items-center gap-2.5 text-lg font-black">
                 {myLeague ? (
                     <LeagueIcon
                         league={myLeague}
                         label={name(myLeague)}
-                        size={20}
+                        size={42}
                     />
                 ) : (
-                    <Gem className="h-4 w-4" style={{ color: accent }} />
+                    <Gem className="h-8 w-8" style={{ color: accent }} />
                 )}
                 {myLeague ? name(myLeague) : t("leagueTitle")}
             </h3>
@@ -93,7 +93,7 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
                                 <LeagueIcon
                                     league={l}
                                     label={name(l)}
-                                    size={isCurrent ? 38 : 26}
+                                    size={isCurrent ? 46 : 32}
                                     className={
                                         isCurrent ? "drop-shadow-md" : undefined
                                     }
