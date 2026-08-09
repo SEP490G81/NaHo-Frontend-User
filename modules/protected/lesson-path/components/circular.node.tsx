@@ -41,12 +41,9 @@ export function CircularNode({
     const locked = status === "locked";
     const completed = status === "completed";
     const kind = node.kind as Exclude<NodeKind, "chest">;
-    // Node hoa anh đào luôn màu HỒNG (giống hoa trang trí của app), tách khỏi màu
-    // sách; đã xong thì hồng trầm hơn, khóa thì xám (xử lý trong SakuraDisc).
-    const SAKURA = "var(--color-bgc-highlight)";
-    const color = completed
-        ? `color-mix(in srgb, ${SAKURA} 82%, #000)`
-        : SAKURA;
+    // Node hoa anh đào LUÔN màu hồng như node "Bắt đầu" — kể cả khi đã hoàn thành
+    // (đã có badge tích xanh để phân biệt). Khóa thì xám (xử lý trong SakuraDisc).
+    const color = "var(--color-bgc-highlight)";
 
     const [hovered, setHovered] = useState(false);
     // Chỉ nạp đề bài khi rê vào node LUYỆN NÓI; cache dùng chung với trang chi tiết.
@@ -59,13 +56,11 @@ export function CircularNode({
     const question = detailQ.data?.speakingQuestion;
 
     return (
-        <div
-            className="group relative z-10 flex flex-col items-center"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >
-            {!locked && (
-                <NodeTooltip>
+        <NodeTooltip
+            enabled={!locked}
+            onOpen={() => setHovered(true)}
+            tip={
+                <>
                     <span
                         className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
                         style={{ background: accent }}
@@ -112,9 +107,9 @@ export function CircularNode({
                             ? t("path.hoverRelearn")
                             : t("path.hoverOpen")}
                     </p>
-                </NodeTooltip>
-            )}
-
+                </>
+            }
+        >
             <button
                 type="button"
                 onClick={onClick}
@@ -156,7 +151,7 @@ export function CircularNode({
                     )}
                 </span>
             </button>
-        </div>
+        </NodeTooltip>
     );
 }
 

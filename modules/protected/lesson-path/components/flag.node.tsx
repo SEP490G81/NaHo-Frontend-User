@@ -44,28 +44,30 @@ export function FlagNode(props: FlagNodeProps) {
         const firstCando = lesson.canDos?.[0];
 
         return (
-            <div className="group relative z-20 flex flex-col items-center">
-                <NodeTooltip>
-                    <span
-                        className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
-                        style={{ background: tone }}
-                    >
-                        Bài {lesson.order}
-                    </span>
-                    <h3 className="text-text-contrast mt-1.5 text-sm leading-snug font-bold">
-                        <FuriganaHtml
-                            text={lesson.jpTitle}
-                            markup={lesson.furiganaMarkup}
-                            showFurigana={showFurigana}
-                        />
-                    </h3>
-                    {firstCando?.viDesc && (
-                        <p className="text-text-muted border-bdc-primary mt-1.5 border-t pt-1.5 text-xs leading-snug">
-                            {firstCando.viDesc}
-                        </p>
-                    )}
-                </NodeTooltip>
-
+            <NodeTooltip
+                tip={
+                    <>
+                        <span
+                            className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
+                            style={{ background: tone }}
+                        >
+                            Bài {lesson.order}
+                        </span>
+                        <h3 className="text-text-contrast mt-1.5 text-sm leading-snug font-bold">
+                            <FuriganaHtml
+                                text={lesson.jpTitle}
+                                markup={lesson.furiganaMarkup}
+                                showFurigana={showFurigana}
+                            />
+                        </h3>
+                        {firstCando?.viDesc && (
+                            <p className="text-text-muted border-bdc-primary mt-1.5 border-t pt-1.5 text-xs leading-snug">
+                                {firstCando.viDesc}
+                            </p>
+                        )}
+                    </>
+                }
+            >
                 <div className="flex cursor-pointer flex-col items-center transition-transform group-hover:-translate-y-0.5">
                     <ToriiMark locked={status === "locked"} />
                     <div
@@ -75,7 +77,7 @@ export function FlagNode(props: FlagNodeProps) {
                         Bài {lesson.order}
                     </div>
                 </div>
-            </div>
+            </NodeTooltip>
         );
     }
 
@@ -85,23 +87,25 @@ export function FlagNode(props: FlagNodeProps) {
     const tone = toneOf(status, accent);
 
     return (
-        <div className="group relative z-20 flex flex-col items-center">
-            <NodeTooltip>
-                <span
-                    className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
-                    style={{ background: tone }}
-                >
-                    Can-do {cando.orderInLesson} · {done}/{total}
-                </span>
-                <p className="text-text-contrast mt-1.5 text-xs leading-snug font-semibold">
-                    <FuriganaHtml
-                        text={cando.jpDesc || cando.viDesc}
-                        markup={cando.furiganaMarkup}
-                        showFurigana={showFurigana}
-                    />
-                </p>
-            </NodeTooltip>
-
+        <NodeTooltip
+            tip={
+                <>
+                    <span
+                        className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
+                        style={{ background: tone }}
+                    >
+                        Can-do {cando.orderInLesson} · {done}/{total}
+                    </span>
+                    <p className="text-text-contrast mt-1.5 text-xs leading-snug font-semibold">
+                        <FuriganaHtml
+                            text={cando.jpDesc || cando.viDesc}
+                            markup={cando.furiganaMarkup}
+                            showFurigana={showFurigana}
+                        />
+                    </p>
+                </>
+            }
+        >
             <div className="flex cursor-pointer flex-col items-center transition-transform group-hover:-translate-y-0.5">
                 <KoinoboriMark locked={status === "locked"} />
                 <div
@@ -111,7 +115,7 @@ export function FlagNode(props: FlagNodeProps) {
                     Can-do {cando.orderInLesson}
                 </div>
             </div>
-        </div>
+        </NodeTooltip>
     );
 }
 
