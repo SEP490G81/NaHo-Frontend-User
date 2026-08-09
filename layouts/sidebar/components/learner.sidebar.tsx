@@ -150,12 +150,15 @@ export function LearnerSidebar() {
                                                 href={pinned.url}
                                                 onClick={closeSidebar}
                                                 className={cn(
-                                                    "flex h-9 w-full items-center justify-center rounded-lg transition-all duration-200",
+                                                    "relative flex h-9 w-full items-center justify-center rounded-lg transition-all duration-200 ease-in-out cursor-pointer",
                                                     isActive
                                                         ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                                                         : "text-text-contrast hover:bg-hbgc-app",
                                                 )}
                                             >
+                                                {isActive && (
+                                                    <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                                                )}
                                                 <Pin className="text-bgc-highlight h-4 w-4 shrink-0 rotate-45" />
                                             </Link>
                                         </TooltipCustom>
@@ -175,12 +178,15 @@ export function LearnerSidebar() {
                                     >
                                         <div
                                             className={cn(
-                                                "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
+                                                "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out cursor-pointer",
                                                 isActive
                                                     ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
-                                                    : "text-text-contrast hover:bg-hbgc-app",
+                                                    : "text-text-contrast hover:bg-hbgc-app hover:translate-x-1",
                                             )}
                                         >
+                                            {isActive && (
+                                                <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                                            )}
                                             <Link
                                                 href={pinned.url}
                                                 onClick={closeSidebar}

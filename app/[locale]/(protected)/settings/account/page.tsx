@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import AccountSettings from "@/modules/protected/settings/features/account.settings";
+import AccountSettings from "@/modules/protected/settings/account/features/account.settings";
 
 export async function generateMetadata({
     params,

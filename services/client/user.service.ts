@@ -1,5 +1,6 @@
 import { ApiError } from "@/libs/api.error";
 import {
+    ChangePasswordRequest,
     CredentialsLoginRequest,
     ForgotPasswordRequest,
     RegisterRequest,
@@ -236,3 +237,23 @@ export async function uploadUserAvatarClient(
     const apiResponse = result as ApiResponse<UserResponse>;
     return apiResponse.data || (result as UserResponse);
 }
+
+export async function changePassword(
+    request: ChangePasswordRequest,
+): Promise<void> {
+    const response = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+}
+

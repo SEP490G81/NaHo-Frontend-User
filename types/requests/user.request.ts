@@ -46,3 +46,10 @@ export interface UpdateUserInfoRequest {
     gender?: string | null;
     dob?: string | null;
 }
+
+export interface ChangePasswordRequest {
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}
+
