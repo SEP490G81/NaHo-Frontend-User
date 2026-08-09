@@ -7,7 +7,8 @@ export function useLearningFrontier(): {
     frontier: number | null;
     isLoading: boolean;
 } {
-    const { progress, isLoading: isProgressLoading } = useUserLearningProgress();
+    const { progress, isLoading: isProgressLoading } =
+        useUserLearningProgress();
     const knownIndex = progress?.farthestAvailableNodeGlobalOrderIndex ?? null;
     const fallbackId =
         knownIndex == null ? (progress?.farthestAvailableNodeId ?? 0) : 0;

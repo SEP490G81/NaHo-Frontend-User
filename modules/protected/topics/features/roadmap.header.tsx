@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
-import { ChevronRight, Flame, Sparkles, Trophy } from "lucide-react";
+import { ChevronRight, Sparkles, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { cn, formatPoints } from "@/libs/utils";
 import { useCurrentLevelLabel } from "@/hooks/use.current.level";
@@ -13,14 +12,27 @@ interface StatCardProps {
     icon: React.ReactNode;
     label: string;
     value: string;
+    /** Ghi đè class background cho icon box */
+    iconBgClassName?: string;
     /** Có href → thẻ thành link (vd Tổng điểm → lịch sử nhận điểm). */
     href?: "/point-history";
 }
 
-function StatCard({ icon, label, value, href }: StatCardProps) {
+function StatCard({
+    icon,
+    label,
+    value,
+    iconBgClassName,
+    href,
+}: StatCardProps) {
     const inner = (
         <>
-            <div className="bg-bgc-highlight/15 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl">
+            <div
+                className={cn(
+                    "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
+                    iconBgClassName || "bg-bgc-highlight/15",
+                )}
+            >
                 {icon}
             </div>
             <div className="min-w-0 flex-1">
@@ -54,7 +66,6 @@ export function RoadmapHeader() {
     // Tiến độ thật của người dùng (điểm · streak) — lấy từ context.
     const { progress } = useUserLearningProgress();
     const totalPoint = formatPoints(progress?.totalPoint ?? 0);
-    const streakDays = progress?.currentStreak ?? 0;
     // Trình độ = quyển đang học theo mốc tiến độ; user mới luôn là quyển đầu (N5 · A1).
     const level = useCurrentLevelLabel();
 
@@ -73,12 +84,7 @@ export function RoadmapHeader() {
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:w-[600px]">
-                <StatCard
-                    icon={<Flame className="text-bgc-highlight h-5 w-5" />}
-                    label={t("streak")}
-                    value={t("streakValue", { days: streakDays })}
-                />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <StatCard
                     icon={<Trophy className="text-bgc-highlight h-5 w-5" />}
                     label={t("currentLevel")}

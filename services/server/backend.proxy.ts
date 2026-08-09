@@ -86,6 +86,35 @@ export async function proxyPostForm(path: string, request: Request) {
 }
 
 /**
+ * Helper cho route handler (lớp 1): forward request multipart/form-data PATCH lên BE
+ * (giữ nguyên các part file/text), tự đính kèm access token từ cookie.
+ */
+export async function proxyPatchForm(path: string, request: Request) {
+    if (!process.env.API_URL) {
+        return NextResponse.json(
+            {
+                detail: "API_URL chưa được cấu hình trên server.",
+            } as ProblemDetail,
+            { status: 500 },
+        );
+    }
+
+    const accessToken = (await cookies()).get(ACCESS_TOKEN_NAME)?.value;
+    const form = await request.formData();
+
+    const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
+        method: "PATCH",
+        headers: {
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
+        body: form,
+        cache: "no-store",
+    });
+
+    return forwardJson(backendResponse);
+}
+
+/**
  * Helper cho route handler (lớp 1): forward request JSON lên BE với method tuỳ ý
  * (POST/PUT/DELETE), tự đính kèm access token. Chịu được response rỗng (BE trả
  * 201/204 no-body). DELETE có body được BE dùng cho lệnh xoá theo id.

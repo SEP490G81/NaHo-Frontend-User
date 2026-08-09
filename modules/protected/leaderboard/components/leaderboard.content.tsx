@@ -107,8 +107,8 @@ export function LeaderboardContent({
                         rank={lbUser.rank}
                         fullName={lbUser.fullName}
                         avatarUrl={resolveAvatarUrl(
-                            lbUser.avatarObjectKey,
-                            lbUser.oAuthAvatarUrl,
+                            lbUser.avatarUrl,
+                            lbUser.authAvatarUrl,
                         )}
                         point={lbUser.totalPoint}
                         topSize={LEADERBOARD_TOP_SIZE}

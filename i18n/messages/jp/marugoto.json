@@ -7,7 +7,7 @@
             "streak": "連続学習",
             "currentLevel": "現在のレベル",
             "totalPoints": "累計ポイント",
-            "streakValue": "{days}日 🔥",
+            "streakValue": "{days}日",
             "levelValue": "{level}",
             "pointsValue": "{points} L-Point"
         },

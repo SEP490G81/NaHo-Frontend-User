@@ -10,3 +10,17 @@ export interface VocabulariesOfObjectiveResponseVocabularyDetailResponse {
     vietnameseMeaningText: string;
     englishMeaningText: string;
 }
+
+export interface VocabQuizOption {
+    id: string;
+    text: string;
+}
+
+export interface VocabQuizItem {
+    vocabularyId: number;
+    japanese: string;
+    reading: string | null;
+    options: VocabQuizOption[];
+    correctOptionId: string;
+}
+

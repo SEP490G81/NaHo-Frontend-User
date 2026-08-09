@@ -1,5 +1,5 @@
 import React from "react";
-import {Compass, Home} from "lucide-react";
+import { Compass, Home } from "lucide-react";
 
 /**
  * Giao diện 404 mang thương hiệu NaHo, render trực tiếp tại chỗ (không dùng

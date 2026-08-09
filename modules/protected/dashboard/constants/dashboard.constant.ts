@@ -1,5 +1,10 @@
 export const CHART_COLOR = "#ff99ac";
+export const CHART_PRIMARY_COLOR = "#ff758f";
+export const CHART_GRADIENT_STOP_TOP = "#ff99ac";
 export const CHART_HOVER_FILL = "rgba(255, 153, 172, 0.1)";
+
+export const DAY_NAMES_VI = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+export const DEFAULT_CHART_HISTORY_PAGE_SIZE = 100;
 
 export const RANK_COLORS: Record<number, string> = {
     1: "bg-yellow-400 text-yellow-950",

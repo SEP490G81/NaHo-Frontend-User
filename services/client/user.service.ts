@@ -1,14 +1,16 @@
 import { ApiError } from "@/libs/api.error";
 import {
+    ChangePasswordRequest,
     CredentialsLoginRequest,
     ForgotPasswordRequest,
     RegisterRequest,
     ResendOtpRequest,
     ResetPasswordRequest,
+    UpdateUserInfoRequest,
     VerifyEmailRequest,
     VerifyForgotPasswordOtpRequest,
 } from "@/types/requests/user.request";
-import { ProblemDetail } from "@/types/responses/base.response";
+import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import {
     ResetPasswordTokenResponse,
     UserResponse,
@@ -191,3 +193,67 @@ export async function rotateToken() {
         throw new Error(problemDetail.detail);
     }
 }
+
+export async function updateUserInfoClient(
+    request: UpdateUserInfoRequest,
+): Promise<UserResponse> {
+    const response = await fetch("/api/users/info", {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+
+    const apiResponse = result as ApiResponse<UserResponse>;
+    return apiResponse.data || (result as UserResponse);
+}
+
+export async function uploadUserAvatarClient(
+    file: File,
+): Promise<UserResponse> {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const response = await fetch("/api/users/avatar", {
+        method: "PATCH",
+        body: formData,
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+
+    const apiResponse = result as ApiResponse<UserResponse>;
+    return apiResponse.data || (result as UserResponse);
+}
+
+export async function changePassword(
+    request: ChangePasswordRequest,
+): Promise<void> {
+    const response = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+        const problemDetail = result as ProblemDetail;
+        throw new ApiError(problemDetail);
+    }
+}
+

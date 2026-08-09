@@ -38,9 +38,9 @@ export function Sandbox() {
     });
     const maxSeconds = Math.max(
         1,
-        Math.round(planQ.data?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS),
+        Math.round(planQ.data?.plan?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS),
     );
-    const sampleAnswerEnabled = planQ.data?.sampleAnswerEnabled ?? false;
+    const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
 
     return (
         <SandboxProvider maxSeconds={maxSeconds}>

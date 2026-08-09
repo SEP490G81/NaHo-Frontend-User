@@ -80,7 +80,7 @@ export function TopicRow({ view, bookId, accent }: Props) {
     if (locked) {
         return (
             <div
-                className={`${className} opacity-60 cursor-not-allowed`}
+                className={`${className} cursor-not-allowed opacity-60`}
                 style={style}
             >
                 {inner}

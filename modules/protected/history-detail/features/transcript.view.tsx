@@ -77,7 +77,6 @@ export function TranscriptView({
                                     >
                                         {seg.text}
                                     </span>
-
                                 </Tooltip>
                             ) : (
                                 <span key={i}>{seg.text}</span>

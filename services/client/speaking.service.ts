@@ -1,9 +1,5 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    FormalityLevel,
-    MarugotoLevel,
-    PersonaResponse,
-} from "@/types/responses/persona.response";
+import { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
 import {
     AudioChatResponse,
     ChatReplyResponse,
@@ -11,7 +7,6 @@ import {
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
     SpeakingHistoryListItem,
-    SpringPage,
     StartConversationResponse
 } from "@/types/responses/speaking.response";
 
@@ -244,14 +239,17 @@ export async function endSession(
     sessionId: string,
     input: EndSessionInput = {},
 ): Promise<SessionScoringResponse> {
-    const response = await apiRequest(`/api/speaking/session/${sessionId}/end`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            topic: input.topic ?? "",
-            speechMetadata: input.speechMetadata ?? "",
-            asrConfidence: input.asrConfidence ?? "",
-        }),
-    });
+    const response = await apiRequest(
+        `/api/speaking/session/${sessionId}/end`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                topic: input.topic ?? "",
+                speechMetadata: input.speechMetadata ?? "",
+                asrConfidence: input.asrConfidence ?? "",
+            }),
+        },
+    );
     return unwrap<SessionScoringResponse>(response);
 }

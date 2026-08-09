@@ -63,15 +63,27 @@ export function ReportHistory({ refreshKey }: ReportHistoryProps) {
         statusFilter === "ALL"
             ? reports
             : statusFilter === "RESOLVED"
-                ? reports.filter((r) => r.isResolved)
-                : reports.filter((r) => !r.isResolved);
+              ? reports.filter((r) => r.isResolved)
+              : reports.filter((r) => !r.isResolved);
 
     if (loading) {
         return (
             <div className="space-y-4">
-                <Skeleton variant="rectangular" height={50} className="rounded-xl" />
-                <Skeleton variant="rectangular" height={50} className="rounded-xl" />
-                <Skeleton variant="rectangular" height={50} className="rounded-xl" />
+                <Skeleton
+                    variant="rectangular"
+                    height={50}
+                    className="rounded-xl"
+                />
+                <Skeleton
+                    variant="rectangular"
+                    height={50}
+                    className="rounded-xl"
+                />
+                <Skeleton
+                    variant="rectangular"
+                    height={50}
+                    className="rounded-xl"
+                />
             </div>
         );
     }
@@ -92,10 +104,11 @@ export function ReportHistory({ refreshKey }: ReportHistoryProps) {
                             <button
                                 key={tab.key}
                                 onClick={() => setStatusFilter(tab.key)}
-                                className={`cursor-pointer rounded-full px-4 py-1.5 text-xs font-bold transition-all duration-200 ${isSelected
+                                className={`cursor-pointer rounded-full px-4 py-1.5 text-xs font-bold transition-all duration-200 ${
+                                    isSelected
                                         ? "scale-105 bg-gray-900 font-bold text-white shadow-sm dark:bg-gray-100 dark:text-gray-900"
                                         : "bg-hbgc-app hover:bg-primary/10 text-text-contrast hover:text-primary border-bdc-primary border"
-                                    }`}
+                                }`}
                             >
                                 {tab.label} ({tab.count})
                             </button>

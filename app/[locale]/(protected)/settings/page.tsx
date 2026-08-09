@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import GeneralSettings from "@/modules/protected/settings/features/general.settings";
 
 export async function generateMetadata({
     params,
@@ -11,16 +12,16 @@ export async function generateMetadata({
     const { locale } = await params;
     const t = await getTranslations({
         locale,
-        namespace: "common.metadata.title",
+        namespace: "settings.page",
     });
 
     return {
-        title: t("settings"),
+        title: t("general"),
     };
 }
 
 const SettingsPage = () => {
-    return <div>settings</div>;
+    return <GeneralSettings />;
 };
 
 export default SettingsPage;

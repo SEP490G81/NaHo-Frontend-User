@@ -85,8 +85,11 @@ export function useAudioRecorder(onRecordComplete: (blob: Blob) => void) {
             // Phân tích âm lượng để phát hiện im lặng.
             const AudioCtxClass =
                 window.AudioContext ||
-                (window as unknown as { webkitAudioContext: typeof AudioContext })
-                    .webkitAudioContext;
+                (
+                    window as unknown as {
+                        webkitAudioContext: typeof AudioContext;
+                    }
+                ).webkitAudioContext;
             const audioCtx = new AudioCtxClass();
             audioContextRef.current = audioCtx;
 

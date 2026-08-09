@@ -115,7 +115,9 @@ export function AdvancedHintsView({
                             >
                                 <div className="flex-1 space-y-1">
                                     <div className="text-text-contrast text-base leading-none font-semibold">
-                                        <span className="font-noto-jp">{v.jp}</span>
+                                        <span className="font-noto-jp">
+                                            {v.jp}
+                                        </span>
                                     </div>
                                     <p className="text-text-muted text-xs">
                                         {v.romaji} {v.romaji && v.vi ? "·" : ""}{" "}

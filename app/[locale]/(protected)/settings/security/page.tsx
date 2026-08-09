@@ -1,5 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
+import SecuritySettings from "@/modules/protected/settings/features/security.settings";
 
 export async function generateMetadata({
     params,
@@ -20,7 +21,7 @@ export async function generateMetadata({
 }
 
 const SecurityPage = () => {
-    return <div>Security Page</div>;
+    return <SecuritySettings />;
 };
 
 export default SecurityPage;

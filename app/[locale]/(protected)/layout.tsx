@@ -40,7 +40,9 @@ const ProtectedLayout = async ({
                             <div className="bg-bgc-page relative isolate w-full flex-1 p-5">
                                 <SakuraFalling />
                                 <JapanBackground />
-                                {children}
+                                <div className="max-w-7xl mx-auto">
+                                    {children}
+                                </div>
                             </div>
                         </div>
                     </div>

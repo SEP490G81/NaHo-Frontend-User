@@ -92,7 +92,10 @@ export function SessionReport() {
                     className="bg-bgc-highlight absolute inset-y-0 left-0 w-1.5"
                 />
                 <div className="flex flex-col items-center gap-6 pl-2 sm:flex-row sm:gap-8">
-                    <ScoreRing value={report.overallScore} label={t("overall")} />
+                    <ScoreRing
+                        value={report.overallScore}
+                        label={t("overall")}
+                    />
                     <div className="flex-1 space-y-3 text-center sm:text-left">
                         <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
                             <h1 className="text-text-contrast inline-flex items-center gap-2.5 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -264,8 +267,7 @@ function ListCard({
     icon: React.ReactNode;
     accent: "emerald" | "amber";
 }) {
-    const dot =
-        accent === "emerald" ? "bg-emerald-500" : "bg-amber-500";
+    const dot = accent === "emerald" ? "bg-emerald-500" : "bg-amber-500";
     const head =
         accent === "emerald"
             ? "text-emerald-600 dark:text-emerald-400"

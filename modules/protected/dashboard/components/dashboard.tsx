@@ -2,42 +2,36 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { currentLearner } from "@/data/mockLearnerDashboard";
 import WelcomeBanner from "./welcome.banner";
-import UpgradeBanner from "./upgrade.banner";
 import KanjiQuoteCard from "./kanji.quote.card";
 import DailyVocabQuiz from "./daily.vocab.quiz";
 import PracticeTimeChart from "../features/practice.time.chart";
+import ContainerBox from "@/components/ui/container.box";
 
 export function Dashboard() {
     const t = useTranslations("dashboard");
 
     return (
-        <div className="mx-auto max-w-7xl space-y-5 pb-10">
-            {/* 1. Hero Command Center (Greeting, Goal progress, Quick Resume CTA) */}
-            <WelcomeBanner name={currentLearner.name} t={t} />
+        <div className="mx-auto space-y-6 pb-10 px-4 sm:px-6">
+            {/* 1. Hero Banner Top */}
+            <WelcomeBanner t={t} />
 
-            {/* 2. Main Dashboard Grid (Left 2 cols, Right 1 col) */}
-            <div className="grid gap-5 lg:grid-cols-3">
-                {/* Left Area (2 Columns) */}
-                <div className="space-y-5 lg:col-span-2">
-                    {/* Interactive Vocab Challenge */}
+            {/* 2. Kanji Inspiration Quote (Full Width) */}
+            <KanjiQuoteCard />
+
+            {/* 3. Hàng ngang kết hợp Biểu đồ (70%) + Quiz (30%) cao bằng nhau 100% */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-stretch">
+                {/* Biểu đồ luyện tập (Chiếm ~70% - 8 trên 12 cột) */}
+                {/* Quiz từ vựng hàng ngày (Chiếm ~30% - 4 trên 12 cột) */}
+                <div className="flex flex-col lg:col-span-5 xl:col-span-4">
                     <DailyVocabQuiz />
-
-                    {/* Analytics & Practice Time Chart */}
-                    <PracticeTimeChart />
                 </div>
-
-                {/* Right Sidebar (1 Column) */}
-                <div className="space-y-5 lg:col-span-1">
-                    {/* Kanji Inspiration Quote */}
-                    <KanjiQuoteCard />
-
-                    {/* Subscription Upgrade Promo Card */}
-                    <UpgradeBanner />
+                <div className="flex flex-col lg:col-span-7 xl:col-span-8">
+                    <PracticeTimeChart />
                 </div>
             </div>
         </div>
+
     );
 }
 

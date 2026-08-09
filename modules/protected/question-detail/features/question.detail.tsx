@@ -54,7 +54,7 @@ export function QuestionDetail() {
     const sq = detail?.speakingQuestion;
     const mappedBook = bookQ.data ? mapBook(bookQ.data) : null;
     const accent = mappedBook?.coverColor ?? DEFAULT_ACCENT;
-    const sampleAnswerEnabled = planQ.data?.sampleAnswerEnabled ?? false;
+    const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
 
     if (nodeQ.isLoading || frontierLoading || bookQ.isLoading) {
         return (

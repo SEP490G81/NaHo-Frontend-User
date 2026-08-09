@@ -140,7 +140,7 @@ export function ReportCreateForm({ onSuccess }: ReportCreateFormProps) {
                                 <Send className="h-4 w-4" />
                             )
                         }
-                        className="!bg-bgc-highlight !text-text-pure hover:!opacity-90 rounded-lg px-8 py-2.5 font-bold normal-case shadow-sm"
+                        className="!bg-bgc-highlight !text-text-pure rounded-lg px-8 py-2.5 font-bold normal-case shadow-sm hover:!opacity-90"
                     >
                         {submitting ? t("submitting") : t("submitBtn")}
                     </Button>

@@ -53,7 +53,9 @@ export function AiMessageBubble({ message, companion, voiceSpeed }: Props) {
                                 variant="outlined"
                                 onClick={() => setShowTranslation((v) => !v)}
                                 className="border-bdc-primary !text-text-contrast hover:!border-bgc-highlight hover:!bg-bgc-highlight/10 !rounded-full border !text-xs capitalize"
-                                startIcon={<Languages className="h-3.5 w-3.5" />}
+                                startIcon={
+                                    <Languages className="h-3.5 w-3.5" />
+                                }
                             >
                                 {t("showTranslation")}
                             </Button>

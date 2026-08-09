@@ -11,11 +11,13 @@ export interface LeagueResponse {
 
 export interface LeagueLeaderboardEntryResponse {
     id: number;
+    leagueId?: number;
+    rank?: number;
     username: string | null;
     email: string;
     fullName: string | null;
-    avatarObjectKey: string | null;
-    oAuthAvatarUrl: string[];
+    avatarUrl?: string | null;
+    authAvatarUrl?: string[] | null;
     totalPoint: number;
 }
 
