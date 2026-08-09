@@ -2,11 +2,10 @@
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail, listTopicsByBook } from "@/services/client/book.service";
+import { getBookDetail, getLessonDetail, getObjectiveDetail, getTopicDetail } from "@/services/client/book.service";
 import { mapBeLessonDetail, mapBeObjective, mapBook } from "@/data/marugoto/mapper";
 import type { BookTopic, Lesson } from "@/data/marugoto/types";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
-import { accessVerdict } from "@/modules/protected/topics/utils/unlock";
 import NotFoundView from "@/components/ui/not.found.view";
 import { useTopicNodes } from "../hooks/use.cando.nodes";
 import TopicPathHeader from "../components/topic.path.header";
@@ -42,12 +41,6 @@ export function TopicPath() {
         queryKey: ["topic", topicId],
         queryFn: () => getTopicDetail(topicId),
         enabled: !!topicId,
-    });
-    // Danh sách chủ đề của quyển — để xác minh topic THUỘC quyển trong URL + mốc khóa.
-    const bookTopicsQ = useQuery({
-        queryKey: ["topics", bookId],
-        queryFn: () => listTopicsByBook(bookId),
-        enabled: !!bookId,
     });
 
     const lessons = useMemo(() => topicQ.data?.lessons ?? [], [topicQ.data]);
@@ -111,7 +104,6 @@ export function TopicPath() {
         frontierLoading ||
         bookQ.isLoading ||
         topicQ.isLoading ||
-        bookTopicsQ.isLoading ||
         (lessons.length > 0 && lessonQs.some((q) => q.isLoading)) ||
         (objRefs.length > 0 && objQs.some((q) => q.isLoading));
 
@@ -128,22 +120,14 @@ export function TopicPath() {
     if (bookQ.isError || topicQ.isError) return <NotFoundView />;
     if (!book || !topic || loading) return <LoadingState />;
 
-    // Guard: chủ đề phải THUỘC quyển trong URL và đã mở khóa theo mốc tiến độ.
-    // Chặn cả /books/6/topics/1 (topic không nằm trong quyển 6) lẫn topic chưa mở.
-    const bookTopic = bookTopicsQ.data?.find(
-        (tp) => String(tp.id) === topicId,
-    );
-    if (bookTopicsQ.isSuccess && frontier != null) {
-        const verdict = bookTopic
-            ? accessVerdict(
-                  {
-                      firstNodeOrder: bookTopic.firstNodeGlobalOrderIndex,
-                      lastNodeOrder: bookTopic.lastNodeGlobalOrderIndex,
-                  },
-                  frontier,
-              )
-            : "denied";
-        if (verdict === "denied") return <NotFoundView />;
+    // Guard: chặn truy cập chủ đề đang KHÓA qua URL. Dùng chính trạng thái node
+    // đã tính theo mốc tiến độ (đáng tin) — topic khóa khi MỌI node đều locked.
+    if (
+        frontier != null &&
+        allNodes.length > 0 &&
+        allNodes.every((n) => n.status === "locked")
+    ) {
+        return <NotFoundView />;
     }
 
     const accent = book.coverColor ?? "var(--color-bgc-highlight)";
