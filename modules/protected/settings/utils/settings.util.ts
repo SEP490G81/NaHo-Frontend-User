@@ -63,3 +63,55 @@ export function validateAge(dobString: string): AgeErrorKey | null {
     }
     return null;
 }
+
+export const PASSWORD_PATTERN =
+    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!_~\-]).{8,}$/;
+
+export type OldPasswordErrorKey = "oldPasswordRequired";
+export type NewPasswordErrorKey = "newPasswordRequired" | "passwordPatternError";
+export type ConfirmPasswordErrorKey = "confirmPasswordRequired" | "passwordMatchError";
+
+export function validateOldPassword(val: string): OldPasswordErrorKey | null {
+    if (!val || !val.trim()) return "oldPasswordRequired";
+    return null;
+}
+
+export function validateNewPassword(val: string): NewPasswordErrorKey | null {
+    if (!val || !val.trim()) return "newPasswordRequired";
+    if (!PASSWORD_PATTERN.test(val)) return "passwordPatternError";
+    return null;
+}
+
+export function validateConfirmPassword(
+    newPassword: string,
+    confirmPassword: string,
+): ConfirmPasswordErrorKey | null {
+    if (!confirmPassword || !confirmPassword.trim()) return "confirmPasswordRequired";
+    if (newPassword !== confirmPassword) return "passwordMatchError";
+    return null;
+}
+
+export interface ChangePasswordValidationResult {
+    currentPasswordErrorKey: OldPasswordErrorKey | null;
+    newPasswordErrorKey: NewPasswordErrorKey | null;
+    confirmPasswordErrorKey: ConfirmPasswordErrorKey | null;
+    isValid: boolean;
+}
+
+export function validateChangePassword(
+    currentPassword: string,
+    newPassword: string,
+    confirmPassword: string,
+): ChangePasswordValidationResult {
+    const currentPasswordErrorKey = validateOldPassword(currentPassword);
+    const newPasswordErrorKey = validateNewPassword(newPassword);
+    const confirmPasswordErrorKey = validateConfirmPassword(newPassword, confirmPassword);
+
+    return {
+        currentPasswordErrorKey,
+        newPasswordErrorKey,
+        confirmPasswordErrorKey,
+        isValid: !currentPasswordErrorKey && !newPasswordErrorKey && !confirmPasswordErrorKey,
+    };
+}
+

@@ -39,12 +39,15 @@
             "usernamePlaceholder": "ユーザー名を入力",
             "usernameDesc": "一意のユーザー名（4〜36文字）",
             "fullNameLabel": "氏名",
+            "fullNameDesc": "プロフィールに表示されるフルネーム",
             "genderLabel": "性別",
+            "genderDesc": "ユーザー体験をパーソナライズするための性別",
             "genderUnspecified": "未設定",
             "genderMale": "男性",
             "genderFemale": "女性",
             "genderOther": "その他",
             "dobLabel": "生年月日",
+            "dobDesc": "生年月日（8歳から65歳まで）",
             "jlptLabel": "JLPTレベル",
             "jlptDesc": "現在の日本語能力レベル",
             "updateProfileBtn": "情報を更新",
@@ -73,7 +76,13 @@
             "confirmPassword": "新しいパスワード（確認）",
             "updatePasswordBtn": "パスワードを更新",
             "passwordMatchError": "新しいパスワードと確認用パスワードが一致しません。",
-            "passwordUpdateSuccess": "パスワードを変更しました！"
+            "passwordUpdateSuccess": "パスワードを変更しました！",
+            "oldPasswordRequired": "現在のパスワードを入力してください。",
+            "newPasswordRequired": "新しいパスワードを入力してください。",
+            "confirmPasswordRequired": "新しいパスワードを再入力してください。",
+            "passwordPatternError": "パスワードは8文字以上で、英大文字・英小文字・数字・特殊文字（@#$%^&+=!_~-）をそれぞれ1文字以上含む必要があります。",
+            "oldPasswordIncorrect": "入力された現在のパスワードが正しくありません。",
+            "passwordSameAsOldError": "新しいパスワードは現在のパスワードと同じにすることはできません。"
         },
 
         "orders": {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Collapse, List, ListItem, ListItemButton } from "@mui/material";
+import { Box, Collapse, List, ListItem } from "@mui/material";
 import { ChevronDown } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
@@ -26,16 +26,16 @@ export const getItemClassName = (
 ) => {
     if (isSubItem) {
         return cn(
-            "relative flex w-full items-center rounded-lg text-xs transition-all duration-200 ease-in-out gap-3 px-3 py-2",
+            "relative flex w-full items-center rounded-lg text-xs transition-all duration-200 ease-in-out gap-3 px-3 py-2 cursor-pointer",
             active
-                ? "bg-bgc-highlight/10 text-bgc-highlight font-semibold"
+                ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                 : "text-text-contrast hover:bg-hbgc-app" +
                       (isCollapsed ? "" : " hover:translate-x-1"),
         );
     }
     return cn(
-        "relative flex w-full items-center rounded-lg text-sm transition-all duration-200 ease-in-out",
-        isCollapsed ? "justify-center px-0" : "gap-3 px-3",
+        "relative flex w-full items-center rounded-lg text-sm transition-all duration-200 ease-in-out cursor-pointer",
+        isCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5",
         active
             ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
             : "text-text-contrast hover:bg-hbgc-app" +
@@ -113,61 +113,48 @@ export const SidebarItem = ({
                         placement="right"
                         disableHoverListener={!isCollapsed}
                     >
-                        <span className="block w-full">
-                            <ListItemButton
-                                onClick={() => {
-                                    if (isCollapsed) {
-                                        toggleSidebarCollapse();
-                                    }
-                                    onToggleSubMenu();
-                                }}
-                                className={getItemClassName(
-                                    !!active,
-                                    isCollapsed,
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (isCollapsed) {
+                                    toggleSidebarCollapse();
+                                }
+                                onToggleSubMenu();
+                            }}
+                            className={getItemClassName(!!active, isCollapsed)}
+                        >
+                            {active && (
+                                <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                            )}
+                            <item.icon
+                                className={cn(
+                                    "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
+                                    active
+                                        ? "text-bgc-highlight"
+                                        : "text-text-muted",
                                 )}
-                                sx={{
-                                    paddingTop: "10px",
-                                    paddingBottom: "10px",
-                                    ...(isCollapsed && {
-                                        justifyContent: "center",
-                                        paddingLeft: 0,
-                                        paddingRight: 0,
-                                    }),
-                                }}
-                            >
-                                {active && (
-                                    <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
-                                )}
-                                <item.icon
-                                    className={cn(
-                                        "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
-                                        active
-                                            ? "text-bgc-highlight"
-                                            : "text-text-muted",
-                                    )}
-                                />
-                                {!isCollapsed && (
-                                    <>
-                                        <span
-                                            className={cn(
-                                                "flex-1 text-sm font-medium transition-all duration-200",
-                                                active
-                                                    ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
-                                                    : "text-text-contrast truncate",
-                                            )}
-                                        >
-                                            {item.title}
-                                        </span>
-                                        <ChevronDown
-                                            className={cn(
-                                                "text-text-muted h-4 w-4 shrink-0 transition-transform duration-200",
-                                                isOpen && "rotate-180",
-                                            )}
-                                        />
-                                    </>
-                                )}
-                            </ListItemButton>
-                        </span>
+                            />
+                            {!isCollapsed && (
+                                <>
+                                    <span
+                                        className={cn(
+                                            "flex-1 text-left text-sm font-medium transition-all duration-200",
+                                            active
+                                                ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
+                                                : "text-text-contrast truncate",
+                                        )}
+                                    >
+                                        {item.title}
+                                    </span>
+                                    <ChevronDown
+                                        className={cn(
+                                            "text-text-muted h-4 w-4 shrink-0 transition-transform duration-200",
+                                            isOpen && "rotate-180",
+                                        )}
+                                    />
+                                </>
+                            )}
+                        </button>
                     </TooltipCustom>
                 </ListItem>
 
@@ -187,8 +174,7 @@ export const SidebarItem = ({
                                 pathname.startsWith(child.url + "/");
                             return (
                                 <ListItem key={child.title} disablePadding>
-                                    <ListItemButton
-                                        component={Link as any}
+                                    <Link
                                         href={child.url}
                                         onClick={onCloseSidebar}
                                         className={getItemClassName(
@@ -210,7 +196,7 @@ export const SidebarItem = ({
                                         >
                                             {child.title}
                                         </span>
-                                    </ListItemButton>
+                                    </Link>
                                 </ListItem>
                             );
                         })}
@@ -228,50 +214,39 @@ export const SidebarItem = ({
                 placement="right"
                 disableHoverListener={!isCollapsed}
             >
-                <span className="block w-full">
-                    <ListItemButton
-                        component={Link as any}
-                        href={item.url}
-                        onClick={onCloseSidebar}
-                        className={getItemClassName(!!active, isCollapsed)}
-                        sx={{
-                            paddingTop: "10px",
-                            paddingBottom: "10px",
-                            ...(isCollapsed && {
-                                justifyContent: "center",
-                                paddingLeft: 0,
-                                paddingRight: 0,
-                            }),
-                        }}
-                    >
-                        {active && (
-                            <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                <Link
+                    href={item.url!}
+                    onClick={onCloseSidebar}
+                    className={getItemClassName(!!active, isCollapsed)}
+                >
+                    {active && (
+                        <span className="bg-bgc-highlight absolute top-1/4 left-0 h-1/2 w-1 rounded-r-md" />
+                    )}
+                    <item.icon
+                        className={cn(
+                            "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
+                            active
+                                ? "text-bgc-highlight"
+                                : "text-text-muted",
                         )}
-                        <item.icon
+                    />
+                    {!isCollapsed && (
+                        <span
                             className={cn(
-                                "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
+                                "flex-1 text-sm font-medium transition-all duration-200",
                                 active
-                                    ? "text-bgc-highlight"
-                                    : "text-text-muted",
+                                    ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
+                                    : "text-text-contrast truncate",
                             )}
-                        />
-                        {!isCollapsed && (
-                            <span
-                                className={cn(
-                                    "flex-1 text-sm font-medium transition-all duration-200",
-                                    active
-                                        ? "text-bgc-highlight w-max font-semibold whitespace-nowrap"
-                                        : "text-text-contrast truncate",
-                                )}
-                            >
-                                {item.title}
-                            </span>
-                        )}
-                    </ListItemButton>
-                </span>
+                        >
+                            {item.title}
+                        </span>
+                    )}
+                </Link>
             </TooltipCustom>
         </ListItem>
     );
 };
 
 export default SidebarItem;
+

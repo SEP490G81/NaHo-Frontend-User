@@ -9,6 +9,9 @@ import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { toast } from "react-toastify";
 import { TextFieldCustom } from "@/components/ui/mui-custom/text.field.custom";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
+import { changePassword } from "@/services/client/user.service";
+import { ApiError } from "@/libs/api.error";
+import { validateChangePassword } from "@/modules/protected/settings/utils/settings.util";
 
 const SecuritySettings = () => {
     const t = useTranslations("settings.security");
@@ -22,22 +25,67 @@ const SecuritySettings = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const handleUpdatePassword = (e: React.FormEvent) => {
+    const [currentPasswordError, setCurrentPasswordError] = useState<string | null>(null);
+    const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
+    const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleUpdatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!currentPassword || !newPassword || !confirmPassword) {
-            toast.error("Vui lòng nhập đầy đủ thông tin");
-            return;
+
+        setCurrentPasswordError(null);
+        setNewPasswordError(null);
+        setConfirmPasswordError(null);
+
+        const {
+            currentPasswordErrorKey,
+            newPasswordErrorKey,
+            confirmPasswordErrorKey,
+            isValid,
+        } = validateChangePassword(currentPassword, newPassword, confirmPassword);
+
+        if (currentPasswordErrorKey) {
+            setCurrentPasswordError(t(currentPasswordErrorKey));
+        }
+        if (newPasswordErrorKey) {
+            setNewPasswordError(t(newPasswordErrorKey));
+        }
+        if (confirmPasswordErrorKey) {
+            setConfirmPasswordError(t(confirmPasswordErrorKey));
         }
 
-        if (newPassword !== confirmPassword) {
-            toast.error(t("passwordMatchError"));
-            return;
-        }
+        if (!isValid) return;
 
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-        toast.success(t("passwordUpdateSuccess"));
+        setIsLoading(true);
+        try {
+            await changePassword({
+                oldPassword: currentPassword,
+                newPassword,
+                confirmPassword,
+            });
+
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            toast.success(t("passwordUpdateSuccess"));
+        } catch (err: unknown) {
+            if (err instanceof ApiError) {
+                if (err.errorCode === "USER_A018") {
+                    setCurrentPasswordError(t("oldPasswordIncorrect"));
+                } else if (err.errorCode === "USER_A017") {
+                    setNewPasswordError(t("passwordSameAsOldError"));
+                } else {
+                    toast.error(err.message || "Đã xảy ra lỗi khi đổi mật khẩu.");
+                }
+            } else if (err instanceof Error) {
+                toast.error(err.message);
+            } else {
+                toast.error("Đã xảy ra lỗi không xác định.");
+            }
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -84,9 +132,21 @@ const SecuritySettings = () => {
                         <TextFieldCustom
                             fullWidth
                             variant="filled"
+                            placeholder="••••••••"
                             type={showCurrentPassword ? "text" : "password"}
                             value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            onChange={(e) => {
+                                setCurrentPassword(e.target.value);
+                                if (currentPasswordError) setCurrentPasswordError(null);
+                            }}
+                            error={Boolean(currentPasswordError)}
+                            helperText={
+                                currentPasswordError ? (
+                                    <span className="text-text-error font-semibold">
+                                        {currentPasswordError}
+                                    </span>
+                                ) : null
+                            }
                             slotProps={{
                                 input: {
                                     endAdornment: (
@@ -121,9 +181,21 @@ const SecuritySettings = () => {
                         <TextFieldCustom
                             fullWidth
                             variant="filled"
+                            placeholder="••••••••"
                             type={showNewPassword ? "text" : "password"}
                             value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
+                            onChange={(e) => {
+                                setNewPassword(e.target.value);
+                                if (newPasswordError) setNewPasswordError(null);
+                            }}
+                            error={Boolean(newPasswordError)}
+                            helperText={
+                                newPasswordError ? (
+                                    <span className="text-text-error font-semibold">
+                                        {newPasswordError}
+                                    </span>
+                                ) : null
+                            }
                             slotProps={{
                                 input: {
                                     endAdornment: (
@@ -158,9 +230,21 @@ const SecuritySettings = () => {
                         <TextFieldCustom
                             fullWidth
                             variant="filled"
+                            placeholder="••••••••"
                             type={showConfirmPassword ? "text" : "password"}
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                if (confirmPasswordError) setConfirmPasswordError(null);
+                            }}
+                            error={Boolean(confirmPasswordError)}
+                            helperText={
+                                confirmPasswordError ? (
+                                    <span className="text-text-error font-semibold">
+                                        {confirmPasswordError}
+                                    </span>
+                                ) : null
+                            }
                             slotProps={{
                                 input: {
                                     endAdornment: (
@@ -193,6 +277,7 @@ const SecuritySettings = () => {
                     <Button
                         type="submit"
                         variant="contained"
+                        disabled={isLoading}
                         startIcon={<SaveOutlinedIcon fontSize="small" />}
                         sx={{
                             backgroundColor: "var(--color-bgc-highlight)",
@@ -206,6 +291,11 @@ const SecuritySettings = () => {
                                 opacity: 0.9,
                                 backgroundColor: "var(--color-bgc-highlight)",
                             },
+                            "&.Mui-disabled": {
+                                opacity: 0.6,
+                                color: "#ffffff",
+                                backgroundColor: "var(--color-bgc-highlight)",
+                            },
                         }}
                     >
                         {t("updatePasswordBtn")}
@@ -217,3 +307,4 @@ const SecuritySettings = () => {
 };
 
 export default SecuritySettings;
+
