@@ -168,11 +168,10 @@
             "reactionFailed": "Không cập nhật được cảm xúc."
         },
         "sideRail": {
-            "leaderboardTitle": "Bảng xếp hạng tuần",
+            "leagueTitle": "Giải đấu tuần",
             "yourRank": "Hạng của bạn",
             "points": "{points} điểm",
-            "questsTitle": "Nhiệm vụ hôm nay",
-            "achievementTitle": "Thành tựu kế tiếp"
+            "topicQuestsTitle": "Nhiệm vụ chủ đề"
         }
     }
 }

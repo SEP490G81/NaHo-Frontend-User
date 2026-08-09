@@ -13,7 +13,6 @@ import {
 } from "@/services/client/book.service";
 import { getMySubscription } from "@/services/client/subscription.service";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
-import { accessVerdict } from "@/modules/protected/topics/utils/unlock";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 import SampleAnswerCard from "@/components/ui/sample.answer.card";
 import NotFoundView from "@/components/ui/not.found.view";
@@ -65,21 +64,11 @@ export function QuestionDetail() {
         );
     }
     if (nodeQ.isError || !detail) return <NotFoundView />;
-    // Guard: node phải thuộc quyển trong URL và không vượt mốc tiến độ (khóa) → 404.
-    const nodeAccess = accessVerdict(
-        {
-            firstNodeOrder: detail.globalOrderIndex,
-            lastNodeOrder: detail.globalOrderIndex,
-        },
-        frontier,
-        mappedBook
-            ? {
-                  firstNodeOrder: mappedBook.firstNodeOrder,
-                  lastNodeOrder: mappedBook.lastNodeOrder,
-              }
-            : null,
-    );
-    if (nodeAccess === "denied") return <NotFoundView />;
+    // Guard: chỉ chặn node VƯỢT mốc tiến độ (đang khóa) → 404. Việc topic có thuộc
+    // quyển hay không đã được guard ở trang lộ trình (listTopicsByBook) lo.
+    if (frontier != null && detail.globalOrderIndex > frontier) {
+        return <NotFoundView />;
+    }
     if (!sq) return <NotFoundView />;
 
     const practiceHref = `/sandbox/${sq.id}?node=${nodeId}&book=${bookId}&topic=${topicId}`;

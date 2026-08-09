@@ -168,11 +168,10 @@
             "reactionFailed": "リアクションを更新できませんでした。"
         },
         "sideRail": {
-            "leaderboardTitle": "週間ランキング",
+            "leagueTitle": "週間リーグ",
             "yourRank": "あなたの順位",
             "points": "{points} ポイント",
-            "questsTitle": "今日のクエスト",
-            "achievementTitle": "次の実績"
+            "topicQuestsTitle": "トピックのミッション"
         }
     }
 }

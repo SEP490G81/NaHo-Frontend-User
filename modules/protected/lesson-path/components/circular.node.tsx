@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Check, Lock } from "lucide-react";
+import { BookOpen, Check, Lock, Mic } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
@@ -8,10 +8,9 @@ import { getLearningPathNodeDetail } from "@/services/client/book.service";
 import { FuriganaHtml } from "@/components/ui/furigana.html";
 import type { NodeKind, PathNode } from "../hooks/use.cando.nodes";
 import SakuraDisc from "./sakura.disc";
-import NodeIcon from "./node.icon";
 import NodeTooltip from "./node.tooltip";
 
-const SIZE = 66;
+const SIZE = 76;
 
 interface Props {
     node: PathNode;
@@ -42,9 +41,12 @@ export function CircularNode({
     const locked = status === "locked";
     const completed = status === "completed";
     const kind = node.kind as Exclude<NodeKind, "chest">;
+    // Node hoa anh đào luôn màu HỒNG (giống hoa trang trí của app), tách khỏi màu
+    // sách; đã xong thì hồng trầm hơn, khóa thì xám (xử lý trong SakuraDisc).
+    const SAKURA = "var(--color-bgc-highlight)";
     const color = completed
-        ? `color-mix(in srgb, ${accent} 82%, #000)`
-        : accent;
+        ? `color-mix(in srgb, ${SAKURA} 82%, #000)`
+        : SAKURA;
 
     const [hovered, setHovered] = useState(false);
     // Chỉ nạp đề bài khi rê vào node LUYỆN NÓI; cache dùng chung với trang chi tiết.
@@ -65,9 +67,14 @@ export function CircularNode({
             {!locked && (
                 <NodeTooltip>
                     <span
-                        className="rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
-                        style={{ background: color }}
+                        className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase"
+                        style={{ background: accent }}
                     >
+                        {kind === "vocab" ? (
+                            <BookOpen className="h-3 w-3" strokeWidth={2.5} />
+                        ) : (
+                            <Mic className="h-3 w-3" strokeWidth={2.5} />
+                        )}
                         {title}
                     </span>
                     {kind === "question" ? (
@@ -119,12 +126,10 @@ export function CircularNode({
                 )}
             >
                 <span className="relative inline-block">
+                    {/* Node chỉ là hoa anh đào; icon loại node hiện ở tooltip khi
+                        hover. Node khóa mới hiện ổ khóa để báo trạng thái. */}
                     <SakuraDisc color={color} locked={locked} size={SIZE}>
-                        {locked ? (
-                            <Lock className="h-4 w-4 text-slate-400" />
-                        ) : (
-                            <NodeIcon kind={kind} size={30} />
-                        )}
+                        {locked ? <Lock className="h-5 w-5" /> : null}
                     </SakuraDisc>
                     {completed && !locked && (
                         <span

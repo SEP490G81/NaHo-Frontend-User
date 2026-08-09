@@ -168,11 +168,10 @@
             "reactionFailed": "Could not update reaction."
         },
         "sideRail": {
-            "leaderboardTitle": "Weekly leaderboard",
+            "leagueTitle": "Weekly league",
             "yourRank": "Your rank",
             "points": "{points} pts",
-            "questsTitle": "Today's quests",
-            "achievementTitle": "Next achievement"
+            "topicQuestsTitle": "Topic missions"
         }
     }
 }
