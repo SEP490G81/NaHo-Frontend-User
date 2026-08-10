@@ -11,6 +11,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 import { ContainerBox } from "@/components/ui/container.box";
 import { getCurrentUserClient } from "@/services/client/user.service";
@@ -48,14 +49,24 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
         userData?.username ||
         (userData?.email ? userData.email.split("@")[0] : name || "Learner");
 
+    const tBilling = useTranslations("settings.billing");
+
     // 2. User Subscription Data & Expiration Info (Safe fallback for both UserSubscriptionResponse and SubscriptionPlanResponse)
     const { data: userSubscription } = useMySubscription();
     const subAny = userSubscription as any;
 
-    const planObj = subAny?.plan || subAny;
+    const planObj = subAny?.subscriptionPlan || subAny?.plan || subAny;
     const tier = planObj?.tier || subAny?.tier || "FREE";
     const planName =
-        planObj?.name || subAny?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
+        planObj?.name ||
+        subAny?.name ||
+        (tier === "FREE"
+            ? tBilling("freePlan")
+            : tier === "BASIC"
+              ? tBilling("basicPlan")
+              : tier === "PREMIUM"
+                ? tBilling("premiumPlan")
+                : tier);
     const isPremium = tier === "PREMIUM";
 
     // Expiration Due Date

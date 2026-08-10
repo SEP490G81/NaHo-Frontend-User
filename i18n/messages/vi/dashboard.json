@@ -50,6 +50,9 @@
         "nodeVocabTitle": "Từ vựng: {name}",
         "nodeVocabSubtitle": "Ôn tập vốn câu và từ vựng giao tiếp",
         "nodeChestTitle": "Mở rương phần thưởng",
-        "nodeChestSubtitle": "Nhận điểm thưởng lộ trình"
+        "nodeChestSubtitle": "Nhận điểm thưởng lộ trình",
+        "selectCorrectMeaning": "Chọn ý nghĩa tiếng Việt chính xác:",
+        "selectOptionToAnswer": "Hãy chọn 1 đáp án để kiểm tra...",
+        "upgrade": "Nâng cấp"
     }
 }

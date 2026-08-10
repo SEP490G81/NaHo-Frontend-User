@@ -50,29 +50,37 @@
             "back": "戻る"
         },
         "layout": {
+            "sidebar": {
+                "home": "ホーム",
+                "kaiwaPath": "会話ロードマップ",
+                "freeDialogue": "AIフリートーク",
+                "leaderboard": "ランキング",
+                "comingSoon": "近日公開",
+                "new": "NEW"
+            },
             "header": {
                 "collapseSidebar": "サイドバーを折りたたむ",
                 "expandSidebar": "サイドバーを展開する",
                 "notificationButton": "通知",
                 "themeSwitchButton": {
-                    "darkMode": "Chế độ tối",
-                    "lightMode": "Chế độ sáng"
+                    "darkMode": "ダークモード",
+                    "lightMode": "ライトモード"
                 },
                 "furiganaSwitchButton": {
                     "showFurigana": "ふりがなを表示",
                     "hideFurigana": "ふりがなを非表示"
                 },
-                "loginButton": "Đăng nhập",
-                "logoutButton": "Đăng xuất",
-                "registerButton": "Đăng ký trải nghiệm ngay",
+                "loginButton": "ログイン",
+                "logoutButton": "ログアウト",
+                "registerButton": "今すぐ登録",
                 "accountMenu": {
-                    "settings": "Settings",
-                    "orders": "取引履歴",
+                    "settings": "設定",
+                    "orders": "注文履歴",
                     "pointHistory": "ポイント履歴",
-                    "speakingHistory": "書籍別スピーキング履歴",
-                    "language": "Language",
-                    "getHelp": "Help & Support",
-                    "report": "Report"
+                    "speakingHistory": "発音練習履歴",
+                    "language": "言語",
+                    "getHelp": "ヘルプ・サポート",
+                    "report": "報告・フィードバック"
                 }
             }
         },

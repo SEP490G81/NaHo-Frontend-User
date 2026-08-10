@@ -24,7 +24,16 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
         }
 
         const api = result as ApiResponse<UserSubscriptionResponse>;
-        return api.data ?? null;
+        if (api.data) {
+            const subData = api.data;
+            const planObj = subData.subscriptionPlan || subData.plan;
+            return {
+                ...subData,
+                subscriptionPlan: planObj,
+                plan: planObj,
+            };
+        }
+        return null;
     } catch (error) {
         console.error("Error fetching my subscription:", error);
         throw error;
@@ -56,7 +65,7 @@ export async function getSubscriptionPlans(): Promise<
         const problem = result as ProblemDetail;
         throw new Error(
             problem.detail ||
-                "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
+            "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
         );
     }
 

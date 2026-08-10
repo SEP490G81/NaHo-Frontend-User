@@ -111,7 +111,7 @@ export function DailyVocabQuiz({ className = "" }: { className?: string }) {
                                 )}
                             </div>
                             <p className="mt-1 text-xs font-medium text-text-primary leading-relaxed">
-                                Chọn ý nghĩa tiếng Việt chính xác:
+                                {t("selectCorrectMeaning")}
                             </p>
                         </div>
 
@@ -186,7 +186,7 @@ export function DailyVocabQuiz({ className = "" }: { className?: string }) {
                         </>
                     ) : (
                         <p className="text-[11px] font-medium text-text-muted italic leading-none">
-                            Hãy chọn 1 đáp án để kiểm tra...
+                            {t("selectOptionToAnswer")}
                         </p>
                     )}
                 </div>

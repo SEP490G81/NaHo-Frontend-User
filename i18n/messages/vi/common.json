@@ -55,6 +55,14 @@
             "back": "Quay lại"
         },
         "layout": {
+            "sidebar": {
+                "home": "Trang chủ",
+                "kaiwaPath": "Lộ trình Kaiwa",
+                "freeDialogue": "Trò chuyện tự do AI",
+                "leaderboard": "Bảng xếp hạng thi đua",
+                "comingSoon": "Sắp ra mắt",
+                "new": "Mới"
+            },
             "header": {
                 "collapseSidebar": "Thu gọn thanh bên",
                 "expandSidebar": "Mở rộng thanh bên",
@@ -76,8 +84,8 @@
                     "pointHistory": "Lịch sử nhận điểm",
                     "speakingHistory": "Lịch sử luyện nói theo sách",
                     "language": "Ngôn ngữ",
-                    "getHelp": "Trợ giúp",
-                    "report": "Báo cáo"
+                    "getHelp": "Trợ giúp & Hỗ trợ",
+                    "report": "Báo cáo & Phản hồi"
                 }
             }
         },

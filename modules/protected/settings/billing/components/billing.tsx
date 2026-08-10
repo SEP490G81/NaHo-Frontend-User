@@ -68,7 +68,8 @@ const Billing = () => {
         router.replace("/settings/billing");
     }, [searchParams, router]);
 
-    const currentTier = subscription?.plan?.tier || "FREE";
+    const plan = subscription?.subscriptionPlan || subscription?.plan;
+    const currentTier = plan?.tier || "FREE";
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-6 pb-12">

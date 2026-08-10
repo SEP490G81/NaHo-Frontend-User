@@ -43,7 +43,8 @@ export function LearnerSidebar() {
                 );
 
                 if (hasActiveChild) {
-                    initialOpenState[item.title] = true;
+                    const key = item.titleKey || item.title;
+                    initialOpenState[key] = true;
                 }
             }
         });
@@ -51,10 +52,10 @@ export function LearnerSidebar() {
         setOpenSubMenus((prev) => ({ ...initialOpenState, ...prev }));
     }, [pathname]);
 
-    const toggleSubMenu = (title: string) => {
+    const toggleSubMenu = (key: string) => {
         setOpenSubMenus((prev) => ({
             ...prev,
-            [title]: !prev[title],
+            [key]: !prev[key],
         }));
     };
 
@@ -82,18 +83,21 @@ export function LearnerSidebar() {
                     disablePadding
                     className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}
                 >
-                    {NAV_ITEMS.map((item) => (
-                        <SidebarItem
-                            key={item.title}
-                            item={item}
-                            pathname={pathname}
-                            isCollapsed={isCollapsed}
-                            isOpen={openSubMenus[item.title]}
-                            onToggleSubMenu={() => toggleSubMenu(item.title)}
-                            onCloseSidebar={closeSidebar}
-                            toggleSidebarCollapse={toggleSidebarCollapse}
-                        />
-                    ))}
+                    {NAV_ITEMS.map((item) => {
+                        const itemKey = item.titleKey || item.title;
+                        return (
+                            <SidebarItem
+                                key={itemKey}
+                                item={item}
+                                pathname={pathname}
+                                isCollapsed={isCollapsed}
+                                isOpen={openSubMenus[itemKey]}
+                                onToggleSubMenu={() => toggleSubMenu(itemKey)}
+                                onCloseSidebar={closeSidebar}
+                                toggleSidebarCollapse={toggleSidebarCollapse}
+                            />
+                        );
+                    })}
                 </List>
 
                 {/* Pinned Topics Section */}
