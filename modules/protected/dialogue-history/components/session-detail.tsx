@@ -1,23 +1,25 @@
 "use client";
-import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import {
-    ArrowRight,
+    ArrowLeft,
+    GraduationCap,
     Lightbulb,
-    RefreshCw,
     Sparkles,
     ThumbsUp,
     TriangleAlert,
 } from "lucide-react";
 import { Button } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import dynamic from "next/dynamic";
-import { useChatStore } from "@/store/chatStore";
-import { useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
+import { getSpeakingSessionDetail } from "@/services/client/speaking.service";
 import { cn } from "@/libs/utils";
-import type { SessionScoreBreakdown } from "@/types/responses/speaking.response";
 
 const ScoreRadar = dynamic(
-    () => import("./score-radar").then((m) => m.ScoreRadar),
+    () =>
+        import(
+            "@/modules/protected/speaking-result/components/score-radar"
+        ).then((m) => m.ScoreRadar),
     {
         ssr: false,
         loading: () => (
@@ -26,7 +28,7 @@ const ScoreRadar = dynamic(
     },
 );
 
-const DIMS: (keyof SessionScoreBreakdown)[] = [
+const DIMS = [
     "fluency",
     "pronunciation",
     "grammar",
@@ -34,24 +36,8 @@ const DIMS: (keyof SessionScoreBreakdown)[] = [
     "interaction",
     "naturalness",
     "coherence",
-];
-
-function humanizeKey(key: string): string {
-    return key
-        .replace(/_tip$/i, "")
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-const DIM_KEYS = new Set<string>([
-    "fluency",
-    "pronunciation",
-    "grammar",
-    "vocabulary",
-    "interaction",
-    "naturalness",
-    "coherence",
-]);
+] as const;
+type DimKey = (typeof DIMS)[number];
 
 function barTone(v: number): string {
     if (v >= 80) return "bg-emerald-500";
@@ -59,32 +45,67 @@ function barTone(v: number): string {
     return "bg-rose-500";
 }
 
-export function SessionReport() {
-    const t = useTranslations("speakingResult");
-    const router = useRouter();
-    const report = useChatStore((s) => s.report);
-    const reset = useChatStore((s) => s.reset);
+export function SessionDetail({ sessionCode }: { sessionCode: string }) {
+    const t = useTranslations("dialogueHistory");
 
-    useEffect(() => {
-        if (!report) router.replace("/dialogue-setup");
-    }, [report, router]);
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["speaking-session-detail", sessionCode],
+        queryFn: () => getSpeakingSessionDetail(sessionCode),
+        enabled: !!sessionCode,
+    });
 
-    if (!report) return null;
+    if (isLoading) {
+        return (
+            <div className="text-text-muted flex h-[50vh] items-center justify-center text-sm">
+                {t("loading")}
+            </div>
+        );
+    }
+    if (isError || !data) {
+        return (
+            <div className="flex h-[50vh] flex-col items-center justify-center gap-4 text-center">
+                <p className="text-text-contrast text-lg font-semibold">
+                    {t("notFound")}
+                </p>
+                <Button
+                    component={Link}
+                    href="/dialogue-history"
+                    variant="contained"
+                    className="!bg-bgc-highlight !rounded-lg !font-bold !text-white capitalize"
+                    startIcon={<ArrowLeft className="h-4 w-4" />}
+                >
+                    {t("backToList")}
+                </Button>
+            </div>
+        );
+    }
 
+    const scoreOf: Record<DimKey, number> = {
+        fluency: data.fluencyScore,
+        pronunciation: data.pronunciationScore,
+        grammar: data.grammarScore,
+        vocabulary: data.vocabularyScore,
+        interaction: data.interactionScore,
+        naturalness: data.naturalnessScore,
+        coherence: data.coherenceScore,
+    };
     const radarData = DIMS.map((d) => ({
         label: t(`dim_${d}`),
-        value: report.scores[d],
+        value: scoreOf[d],
     }));
-
-    const handleRetry = () => {
-        reset();
-        router.push("/dialogue-setup");
-    };
-
-    const feedbackEntries = Object.entries(report.feedback ?? {});
+    const feedbackEntries = Object.entries(data.feedback ?? {});
+    const dimSet = new Set<string>(DIMS);
 
     return (
         <div className="space-y-6">
+            <Link
+                href="/dialogue-history"
+                className="text-text-muted hover:text-bgc-highlight inline-flex items-center gap-1.5 text-sm font-medium"
+            >
+                <ArrowLeft className="h-4 w-4" />
+                {t("backToList")}
+            </Link>
+
             {/* Hero */}
             <div className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
                 <span
@@ -92,23 +113,24 @@ export function SessionReport() {
                     className="bg-bgc-highlight absolute inset-y-0 left-0 w-1.5"
                 />
                 <div className="flex flex-col items-center gap-6 pl-2 sm:flex-row sm:gap-8">
-                    <ScoreRing
-                        value={report.overallScore}
-                        label={t("overall")}
-                    />
+                    <ScoreRing value={data.overallScore} label={t("overall")} />
                     <div className="flex-1 space-y-3 text-center sm:text-left">
                         <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
                             <h1 className="text-text-contrast inline-flex items-center gap-2.5 text-2xl font-bold tracking-tight sm:text-3xl">
                                 <Sparkles className="text-bgc-highlight h-6 w-6" />
-                                {t("title")}
+                                {data.topic || t("detailTitle")}
                             </h1>
-                            <span className="bg-bgc-highlight rounded-full px-3 py-1 text-xs font-bold text-white">
-                                {t("jlpt")}: {report.jlptEstimate}
-                            </span>
+                            {data.jlptEstimate && (
+                                <span className="bg-bgc-highlight rounded-full px-3 py-1 text-xs font-bold text-white">
+                                    {t("jlpt")}: {data.jlptEstimate}
+                                </span>
+                            )}
                         </div>
-                        <p className="text-text-muted text-sm leading-relaxed">
-                            {report.summary}
-                        </p>
+                        {data.summary && (
+                            <p className="text-text-muted text-sm leading-relaxed">
+                                {data.summary}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -117,13 +139,13 @@ export function SessionReport() {
             <div className="grid gap-6 lg:grid-cols-2">
                 <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm">
                     <h2 className="text-text-contrast mb-2 text-base font-semibold">
-                        {t("breakdownTitle")}
+                        {t("radarTitle")}
                     </h2>
                     <ScoreRadar data={radarData} />
                 </div>
                 <div className="border-bdc-primary bg-bgc-app space-y-3 rounded-2xl border p-5 shadow-sm">
                     <h2 className="text-text-contrast mb-2 text-base font-semibold">
-                        {t("detailTitle")}
+                        {t("scoresTitle")}
                     </h2>
                     {DIMS.map((d) => (
                         <div key={d} className="space-y-1">
@@ -132,16 +154,16 @@ export function SessionReport() {
                                     {t(`dim_${d}`)}
                                 </span>
                                 <span className="text-text-contrast font-semibold">
-                                    {report.scores[d]}
+                                    {scoreOf[d]}
                                 </span>
                             </div>
                             <div className="bg-bgc-page h-2 overflow-hidden rounded-full">
                                 <div
                                     className={cn(
-                                        "h-full rounded-full transition-[width]",
-                                        barTone(report.scores[d]),
+                                        "h-full rounded-full",
+                                        barTone(scoreOf[d]),
                                     )}
-                                    style={{ width: `${report.scores[d]}%` }}
+                                    style={{ width: `${scoreOf[d]}%` }}
                                 />
                             </div>
                         </div>
@@ -153,19 +175,19 @@ export function SessionReport() {
             <div className="grid gap-6 md:grid-cols-2">
                 <ListCard
                     title={t("strengths")}
-                    items={report.strengths}
+                    items={data.strengths}
                     icon={<ThumbsUp className="h-4 w-4" />}
                     accent="emerald"
                 />
                 <ListCard
                     title={t("weaknesses")}
-                    items={report.weaknesses}
+                    items={data.weaknesses}
                     icon={<TriangleAlert className="h-4 w-4" />}
                     accent="amber"
                 />
             </div>
 
-            {/* Feedback tips */}
+            {/* Feedback */}
             {feedbackEntries.length > 0 && (
                 <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm">
                     <h2 className="text-text-contrast mb-3 flex items-center gap-2 text-base font-semibold">
@@ -179,11 +201,7 @@ export function SessionReport() {
                                 className="border-bdc-primary bg-bgc-page/40 rounded-xl border p-4"
                             >
                                 <div className="text-bgc-highlight mb-1 text-xs font-bold tracking-wide uppercase">
-                                    {DIM_KEYS.has(k)
-                                        ? t(
-                                              `dim_${k as keyof SessionScoreBreakdown}`,
-                                          )
-                                        : humanizeKey(k)}
+                                    {dimSet.has(k) ? t(`dim_${k as DimKey}`) : k}
                                 </div>
                                 <p className="text-text-contrast text-sm leading-relaxed">
                                     {v}
@@ -194,43 +212,83 @@ export function SessionReport() {
                 </div>
             )}
 
+            {/* Study recommendation */}
+            {data.studyRecommendation && (
+                <div className="rounded-2xl border border-sky-300/60 bg-sky-50 p-5 dark:border-sky-500/40 dark:bg-sky-500/10">
+                    <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-sky-700 dark:text-sky-300">
+                        <GraduationCap className="h-4 w-4" />
+                        {t("studyTitle")}
+                    </h2>
+                    <div className="space-y-2 text-sm">
+                        <p className="text-text-contrast">
+                            <span className="font-semibold">
+                                {t("studyFocus")}:{" "}
+                            </span>
+                            {data.studyRecommendation.focusArea}
+                        </p>
+                        <p className="text-text-muted">
+                            <span className="text-text-contrast font-semibold">
+                                {t("studyReason")}:{" "}
+                            </span>
+                            {data.studyRecommendation.reason}
+                        </p>
+                        <p className="text-text-muted">
+                            <span className="text-text-contrast font-semibold">
+                                {t("studyPractice")}:{" "}
+                            </span>
+                            {data.studyRecommendation.suggestedPractice}
+                        </p>
+                        {data.studyRecommendation.encouragement && (
+                            <p className="mt-2 font-medium text-sky-700 dark:text-sky-300">
+                                {data.studyRecommendation.encouragement}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            )}
+
             {/* Improved expressions */}
-            {report.improvedExpressions.length > 0 && (
+            {data.improvedExpressions.length > 0 && (
                 <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm">
                     <h2 className="text-text-contrast mb-3 text-base font-semibold">
                         {t("improvedTitle")}
                     </h2>
                     <div className="space-y-3">
-                        {report.improvedExpressions.map((ex, i) => (
+                        {data.improvedExpressions.map((ex, i) => (
                             <div
                                 key={i}
-                                className="border-bdc-primary flex flex-col gap-2 rounded-xl border p-4 sm:flex-row sm:items-center"
+                                className="border-bdc-primary rounded-xl border p-4"
                             >
-                                <div className="text-text-muted font-noto-jp flex-1 text-sm line-through">
-                                    {ex.original}
+                                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                                    <div className="text-text-muted font-noto-jp flex-1 text-sm line-through">
+                                        {ex.original}
+                                    </div>
+                                    <div className="font-noto-jp flex-1 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                                        {ex.improved}
+                                    </div>
                                 </div>
-                                <ArrowRight className="text-bgc-highlight h-4 w-4 shrink-0 rotate-90 sm:rotate-0" />
-                                <div className="font-noto-jp flex-1 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                                    {ex.improved}
-                                </div>
+                                {ex.explanationVi && (
+                                    <p className="text-text-muted mt-2 text-xs leading-relaxed">
+                                        {ex.explanationVi}
+                                    </p>
+                                )}
                             </div>
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* Actions */}
-            <div className="flex flex-wrap justify-center gap-3 sm:justify-end">
-                <Button
-                    onClick={handleRetry}
-                    variant="contained"
-                    color="primary"
-                    startIcon={<RefreshCw className="h-4 w-4" />}
-                    className="!rounded-xl !px-5 !font-bold text-white capitalize hover:opacity-90"
-                >
-                    {t("retry")}
-                </Button>
-            </div>
+            {/* Transcript */}
+            {data.fullTranscript && (
+                <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm">
+                    <h2 className="text-text-contrast mb-3 text-base font-semibold">
+                        {t("transcriptTitle")}
+                    </h2>
+                    <pre className="text-text-contrast font-noto-jp bg-bgc-page/40 max-h-96 overflow-auto rounded-xl p-4 text-sm leading-relaxed whitespace-pre-wrap">
+                        {data.fullTranscript}
+                    </pre>
+                </div>
+            )}
         </div>
     );
 }
@@ -303,4 +361,4 @@ function ListCard({
     );
 }
 
-export default SessionReport;
+export default SessionDetail;
