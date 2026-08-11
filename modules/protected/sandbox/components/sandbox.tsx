@@ -214,11 +214,8 @@ function SandboxContent({
     };
 
     return (
-        <div
-            className="px-4 py-6 md:px-8"
-            style={{ "--book-accent": accent } as React.CSSProperties}
-        >
-            <div className="mx-auto max-w-5xl space-y-5">
+        <div style={{ "--book-accent": accent } as React.CSSProperties}>
+            <div className="space-y-5">
                 <SandboxHeader backHref={backHref} accent={accent} />
 
                 <SandboxQuestionBanner

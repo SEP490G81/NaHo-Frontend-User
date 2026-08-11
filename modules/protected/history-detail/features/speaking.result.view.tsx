@@ -103,11 +103,8 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
             : "/speaking-history";
 
     return (
-        <div
-            className="px-4 py-6 md:px-8"
-            style={{ "--book-accent": accent } as React.CSSProperties}
-        >
-            <div className="mx-auto max-w-6xl space-y-6">
+        <div style={{ "--book-accent": accent } as React.CSSProperties}>
+            <div className="space-y-6">
                 <ReportHero
                     average={report.average}
                     questionTitle={data.speakingQuestionTitle}

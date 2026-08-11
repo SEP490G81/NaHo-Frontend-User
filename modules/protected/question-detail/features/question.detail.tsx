@@ -58,7 +58,7 @@ export function QuestionDetail() {
 
     if (nodeQ.isLoading || frontierLoading || bookQ.isLoading) {
         return (
-            <div className="mx-auto max-w-5xl px-4 py-6">
+            <div>
                 <div className="border-bdc-primary bg-bgc-page h-40 animate-pulse rounded-2xl border" />
             </div>
         );
@@ -75,7 +75,7 @@ export function QuestionDetail() {
 
     return (
         <div
-            className="mx-auto max-w-5xl space-y-6 px-4 py-6"
+            className="space-y-6"
             style={{ "--book-accent": accent } as React.CSSProperties}
         >
             <QuestionDetailHeader

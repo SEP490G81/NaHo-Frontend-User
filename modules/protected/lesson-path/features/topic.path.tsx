@@ -16,12 +16,10 @@ import { useFurigana } from "@/components/providers/app.toggle.furigana.provider
 
 function LoadingState() {
     return (
-        <div className="px-4 py-6">
-            <div className="mx-auto flex max-w-5xl flex-col gap-4">
-                <div className="border-bdc-primary bg-bgc-page h-20 animate-pulse rounded-2xl border" />
-                <div className="border-bdc-primary bg-bgc-page h-40 animate-pulse rounded-2xl border" />
-                <div className="border-bdc-primary bg-bgc-page h-40 animate-pulse rounded-2xl border" />
-            </div>
+        <div className="flex flex-col gap-4">
+            <div className="border-bdc-primary bg-bgc-page h-20 animate-pulse rounded-2xl border" />
+            <div className="border-bdc-primary bg-bgc-page h-40 animate-pulse rounded-2xl border" />
+            <div className="border-bdc-primary bg-bgc-page h-40 animate-pulse rounded-2xl border" />
         </div>
     );
 }
@@ -149,7 +147,7 @@ export function TopicPath() {
     const accent = book.coverColor ?? "var(--color-bgc-highlight)";
 
     return (
-        <div className="mx-auto max-w-6xl px-4">
+        <div>
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
                 <div className="flex min-w-0 flex-col gap-6">
                     <TopicPathHeader

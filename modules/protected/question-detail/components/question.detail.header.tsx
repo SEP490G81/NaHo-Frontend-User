@@ -32,7 +32,8 @@ export function QuestionDetailHeader({
         <div className="space-y-3">
             <Link
                 href={backHref as AllRoute}
-                className="text-text-muted hover:text-text-contrast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-80"
+                style={{ color: accent }}
             >
                 <ArrowLeft className="h-4 w-4" />
                 {t("back")}
