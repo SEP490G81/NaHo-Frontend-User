@@ -48,8 +48,11 @@
         "defaultNextTopic": "Japanese Kaiwa Learning Path",
         "defaultNextSubtitle": "Practice speaking at the next node",
         "nodeVocabTitle": "Vocabulary: {name}",
-        "nodeVocabSubtitle": "Review vocabulary and phrases",
-        "nodeChestTitle": "Reward Chest",
-        "nodeChestSubtitle": "Claim bonus points"
+        "nodeVocabSubtitle": "Review vocabulary and communication sentences",
+        "nodeChestTitle": "Open Reward Chest",
+        "nodeChestSubtitle": "Earn learning path reward points",
+        "selectCorrectMeaning": "Select the correct meaning:",
+        "selectOptionToAnswer": "Select an option to check...",
+        "upgrade": "Upgrade"
     }
 }

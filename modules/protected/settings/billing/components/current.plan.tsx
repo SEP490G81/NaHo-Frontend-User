@@ -39,10 +39,10 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         );
     }
 
-    const plan = subscription?.plan;
+    const plan = subscription?.subscriptionPlan || subscription?.plan;
     const tier = plan?.tier || "FREE";
     const planName =
-        plan?.name || (tier === "FREE" ? "Gói Miễn Phí" : tier);
+        plan?.name || (tier === "FREE" ? t("freePlan") : tier === "BASIC" ? t("basicPlan") : tier === "PREMIUM" ? t("premiumPlan") : tier);
 
     const isFree = tier === "FREE";
 
@@ -93,7 +93,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                         <UpdatePlanButton onOpenModal={onOpenModal} />
                     ) : (
                         <Chip
-                            label="Gói cao nhất 👑"
+                            label={t("highestPlanBadge")}
                             color="warning"
                             variant="filled"
                             className="font-bold text-white shadow"
@@ -107,35 +107,50 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                 <div className="bg-bgc-subtle mt-6 grid grid-cols-1 gap-4 rounded-xl p-4 sm:grid-cols-3">
                     <div className="flex flex-col">
                         <span className="text-text-muted text-xs">
-                            {t("features.assessmentLimit", { count: "" })
-                                .replace("/ tháng", "")
-                                .trim()}
+                            {t("quota.speakingEvaluationTitle")}
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {plan.monthlyAssessmentLimit} bài / tháng
+                            {t("quota.perDay", {
+                                count: plan.dailySpeakingQuestionEvaluationLimit ?? 0,
+                            })}
+                        </span>
+                        <span className="text-text-muted mt-0.5 text-xs">
+                            {t("quota.maxRecordingPerTurn", {
+                                seconds: plan.maxSpeakingQuestionRecordingSeconds ?? 60,
+                            })}
                         </span>
                     </div>
 
                     <div className="flex flex-col">
                         <span className="text-text-muted text-xs">
-                            Luyện hội thoại
+                            {t("quota.aiConversationTitle")}
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {Math.round(
-                                plan.monthlyConversationSeconds / 60,
-                            )}{" "}
-                            phút / tháng
+                            {t("quota.sessionsPerDay", {
+                                count: plan.dailyAiSessionEvaluationLimit ?? 0,
+                            })}
+                        </span>
+                        <span className="text-text-muted mt-0.5 text-xs">
+                            {t("quota.maxTurnsAndSeconds", {
+                                turns: plan.maxTurnsPerAiSession ?? 10,
+                                seconds: plan.maxAiTurnSpeakingSeconds ?? 20,
+                            })}
                         </span>
                     </div>
 
                     <div className="flex flex-col">
                         <span className="text-text-muted text-xs">
-                            Giáo trình
+                            {t("quota.sampleAnswerTitle")}
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
-                            {plan.fullCurriculumAccess
-                                ? "Toàn bộ bài học"
-                                : "Cơ bản"}
+                            {plan.sampleAnswerEnabled
+                                ? t("quota.supported")
+                                : t("quota.notSupported")}
+                        </span>
+                        <span className="text-text-muted mt-0.5 text-xs">
+                            {t("quota.concurrentSessions", {
+                                count: plan.maxConcurrentAiSessionCount ?? 1,
+                            })}
                         </span>
                     </div>
                 </div>

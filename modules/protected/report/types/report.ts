@@ -21,6 +21,7 @@ export interface Report {
     description: string;
     reportType: ReportType;
     isResolved: boolean;
+    adminReply?: string | null;
     files?: ReportFile[];
     createdAt?: string;
 }

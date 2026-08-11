@@ -50,29 +50,37 @@
             "back": "Back"
         },
         "layout": {
+            "sidebar": {
+                "home": "Home",
+                "kaiwaPath": "Kaiwa Learning Path",
+                "freeDialogue": "AI Free Dialogue",
+                "leaderboard": "Leaderboard",
+                "comingSoon": "Coming Soon",
+                "new": "New"
+            },
             "header": {
                 "collapseSidebar": "Collapse sidebar",
                 "expandSidebar": "Expand sidebar",
                 "notificationButton": "Notifications",
                 "themeSwitchButton": {
-                    "darkMode": "Chế độ tối",
-                    "lightMode": "Chế độ sáng"
+                    "darkMode": "Dark Mode",
+                    "lightMode": "Light Mode"
                 },
                 "furiganaSwitchButton": {
                     "showFurigana": "Show Furigana",
                     "hideFurigana": "Hide Furigana"
                 },
-                "loginButton": "Đăng nhập",
-                "logoutButton": "Đăng xuất",
-                "registerButton": "Đăng ký trải nghiệm ngay",
+                "loginButton": "Log in",
+                "logoutButton": "Log out",
+                "registerButton": "Register now",
                 "accountMenu": {
                     "settings": "Settings",
                     "orders": "Order History",
                     "pointHistory": "Point History",
-                    "speakingHistory": "Speaking History by Book",
+                    "speakingHistory": "Speaking History",
                     "language": "Language",
                     "getHelp": "Help & Support",
-                    "report": "Report"
+                    "report": "Reports & Feedback"
                 }
             }
         },
@@ -130,7 +138,8 @@
             "tableHeaderImages": "Attached Images",
             "tableHeaderDate": "Created Date",
             "viewImages": "View images ({count})",
-            "noImages": "No images"
+            "noImages": "No images",
+            "adminReplyLabel": "Admin Reply"
         }
     }
 }

@@ -45,18 +45,18 @@ const PlanCard: React.FC<PlanCardProps> = ({
     };
 
     const formatDurationText = (seconds: number) => {
-        if (seconds >= 99999) return "Không giới hạn";
+        if (seconds >= 99999) return t("card.unlimited");
         const mins = Math.round(seconds / 60);
         if (mins >= 60) {
             const hrs = (mins / 60).toFixed(1).replace(".0", "");
-            return `${hrs} giờ`;
+            return t("card.hours", { count: hrs });
         }
-        return `${mins} phút`;
+        return t("card.minutes", { count: mins });
     };
 
     const formatLimitCount = (count: number) => {
-        if (count >= 9999) return "Không giới hạn";
-        return `${count} lượt`;
+        if (count >= 9999) return t("card.unlimited");
+        return t("card.timesCount", { count });
     };
 
     // Tier specific styling configuration
@@ -67,14 +67,14 @@ const PlanCard: React.FC<PlanCardProps> = ({
     const cardContainerStyles = isPremium
         ? "relative flex flex-col justify-between rounded-3xl border-2 border-amber-400 dark:border-amber-500/80 bg-gradient-to-b from-amber-500/10 via-rose-500/5 to-bgc-card p-6 shadow-xl shadow-amber-500/15 hover:shadow-2xl hover:shadow-amber-500/25 hover:-translate-y-1 transition-all duration-300 ring-1 ring-amber-400/30 overflow-hidden"
         : isBasic
-          ? "relative flex flex-col justify-between rounded-3xl border-2 border-indigo-500/60 dark:border-indigo-400/60 bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-bgc-card p-6 shadow-lg shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-1 transition-all duration-300"
-          : "relative flex flex-col justify-between rounded-3xl border border-bdc-primary bg-gradient-to-b from-slate-100/50 via-bgc-card to-bgc-card dark:from-slate-800/30 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300";
+            ? "relative flex flex-col justify-between rounded-3xl border-2 border-indigo-500/60 dark:border-indigo-400/60 bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-bgc-card p-6 shadow-lg shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-1 transition-all duration-300"
+            : "relative flex flex-col justify-between rounded-3xl border border-bdc-primary bg-gradient-to-b from-slate-100/50 via-bgc-card to-bgc-card dark:from-slate-800/30 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300";
 
     const featureIconColor = isPremium
         ? "text-rose-500 dark:text-rose-400"
         : isBasic
-          ? "text-indigo-600 dark:text-indigo-400"
-          : "text-emerald-600 dark:text-emerald-400";
+            ? "text-indigo-600 dark:text-indigo-400"
+            : "text-emerald-600 dark:text-emerald-400";
 
     return (
         <div className={cardContainerStyles}>
@@ -90,25 +90,25 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         {isPremium ? (
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md animate-pulse">
                                 <WorkspacePremiumIcon style={{ fontSize: 15 }} />
-                                <span>GÓI CAO CẤP NHẤT 👑</span>
+                                <span>{t("card.highestTierBadge")}</span>
                             </span>
                         ) : isBasic ? (
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 px-3.5 py-1 text-xs font-extrabold text-white shadow-md">
                                 <StarIcon style={{ fontSize: 14 }} />
-                                <span>GÓI KHUYÊN DÙNG ★</span>
+                                <span>{t("card.recommendedBadge")}</span>
                             </span>
                         ) : (
                             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-300">
                                 <SentimentSatisfiedAltIcon
                                     style={{ fontSize: 14 }}
                                 />
-                                <span>GÓI MIỄN PHÍ</span>
+                                <span>{t("card.freeBadge")}</span>
                             </span>
                         )}
                     </div>
 
                     <h3 className="text-text-primary text-2xl font-black tracking-tight">
-                        {plan.name}
+                        {plan.name || (tierCode === "FREE" ? t("freePlan") : tierCode === "BASIC" ? t("basicPlan") : tierCode === "PREMIUM" ? t("premiumPlan") : tierCode)}
                     </h3>
                     <p className="text-text-muted mt-1.5 min-h-[38px] text-xs font-medium leading-relaxed">
                         {plan.description}
@@ -131,9 +131,9 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         )}
 
                         <span className="text-text-muted text-xs font-semibold">
-                            {plan.priceAmount === 0
-                                ? "/ vĩnh viễn"
-                                : ` / ${plan.durationDays} ngày`}
+                            {plan.priceAmount === 0 || !plan.durationDays
+                                ? t("card.lifetimeDuration")
+                                : t("card.daysDuration", { days: plan.durationDays })}
                         </span>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     {/* Section 1: Đánh giá & Hội thoại */}
                     <div>
                         <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
-                            ⚡ Đánh giá phát âm & AI
+                            {t("card.sectionAssessmentAndAi")}
                         </div>
                         <ul className="space-y-2 text-xs">
                             <li className="flex items-start gap-2 text-text-primary">
@@ -154,33 +154,14 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Đánh giá phát âm:{" "}
+                                    {t("card.speakingAssessmentLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.monthlyAssessmentLimit,
+                                            plan.dailySpeakingQuestionEvaluationLimit ?? 0,
                                         )}
                                     </strong>
-                                    {plan.monthlyAssessmentLimit < 9999 && (
-                                        <span className="text-text-muted">
-                                            {" "}
-                                            / tháng
-                                        </span>
-                                    )}
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                <CheckCircleIcon
-                                    style={{ fontSize: 16 }}
-                                    className={`${featureIconColor} mt-0.5 shrink-0`}
-                                />
-                                <span>
-                                    Ghi âm tối đa:{" "}
-                                    <strong className="font-extrabold">
-                                        {plan.maxAssessmentAudioSeconds}s
-                                    </strong>
                                     <span className="text-text-muted">
-                                        {" "}
-                                        / lượt bài
+                                        {t("card.perDaySuffix")}
                                     </span>
                                 </span>
                             </li>
@@ -190,19 +171,30 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Luyện hội thoại AI:{" "}
+                                    {t("card.maxRecordingLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {formatDurationText(
-                                            plan.monthlyConversationSeconds,
+                                        {plan.maxSpeakingQuestionRecordingSeconds ?? 60}s
+                                    </strong>
+                                    <span className="text-text-muted">
+                                        {t("card.perTurnSuffix")}
+                                    </span>
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    {t("card.aiConversationLabel")}{" "}
+                                    <strong className="font-extrabold">
+                                        {formatLimitCount(
+                                            plan.dailyAiSessionEvaluationLimit ?? 0,
                                         )}
                                     </strong>
-                                    {plan.monthlyConversationSeconds <
-                                        99999 && (
-                                        <span className="text-text-muted">
-                                            {" "}
-                                            / tháng
-                                        </span>
-                                    )}
+                                    <span className="text-text-muted">
+                                        {t("card.perDaySuffix")}
+                                    </span>
                                 </span>
                             </li>
                             <li className="flex items-start gap-2 text-text-primary">
@@ -211,30 +203,26 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Tối đa 1 phiên AI:{" "}
+                                    {t("card.sessionLimitLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {formatDurationText(
-                                            plan.maxConversationSessionSeconds,
-                                        )}
-                                    </strong>{" "}
-                                    ({plan.maxConversationTurnsPerSession} lượt
-                                    nói)
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                <CheckCircleIcon
-                                    style={{ fontSize: 16 }}
-                                    className={`${featureIconColor} mt-0.5 shrink-0`}
-                                />
-                                <span>
-                                    Thời gian trả lời câu:{" "}
-                                    <strong className="font-extrabold">
-                                        {plan.maxAnswerTimeSeconds}s
+                                        {plan.maxTurnsPerAiSession ?? 10} {t("card.turnsSuffix")}
                                     </strong>
                                     <span className="text-text-muted">
                                         {" "}
-                                        / câu
+                                        ({plan.maxAiTurnSpeakingSeconds ?? 20} {t("card.secondsPerTurnSuffix")})
                                     </span>
+                                </span>
+                            </li>
+                            <li className="flex items-start gap-2 text-text-primary">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    {t("card.concurrentSessionsLabel")}{" "}
+                                    <strong className="font-extrabold">
+                                        {plan.maxConcurrentAiSessionCount ?? 1} {t("card.sessionsSuffix")}
+                                    </strong>
                                 </span>
                             </li>
                         </ul>
@@ -243,31 +231,9 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     {/* Section 2: Tiện ích & Quyền truy cập */}
                     <div>
                         <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
-                            🎁 Tiện ích & Quyền lợi
+                            {t("card.sectionBenefits")}
                         </div>
                         <ul className="space-y-2 text-xs">
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.fullCurriculumAccess ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.fullCurriculumAccess
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Mở khóa toàn bộ giáo trình
-                                </span>
-                            </li>
                             <li className="flex items-start gap-2 text-text-primary">
                                 {plan.sampleAnswerEnabled ? (
                                     <CheckCircleIcon
@@ -287,51 +253,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                             : "text-text-muted/60 line-through"
                                     }
                                 >
-                                    Gợi ý đáp án mẫu AI thông minh
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.progressAnalyticsEnabled ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.progressAnalyticsEnabled
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Phân tích tiến độ học tập
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.saveAnswerHistoryEnabled ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.saveAnswerHistoryEnabled
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Lưu trữ lịch sử câu trả lời
+                                    {t("card.smartSampleAnswersLabel")}
                                 </span>
                             </li>
                         </ul>
@@ -369,8 +291,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                             isPremium
                                 ? "rounded-xl bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 py-3 text-sm font-black text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-rose-500/30 active:scale-[0.98]"
                                 : isBasic
-                                  ? "rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-sm font-black text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-indigo-500/30 active:scale-[0.98]"
-                                  : "rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-900 active:scale-[0.98]"
+                                    ? "rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-sm font-black text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-indigo-500/30 active:scale-[0.98]"
+                                    : "rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-900 active:scale-[0.98]"
                         }
                         sx={{
                             color: "#ffffff !important",

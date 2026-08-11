@@ -3,6 +3,7 @@
 import React from "react";
 import { Box, Collapse, List, ListItem } from "@mui/material";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import { NavItem } from "../constants/leaner.sidebar.constant";
@@ -30,7 +31,7 @@ export const getItemClassName = (
             active
                 ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                 : "text-text-contrast hover:bg-hbgc-app" +
-                      (isCollapsed ? "" : " hover:translate-x-1"),
+                (isCollapsed ? "" : " hover:translate-x-1"),
         );
     }
     return cn(
@@ -39,7 +40,7 @@ export const getItemClassName = (
         active
             ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
             : "text-text-contrast hover:bg-hbgc-app" +
-                  (isCollapsed ? "" : " hover:translate-x-1"),
+            (isCollapsed ? "" : " hover:translate-x-1"),
     );
 };
 
@@ -52,17 +53,19 @@ export const SidebarItem = ({
     onCloseSidebar,
     toggleSidebarCollapse,
 }: SidebarItemProps) => {
+    const t = useTranslations("common.layout.sidebar");
     const hasChildren = item.children && item.children.length > 0;
+    const title = item.titleKey ? t(item.titleKey as any) : item.title;
 
     // Check if parent or any child route is active
     const active = item.url
         ? pathname === item.url ||
-          (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
+        (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
         : item.children?.some(
-              (child) =>
-                  pathname === child.url ||
-                  pathname.startsWith(child.url + "/"),
-          );
+            (child) =>
+                pathname === child.url ||
+                pathname.startsWith(child.url + "/"),
+        );
 
     // 1. Render Disabled / Coming soon items
     if (item.disabled) {
@@ -71,8 +74,8 @@ export const SidebarItem = ({
                 <TooltipCustom
                     title={
                         isCollapsed
-                            ? `${item.title} (Sắp ra mắt)`
-                            : "Sắp ra mắt"
+                            ? `${title} (${t("comingSoon")})`
+                            : t("comingSoon")
                     }
                     placement="right"
                 >
@@ -90,10 +93,10 @@ export const SidebarItem = ({
                         {!isCollapsed && (
                             <>
                                 <span className="flex-1 truncate font-medium">
-                                    {item.title}
+                                    {title}
                                 </span>
                                 <span className="border-bdc-muted bg-bgc-page text-text-muted rounded-md border px-1.5 py-0.5 text-[9px] font-bold tracking-wide uppercase">
-                                    Mới
+                                    {t("new")}
                                 </span>
                             </>
                         )}
@@ -109,7 +112,7 @@ export const SidebarItem = ({
             <React.Fragment>
                 <ListItem disablePadding>
                     <TooltipCustom
-                        title={item.title}
+                        title={title}
                         placement="right"
                         disableHoverListener={!isCollapsed}
                     >
@@ -144,7 +147,7 @@ export const SidebarItem = ({
                                                 : "text-text-contrast truncate",
                                         )}
                                     >
-                                        {item.title}
+                                        {title}
                                     </span>
                                     <ChevronDown
                                         className={cn(
@@ -172,6 +175,9 @@ export const SidebarItem = ({
                             const childActive =
                                 pathname === child.url ||
                                 pathname.startsWith(child.url + "/");
+                            const childTitle = child.titleKey
+                                ? t(child.titleKey as any)
+                                : child.title;
                             return (
                                 <ListItem key={child.title} disablePadding>
                                     <Link
@@ -194,7 +200,7 @@ export const SidebarItem = ({
                                                     : "text-text-muted",
                                             )}
                                         >
-                                            {child.title}
+                                            {childTitle}
                                         </span>
                                     </Link>
                                 </ListItem>
@@ -210,7 +216,7 @@ export const SidebarItem = ({
     return (
         <ListItem disablePadding>
             <TooltipCustom
-                title={item.title}
+                title={title}
                 placement="right"
                 disableHoverListener={!isCollapsed}
             >
@@ -239,7 +245,7 @@ export const SidebarItem = ({
                                     : "text-text-contrast truncate",
                             )}
                         >
-                            {item.title}
+                            {title}
                         </span>
                     )}
                 </Link>
