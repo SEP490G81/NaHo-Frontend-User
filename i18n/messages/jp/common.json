@@ -138,7 +138,8 @@
             "tableHeaderImages": "添付画像",
             "tableHeaderDate": "作成日時",
             "viewImages": "画像を表示 ({count})",
-            "noImages": "画像なし"
+            "noImages": "画像なし",
+            "adminReplyLabel": "管理者からの返信"
         }
     }
 }

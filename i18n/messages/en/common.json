@@ -138,7 +138,8 @@
             "tableHeaderImages": "Attached Images",
             "tableHeaderDate": "Created Date",
             "viewImages": "View images ({count})",
-            "noImages": "No images"
+            "noImages": "No images",
+            "adminReplyLabel": "Admin Reply"
         }
     }
 }
