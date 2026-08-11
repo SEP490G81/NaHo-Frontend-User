@@ -60,11 +60,44 @@ export function LiveChatroom() {
         if (!session) router.replace("/dialogue-setup");
     }, [session, router]);
 
-    // Seed câu chào của AI (kèm audio TTS + bản dịch + ngữ pháp).
+    // Seed: tin nhắn cũ (nếu resume) + câu chào (kèm audio/dịch/ngữ pháp).
     useEffect(() => {
         if (session && !seeded.current) {
             seeded.current = true;
+
+            // Dựng lại lịch sử khi khôi phục phiên dở.
+            const history: ChatMessage[] = (session.resumedMessages ?? []).map(
+                (m) => {
+                    const isUser = m.senderType
+                        ?.toUpperCase()
+                        .includes("USER");
+                    if (isUser) {
+                        return {
+                            id: nextId("h"),
+                            role: "user",
+                            text: m.content,
+                            correction: m.correctionExplanation
+                                ? {
+                                      correctedText:
+                                          m.correctedText ?? m.content,
+                                      explanation: m.correctionExplanation,
+                                  }
+                                : null,
+                            timestamp: "",
+                        };
+                    }
+                    return {
+                        id: nextId("h"),
+                        role: "ai",
+                        text: m.content,
+                        grammar: m.grammarNote,
+                        timestamp: "",
+                    };
+                },
+            );
+
             setMessages([
+                ...history,
                 {
                     id: nextId("greet"),
                     role: "ai",
