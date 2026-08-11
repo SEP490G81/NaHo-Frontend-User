@@ -13,6 +13,13 @@ export interface ReportResponse {
 
 // ─── Comment / Reaction (khớp contract BE /api/v1/comments & /reactions) ───
 import type { LeaderboardUserResponse } from "./league.response";
+import type { PlanCode } from "./subscription.response";
+
+/** userInfo của comment = leaderboard user + tier gói đăng ký (để tô aura avatar).
+ *  `subscriptionTier` optional: chờ BE bổ sung vào CommentResponse.userInfo. */
+export type CommentUserInfo = LeaderboardUserResponse & {
+    subscriptionTier?: PlanCode | null;
+};
 
 /** 6 loại cảm xúc BE hỗ trợ (đồng bộ enum ReactionType phía backend). */
 export const REACTION_TYPES = [
@@ -38,8 +45,8 @@ export interface ReactionSummary {
 export interface CommentNode {
     commentId: number;
     questionId: number;
-    /** Thông tin người bình luận (tên, avatar, id) — BE trả kèm. */
-    userInfo: LeaderboardUserResponse | null;
+    /** Thông tin người bình luận (tên, avatar, id, tier) — BE trả kèm. */
+    userInfo: CommentUserInfo | null;
     parentId: number | null;
     content: string;
     createdTime: string;

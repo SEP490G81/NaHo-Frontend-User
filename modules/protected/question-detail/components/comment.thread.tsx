@@ -16,7 +16,7 @@ import type {
     ReactionType,
 } from "@/types/responses/social.response";
 import { resolveAvatarUrl } from "@/modules/protected/leaderboard/utils/leaderboard.util";
-import LearnerAvatar from "@/modules/protected/leaderboard/components/learner.avatar";
+import UserAvatarImage from "@/layouts/sidebar/components/user.avatar.image";
 import CommentInputForm from "@/modules/protected/comment-reaction/components/comment-input-form";
 import CommentReactionBar from "./comment.reaction.bar";
 import CommentAuthorCard from "./comment.author.card";
@@ -62,6 +62,8 @@ interface Props {
     myUserId?: number;
     /** Người viết comment cha (để hiện @tên in đậm ở đầu reply). */
     parentUser?: CommentNode["userInfo"];
+    /** Tier gói của user hiện tại — để tô aura cho comment của chính mình. */
+    myTier?: string;
     now: number;
     onReply: (content: string, parentId: number) => void;
     onReact: (commentId: number, type: ReactionType) => void;
@@ -76,6 +78,7 @@ export function CommentThread({
     currentUserAvatar,
     myUserId,
     parentUser,
+    myTier,
     now,
     onReply,
     onReact,
@@ -93,6 +96,9 @@ export function CommentThread({
     const user = comment.userInfo;
     const author = user?.fullName || t("commenter", { id: user?.id ?? "?" });
     const isMine = myUserId != null && user?.id === myUserId;
+    // Tier gói để tô aura avatar: comment của mình lấy theo gói hiện tại (biết
+    // chắc); người khác lấy từ userInfo.subscriptionTier (BE bổ sung dần).
+    const tier = (isMine ? myTier : user?.subscriptionTier) ?? "FREE";
     // "đã sửa" chỉ hiện khi thời điểm sửa cách lúc tạo > 1s (bỏ chênh lệch tạo mới).
     const edited =
         new Date(comment.modifiedTime).getTime() -
@@ -148,9 +154,15 @@ export function CommentThread({
 
     const avatarEl = (
         <span className="shrink-0 cursor-default">
-            <LearnerAvatar
-                fullName={user?.fullName ?? null}
-                avatarUrl={resolveAvatarUrl(user?.avatarUrl, user?.authAvatarUrl)}
+            <UserAvatarImage
+                user={{
+                    fullName: user?.fullName ?? null,
+                    avatarUrl: resolveAvatarUrl(
+                        user?.avatarUrl,
+                        user?.authAvatarUrl,
+                    ),
+                }}
+                tier={tier}
                 size={36}
             />
         </span>
@@ -348,6 +360,7 @@ export function CommentThread({
                             currentUserAvatar={currentUserAvatar}
                             myUserId={myUserId}
                             parentUser={user}
+                            myTier={myTier}
                             now={now}
                             onReply={onReply}
                             onReact={onReact}

@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import { useUserLearningProgress } from "@/components/providers/user.learning.progress.provider";
+import { getMySubscription } from "@/services/client/subscription.service";
 import { resolveAvatarUrl } from "@/modules/protected/leaderboard/utils/leaderboard.util";
 import type { CommentNode } from "@/types/responses/social.response";
 import CommentInputForm from "@/modules/protected/comment-reaction/components/comment-input-form";
@@ -32,6 +34,13 @@ export function QuestionComments({ speakingQuestionId }: Props) {
     const lbUser = progress?.leaderboardUser;
     const myUserId = lbUser?.id ?? currentUser?.id;
     const myAvatar = resolveAvatarUrl(lbUser?.avatarUrl, lbUser?.authAvatarUrl);
+    // Tier gói của mình → tô aura ngay cho comment của chính mình (BASIC/PREMIUM).
+    const subQ = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const myTier = subQ.data?.plan?.code;
     const [text, setText] = useState("");
     // "Hiện tại" cập nhật phía client (tránh Date.now() khi render & lệch SSR).
     const [now, setNow] = useState(0);
@@ -107,6 +116,7 @@ export function QuestionComments({ speakingQuestionId }: Props) {
                             currentUserName={currentUserName}
                             currentUserAvatar={myAvatar}
                             myUserId={myUserId}
+                            myTier={myTier}
                             now={now}
                             onReply={(content, parentId) =>
                                 addComment(content, parentId)
