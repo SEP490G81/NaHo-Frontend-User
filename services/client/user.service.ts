@@ -256,4 +256,3 @@ export async function changePassword(
         throw new ApiError(problemDetail);
     }
 }
-

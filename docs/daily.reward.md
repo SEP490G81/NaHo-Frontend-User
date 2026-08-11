@@ -40,371 +40,279 @@
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 1
-  },
-  {
+  "dayOfMonth": 1 }, {
   "id": 2,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 2
-  },
-  {
+  "dayOfMonth": 2 }, {
   "id": 3,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 3
-  },
-  {
+  "dayOfMonth": 3 }, {
   "id": 4,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 4
-  },
-  {
+  "dayOfMonth": 4 }, {
   "id": 5,
   "chest": {
   "id": 2,
   "chestType": "BRONZE",
   "description": "Mở rương đồng để nhận ngẫu nhiên từ 10 đến 20 điểm",
   "minPoint": 15,
-  "maxPoint": 25
-  },
+  "maxPoint": 25 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 5
-  },
-  {
+  "dayOfMonth": 5 }, {
   "id": 6,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 6
-  },
-  {
+  "dayOfMonth": 6 }, {
   "id": 7,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 7
-  },
-  {
+  "dayOfMonth": 7 }, {
   "id": 8,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 8
-  },
-  {
+  "dayOfMonth": 8 }, {
   "id": 9,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 9
-  },
-  {
+  "dayOfMonth": 9 }, {
   "id": 10,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 10
-  },
-  {
+  "dayOfMonth": 10 }, {
   "id": 11,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 11
-  },
-  {
+  "dayOfMonth": 11 }, {
   "id": 12,
   "chest": {
   "id": 2,
   "chestType": "BRONZE",
   "description": "Mở rương đồng để nhận ngẫu nhiên từ 10 đến 20 điểm",
   "minPoint": 15,
-  "maxPoint": 25
-  },
+  "maxPoint": 25 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 12
-  },
-  {
+  "dayOfMonth": 12 }, {
   "id": 13,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 13
-  },
-  {
+  "dayOfMonth": 13 }, {
   "id": 14,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 14
-  },
-  {
+  "dayOfMonth": 14 }, {
   "id": 15,
   "chest": {
   "id": 3,
   "chestType": "SLIVER",
   "description": "Mở rương bạc để nhận ngẫu nhiên từ 25 đến 50 điểm",
   "minPoint": 30,
-  "maxPoint": 50
-  },
+  "maxPoint": 50 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 15
-  },
-  {
+  "dayOfMonth": 15 }, {
   "id": 16,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 16
-  },
-  {
+  "dayOfMonth": 16 }, {
   "id": 17,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 17
-  },
-  {
+  "dayOfMonth": 17 }, {
   "id": 18,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 18
-  },
-  {
+  "dayOfMonth": 18 }, {
   "id": 19,
   "chest": {
   "id": 2,
   "chestType": "BRONZE",
   "description": "Mở rương đồng để nhận ngẫu nhiên từ 10 đến 20 điểm",
   "minPoint": 15,
-  "maxPoint": 25
-  },
+  "maxPoint": 25 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 19
-  },
-  {
+  "dayOfMonth": 19 }, {
   "id": 20,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 20
-  },
-  {
+  "dayOfMonth": 20 }, {
   "id": 21,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 21
-  },
-  {
+  "dayOfMonth": 21 }, {
   "id": 22,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 22
-  },
-  {
+  "dayOfMonth": 22 }, {
   "id": 23,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 23
-  },
-  {
+  "dayOfMonth": 23 }, {
   "id": 24,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 24
-  },
-  {
+  "dayOfMonth": 24 }, {
   "id": 25,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 25
-  },
-  {
+  "dayOfMonth": 25 }, {
   "id": 26,
   "chest": {
   "id": 2,
   "chestType": "BRONZE",
   "description": "Mở rương đồng để nhận ngẫu nhiên từ 10 đến 20 điểm",
   "minPoint": 15,
-  "maxPoint": 25
-  },
+  "maxPoint": 25 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 26
-  },
-  {
+  "dayOfMonth": 26 }, {
   "id": 27,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 27
-  },
-  {
+  "dayOfMonth": 27 }, {
   "id": 28,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 28
-  },
-  {
+  "dayOfMonth": 28 }, {
   "id": 29,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 29
-  },
-  {
+  "dayOfMonth": 29 }, {
   "id": 30,
   "chest": {
   "id": 1,
   "chestType": "NONE",
   "description": "Nhận ngay 5 điểm mà không cần mở rương",
   "minPoint": 1,
-  "maxPoint": 10
-  },
+  "maxPoint": 10 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 30
-  },
-  {
+  "dayOfMonth": 30 }, {
   "id": 31,
   "chest": {
   "id": 4,
   "chestType": "GOLD",
   "description": "Mở rương vàng để nhận ngẫu nhiên từ 60 đến 100 điểm",
   "minPoint": 60,
-  "maxPoint": 100
-  },
+  "maxPoint": 100 },
   "rewardYearMonth": "2026-07",
-  "dayOfMonth": 31
-  }
+  "dayOfMonth": 31 }
   ]
 
 ### Yêu cầu

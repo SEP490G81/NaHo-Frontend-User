@@ -44,7 +44,7 @@ const UserAvatar = ({ isCollapsed = false }: Props) => {
                             {name}
                         </p>
 
-                        <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                        <div className="mt-1 flex flex-wrap items-center gap-1.5">
                             {tier === "PREMIUM" ? (
                                 <Chip
                                     label="PREMIUM 👑"
@@ -66,7 +66,11 @@ const UserAvatar = ({ isCollapsed = false }: Props) => {
                                         fontSize: "8.5px",
                                         fontWeight: 800,
                                         color: "#ffffff !important",
-                                        "& .MuiChip-label": { px: 1, py: 0, color: "#ffffff !important" },
+                                        "& .MuiChip-label": {
+                                            px: 1,
+                                            py: 0,
+                                            color: "#ffffff !important",
+                                        },
                                     }}
                                     className="bg-linear-to-r from-purple-600 to-indigo-600 text-white shadow-xs"
                                 />
@@ -107,13 +111,18 @@ const UserAvatar = ({ isCollapsed = false }: Props) => {
                                         lineHeight: 1,
                                         borderRadius: "6px",
                                         borderColor: "rgba(255, 153, 172, 0.6)",
-                                        backgroundColor: "rgba(255, 153, 172, 0.1)",
+                                        backgroundColor:
+                                            "rgba(255, 153, 172, 0.1)",
                                         color: "#ff758f",
                                         textTransform: "none",
-                                        "& .MuiButton-startIcon": { mr: 0.3, ml: 0 },
+                                        "& .MuiButton-startIcon": {
+                                            mr: 0.3,
+                                            ml: 0,
+                                        },
                                         "&:hover": {
                                             borderColor: "#ff758f",
-                                            backgroundColor: "rgba(255, 153, 172, 0.2)",
+                                            backgroundColor:
+                                                "rgba(255, 153, 172, 0.2)",
                                         },
                                     }}
                                 >

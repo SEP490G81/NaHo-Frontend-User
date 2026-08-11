@@ -25,9 +25,15 @@ const SecuritySettings = () => {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const [currentPasswordError, setCurrentPasswordError] = useState<string | null>(null);
-    const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
-    const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+    const [currentPasswordError, setCurrentPasswordError] = useState<
+        string | null
+    >(null);
+    const [newPasswordError, setNewPasswordError] = useState<string | null>(
+        null,
+    );
+    const [confirmPasswordError, setConfirmPasswordError] = useState<
+        string | null
+    >(null);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -43,7 +49,11 @@ const SecuritySettings = () => {
             newPasswordErrorKey,
             confirmPasswordErrorKey,
             isValid,
-        } = validateChangePassword(currentPassword, newPassword, confirmPassword);
+        } = validateChangePassword(
+            currentPassword,
+            newPassword,
+            confirmPassword,
+        );
 
         if (currentPasswordErrorKey) {
             setCurrentPasswordError(t(currentPasswordErrorKey));
@@ -76,7 +86,9 @@ const SecuritySettings = () => {
                 } else if (err.errorCode === "USER_A017") {
                     setNewPasswordError(t("passwordSameAsOldError"));
                 } else {
-                    toast.error(err.message || "Đã xảy ra lỗi khi đổi mật khẩu.");
+                    toast.error(
+                        err.message || "Đã xảy ra lỗi khi đổi mật khẩu.",
+                    );
                 }
             } else if (err instanceof Error) {
                 toast.error(err.message);
@@ -137,7 +149,8 @@ const SecuritySettings = () => {
                             value={currentPassword}
                             onChange={(e) => {
                                 setCurrentPassword(e.target.value);
-                                if (currentPasswordError) setCurrentPasswordError(null);
+                                if (currentPasswordError)
+                                    setCurrentPasswordError(null);
                             }}
                             error={Boolean(currentPasswordError)}
                             helperText={
@@ -235,7 +248,8 @@ const SecuritySettings = () => {
                             value={confirmPassword}
                             onChange={(e) => {
                                 setConfirmPassword(e.target.value);
-                                if (confirmPasswordError) setConfirmPasswordError(null);
+                                if (confirmPasswordError)
+                                    setConfirmPasswordError(null);
                             }}
                             error={Boolean(confirmPasswordError)}
                             helperText={
@@ -307,4 +321,3 @@ const SecuritySettings = () => {
 };
 
 export default SecuritySettings;
-

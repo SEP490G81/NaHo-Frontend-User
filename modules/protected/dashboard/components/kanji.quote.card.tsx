@@ -48,19 +48,19 @@ export function KanjiQuoteCard() {
     const currentQuote = quote || FALLBACK_QUOTE;
 
     return (
-        <ContainerBox className="relative overflow-hidden border border-bdc-primary bg-gradient-to-br from-bgc-card via-bgc-card to-[#ff99ac]/10 p-5 md:p-6">
+        <ContainerBox className="border-bdc-primary from-bgc-card via-bgc-card relative overflow-hidden border bg-gradient-to-br to-[#ff99ac]/10 p-5 md:p-6">
             {/* Sakura ambient glow circles phủ toàn bộ ContainerBox */}
             <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-[#ff99ac]/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-[#ff758f]/10 blur-2xl" />
 
             <div className="relative z-10 flex h-full flex-col justify-between space-y-6">
                 {/* Header tag & refresh button */}
-                <div className="flex items-center justify-between border-b border-bdc-primary/60 pb-3">
+                <div className="border-bdc-primary/60 flex items-center justify-between border-b pb-3">
                     <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ff99ac]/20 text-[#ff758f]">
                             <MenuBookIcon style={{ fontSize: 20 }} />
                         </div>
-                        <span className="text-lg font-extrabold text-text-primary">
+                        <span className="text-text-primary text-lg font-extrabold">
                             {t("dailyQuoteTitle")}
                         </span>
                     </div>
@@ -81,8 +81,9 @@ export function KanjiQuoteCard() {
 
                 {/* Main Kanji quote display */}
                 <div
-                    className={`my-auto space-y-4 text-center py-4 transition-opacity duration-300 ${loading ? "opacity-40" : "opacity-100"
-                        }`}
+                    className={`my-auto space-y-4 py-4 text-center transition-opacity duration-300 ${
+                        loading ? "opacity-40" : "opacity-100"
+                    }`}
                 >
                     {/* Chữ Kanji chính */}
                     <h2 className="text-4xl font-black tracking-tighter text-[#ff758f] sm:text-6xl md:text-7xl lg:text-9xl">
@@ -91,12 +92,10 @@ export function KanjiQuoteCard() {
 
                     {/* Nhóm phần tử bên dưới sát nhau */}
                     <div className="space-y-1.5">
-
                         {currentQuote.hiragana && (
-                            <p className="text-sm font-semibold tracking-wider text-text-muted">
+                            <p className="text-text-muted text-sm font-semibold tracking-wider">
                                 ({currentQuote.hiragana})
                             </p>
-
                         )}
 
                         {/* Kanji detail badge */}
@@ -111,7 +110,7 @@ export function KanjiQuoteCard() {
                         )}
 
                         {currentQuote.translation && (
-                            <p className="text-base font-medium leading-relaxed text-text-primary">
+                            <p className="text-text-primary text-base leading-relaxed font-medium">
                                 {currentQuote.translation}
                             </p>
                         )}

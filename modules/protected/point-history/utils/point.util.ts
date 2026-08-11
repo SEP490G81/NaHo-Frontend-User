@@ -1,4 +1,4 @@
-import type {PointTransactionType} from "@/types/responses/point.response";
+import type { PointTransactionType } from "@/types/responses/point.response";
 
 /** Màu chủ đạo cho nhãn loại hoạt động, gom theo nhóm ý nghĩa (bám tone giao diện). */
 const REWARD = "#c99a17"; // vàng · phần thưởng

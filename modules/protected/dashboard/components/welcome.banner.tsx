@@ -164,8 +164,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
             nodeDetail.nodeType === "VOCABULARY_QUESTION" &&
             nodeDetail.vocabularyQuestion
         ) {
-            const firstVocab =
-                nodeDetail.vocabularyQuestion.vocabularies?.[0];
+            const firstVocab = nodeDetail.vocabularyQuestion.vocabularies?.[0];
             topicTitle = firstVocab?.japanese
                 ? t("nodeVocabTitle", { name: firstVocab.japanese })
                 : t("defaultNextTopic");
@@ -181,7 +180,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
     }
 
     return (
-        <ContainerBox className="relative overflow-hidden border border-bdc-primary bg-gradient-to-br from-bgc-card via-bgc-card to-[#ff99ac]/10 p-5 sm:p-6 lg:p-7">
+        <ContainerBox className="border-bdc-primary from-bgc-card via-bgc-card relative overflow-hidden border bg-gradient-to-br to-[#ff99ac]/10 p-5 sm:p-6 lg:p-7">
             {/* Sakura ambient glow circles */}
             <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-[#ff99ac]/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-[#ff758f]/10 blur-2xl" />
@@ -213,10 +212,10 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
 
                     {/* Hàng 2: Tiêu đề + Slogan */}
                     <div>
-                        <h1 className="text-2xl font-black tracking-tight text-text-primary sm:text-3xl lg:text-4xl">
+                        <h1 className="text-text-primary text-2xl font-black tracking-tight sm:text-3xl lg:text-4xl">
                             {t("welcome", { name: displayName })}
                         </h1>
-                        <p className="mt-1 text-sm font-medium leading-normal text-text-muted">
+                        <p className="text-text-muted mt-1 text-sm leading-normal font-medium">
                             {t("slogan")}
                         </p>
                     </div>
@@ -231,15 +230,13 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                             }
                             label={t("subscriptionLabel", { name: planName })}
                             size="small"
-                            className="border border-bdc-primary/60 bg-bgc-subtle font-bold text-text-primary"
+                            className="border-bdc-primary/60 bg-bgc-subtle text-text-primary border font-bold"
                         />
                         <Chip
-                            icon={
-                                <AccessTimeIcon style={{ fontSize: 13 }} />
-                            }
+                            icon={<AccessTimeIcon style={{ fontSize: 13 }} />}
                             label={expireText}
                             size="small"
-                            className="border border-bdc-primary/40 bg-bgc-card/80 text-xs font-semibold text-text-muted"
+                            className="border-bdc-primary/40 bg-bgc-card/80 text-text-muted border text-xs font-semibold"
                         />
 
                         {!isPremium && (
@@ -254,9 +251,7 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                                         className="text-[#ff758f]"
                                     />
                                 }
-                                endIcon={
-                                    <ArrowForwardIcon fontSize="small" />
-                                }
+                                endIcon={<ArrowForwardIcon fontSize="small" />}
                                 className="rounded-xl border-[#ff99ac]/60 bg-[#ff99ac]/10 px-3 py-1 text-xs font-extrabold text-[#ff758f] transition-all hover:border-[#ff758f] hover:bg-[#ff99ac]/20"
                             >
                                 {t("upgradeBannerBtnNow")}
@@ -266,20 +261,20 @@ export function WelcomeBanner({ name, t }: WelcomeBannerProps) {
                 </div>
 
                 {/* CỘT PHẢI: Mở rộng chiều ngang card tiếp tục luyện tập */}
-                <div className="flex w-full flex-col justify-between gap-3 rounded-2xl border border-[#ff99ac]/30 bg-bgc-card/80 p-5 shadow-sm backdrop-blur-md transition-all hover:border-[#ff758f]/50 lg:w-[380px] xl:w-[420px] lg:shrink-0">
+                <div className="bg-bgc-card/80 flex w-full flex-col justify-between gap-3 rounded-2xl border border-[#ff99ac]/30 p-5 shadow-sm backdrop-blur-md transition-all hover:border-[#ff758f]/50 lg:w-[380px] lg:shrink-0 xl:w-[420px]">
                     <div>
                         <div className="mb-1.5 flex items-center gap-1.5">
-                            <span className="h-2 w-2 rounded-full bg-[#ff758f] animate-pulse" />
+                            <span className="h-2 w-2 animate-pulse rounded-full bg-[#ff758f]" />
                             <span className="text-xs font-extrabold tracking-wider text-[#ff758f] uppercase">
                                 {t("nextLessonTag")}
                             </span>
                         </div>
 
                         <div className="my-1 space-y-1">
-                            <h4 className="text-base font-extrabold text-text-primary line-clamp-1">
+                            <h4 className="text-text-primary line-clamp-1 text-base font-extrabold">
                                 {topicTitle}
                             </h4>
-                            <p className="text-xs font-medium leading-relaxed text-text-muted line-clamp-2">
+                            <p className="text-text-muted line-clamp-2 text-xs leading-relaxed font-medium">
                                 {topicSubtitle}
                             </p>
                         </div>

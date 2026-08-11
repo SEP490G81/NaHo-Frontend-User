@@ -15,10 +15,10 @@ import { queryKeys } from "@/libs/query.keys";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
 import { GenderType } from "../types/account.ui.type";
 import {
-    validateAge,
-    validateUsername,
     getFirstCharacter,
     getUserAvatarUrl,
+    validateAge,
+    validateUsername,
 } from "../utils/account.util";
 import { MAX_AVATAR_SIZE_BYTES } from "../constants/account.constant";
 

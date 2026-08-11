@@ -31,7 +31,7 @@ export const getItemClassName = (
             active
                 ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                 : "text-text-contrast hover:bg-hbgc-app" +
-                (isCollapsed ? "" : " hover:translate-x-1"),
+                      (isCollapsed ? "" : " hover:translate-x-1"),
         );
     }
     return cn(
@@ -40,7 +40,7 @@ export const getItemClassName = (
         active
             ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
             : "text-text-contrast hover:bg-hbgc-app" +
-            (isCollapsed ? "" : " hover:translate-x-1"),
+                  (isCollapsed ? "" : " hover:translate-x-1"),
     );
 };
 
@@ -60,12 +60,12 @@ export const SidebarItem = ({
     // Check if parent or any child route is active
     const active = item.url
         ? pathname === item.url ||
-        (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
+          (item.url !== "/dashboard" && pathname.startsWith(item.url + "/"))
         : item.children?.some(
-            (child) =>
-                pathname === child.url ||
-                pathname.startsWith(child.url + "/"),
-        );
+              (child) =>
+                  pathname === child.url ||
+                  pathname.startsWith(child.url + "/"),
+          );
 
     // 1. Render Disabled / Coming soon items
     if (item.disabled) {
@@ -231,9 +231,7 @@ export const SidebarItem = ({
                     <item.icon
                         className={cn(
                             "h-4.5 w-4.5 shrink-0 transition-transform duration-200",
-                            active
-                                ? "text-bgc-highlight"
-                                : "text-text-muted",
+                            active ? "text-bgc-highlight" : "text-text-muted",
                         )}
                     />
                     {!isCollapsed && (
@@ -255,4 +253,3 @@ export const SidebarItem = ({
 };
 
 export default SidebarItem;
-

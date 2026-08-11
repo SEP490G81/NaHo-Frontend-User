@@ -88,8 +88,8 @@ export function ReportHistoryTable({
                                 </p>
                                 {report.adminReply && (
                                     <div className="bg-bgc-subtle border-bdc-primary mt-2.5 rounded-lg border p-2.5 text-xs">
-                                        <div className="flex items-center gap-1.5 font-semibold text-text-primary mb-1">
-                                            <MessageSquareText className="h-3.5 w-3.5 text-text-contrast shrink-0" />
+                                        <div className="text-text-primary mb-1 flex items-center gap-1.5 font-semibold">
+                                            <MessageSquareText className="text-text-contrast h-3.5 w-3.5 shrink-0" />
                                             <span>{t("adminReplyLabel")}:</span>
                                         </div>
                                         <p className="text-text-muted leading-relaxed whitespace-pre-wrap">

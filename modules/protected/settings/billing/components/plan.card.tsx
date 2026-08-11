@@ -67,14 +67,14 @@ const PlanCard: React.FC<PlanCardProps> = ({
     const cardContainerStyles = isPremium
         ? "relative flex flex-col justify-between rounded-3xl border-2 border-amber-400 dark:border-amber-500/80 bg-gradient-to-b from-amber-500/10 via-rose-500/5 to-bgc-card p-6 shadow-xl shadow-amber-500/15 hover:shadow-2xl hover:shadow-amber-500/25 hover:-translate-y-1 transition-all duration-300 ring-1 ring-amber-400/30 overflow-hidden"
         : isBasic
-            ? "relative flex flex-col justify-between rounded-3xl border-2 border-indigo-500/60 dark:border-indigo-400/60 bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-bgc-card p-6 shadow-lg shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-1 transition-all duration-300"
-            : "relative flex flex-col justify-between rounded-3xl border border-bdc-primary bg-gradient-to-b from-slate-100/50 via-bgc-card to-bgc-card dark:from-slate-800/30 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300";
+          ? "relative flex flex-col justify-between rounded-3xl border-2 border-indigo-500/60 dark:border-indigo-400/60 bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-bgc-card p-6 shadow-lg shadow-indigo-500/10 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-1 transition-all duration-300"
+          : "relative flex flex-col justify-between rounded-3xl border border-bdc-primary bg-gradient-to-b from-slate-100/50 via-bgc-card to-bgc-card dark:from-slate-800/30 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300";
 
     const featureIconColor = isPremium
         ? "text-rose-500 dark:text-rose-400"
         : isBasic
-            ? "text-indigo-600 dark:text-indigo-400"
-            : "text-emerald-600 dark:text-emerald-400";
+          ? "text-indigo-600 dark:text-indigo-400"
+          : "text-emerald-600 dark:text-emerald-400";
 
     return (
         <div className={cardContainerStyles}>
@@ -88,8 +88,10 @@ const PlanCard: React.FC<PlanCardProps> = ({
                 <div className="mb-4 text-center">
                     <div className="mb-3 flex justify-center">
                         {isPremium ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md animate-pulse">
-                                <WorkspacePremiumIcon style={{ fontSize: 15 }} />
+                            <span className="inline-flex animate-pulse items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md">
+                                <WorkspacePremiumIcon
+                                    style={{ fontSize: 15 }}
+                                />
                                 <span>{t("card.highestTierBadge")}</span>
                             </span>
                         ) : isBasic ? (
@@ -98,7 +100,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 <span>{t("card.recommendedBadge")}</span>
                             </span>
                         ) : (
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 <SentimentSatisfiedAltIcon
                                     style={{ fontSize: 14 }}
                                 />
@@ -108,16 +110,23 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     </div>
 
                     <h3 className="text-text-primary text-2xl font-black tracking-tight">
-                        {plan.name || (tierCode === "FREE" ? t("freePlan") : tierCode === "BASIC" ? t("basicPlan") : tierCode === "PREMIUM" ? t("premiumPlan") : tierCode)}
+                        {plan.name ||
+                            (tierCode === "FREE"
+                                ? t("freePlan")
+                                : tierCode === "BASIC"
+                                  ? t("basicPlan")
+                                  : tierCode === "PREMIUM"
+                                    ? t("premiumPlan")
+                                    : tierCode)}
                     </h3>
-                    <p className="text-text-muted mt-1.5 min-h-[38px] text-xs font-medium leading-relaxed">
+                    <p className="text-text-muted mt-1.5 min-h-[38px] text-xs leading-relaxed font-medium">
                         {plan.description}
                     </p>
 
                     {/* Price Tag */}
                     <div className="mt-4 flex items-baseline justify-center gap-1">
                         {isPremium ? (
-                            <span className="text-3xl font-black tracking-tight bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 bg-clip-text text-3xl font-black tracking-tight text-transparent">
                                 {formatPrice(plan.priceAmount)}
                             </span>
                         ) : isBasic ? (
@@ -133,22 +142,24 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         <span className="text-text-muted text-xs font-semibold">
                             {plan.priceAmount === 0 || !plan.durationDays
                                 ? t("card.lifetimeDuration")
-                                : t("card.daysDuration", { days: plan.durationDays })}
+                                : t("card.daysDuration", {
+                                      days: plan.durationDays,
+                                  })}
                         </span>
                     </div>
                 </div>
 
-                <div className="my-4 h-px w-full bg-bdc-primary/40" />
+                <div className="bg-bdc-primary/40 my-4 h-px w-full" />
 
                 {/* Detailed Features List */}
                 <div className="space-y-4">
                     {/* Section 1: Đánh giá & Hội thoại */}
                     <div>
-                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
+                        <div className="text-text-muted mb-2 text-[11px] font-black tracking-wider uppercase opacity-75">
                             {t("card.sectionAssessmentAndAi")}
                         </div>
                         <ul className="space-y-2 text-xs">
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
@@ -157,7 +168,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     {t("card.speakingAssessmentLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.dailySpeakingQuestionEvaluationLimit ?? 0,
+                                            plan.dailySpeakingQuestionEvaluationLimit ??
+                                                0,
                                         )}
                                     </strong>
                                     <span className="text-text-muted">
@@ -165,7 +177,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
@@ -173,14 +185,16 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 <span>
                                     {t("card.maxRecordingLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {plan.maxSpeakingQuestionRecordingSeconds ?? 60}s
+                                        {plan.maxSpeakingQuestionRecordingSeconds ??
+                                            60}
+                                        s
                                     </strong>
                                     <span className="text-text-muted">
                                         {t("card.perTurnSuffix")}
                                     </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
@@ -189,7 +203,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     {t("card.aiConversationLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.dailyAiSessionEvaluationLimit ?? 0,
+                                            plan.dailyAiSessionEvaluationLimit ??
+                                                0,
                                         )}
                                     </strong>
                                     <span className="text-text-muted">
@@ -197,7 +212,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
@@ -205,15 +220,18 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 <span>
                                     {t("card.sessionLimitLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {plan.maxTurnsPerAiSession ?? 10} {t("card.turnsSuffix")}
+                                        {plan.maxTurnsPerAiSession ?? 10}{" "}
+                                        {t("card.turnsSuffix")}
                                     </strong>
                                     <span className="text-text-muted">
                                         {" "}
-                                        ({plan.maxAiTurnSpeakingSeconds ?? 20} {t("card.secondsPerTurnSuffix")})
+                                        ({plan.maxAiTurnSpeakingSeconds ??
+                                            20}{" "}
+                                        {t("card.secondsPerTurnSuffix")})
                                     </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
@@ -221,7 +239,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 <span>
                                     {t("card.concurrentSessionsLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {plan.maxConcurrentAiSessionCount ?? 1} {t("card.sessionsSuffix")}
+                                        {plan.maxConcurrentAiSessionCount ?? 1}{" "}
+                                        {t("card.sessionsSuffix")}
                                     </strong>
                                 </span>
                             </li>
@@ -230,11 +249,11 @@ const PlanCard: React.FC<PlanCardProps> = ({
 
                     {/* Section 2: Tiện ích & Quyền truy cập */}
                     <div>
-                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
+                        <div className="text-text-muted mb-2 text-[11px] font-black tracking-wider uppercase opacity-75">
                             {t("card.sectionBenefits")}
                         </div>
                         <ul className="space-y-2 text-xs">
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 {plan.sampleAnswerEnabled ? (
                                     <CheckCircleIcon
                                         style={{ fontSize: 16 }}
@@ -243,7 +262,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 ) : (
                                     <CancelIcon
                                         style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                        className="text-text-muted/40 mt-0.5 shrink-0"
                                     />
                                 )}
                                 <span
@@ -291,25 +310,35 @@ const PlanCard: React.FC<PlanCardProps> = ({
                             isPremium
                                 ? "rounded-xl bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 py-3 text-sm font-black text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-rose-500/30 active:scale-[0.98]"
                                 : isBasic
-                                    ? "rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-sm font-black text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-indigo-500/30 active:scale-[0.98]"
-                                    : "rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-900 active:scale-[0.98]"
+                                  ? "rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 text-sm font-black text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-indigo-500/30 active:scale-[0.98]"
+                                  : "rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-slate-900 active:scale-[0.98]"
                         }
                         sx={{
                             color: "#ffffff !important",
-                            "& .MuiButton-startIcon": { color: "#ffffff !important" },
+                            "& .MuiButton-startIcon": {
+                                color: "#ffffff !important",
+                            },
                         }}
                     >
                         {isLoadingThisPlan ? (
                             <div className="flex items-center gap-2 text-white">
                                 <CircularProgress size={18} color="inherit" />
-                                <span className="text-white font-bold">{t("processing")}</span>
+                                <span className="font-bold text-white">
+                                    {t("processing")}
+                                </span>
                             </div>
                         ) : isFailed ? (
-                            <span className="text-white font-bold">{t("retry")}</span>
+                            <span className="font-bold text-white">
+                                {t("retry")}
+                            </span>
                         ) : (
-                            <span className="flex items-center justify-center gap-1.5 text-white font-black">
-                                <AutoAwesomeIcon style={{ fontSize: 16, color: "#ffffff" }} />
-                                <span className="text-white">{t("buyNow")}</span>
+                            <span className="flex items-center justify-center gap-1.5 font-black text-white">
+                                <AutoAwesomeIcon
+                                    style={{ fontSize: 16, color: "#ffffff" }}
+                                />
+                                <span className="text-white">
+                                    {t("buyNow")}
+                                </span>
                             </span>
                         )}
                     </Button>

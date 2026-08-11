@@ -154,7 +154,7 @@ export function LearnerSidebar() {
                                                 href={pinned.url}
                                                 onClick={closeSidebar}
                                                 className={cn(
-                                                    "relative flex h-9 w-full items-center justify-center rounded-lg transition-all duration-200 ease-in-out cursor-pointer",
+                                                    "relative flex h-9 w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-200 ease-in-out",
                                                     isActive
                                                         ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                                                         : "text-text-contrast hover:bg-hbgc-app",
@@ -182,7 +182,7 @@ export function LearnerSidebar() {
                                     >
                                         <div
                                             className={cn(
-                                                "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out cursor-pointer",
+                                                "group relative flex w-full cursor-pointer items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
                                                 isActive
                                                     ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                                                     : "text-text-contrast hover:bg-hbgc-app hover:translate-x-1",

@@ -1,8 +1,5 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    SubscriptionPlanResponse,
-    UserSubscriptionResponse,
-} from "@/types/responses/subscription.response";
+import { SubscriptionPlanResponse, UserSubscriptionResponse } from "@/types/responses/subscription.response";
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
@@ -65,7 +62,7 @@ export async function getSubscriptionPlans(): Promise<
         const problem = result as ProblemDetail;
         throw new Error(
             problem.detail ||
-            "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
+                "Không thể tải danh sách gói cước, vui lòng thử lại sau.",
         );
     }
 

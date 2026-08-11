@@ -9,9 +9,8 @@
 - Làm cho tôi giao diện phần setting: `app/[locale]/(protected)/settings` với các yêu cầu sau:
 
 1. Tôi muốn cấu trúc của phần cài đặt giống ở trong file `docs/settings/settings.json`, tôi muốn cái thanh search của
-   setting
-   phải tìm được cái mục này khi người dùng enter, và bôi sáng phần tìm được lên. Ngoài ra khi họ gõ vào ô search thì
-   các gợi ý cũng sẽ hiện lên để người dùng chọn.
+   setting phải tìm được cái mục này khi người dùng enter, và bôi sáng phần tìm được lên. Ngoài ra khi họ gõ vào ô
+   search thì các gợi ý cũng sẽ hiện lên để người dùng chọn.
 2. Ở mỗi part lớn, ở đầu đều phải có tên phần và mô tả ngắn gọn về phần đó làm gì
 3. Giữa mỗi phần trong 1 part nên có Divider để ngăn cách cho dễ nhìn
 

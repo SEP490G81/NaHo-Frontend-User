@@ -146,7 +146,9 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
 
     if (!mounted || isLoading) {
         return (
-            <ContainerBox className={`border-bdc-primary border h-full ${className}`}>
+            <ContainerBox
+                className={`border-bdc-primary h-full border ${className}`}
+            >
                 <div className="bg-bdc-primary/30 h-6 w-48 animate-pulse rounded" />
                 <div className="bg-bgc-subtle text-text-muted mt-6 flex h-64 w-full items-center justify-center rounded-lg text-xs">
                     {t("loadingChart")}
@@ -157,8 +159,10 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
 
     if (isError) {
         return (
-            <ContainerBox className={`border-bdc-primary border h-full ${className}`}>
-                <div className="flex flex-col items-center justify-center py-12 text-center h-full">
+            <ContainerBox
+                className={`border-bdc-primary h-full border ${className}`}
+            >
+                <div className="flex h-full flex-col items-center justify-center py-12 text-center">
                     <p className="text-text-muted text-sm">
                         {t("errorLoadingChart")}
                     </p>
@@ -175,7 +179,9 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
     }
 
     return (
-        <ContainerBox className={`border-bdc-primary border h-full flex flex-col justify-between ${className}`}>
+        <ContainerBox
+            className={`border-bdc-primary flex h-full flex-col justify-between border ${className}`}
+        >
             {/* Header & Quick stats */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -222,7 +228,7 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
             </div>
 
             {/* Chart Area flex-1 tự giãn bằng độ cao của Quiz */}
-            <div className="mt-6 w-full flex-1 min-h-[220px]">
+            <div className="mt-6 min-h-[220px] w-full flex-1">
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                     <AreaChart
                         data={chartData}
@@ -298,8 +304,8 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                                 const payload = items?.[0]?.payload;
                                 return payload?.fullLabel
                                     ? t("chartTooltipDate", {
-                                        date: payload.fullLabel,
-                                    })
+                                          date: payload.fullLabel,
+                                      })
                                     : t("chartTooltipDay", { label });
                             }}
                         />

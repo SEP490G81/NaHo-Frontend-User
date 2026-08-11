@@ -94,7 +94,11 @@ const AccountMenu = ({
                                         fontSize: "9px",
                                         fontWeight: 800,
                                         color: "#ffffff !important",
-                                        "& .MuiChip-label": { px: 1, py: 0, color: "#ffffff !important" },
+                                        "& .MuiChip-label": {
+                                            px: 1,
+                                            py: 0,
+                                            color: "#ffffff !important",
+                                        },
                                     }}
                                     className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-xs"
                                 />

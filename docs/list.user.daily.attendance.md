@@ -13,8 +13,7 @@
   "meta": {
   "traceId": "a2d2c9d5-8131-4677-86aa-ea0603d5f59d",
   "timestamp": "2026-07-25T02:10:54.415812Z",
-  "pageMeta": null
-  },
+  "pageMeta": null },
   "message": "Lấy lịch sử điểm danh tháng hiện tại thành công!",
   "data": [
   {
@@ -22,8 +21,7 @@
   "userId": 1,
   "dailyRewardId": 25,
   "attendanceDate": "2026-07-25",
-  "earnedPoint": 1
-  }
+  "earnedPoint": 1 }
   ]
   }
 - nó sẽ cho biết những ngày mà user hiện tại đã điểm danh

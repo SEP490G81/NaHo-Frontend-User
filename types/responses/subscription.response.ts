@@ -55,7 +55,6 @@ export interface SubscriptionPlanResponse {
     maxAiTurnSpeakingSeconds: number;
     sampleAnswerEnabled: boolean;
     status: PlanStatus;
-
 }
 
 export interface UserSubscriptionResponse {

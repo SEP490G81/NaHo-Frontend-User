@@ -42,7 +42,14 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
     const plan = subscription?.subscriptionPlan || subscription?.plan;
     const tier = plan?.tier || "FREE";
     const planName =
-        plan?.name || (tier === "FREE" ? t("freePlan") : tier === "BASIC" ? t("basicPlan") : tier === "PREMIUM" ? t("premiumPlan") : tier);
+        plan?.name ||
+        (tier === "FREE"
+            ? t("freePlan")
+            : tier === "BASIC"
+              ? t("basicPlan")
+              : tier === "PREMIUM"
+                ? t("premiumPlan")
+                : tier);
 
     const isFree = tier === "FREE";
 
@@ -50,8 +57,8 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
         tier === "PREMIUM"
             ? "bg-amber-500 text-white"
             : tier === "BASIC"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
+              ? "bg-indigo-600 text-white"
+              : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200";
 
     return (
         <div className="border-bdc-primary bg-bgc-card rounded-2xl border p-6 shadow-sm">
@@ -111,12 +118,16 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
                             {t("quota.perDay", {
-                                count: plan.dailySpeakingQuestionEvaluationLimit ?? 0,
+                                count:
+                                    plan.dailySpeakingQuestionEvaluationLimit ??
+                                    0,
                             })}
                         </span>
                         <span className="text-text-muted mt-0.5 text-xs">
                             {t("quota.maxRecordingPerTurn", {
-                                seconds: plan.maxSpeakingQuestionRecordingSeconds ?? 60,
+                                seconds:
+                                    plan.maxSpeakingQuestionRecordingSeconds ??
+                                    60,
                             })}
                         </span>
                     </div>
