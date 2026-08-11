@@ -49,6 +49,14 @@
         "startHint": "You can change your companion anytime during the session.",
         "startError": "Could not start the conversation. Please try again.",
         "personaUnavailable": "This persona hasn't been set up on the server yet.",
+        "resumeTitle": "You have an unfinished session",
+        "resumeTurns": "{count} turns",
+        "resumeContinue": "Continue session",
+        "resumeDismiss": "Dismiss",
+        "resuming": "Resuming...",
+        "resumeError": "Could not resume the session. Please try again.",
+        "resumeUnknownPersona": "AI companion",
+        "viewHistory": "Session history",
         "toastStartSuccess": "Settings saved. Start chatting!",
         "companionLevel": "Level: {level}"
     }

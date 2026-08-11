@@ -32,6 +32,7 @@
                 "report": "Report",
                 "liveChatroom": "Live Chatroom",
                 "dialogueSetup": "Free AI Conversation",
+                "dialogueHistory": "AI Dialogue History",
                 "speakingResult": "Session Report",
                 "orders": "Order History",
                 "terms": "Terms of Service",
@@ -78,6 +79,7 @@
                     "orders": "Order History",
                     "pointHistory": "Point History",
                     "speakingHistory": "Speaking History",
+                    "dialogueHistory": "AI Dialogue History",
                     "language": "Language",
                     "getHelp": "Help & Support",
                     "report": "Reports & Feedback"

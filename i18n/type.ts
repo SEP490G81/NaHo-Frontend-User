@@ -22,6 +22,8 @@ export type AllRoute =
     | "/point-history"
     | "/dialogue-setup"
     | "/live-chatroom"
+    | "/dialogue-history"
+    | `/dialogue-history/${string}` // hoặc "/dialogue-history/[code]"
     | "/leaderboard"
     | "/speaking-result"
     | "/settings"

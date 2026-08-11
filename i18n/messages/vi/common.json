@@ -35,6 +35,7 @@
                 "report": "Báo cáo",
                 "liveChatroom": "Trò chuyện trực tuyến",
                 "dialogueSetup": "Trò chuyện tự do AI",
+                "dialogueHistory": "Lịch sử trò chuyện AI",
                 "speakingResult": "Báo cáo phiên luyện",
                 "leaderboard": "Bảng xếp hạng thi đua",
                 "settings": "Cài đặt",
@@ -83,6 +84,7 @@
                     "orders": "Lịch sử giao dịch",
                     "pointHistory": "Lịch sử nhận điểm",
                     "speakingHistory": "Lịch sử luyện nói theo sách",
+                    "dialogueHistory": "Lịch sử trò chuyện AI",
                     "language": "Ngôn ngữ",
                     "getHelp": "Trợ giúp & Hỗ trợ",
                     "report": "Báo cáo & Phản hồi"

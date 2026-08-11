@@ -49,6 +49,14 @@
         "startHint": "セッション中はいつでも話し相手を変更できます。",
         "startError": "会話を開始できませんでした。もう一度お試しください。",
         "personaUnavailable": "このペルソナはサーバーにまだ設定されていません。",
+        "resumeTitle": "未完了のセッションがあります",
+        "resumeTurns": "{count}ターン",
+        "resumeContinue": "セッションを続ける",
+        "resumeDismiss": "無視",
+        "resuming": "復元中...",
+        "resumeError": "セッションを復元できませんでした。もう一度お試しください。",
+        "resumeUnknownPersona": "AIパートナー",
+        "viewHistory": "セッション履歴",
         "toastStartSuccess": "設定を保存しました。会話を開始します！",
         "companionLevel": "レベル：{level}"
     }
