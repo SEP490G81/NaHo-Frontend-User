@@ -1,6 +1,6 @@
-import type {BookResponse} from "@/types/responses/book.response";
-import {mapBook} from "./mapper";
-import type {MarugotoBook} from "./types";
+import type { BookResponse } from "@/types/responses/book.response";
+import { mapBook } from "./mapper";
+import type { MarugotoBook } from "./types";
 
 /**
  * Chuẩn hóa danh sách sách từ API: sắp theo trình độ và gán `cefrOrder` tuần tự

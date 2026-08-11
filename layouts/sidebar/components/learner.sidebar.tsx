@@ -43,7 +43,8 @@ export function LearnerSidebar() {
                 );
 
                 if (hasActiveChild) {
-                    initialOpenState[item.title] = true;
+                    const key = item.titleKey || item.title;
+                    initialOpenState[key] = true;
                 }
             }
         });
@@ -51,10 +52,10 @@ export function LearnerSidebar() {
         setOpenSubMenus((prev) => ({ ...initialOpenState, ...prev }));
     }, [pathname]);
 
-    const toggleSubMenu = (title: string) => {
+    const toggleSubMenu = (key: string) => {
         setOpenSubMenus((prev) => ({
             ...prev,
-            [title]: !prev[title],
+            [key]: !prev[key],
         }));
     };
 
@@ -82,18 +83,21 @@ export function LearnerSidebar() {
                     disablePadding
                     className={cn("space-y-2", isCollapsed ? "px-1.5" : "px-3")}
                 >
-                    {NAV_ITEMS.map((item) => (
-                        <SidebarItem
-                            key={item.title}
-                            item={item}
-                            pathname={pathname}
-                            isCollapsed={isCollapsed}
-                            isOpen={openSubMenus[item.title]}
-                            onToggleSubMenu={() => toggleSubMenu(item.title)}
-                            onCloseSidebar={closeSidebar}
-                            toggleSidebarCollapse={toggleSidebarCollapse}
-                        />
-                    ))}
+                    {NAV_ITEMS.map((item) => {
+                        const itemKey = item.titleKey || item.title;
+                        return (
+                            <SidebarItem
+                                key={itemKey}
+                                item={item}
+                                pathname={pathname}
+                                isCollapsed={isCollapsed}
+                                isOpen={openSubMenus[itemKey]}
+                                onToggleSubMenu={() => toggleSubMenu(itemKey)}
+                                onCloseSidebar={closeSidebar}
+                                toggleSidebarCollapse={toggleSidebarCollapse}
+                            />
+                        );
+                    })}
                 </List>
 
                 {/* Pinned Topics Section */}
@@ -150,7 +154,7 @@ export function LearnerSidebar() {
                                                 href={pinned.url}
                                                 onClick={closeSidebar}
                                                 className={cn(
-                                                    "relative flex h-9 w-full items-center justify-center rounded-lg transition-all duration-200 ease-in-out cursor-pointer",
+                                                    "relative flex h-9 w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-200 ease-in-out",
                                                     isActive
                                                         ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                                                         : "text-text-contrast hover:bg-hbgc-app",
@@ -178,7 +182,7 @@ export function LearnerSidebar() {
                                     >
                                         <div
                                             className={cn(
-                                                "group relative flex w-full items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out cursor-pointer",
+                                                "group relative flex w-full cursor-pointer items-center justify-between gap-2.5 rounded-lg px-3 py-2 text-xs transition-all duration-200 ease-in-out",
                                                 isActive
                                                     ? "bg-bgc-highlight/15 text-bgc-highlight font-semibold"
                                                     : "text-text-contrast hover:bg-hbgc-app hover:translate-x-1",

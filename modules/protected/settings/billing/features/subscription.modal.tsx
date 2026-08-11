@@ -168,7 +168,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         >
             <div className="relative p-4 sm:p-6 lg:p-8">
                 {/* Glowing ambient background header */}
-                <div className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 h-36 w-full max-w-xl rounded-full bg-gradient-to-r from-indigo-500/10 via-[#ff758f]/15 to-amber-500/10 blur-3xl" />
+                <div className="pointer-events-none absolute -top-12 left-1/2 h-36 w-full max-w-xl -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-500/10 via-[#ff758f]/15 to-amber-500/10 blur-3xl" />
 
                 <DialogTitle className="text-text-primary p-0 text-center text-2xl font-black tracking-tight sm:text-3xl">
                     {t("modalTitle")}

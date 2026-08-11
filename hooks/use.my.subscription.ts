@@ -8,12 +8,12 @@ import {
 } from "@/types/responses/subscription.response";
 
 export function useMySubscription() {
-    return useQuery<
-        UserSubscriptionResponse | SubscriptionPlanResponse | null
-    >({
-        queryKey: ["my-subscription"],
-        queryFn: getMySubscription,
-        staleTime: 1000 * 60 * 5,
-        refetchOnWindowFocus: false,
-    });
+    return useQuery<UserSubscriptionResponse | SubscriptionPlanResponse | null>(
+        {
+            queryKey: ["my-subscription"],
+            queryFn: getMySubscription,
+            staleTime: 1000 * 60 * 5,
+            refetchOnWindowFocus: false,
+        },
+    );
 }

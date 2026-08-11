@@ -37,7 +37,7 @@ export interface SubscriptionPlanResponse {
     id: number;
 
     code: PlanCode;
-    name: string;
+    name?: string;
     description: string;
 
     tier: PlanTier;
@@ -45,24 +45,15 @@ export interface SubscriptionPlanResponse {
     priceAmount: number;
     priceCurrency: string;
 
-    durationDays: number;
+    durationDays: number | null;
 
-    monthlyAssessmentLimit: number;
-    monthlyAssessmentAudioSeconds: number;
-    maxAssessmentAudioSeconds: number;
-
-    monthlyConversationSeconds: number;
-    maxConversationSessionSeconds: number;
-    maxConversationTurnsPerSession: number;
-
-    fullCurriculumAccess: boolean;
-    progressAnalyticsEnabled: boolean;
+    dailySpeakingQuestionEvaluationLimit: number;
+    maxSpeakingQuestionRecordingSeconds: number;
+    maxConcurrentAiSessionCount: number;
+    maxTurnsPerAiSession: number;
+    dailyAiSessionEvaluationLimit: number;
+    maxAiTurnSpeakingSeconds: number;
     sampleAnswerEnabled: boolean;
-
-    maxAnswerTimeSeconds: number;
-
-    saveAnswerHistoryEnabled: boolean;
-
     status: PlanStatus;
 }
 
@@ -76,5 +67,6 @@ export interface UserSubscriptionResponse {
     endTime: string;
     createdTime?: string;
     modifiedTime?: string;
-    plan: SubscriptionPlanResponse;
+    subscriptionPlan?: SubscriptionPlanResponse;
+    plan?: SubscriptionPlanResponse;
 }

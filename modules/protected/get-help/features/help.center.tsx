@@ -9,18 +9,12 @@ import HelpGuideCard from "@/modules/protected/get-help/components/help.guide.ca
 import HelpSearchBar from "@/modules/protected/get-help/components/help.search.bar";
 import HelpSearchResults from "@/modules/protected/get-help/components/help.search.results";
 import HelpTroubleshootingCard from "@/modules/protected/get-help/components/help.troubleshooting.card";
-import {
-    HELP_ALL_CATEGORY,
-    HELP_FAQ_SECTION_ID,
-} from "@/modules/protected/get-help/constants/help.constant";
-import {
-    HelpContent,
-    HelpSearchResult,
-} from "@/modules/protected/get-help/types/help.ui.type";
+import { HELP_ALL_CATEGORY, HELP_FAQ_SECTION_ID } from "@/modules/protected/get-help/constants/help.constant";
+import { HelpContent, HelpSearchResult } from "@/modules/protected/get-help/types/help.ui.type";
 import {
     buildHelpSearchIndex,
     countQuestionsByCategory,
-    searchHelp,
+    searchHelp
 } from "@/modules/protected/get-help/utils/help.search";
 import { cn } from "@/libs/utils";
 import { LifeBuoy } from "lucide-react";

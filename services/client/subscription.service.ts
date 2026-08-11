@@ -1,8 +1,5 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    SubscriptionPlanResponse,
-    UserSubscriptionResponse,
-} from "@/types/responses/subscription.response";
+import { SubscriptionPlanResponse, UserSubscriptionResponse } from "@/types/responses/subscription.response";
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
@@ -24,7 +21,16 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
         }
 
         const api = result as ApiResponse<UserSubscriptionResponse>;
-        return api.data ?? null;
+        if (api.data) {
+            const subData = api.data;
+            const planObj = subData.subscriptionPlan || subData.plan;
+            return {
+                ...subData,
+                subscriptionPlan: planObj,
+                plan: planObj,
+            };
+        }
+        return null;
     } catch (error) {
         console.error("Error fetching my subscription:", error);
         throw error;

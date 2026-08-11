@@ -32,11 +32,7 @@ export function AccountAvatarSection({
             className="border-bdc-primary/60 bg-bgc-app flex flex-col items-start justify-between gap-4 rounded-xl border p-6 transition-all duration-300 sm:flex-row sm:items-center"
         >
             <div className="flex items-center gap-4">
-                <Tooltip
-                    title={t("avatarHoverTooltip")}
-                    arrow
-                    placement="top"
-                >
+                <Tooltip title={t("avatarHoverTooltip")} arrow placement="top">
                     <button
                         type="button"
                         onClick={onOpenPreview}
@@ -64,10 +60,7 @@ export function AccountAvatarSection({
                             }`}
                         >
                             {isAvatarUploading ? (
-                                <CircularProgress
-                                    size={24}
-                                    color="inherit"
-                                />
+                                <CircularProgress size={24} color="inherit" />
                             ) : (
                                 <ZoomInIcon fontSize="medium" />
                             )}
@@ -100,10 +93,7 @@ export function AccountAvatarSection({
                     size="small"
                     startIcon={
                         isAvatarUploading ? (
-                            <CircularProgress
-                                size={16}
-                                color="inherit"
-                            />
+                            <CircularProgress size={16} color="inherit" />
                         ) : (
                             <AddAPhotoOutlinedIcon fontSize="small" />
                         )
@@ -128,9 +118,7 @@ export function AccountAvatarSection({
                         },
                     }}
                 >
-                    {isAvatarUploading
-                        ? "Đang tải..."
-                        : t("changeAvatar")}
+                    {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
                 </Button>
             </div>
         </div>

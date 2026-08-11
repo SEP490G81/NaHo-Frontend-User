@@ -105,10 +105,7 @@ export function AccountAvatarPreviewModal({
                         size="small"
                         startIcon={
                             isAvatarUploading ? (
-                                <CircularProgress
-                                    size={16}
-                                    color="inherit"
-                                />
+                                <CircularProgress size={16} color="inherit" />
                             ) : (
                                 <AddAPhotoOutlinedIcon fontSize="small" />
                             )
@@ -133,9 +130,7 @@ export function AccountAvatarPreviewModal({
                             },
                         }}
                     >
-                        {isAvatarUploading
-                            ? "Đang tải..."
-                            : t("changeAvatar")}
+                        {isAvatarUploading ? "Đang tải..." : t("changeAvatar")}
                     </Button>
                 </div>
                 <Button

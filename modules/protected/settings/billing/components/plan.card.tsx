@@ -45,18 +45,18 @@ const PlanCard: React.FC<PlanCardProps> = ({
     };
 
     const formatDurationText = (seconds: number) => {
-        if (seconds >= 99999) return "Không giới hạn";
+        if (seconds >= 99999) return t("card.unlimited");
         const mins = Math.round(seconds / 60);
         if (mins >= 60) {
             const hrs = (mins / 60).toFixed(1).replace(".0", "");
-            return `${hrs} giờ`;
+            return t("card.hours", { count: hrs });
         }
-        return `${mins} phút`;
+        return t("card.minutes", { count: mins });
     };
 
     const formatLimitCount = (count: number) => {
-        if (count >= 9999) return "Không giới hạn";
-        return `${count} lượt`;
+        if (count >= 9999) return t("card.unlimited");
+        return t("card.timesCount", { count });
     };
 
     // Tier specific styling configuration
@@ -88,36 +88,45 @@ const PlanCard: React.FC<PlanCardProps> = ({
                 <div className="mb-4 text-center">
                     <div className="mb-3 flex justify-center">
                         {isPremium ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md animate-pulse">
-                                <WorkspacePremiumIcon style={{ fontSize: 15 }} />
-                                <span>GÓI CAO CẤP NHẤT 👑</span>
+                            <span className="inline-flex animate-pulse items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 px-4 py-1.5 text-xs font-black text-white shadow-md">
+                                <WorkspacePremiumIcon
+                                    style={{ fontSize: 15 }}
+                                />
+                                <span>{t("card.highestTierBadge")}</span>
                             </span>
                         ) : isBasic ? (
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 px-3.5 py-1 text-xs font-extrabold text-white shadow-md">
                                 <StarIcon style={{ fontSize: 14 }} />
-                                <span>GÓI KHUYÊN DÙNG ★</span>
+                                <span>{t("card.recommendedBadge")}</span>
                             </span>
                         ) : (
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 px-3 py-1 text-xs font-bold text-slate-700 dark:text-slate-300">
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 <SentimentSatisfiedAltIcon
                                     style={{ fontSize: 14 }}
                                 />
-                                <span>GÓI MIỄN PHÍ</span>
+                                <span>{t("card.freeBadge")}</span>
                             </span>
                         )}
                     </div>
 
                     <h3 className="text-text-primary text-2xl font-black tracking-tight">
-                        {plan.name}
+                        {plan.name ||
+                            (tierCode === "FREE"
+                                ? t("freePlan")
+                                : tierCode === "BASIC"
+                                  ? t("basicPlan")
+                                  : tierCode === "PREMIUM"
+                                    ? t("premiumPlan")
+                                    : tierCode)}
                     </h3>
-                    <p className="text-text-muted mt-1.5 min-h-[38px] text-xs font-medium leading-relaxed">
+                    <p className="text-text-muted mt-1.5 min-h-[38px] text-xs leading-relaxed font-medium">
                         {plan.description}
                     </p>
 
                     {/* Price Tag */}
                     <div className="mt-4 flex items-baseline justify-center gap-1">
                         {isPremium ? (
-                            <span className="text-3xl font-black tracking-tight bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-amber-500 via-rose-500 to-amber-500 bg-clip-text text-3xl font-black tracking-tight text-transparent">
                                 {formatPrice(plan.priceAmount)}
                             </span>
                         ) : isBasic ? (
@@ -131,110 +140,108 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         )}
 
                         <span className="text-text-muted text-xs font-semibold">
-                            {plan.priceAmount === 0
-                                ? "/ vĩnh viễn"
-                                : ` / ${plan.durationDays} ngày`}
+                            {plan.priceAmount === 0 || !plan.durationDays
+                                ? t("card.lifetimeDuration")
+                                : t("card.daysDuration", {
+                                      days: plan.durationDays,
+                                  })}
                         </span>
                     </div>
                 </div>
 
-                <div className="my-4 h-px w-full bg-bdc-primary/40" />
+                <div className="bg-bdc-primary/40 my-4 h-px w-full" />
 
                 {/* Detailed Features List */}
                 <div className="space-y-4">
                     {/* Section 1: Đánh giá & Hội thoại */}
                     <div>
-                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
-                            ⚡ Đánh giá phát âm & AI
+                        <div className="text-text-muted mb-2 text-[11px] font-black tracking-wider uppercase opacity-75">
+                            {t("card.sectionAssessmentAndAi")}
                         </div>
                         <ul className="space-y-2 text-xs">
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Đánh giá phát âm:{" "}
+                                    {t("card.speakingAssessmentLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.monthlyAssessmentLimit,
+                                            plan.dailySpeakingQuestionEvaluationLimit ??
+                                                0,
                                         )}
                                     </strong>
-                                    {plan.monthlyAssessmentLimit < 9999 && (
-                                        <span className="text-text-muted">
-                                            {" "}
-                                            / tháng
-                                        </span>
-                                    )}
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                <CheckCircleIcon
-                                    style={{ fontSize: 16 }}
-                                    className={`${featureIconColor} mt-0.5 shrink-0`}
-                                />
-                                <span>
-                                    Ghi âm tối đa:{" "}
-                                    <strong className="font-extrabold">
-                                        {plan.maxAssessmentAudioSeconds}s
-                                    </strong>
                                     <span className="text-text-muted">
-                                        {" "}
-                                        / lượt bài
+                                        {t("card.perDaySuffix")}
                                     </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Luyện hội thoại AI:{" "}
+                                    {t("card.maxRecordingLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {formatDurationText(
-                                            plan.monthlyConversationSeconds,
+                                        {plan.maxSpeakingQuestionRecordingSeconds ??
+                                            60}
+                                        s
+                                    </strong>
+                                    <span className="text-text-muted">
+                                        {t("card.perTurnSuffix")}
+                                    </span>
+                                </span>
+                            </li>
+                            <li className="text-text-primary flex items-start gap-2">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    {t("card.aiConversationLabel")}{" "}
+                                    <strong className="font-extrabold">
+                                        {formatLimitCount(
+                                            plan.dailyAiSessionEvaluationLimit ??
+                                                0,
                                         )}
                                     </strong>
-                                    {plan.monthlyConversationSeconds <
-                                        99999 && (
-                                        <span className="text-text-muted">
-                                            {" "}
-                                            / tháng
-                                        </span>
-                                    )}
+                                    <span className="text-text-muted">
+                                        {t("card.perDaySuffix")}
+                                    </span>
                                 </span>
                             </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 <CheckCircleIcon
                                     style={{ fontSize: 16 }}
                                     className={`${featureIconColor} mt-0.5 shrink-0`}
                                 />
                                 <span>
-                                    Tối đa 1 phiên AI:{" "}
+                                    {t("card.sessionLimitLabel")}{" "}
                                     <strong className="font-extrabold">
-                                        {formatDurationText(
-                                            plan.maxConversationSessionSeconds,
-                                        )}
-                                    </strong>{" "}
-                                    ({plan.maxConversationTurnsPerSession} lượt
-                                    nói)
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                <CheckCircleIcon
-                                    style={{ fontSize: 16 }}
-                                    className={`${featureIconColor} mt-0.5 shrink-0`}
-                                />
-                                <span>
-                                    Thời gian trả lời câu:{" "}
-                                    <strong className="font-extrabold">
-                                        {plan.maxAnswerTimeSeconds}s
+                                        {plan.maxTurnsPerAiSession ?? 10}{" "}
+                                        {t("card.turnsSuffix")}
                                     </strong>
                                     <span className="text-text-muted">
                                         {" "}
-                                        / câu
+                                        ({plan.maxAiTurnSpeakingSeconds ??
+                                            20}{" "}
+                                        {t("card.secondsPerTurnSuffix")})
                                     </span>
+                                </span>
+                            </li>
+                            <li className="text-text-primary flex items-start gap-2">
+                                <CheckCircleIcon
+                                    style={{ fontSize: 16 }}
+                                    className={`${featureIconColor} mt-0.5 shrink-0`}
+                                />
+                                <span>
+                                    {t("card.concurrentSessionsLabel")}{" "}
+                                    <strong className="font-extrabold">
+                                        {plan.maxConcurrentAiSessionCount ?? 1}{" "}
+                                        {t("card.sessionsSuffix")}
+                                    </strong>
                                 </span>
                             </li>
                         </ul>
@@ -242,33 +249,11 @@ const PlanCard: React.FC<PlanCardProps> = ({
 
                     {/* Section 2: Tiện ích & Quyền truy cập */}
                     <div>
-                        <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-text-muted opacity-75">
-                            🎁 Tiện ích & Quyền lợi
+                        <div className="text-text-muted mb-2 text-[11px] font-black tracking-wider uppercase opacity-75">
+                            {t("card.sectionBenefits")}
                         </div>
                         <ul className="space-y-2 text-xs">
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.fullCurriculumAccess ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.fullCurriculumAccess
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Mở khóa toàn bộ giáo trình
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
+                            <li className="text-text-primary flex items-start gap-2">
                                 {plan.sampleAnswerEnabled ? (
                                     <CheckCircleIcon
                                         style={{ fontSize: 16 }}
@@ -277,7 +262,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                 ) : (
                                     <CancelIcon
                                         style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
+                                        className="text-text-muted/40 mt-0.5 shrink-0"
                                     />
                                 )}
                                 <span
@@ -287,51 +272,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                             : "text-text-muted/60 line-through"
                                     }
                                 >
-                                    Gợi ý đáp án mẫu AI thông minh
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.progressAnalyticsEnabled ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.progressAnalyticsEnabled
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Phân tích tiến độ học tập
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2 text-text-primary">
-                                {plan.saveAnswerHistoryEnabled ? (
-                                    <CheckCircleIcon
-                                        style={{ fontSize: 16 }}
-                                        className={`${featureIconColor} mt-0.5 shrink-0`}
-                                    />
-                                ) : (
-                                    <CancelIcon
-                                        style={{ fontSize: 16 }}
-                                        className="mt-0.5 shrink-0 text-text-muted/40"
-                                    />
-                                )}
-                                <span
-                                    className={
-                                        plan.saveAnswerHistoryEnabled
-                                            ? "font-medium"
-                                            : "text-text-muted/60 line-through"
-                                    }
-                                >
-                                    Lưu trữ lịch sử câu trả lời
+                                    {t("card.smartSampleAnswersLabel")}
                                 </span>
                             </li>
                         </ul>
@@ -374,20 +315,30 @@ const PlanCard: React.FC<PlanCardProps> = ({
                         }
                         sx={{
                             color: "#ffffff !important",
-                            "& .MuiButton-startIcon": { color: "#ffffff !important" },
+                            "& .MuiButton-startIcon": {
+                                color: "#ffffff !important",
+                            },
                         }}
                     >
                         {isLoadingThisPlan ? (
                             <div className="flex items-center gap-2 text-white">
                                 <CircularProgress size={18} color="inherit" />
-                                <span className="text-white font-bold">{t("processing")}</span>
+                                <span className="font-bold text-white">
+                                    {t("processing")}
+                                </span>
                             </div>
                         ) : isFailed ? (
-                            <span className="text-white font-bold">{t("retry")}</span>
+                            <span className="font-bold text-white">
+                                {t("retry")}
+                            </span>
                         ) : (
-                            <span className="flex items-center justify-center gap-1.5 text-white font-black">
-                                <AutoAwesomeIcon style={{ fontSize: 16, color: "#ffffff" }} />
-                                <span className="text-white">{t("buyNow")}</span>
+                            <span className="flex items-center justify-center gap-1.5 font-black text-white">
+                                <AutoAwesomeIcon
+                                    style={{ fontSize: 16, color: "#ffffff" }}
+                                />
+                                <span className="text-white">
+                                    {t("buyNow")}
+                                </span>
                             </span>
                         )}
                     </Button>

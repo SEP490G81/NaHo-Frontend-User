@@ -116,7 +116,9 @@ export function AccountFormFields({
                         fullWidth
                         size="small"
                         value={gender}
-                        onChange={(e) => setGender(e.target.value as GenderType)}
+                        onChange={(e) =>
+                            setGender(e.target.value as GenderType)
+                        }
                         displayEmpty
                         sx={{
                             borderRadius: "6px",
@@ -128,7 +130,10 @@ export function AccountFormFields({
                         }}
                     >
                         {GENDER_OPTIONS.map((option) => (
-                            <MenuItem key={option.value || "unspecified"} value={option.value}>
+                            <MenuItem
+                                key={option.value || "unspecified"}
+                                value={option.value}
+                            >
                                 {t(option.labelKey)}
                             </MenuItem>
                         ))}
@@ -176,9 +181,7 @@ export function AccountFormFields({
                 <label className="text-text-contrast mb-1 block text-sm font-semibold">
                     {t("emailLabel")}
                 </label>
-                <p className="text-text-muted mb-2 text-xs">
-                    {t("emailDesc")}
-                </p>
+                <p className="text-text-muted mb-2 text-xs">{t("emailDesc")}</p>
                 <TextFieldCustom
                     fullWidth
                     disabled

@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { Image as ImageIcon } from "lucide-react";
+import { Image as ImageIcon, MessageSquareText } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Report, ReportFile } from "../types/report";
 import ReportStatusChip from "./report-status-chip";
@@ -86,6 +86,17 @@ export function ReportHistoryTable({
                                 <p className="text-text-muted mt-1 line-clamp-2 text-xs leading-relaxed">
                                     {report.description}
                                 </p>
+                                {report.adminReply && (
+                                    <div className="bg-bgc-subtle border-bdc-primary mt-2.5 rounded-lg border p-2.5 text-xs">
+                                        <div className="text-text-primary mb-1 flex items-center gap-1.5 font-semibold">
+                                            <MessageSquareText className="text-text-contrast h-3.5 w-3.5 shrink-0" />
+                                            <span>{t("adminReplyLabel")}:</span>
+                                        </div>
+                                        <p className="text-text-muted leading-relaxed whitespace-pre-wrap">
+                                            {report.adminReply}
+                                        </p>
+                                    </div>
+                                )}
                             </TableCell>
                             <TableCell
                                 align="center"

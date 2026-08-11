@@ -68,8 +68,12 @@ export const PASSWORD_PATTERN =
     /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!_~\-]).{8,}$/;
 
 export type OldPasswordErrorKey = "oldPasswordRequired";
-export type NewPasswordErrorKey = "newPasswordRequired" | "passwordPatternError";
-export type ConfirmPasswordErrorKey = "confirmPasswordRequired" | "passwordMatchError";
+export type NewPasswordErrorKey =
+    | "newPasswordRequired"
+    | "passwordPatternError";
+export type ConfirmPasswordErrorKey =
+    | "confirmPasswordRequired"
+    | "passwordMatchError";
 
 export function validateOldPassword(val: string): OldPasswordErrorKey | null {
     if (!val || !val.trim()) return "oldPasswordRequired";
@@ -86,7 +90,8 @@ export function validateConfirmPassword(
     newPassword: string,
     confirmPassword: string,
 ): ConfirmPasswordErrorKey | null {
-    if (!confirmPassword || !confirmPassword.trim()) return "confirmPasswordRequired";
+    if (!confirmPassword || !confirmPassword.trim())
+        return "confirmPasswordRequired";
     if (newPassword !== confirmPassword) return "passwordMatchError";
     return null;
 }
@@ -105,13 +110,18 @@ export function validateChangePassword(
 ): ChangePasswordValidationResult {
     const currentPasswordErrorKey = validateOldPassword(currentPassword);
     const newPasswordErrorKey = validateNewPassword(newPassword);
-    const confirmPasswordErrorKey = validateConfirmPassword(newPassword, confirmPassword);
+    const confirmPasswordErrorKey = validateConfirmPassword(
+        newPassword,
+        confirmPassword,
+    );
 
     return {
         currentPasswordErrorKey,
         newPasswordErrorKey,
         confirmPasswordErrorKey,
-        isValid: !currentPasswordErrorKey && !newPasswordErrorKey && !confirmPasswordErrorKey,
+        isValid:
+            !currentPasswordErrorKey &&
+            !newPasswordErrorKey &&
+            !confirmPasswordErrorKey,
     };
 }
-

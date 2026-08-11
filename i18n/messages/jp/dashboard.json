@@ -47,9 +47,12 @@
         "continuePracticeBtn": "今すぐ練習を続ける",
         "defaultNextTopic": "日本語会話学習ロードマップ",
         "defaultNextSubtitle": "次のノードで会話練習を始める",
-        "nodeVocabTitle": "単語: {name}",
-        "nodeVocabSubtitle": "語彙と表現の復習",
-        "nodeChestTitle": "宝箱報酬",
-        "nodeChestSubtitle": "ボーナスポイントを獲得"
+        "nodeVocabTitle": "語彙: {name}",
+        "nodeVocabSubtitle": "会話フレーズと語彙を復習する",
+        "nodeChestTitle": "宝箱を開ける",
+        "nodeChestSubtitle": "ロードマップ報酬ポイントを獲得",
+        "selectCorrectMeaning": "正しい意味を選択してください：",
+        "selectOptionToAnswer": "解答を選択してください...",
+        "upgrade": "アップグレード"
     }
 }

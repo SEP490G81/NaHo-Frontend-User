@@ -1,0 +1,21 @@
+{
+    "chung": {
+        "giao diện": "dùng để chỉnh màu của trang web (dark mode, light mode)",
+        "ngôn ngữ": "đổi ngôn ngữ của toàn bộ trang web"
+    },
+    "tài khoản": {
+        "avatar": "ảnh avatar của người dùng",
+        "email": "email người dùng đang đăng nhập",
+        "Họ và tên": "họ và tên người dùng đang đăng nhập",
+        "giới tính": "giới tính của tài khoản đang đăng nhập",
+        "dob": "ngày sinh của người đang đăng nhập",
+        "jlpt level": "trình độ tiếng Nhạt hiện tại của người dùng",
+        "cập nhật thông tin": "nút cập nhật thông tin",
+        "xóa tài khoản": "nút xóa tài khoản"
+    },
+    "bảo mật": {
+        "đổi mật khẩu": "3 field gồm: nhập mật khẩu cũ, nhập 2 lần mât khẩu mới",
+        "cập nhật": "nút xác nhận đổi"
+    },
+    "gói dịch vụ hiện tại": "thông tin gói hiện tại và nút nâng cấp (có thể tái sử dụng giao diện hiện tại"
+}

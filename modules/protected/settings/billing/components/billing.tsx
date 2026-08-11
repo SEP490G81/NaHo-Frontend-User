@@ -7,10 +7,7 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { Divider } from "@mui/material";
 import { getMySubscription } from "@/services/client/subscription.service";
-import {
-    SubscriptionPlanResponse,
-    UserSubscriptionResponse,
-} from "@/types/responses/subscription.response";
+import { UserSubscriptionResponse } from "@/types/responses/subscription.response";
 import CurrentPlan from "@/modules/protected/settings/billing/components/current.plan";
 import SubscriptionModal from "@/modules/protected/settings/billing/features/subscription.modal";
 import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.setting.highlight";
@@ -68,7 +65,8 @@ const Billing = () => {
         router.replace("/settings/billing");
     }, [searchParams, router]);
 
-    const currentTier = subscription?.plan?.tier || "FREE";
+    const plan = subscription?.subscriptionPlan || subscription?.plan;
+    const currentTier = plan?.tier || "FREE";
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-y-6 pb-12">

@@ -53,7 +53,7 @@ const SettingsSidebar = () => {
                             </span>
                             <span
                                 className={cn(
-                                    "flex-1 text-sm font-medium transition-all duration-200 truncate",
+                                    "flex-1 truncate text-sm font-medium transition-all duration-200",
                                     isActive
                                         ? "text-bgc-highlight font-semibold"
                                         : "text-text-contrast",
@@ -70,4 +70,3 @@ const SettingsSidebar = () => {
 };
 
 export default SettingsSidebar;
-
