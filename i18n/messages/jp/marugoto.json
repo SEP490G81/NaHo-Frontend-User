@@ -155,6 +155,7 @@
             "replyPlaceholder": "返信を書く...",
             "send": "送信",
             "reply": "返信",
+            "replyingTo": "返信先：",
             "report": "報告",
             "like": "いいね",
             "you": "あなた",
@@ -165,7 +166,18 @@
             "noComments": "まだコメントがありません。最初のコメントを！",
             "loadFailed": "コメントを読み込めませんでした。",
             "commentFailed": "コメントを送信できませんでした。もう一度お試しください。",
-            "reactionFailed": "リアクションを更新できませんでした。"
+            "reactionFailed": "リアクションを更新できませんでした。",
+            "edit": "編集",
+            "delete": "削除",
+            "save": "保存",
+            "edited": "編集済み",
+            "commentDeleted": "コメントを削除しました。",
+            "commentDeleteFailed": "コメントを削除できませんでした。",
+            "deleteTitle": "コメントを削除？",
+            "deleteConfirm": "このコメントを削除してもよろしいですか？",
+            "cancel": "キャンセル",
+            "profileRank": "順位 #{rank}",
+            "profilePoints": "{points} ポイント"
         },
         "sideRail": {
             "leagueTitle": "週間リーグ",

@@ -155,6 +155,7 @@
             "replyPlaceholder": "Viết phản hồi...",
             "send": "Gửi",
             "reply": "Trả lời",
+            "replyingTo": "Đang trả lời",
             "report": "Báo cáo",
             "like": "Thích",
             "you": "Bạn",
@@ -165,7 +166,18 @@
             "noComments": "Chưa có bình luận nào. Hãy là người đầu tiên!",
             "loadFailed": "Không tải được bình luận.",
             "commentFailed": "Không gửi được bình luận, thử lại nhé.",
-            "reactionFailed": "Không cập nhật được cảm xúc."
+            "reactionFailed": "Không cập nhật được cảm xúc.",
+            "edit": "Sửa",
+            "delete": "Xoá",
+            "save": "Lưu",
+            "edited": "đã sửa",
+            "commentDeleted": "Đã xoá bình luận.",
+            "commentDeleteFailed": "Không xoá được bình luận.",
+            "deleteTitle": "Xoá bình luận?",
+            "deleteConfirm": "Bạn có chắc chắn muốn xoá bình luận này không?",
+            "cancel": "Huỷ",
+            "profileRank": "Hạng #{rank}",
+            "profilePoints": "{points} điểm"
         },
         "sideRail": {
             "leagueTitle": "Giải đấu tuần",

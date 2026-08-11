@@ -3,9 +3,19 @@ import React, { useEffect, useState } from "react";
 import { MessageSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useAuthStore } from "@/store/authStore";
+import { useCurrentUser } from "@/hooks/use.current.user";
+import { useUserLearningProgress } from "@/components/providers/user.learning.progress.provider";
+import { resolveAvatarUrl } from "@/modules/protected/leaderboard/utils/leaderboard.util";
+import type { CommentNode } from "@/types/responses/social.response";
 import CommentInputForm from "@/modules/protected/comment-reaction/components/comment-input-form";
 import { useQuestionComments } from "../hooks/use.question.comments";
+import { useCommentRealtime } from "../hooks/use.comment.realtime";
 import CommentThread from "../components/comment.thread";
+
+/** Gom mọi commentId (kể cả reply lồng nhau) để subscribe realtime reaction. */
+function collectIds(nodes: CommentNode[]): number[] {
+    return nodes.flatMap((n) => [n.commentId, ...collectIds(n.children)]);
+}
 
 interface Props {
     speakingQuestionId: number;
@@ -16,6 +26,12 @@ export function QuestionComments({ speakingQuestionId }: Props) {
     const t = useTranslations("marugoto.questionDetail");
     const profile = useAuthStore((s) => s.profile);
     const currentUserName = profile?.fullName || t("you");
+    // Id user hiện tại để bật Sửa/Xoá đúng comment của mình (khớp cách leaderboard).
+    const { data: currentUser } = useCurrentUser();
+    const { progress } = useUserLearningProgress();
+    const lbUser = progress?.leaderboardUser;
+    const myUserId = lbUser?.id ?? currentUser?.id;
+    const myAvatar = resolveAvatarUrl(lbUser?.avatarUrl, lbUser?.authAvatarUrl);
     const [text, setText] = useState("");
     // "Hiện tại" cập nhật phía client (tránh Date.now() khi render & lệch SSR).
     const [now, setNow] = useState(0);
@@ -29,8 +45,23 @@ export function QuestionComments({ speakingQuestionId }: Props) {
         };
     }, []);
 
-    const { comments, isLoading, isError, addComment, adding, react } =
-        useQuestionComments(speakingQuestionId);
+    const {
+        comments,
+        isLoading,
+        isError,
+        addComment,
+        adding,
+        react,
+        editComment,
+        removeComment,
+        refetch,
+    } = useQuestionComments(speakingQuestionId);
+
+    // Gom mọi id (gốc + reply lồng) — vừa để đếm tổng, vừa để subscribe realtime.
+    const allIds = collectIds(comments);
+    // Realtime: khi có ai tạo/sửa/xoá/thả cảm xúc → refetch (tự tắt nếu chưa
+    // cấu hình NEXT_PUBLIC_WS_URL).
+    useCommentRealtime(allIds, refetch);
 
     const submitRoot = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,12 +78,13 @@ export function QuestionComments({ speakingQuestionId }: Props) {
                     {t("discussion")}
                 </h3>
                 <span className="bg-bgc-page text-text-muted rounded-full px-2 py-0.5 text-xs font-semibold">
-                    {t("commentsCount", { count: comments.length })}
+                    {t("commentsCount", { count: allIds.length })}
                 </span>
             </div>
 
             <CommentInputForm
                 currentUserName={currentUserName}
+                avatarUrl={myAvatar}
                 value={text}
                 onChange={setText}
                 onSubmit={submitRoot}
@@ -73,11 +105,15 @@ export function QuestionComments({ speakingQuestionId }: Props) {
                             key={c.commentId}
                             comment={c}
                             currentUserName={currentUserName}
+                            currentUserAvatar={myAvatar}
+                            myUserId={myUserId}
                             now={now}
                             onReply={(content, parentId) =>
                                 addComment(content, parentId)
                             }
                             onReact={react}
+                            onEdit={editComment}
+                            onDelete={removeComment}
                         />
                     ))
                 ) : (

@@ -12,6 +12,7 @@ export interface ReportResponse {
 }
 
 // ─── Comment / Reaction (khớp contract BE /api/v1/comments & /reactions) ───
+import type { LeaderboardUserResponse } from "./league.response";
 
 /** 6 loại cảm xúc BE hỗ trợ (đồng bộ enum ReactionType phía backend). */
 export const REACTION_TYPES = [
@@ -25,9 +26,6 @@ export const REACTION_TYPES = [
 
 export type ReactionType = (typeof REACTION_TYPES)[number];
 
-/** Hành động khi bấm reaction — BE tự suy nhưng vẫn yêu cầu gửi kèm. */
-export type ReactionAction = "ADDED" | "UPDATED" | "REMOVED";
-
 /** Tổng hợp reaction đính kèm mỗi comment (BE trả sẵn trong list). */
 export interface ReactionSummary {
     total: number;
@@ -40,7 +38,8 @@ export interface ReactionSummary {
 export interface CommentNode {
     commentId: number;
     questionId: number;
-    userId: number;
+    /** Thông tin người bình luận (tên, avatar, id) — BE trả kèm. */
+    userInfo: LeaderboardUserResponse | null;
     parentId: number | null;
     content: string;
     createdTime: string;
@@ -54,9 +53,8 @@ export interface CommentListResponse {
     comments: CommentNode[];
 }
 
-/** Body toggle reaction gửi lên BE. */
+/** Body toggle reaction gửi lên BE (BE tự quyết ADD/UPDATE/REMOVE). */
 export interface ReactionToggleRequest {
     commentId: number;
     reactionType: ReactionType;
-    reactionAction: ReactionAction;
 }

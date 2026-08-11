@@ -13,13 +13,15 @@ interface Props {
     onReact: (type: ReactionType) => void;
 }
 
-/** Nút thả cảm xúc cho 1 comment + bảng chọn 6 loại + tổng hợp reaction. */
+/** Nút thả cảm xúc cho 1 comment + bảng chọn 6 loại (kiểu Facebook) + tổng hợp. */
 export function CommentReactionBar({ summary, onReact }: Props) {
     const t = useTranslations("marugoto.questionDetail");
     const [showPicker, setShowPicker] = useState(false);
     const mine = summary?.myReaction ?? null;
 
-    const topTypes = REACTION_TYPES.filter((tp) => (summary?.counts?.[tp] ?? 0) > 0);
+    const topTypes = REACTION_TYPES.filter(
+        (tp) => (summary?.counts?.[tp] ?? 0) > 0,
+    );
     const total = summary?.total ?? 0;
 
     const btnLabel = mine ? REACTION_EMOJIS[mine].label : t("like");
@@ -40,30 +42,36 @@ export function CommentReactionBar({ summary, onReact }: Props) {
                             : "text-text-muted hover:text-text-contrast"
                     }`}
                 >
-                    <span>{btnEmoji}</span>
+                    <span className="text-sm">{btnEmoji}</span>
                     <span>{btnLabel}</span>
                 </button>
 
                 {showPicker && (
-                    <div
-                        className="bg-bgc-app border-bdc-primary absolute bottom-full left-0 z-30 mb-1 flex items-center gap-1 rounded-full border px-2 py-1.5 shadow-lg"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {REACTION_TYPES.map((type) => (
-                            <button
-                                key={type}
-                                onClick={() => {
-                                    onReact(type);
-                                    setShowPicker(false);
-                                }}
-                                title={REACTION_EMOJIS[type].label}
-                                className="flex cursor-pointer items-center justify-center rounded-full p-1 transition-transform hover:scale-135"
-                            >
-                                <span className="text-xl leading-none">
-                                    {REACTION_EMOJIS[type].emoji}
-                                </span>
-                            </button>
-                        ))}
+                    // pb-2 = "cầu hover" nối liền nút và bảng chọn (không rớt hover).
+                    <div className="absolute bottom-full left-0 z-40 pb-2">
+                        <div
+                            className="bg-bgc-app border-bdc-primary flex items-center gap-0.5 rounded-full border px-2 py-1.5 shadow-xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {REACTION_TYPES.map((type) => (
+                                <button
+                                    key={type}
+                                    onClick={() => {
+                                        onReact(type);
+                                        setShowPicker(false);
+                                    }}
+                                    aria-label={REACTION_EMOJIS[type].label}
+                                    className="group/emo relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-transform duration-150 hover:-translate-y-1.5 hover:scale-125"
+                                >
+                                    <span className="text-[26px] leading-none">
+                                        {REACTION_EMOJIS[type].emoji}
+                                    </span>
+                                    <span className="bg-text-contrast text-text-pure pointer-events-none absolute -top-6 rounded-md px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap opacity-0 transition-opacity group-hover/emo:opacity-100">
+                                        {REACTION_EMOJIS[type].label}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
@@ -75,7 +83,7 @@ export function CommentReactionBar({ summary, onReact }: Props) {
                             <span
                                 key={type}
                                 title={REACTION_EMOJIS[type].label}
-                                className="bg-bgc-page inline-flex h-4.5 w-4.5 items-center justify-center rounded-full text-[10px] shadow-sm"
+                                className="bg-bgc-page inline-flex h-4.5 w-4.5 items-center justify-center rounded-full text-[11px] shadow-sm"
                             >
                                 {REACTION_EMOJIS[type].emoji}
                             </span>

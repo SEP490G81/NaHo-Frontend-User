@@ -18,9 +18,10 @@ async function readJson(response: Response): Promise<unknown> {
     }
 }
 
-function fail(result: unknown, fallback: string): never {
-    const problem = result as ProblemDetail | null;
-    throw new Error(problem?.detail || fallback);
+function fail(result: unknown, fallback: string, status?: number): never {
+    const problem = result as (ProblemDetail & { message?: string }) | null;
+    const detail = problem?.detail || problem?.title || problem?.message;
+    throw new Error(detail || (status ? `${fallback} (HTTP ${status})` : fallback));
 }
 
 /** Danh sách comment (dạng cây) của một câu hỏi nói. */
@@ -54,21 +55,17 @@ export async function createComment(input: {
     if (!response.ok) fail(await readJson(response), "Không gửi được bình luận.");
 }
 
-/** Sửa nội dung comment. */
+/** Sửa nội dung comment (BE lấy userId từ token, chỉ cần commentId + nội dung). */
 export async function updateComment(input: {
     commentId: number;
-    speakingQuestionId: number;
     newContent: string;
-    parentId?: number | null;
 }): Promise<void> {
     const response = await fetch("/api/comments", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             commentId: input.commentId,
-            questionId: input.speakingQuestionId,
             newContent: input.newContent,
-            parentId: input.parentId ?? null,
         }),
     });
     if (!response.ok) fail(await readJson(response), "Không sửa được bình luận.");
@@ -94,5 +91,9 @@ export async function toggleReaction(
         body: JSON.stringify(input),
     });
     if (!response.ok)
-        fail(await readJson(response), "Không cập nhật được cảm xúc.");
+        fail(
+            await readJson(response),
+            "Không cập nhật được cảm xúc.",
+            response.status,
+        );
 }
