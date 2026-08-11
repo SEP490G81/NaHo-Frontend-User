@@ -51,6 +51,107 @@ export interface ChatReplyResponse {
     aiReplyAudio: string | null;
 }
 
+/* ─── AI 1:1 Session persistence: resume + history (#59) ─────────── */
+
+export type SpeakingSessionStatus = "IN_PROGRESS" | "COMPLETED";
+
+/** Một tin nhắn đã lưu trong phiên (dùng khi resume / xem chi tiết). */
+export interface SessionMessageItem {
+    turnIndex: number;
+    /** "USER" | "ASSISTANT" (hoặc tương đương từ BE). */
+    senderType: string;
+    content: string;
+    correctedText: string | null;
+    correctionExplanation: string | null;
+    grammarNote: string | null;
+    hintForLearner: string | null;
+}
+
+/** GET /speaking/session/active — phiên đang dở của user (null nếu không có). */
+export interface ActiveSpeakingSessionResponse {
+    id: number;
+    sessionCode: string;
+    personaId: number | null;
+    topic: string | null;
+    marugotoLevel: string | null;
+    formalityLevel: string | null;
+    totalTurns: number;
+    startedAt: string;
+    messages: SessionMessageItem[];
+}
+
+/** Một dòng trong danh sách lịch sử phiên (POST /speaking/session/history). */
+export interface SpeakingSessionListItem {
+    id: number;
+    sessionCode: string;
+    topic: string | null;
+    personaId: number | null;
+    marugotoLevel: string | null;
+    formalityLevel: string | null;
+    overallScore: number;
+    jlptEstimate: string | null;
+    totalTurns: number;
+    durationSeconds: number;
+    startedAt: string;
+    endedAt: string | null;
+    status: SpeakingSessionStatus;
+}
+
+export interface SpeakingSessionQuery {
+    page?: number;
+    size?: number;
+    sortColumn?: string;
+    sortDirection?: "ASC" | "DESC";
+    personaId?: number | null;
+    search?: string | null;
+    status?: SpeakingSessionStatus | null;
+}
+
+/** Gợi ý học tập (chỉ có ở chi tiết phiên, /end chưa trả). */
+export interface SessionStudyRecommendation {
+    focusArea: string;
+    reason: string;
+    suggestedPractice: string;
+    encouragement: string;
+}
+
+export interface SessionImprovedExpressionDetail {
+    original: string;
+    improved: string;
+    explanationVi: string | null;
+}
+
+/** GET /speaking/session/history/{sessionCode} — chi tiết đầy đủ 1 phiên. */
+export interface SpeakingSessionDetail {
+    id: number;
+    sessionCode: string;
+    topic: string | null;
+    personaId: number | null;
+    marugotoLevel: string | null;
+    formalityLevel: string | null;
+    totalTurns: number;
+    durationSeconds: number;
+    asrConfidence: number | null;
+    fullTranscript: string | null;
+    startedAt: string;
+    endedAt: string | null;
+    overallScore: number;
+    jlptEstimate: string | null;
+    fluencyScore: number;
+    pronunciationScore: number;
+    grammarScore: number;
+    vocabularyScore: number;
+    interactionScore: number;
+    naturalnessScore: number;
+    coherenceScore: number;
+    summary: string | null;
+    strengths: string[];
+    weaknesses: string[];
+    feedback: Record<string, string>;
+    improvedExpressions: SessionImprovedExpressionDetail[];
+    studyRecommendation: SessionStudyRecommendation | null;
+}
+
 /** 7 chiều điểm trong báo cáo cuối phiên. */
 export interface SessionScoreBreakdown {
     fluency: number;
