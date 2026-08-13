@@ -68,6 +68,9 @@
                 "collapseSidebar": "Thu gọn thanh bên",
                 "expandSidebar": "Mở rộng thanh bên",
                 "notificationButton": "Thông báo",
+                "notifications": "Thông báo",
+                "markAllRead": "Đánh dấu đã đọc tất cả",
+                "noNotifications": "Chưa có thông báo nào.",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"

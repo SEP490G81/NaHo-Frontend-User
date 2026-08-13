@@ -120,7 +120,7 @@ export async function proxyPatchForm(path: string, request: Request) {
  * 201/204 no-body). DELETE có body được BE dùng cho lệnh xoá theo id.
  */
 export async function proxyBodyJson(
-    method: "POST" | "PUT" | "DELETE",
+    method: "POST" | "PUT" | "DELETE" | "PATCH",
     path: string,
     request: Request,
 ) {

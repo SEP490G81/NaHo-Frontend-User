@@ -63,6 +63,9 @@
                 "collapseSidebar": "Collapse sidebar",
                 "expandSidebar": "Expand sidebar",
                 "notificationButton": "Notifications",
+                "notifications": "Notifications",
+                "markAllRead": "Mark all as read",
+                "noNotifications": "No notifications yet.",
                 "themeSwitchButton": {
                     "darkMode": "Dark Mode",
                     "lightMode": "Light Mode"

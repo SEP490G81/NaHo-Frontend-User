@@ -63,6 +63,9 @@
                 "collapseSidebar": "サイドバーを折りたたむ",
                 "expandSidebar": "サイドバーを展開する",
                 "notificationButton": "通知",
+                "notifications": "通知",
+                "markAllRead": "すべて既読にする",
+                "noNotifications": "通知はまだありません。",
                 "themeSwitchButton": {
                     "darkMode": "ダークモード",
                     "lightMode": "ライトモード"
