@@ -64,6 +64,8 @@
             "milestoneProgress": "{done}/{total} mốc",
             "vocabShort": "Từ vựng",
             "topicVocabList": "Xem danh sách từ vựng",
+            "vocabEmpty": "Chủ đề này chưa có từ vựng.",
+            "vocabLoadFailed": "Không tải được từ vựng.",
             "pinTopic": "Ghim chủ đề vào thanh bên",
             "unpinTopic": "Bỏ ghim chủ đề",
             "pinnedSection": "Đã ghim",
@@ -177,7 +179,11 @@
             "deleteConfirm": "Bạn có chắc chắn muốn xoá bình luận này không?",
             "cancel": "Huỷ",
             "profileRank": "Hạng #{rank}",
-            "profilePoints": "{points} điểm"
+            "profilePoints": "{points} điểm",
+            "yourBestScore": "Điểm cao nhất {score}/10",
+            "statusPassed": "Đã đạt",
+            "statusNotPassed": "Chưa đạt",
+            "attemptsCount": "{count} lần thử"
         },
         "sideRail": {
             "leagueTitle": "Giải đấu tuần",

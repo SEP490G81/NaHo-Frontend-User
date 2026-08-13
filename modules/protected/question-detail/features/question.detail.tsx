@@ -10,6 +10,7 @@ import { mapBook } from "@/data/marugoto/mapper";
 import {
     getBookDetail,
     getLearningPathNodeDetail,
+    getUserNodeProgress,
 } from "@/services/client/book.service";
 import { getMySubscription } from "@/services/client/subscription.service";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
@@ -47,10 +48,18 @@ export function QuestionDetail() {
         queryFn: getMySubscription,
         staleTime: 5 * 60 * 1000,
     });
+    // Tiến độ THẬT của node này từ BE (best-score/status/số lần thử) — nguồn đáng
+    // tin thay cho điểm cục bộ.
+    const nodeProgQ = useQuery({
+        queryKey: ["node-progress", nodeId],
+        queryFn: () => getUserNodeProgress(nodeId),
+        enabled: !!nodeId,
+    });
     // Mốc tiến độ thật để chặn truy cập node bị khóa qua URL (giống luật khóa BE).
     const { frontier, isLoading: frontierLoading } = useLearningFrontier();
 
     const detail = nodeQ.data;
+    const nodeProg = nodeProgQ.data;
     const sq = detail?.speakingQuestion;
     const mappedBook = bookQ.data ? mapBook(bookQ.data) : null;
     const accent = mappedBook?.coverColor ?? DEFAULT_ACCENT;
@@ -98,6 +107,32 @@ export function QuestionDetail() {
                         accent={accent}
                         locked={!sampleAnswerEnabled}
                     />
+
+                    {nodeProg?.bestScore != null && (
+                        <div className="border-bdc-primary bg-bgc-app flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border px-4 py-3 text-sm">
+                            <span className="text-text-muted">
+                                {t("yourBestScore", {
+                                    score: Number(nodeProg.bestScore).toFixed(1),
+                                })}
+                            </span>
+                            <span
+                                className={
+                                    nodeProg.status === "PASSED"
+                                        ? "text-text-success font-semibold"
+                                        : "font-semibold text-amber-500"
+                                }
+                            >
+                                {nodeProg.status === "PASSED"
+                                    ? t("statusPassed")
+                                    : t("statusNotPassed")}
+                            </span>
+                            <span className="text-text-muted">
+                                {t("attemptsCount", {
+                                    count: nodeProg.attemptCount,
+                                })}
+                            </span>
+                        </div>
+                    )}
 
                     <Link
                         href={practiceHref as AllRoute}
