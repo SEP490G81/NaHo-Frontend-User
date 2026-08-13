@@ -1,5 +1,9 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { SubscriptionPlanResponse, UserSubscriptionResponse } from "@/types/responses/subscription.response";
+import {
+    SubscriptionPlanResponse,
+    UserDailyAiUsageResponse,
+    UserSubscriptionResponse,
+} from "@/types/responses/subscription.response";
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
@@ -68,4 +72,15 @@ export async function getSubscriptionPlans(): Promise<
 
     const api = result as ApiResponse<SubscriptionPlanResponse[]>;
     return api.data ?? (result as SubscriptionPlanResponse[]) ?? [];
+}
+
+/** Số lượt AI đã dùng hôm nay (để tính "còn X lượt chấm nói"). */
+export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null> {
+    const response = await fetch("/api/user-daily-ai-usages/today", {
+        cache: "no-store",
+    });
+    if (!response.ok) return null;
+    const result = await response.json();
+    const api = result as ApiResponse<UserDailyAiUsageResponse>;
+    return api.data ?? (result as UserDailyAiUsageResponse) ?? null;
 }

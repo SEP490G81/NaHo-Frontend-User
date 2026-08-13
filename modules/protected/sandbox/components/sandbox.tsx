@@ -1,5 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
+import { Mic } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,10 @@ import {
     getLearningPathNodeDetail,
 } from "@/services/client/book.service";
 import { submitSpeakingAnalysis } from "@/services/client/speaking.service";
-import { getMySubscription } from "@/services/client/subscription.service";
+import {
+    getMySubscription,
+    getTodayAiUsage,
+} from "@/services/client/subscription.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
 import { getSandboxRules } from "../constants/sandbox.constant";
 import SandboxStepper from "./sandbox.stepper";
@@ -83,6 +87,23 @@ function SandboxContent({
     const accent = bookQ.data
         ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
         : "var(--color-bgc-highlight)";
+
+    // Lượt chấm nói còn lại hôm nay = hạn mức gói − đã dùng (BE cùng công thức).
+    const subQ = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const usageQ = useQuery({
+        queryKey: ["ai-usage-today"],
+        queryFn: getTodayAiUsage,
+        staleTime: 60 * 1000,
+    });
+    const dailyLimit = subQ.data?.plan?.dailySpeakingQuestionEvaluationLimit;
+    const remainingToday =
+        dailyLimit != null
+            ? Math.max(0, dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0))
+            : null;
 
     const question = useMemo(() => {
         if (sq) {
@@ -221,7 +242,23 @@ function SandboxContent({
             style={{ "--book-accent": accent } as React.CSSProperties}
         >
             <div className="mx-auto max-w-5xl space-y-5">
-                <SandboxHeader backHref={backHref} accent={accent} />
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                    <SandboxHeader backHref={backHref} accent={accent} />
+                    {remainingToday != null && (
+                        <span
+                            className="border-bdc-primary bg-bgc-app inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
+                            style={{
+                                color: remainingToday > 0 ? accent : undefined,
+                            }}
+                        >
+                            <Mic className="h-3.5 w-3.5" />
+                            {t("dailyQuotaLeft", {
+                                remaining: remainingToday,
+                                limit: dailyLimit,
+                            })}
+                        </span>
+                    )}
+                </div>
 
                 <SandboxQuestionBanner
                     jp={question.jp}

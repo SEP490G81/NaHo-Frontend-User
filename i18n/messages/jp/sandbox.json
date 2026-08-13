@@ -1,6 +1,7 @@
 {
     "sandbox": {
         "backToTopic": "Quay lại chủ đề",
+        "dailyQuotaLeft": "本日の採点 残り {remaining}/{limit} 回",
         "showFurigana": "Hiện Furigana",
         "step1": "Kiểm tra thiết bị",
         "step2": "Luyện nói phản xạ",

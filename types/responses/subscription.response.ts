@@ -70,3 +70,12 @@ export interface UserSubscriptionResponse {
     subscriptionPlan?: SubscriptionPlanResponse;
     plan?: SubscriptionPlanResponse;
 }
+
+/** Số lượt AI đã dùng trong ngày hôm nay (GET /user-daily-ai-usages/today). */
+export interface UserDailyAiUsageResponse {
+    id: number;
+    userId: number;
+    usageDate: string;
+    speakingEvaluationCount: number;
+    aiSessionEvaluationCount: number;
+}
