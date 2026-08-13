@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { ListChecks, Mic } from "lucide-react";
+import { ArrowRight, ListChecks, Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
@@ -103,8 +103,11 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
             : "/speaking-history";
 
     return (
-        <div style={{ "--book-accent": accent } as React.CSSProperties}>
-            <div className="space-y-6">
+        <div
+            className="px-4 py-6 md:px-8"
+            style={{ "--book-accent": accent } as React.CSSProperties}
+        >
+            <div className="mx-auto max-w-6xl space-y-6">
                 <ReportHero
                     average={report.average}
                     questionTitle={data.speakingQuestionTitle}
@@ -160,6 +163,24 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                         }}
                     >
                         {t("retryBtn")}
+                    </Button>
+                    <Button
+                        component={Link}
+                        href={(topicHref ?? "/topics") as AllRoute}
+                        variant="contained"
+                        endIcon={<ArrowRight className="h-4 w-4" />}
+                        sx={{
+                            textTransform: "none",
+                            backgroundColor: accent,
+                            color: "#fff",
+                            fontWeight: 700,
+                            "&:hover": {
+                                backgroundColor: accent,
+                                filter: "brightness(0.95)",
+                            },
+                        }}
+                    >
+                        {t("continueBtn")}
                     </Button>
                 </div>
             </div>

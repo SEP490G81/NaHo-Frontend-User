@@ -177,7 +177,9 @@ function SandboxContent({
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
-            toast.error(t("analyzeFailed"));
+            // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
+            // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
+            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
         },
     });
 
@@ -214,8 +216,11 @@ function SandboxContent({
     };
 
     return (
-        <div style={{ "--book-accent": accent } as React.CSSProperties}>
-            <div className="space-y-5">
+        <div
+            className="px-4 py-6 md:px-8"
+            style={{ "--book-accent": accent } as React.CSSProperties}
+        >
+            <div className="mx-auto max-w-5xl space-y-5">
                 <SandboxHeader backHref={backHref} accent={accent} />
 
                 <SandboxQuestionBanner
