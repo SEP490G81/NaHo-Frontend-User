@@ -15,9 +15,15 @@
             "loginByGoogle": "Đăng nhập bằng Google",
             "noAccount": "Chưa có tài khoản?",
             "registerNow": "Đăng ký ngay",
-            "pleaseEnterEmailOrUsername": "Vui lòng nhập email/tên tài khoản!",
-            "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
-            "wrongLoginInfo": "Sai thông tin đăng nhập!"
+            "pleaseEnterEmailOrUsername": "メールアドレスまたはユーザー名を入力してください！",
+            "pleaseEnterPassword": "パスワードを入力してください！",
+            "wrongLoginInfo": "ログイン情報が正しくありません！"
+        },
+        "lock": {
+            "title": "アカウントが一時的にロックされています！",
+            "defaultDetail": "ログイン試行に何度も失敗したため、アカウントが一時的にロックされました。15分後にもう一度お試しください。",
+            "forgotPassword": "パスワードをお忘れですか",
+            "understand": "了解"
         }
     }
 }
