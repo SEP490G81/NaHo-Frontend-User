@@ -5,21 +5,6 @@ import {
     UserSubscriptionResponse,
 } from "@/types/responses/subscription.response";
 
-/** Lượt AI đã dùng hôm nay (speaking + AI 1:1). */
-export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null> {
-    const response = await fetch("/api/user-daily-ai-usages/today", {
-        cache: "no-store",
-    });
-    const result = await response.json();
-    if (!response.ok) {
-        throw new Error(
-            (result as ProblemDetail).detail ||
-                "Không lấy được lượt sử dụng AI hôm nay.",
-        );
-    }
-    return (result as ApiResponse<UserDailyAiUsageResponse>).data ?? null;
-}
-
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
  */

@@ -42,7 +42,10 @@ export function Sandbox() {
     });
     const maxSeconds = Math.max(
         1,
-        Math.round(planQ.data?.plan?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS),
+        Math.round(
+            planQ.data?.plan?.maxSpeakingQuestionRecordingSeconds ??
+                DEFAULT_MAX_SECONDS,
+        ),
     );
     const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
 
@@ -254,7 +257,7 @@ function SandboxContent({
                             <Mic className="h-3.5 w-3.5" />
                             {t("dailyQuotaLeft", {
                                 remaining: remainingToday,
-                                limit: dailyLimit,
+                                limit: dailyLimit ?? 0,
                             })}
                         </span>
                     )}
