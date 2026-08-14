@@ -56,6 +56,8 @@
         "retryBtn": "Thử lại",
         "recordingHintActive": "Đang ghi âm — nhấn lại để dừng",
         "recordingHintIdle": "Nhấn vào micro để bắt đầu",
+        "recordingBudget": "{seconds}秒で話しましょう",
+        "recordingRemaining": "録音中 — タップで早めに提出",
         "recordCardTitle": "回答を録音",
         "recordCardHint": "マイクを押して回答を話し、もう一度押して停止します。",
         "analyzeFailed": "採点できませんでした。はっきり話してもう一度お試しください。",

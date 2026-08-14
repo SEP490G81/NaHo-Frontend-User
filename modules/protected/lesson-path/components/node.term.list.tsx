@@ -8,9 +8,9 @@ export function NodeTermList({ items }: { items: NodeVocabularyItem[] }) {
             {items.map((v) => (
                 <li
                     key={v.id}
-                    className="border-bdc-primary flex items-start justify-between gap-3 border-b border-dashed pb-1.5 text-sm last:border-0"
+                    className="group border-bdc-primary hover:bg-bgc-page -mx-2 flex items-start justify-between gap-3 rounded-lg border-b border-dashed px-2 py-1.5 text-sm transition-colors last:border-0"
                 >
-                    <span className="font-noto-jp text-text-contrast">
+                    <span className="font-noto-jp text-text-contrast min-w-0 flex-1 break-words transition-all group-hover:font-semibold">
                         {v.japanese}
                         {v.reading && v.reading !== v.japanese ? (
                             <span className="text-text-muted ml-1 text-xs">
@@ -18,7 +18,7 @@ export function NodeTermList({ items }: { items: NodeVocabularyItem[] }) {
                             </span>
                         ) : null}
                     </span>
-                    <span className="text-text-muted shrink-0 text-right">
+                    <span className="text-text-muted group-hover:text-text-contrast max-w-[45%] shrink-0 text-right break-words transition-colors group-hover:font-medium">
                         {v.vietnameseMeaningText}
                     </span>
                 </li>

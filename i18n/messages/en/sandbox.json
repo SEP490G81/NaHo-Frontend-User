@@ -56,6 +56,8 @@
         "retryBtn": "Thử lại",
         "recordingHintActive": "Đang ghi âm — nhấn lại để dừng",
         "recordingHintIdle": "Nhấn vào micro để bắt đầu",
+        "recordingBudget": "You have {seconds}s to speak",
+        "recordingRemaining": "Recording — tap to submit early",
         "recordCardTitle": "Record your answer",
         "recordCardHint": "Tap the mic, speak your answer, then tap again to stop.",
         "analyzeFailed": "Couldn't score your speech. Please speak clearly and try again.",

@@ -117,7 +117,7 @@ export function TopicPathHeader({
     };
 
     return (
-        <header className="group sticky top-16 z-10 mx-auto w-full max-w-4xl px-2 select-none sm:px-0">
+        <header className="group sticky top-20 z-40 mx-auto w-full max-w-4xl px-2 select-none sm:px-0">
             <div
                 className="border-bdc-primary bg-bgc-app/95 dark:bg-bgc-modal/95 overflow-hidden rounded-2xl border shadow-md backdrop-blur-xl transition-all duration-500 ease-out group-hover:shadow-2xl"
                 style={{

@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import { ListChecks, Mic } from "lucide-react";
+import { ArrowRight, ListChecks, Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@mui/material";
@@ -163,6 +163,24 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                         }}
                     >
                         {t("retryBtn")}
+                    </Button>
+                    <Button
+                        component={Link}
+                        href={(topicHref ?? "/topics") as AllRoute}
+                        variant="contained"
+                        endIcon={<ArrowRight className="h-4 w-4" />}
+                        sx={{
+                            textTransform: "none",
+                            backgroundColor: accent,
+                            color: "#fff",
+                            fontWeight: 700,
+                            "&:hover": {
+                                backgroundColor: accent,
+                                filter: "brightness(0.95)",
+                            },
+                        }}
+                    >
+                        {t("continueBtn")}
                     </Button>
                 </div>
             </div>

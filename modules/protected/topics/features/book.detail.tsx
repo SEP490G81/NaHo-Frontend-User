@@ -9,7 +9,9 @@ import {
 } from "@/services/client/book.service";
 import { mapBeLesson, mapBeTopic, mapBook } from "@/data/marugoto/mapper";
 import type { MarugotoBook } from "@/data/marugoto/types";
+import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import NotFoundView from "@/components/ui/not.found.view";
+import { accessVerdict } from "../utils/unlock";
 import TopicRoadmap from "./topic.roadmap";
 
 function LoadingState() {
@@ -25,6 +27,9 @@ function LoadingState() {
 export function BookDetail() {
     const params = useParams();
     const bookId = params?.bookId as string;
+
+    // Mốc tiến độ thật để chặn truy cập quyển chưa mở khóa qua URL.
+    const { frontier, isLoading: frontierLoading } = useLearningFrontier();
 
     const bookQ = useQuery({
         queryKey: ["book", bookId],
@@ -61,13 +66,17 @@ export function BookDetail() {
 
     // Chờ nạp xong lesson của mọi chủ đề rồi mới render, để accordion tự mở sổ.
     const loading =
+        frontierLoading ||
         bookQ.isLoading ||
         topicsQ.isLoading ||
         (topics.length > 0 && topicDetailQs.some((q) => q.isLoading));
 
+    // Quyển vượt mốc tiến độ = chưa mở khóa → chặn (đồng bộ với thư viện sách).
+    const denied = !!book && accessVerdict(book, frontier) === "denied";
+
     return (
         <>
-            {bookQ.isError ? (
+            {bookQ.isError || (book && denied) ? (
                 <NotFoundView />
             ) : book && !loading ? (
                 <TopicRoadmap book={book} />

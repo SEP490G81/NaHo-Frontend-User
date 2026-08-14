@@ -115,10 +115,15 @@ export async function proxyPatchForm(path: string, request: Request) {
 }
 
 /**
- * Helper cho route handler (lớp 1): forward request JSON lên BE, tự đính kèm
- * access token. Chịu được response rỗng (BE trả 201 no-body).
+ * Helper cho route handler (lớp 1): forward request JSON lên BE với method tuỳ ý
+ * (POST/PUT/DELETE), tự đính kèm access token. Chịu được response rỗng (BE trả
+ * 201/204 no-body). DELETE có body được BE dùng cho lệnh xoá theo id.
  */
-export async function proxyPostJson(path: string, request: Request) {
+export async function proxyBodyJson(
+    method: "POST" | "PUT" | "DELETE",
+    path: string,
+    request: Request,
+) {
     if (!process.env.API_URL) {
         return NextResponse.json(
             {
@@ -139,11 +144,19 @@ export async function proxyPostJson(path: string, request: Request) {
     };
 
     const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
-        method: "POST",
+        method,
         headers,
         body,
         cache: "no-store",
     });
 
     return forwardJson(backendResponse);
+}
+
+/**
+ * Helper cho route handler (lớp 1): forward request JSON lên BE, tự đính kèm
+ * access token. Chịu được response rỗng (BE trả 201 no-body).
+ */
+export async function proxyPostJson(path: string, request: Request) {
+    return proxyBodyJson("POST", path, request);
 }

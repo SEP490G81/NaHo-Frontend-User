@@ -12,6 +12,7 @@ import {
     getLearningPathNodeDetail,
 } from "@/services/client/book.service";
 import { submitSpeakingAnalysis } from "@/services/client/speaking.service";
+import { getMySubscription } from "@/services/client/subscription.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
 import { getSandboxRules } from "../constants/sandbox.constant";
 import SandboxStepper from "./sandbox.stepper";
@@ -26,16 +27,33 @@ import { useRouter } from "@/i18n/navigation";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 
 const EMPTY_HINTS: QuestionHints = { vocab: [], structures: [] };
+const DEFAULT_MAX_SECONDS = 60;
 
 export function Sandbox() {
+    // Gói đăng ký quyết định thời gian nói tối đa & quyền xem câu trả lời mẫu.
+    const planQ = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const maxSeconds = Math.max(
+        1,
+        Math.round(planQ.data?.plan?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS),
+    );
+    const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
+
     return (
-        <SandboxProvider>
-            <SandboxContent />
+        <SandboxProvider maxSeconds={maxSeconds}>
+            <SandboxContent sampleAnswerEnabled={sampleAnswerEnabled} />
         </SandboxProvider>
     );
 }
 
-function SandboxContent() {
+function SandboxContent({
+    sampleAnswerEnabled,
+}: {
+    sampleAnswerEnabled: boolean;
+}) {
     const t = useTranslations("sandbox");
     const params = useParams();
     const searchParams = useSearchParams();
@@ -101,6 +119,15 @@ function SandboxContent() {
         };
     }, [sq]);
 
+    const sampleAnswer = useMemo(() => {
+        if (!sq?.japaneseSampleAnswer?.trim()) return null;
+        return {
+            japanese: sq.japaneseSampleAnswer,
+            japaneseMarkup: sq.japaneseSampleAnswerMarkup,
+            vietnamese: sq.vietnameseSampleAnswer,
+        };
+    }, [sq]);
+
     const {
         step,
         setStep,
@@ -108,6 +135,7 @@ function SandboxContent() {
         volume,
         recording,
         elapsed,
+        maxSeconds,
         playing,
         setPlaying,
         analyzing,
@@ -149,7 +177,9 @@ function SandboxContent() {
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
-            toast.error(t("analyzeFailed"));
+            // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
+            // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
+            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
         },
     });
 
@@ -220,10 +250,13 @@ function SandboxContent() {
                     <SandboxStep2
                         recording={recording}
                         elapsed={elapsed}
+                        maxSeconds={maxSeconds}
                         toggleRecord={toggleRecord}
                         hints={hints}
                         showFurigana={showFurigana}
                         accent={accent}
+                        sampleAnswer={sampleAnswer}
+                        sampleAnswerEnabled={sampleAnswerEnabled}
                     />
                 )}
 
