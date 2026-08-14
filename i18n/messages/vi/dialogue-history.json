@@ -6,6 +6,7 @@
         "filterAll": "Tất cả",
         "statusCompleted": "Đã hoàn thành",
         "statusInProgress": "Đang dở",
+        "resume": "Tiếp tục",
         "empty": "Chưa có phiên trò chuyện nào.",
         "loading": "Đang tải...",
         "error": "Không tải được lịch sử phiên.",

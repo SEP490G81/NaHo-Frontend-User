@@ -6,6 +6,7 @@
         "filterAll": "All",
         "statusCompleted": "Completed",
         "statusInProgress": "In progress",
+        "resume": "Resume",
         "empty": "No conversation sessions yet.",
         "loading": "Loading...",
         "error": "Could not load session history.",

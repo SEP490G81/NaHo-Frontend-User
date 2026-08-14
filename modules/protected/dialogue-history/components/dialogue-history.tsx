@@ -1,6 +1,13 @@
 "use client";
 import { useMemo, useState } from "react";
-import { ChevronRight, Clock, MessagesSquare, Search } from "lucide-react";
+import {
+    ChevronRight,
+    Clock,
+    Loader2,
+    MessagesSquare,
+    Play,
+    Search,
+} from "lucide-react";
 import { Avatar, Button } from "@mui/material";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -9,10 +16,17 @@ import {
     getPersonas,
     getSpeakingSessions,
 } from "@/services/client/speaking.service";
-import { resolveCompanions } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import {
+    COMPANIONS,
+    resolveCompanions,
+} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use-resume-session";
 import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
 import type { Companion } from "@/modules/protected/live-chatroom/types/live-chatroom.type";
-import type { SpeakingSessionStatus } from "@/types/responses/speaking.response";
+import type {
+    SpeakingSessionListItem,
+    SpeakingSessionStatus,
+} from "@/types/responses/speaking.response";
 import { cn } from "@/libs/utils";
 
 type StatusFilter = "" | SpeakingSessionStatus;
@@ -46,15 +60,28 @@ export function DialogueHistory() {
         staleTime: 5 * 60 * 1000,
     });
 
+    const companions = useMemo(
+        () => (personas?.length ? resolveCompanions(personas) : COMPANIONS),
+        [personas],
+    );
     const companionMap = useMemo(() => {
         const m = new Map<number, Companion>();
-        if (personas?.length) {
-            resolveCompanions(personas).forEach((c) => {
-                if (c.personaId != null) m.set(c.personaId, c);
-            });
-        }
+        companions.forEach((c) => {
+            if (c.personaId != null) m.set(c.personaId, c);
+        });
         return m;
-    }, [personas]);
+    }, [companions]);
+
+    // Phiên IN_PROGRESS → khôi phục vào phòng chat thay vì mở báo cáo.
+    const { resume, resumingCode } = useResumeSession(companions);
+    const handleResumeItem = (item: SpeakingSessionListItem) => {
+        resume({
+            sessionCode: item.sessionCode,
+            personaId: item.personaId,
+            formalityLevel: item.formalityLevel,
+            marugotoLevel: item.marugotoLevel,
+        });
+    };
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["speaking-sessions", { status, search, page }],
@@ -156,12 +183,10 @@ export function DialogueHistory() {
                             : undefined;
                         const name = comp?.name ?? item.topic ?? "AI";
                         const done = item.status === "COMPLETED";
-                        return (
-                            <Link
-                                key={item.sessionCode}
-                                href={`/dialogue-history/${item.sessionCode}`}
-                                className="border-bdc-primary bg-bgc-app hover:border-bgc-highlight/60 flex items-center gap-4 rounded-2xl border p-4 shadow-sm transition-colors"
-                            >
+                        const cardClass =
+                            "border-bdc-primary bg-bgc-app hover:border-bgc-highlight/60 flex w-full items-center gap-4 rounded-2xl border p-4 text-left shadow-sm transition-colors";
+                        const inner = (
+                            <>
                                 <Avatar
                                     className={`h-12 w-12 shrink-0 ${comp?.accent ?? "bg-bgc-highlight/15 text-bgc-highlight"}`}
                                 >
@@ -211,8 +236,44 @@ export function DialogueHistory() {
                                         )}
                                     </div>
                                 )}
-                                <ChevronRight className="text-text-muted h-5 w-5 shrink-0" />
+                                {done ? (
+                                    <ChevronRight className="text-text-muted h-5 w-5 shrink-0" />
+                                ) : resumingCode === item.sessionCode ? (
+                                    <Loader2 className="text-bgc-highlight h-5 w-5 shrink-0 animate-spin" />
+                                ) : (
+                                    <span className="border-bgc-highlight/40 text-bgc-highlight inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold">
+                                        <Play className="h-3.5 w-3.5" />
+                                        {t("resume")}
+                                    </span>
+                                )}
+                            </>
+                        );
+
+                        // Phiên đã hoàn thành → mở báo cáo; đang dở → resume phiên.
+                        return done ? (
+                            <Link
+                                key={item.sessionCode}
+                                href={`/dialogue-history/${item.sessionCode}`}
+                                className={cardClass}
+                            >
+                                {inner}
                             </Link>
+                        ) : (
+                            <button
+                                key={item.sessionCode}
+                                type="button"
+                                onClick={() => handleResumeItem(item)}
+                                disabled={resumingCode != null}
+                                className={cn(
+                                    cardClass,
+                                    "cursor-pointer disabled:cursor-not-allowed",
+                                    resumingCode != null &&
+                                        resumingCode !== item.sessionCode &&
+                                        "opacity-50",
+                                )}
+                            >
+                                {inner}
+                            </button>
                         );
                     })}
                 </div>
