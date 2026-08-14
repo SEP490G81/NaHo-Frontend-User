@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { FormEvent, useState } from "react";
 
 const initialValues: RegisterValues = {
+    fullName: "",
     username: "",
     email: "",
     password: "",
@@ -75,6 +76,7 @@ const RegisterForm = () => {
         setErrors(fieldErrors);
         setAgreeTermsError(notAgreed);
         setTouched({
+            fullName: true,
             username: true,
             email: true,
             password: true,
@@ -87,6 +89,7 @@ const RegisterForm = () => {
             setSubmitting(true);
             const email = values.email.trim();
             await register({
+                fullname: values.fullName.trim(),
                 username: values.username.trim(),
                 email,
                 password: values.password,

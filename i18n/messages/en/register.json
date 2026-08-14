@@ -6,6 +6,10 @@
         "welcome": "Tạo tài khoản NaHo",
         "registerDescription": "Cá nhân hóa trải nghiệm luyện Kaiwa trong vài bước.",
         "form": {
+            "fullName": "Full name",
+            "enterFullName": "Enter your full name",
+            "pleaseEnterFullName": "Please enter your full name!",
+            "fullNameInvalidLength": "Full name must be between 2 and 100 characters!",
             "username": "Tên tài khoản",
             "enterUsername": "Nhập tên tài khoản của bạn.",
             "email": "Địa chỉ Email",
