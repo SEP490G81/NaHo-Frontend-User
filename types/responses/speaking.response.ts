@@ -65,6 +65,8 @@ export interface SessionMessageItem {
     correctionExplanation: string | null;
     grammarNote: string | null;
     hintForLearner: string | null;
+    /** URL audio TTS của câu (nếu có) — dùng phát lại khi resume. */
+    audioUrl: string | null;
 }
 
 /** GET /speaking/session/active — phiên đang dở của user (null nếu không có). */
