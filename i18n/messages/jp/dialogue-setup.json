@@ -57,6 +57,7 @@
         "resumeError": "セッションを復元できませんでした。もう一度お試しください。",
         "resumeUnknownPersona": "AIパートナー",
         "viewHistory": "セッション履歴",
+        "dailyQuota": "本日のAI {used}/{limit}",
         "toastStartSuccess": "設定を保存しました。会話を開始します！",
         "companionLevel": "レベル：{level}"
     }

@@ -57,6 +57,7 @@
         "resumeError": "Không khôi phục được phiên. Vui lòng thử lại.",
         "resumeUnknownPersona": "Bạn đồng hành AI",
         "viewHistory": "Lịch sử phiên",
+        "dailyQuota": "{used}/{limit} lượt AI hôm nay",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
         "companionLevel": "Trình độ: {level}"
     }

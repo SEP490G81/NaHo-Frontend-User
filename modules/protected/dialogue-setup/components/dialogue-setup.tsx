@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import { History, Sparkles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { toast } from "react-toastify";
 import { CompanionList } from "./companion-list";
 import { SummaryPanel } from "./summary-panel";
 import { ResumeBanner } from "./resume-banner";
@@ -14,14 +13,17 @@ import {
     DEFAULT_MARUGOTO,
     resolveCompanions,
 } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use-resume-session";
 import {
     getActiveSession,
     getPersonas,
-    resumeSession,
 } from "@/services/client/speaking.service";
+import {
+    getMySubscription,
+    getTodayAiUsage,
+} from "@/services/client/subscription.service";
 import { useAuthStore } from "@/store/authStore";
-import { useChatStore } from "@/store/chatStore";
-import { Link, useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import type {
     FormalityLevel,
     MarugotoLevel,
@@ -29,10 +31,7 @@ import type {
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
-    const router = useRouter();
     const level = useAuthStore((s) => s.profile?.level);
-    const setConfig = useChatStore((s) => s.setConfig);
-    const setSession = useChatStore((s) => s.setSession);
 
     // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
     const { data: personas, isLoading } = useQuery({
@@ -53,7 +52,23 @@ export function DialogueSetup() {
         staleTime: 60 * 1000,
     });
     const [dismissed, setDismissed] = useState(false);
-    const [resuming, setResuming] = useState(false);
+    const { resume, resumingCode } = useResumeSession(companions);
+
+    // Quota AI 1:1 hôm nay = lượt đã dùng / hạn mức của gói.
+    const { data: subscription } = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const { data: aiUsage } = useQuery({
+        queryKey: ["today-ai-usage"],
+        queryFn: getTodayAiUsage,
+        staleTime: 60 * 1000,
+    });
+    const aiLimit =
+        subscription?.subscriptionPlan?.dailyAiSessionEvaluationLimit ?? null;
+    const aiUsed = aiUsage?.aiSessionEvaluationCount ?? 0;
+    const aiExhausted = aiLimit != null && aiUsed >= aiLimit;
 
     const [companionId, setCompanionId] = useState(COMPANIONS[0].id);
     // null = theo mặc định của persona; khác null = người dùng đã tự đổi.
@@ -86,40 +101,18 @@ export function DialogueSetup() {
         : undefined;
 
     // Khôi phục phiên dở → seed câu cũ + câu chào lại → vào phòng chat.
-    const handleResume = async () => {
+    const handleResume = () => {
         if (!active) return;
-        setResuming(true);
-        try {
-            const res = await resumeSession(active.sessionCode);
-            const comp = activeCompanion ?? selected;
-            setConfig({
-                companionId: comp.id,
-                conversationStyle:
-                    (active.formalityLevel as FormalityLevel) ??
-                    comp.defaultFormality ??
-                    DEFAULT_FORMALITY,
-                marugotoLevel:
-                    (active.marugotoLevel as MarugotoLevel) ??
-                    comp.defaultMarugotoLevel ??
-                    DEFAULT_MARUGOTO,
-                voiceSpeed,
-                showHints,
-            });
-            setSession({
-                sessionId: res.sessionId || active.sessionCode,
-                personaId: active.personaId ?? comp.personaId ?? 0,
-                companionId: comp.id,
-                aiGreeting: res.aiGreeting,
-                greetingTranslation: res.aiGreetingTranslation,
-                greetingGrammar: res.grammarExplanation,
-                greetingAudioBase64: res.audioBase64,
-                resumedMessages: active.messages,
-            });
-            router.push("/live-chatroom");
-        } catch (err) {
-            toast.error(err instanceof Error ? err.message : t("resumeError"));
-            setResuming(false);
-        }
+        resume(
+            {
+                sessionCode: active.sessionCode,
+                personaId: active.personaId,
+                formalityLevel: active.formalityLevel,
+                marugotoLevel: active.marugotoLevel,
+                messages: active.messages,
+            },
+            { voiceSpeed, showHints },
+        );
     };
 
     return (
@@ -128,7 +121,7 @@ export function DialogueSetup() {
                 <ResumeBanner
                     active={active}
                     companion={activeCompanion}
-                    resuming={resuming}
+                    resuming={resumingCode === active.sessionCode}
                     onResume={handleResume}
                     onDismiss={() => setDismissed(true)}
                 />
@@ -150,6 +143,21 @@ export function DialogueSetup() {
                         </p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
+                        {aiLimit != null && (
+                            <span
+                                className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold ${
+                                    aiExhausted
+                                        ? "border-amber-300 bg-amber-500/15 text-amber-600 dark:text-amber-300"
+                                        : "border-bdc-primary bg-bgc-page text-text-contrast"
+                                }`}
+                            >
+                                <Sparkles className="text-bgc-highlight h-4 w-4" />
+                                {t("dailyQuota", {
+                                    used: aiUsed,
+                                    limit: aiLimit,
+                                })}
+                            </span>
+                        )}
                         {level && (
                             <span className="border-bdc-primary bg-bgc-page text-text-contrast inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
                                 <Sparkles className="text-bgc-highlight h-4 w-4" />

@@ -57,6 +57,7 @@
         "resumeError": "Could not resume the session. Please try again.",
         "resumeUnknownPersona": "AI companion",
         "viewHistory": "Session history",
+        "dailyQuota": "{used}/{limit} AI sessions today",
         "toastStartSuccess": "Settings saved. Start chatting!",
         "companionLevel": "Level: {level}"
     }
