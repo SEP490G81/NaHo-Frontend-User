@@ -25,7 +25,7 @@
         "showFurigana": "Hiện Furigana",
         "backBtn": "Quay lại",
         "continueBtn": "Continue",
-        "passTitle": "Passed 🎉",
+        "passTitle": "Passed",
         "passDesc": "You've unlocked the next lesson on your path.",
         "failTitle": "Not passed yet",
         "failDesc": "You need at least {min}/10 to unlock the next lesson. Try this question again.",

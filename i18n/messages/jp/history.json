@@ -25,7 +25,7 @@
         "showFurigana": "Hiện Furigana",
         "backBtn": "Quay lại",
         "continueBtn": "続ける",
-        "passTitle": "合格 🎉",
+        "passTitle": "合格",
         "passDesc": "ロードマップの次のレッスンが解放されました。",
         "failTitle": "未合格",
         "failDesc": "次のレッスンを解放するには最低 {min}/10 が必要です。もう一度挑戦しましょう。",
