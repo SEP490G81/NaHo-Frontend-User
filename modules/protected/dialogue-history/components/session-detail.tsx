@@ -97,7 +97,7 @@ export function SessionDetail({ sessionCode }: { sessionCode: string }) {
     const dimSet = new Set<string>(DIMS);
 
     return (
-        <div className="space-y-6">
+        <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
             <Link
                 href="/dialogue-history"
                 className="text-text-muted hover:text-bgc-highlight inline-flex items-center gap-1.5 text-sm font-medium"

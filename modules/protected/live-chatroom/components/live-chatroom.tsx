@@ -287,7 +287,7 @@ export function LiveChatroom() {
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app flex h-[calc(100vh-120px)] w-full overflow-hidden rounded-2xl border shadow-sm">
+        <div className="border-bdc-primary bg-bgc-app mx-auto flex h-[calc(100vh-120px)] w-full max-w-5xl overflow-hidden rounded-2xl border shadow-sm">
             {/* Desktop sidebar */}
             <div className="hidden w-72 shrink-0 lg:block">
                 <ChatSidebar {...sidebarProps} />
