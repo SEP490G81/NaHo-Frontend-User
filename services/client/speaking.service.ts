@@ -1,12 +1,20 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import {
+    ApiResponse,
+    PageMeta,
+    ProblemDetail,
+} from "@/types/responses/base.response";
 import { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
 import {
+    ActiveSpeakingSessionResponse,
     AudioChatResponse,
     ChatReplyResponse,
     SessionScoringResponse,
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
     SpeakingHistoryListItem,
+    SpeakingSessionDetail,
+    SpeakingSessionListItem,
+    SpeakingSessionQuery,
     StartConversationResponse
 } from "@/types/responses/speaking.response";
 
@@ -252,4 +260,70 @@ export async function endSession(
         },
     );
     return unwrap<SessionScoringResponse>(response);
+}
+
+/* ─── AI 1:1 Session persistence: resume + history (#59) ─────────── */
+
+/** Phiên đang dở của user (null nếu không có). */
+export async function getActiveSession(
+    personaId?: number | null,
+): Promise<ActiveSpeakingSessionResponse | null> {
+    const query = personaId != null ? `?personaId=${personaId}` : "";
+    const response = await apiRequest(`/api/speaking/session/active${query}`);
+    return unwrap<ActiveSpeakingSessionResponse | null>(response);
+}
+
+/** Khôi phục phiên dở theo sessionCode → câu chào "chào lại". */
+export async function resumeSession(
+    sessionCode: string,
+): Promise<StartConversationResponse> {
+    const response = await apiRequest(
+        `/api/speaking/session/${sessionCode}/resume`,
+        { method: "POST" },
+    );
+    return unwrap<StartConversationResponse>(response);
+}
+
+export interface SpeakingSessionPage {
+    items: SpeakingSessionListItem[];
+    pageMeta?: PageMeta;
+}
+
+/** Danh sách phiên AI 1:1 (phân trang + lọc). `data` là mảng, phân trang ở meta. */
+export async function getSpeakingSessions(
+    query: SpeakingSessionQuery = {},
+): Promise<SpeakingSessionPage> {
+    const response = await apiRequest("/api/speaking/session/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            page: query.page ?? 0,
+            size: query.size ?? 10,
+            sortColumn: query.sortColumn ?? "CREATED_TIME",
+            sortDirection: query.sortDirection ?? "DESC",
+            personaId: query.personaId ?? null,
+            search: query.search || null,
+            status: query.status ?? null,
+        }),
+    });
+    const text = await response.text();
+    const result = text ? JSON.parse(text) : null;
+    if (!response.ok) {
+        throw new Error(
+            (result as ProblemDetail)?.detail ||
+                "Không tải được lịch sử phiên",
+        );
+    }
+    const api = result as ApiResponse<SpeakingSessionListItem[]>;
+    return { items: api.data ?? [], pageMeta: api.meta?.pageMeta };
+}
+
+/** Chi tiết đầy đủ 1 phiên (báo cáo + transcript + gợi ý học tập). */
+export async function getSpeakingSessionDetail(
+    sessionCode: string,
+): Promise<SpeakingSessionDetail> {
+    const response = await apiRequest(
+        `/api/speaking/session/history/${sessionCode}`,
+    );
+    return unwrap<SpeakingSessionDetail>(response);
 }

@@ -57,6 +57,17 @@ export interface SubscriptionPlanResponse {
     status: PlanStatus;
 }
 
+/** GET /user-daily-ai-usages/today — số lượt AI đã dùng trong ngày. */
+export interface UserDailyAiUsageResponse {
+    id: number | null;
+    userId: number;
+    usageDate: string;
+    /** Số lần chấm điểm phát âm (speaking question) hôm nay. */
+    speakingEvaluationCount: number;
+    /** Số phiên trò chuyện AI 1:1 đã chấm hôm nay. */
+    aiSessionEvaluationCount: number;
+}
+
 export interface UserSubscriptionResponse {
     id: number;
     userId: number;

@@ -5,6 +5,7 @@ import {
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import StarsOutlinedIcon from "@mui/icons-material/StarsOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
 
@@ -31,6 +32,13 @@ export const ACCOUNT_MENU_ITEMS: (
         titleKey: "speakingHistory",
         redirectLink: "/speaking-history",
         icon: <HistoryOutlinedIcon fontSize="small" />,
+        type: "LINK",
+    },
+    {
+        id: "i-dialogue-history",
+        titleKey: "dialogueHistory",
+        redirectLink: "/dialogue-history",
+        icon: <ForumOutlinedIcon fontSize="small" />,
         type: "LINK",
     },
     {

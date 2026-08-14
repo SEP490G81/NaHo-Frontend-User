@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { SessionScoringResponse } from "@/types/responses/speaking.response";
+import type {
+    SessionMessageItem,
+    SessionScoringResponse,
+} from "@/types/responses/speaking.response";
 import type {
     FormalityLevel,
     MarugotoLevel,
@@ -35,6 +38,8 @@ export interface ChatSession {
     greetingGrammar?: string | null;
     /** WAV base64 câu chào — không persist (chỉ dùng trong bộ nhớ). */
     greetingAudioBase64?: string;
+    /** Tin nhắn cũ khi khôi phục phiên dở — không persist. */
+    resumedMessages?: SessionMessageItem[];
 }
 
 interface ChatState {

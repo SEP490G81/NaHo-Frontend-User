@@ -49,6 +49,15 @@
         "startHint": "Bạn có thể thay đổi bạn đồng hành bất kỳ lúc nào trong phiên học.",
         "startError": "Không thể bắt đầu hội thoại. Vui lòng thử lại.",
         "personaUnavailable": "Nhân vật này chưa được thiết lập trên máy chủ.",
+        "resumeTitle": "Bạn có một phiên đang dở",
+        "resumeTurns": "{count} lượt",
+        "resumeContinue": "Tiếp tục phiên",
+        "resumeDismiss": "Bỏ qua",
+        "resuming": "Đang khôi phục...",
+        "resumeError": "Không khôi phục được phiên. Vui lòng thử lại.",
+        "resumeUnknownPersona": "Bạn đồng hành AI",
+        "viewHistory": "Lịch sử phiên",
+        "dailyQuota": "{used}/{limit} lượt AI hôm nay",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
         "companionLevel": "Trình độ: {level}"
     }

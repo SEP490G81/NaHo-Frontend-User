@@ -60,11 +60,44 @@ export function LiveChatroom() {
         if (!session) router.replace("/dialogue-setup");
     }, [session, router]);
 
-    // Seed câu chào của AI (kèm audio TTS + bản dịch + ngữ pháp).
+    // Seed: tin nhắn cũ (nếu resume) + câu chào (kèm audio/dịch/ngữ pháp).
     useEffect(() => {
         if (session && !seeded.current) {
             seeded.current = true;
+
+            // Dựng lại lịch sử khi khôi phục phiên dở.
+            const history: ChatMessage[] = (session.resumedMessages ?? []).map(
+                (m) => {
+                    const isUser = m.senderType
+                        ?.toUpperCase()
+                        .includes("USER");
+                    if (isUser) {
+                        return {
+                            id: nextId("h"),
+                            role: "user",
+                            text: m.content,
+                            correction: m.correctionExplanation
+                                ? {
+                                      correctedText:
+                                          m.correctedText ?? m.content,
+                                      explanation: m.correctionExplanation,
+                                  }
+                                : null,
+                            timestamp: "",
+                        };
+                    }
+                    return {
+                        id: nextId("h"),
+                        role: "ai",
+                        text: m.content,
+                        grammar: m.grammarNote,
+                        timestamp: "",
+                    };
+                },
+            );
+
             setMessages([
+                ...history,
                 {
                     id: nextId("greet"),
                     role: "ai",
@@ -254,7 +287,7 @@ export function LiveChatroom() {
     };
 
     return (
-        <div className="border-bdc-primary bg-bgc-app flex h-[calc(100vh-120px)] w-full overflow-hidden rounded-2xl border shadow-sm">
+        <div className="border-bdc-primary bg-bgc-app mx-auto flex h-[calc(100vh-120px)] w-full max-w-5xl overflow-hidden rounded-2xl border shadow-sm">
             {/* Desktop sidebar */}
             <div className="hidden w-72 shrink-0 lg:block">
                 <ChatSidebar {...sidebarProps} />
