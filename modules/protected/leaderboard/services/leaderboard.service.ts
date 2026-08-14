@@ -64,7 +64,7 @@ export async function getUserLearningProgress(): Promise<UserLearningProgressRes
     if (USE_MOCK) {
         return getMockUserProgress();
     }
-    const response = await fetch("/api/user-learning-progresses", {
+    const response = await fetch("/api/user-learning-progresses/me", {
         credentials: "include",
     });
     if (!response.ok) {

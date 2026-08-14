@@ -1,6 +1,7 @@
 {
     "sandbox": {
         "backToTopic": "Quay lại chủ đề",
+        "dailyQuotaLeft": "Còn {remaining}/{limit} lượt chấm hôm nay",
         "showFurigana": "Hiện Furigana",
         "step1": "Kiểm tra thiết bị",
         "step2": "Luyện nói phản xạ",
@@ -56,6 +57,8 @@
         "retryBtn": "Thử lại",
         "recordingHintActive": "Đang ghi âm — nhấn lại để dừng",
         "recordingHintIdle": "Nhấn vào micro để bắt đầu",
+        "recordingBudget": "Bạn có {seconds} giây để nói",
+        "recordingRemaining": "Đang ghi âm — nhấn để nộp trước",
         "recordCardTitle": "Ghi âm câu trả lời",
         "recordCardHint": "Nhấn micro, nói câu trả lời rồi nhấn lại để dừng.",
         "analyzeFailed": "Chưa chấm được bài. Hãy nói to, rõ và thử lại nhé.",

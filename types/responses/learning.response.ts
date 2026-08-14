@@ -24,6 +24,12 @@ export interface NodeVocabularyItem {
 /** Ngữ pháp trên node có cùng shape với từ vựng (mẫu câu + nghĩa). */
 export type NodeGrammarItem = NodeVocabularyItem;
 
+/** Toàn bộ từ vựng của một chủ đề (GET /vocabularies/topic/{topicId}). */
+export interface VocabulariesOfTopicResponse {
+    topicId: number;
+    vocabularyDetailResults: NodeVocabularyItem[];
+}
+
 export interface LearningPathNodeDetailResponseSpeakingQuestionDetailResponse {
     id: number;
     userId: number;

@@ -46,7 +46,7 @@ const Billing = () => {
 
         if (status === "PAID") {
             toast.success(
-                "🎉 Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!",
+                "Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!",
                 {
                     autoClose: 5000,
                 },

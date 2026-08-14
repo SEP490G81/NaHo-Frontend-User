@@ -1,5 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
+import { Mic } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -12,6 +13,10 @@ import {
     getLearningPathNodeDetail,
 } from "@/services/client/book.service";
 import { submitSpeakingAnalysis } from "@/services/client/speaking.service";
+import {
+    getMySubscription,
+    getTodayAiUsage,
+} from "@/services/client/subscription.service";
 import { SandboxProvider, useSandbox } from "../provider/sandbox.context";
 import { getSandboxRules } from "../constants/sandbox.constant";
 import SandboxStepper from "./sandbox.stepper";
@@ -26,16 +31,33 @@ import { useRouter } from "@/i18n/navigation";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 
 const EMPTY_HINTS: QuestionHints = { vocab: [], structures: [] };
+const DEFAULT_MAX_SECONDS = 60;
 
 export function Sandbox() {
+    // Gói đăng ký quyết định thời gian nói tối đa & quyền xem câu trả lời mẫu.
+    const planQ = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const maxSeconds = Math.max(
+        1,
+        Math.round(planQ.data?.plan?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS),
+    );
+    const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
+
     return (
-        <SandboxProvider>
-            <SandboxContent />
+        <SandboxProvider maxSeconds={maxSeconds}>
+            <SandboxContent sampleAnswerEnabled={sampleAnswerEnabled} />
         </SandboxProvider>
     );
 }
 
-function SandboxContent() {
+function SandboxContent({
+    sampleAnswerEnabled,
+}: {
+    sampleAnswerEnabled: boolean;
+}) {
     const t = useTranslations("sandbox");
     const params = useParams();
     const searchParams = useSearchParams();
@@ -65,6 +87,23 @@ function SandboxContent() {
     const accent = bookQ.data
         ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
         : "var(--color-bgc-highlight)";
+
+    // Lượt chấm nói còn lại hôm nay = hạn mức gói − đã dùng (BE cùng công thức).
+    const subQ = useQuery({
+        queryKey: ["my-subscription"],
+        queryFn: getMySubscription,
+        staleTime: 5 * 60 * 1000,
+    });
+    const usageQ = useQuery({
+        queryKey: ["ai-usage-today"],
+        queryFn: getTodayAiUsage,
+        staleTime: 60 * 1000,
+    });
+    const dailyLimit = subQ.data?.plan?.dailySpeakingQuestionEvaluationLimit;
+    const remainingToday =
+        dailyLimit != null
+            ? Math.max(0, dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0))
+            : null;
 
     const question = useMemo(() => {
         if (sq) {
@@ -101,6 +140,15 @@ function SandboxContent() {
         };
     }, [sq]);
 
+    const sampleAnswer = useMemo(() => {
+        if (!sq?.japaneseSampleAnswer?.trim()) return null;
+        return {
+            japanese: sq.japaneseSampleAnswer,
+            japaneseMarkup: sq.japaneseSampleAnswerMarkup,
+            vietnamese: sq.vietnameseSampleAnswer,
+        };
+    }, [sq]);
+
     const {
         step,
         setStep,
@@ -108,6 +156,7 @@ function SandboxContent() {
         volume,
         recording,
         elapsed,
+        maxSeconds,
         playing,
         setPlaying,
         analyzing,
@@ -149,7 +198,9 @@ function SandboxContent() {
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
-            toast.error(t("analyzeFailed"));
+            // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
+            // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
+            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
         },
     });
 
@@ -191,7 +242,23 @@ function SandboxContent() {
             style={{ "--book-accent": accent } as React.CSSProperties}
         >
             <div className="mx-auto max-w-5xl space-y-5">
-                <SandboxHeader backHref={backHref} accent={accent} />
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                    <SandboxHeader backHref={backHref} accent={accent} />
+                    {remainingToday != null && (
+                        <span
+                            className="border-bdc-primary bg-bgc-app inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold"
+                            style={{
+                                color: remainingToday > 0 ? accent : undefined,
+                            }}
+                        >
+                            <Mic className="h-3.5 w-3.5" />
+                            {t("dailyQuotaLeft", {
+                                remaining: remainingToday,
+                                limit: dailyLimit,
+                            })}
+                        </span>
+                    )}
+                </div>
 
                 <SandboxQuestionBanner
                     jp={question.jp}
@@ -220,10 +287,13 @@ function SandboxContent() {
                     <SandboxStep2
                         recording={recording}
                         elapsed={elapsed}
+                        maxSeconds={maxSeconds}
                         toggleRecord={toggleRecord}
                         hints={hints}
                         showFurigana={showFurigana}
                         accent={accent}
+                        sampleAnswer={sampleAnswer}
+                        sampleAnswerEnabled={sampleAnswerEnabled}
                     />
                 )}
 

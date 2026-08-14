@@ -1,15 +1,22 @@
 "use client";
 import React, { useMemo } from "react";
-import { ListChecks, Mic } from "lucide-react";
+import {
+    AlertTriangle,
+    ArrowRight,
+    CheckCircle2,
+    ListChecks,
+    Mic,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@mui/material";
+import { Button, type SxProps, type Theme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
 import { getBookDetail, getTopicDetail } from "@/services/client/book.service";
 import { mapBook } from "@/data/marugoto/mapper";
+import { PASS_SCORE } from "@/store/marugotoStore";
 import { mapSpeakingReport } from "../utils/speaking.mapper";
 import ReportHero from "../components/report.hero";
 import HistoryDetailOverview from "../components/history.detail.overview";
@@ -101,6 +108,28 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         data.questionId != null
             ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
             : "/speaking-history";
+    // Đạt khi điểm tổng ≥ 7.5/10 (đồng bộ ngưỡng BE) → BE đã mở node kế.
+    const passed = report.average >= PASS_SCORE;
+
+    // Nhấn mạnh đổi theo kết quả (giữ nguyên thứ tự nút): đạt → nổi bật "Tiếp
+    // tục"; chưa đạt → nổi bật "Luyện lại". Nút còn lại chuyển sang dạng viền.
+    const emphSx: SxProps<Theme> = {
+        textTransform: "none",
+        backgroundColor: accent,
+        color: "#fff",
+        fontWeight: 700,
+        "&:hover": { backgroundColor: accent, filter: "brightness(0.95)" },
+    };
+    const softSx: SxProps<Theme> = {
+        textTransform: "none",
+        borderColor: accent,
+        color: accent,
+        fontWeight: 600,
+        "&:hover": {
+            borderColor: accent,
+            backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`,
+        },
+    };
 
     return (
         <div
@@ -119,6 +148,30 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     audioUrl={data.audioUrl}
                     accent={accent}
                 />
+
+                <div
+                    className={`flex items-start gap-3 rounded-2xl border p-4 ${
+                        passed
+                            ? "border-emerald-500/30 bg-emerald-500/10"
+                            : "border-amber-500/30 bg-amber-500/10"
+                    }`}
+                >
+                    {passed ? (
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
+                    ) : (
+                        <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                    )}
+                    <div>
+                        <p className="text-text-contrast text-sm font-bold">
+                            {passed ? t("passTitle") : t("failTitle")}
+                        </p>
+                        <p className="text-text-muted mt-0.5 text-sm">
+                            {passed
+                                ? t("passDesc")
+                                : t("failDesc", { min: PASS_SCORE })}
+                        </p>
+                    </div>
+                </div>
 
                 <HistoryDetailOverview report={report} accent={accent} />
 
@@ -149,20 +202,20 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     <Button
                         component={Link}
                         href={retryHref as AllRoute}
-                        variant="contained"
+                        variant={passed ? "outlined" : "contained"}
                         startIcon={<Mic className="h-4 w-4" />}
-                        sx={{
-                            textTransform: "none",
-                            backgroundColor: accent,
-                            color: "#fff",
-                            fontWeight: 700,
-                            "&:hover": {
-                                backgroundColor: accent,
-                                filter: "brightness(0.95)",
-                            },
-                        }}
+                        sx={passed ? softSx : emphSx}
                     >
                         {t("retryBtn")}
+                    </Button>
+                    <Button
+                        component={Link}
+                        href={(topicHref ?? "/topics") as AllRoute}
+                        variant={passed ? "contained" : "outlined"}
+                        endIcon={<ArrowRight className="h-4 w-4" />}
+                        sx={passed ? emphSx : softSx}
+                    >
+                        {t("continueBtn")}
                     </Button>
                 </div>
             </div>

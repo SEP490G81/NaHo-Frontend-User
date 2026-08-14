@@ -64,6 +64,8 @@
             "milestoneProgress": "{done}/{total} mốc",
             "vocabShort": "Từ vựng",
             "topicVocabList": "Xem danh sách từ vựng",
+            "vocabEmpty": "Chủ đề này chưa có từ vựng.",
+            "vocabLoadFailed": "Không tải được từ vựng.",
             "pinTopic": "Ghim chủ đề vào thanh bên",
             "unpinTopic": "Bỏ ghim chủ đề",
             "pinnedSection": "Đã ghim",
@@ -76,7 +78,10 @@
             "topicProgress": "Tiến độ chủ đề",
             "completedNodes": "Đã hoàn thành",
             "activeGoal": "Mục tiêu hiện tại",
-            "rewardsHint": "Mở rương phần thưởng"
+            "rewardsHint": "Mở rương phần thưởng",
+            "loadingQuestion": "Đang tải câu hỏi...",
+            "hoverOpen": "Bấm để xem chi tiết",
+            "hoverRelearn": "Bấm để luyện lại"
         },
         "node": {
             "vocabTitle": "Từ vựng",
@@ -129,6 +134,62 @@
             "finish": "Hoàn thành",
             "done": "Đã hoàn thành",
             "finishHint": "Lướt hết các thẻ để hoàn thành"
+        },
+        "sampleAnswer": {
+            "title": "Câu trả lời mẫu",
+            "speak": "Phát âm",
+            "reveal": "Xem gợi ý câu mẫu",
+            "hide": "Ẩn câu mẫu",
+            "translation": "Bản dịch",
+            "locked": "Nâng cấp gói để xem câu trả lời mẫu",
+            "empty": "Câu hỏi này chưa có câu trả lời mẫu."
+        },
+        "questionDetail": {
+            "back": "Quay lại lộ trình",
+            "badge": "Chi tiết câu hỏi",
+            "practiceNow": "Luyện nói câu này ngay",
+            "vocab": "Từ vựng",
+            "grammar": "Ngữ pháp tiêu biểu",
+            "discussion": "Thảo luận & tương tác",
+            "commentsCount": "{count} bình luận",
+            "commentPlaceholder": "Viết bình luận của bạn...",
+            "postComment": "Đăng bình luận",
+            "replyPlaceholder": "Viết phản hồi...",
+            "send": "Gửi",
+            "reply": "Trả lời",
+            "replyingTo": "Đang trả lời",
+            "report": "Báo cáo",
+            "like": "Thích",
+            "you": "Bạn",
+            "commenter": "Học viên #{id}",
+            "justNow": "Vừa xong",
+            "minutesAgo": "{count} phút trước",
+            "hoursAgo": "{count} giờ trước",
+            "noComments": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+            "loadFailed": "Không tải được bình luận.",
+            "commentFailed": "Không gửi được bình luận, thử lại nhé.",
+            "reactionFailed": "Không cập nhật được cảm xúc.",
+            "edit": "Sửa",
+            "delete": "Xoá",
+            "save": "Lưu",
+            "edited": "đã sửa",
+            "commentDeleted": "Đã xoá bình luận.",
+            "commentDeleteFailed": "Không xoá được bình luận.",
+            "deleteTitle": "Xoá bình luận?",
+            "deleteConfirm": "Bạn có chắc chắn muốn xoá bình luận này không?",
+            "cancel": "Huỷ",
+            "profileRank": "Hạng #{rank}",
+            "profilePoints": "{points} điểm",
+            "yourBestScore": "Điểm cao nhất {score}/10",
+            "statusPassed": "Đã đạt",
+            "statusNotPassed": "Chưa đạt",
+            "attemptsCount": "{count} lần thử"
+        },
+        "sideRail": {
+            "leagueTitle": "Giải đấu tuần",
+            "yourRank": "Hạng của bạn",
+            "points": "{points} điểm",
+            "topicQuestsTitle": "Nhiệm vụ chủ đề"
         }
     }
 }

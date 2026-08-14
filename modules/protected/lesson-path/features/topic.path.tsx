@@ -19,6 +19,7 @@ import NotFoundView from "@/components/ui/not.found.view";
 import { useTopicNodes } from "../hooks/use.cando.nodes";
 import TopicPathHeader from "../components/topic.path.header";
 import TopicRoadmapBody from "./topic.roadmap.body";
+import RoadmapSideRail from "./roadmap.side.rail";
 
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 
@@ -128,26 +129,59 @@ export function TopicPath() {
     if (bookQ.isError || topicQ.isError) return <NotFoundView />;
     if (!book || !topic || loading) return <LoadingState />;
 
+    // Guard 1 — CROSS-BOOK: node của chủ đề phải nằm trong dải node của quyển
+    // (getBookDetail trả dải đáng tin, vd book1 [1,87], book6 [460,558]). Nếu
+    // ngoài dải ⇒ chủ đề thuộc quyển khác (vd /books/6/topics/1) → 404.
+    if (
+        book.firstNodeOrder != null &&
+        book.lastNodeOrder != null &&
+        allNodes.length > 0
+    ) {
+        const gois = allNodes.map((n) => n.globalOrderIndex);
+        if (
+            Math.min(...gois) < book.firstNodeOrder ||
+            Math.max(...gois) > book.lastNodeOrder
+        ) {
+            return <NotFoundView />;
+        }
+    }
+
+    // Guard 2 — LOCKED: mọi node của chủ đề đều khóa (chưa tới mốc tiến độ) → 404.
+    if (
+        frontier != null &&
+        allNodes.length > 0 &&
+        allNodes.every((n) => n.status === "locked")
+    ) {
+        return <NotFoundView />;
+    }
+
+    const accent = book.coverColor ?? "var(--color-bgc-highlight)";
+
     return (
-        <div className="mx-auto flex max-w-5xl flex-col gap-6">
-            <TopicPathHeader
-                book={book}
-                topic={topic}
-                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                overallPercent={overallPercent}
-                lessonCount={lessonModels.length}
-                showFurigana={showFurigana}
-                completedCount={completedCount}
-                totalCount={totalCount}
-            />
-            <TopicRoadmapBody
-                groups={groups}
-                bookId={bookId}
-                topicId={topicId}
-                accent={book.coverColor ?? "var(--color-bgc-highlight)"}
-                showFurigana={showFurigana}
-                currentNodeId={currentNodeId}
-            />
+        <div className="mx-auto max-w-6xl px-4">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+                <div className="flex min-w-0 flex-col gap-6">
+                    <TopicPathHeader
+                        book={book}
+                        topic={topic}
+                        accent={accent}
+                        overallPercent={overallPercent}
+                        lessonCount={lessonModels.length}
+                        showFurigana={showFurigana}
+                        completedCount={completedCount}
+                        totalCount={totalCount}
+                    />
+                    <TopicRoadmapBody
+                        groups={groups}
+                        bookId={bookId}
+                        topicId={topicId}
+                        accent={accent}
+                        showFurigana={showFurigana}
+                        currentNodeId={currentNodeId}
+                    />
+                </div>
+                <RoadmapSideRail accent={accent} />
+            </div>
         </div>
     );
 }

@@ -15,9 +15,15 @@
             "loginByGoogle": "Đăng nhập bằng Google",
             "noAccount": "Chưa có tài khoản?",
             "registerNow": "Đăng ký ngay",
-            "pleaseEnterEmailOrUsername": "Vui lòng nhập email/tên tài khoản!",
-            "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
-            "wrongLoginInfo": "Sai thông tin đăng nhập!"
+            "pleaseEnterEmailOrUsername": "Please enter your email/username!",
+            "pleaseEnterPassword": "Please enter your password!",
+            "wrongLoginInfo": "Invalid login credentials!"
+        },
+        "lock": {
+            "title": "Account Temporarily Locked!",
+            "defaultDetail": "Your account has been temporarily locked due to too many failed login attempts. Please try again after 15 minutes.",
+            "forgotPassword": "Forgot password",
+            "understand": "Understood"
         }
     }
 }

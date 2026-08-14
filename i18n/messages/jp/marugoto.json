@@ -64,6 +64,8 @@
             "milestoneProgress": "{done}/{total} マイルストーン",
             "vocabShort": "語彙",
             "topicVocabList": "単語リストを見る",
+            "vocabEmpty": "このトピックにはまだ語彙がありません。",
+            "vocabLoadFailed": "語彙を読み込めませんでした。",
             "pinTopic": "サイドバーにピン留め",
             "unpinTopic": "ピン留め解除",
             "pinnedSection": "ピン留め済み",
@@ -76,7 +78,10 @@
             "topicProgress": "トピックの進捗",
             "completedNodes": "完了済み",
             "activeGoal": "現在の目標",
-            "rewardsHint": "ごほうび箱を開ける"
+            "rewardsHint": "ごほうび箱を開ける",
+            "loadingQuestion": "問題を読み込み中...",
+            "hoverOpen": "クリックして詳細を見る",
+            "hoverRelearn": "クリックして再挑戦"
         },
         "node": {
             "vocabTitle": "語彙",
@@ -129,6 +134,62 @@
             "finish": "完了",
             "done": "完了済み",
             "finishHint": "すべてのカードを見て完了"
+        },
+        "sampleAnswer": {
+            "title": "模範解答",
+            "speak": "発音",
+            "reveal": "模範解答を見る",
+            "hide": "模範解答を隠す",
+            "translation": "翻訳",
+            "locked": "プランをアップグレードすると模範解答を表示できます",
+            "empty": "この問題にはまだ模範解答がありません。"
+        },
+        "questionDetail": {
+            "back": "ロードマップに戻る",
+            "badge": "問題の詳細",
+            "practiceNow": "この問題を今すぐ練習",
+            "vocab": "語彙",
+            "grammar": "主要な文法",
+            "discussion": "ディスカッション＆リアクション",
+            "commentsCount": "コメント {count} 件",
+            "commentPlaceholder": "コメントを書く...",
+            "postComment": "コメントする",
+            "replyPlaceholder": "返信を書く...",
+            "send": "送信",
+            "reply": "返信",
+            "replyingTo": "返信先：",
+            "report": "報告",
+            "like": "いいね",
+            "you": "あなた",
+            "commenter": "学習者 #{id}",
+            "justNow": "たった今",
+            "minutesAgo": "{count} 分前",
+            "hoursAgo": "{count} 時間前",
+            "noComments": "まだコメントがありません。最初のコメントを！",
+            "loadFailed": "コメントを読み込めませんでした。",
+            "commentFailed": "コメントを送信できませんでした。もう一度お試しください。",
+            "reactionFailed": "リアクションを更新できませんでした。",
+            "edit": "編集",
+            "delete": "削除",
+            "save": "保存",
+            "edited": "編集済み",
+            "commentDeleted": "コメントを削除しました。",
+            "commentDeleteFailed": "コメントを削除できませんでした。",
+            "deleteTitle": "コメントを削除？",
+            "deleteConfirm": "このコメントを削除してもよろしいですか？",
+            "cancel": "キャンセル",
+            "profileRank": "順位 #{rank}",
+            "profilePoints": "{points} ポイント",
+            "yourBestScore": "自己ベスト {score}/10",
+            "statusPassed": "合格",
+            "statusNotPassed": "未合格",
+            "attemptsCount": "{count} 回挑戦"
+        },
+        "sideRail": {
+            "leagueTitle": "週間リーグ",
+            "yourRank": "あなたの順位",
+            "points": "{points} ポイント",
+            "topicQuestsTitle": "トピックのミッション"
         }
     }
 }

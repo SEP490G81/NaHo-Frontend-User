@@ -25,6 +25,7 @@
                 "topics": "Practice Topics",
                 "topicDetail": "Topic Detail",
                 "lessonPath": "Lộ trình bài học",
+                "questionDetail": "Chi tiết câu hỏi",
                 "sandbox": "Speaking Room",
                 "history": "Lịch sử luyện nói theo sách",
                 "historyDetail": "Detailed Report",
@@ -68,6 +69,9 @@
                 "collapseSidebar": "Thu gọn thanh bên",
                 "expandSidebar": "Mở rộng thanh bên",
                 "notificationButton": "Thông báo",
+                "notifications": "Thông báo",
+                "markAllRead": "Đánh dấu đã đọc tất cả",
+                "noNotifications": "Chưa có thông báo nào.",
                 "themeSwitchButton": {
                     "darkMode": "Chế độ tối",
                     "lightMode": "Chế độ sáng"

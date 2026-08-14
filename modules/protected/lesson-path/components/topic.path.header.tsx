@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { BookOpen, LayoutGrid, Pin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import { FuriganaHtml } from "@/components/ui/furigana.html";
 import BackButton from "@/components/ui/back.button";
 import type { BookTopic, MarugotoBook } from "@/data/marugoto/types";
 import { usePinnedTopics } from "@/hooks/use.pinned.topics";
+import TopicVocabDialog from "./topic.vocab.dialog";
 
 interface Props {
     book: MarugotoBook;
@@ -83,13 +84,14 @@ export function TopicPathHeader({
 }: Props) {
     const t = useTranslations("marugoto");
     const { togglePinTopic, isTopicPinned } = usePinnedTopics();
+    const [vocabOpen, setVocabOpen] = useState(false);
 
     const topicPinId = `${book.id}-${topic.id}`;
     const isPinned = isTopicPinned(topicPinId);
 
     const handleVocabClick = (e: React.MouseEvent) => {
         e.stopPropagation();
-        toast.info(t("path.topicVocabList") + " (Sắp ra mắt)");
+        setVocabOpen(true);
     };
 
     const handlePinToggle = (e: React.MouseEvent) => {
@@ -117,7 +119,8 @@ export function TopicPathHeader({
     };
 
     return (
-        <header className="group sticky top-16 z-10 mx-auto w-full max-w-4xl px-2 select-none sm:px-0">
+        <>
+        <header className="group sticky top-20 z-40 mx-auto w-full max-w-4xl px-2 select-none sm:px-0">
             <div
                 className="border-bdc-primary bg-bgc-app/95 dark:bg-bgc-modal/95 overflow-hidden rounded-2xl border shadow-md backdrop-blur-xl transition-all duration-500 ease-out group-hover:shadow-2xl"
                 style={{
@@ -245,6 +248,12 @@ export function TopicPathHeader({
                 </div>
             </div>
         </header>
+        <TopicVocabDialog
+            topicId={topic.id}
+            open={vocabOpen}
+            onClose={() => setVocabOpen(false)}
+        />
+        </>
     );
 }
 

@@ -47,3 +47,16 @@ export interface LeaderboardEntry {
     avatarUrl: string | null;
     point: number;
 }
+
+/** Tiến độ THẬT của user tại 1 node (GET /user-node-progresses/learning-path-nodes/{id}). */
+export interface UserNodeProgressResponse {
+    id: number;
+    learningPathNodeId: number;
+    userId: number;
+    bestScore: number | null;
+    currentScore: number | null;
+    attemptCount: number;
+    lastCompletedAt: string | null;
+    /** NodeStatus phía BE: "PASSED" | "FAILED" | ... */
+    status: string | null;
+}

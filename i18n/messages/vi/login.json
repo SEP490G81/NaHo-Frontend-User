@@ -18,6 +18,12 @@
             "pleaseEnterEmailOrUsername": "Vui lòng nhập email/tên tài khoản!",
             "pleaseEnterPassword": "Vui lòng nhập mật khẩu!",
             "wrongLoginInfo": "Sai thông tin đăng nhập!"
+        },
+        "lock": {
+            "title": "Tài khoản bị khoá tạm thời!",
+            "defaultDetail": "Tài khoản của bạn đã bị khoá tạm thời do đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 15 phút.",
+            "forgotPassword": "Quên mật khẩu",
+            "understand": "Đã hiểu"
         }
     }
 }

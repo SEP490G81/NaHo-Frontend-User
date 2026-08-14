@@ -22,6 +22,7 @@
                 "topics": "Practice Topics",
                 "topicDetail": "Topic Detail",
                 "lessonPath": "Lesson Path",
+                "questionDetail": "Question Detail",
                 "sandbox": "Speaking Room",
                 "history": "Practice History",
                 "historyDetail": "Detailed Report",
@@ -63,6 +64,9 @@
                 "collapseSidebar": "Collapse sidebar",
                 "expandSidebar": "Expand sidebar",
                 "notificationButton": "Notifications",
+                "notifications": "Notifications",
+                "markAllRead": "Mark all as read",
+                "noNotifications": "No notifications yet.",
                 "themeSwitchButton": {
                     "darkMode": "Dark Mode",
                     "lightMode": "Light Mode"

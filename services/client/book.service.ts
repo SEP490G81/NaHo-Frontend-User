@@ -6,7 +6,11 @@ import {
     TopicDetailResponse,
     TopicListItemResponse
 } from "@/types/responses/book.response";
-import { LearningPathNodeDetailResponse } from "@/types/responses/learning.response";
+import {
+    LearningPathNodeDetailResponse,
+    VocabulariesOfTopicResponse,
+} from "@/types/responses/learning.response";
+import { UserNodeProgressResponse } from "@/types/responses/league.response";
 
 /**
  * Service phía client cho sách Marugoto. Gọi qua Next route handler (/api/*)
@@ -68,6 +72,33 @@ export function getLearningPathNodeDetail(
 ): Promise<LearningPathNodeDetailResponse> {
     return getData<LearningPathNodeDetailResponse>(
         `/api/learning-path-nodes/${nodeId}`,
+    );
+}
+
+/** Toàn bộ từ vựng của một chủ đề (để hiển thị "Danh sách từ vựng"). */
+export function getTopicVocabularies(
+    topicId: string | number,
+): Promise<VocabulariesOfTopicResponse> {
+    return getData<VocabulariesOfTopicResponse>(
+        `/api/vocabularies/topic/${topicId}`,
+    );
+}
+
+/** Tiến độ THẬT của user tại 1 node (best-score/status/số lần thử). Trả null nếu
+ *  user chưa từng làm node này (BE 404/không có bản ghi). */
+export async function getUserNodeProgress(
+    nodeId: string | number,
+): Promise<UserNodeProgressResponse | null> {
+    const response = await fetch(
+        `/api/user-node-progresses/learning-path-nodes/${nodeId}`,
+        { cache: "no-store" },
+    );
+    if (!response.ok) return null;
+    const result = await response.json().catch(() => null);
+    if (!result) return null;
+    return (
+        (result as ApiResponse<UserNodeProgressResponse>).data ??
+        (result as UserNodeProgressResponse)
     );
 }
 
