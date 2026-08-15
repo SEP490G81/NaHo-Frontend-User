@@ -23,9 +23,7 @@ const NotificationItem = ({
             type="button"
             onClick={() => onSelect(notification)}
             className={`border-bdc-primary hover:bg-bgc-page flex w-full cursor-pointer items-start gap-2.5 border-b px-4 py-3 text-left transition-all last:border-0 ${
-                isRead
-                    ? "opacity-60 hover:opacity-100"
-                    : "bg-bgc-highlight/5 opacity-100"
+                isRead ? "opacity-60 hover:opacity-100" : "bg-bgc-highlight/5"
             }`}
         >
             <span

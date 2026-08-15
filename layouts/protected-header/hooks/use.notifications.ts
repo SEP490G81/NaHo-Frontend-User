@@ -53,6 +53,8 @@ export function useNotifications(open: boolean) {
         };
     };
 
+    // Cache rỗng từ trước thì setQueryData(undefined) là no-op nên không khôi
+    // phục được — không sao, onSettled luôn invalidate nên BE nói lời cuối.
     const restoreSnapshot = (snapshot?: NotificationCacheSnapshot) => {
         if (!snapshot) return;
         qc.setQueryData(NOTIFICATION_QUERY_KEYS.list, snapshot.list);
