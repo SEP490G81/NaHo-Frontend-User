@@ -22,6 +22,7 @@ export function BookCard({ book, unlocked, current }: BookCardProps) {
 
     const inner = (
         <div
+            data-tour-id={current ? "tour-marugoto-book" : undefined}
             className={cn(
                 "group bg-bgc-app relative flex flex-col overflow-hidden rounded-2xl border transition-all",
                 current
