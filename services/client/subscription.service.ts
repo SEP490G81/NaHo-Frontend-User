@@ -28,10 +28,18 @@ export async function getMySubscription(): Promise<UserSubscriptionResponse | nu
         if (api.data) {
             const subData = api.data;
             const planObj = subData.subscriptionPlan || subData.plan;
+            const normalizedPlan = planObj
+                ? {
+                      ...planObj,
+                      dailyAiSessionStartLimit:
+                          planObj.dailyAiSessionStartLimit ??
+                          planObj.dailyAiSessionEvaluationLimit,
+                  }
+                : undefined;
             return {
                 ...subData,
-                subscriptionPlan: planObj,
-                plan: planObj,
+                subscriptionPlan: normalizedPlan,
+                plan: normalizedPlan,
             };
         }
         return null;
@@ -71,7 +79,12 @@ export async function getSubscriptionPlans(): Promise<
     }
 
     const api = result as ApiResponse<SubscriptionPlanResponse[]>;
-    return api.data ?? (result as SubscriptionPlanResponse[]) ?? [];
+    const plans = api.data ?? (result as SubscriptionPlanResponse[]) ?? [];
+    return plans.map((plan) => ({
+        ...plan,
+        dailyAiSessionStartLimit:
+            plan.dailyAiSessionStartLimit ?? plan.dailyAiSessionEvaluationLimit,
+    }));
 }
 
 /** Số lượt AI đã dùng hôm nay (để tính "còn X lượt chấm nói"). */
@@ -82,5 +95,13 @@ export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null
     if (!response.ok) return null;
     const result = await response.json();
     const api = result as ApiResponse<UserDailyAiUsageResponse>;
-    return api.data ?? (result as UserDailyAiUsageResponse) ?? null;
+    const data = api.data ?? (result as UserDailyAiUsageResponse) ?? null;
+    if (data) {
+        return {
+            ...data,
+            aiSessionStartCount:
+                data.aiSessionStartCount ?? data.aiSessionEvaluationCount ?? 0,
+        };
+    }
+    return null;
 }

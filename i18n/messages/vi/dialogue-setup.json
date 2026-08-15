@@ -58,6 +58,11 @@
         "resumeUnknownPersona": "Bạn đồng hành AI",
         "viewHistory": "Lịch sử phiên",
         "dailyQuota": "{used}/{limit} lượt AI hôm nay",
+        "dailyQuotaLimit": "Số session nói chuyện với AI mỗi ngày của bạn là {limit}.",
+        "dailyQuotaRemaining": "Hôm nay bạn còn {remaining} lần nói chuyện với AI.",
+        "dailyQuotaStatus": "Còn {remaining}/{limit} lượt hôm nay",
+        "dailyQuotaExhausted": "Bạn đã sử dụng hết số lượt nói chuyện với AI hôm nay.",
+        "dailyQuotaUpgradeHint": "Hãy nâng cấp gói mới để tăng thêm lượt nói chuyện với AI mỗi ngày.",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
         "companionLevel": "Trình độ: {level}"
     }
