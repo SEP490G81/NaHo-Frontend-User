@@ -45,12 +45,9 @@ const Billing = () => {
         if (!status) return;
 
         if (status === "PAID") {
-            toast.success(
-                "Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!",
-                {
-                    autoClose: 5000,
-                },
-            );
+            toast.success("Chúc mừng bạn đã nâng cấp gói dịch vụ thành công!", {
+                autoClose: 5000,
+            });
             fetchSub();
         } else {
             toast.error(

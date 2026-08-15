@@ -4,6 +4,7 @@ import { Button, IconButton } from "@mui/material";
 import { cn } from "@/libs/utils";
 import { useTranslations } from "next-intl";
 import { AudioVisualizer } from "../components/audio-visualizer";
+import React from "react";
 
 interface Props {
     value: string;
@@ -25,7 +26,7 @@ export function ChatInputBar({
     onToggleRecord,
     onCancelRecord,
     disabled,
-}: Props) {
+}: Readonly<Props>) {
     const t = useTranslations("liveChatroom");
 
     const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -36,7 +37,7 @@ export function ChatInputBar({
     };
 
     return (
-        <div className="space-y-2">
+        <div data-tour-id="tour-ai1on1-chat" className="space-y-2">
             {isRecording && (
                 <div className="bg-bgc-highlight/10 text-bgc-highlight flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-xs font-medium">
                     <AudioVisualizer

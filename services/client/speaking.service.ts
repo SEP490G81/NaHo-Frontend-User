@@ -1,8 +1,4 @@
-import {
-    ApiResponse,
-    PageMeta,
-    ProblemDetail,
-} from "@/types/responses/base.response";
+import { ApiResponse, PageMeta, ProblemDetail } from "@/types/responses/base.response";
 import { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
 import {
     ActiveSpeakingSessionResponse,
@@ -310,8 +306,7 @@ export async function getSpeakingSessions(
     const result = text ? JSON.parse(text) : null;
     if (!response.ok) {
         throw new Error(
-            (result as ProblemDetail)?.detail ||
-                "Không tải được lịch sử phiên",
+            (result as ProblemDetail)?.detail || "Không tải được lịch sử phiên",
         );
     }
     const api = result as ApiResponse<SpeakingSessionListItem[]>;

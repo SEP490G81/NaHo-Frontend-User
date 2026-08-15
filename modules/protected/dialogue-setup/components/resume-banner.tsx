@@ -43,8 +43,9 @@ export function ResumeBanner({
                         {t("resumeTitle")}
                     </div>
                     <div className="text-text-muted text-xs">
-                        {name} · {t("resumeTurns", { count: active.totalTurns })}{" "}
-                        · {formatWhen(active.startedAt)}
+                        {name} ·{" "}
+                        {t("resumeTurns", { count: active.totalTurns })} ·{" "}
+                        {formatWhen(active.startedAt)}
                     </div>
                 </div>
             </div>

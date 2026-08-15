@@ -14,6 +14,8 @@ import JapanBackground from "@/components/ui/japan-background";
 import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
 import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigana.provider";
 import UserLearningProgressProvider from "@/components/providers/user.learning.progress.provider";
+import TourUserScope from "@/modules/protected/user-guide/providers/tour.user.scope";
+import ActiveTours from "@/modules/protected/user-guide/providers/active.tours";
 
 const ProtectedLayout = async ({
     children,
@@ -33,6 +35,8 @@ const ProtectedLayout = async ({
             <UserLearningProgressProvider>
                 <AppToggleFuriganaProvider>
                     <MarugotoUserScope userId={String(user.id)} />
+                    <TourUserScope userId={String(user.id)} />
+                    <ActiveTours />
                     <div className="relative flex min-h-screen">
                         <LearnerSidebar />
                         <div className="flex min-w-0 flex-1 flex-col">

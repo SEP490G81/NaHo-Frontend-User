@@ -6,10 +6,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import { useUserLearningProgress } from "@/components/providers/user.learning.progress.provider";
-import {
-    getLeagueLeaderboard,
-    getLeagues,
-} from "../services/leaderboard.service";
+import { getLeagueLeaderboard, getLeagues } from "../services/leaderboard.service";
 import { findLeagueByTotalPoint } from "../utils/leaderboard.util";
 import { useLeagueLabel } from "../utils/use.league.label";
 import LeagueIcon from "./league.icon";
@@ -80,7 +77,7 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
             {leagues.length > 0 && (
                 <div
                     ref={stripRef}
-                    className="flex items-center gap-2.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    className="flex [scrollbar-width:none] items-center gap-2.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                 >
                     {leagues.map((l) => {
                         const isCurrent = l.id === myLeague?.id;

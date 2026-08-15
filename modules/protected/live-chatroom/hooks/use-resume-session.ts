@@ -2,21 +2,12 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
-import {
-    getActiveSession,
-    resumeSession,
-} from "@/services/client/speaking.service";
+import { getActiveSession, resumeSession } from "@/services/client/speaking.service";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
-import {
-    DEFAULT_FORMALITY,
-    DEFAULT_MARUGOTO,
-} from "../constants/live-chatroom.constant";
+import { DEFAULT_FORMALITY, DEFAULT_MARUGOTO } from "../constants/live-chatroom.constant";
 import type { Companion } from "../types/live-chatroom.type";
-import type {
-    FormalityLevel,
-    MarugotoLevel,
-} from "@/types/responses/persona.response";
+import type { FormalityLevel, MarugotoLevel } from "@/types/responses/persona.response";
 import type { SessionMessageItem } from "@/types/responses/speaking.response";
 
 /** Thông tin tối thiểu để khôi phục một phiên dở (từ banner hoặc list lịch sử). */
@@ -66,8 +57,7 @@ export function useResumeSession(companions: Companion[]) {
             const comp =
                 (target.personaId != null
                     ? companions.find((c) => c.personaId === target.personaId)
-                    : undefined) ??
-                companions[0];
+                    : undefined) ?? companions[0];
 
             setConfig({
                 companionId: comp.id,

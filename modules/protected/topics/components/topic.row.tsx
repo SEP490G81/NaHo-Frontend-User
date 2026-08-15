@@ -19,6 +19,8 @@ export function TopicRow({ view, bookId, accent }: Props) {
     const lessonCount = topic.lessons.length;
     const locked = view.status === "locked";
     const tone = locked ? "var(--color-text-muted)" : accent;
+    const tourId =
+        view.status === "active" ? "tour-marugoto-topic" : undefined;
 
     const inner = (
         <>
@@ -91,6 +93,7 @@ export function TopicRow({ view, bookId, accent }: Props) {
     return (
         <Link
             href={`/books/${bookId}/topics/${topic.id}`}
+            data-tour-id={tourId}
             className={`${className} hover:-translate-y-0.5 hover:shadow-md`}
             style={style}
         >

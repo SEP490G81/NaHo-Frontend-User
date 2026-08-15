@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { History, Sparkles } from "lucide-react";
+import { Compass, History, Sparkles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { CompanionList } from "./companion-list";
@@ -23,15 +23,23 @@ import {
     getTodayAiUsage,
 } from "@/services/client/subscription.service";
 import { useAuthStore } from "@/store/authStore";
+import { useTourStore } from "@/store/tourStore";
+import { AI_ONE_ON_ONE_TOUR_ID } from "@/modules/protected/user-guide/constants/ai.one.on.one.tour.constant";
 import { Link } from "@/i18n/navigation";
 import type {
     FormalityLevel,
     MarugotoLevel,
 } from "@/types/responses/persona.response";
 
+import UpdatePlanButton from "@/modules/protected/settings/billing/components/update.plan.button";
+import SubscriptionModal from "@/modules/protected/settings/billing/features/subscription.modal";
+
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
+    const tGuide = useTranslations("userGuide.tour");
     const level = useAuthStore((s) => s.profile?.level);
+    const startTour = useTourStore((s) => s.startTour);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
     const { data: personas, isLoading } = useQuery({
@@ -66,9 +74,20 @@ export function DialogueSetup() {
         staleTime: 60 * 1000,
     });
     const aiLimit =
-        subscription?.subscriptionPlan?.dailyAiSessionEvaluationLimit ?? null;
-    const aiUsed = aiUsage?.aiSessionEvaluationCount ?? 0;
-    const aiExhausted = aiLimit != null && aiUsed >= aiLimit;
+        subscription?.subscriptionPlan?.dailyAiSessionStartLimit ??
+        subscription?.subscriptionPlan?.dailyAiSessionEvaluationLimit ??
+        null;
+    const aiUsed =
+        aiUsage?.aiSessionStartCount ??
+        aiUsage?.aiSessionEvaluationCount ??
+        0;
+    const aiRemaining = aiLimit != null ? Math.max(0, aiLimit - aiUsed) : null;
+    const aiExhausted = aiRemaining != null && aiRemaining <= 0;
+
+    const currentTier =
+        subscription?.subscriptionPlan?.tier ??
+        subscription?.plan?.tier ??
+        "FREE";
 
     const [companionId, setCompanionId] = useState(COMPANIONS[0].id);
     // null = theo mặc định của persona; khác null = người dùng đã tự đổi.
@@ -133,48 +152,130 @@ export function DialogueSetup() {
                     aria-hidden
                     className="bg-bgc-highlight absolute inset-y-0 left-0 w-1.5"
                 />
-                <div className="relative z-10 flex flex-wrap items-start justify-between gap-4 pl-2">
-                    <div className="space-y-2">
-                        <h1 className="text-text-contrast text-2xl font-bold tracking-tight sm:text-3xl">
-                            {t("title")}
-                        </h1>
-                        <p className="text-text-muted max-w-xl text-sm">
-                            {t("subtitle")}
-                        </p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                        {aiLimit != null && (
-                            <span
-                                className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold ${
-                                    aiExhausted
-                                        ? "border-amber-300 bg-amber-500/15 text-amber-600 dark:text-amber-300"
-                                        : "border-bdc-primary bg-bgc-page text-text-contrast"
-                                }`}
-                            >
-                                <Sparkles className="text-bgc-highlight h-4 w-4" />
-                                {t("dailyQuota", {
-                                    used: aiUsed,
-                                    limit: aiLimit,
-                                })}
-                            </span>
-                        )}
-                        {level && (
-                            <span className="border-bdc-primary bg-bgc-page text-text-contrast inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
-                                <Sparkles className="text-bgc-highlight h-4 w-4" />
-                                {t("currentLevel")}
-                                <span className="bg-bgc-highlight/15 text-bgc-highlight rounded-full px-2 py-0.5 text-xs">
-                                    {level}
+                <div className="relative z-10 space-y-5">
+                    <div className="flex flex-wrap items-start justify-between gap-4 pl-2">
+                        <div className="space-y-2">
+                            <h1 className="text-text-contrast text-2xl font-bold tracking-tight sm:text-3xl">
+                                {t("title")}
+                            </h1>
+                            <p className="text-text-muted max-w-xl text-sm">
+                                {t("subtitle")}
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                            {aiLimit != null && aiRemaining != null && (
+                                <span
+                                    className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold ${
+                                        aiExhausted
+                                            ? "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400"
+                                            : "border-bgc-highlight/40 bg-bgc-highlight/10 text-bgc-highlight"
+                                    }`}
+                                >
+                                    <Sparkles
+                                        className={
+                                            aiExhausted
+                                                ? "text-rose-500 h-4 w-4"
+                                                : "text-bgc-highlight h-4 w-4"
+                                        }
+                                    />
+                                    {t("dailyQuotaStatus", {
+                                        remaining: aiRemaining,
+                                        limit: aiLimit,
+                                    })}
                                 </span>
-                            </span>
-                        )}
-                        <Link
-                            href="/dialogue-history"
-                            className="border-bdc-primary text-text-muted hover:border-bgc-highlight/60 hover:text-bgc-highlight inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium"
-                        >
-                            <History className="h-4 w-4" />
-                            {t("viewHistory")}
-                        </Link>
+                            )}
+                            {level && (
+                                <span className="border-bdc-primary bg-bgc-page text-text-contrast inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
+                                    <Sparkles className="text-bgc-highlight h-4 w-4" />
+                                    {t("currentLevel")}
+                                    <span className="bg-bgc-highlight/15 text-bgc-highlight rounded-full px-2 py-0.5 text-xs font-bold">
+                                        {level}
+                                    </span>
+                                </span>
+                            )}
+                            <Link
+                                href="/dialogue-history"
+                                className="border-bdc-primary text-text-muted hover:border-bgc-highlight/60 hover:text-bgc-highlight inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+                            >
+                                <History className="h-4 w-4" />
+                                {t("viewHistory")}
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => startTour(AI_ONE_ON_ONE_TOUR_ID)}
+                                className="border-bdc-primary text-text-muted hover:border-bgc-highlight/60 hover:text-bgc-highlight inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+                            >
+                                <Compass className="h-4 w-4" />
+                                {tGuide("restart")}
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Quota Banner */}
+                    {aiLimit != null && aiRemaining != null && (
+                        <div
+                            className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border p-4 shadow-xs transition-all ${
+                                aiExhausted
+                                    ? "border-rose-500/50 bg-rose-500/10 text-text-contrast"
+                                    : "border-bgc-highlight/50 bg-bgc-highlight/10 text-text-contrast"
+                            }`}
+                        >
+                            <div className="flex items-center gap-3.5 pl-2">
+                                <div
+                                    className={`shrink-0 rounded-xl p-2.5 shadow-xs ${
+                                        aiExhausted
+                                            ? "bg-rose-500 text-white"
+                                            : "bg-bgc-highlight text-white"
+                                    }`}
+                                >
+                                    <Sparkles className="h-5 w-5" />
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-text-contrast text-sm sm:text-base font-bold">
+                                        {t("dailyQuotaLimit", { limit: aiLimit })}
+                                    </p>
+                                    <p
+                                        className={`text-xs sm:text-sm font-bold ${
+                                            aiExhausted
+                                                ? "text-rose-600 dark:text-rose-400"
+                                                : "text-bgc-highlight"
+                                        }`}
+                                    >
+                                        {aiExhausted ? (
+                                            <>
+                                                <span>{t("dailyQuotaExhausted")} </span>
+                                                <span>{t("dailyQuotaUpgradeHint")}</span>
+                                            </>
+                                        ) : (
+                                            t("dailyQuotaRemaining", {
+                                                remaining: aiRemaining,
+                                            })
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="shrink-0 flex items-center gap-2 pl-2 sm:pl-0">
+                                {aiExhausted && (
+                                    <UpdatePlanButton
+                                        onOpenModal={() => setIsModalOpen(true)}
+                                    />
+                                )}
+                                <span
+                                    className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-extrabold shadow-xs ${
+                                        aiExhausted
+                                            ? "bg-rose-500 text-white"
+                                            : "bg-bgc-highlight text-white"
+                                    }`}
+                                >
+                                    {t("dailyQuotaStatus", {
+                                        remaining: aiRemaining,
+                                        limit: aiLimit,
+                                    })}
+                                </span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </header>
 
@@ -220,9 +321,16 @@ export function DialogueSetup() {
                         marugotoLevel={marugotoLevel}
                         voiceSpeed={voiceSpeed}
                         showHints={showHints}
+                        isQuotaExhausted={aiExhausted}
                     />
                 </div>
             </div>
+
+            <SubscriptionModal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                currentPlanTier={currentTier}
+            />
         </div>
     );
 }

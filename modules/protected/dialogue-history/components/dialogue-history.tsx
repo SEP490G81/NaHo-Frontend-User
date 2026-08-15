@@ -221,7 +221,9 @@ export function DialogueHistory() {
                                                 item.durationSeconds,
                                             )}
                                         </span>
-                                        <span>{formatWhen(item.startedAt)}</span>
+                                        <span>
+                                            {formatWhen(item.startedAt)}
+                                        </span>
                                     </div>
                                 </div>
                                 {done && (

@@ -112,7 +112,9 @@ export function QuestionDetail() {
                         <div className="border-bdc-primary bg-bgc-app flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border px-4 py-3 text-sm">
                             <span className="text-text-muted">
                                 {t("yourBestScore", {
-                                    score: Number(nodeProg.bestScore).toFixed(1),
+                                    score: Number(nodeProg.bestScore).toFixed(
+                                        1,
+                                    ),
                                 })}
                             </span>
                             <span
@@ -136,6 +138,7 @@ export function QuestionDetail() {
 
                     <Link
                         href={practiceHref as AllRoute}
+                        data-tour-id="tour-marugoto-practice"
                         className="text-text-pure flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-opacity hover:opacity-90"
                         style={{ background: accent }}
                     >

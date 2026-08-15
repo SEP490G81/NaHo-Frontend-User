@@ -2,8 +2,23 @@ import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import {
     SubscriptionPlanResponse,
     UserDailyAiUsageResponse,
-    UserSubscriptionResponse,
+    UserSubscriptionResponse
 } from "@/types/responses/subscription.response";
+
+/** Lượt AI đã dùng hôm nay (speaking + AI 1:1). */
+export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null> {
+    const response = await fetch("/api/user-daily-ai-usages/today", {
+        cache: "no-store",
+    });
+    const result = await response.json();
+    if (!response.ok) {
+        throw new Error(
+            (result as ProblemDetail).detail ||
+                "Không lấy được lượt sử dụng AI hôm nay.",
+        );
+    }
+    return (result as ApiResponse<UserDailyAiUsageResponse>).data ?? null;
+}
 
 /**
  * Lấy thông tin gói đăng ký hiện tại của user đang đăng nhập.
@@ -74,13 +89,13 @@ export async function getSubscriptionPlans(): Promise<
     return api.data ?? (result as SubscriptionPlanResponse[]) ?? [];
 }
 
-/** Số lượt AI đã dùng hôm nay (để tính "còn X lượt chấm nói"). */
-export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null> {
-    const response = await fetch("/api/user-daily-ai-usages/today", {
-        cache: "no-store",
-    });
-    if (!response.ok) return null;
-    const result = await response.json();
-    const api = result as ApiResponse<UserDailyAiUsageResponse>;
-    return api.data ?? (result as UserDailyAiUsageResponse) ?? null;
-}
+// /** Số lượt AI đã dùng hôm nay (để tính "còn X lượt chấm nói"). */
+// export async function getTodayAiUsage(): Promise<UserDailyAiUsageResponse | null> {
+//     const response = await fetch("/api/user-daily-ai-usages/today", {
+//         cache: "no-store",
+//     });
+//     if (!response.ok) return null;
+//     const result = await response.json();
+//     const api = result as ApiResponse<UserDailyAiUsageResponse>;
+//     return api.data ?? (result as UserDailyAiUsageResponse) ?? null;
+// }

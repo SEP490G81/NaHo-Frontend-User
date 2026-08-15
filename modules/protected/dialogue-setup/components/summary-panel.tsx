@@ -24,6 +24,7 @@ interface SummaryPanelProps {
     marugotoLevel: MarugotoLevel;
     voiceSpeed: number;
     showHints: boolean;
+    isQuotaExhausted?: boolean;
 }
 
 export function SummaryPanel({
@@ -32,6 +33,7 @@ export function SummaryPanel({
     marugotoLevel,
     voiceSpeed,
     showHints,
+    isQuotaExhausted = false,
 }: SummaryPanelProps) {
     const t = useTranslations("dialogueSetup");
     const router = useRouter();
@@ -40,7 +42,7 @@ export function SummaryPanel({
     const [starting, setStarting] = useState(false);
 
     const personaId = companion.personaId;
-    const canStart = personaId != null && !starting;
+    const canStart = personaId != null && !starting && !isQuotaExhausted;
 
     const rows: { label: string; value: string }[] = [
         { label: t("summaryCompanion"), value: companion.name },
@@ -53,7 +55,7 @@ export function SummaryPanel({
     ];
 
     const handleStart = async () => {
-        if (personaId == null) return;
+        if (personaId == null || isQuotaExhausted) return;
         setStarting(true);
         try {
             const res = await startConversation(personaId, {
@@ -122,6 +124,7 @@ export function SummaryPanel({
             <Button
                 onClick={handleStart}
                 disabled={!canStart}
+                data-tour-id="tour-ai1on1-start"
                 variant="contained"
                 color="primary"
                 fullWidth
@@ -138,7 +141,11 @@ export function SummaryPanel({
             </Button>
 
             <p className="text-text-muted text-center text-xs">
-                {personaId == null ? t("personaUnavailable") : t("startHint")}
+                {personaId == null
+                    ? t("personaUnavailable")
+                    : isQuotaExhausted
+                      ? t("dailyQuotaExhausted")
+                      : t("startHint")}
             </p>
         </div>
     );

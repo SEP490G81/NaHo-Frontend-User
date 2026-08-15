@@ -1,0 +1,57 @@
+{
+    "userGuide": {
+        "tour": {
+            "stepCounter": "Step {current}/{total}",
+            "skip": "Skip",
+            "finish": "Finish",
+            "pointHint": "Click the highlighted area to continue",
+            "restart": "View guide"
+        },
+        "tours": {
+            "marugoto": {
+                "chooseBook": {
+                    "title": "Pick a book",
+                    "description": "Start with the unlocked book (marked \"In progress\"). Click it to see the topics inside."
+                },
+                "chooseTopic": {
+                    "title": "Pick a topic",
+                    "description": "Each topic has several questions and vocabulary sets. Click the unlocked topic to get started."
+                },
+                "roadmap": {
+                    "title": "Follow the roadmap",
+                    "description": "Each node is a question, vocabulary set, or reward chest. Click a question node (mic icon) to practice speaking."
+                },
+                "practice": {
+                    "title": "Start speaking practice",
+                    "description": "Review the prompt, vocabulary, and sample answer, then click \"Practice now\" to record your answer."
+                },
+                "record": {
+                    "title": "Record & get scored",
+                    "description": "Test your mic, then record your answer. The AI scores it instantly, adds points, and saves it to your history so you can review it anytime."
+                }
+            },
+            "aiOneOnOne": {
+                "persona": {
+                    "title": "Pick an AI companion",
+                    "description": "Each companion has its own speaking style. Click one to pick your practice partner."
+                },
+                "start": {
+                    "title": "Start the conversation",
+                    "description": "Review your selection, then click \"Start\" to enter the chat room."
+                },
+                "chat": {
+                    "title": "Talk with the AI",
+                    "description": "Type or tap the mic to speak Japanese. The AI replies, corrects mistakes, and translates right in the chat."
+                },
+                "end": {
+                    "title": "End the session",
+                    "description": "When you're done, click \"End\" then confirm in the dialog to see your results."
+                },
+                "result": {
+                    "title": "Review your results",
+                    "description": "Your overall score, per-skill breakdown, and improvement tips show up here, and are saved to your history so you can review them anytime."
+                }
+            }
+        }
+    }
+}
