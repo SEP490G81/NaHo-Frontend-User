@@ -20,6 +20,7 @@ import UserAvatarImage from "@/layouts/sidebar/components/user.avatar.image";
 import CommentInputForm from "@/modules/protected/comment-reaction/components/comment-input-form";
 import CommentReactionBar from "./comment.reaction.bar";
 import CommentAuthorCard from "./comment.author.card";
+import { commentAnchorId } from "../hooks/use.comment.anchor";
 
 type CommentUser = NonNullable<CommentNode["userInfo"]>;
 
@@ -64,6 +65,8 @@ interface Props {
     parentUser?: CommentNode["userInfo"];
     /** Tier gói của user hiện tại — để tô aura cho comment của chính mình. */
     myTier?: string;
+    /** Comment mà thông báo trỏ tới (hash URL) — nháy nền để người đọc thấy ngay. */
+    highlightedCommentId?: number | null;
     now: number;
     onReply: (content: string, parentId: number) => void;
     onReact: (commentId: number, type: ReactionType) => void;
@@ -79,6 +82,7 @@ export function CommentThread({
     myUserId,
     parentUser,
     myTier,
+    highlightedCommentId,
     now,
     onReply,
     onReact,
@@ -95,6 +99,7 @@ export function CommentThread({
 
     const user = comment.userInfo;
     const author = user?.fullName || t("commenter", { id: user?.id ?? "?" });
+    const isHighlighted = highlightedCommentId === comment.commentId;
     const isMine = myUserId != null && user?.id === myUserId;
     // Tier gói để tô aura avatar: comment của mình lấy theo gói hiện tại (biết
     // chắc); người khác lấy từ userInfo.subscriptionTier (BE bổ sung dần).
@@ -170,7 +175,10 @@ export function CommentThread({
 
     return (
         <div className="space-y-3">
-            <div className="flex items-start gap-3">
+            <div
+                id={commentAnchorId(comment.commentId)}
+                className="flex items-start gap-3"
+            >
                 {!editing &&
                     (user ? (
                         <AuthorCardTooltip user={user}>
@@ -194,7 +202,13 @@ export function CommentThread({
                             submitLabel={t("save")}
                         />
                     ) : (
-                        <div className="border-bdc-primary bg-bgc-page inline-block max-w-full rounded-2xl border px-4 py-2">
+                        <div
+                            className={`border-bdc-primary bg-bgc-page inline-block max-w-full rounded-2xl border px-4 py-2 ${
+                                isHighlighted
+                                    ? "animate-naho-comment-flash"
+                                    : ""
+                            }`}
+                        >
                             <div className="flex items-center gap-2">
                                 <span className="text-text-contrast text-sm font-bold">
                                     {author}
@@ -361,6 +375,7 @@ export function CommentThread({
                             myUserId={myUserId}
                             parentUser={user}
                             myTier={myTier}
+                            highlightedCommentId={highlightedCommentId}
                             now={now}
                             onReply={onReply}
                             onReact={onReact}

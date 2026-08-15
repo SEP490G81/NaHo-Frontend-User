@@ -59,6 +59,45 @@
     --animate-naho-bob: naho-bob 2.6s ease-in-out infinite;
     /* Chạy đúng 1 lượt để onAnimationEnd bắn được, dùng cho chuông thông báo. */
     --animate-naho-bell-ring: naho-bell-ring 0.9s ease-in-out 1;
+    /* Nháy nền comment được thông báo trỏ tới rồi tự tắt, không cần hẹn giờ JS.
+       Giữ màu tới 45% thời lượng để người dùng kịp nhìn, sau đó mới nhạt dần về
+       đúng nền/viền mặc định của bong bóng comment (tránh giật màu lúc kết thúc). */
+    --animate-naho-comment-flash: naho-comment-flash 3s ease-out 1;
+
+    /* Nháy 1 dòng trong bảng (báo cáo...). Khác naho-comment-flash ở chỗ nền
+       kết thúc bằng transparent thay vì màu cụ thể, vì dòng bảng không có nền
+       riêng — phủ màu trong suốt lên nền sẵn có nên hợp mọi ngữ cảnh. */
+    --animate-naho-row-flash: naho-row-flash 3s ease-out 1;
+
+    @keyframes naho-row-flash {
+        0%,
+        45% {
+            background-color: color-mix(
+                in srgb,
+                var(--color-bgc-highlight) 35%,
+                transparent
+            );
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    @keyframes naho-comment-flash {
+        0%,
+        45% {
+            background-color: color-mix(
+                in srgb,
+                var(--color-bgc-highlight) 45%,
+                var(--color-bgc-page)
+            );
+            border-color: var(--color-bgc-highlight);
+        }
+        100% {
+            background-color: var(--color-bgc-page);
+            border-color: var(--color-bdc-primary);
+        }
+    }
 
     @keyframes naho-bell-ring {
         0%,
