@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { History, Sparkles } from "lucide-react";
+import { Compass, History, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SetupQuotaBanner } from "./setup-quota-banner";
+import { useTourStore } from "@/store/tourStore";
+import { AI_ONE_ON_ONE_TOUR_ID } from "@/modules/protected/user-guide/constants/ai.one.on.one.tour.constant";
 
 interface SetupHeroProps {
     level?: string | null;
@@ -22,6 +24,8 @@ export function SetupHero({
     onOpenUpgradeModal,
 }: Readonly<SetupHeroProps>) {
     const t = useTranslations("dialogueSetup");
+    const tGuide = useTranslations("userGuide.tour");
+    const startTour = useTourStore((s) => s.startTour);
 
     return (
         <header className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
@@ -77,6 +81,14 @@ export function SetupHero({
                             <History className="h-4 w-4" />
                             {t("viewHistory")}
                         </Link>
+                        <button
+                            type="button"
+                            onClick={() => startTour(AI_ONE_ON_ONE_TOUR_ID)}
+                            className="border-bdc-primary text-text-muted hover:border-bgc-highlight/60 hover:text-bgc-highlight inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+                        >
+                            <Compass className="h-4 w-4" />
+                            {tGuide("restart")}
+                        </button>
                     </div>
                 </div>
 

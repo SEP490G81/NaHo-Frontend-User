@@ -20,12 +20,12 @@ export const AI_ONE_ON_ONE_TOUR_STEPS: TourStepDef[] = [
     },
     {
         id: "chat",
-        routeTest: /^\/live-chatroom$/,
+        routeTest: /^\/live-chatroom\/[^/]+$/,
         targetId: "tour-ai1on1-chat",
     },
     {
         id: "end",
-        routeTest: /^\/live-chatroom$/,
+        routeTest: /^\/live-chatroom\/[^/]+$/,
         targetId: "tour-ai1on1-end",
     },
     {

@@ -122,6 +122,7 @@ export function SummaryPanel({
             <Button
                 onClick={handleStart}
                 disabled={!canStart}
+                data-tour-id="tour-ai1on1-start"
                 variant="contained"
                 color="primary"
                 fullWidth

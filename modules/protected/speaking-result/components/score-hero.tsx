@@ -19,7 +19,10 @@ export function ScoreHero({
     const pct = Math.max(0, Math.min(100, overallScore));
 
     return (
-        <div className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
+        <div
+            data-tour-id="tour-ai1on1-result"
+            className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8"
+        >
             <span
                 aria-hidden
                 className="bg-bgc-highlight absolute inset-y-0 left-0 w-1.5"
