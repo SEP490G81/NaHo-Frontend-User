@@ -8,6 +8,7 @@ import { AllRoute } from "@/i18n/type";
 import NotificationItem from "@/layouts/protected-header/components/notification.item";
 import { useNotificationStream } from "@/layouts/protected-header/hooks/use.notification.stream";
 import { useNotifications } from "@/layouts/protected-header/hooks/use.notifications";
+import { toInternalPath } from "@/layouts/protected-header/utils/notification.util";
 import type { NotificationResponse } from "@/types/responses/notification.response";
 
 const NotificationButton = () => {
@@ -25,7 +26,10 @@ const NotificationButton = () => {
     const onItemClick = (n: NotificationResponse) => {
         if (!n.isRead) markRead.mutate(n.id);
         setAnchorEl(null);
-        if (n.targetUrl) router.push(n.targetUrl as AllRoute);
+        // targetUrl có thể kèm hash ("#comment-8", "#report-4") — trang đích tự
+        // đọc hash rồi cuộn tới đúng bản ghi.
+        const path = n.targetUrl ? toInternalPath(n.targetUrl) : null;
+        if (path) router.push(path as AllRoute);
     };
 
     return (
