@@ -27,7 +27,9 @@ import SubscriptionModal from "@/modules/protected/settings/billing/features/sub
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
+    const tGuide = useTranslations("userGuide.tour");
     const level = useAuthStore((s) => s.profile?.level);
+    const startTour = useTourStore((s) => s.startTour);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.

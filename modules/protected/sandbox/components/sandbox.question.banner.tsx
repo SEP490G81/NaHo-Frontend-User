@@ -8,7 +8,6 @@ interface Props {
     jp: string;
     markup?: string;
     vi: string;
-    viMarkup?: string;
     accent: string;
     showFurigana: boolean;
 }
@@ -18,7 +17,6 @@ export function SandboxQuestionBanner({
     jp,
     markup,
     vi,
-    viMarkup,
     accent,
     showFurigana,
 }: Props) {
@@ -49,13 +47,12 @@ export function SandboxQuestionBanner({
                     showFurigana={showFurigana}
                 />
             </h1>
-            {(viMarkup || vi) && (
-                <div className="text-text-muted mt-1 text-sm">
-                    <FuriganaHtml
-                        text={vi}
-                        markup={viMarkup}
-                        showFurigana={showFurigana}
-                    />
+            {vi?.trim() && (
+                <div className="mt-1.5">
+                    <p className="text-text-muted text-[11px] font-semibold tracking-wide uppercase">
+                        {t("translation")}
+                    </p>
+                    <p className="text-text-muted mt-0.5 text-sm">{vi}</p>
                 </div>
             )}
         </div>

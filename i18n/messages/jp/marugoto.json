@@ -156,6 +156,7 @@
         "questionDetail": {
             "back": "ロードマップに戻る",
             "badge": "問題の詳細",
+            "translation": "翻訳",
             "practiceNow": "この問題を今すぐ練習",
             "vocab": "語彙",
             "grammar": "主要な文法",

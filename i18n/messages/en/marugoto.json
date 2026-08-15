@@ -156,6 +156,7 @@
         "questionDetail": {
             "back": "Back to path",
             "badge": "Question detail",
+            "translation": "Translation",
             "practiceNow": "Practice this question now",
             "vocab": "Vocabulary",
             "grammar": "Key grammar",

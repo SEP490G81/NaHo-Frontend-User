@@ -15,15 +15,19 @@ import { useTranslations } from "next-intl";
 import { Report, ReportFile } from "../types/report";
 import ReportStatusChip from "./report-status-chip";
 import ReportTypeChip from "./report-type-chip";
+import { reportAnchorId } from "../hooks/use.report.anchor";
 
 interface ReportHistoryTableProps {
     reports: Report[];
     onViewFiles: (files: ReportFile[]) => void;
+    /** Báo cáo mà thông báo trỏ tới (hash URL) — nháy nền để thấy ngay. */
+    highlightedReportId?: number | null;
 }
 
 export function ReportHistoryTable({
     reports,
     onViewFiles,
+    highlightedReportId,
 }: ReportHistoryTableProps) {
     const t = useTranslations("common.report");
 
@@ -69,7 +73,12 @@ export function ReportHistoryTable({
                     {reports.map((report) => (
                         <TableRow
                             key={report.id}
-                            className="hover:bg-bgc-subtle/50 transition-colors"
+                            id={reportAnchorId(report.id)}
+                            className={`hover:bg-bgc-subtle/50 transition-colors ${
+                                report.id === highlightedReportId
+                                    ? "animate-naho-row-flash"
+                                    : ""
+                            }`}
                         >
                             <TableCell className="text-text-primary font-mono font-medium whitespace-nowrap">
                                 #{report.id}

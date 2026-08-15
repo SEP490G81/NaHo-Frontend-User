@@ -213,6 +213,9 @@ export interface SpeakingPronunciationItem {
     furigana: string;
     severity: string;
     note: string;
+    accuracyScore: number | null;
+    colorCategory: string | null;
+    hexColor: string | null;
 }
 
 export interface SpeakingExpressionItem {
@@ -231,6 +234,8 @@ export interface SpeakingVocabItem {
 export interface SpeakingReport {
     average: number;
     scores: SpeakingReportScores;
+    /** Bản STT đầy đủ, thật từ Azure — dùng làm nguồn hiển thị chính (thay vì userTranscript có thể bị AI tóm tắt thiếu). */
+    fullTranscript: string;
     userTranscript: SpeakingTranscriptItem[];
     aiSuggestion: SpeakingAiSuggestion | null;
     pronunciation: SpeakingPronunciationItem[];

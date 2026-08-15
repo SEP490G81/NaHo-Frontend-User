@@ -12,17 +12,19 @@ interface Props {
     japaneseMarkup?: string | null;
     description?: string | null;
     descriptionMarkup?: string | null;
+    vietnamese?: string | null;
     showFurigana: boolean;
     accent: string;
 }
 
-/** Đầu trang chi tiết câu hỏi: nút quay lại + đề bài (furigana). */
+/** Đầu trang chi tiết câu hỏi: nút quay lại + đề bài (furigana) + bản dịch tiếng Việt. */
 export function QuestionDetailHeader({
     backHref,
     japanese,
     japaneseMarkup,
     description,
     descriptionMarkup,
+    vietnamese,
     showFurigana,
     accent,
 }: Props) {
@@ -64,6 +66,16 @@ export function QuestionDetailHeader({
                             showFurigana={showFurigana}
                         />
                     </p>
+                )}
+                {vietnamese?.trim() && (
+                    <div className="border-bdc-primary mt-2 border-t pt-2">
+                        <p className="text-text-muted text-[11px] font-semibold tracking-wide uppercase">
+                            {t("translation")}
+                        </p>
+                        <p className="text-text-muted mt-0.5 text-sm">
+                            {vietnamese}
+                        </p>
+                    </div>
                 )}
             </div>
         </div>

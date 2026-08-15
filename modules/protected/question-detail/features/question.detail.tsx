@@ -93,6 +93,7 @@ export function QuestionDetail() {
                 japaneseMarkup={sq.japaneseNameMarkup}
                 description={sq.description}
                 descriptionMarkup={sq.descriptionMarkup}
+                vietnamese={sq.vietnameseName}
                 showFurigana={showFurigana}
                 accent={accent}
             />
@@ -138,6 +139,7 @@ export function QuestionDetail() {
 
                     <Link
                         href={practiceHref as AllRoute}
+                        data-tour-id="tour-marugoto-practice"
                         className="text-text-pure flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-opacity hover:opacity-90"
                         style={{ background: accent }}
                     >

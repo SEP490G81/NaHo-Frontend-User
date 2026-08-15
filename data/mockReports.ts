@@ -16,6 +16,9 @@ export interface PronSegment {
     furigana?: string;
     severity: "ok" | "warn" | "bad";
     note?: string;
+    accuracyScore?: number | null;
+    colorCategory?: string | null;
+    hexColor?: string | null;
 }
 
 export interface ExpressionHint {
@@ -39,6 +42,7 @@ export interface ReportDetail {
         naturalness: number;
     };
     average: number;
+    fullTranscript: string;
     userTranscript: TranscriptSegment[];
     aiSuggestion: { jp: string; furigana: string; vi: string };
     pronunciation: PronSegment[];
