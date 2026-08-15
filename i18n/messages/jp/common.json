@@ -78,6 +78,8 @@
                 "loginButton": "ログイン",
                 "logoutButton": "ログアウト",
                 "registerButton": "今すぐ登録",
+                "openMenu": "メニューを開く",
+                "closeMenu": "メニューを閉じる",
                 "accountMenu": {
                     "settings": "設定",
                     "orders": "注文履歴",

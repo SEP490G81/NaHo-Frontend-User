@@ -78,6 +78,8 @@
                 "loginButton": "Log in",
                 "logoutButton": "Log out",
                 "registerButton": "Register now",
+                "openMenu": "Open menu",
+                "closeMenu": "Close menu",
                 "accountMenu": {
                     "settings": "Settings",
                     "orders": "Order History",

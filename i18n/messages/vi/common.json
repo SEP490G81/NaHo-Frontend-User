@@ -83,6 +83,8 @@
                 "loginButton": "Đăng nhập",
                 "logoutButton": "Đăng xuất",
                 "registerButton": "Đăng ký trải nghiệm ngay",
+                "openMenu": "Mở menu",
+                "closeMenu": "Đóng menu",
                 "accountMenu": {
                     "settings": "Cài đặt",
                     "orders": "Lịch sử giao dịch",
