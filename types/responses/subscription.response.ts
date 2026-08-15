@@ -51,7 +51,8 @@ export interface SubscriptionPlanResponse {
     maxSpeakingQuestionRecordingSeconds: number;
     maxConcurrentAiSessionCount: number;
     maxTurnsPerAiSession: number;
-    dailyAiSessionEvaluationLimit: number;
+    dailyAiSessionEvaluationLimit?: number;
+    dailyAiSessionStartLimit?: number;
     maxAiTurnSpeakingSeconds: number;
     sampleAnswerEnabled: boolean;
     status: PlanStatus;
@@ -65,7 +66,9 @@ export interface UserDailyAiUsageResponse {
     /** Số lần chấm điểm phát âm (speaking question) hôm nay. */
     speakingEvaluationCount: number;
     /** Số phiên trò chuyện AI 1:1 đã chấm hôm nay. */
-    aiSessionEvaluationCount: number;
+    aiSessionEvaluationCount?: number;
+    /** Số phiên trò chuyện AI 1:1 đã bắt đầu hôm nay. */
+    aiSessionStartCount?: number;
 }
 
 export interface UserSubscriptionResponse {

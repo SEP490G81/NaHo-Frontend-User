@@ -58,6 +58,11 @@
         "resumeUnknownPersona": "AI companion",
         "viewHistory": "Session history",
         "dailyQuota": "{used}/{limit} AI sessions today",
+        "dailyQuotaLimit": "Your daily AI conversation session limit is {limit}.",
+        "dailyQuotaRemaining": "You have {remaining} session(s) remaining today.",
+        "dailyQuotaStatus": "{remaining}/{limit} left today",
+        "dailyQuotaExhausted": "You have reached your daily AI conversation limit.",
+        "dailyQuotaUpgradeHint": "Please upgrade to a new plan to get more daily AI conversation sessions.",
         "toastStartSuccess": "Settings saved. Start chatting!",
         "companionLevel": "Level: {level}"
     }
