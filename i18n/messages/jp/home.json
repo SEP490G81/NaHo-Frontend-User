@@ -127,6 +127,16 @@
                     "answer": "NaHo được thiết kế cho sinh viên ngành Kỹ sư cầu nối (BrSE) Đại học FPT và người học tiếng Nhật trong lĩnh vực công nghệ, đặc biệt là những ai cần luyện phản xạ Kaiwa cho phỏng vấn và môi trường công sở Nhật."
                 }
             }
+        },
+        "cta": {
+            "title": "会話の反射神経を鍛える準備はできましたか？",
+            "subtitle": "今すぐNaHoに参加して、AIと一緒に日本語会話を練習しましょう。無料で始められ、クレジットカードは不要です。",
+            "button": "無料で始める"
+        },
+        "footer": {
+            "tagline": "日本語学習者のためのAI会話練習プラットフォーム。",
+            "productTitle": "製品",
+            "legalTitle": "法的情報"
         }
     }
 }

@@ -127,6 +127,16 @@
                     "answer": "NaHo được thiết kế cho sinh viên ngành Kỹ sư cầu nối (BrSE) Đại học FPT và người học tiếng Nhật trong lĩnh vực công nghệ, đặc biệt là những ai cần luyện phản xạ Kaiwa cho phỏng vấn và môi trường công sở Nhật."
                 }
             }
+        },
+        "cta": {
+            "title": "Sẵn sàng chinh phục phản xạ Kaiwa?",
+            "subtitle": "Tham gia NaHo ngay hôm nay để luyện nói tiếng Nhật cùng AI — miễn phí khi bắt đầu, không cần thẻ thanh toán.",
+            "button": "Bắt đầu miễn phí ngay"
+        },
+        "footer": {
+            "tagline": "Nền tảng luyện phản xạ Kaiwa cùng AI dành cho người học tiếng Nhật.",
+            "productTitle": "Sản phẩm",
+            "legalTitle": "Pháp lý"
         }
     }
 }

@@ -3,6 +3,7 @@ import {
     FaqItem,
     FeatureItem,
     FeedbackBarItem,
+    FooterLinkItem,
     HeroPetalItem,
     StepItem,
     TestimonialItem,
@@ -186,6 +187,19 @@ export const HERO_PETAL_ITEMS: HeroPetalItem[] = [
         size: 12,
         delay: 2.5,
         duration: 13,
+    },
+];
+
+export const FOOTER_LEGAL_LINKS: FooterLinkItem[] = [
+    {
+        id: "l-1",
+        titleKey: "terms",
+        redirectLink: "/terms",
+    },
+    {
+        id: "l-2",
+        titleKey: "privacy",
+        redirectLink: "/privacy",
     },
 ];
 

@@ -1,5 +1,6 @@
 import { Messages } from "next-intl";
 import { SvgIconComponent } from "@mui/icons-material";
+import { MetadataTitleKey, StaticRoute } from "@/i18n/type";
 
 export type HomeFeatureKey = keyof Messages["home"]["features"]["items"];
 
@@ -52,6 +53,12 @@ export interface FeedbackBarItem {
     id: string;
     messageKey: HomeFeedbackBarKey;
     value: number;
+}
+
+export interface FooterLinkItem {
+    id: string;
+    titleKey: MetadataTitleKey;
+    redirectLink: StaticRoute;
 }
 
 export interface HeroPetalItem {
