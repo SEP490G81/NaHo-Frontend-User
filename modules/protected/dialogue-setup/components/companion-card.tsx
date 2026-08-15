@@ -15,7 +15,7 @@ export function CompanionCard({
     companion,
     selected,
     onSelect,
-}: CompanionCardProps) {
+}: Readonly<CompanionCardProps>) {
     const unavailable = companion.personaId == null;
 
     return (

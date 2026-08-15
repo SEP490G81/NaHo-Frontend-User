@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { CompanionList } from "./companion-list";
 import { SummaryPanel } from "./summary-panel";
-import { ResumeBanner } from "./resume-banner";
 import { AdvancedSettingsForm } from "../features/advanced-settings-form";
 import {
     COMPANIONS,
@@ -13,11 +12,7 @@ import {
     DEFAULT_MARUGOTO,
     resolveCompanions,
 } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
-import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use-resume-session";
-import {
-    getActiveSession,
-    getPersonas,
-} from "@/services/client/speaking.service";
+import { getPersonas } from "@/services/client/speaking.service";
 import {
     getMySubscription,
     getTodayAiUsage,
@@ -49,15 +44,6 @@ export function DialogueSetup() {
         [personas],
     );
 
-    // Phiên đang dở → cho phép khôi phục.
-    const { data: active } = useQuery({
-        queryKey: ["active-speaking-session"],
-        queryFn: () => getActiveSession(),
-        staleTime: 60 * 1000,
-    });
-    const [dismissed, setDismissed] = useState(false);
-    const { resume, resumingCode } = useResumeSession(companions);
-
     // Quota AI 1:1 hôm nay = lượt đã dùng / hạn mức của gói.
     const { data: subscription } = useQuery({
         queryKey: ["my-subscription"],
@@ -74,9 +60,7 @@ export function DialogueSetup() {
         subscription?.subscriptionPlan?.dailyAiSessionEvaluationLimit ??
         null;
     const aiUsed =
-        aiUsage?.aiSessionStartCount ??
-        aiUsage?.aiSessionEvaluationCount ??
-        0;
+        aiUsage?.aiSessionStartCount ?? aiUsage?.aiSessionEvaluationCount ?? 0;
     const aiRemaining = aiLimit != null ? Math.max(0, aiLimit - aiUsed) : null;
     const aiExhausted = aiRemaining != null && aiRemaining <= 0;
 
@@ -111,36 +95,8 @@ export function DialogueSetup() {
         setMarugotoOverride(null);
     };
 
-    const activeCompanion = active
-        ? companions.find((c) => c.personaId === active.personaId)
-        : undefined;
-
-    // Khôi phục phiên dở → seed câu cũ + câu chào lại → vào phòng chat.
-    const handleResume = () => {
-        if (!active) return;
-        resume(
-            {
-                sessionCode: active.sessionCode,
-                personaId: active.personaId,
-                formalityLevel: active.formalityLevel,
-                marugotoLevel: active.marugotoLevel,
-                messages: active.messages,
-            },
-            { voiceSpeed, showHints },
-        );
-    };
-
     return (
         <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
-            {active && !dismissed && (
-                <ResumeBanner
-                    active={active}
-                    companion={activeCompanion}
-                    resuming={resumingCode === active.sessionCode}
-                    onResume={handleResume}
-                    onDismiss={() => setDismissed(true)}
-                />
-            )}
 
             {/* Hero */}
             <header className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
@@ -170,7 +126,7 @@ export function DialogueSetup() {
                                     <Sparkles
                                         className={
                                             aiExhausted
-                                                ? "text-rose-500 h-4 w-4"
+                                                ? "h-4 w-4 text-rose-500"
                                                 : "text-bgc-highlight h-4 w-4"
                                         }
                                     />
@@ -202,9 +158,9 @@ export function DialogueSetup() {
                     {/* Quota Banner */}
                     {aiLimit != null && aiRemaining != null && (
                         <div
-                            className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border p-4 shadow-xs transition-all ${
+                            className={`flex flex-col justify-between gap-4 rounded-xl border p-4 shadow-xs transition-all sm:flex-row sm:items-center ${
                                 aiExhausted
-                                    ? "border-rose-500/50 bg-rose-500/10 text-text-contrast"
+                                    ? "text-text-contrast border-rose-500/50 bg-rose-500/10"
                                     : "border-bgc-highlight/50 bg-bgc-highlight/10 text-text-contrast"
                             }`}
                         >
@@ -219,11 +175,13 @@ export function DialogueSetup() {
                                     <Sparkles className="h-5 w-5" />
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-text-contrast text-sm sm:text-base font-bold">
-                                        {t("dailyQuotaLimit", { limit: aiLimit })}
+                                    <p className="text-text-contrast text-sm font-bold sm:text-base">
+                                        {t("dailyQuotaLimit", {
+                                            limit: aiLimit,
+                                        })}
                                     </p>
                                     <p
-                                        className={`text-xs sm:text-sm font-bold ${
+                                        className={`text-xs font-bold sm:text-sm ${
                                             aiExhausted
                                                 ? "text-rose-600 dark:text-rose-400"
                                                 : "text-bgc-highlight"
@@ -231,8 +189,14 @@ export function DialogueSetup() {
                                     >
                                         {aiExhausted ? (
                                             <>
-                                                <span>{t("dailyQuotaExhausted")} </span>
-                                                <span>{t("dailyQuotaUpgradeHint")}</span>
+                                                <span>
+                                                    {t(
+                                                        "dailyQuotaExhausted",
+                                                    )}{" "}
+                                                </span>
+                                                <span>
+                                                    {t("dailyQuotaUpgradeHint")}
+                                                </span>
                                             </>
                                         ) : (
                                             t("dailyQuotaRemaining", {
@@ -243,7 +207,7 @@ export function DialogueSetup() {
                                 </div>
                             </div>
 
-                            <div className="shrink-0 flex items-center gap-2 pl-2 sm:pl-0">
+                            <div className="flex shrink-0 items-center gap-2 pl-2 sm:pl-0">
                                 {aiExhausted && (
                                     <UpdatePlanButton
                                         onOpenModal={() => setIsModalOpen(true)}

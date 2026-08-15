@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { proxyPostJson } from "@/services/server/backend.proxy";
 
 /**
- * Lớp 1: /api/speaking/session/[id]/message → BE /speaking/session/{sessionId}/message
+ * Lớp 1: /api/speaking/session/[id]/message → BE /speaking/session/{sessionCode}/message
  * Gửi tin nhắn text → reply của AI (không kèm điểm phát âm/audio).
  */
 export async function POST(

@@ -1,5 +1,6 @@
 {
     "liveChatroom": {
+        "back": "Back",
         "settingsTitle": "Conversation Settings",
         "online": "Online",
         "ending": "Ending...",

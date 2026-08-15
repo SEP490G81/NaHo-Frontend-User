@@ -35,7 +35,7 @@ export interface ChatResponse {
 }
 
 export interface ScoringResponse {
-    sessionId: string;
+    sessionCode: string;
     overallScore: number;
     jlptEstimate: string;
     scores: ScoringResponseScores;
@@ -132,11 +132,11 @@ export interface SpeakingHistoryDetailResponseItVocabItem {
 }
 
 export interface StartSessionResponse {
-    sessionId: string;
+    sessionCode: string;
 }
 
 export interface StartTopicResponse {
-    sessionId: string;
+    sessionCode: string;
     topic: string;
     aiGreeting: string;
 }

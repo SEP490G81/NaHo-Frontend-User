@@ -27,9 +27,9 @@ export const defaultChatConfig: ChatConfig = {
     showHints: true,
 };
 
-/** Phiên hội thoại đang chạy (trả về từ POST /speaking/session/{personaId}). */
+/** Phiên hội thoại đang chạy (trả về từ POST /speaking/session/persona/{personaId}). */
 export interface ChatSession {
-    sessionId: string;
+    sessionCode: string;
     personaId: number;
     companionId: string;
     aiGreeting: string;
@@ -70,7 +70,7 @@ export const useChatStore = create<ChatState>()(
                 config: state.config,
                 session: state.session
                     ? {
-                          sessionId: state.session.sessionId,
+                          sessionCode: state.session.sessionCode,
                           personaId: state.session.personaId,
                           companionId: state.session.companionId,
                           aiGreeting: state.session.aiGreeting,

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Avatar, Button } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
@@ -34,9 +35,10 @@ export function SummaryPanel({
     voiceSpeed,
     showHints,
     isQuotaExhausted = false,
-}: SummaryPanelProps) {
+}: Readonly<SummaryPanelProps>) {
     const t = useTranslations("dialogueSetup");
     const router = useRouter();
+    const queryClient = useQueryClient();
     const setConfig = useChatStore((s) => s.setConfig);
     const setSession = useChatStore((s) => s.setSession);
     const [starting, setStarting] = useState(false);
@@ -70,13 +72,16 @@ export function SummaryPanel({
                 showHints,
             });
             setSession({
-                sessionId: res.sessionId,
+                sessionCode: res.sessionCode,
                 personaId,
                 companionId: companion.id,
                 aiGreeting: res.aiGreeting,
                 greetingTranslation: res.aiGreetingTranslation,
                 greetingGrammar: res.grammarExplanation,
                 greetingAudioBase64: res.audioBase64,
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ["active-speaking-session"],
             });
             router.push("/live-chatroom");
         } catch (err) {

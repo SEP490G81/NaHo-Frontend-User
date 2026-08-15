@@ -173,7 +173,7 @@ export async function startConversation(
 ): Promise<StartConversationResponse> {
     const hasOverride = !!(input.formalityLevel || input.marugotoLevel);
     const response = await apiRequest(
-        `/api/speaking/session/${personaId}`,
+        `/api/speaking/session/persona/${personaId}`,
         hasOverride
             ? {
                   method: "POST",
@@ -199,7 +199,7 @@ function sessionFileName(blob: Blob): string {
 
 /** Gửi audio trong phiên → STT + điểm phát âm + reply của AI. */
 export async function sendSessionAudio(
-    sessionId: string,
+    sessionCode: string,
     blob: Blob,
     referenceText?: string,
 ): Promise<AudioChatResponse> {
@@ -210,7 +210,7 @@ export async function sendSessionAudio(
         ? `?reference-text=${encodeURIComponent(referenceText)}`
         : "";
     const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/audio${query}`,
+        `/api/speaking/session/${sessionCode}/audio${query}`,
         { method: "POST", body: form },
     );
     return unwrap<AudioChatResponse>(response);
@@ -218,11 +218,11 @@ export async function sendSessionAudio(
 
 /** Gửi tin nhắn text trong phiên → reply của AI. */
 export async function sendTextMessage(
-    sessionId: string,
+    sessionCode: string,
     transcript: string,
 ): Promise<ChatReplyResponse> {
     const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/message`,
+        `/api/speaking/session/${sessionCode}/message`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -240,11 +240,11 @@ export interface EndSessionInput {
 
 /** Kết thúc phiên → báo cáo chấm điểm cả buổi. */
 export async function endSession(
-    sessionId: string,
+    sessionCode: string,
     input: EndSessionInput = {},
 ): Promise<SessionScoringResponse> {
     const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/end`,
+        `/api/speaking/session/${sessionCode}/end`,
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -322,3 +322,23 @@ export async function getSpeakingSessionDetail(
     );
     return unwrap<SpeakingSessionDetail>(response);
 }
+
+/** Xoá một phiên hội thoại AI 1:1 theo sessionCode (HTTP DELETE 204). */
+export async function deleteSpeakingSession(
+    sessionCode: string,
+): Promise<void> {
+    const response = await apiRequest(`/api/speaking/session/${sessionCode}`, {
+        method: "DELETE",
+    });
+    if (!response.ok && response.status !== 204) {
+        let detail = "Không thể xoá phiên hội thoại.";
+        try {
+            const json = await response.json();
+            if (json?.detail) detail = json.detail;
+        } catch {
+            // ignore non-json errors
+        }
+        throw new Error(detail);
+    }
+}
+

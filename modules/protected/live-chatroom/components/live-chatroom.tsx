@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Drawer } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { ChatSidebar } from "./chat-sidebar";
@@ -36,6 +37,7 @@ const nextId = (p: string) => `${p}-${Date.now()}-${seq++}`;
 
 export function LiveChatroom() {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const t = useTranslations("liveChatroom");
     const config = useChatStore((s) => s.config);
     const session = useChatStore((s) => s.session);
@@ -178,7 +180,7 @@ export function LiveChatroom() {
         ]);
         setIsTyping(true);
         try {
-            const res = await sendTextMessage(session.sessionId, text);
+            const res = await sendTextMessage(session.sessionCode, text);
             attachCorrection(
                 userId,
                 res.correctedUserText,
@@ -204,7 +206,7 @@ export function LiveChatroom() {
         setAudioProcessing(true);
         try {
             const wavBlob = await blobToWav(blob);
-            const res = await sendSessionAudio(session.sessionId, wavBlob);
+            const res = await sendSessionAudio(session.sessionCode, wavBlob);
             setAudioProcessing(false);
             setMessages((m) => [
                 ...m,
@@ -260,8 +262,12 @@ export function LiveChatroom() {
         if (!session || ending) return;
         setEnding(true);
         try {
-            const report = await endSession(session.sessionId, {
+            const report = await endSession(session.sessionCode, {
                 topic: companion.name,
+            });
+            queryClient.setQueryData(["active-speaking-session"], null);
+            await queryClient.invalidateQueries({
+                queryKey: ["active-speaking-session"],
             });
             setReport(report);
             router.push("/speaking-result");

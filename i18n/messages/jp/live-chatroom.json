@@ -1,6 +1,7 @@
 {
     "liveChatroom": {
-        "settingsTitle": "会話設定",
+        "back": "戻る",
+        "settingsTitle": "会話の設定",
         "online": "オンライン",
         "ending": "終了中...",
         "sendError": "メッセージを送信できませんでした。もう一度お試しください。",

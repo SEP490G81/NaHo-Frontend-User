@@ -81,7 +81,16 @@
             "rewardsHint": "Mở rương phần thưởng",
             "loadingQuestion": "Đang tải câu hỏi...",
             "hoverOpen": "Bấm để xem chi tiết",
-            "hoverRelearn": "Bấm để luyện lại"
+            "hoverRelearn": "Bấm để luyện lại",
+            "activeSessionSection": "Đang diễn ra",
+            "resumeSessionTooltip": "Tiếp tục phiên: \"{text}\"",
+            "deleteSessionTitle": "Xóa phiên hội thoại",
+            "deleteSessionConfirm": "Bạn có chắc chắn muốn xóa phiên hội thoại đang dở này không?",
+            "deleteSessionSuccess": "Đã xóa phiên hội thoại thành công.",
+            "deleteSessionError": "Không thể xóa phiên hội thoại. Vui lòng thử lại.",
+            "deleteSessionButton": "Xóa",
+            "cancelButton": "Hủy",
+            "noUtterance": "Hội thoại đang dở"
         },
         "node": {
             "vocabTitle": "Từ vựng",

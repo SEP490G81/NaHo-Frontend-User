@@ -2,8 +2,8 @@ import { NextRequest } from "next/server";
 import { proxyPostForm } from "@/services/server/backend.proxy";
 
 /**
- * Lớp 1: /api/speaking/session/[id]/audio → BE /speaking/session/{sessionCode}/audio
- * Gửi bản ghi âm (multipart) → STT + điểm phát âm + reply của AI.
+ * Lớp 1: POST /api/speaking/session/audio/[id] → BE /speaking/session/audio/{sessionCode}
+ * Gửi file ghi âm (multipart/form-data) trong phiên hội thoại AI 1:1.
  */
 export async function POST(
     req: NextRequest,
@@ -13,7 +13,7 @@ export async function POST(
     const search = req.nextUrl.searchParams;
     const query = search.toString();
     return proxyPostForm(
-        `/speaking/session/${id}/audio${query ? `?${query}` : ""}`,
+        `/speaking/session/audio/${id}${query ? `?${query}` : ""}`,
         req,
     );
 }

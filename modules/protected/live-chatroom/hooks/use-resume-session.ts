@@ -73,7 +73,7 @@ export function useResumeSession(companions: Companion[]) {
                 showHints: opts.showHints ?? true,
             });
             setSession({
-                sessionId: res.sessionId || target.sessionCode,
+                sessionCode: res.sessionCode || target.sessionCode,
                 personaId: target.personaId ?? comp.personaId ?? 0,
                 companionId: comp.id,
                 aiGreeting: res.aiGreeting,

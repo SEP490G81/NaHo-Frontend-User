@@ -13,6 +13,7 @@ import {
     Switch,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
+import BackButton from "@/components/ui/back.button";
 import type { Companion } from "../types/live-chatroom.type";
 import { getInitials } from "../utils/get-initials";
 import { styleKeyOf } from "../constants/live-chatroom.constant";
@@ -41,7 +42,7 @@ export function ChatSidebar({
     onEndSession,
     ending,
     onCloseMobile,
-}: ChatSidebarProps) {
+}: Readonly<ChatSidebarProps>) {
     const t = useTranslations("liveChatroom");
     const ts = useTranslations("dialogueSetup");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,7 +54,14 @@ export function ChatSidebar({
     };
 
     return (
-        <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-5 border-r p-5">
+        <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-4 border-r p-5">
+            {/* Nút quay lại */}
+            <BackButton
+                href="/dialogue-setup"
+                label={t("back")}
+                className="!py-1.5 !px-3 !text-xs self-start"
+            />
+
             {/* Companion */}
             <div className="flex flex-col items-center gap-2 text-center">
                 <Avatar
