@@ -10,6 +10,7 @@ import { Report, ReportFile } from "../types/report";
 import { getUserReports } from "@/services/client/report.service";
 import ReportHistoryTable from "../components/report-history-table";
 import ReportFilesModal from "../components/report-files-modal";
+import { useReportAnchor } from "../hooks/use.report.anchor";
 
 interface ReportHistoryProps {
     refreshKey?: number;
@@ -65,6 +66,10 @@ export function ReportHistory({ refreshKey }: ReportHistoryProps) {
             : statusFilter === "RESOLVED"
               ? reports.filter((r) => r.isResolved)
               : reports.filter((r) => !r.isResolved);
+
+    // Bấm thông báo "báo cáo đã được xử lý" → URL kèm "#report-<id>": chờ bảng
+    // render xong rồi cuộn tới đúng dòng và nháy nền.
+    const highlightedReportId = useReportAnchor(filteredReports.length > 0);
 
     if (loading) {
         return (
@@ -132,6 +137,7 @@ export function ReportHistory({ refreshKey }: ReportHistoryProps) {
                 <ReportHistoryTable
                     reports={filteredReports}
                     onViewFiles={(files) => setSelectedFilesModal(files)}
+                    highlightedReportId={highlightedReportId}
                 />
             )}
 

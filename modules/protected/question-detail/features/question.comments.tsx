@@ -12,6 +12,7 @@ import type { CommentNode } from "@/types/responses/social.response";
 import CommentInputForm from "@/modules/protected/comment-reaction/components/comment-input-form";
 import { useQuestionComments } from "../hooks/use.question.comments";
 import { useCommentRealtime } from "../hooks/use.comment.realtime";
+import { useCommentAnchor } from "../hooks/use.comment.anchor";
 import CommentThread from "../components/comment.thread";
 
 /** Gom mọi commentId (kể cả reply lồng nhau) để subscribe realtime reaction. */
@@ -71,6 +72,9 @@ export function QuestionComments({ speakingQuestionId }: Props) {
     // Realtime: khi có ai tạo/sửa/xoá/thả cảm xúc → refetch (tự tắt nếu chưa
     // cấu hình NEXT_PUBLIC_WS_URL).
     useCommentRealtime(allIds, refetch);
+    // Bấm thông báo → URL kèm "#comment-<id>": chờ cây comment render xong rồi
+    // cuộn tới đúng comment đó và nháy nền.
+    const highlightedCommentId = useCommentAnchor(allIds.length > 0);
 
     const submitRoot = (e: React.FormEvent) => {
         e.preventDefault();
@@ -117,6 +121,7 @@ export function QuestionComments({ speakingQuestionId }: Props) {
                             currentUserAvatar={myAvatar}
                             myUserId={myUserId}
                             myTier={myTier}
+                            highlightedCommentId={highlightedCommentId}
                             now={now}
                             onReply={(content, parentId) =>
                                 addComment(content, parentId)
