@@ -203,7 +203,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     {t("card.aiConversationLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.dailyAiSessionEvaluationLimit ??
+                                            plan.dailyAiSessionStartLimit ??
+                                                plan.dailyAiSessionEvaluationLimit ??
                                                 0,
                                         )}
                                     </strong>
@@ -229,19 +230,6 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                             20}{" "}
                                         {t("card.secondsPerTurnSuffix")})
                                     </span>
-                                </span>
-                            </li>
-                            <li className="text-text-primary flex items-start gap-2">
-                                <CheckCircleIcon
-                                    style={{ fontSize: 16 }}
-                                    className={`${featureIconColor} mt-0.5 shrink-0`}
-                                />
-                                <span>
-                                    {t("card.concurrentSessionsLabel")}{" "}
-                                    <strong className="font-extrabold">
-                                        {plan.maxConcurrentAiSessionCount ?? 1}{" "}
-                                        {t("card.sessionsSuffix")}
-                                    </strong>
                                 </span>
                             </li>
                         </ul>

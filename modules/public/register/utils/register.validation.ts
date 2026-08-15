@@ -4,9 +4,9 @@ const USERNAME_MIN_LENGTH = 4;
 const USERNAME_MAX_LENGTH = 36;
 const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 16;
+const FULL_NAME_MIN_LENGTH = 2;
+export const FULL_NAME_MAX_LENGTH = 100;
 
-// Bộ ký tự đặc biệt phải khớp với regex của backend (value object Password),
-// nếu nới rộng hơn thì backend sẽ trả USER_006 dù frontend báo hợp lệ.
 const SPECIAL_REGEX = /[@#$%^&+=!_~-]/;
 
 export interface PasswordRule {
@@ -38,6 +38,7 @@ export const PASSWORD_RULES: PasswordRule[] = [
 ];
 
 export interface RegisterValues {
+    fullName: string;
     username: string;
     email: string;
     password: string;
@@ -45,6 +46,14 @@ export interface RegisterValues {
 }
 
 export type RegisterFieldErrors = Partial<Record<keyof RegisterValues, string>>;
+
+export function validateFullName(value: string): string | undefined {
+    const v = value.trim();
+    if (v.length === 0) return "register.form.pleaseEnterFullName";
+    if (v.length < FULL_NAME_MIN_LENGTH || v.length > FULL_NAME_MAX_LENGTH)
+        return "register.form.fullNameInvalidLength";
+    return undefined;
+}
 
 export function validateUsername(value: string): string | undefined {
     const v = value.trim();
@@ -84,6 +93,8 @@ export function validateField(
     values: RegisterValues,
 ): string | undefined {
     switch (name) {
+        case "fullName":
+            return validateFullName(values.fullName);
         case "username":
             return validateUsername(values.username);
         case "email":

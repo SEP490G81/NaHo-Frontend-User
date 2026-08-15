@@ -43,7 +43,8 @@ export function Sandbox() {
     const maxSeconds = Math.max(
         1,
         Math.round(
-            planQ.data?.plan?.maxAnswerTimeSeconds ?? DEFAULT_MAX_SECONDS,
+            planQ.data?.plan?.maxSpeakingQuestionRecordingSeconds ??
+                DEFAULT_MAX_SECONDS,
         ),
     );
     const sampleAnswerEnabled = planQ.data?.plan?.sampleAnswerEnabled ?? false;
@@ -104,10 +105,7 @@ function SandboxContent({
     const dailyLimit = subQ.data?.plan?.dailySpeakingQuestionEvaluationLimit;
     const remainingToday =
         dailyLimit != null
-            ? Math.max(
-                  0,
-                  dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0),
-              )
+            ? Math.max(0, dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0))
             : null;
 
     const question = useMemo(() => {
@@ -205,9 +203,7 @@ function SandboxContent({
             setAnalyzing(false);
             // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
             // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
-            toast.error(
-                err instanceof Error ? err.message : t("analyzeFailed"),
-            );
+            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
         },
     });
 
@@ -261,7 +257,7 @@ function SandboxContent({
                             <Mic className="h-3.5 w-3.5" />
                             {t("dailyQuotaLeft", {
                                 remaining: remainingToday,
-                                limit: dailyLimit,
+                                limit: dailyLimit ?? 0,
                             })}
                         </span>
                     )}
