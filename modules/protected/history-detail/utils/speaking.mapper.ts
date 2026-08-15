@@ -21,6 +21,7 @@ export function mapSpeakingReport(r: SpeakingReport): ReportDetail {
             grammar: r.scores?.grammar ?? 0,
             naturalness: r.scores?.naturalness ?? 0,
         },
+        fullTranscript: r.fullTranscript ?? "",
         userTranscript: (r.userTranscript ?? []).map((u) => ({
             text: u.text,
             error: u.error ?? undefined,
@@ -31,6 +32,9 @@ export function mapSpeakingReport(r: SpeakingReport): ReportDetail {
             furigana: p.furigana,
             severity: toSeverity(p.severity),
             note: p.note,
+            accuracyScore: p.accuracyScore ?? null,
+            colorCategory: p.colorCategory ?? null,
+            hexColor: p.hexColor ?? null,
         })),
         pronunciationNote: r.pronunciationNote ?? "",
         expressions: r.expressions ?? [],

@@ -3,6 +3,7 @@ import React from "react";
 import { AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 
 export interface PronunciationWord {
     word: string;
@@ -11,7 +12,7 @@ export interface PronunciationWord {
 }
 
 /** Dạng thô của một mục phát âm — chấp nhận cả field cũ (word/score/feedback)
- *  lẫn field đã map (text/severity/note). */
+ *  lẫn field đã map (text/severity/note/accuracyScore/hexColor). */
 interface RawPronItem {
     word?: string;
     text?: string;
@@ -19,16 +20,22 @@ interface RawPronItem {
     severity?: string;
     feedback?: string;
     note?: string;
+    furigana?: string | null;
+    accuracyScore?: number | null;
+    colorCategory?: string | null;
+    hexColor?: string | null;
 }
 
 interface PronunciationViewProps {
     pronunciation: RawPronItem[];
     note: string;
+    showFurigana: boolean;
 }
 
 export function PronunciationView({
     pronunciation,
     note,
+    showFurigana,
 }: PronunciationViewProps) {
     const t = useTranslations("historyDetail");
 
@@ -36,7 +43,8 @@ export function PronunciationView({
         if (!pronunciation || !Array.isArray(pronunciation)) return [];
         return pronunciation.map((item: RawPronItem) => {
             const word = item.word ?? item.text ?? "";
-            let score = item.score;
+            const furiganaMarkup = item.furigana ?? null;
+            let score = item.accuracyScore ?? item.score;
             const feedback = item.feedback ?? item.note ?? "";
 
             if (score === undefined && item.severity) {
@@ -47,7 +55,9 @@ export function PronunciationView({
 
             return {
                 word,
+                furiganaMarkup,
                 score: score ?? 100,
+                hexColor: item.hexColor ?? null,
                 feedback,
             };
         });
@@ -81,19 +91,32 @@ export function PronunciationView({
                                     key={i}
                                     className="border-bdc-primary hover:bg-hbgc-app/50 border-b last:border-0"
                                 >
-                                    <td className="font-noto-jp text-text-contrast px-4 py-3 align-middle text-base font-semibold">
-                                        {item.word}
+                                    <td className="text-text-contrast px-4 py-3 align-middle text-base font-semibold">
+                                        <FuriganaHtml
+                                            text={item.word}
+                                            markup={item.furiganaMarkup}
+                                            showFurigana={showFurigana}
+                                        />
                                     </td>
                                     <td className="px-4 py-3 align-middle">
                                         <span
                                             className={cn(
                                                 "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                                                item.score >= 80
-                                                    ? "bg-green-500/10 text-green-500"
-                                                    : item.score >= 60
-                                                      ? "bg-orange-500/10 text-orange-500"
-                                                      : "bg-red-500/10 text-red-500",
+                                                !item.hexColor &&
+                                                    (item.score >= 80
+                                                        ? "bg-green-500/10 text-green-500"
+                                                        : item.score >= 60
+                                                          ? "bg-orange-500/10 text-orange-500"
+                                                          : "bg-red-500/10 text-red-500"),
                                             )}
+                                            style={
+                                                item.hexColor
+                                                    ? {
+                                                          color: item.hexColor,
+                                                          background: `color-mix(in srgb, ${item.hexColor} 12%, transparent)`,
+                                                      }
+                                                    : undefined
+                                            }
                                         >
                                             {item.score}%
                                         </span>

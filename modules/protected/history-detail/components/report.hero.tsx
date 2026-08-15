@@ -4,11 +4,15 @@ import { CalendarClock, ChevronRight, Clock, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
 import ScoreGauge from "./score.gauge";
 
 interface Props {
     average: number;
     questionTitle: string | null;
+    questionTitleMarkup?: string | null;
+    questionTranslation: string | null;
+    showFurigana: boolean;
     topicName: string | null;
     topicLabel: string | null;
     topicHref: string | null;
@@ -27,6 +31,9 @@ function fmt(iso: string): string {
 export function ReportHero({
     average,
     questionTitle,
+    questionTitleMarkup,
+    questionTranslation,
+    showFurigana,
     topicName,
     topicLabel,
     topicHref,
@@ -79,7 +86,16 @@ export function ReportHero({
                         </p>
                         {questionTitle && (
                             <p className="text-text-contrast text-lg leading-snug font-bold">
-                                {questionTitle}
+                                <FuriganaHtml
+                                    text={questionTitle}
+                                    markup={questionTitleMarkup}
+                                    showFurigana={showFurigana}
+                                />
+                            </p>
+                        )}
+                        {questionTranslation?.trim() && (
+                            <p className="text-text-muted text-sm">
+                                {questionTranslation}
                             </p>
                         )}
                         {topicText &&

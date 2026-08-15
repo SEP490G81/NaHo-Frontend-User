@@ -114,8 +114,7 @@ function SandboxContent({
                 id: questionId,
                 jp: sq.japaneseName,
                 markup: sq.japaneseNameMarkup,
-                vi: sq.description ?? "",
-                viMarkup: sq.descriptionMarkup ?? undefined,
+                vi: sq.vietnameseName ?? "",
             };
         }
         // Chưa nạp được node → placeholder tối thiểu để vẫn ghi âm/gửi chấm được.
@@ -124,7 +123,6 @@ function SandboxContent({
             jp: "録音して発音を分析しましょう",
             markup: undefined,
             vi: "",
-            viMarkup: undefined,
         };
     }, [sq, questionId]);
 
@@ -267,7 +265,6 @@ function SandboxContent({
                     jp={question.jp}
                     markup={question.markup}
                     vi={question.vi}
-                    viMarkup={question.viMarkup}
                     accent={accent}
                     showFurigana={showFurigana}
                 />

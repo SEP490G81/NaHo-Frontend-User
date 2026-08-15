@@ -6,6 +6,7 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import type { TranscriptSegment } from "@/data/mockReports";
 
 interface TranscriptViewProps {
+    fullTranscript: string;
     transcript: TranscriptSegment[];
     aiSuggestion: {
         jp: string;
@@ -13,15 +14,18 @@ interface TranscriptViewProps {
         vi: string;
         explanation?: string;
     };
-    showFurigana: boolean;
 }
 
 export function TranscriptView({
+    fullTranscript,
     transcript,
     aiSuggestion,
-    showFurigana,
 }: TranscriptViewProps) {
     const t = useTranslations("historyDetail");
+    // fullTranscript là bản STT thật, luôn đầy đủ — ưu tiên hiển thị thay vì
+    // userTranscript (JSON do AI tự tóm tắt, có thể thiếu). Chỉ fallback về
+    // segment cũ (có gạch chân lỗi) khi BE chưa trả fullTranscript.
+    const hasFullTranscript = fullTranscript?.trim().length > 0;
 
     return (
         <div className="grid gap-5 lg:grid-cols-2">
@@ -38,54 +42,60 @@ export function TranscriptView({
                 </h3>
                 <div className="bg-bgc-page border-bdc-primary rounded-md border p-4">
                     <p className="font-noto-jp text-text-contrast text-lg leading-relaxed">
-                        {transcript.map((seg, i) =>
-                            seg.error ? (
-                                <Tooltip
-                                    key={i}
-                                    title={
-                                        <Box className="space-y-1.5 p-1 text-xs">
-                                            <Typography
-                                                variant="caption"
-                                                className="block font-bold text-red-400"
-                                            >
-                                                {t("aiErrorLabel")}{" "}
-                                                {seg.error.type}
-                                            </Typography>
-                                            <Typography
-                                                variant="caption"
-                                                className="block leading-normal text-white/90"
-                                            >
-                                                {seg.error.explanation}
-                                            </Typography>
-                                            <Typography
-                                                variant="caption"
-                                                className="block leading-normal text-white/80"
-                                            >
-                                                <span className="font-bold text-emerald-400">
-                                                    {t("aiSuggestionLabel")}
-                                                </span>{" "}
-                                                {seg.error.suggestion}
-                                            </Typography>
-                                        </Box>
-                                    }
-                                    arrow
-                                    placement="top"
-                                >
-                                    <span
-                                        className="inline-block origin-bottom cursor-help rounded bg-red-500/15 px-1 font-semibold text-red-500 underline decoration-red-500/70 decoration-wavy underline-offset-4 transition-all duration-150 hover:scale-110 hover:bg-red-500/30 hover:font-bold hover:text-red-600 hover:decoration-red-600 focus-visible:scale-110 focus-visible:bg-red-500/30 focus-visible:text-red-600 focus-visible:outline-none"
-                                        tabIndex={0}
-                                    >
-                                        {seg.text}
-                                    </span>
-                                </Tooltip>
-                            ) : (
-                                <span key={i}>{seg.text}</span>
-                            ),
-                        )}
+                        {hasFullTranscript
+                            ? fullTranscript
+                            : transcript.map((seg, i) =>
+                                  seg.error ? (
+                                      <Tooltip
+                                          key={i}
+                                          title={
+                                              <Box className="space-y-1.5 p-1 text-xs">
+                                                  <Typography
+                                                      variant="caption"
+                                                      className="block font-bold text-red-400"
+                                                  >
+                                                      {t("aiErrorLabel")}{" "}
+                                                      {seg.error.type}
+                                                  </Typography>
+                                                  <Typography
+                                                      variant="caption"
+                                                      className="block leading-normal text-white/90"
+                                                  >
+                                                      {seg.error.explanation}
+                                                  </Typography>
+                                                  <Typography
+                                                      variant="caption"
+                                                      className="block leading-normal text-white/80"
+                                                  >
+                                                      <span className="font-bold text-emerald-400">
+                                                          {t(
+                                                              "aiSuggestionLabel",
+                                                          )}
+                                                      </span>{" "}
+                                                      {seg.error.suggestion}
+                                                  </Typography>
+                                              </Box>
+                                          }
+                                          arrow
+                                          placement="top"
+                                      >
+                                          <span
+                                              className="inline-block origin-bottom cursor-help rounded bg-red-500/15 px-1 font-semibold text-red-500 underline decoration-red-500/70 decoration-wavy underline-offset-4 transition-all duration-150 hover:scale-110 hover:bg-red-500/30 hover:font-bold hover:text-red-600 hover:decoration-red-600 focus-visible:scale-110 focus-visible:bg-red-500/30 focus-visible:text-red-600 focus-visible:outline-none"
+                                              tabIndex={0}
+                                          >
+                                              {seg.text}
+                                          </span>
+                                      </Tooltip>
+                                  ) : (
+                                      <span key={i}>{seg.text}</span>
+                                  ),
+                              )}
                     </p>
-                    <p className="text-text-muted mt-4 text-xs">
-                        {t("aiHoverTip")}
-                    </p>
+                    {!hasFullTranscript && (
+                        <p className="text-text-muted mt-4 text-xs">
+                            {t("aiHoverTip")}
+                        </p>
+                    )}
                 </div>
             </div>
 

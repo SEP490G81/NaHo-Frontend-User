@@ -14,9 +14,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
-import { getBookDetail, getTopicDetail } from "@/services/client/book.service";
+import {
+    getBookDetail,
+    getLearningPathNodeDetail,
+    getTopicDetail,
+} from "@/services/client/book.service";
 import { mapBook } from "@/data/marugoto/mapper";
 import { PASS_SCORE } from "@/store/marugotoStore";
+import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
 import { mapSpeakingReport } from "../utils/speaking.mapper";
 import ReportHero from "../components/report.hero";
 import HistoryDetailOverview from "../components/history.detail.overview";
@@ -26,7 +31,7 @@ import HistoryDetailTabs from "../components/history.detail.tabs";
 export function SpeakingResultView({ historyId }: { historyId: string }) {
     const t = useTranslations("historyDetail");
     const searchParams = useSearchParams();
-    const showFurigana = true;
+    const { showFurigana } = useFurigana();
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["speaking-history", historyId],
@@ -54,6 +59,18 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         queryFn: () => getTopicDetail(String(topicId)),
         enabled: !!topicId,
     });
+    // Node lộ trình của câu hỏi — chỉ để lấy bản dịch tiếng Việt của đề bài
+    // (SpeakingHistoryDetailResponse không có sẵn field này).
+    const nodeId = data?.learningPathNodeId;
+    const nodeQ = useQuery({
+        queryKey: ["learning-node", String(nodeId)],
+        queryFn: () => getLearningPathNodeDetail(nodeId!),
+        enabled: !!nodeId,
+    });
+    const questionTranslation =
+        nodeQ.data?.speakingQuestion?.vietnameseName ?? null;
+    const questionTitleMarkup =
+        nodeQ.data?.speakingQuestion?.japaneseNameMarkup ?? null;
 
     const accent = bookQ.data
         ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
@@ -140,6 +157,9 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                 <ReportHero
                     average={report.average}
                     questionTitle={data.speakingQuestionTitle}
+                    questionTitleMarkup={questionTitleMarkup}
+                    questionTranslation={questionTranslation}
+                    showFurigana={showFurigana}
                     topicName={data.topicName}
                     topicLabel={topicLabel}
                     topicHref={topicHref}

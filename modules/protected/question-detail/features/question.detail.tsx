@@ -93,6 +93,7 @@ export function QuestionDetail() {
                 japaneseMarkup={sq.japaneseNameMarkup}
                 description={sq.description}
                 descriptionMarkup={sq.descriptionMarkup}
+                vietnamese={sq.vietnameseName}
                 showFurigana={showFurigana}
                 accent={accent}
             />
