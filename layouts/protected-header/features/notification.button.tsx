@@ -2,63 +2,31 @@
 import React, { useState } from "react";
 import { Badge, Button, CircularProgress, Popover } from "@mui/material";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import {
-    useMutation,
-    useQuery,
-    useQueryClient,
-} from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
-import {
-    getNotifications,
-    getUnreadCount,
-    markAllNotificationsRead,
-    markNotificationRead,
-} from "@/services/client/notification.service";
+import NotificationItem from "@/layouts/protected-header/components/notification.item";
+import { useNotificationStream } from "@/layouts/protected-header/hooks/use.notification.stream";
+import { useNotifications } from "@/layouts/protected-header/hooks/use.notifications";
 import type { NotificationResponse } from "@/types/responses/notification.response";
 
 const NotificationButton = () => {
     const t = useTranslations("common.layout.header");
-    const qc = useQueryClient();
     const router = useRouter();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
 
-    // Badge chưa đọc: poll định kỳ (BE có SSE nhưng chưa rõ tên event noti → poll).
-    const unreadQ = useQuery({
-        queryKey: ["notifications-unread"],
-        queryFn: getUnreadCount,
-        refetchInterval: 45000,
-        staleTime: 30000,
-    });
-    const listQ = useQuery({
-        queryKey: ["notifications-list"],
-        queryFn: () => getNotifications(15, 0),
-        enabled: open,
-    });
-
-    const refresh = () => {
-        qc.invalidateQueries({ queryKey: ["notifications-unread"] });
-        qc.invalidateQueries({ queryKey: ["notifications-list"] });
-    };
-    const readM = useMutation({
-        mutationFn: (id: number) => markNotificationRead(id),
-        onSuccess: refresh,
-    });
-    const readAllM = useMutation({
-        mutationFn: () => markAllNotificationsRead(),
-        onSuccess: refresh,
-    });
+    // Realtime: BE đẩy event NOTIFICATION qua SSE, hook tự cập nhật cache.
+    const { hasNewNotification, clearNewNotification } =
+        useNotificationStream();
+    const { items, unreadCount, isLoading, markRead, markAllRead } =
+        useNotifications(open);
 
     const onItemClick = (n: NotificationResponse) => {
-        if (!n.isRead) readM.mutate(n.id);
+        if (!n.isRead) markRead.mutate(n.id);
         setAnchorEl(null);
         if (n.targetUrl) router.push(n.targetUrl as AllRoute);
     };
-
-    const items = listQ.data ?? [];
-    const unread = unreadQ.data ?? 0;
 
     return (
         <>
@@ -68,8 +36,15 @@ const NotificationButton = () => {
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 sx={{ width: "40px", minWidth: "40px", height: "40px" }}
             >
-                <Badge badgeContent={unread} color="error" max={99}>
-                    <NotificationsNoneOutlinedIcon />
+                <Badge badgeContent={unreadCount} color="error" max={99}>
+                    <span
+                        onAnimationEnd={clearNewNotification}
+                        className={`inline-flex origin-top ${
+                            hasNewNotification ? "animate-naho-bell-ring" : ""
+                        }`}
+                    >
+                        <NotificationsNoneOutlinedIcon />
+                    </span>
                 </Badge>
             </Button>
 
@@ -97,19 +72,23 @@ const NotificationButton = () => {
                     <span className="text-text-contrast text-sm font-bold">
                         {t("notifications")}
                     </span>
-                    {unread > 0 && (
+                    {unreadCount > 0 && (
                         <button
                             type="button"
-                            onClick={() => readAllM.mutate()}
-                            className="text-bgc-highlight cursor-pointer text-xs font-semibold hover:underline"
+                            disabled={markAllRead.isPending}
+                            onClick={() => markAllRead.mutate()}
+                            className="text-bgc-highlight flex cursor-pointer items-center gap-1.5 text-xs font-semibold hover:underline disabled:cursor-default disabled:opacity-60"
                         >
+                            {markAllRead.isPending && (
+                                <CircularProgress size={12} color="inherit" />
+                            )}
                             {t("markAllRead")}
                         </button>
                     )}
                 </div>
 
                 <div className="max-h-96 overflow-y-auto">
-                    {listQ.isLoading ? (
+                    {isLoading ? (
                         <div className="flex justify-center py-8">
                             <CircularProgress size={22} />
                         </div>
@@ -119,30 +98,11 @@ const NotificationButton = () => {
                         </p>
                     ) : (
                         items.map((n) => (
-                            <button
+                            <NotificationItem
                                 key={n.id}
-                                type="button"
-                                onClick={() => onItemClick(n)}
-                                className={`border-bdc-primary hover:bg-bgc-page flex w-full items-start gap-2.5 border-b px-4 py-3 text-left transition-colors last:border-0 ${
-                                    n.isRead ? "" : "bg-bgc-highlight/5"
-                                }`}
-                            >
-                                <span
-                                    className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
-                                        n.isRead
-                                            ? "bg-transparent"
-                                            : "bg-bgc-highlight"
-                                    }`}
-                                />
-                                <span className="min-w-0 flex-1">
-                                    <span className="text-text-contrast block text-sm font-semibold">
-                                        {n.title}
-                                    </span>
-                                    <span className="text-text-muted mt-0.5 line-clamp-2 block text-xs">
-                                        {n.content}
-                                    </span>
-                                </span>
-                            </button>
+                                notification={n}
+                                onSelect={onItemClick}
+                            />
                         ))
                     )}
                 </div>
