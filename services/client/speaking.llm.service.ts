@@ -1,73 +1,25 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { ChatSessionMessageRequest } from "@/types/requests/speaking.llm.request";
+import {
+    ChatSessionMessageRequest,
+    EndSessionRequest,
+} from "@/types/requests/speaking.llm.request";
 import {
     AudioChatResponse,
     ChatResponse,
+    ScoringResponse,
     SpeakingSessionResponse,
     StartConversationResponse,
 } from "@/types/responses/speaking.llm.response";
+import {
+    apiRequest,
+    fileNameFor,
+    unwrap,
+} from "./speaking.llm.helper";
 
 /**
  * Service phía client cho các tính năng hội thoại Speaking LLM 1:1.
  * Gọi qua Next.js route handler (/api/speaking/session/*) cùng origin (pattern 2 lớp)
  * nhằm tránh CORS và tự động đính kèm access token từ cookie.
  */
-
-async function unwrap<T>(response: Response): Promise<T> {
-    const text = await response.text();
-    let result: unknown = null;
-    if (text) {
-        try {
-            result = JSON.parse(text);
-        } catch {
-            if (response.ok) {
-                return text as unknown as T;
-            }
-            throw new Error(`Máy chủ phản hồi lỗi (HTTP ${response.status}).`);
-        }
-    }
-    if (!response.ok) {
-        throw new Error(
-            (result as ProblemDetail)?.detail ||
-                `Yêu cầu thất bại (HTTP ${response.status}).`,
-        );
-    }
-    const apiResponse = result as ApiResponse<T>;
-    if (
-        apiResponse &&
-        typeof apiResponse === "object" &&
-        "data" in apiResponse
-    ) {
-        return apiResponse.data;
-    }
-    return result as T;
-}
-
-async function apiRequest(
-    input: string,
-    init?: RequestInit,
-): Promise<Response> {
-    let response = await fetch(input, init);
-    if (response.status === 401) {
-        const rotated = await fetch("/api/auth/rotation", {
-            method: "POST",
-            credentials: "include",
-        });
-        if (rotated.ok) {
-            response = await fetch(input, init);
-        }
-    }
-    return response;
-}
-
-function fileNameFor(blob: Blob): string {
-    if (blob instanceof File && blob.name) return blob.name;
-    if (blob.type.includes("wav")) return "recording.wav";
-    if (blob.type.includes("mp4") || blob.type.includes("m4a"))
-        return "recording.m4a";
-    if (blob.type.includes("ogg")) return "recording.ogg";
-    return "recording.webm";
-}
 
 /**
  * 1. Khởi tạo phiên hội thoại với Persona
@@ -80,10 +32,37 @@ export async function startConversation(
         `/api/speaking/session/persona/${personaId}`,
         {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
         },
     );
-    return unwrap<string>(response);
+    const result = await unwrap<unknown>(response);
+    if (typeof result === "string") {
+        return result.trim().replace(/^"|"$/g, "");
+    }
+    if (result && typeof result === "object") {
+        const record = result as Record<string, unknown>;
+        if (typeof record.sessionCode === "string") {
+            return record.sessionCode.trim().replace(/^"|"$/g, "");
+        }
+        if (typeof record.data === "string") {
+            return record.data.trim().replace(/^"|"$/g, "");
+        }
+        if (typeof record.raw === "string") {
+            return record.raw.trim().replace(/^"|"$/g, "");
+        }
+        if (
+            record.data &&
+            typeof record.data === "object" &&
+            typeof (record.data as Record<string, unknown>).sessionCode ===
+                "string"
+        ) {
+            return (
+                (record.data as Record<string, unknown>).sessionCode as string
+            )
+                .trim()
+                .replace(/^"|"$/g, "");
+        }
+    }
+    return "";
 }
 
 /**
@@ -97,7 +76,6 @@ export async function initFirstGreeting(
         `/api/speaking/session/init/${sessionCode}`,
         {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
         },
     );
     return unwrap<StartConversationResponse>(response);
@@ -162,4 +140,40 @@ export async function sendAudioMessage(
         },
     );
     return unwrap<AudioChatResponse>(response);
+}
+
+/**
+ * 6. Kết thúc phiên hội thoại và chấm điểm
+ * POST /speaking/session/end/{sessionCode} -> trả về ScoringResponse
+ */
+export async function endSpeakingSession(
+    sessionCode: string,
+    request: EndSessionRequest = {},
+): Promise<ScoringResponse> {
+    const response = await apiRequest(
+        `/api/speaking/session/end/${sessionCode}`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(request),
+        },
+    );
+    return unwrap<ScoringResponse>(response);
+}
+
+/**
+ * 7. Lấy danh sách các phiên hội thoại đang dở (IN_PROGRESS)
+ * GET /speaking/session/in-progress/all -> trả về SpeakingSessionResponse[]
+ */
+export async function getInProgressSessions(): Promise<
+    SpeakingSessionResponse[]
+> {
+    const response = await apiRequest(
+        "/api/speaking/session/in-progress/all",
+        {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        },
+    );
+    return unwrap<SpeakingSessionResponse[]>(response);
 }

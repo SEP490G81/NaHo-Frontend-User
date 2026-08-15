@@ -6,7 +6,12 @@
 
 ### Mô tả bài toán
 
-- Với chức năng hiển thị các session ở sidebar và xóa session, tôi cần có hiệu ứng loading
+- Cái file `modules/protected/dialogue-setup/components/summary-panel.tsx` tại sao khi route sang trang
+  `app/[locale]/(protected)/live-chatroom/[sessionCode]/page.tsx` thì nó cứ bị lỗi, khi tôi check backend thì nhận ra là
+  nó gọi API backend với url như sau:
+  `/api/v1/speaking/session/details/%5Bobject%20Object%5D`
+  => sessionCode đang bị lỗi.
+- Bạn hãy sửa lại giúp tôi
 
 ### Yêu cầu
 

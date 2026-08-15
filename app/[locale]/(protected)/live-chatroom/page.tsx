@@ -1,27 +1,5 @@
-import React from "react";
-import { getTranslations } from "next-intl/server";
-import LiveChatroom from "@/modules/protected/live-chatroom/components/live-chatroom";
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({
-    params,
-}: {
-    params: { locale: string };
-}): Promise<{
-    title: string;
-}> {
-    const { locale } = await params;
-    const t = await getTranslations({
-        locale,
-        namespace: "common.metadata.title",
-    });
-
-    return {
-        title: t("liveChatroom"),
-    };
+export default function LiveChatroomIndexPage() {
+    redirect("/dialogue-setup");
 }
-
-const LiveChatroomPage = async () => {
-    return <LiveChatroom />;
-};
-
-export default LiveChatroomPage;

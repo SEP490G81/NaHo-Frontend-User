@@ -16,6 +16,12 @@ async function forwardJson(backendResponse: Response) {
         try {
             body = JSON.parse(text);
         } catch {
+            if (backendResponse.ok) {
+                // Backend trả 2xx dạng text thuần (ví dụ raw sessionCode string), không phải JSON
+                return NextResponse.json(text, {
+                    status: backendResponse.status,
+                });
+            }
             body = {
                 detail: `Máy chủ trả về phản hồi không hợp lệ (HTTP ${backendResponse.status}).`,
                 status: backendResponse.status,
@@ -136,9 +142,10 @@ export async function proxyBodyJson(
     const accessToken = (await cookies()).get(ACCESS_TOKEN_NAME)?.value;
     const idempotencyKey = request.headers.get("Idempotency-Key");
     const body = await request.text();
+    const hasBody = Boolean(body && body.trim().length > 0);
 
     const headers: Record<string, string> = {
-        "Content-Type": "application/json",
+        ...(hasBody ? { "Content-Type": "application/json" } : {}),
         ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
     };
@@ -146,7 +153,7 @@ export async function proxyBodyJson(
     const backendResponse = await fetch(`${process.env.API_URL}${path}`, {
         method,
         headers,
-        body,
+        body: hasBody ? body : undefined,
         cache: "no-store",
     });
 

@@ -19,7 +19,13 @@
             "darkMode": "ダークモード",
             "systemMode": "システム設定",
             "languageTitle": "言語",
-            "languageDesc": "ウェブサイト全体の表示言語を変更します"
+            "languageDesc": "ウェブサイト全体の表示言語を変更します",
+            "aiAudioTitle": "AI音声再生（ライブチャット）",
+            "aiAudioDesc": "ライブ会話中のAI音声の再生方法を設定します",
+            "aiAudioAutoPlay": "自動再生",
+            "aiAudioAutoPlayDesc": "AIが返答すると同時に音声を自動再生します",
+            "aiAudioManual": "手動再生",
+            "aiAudioManualDesc": "Playボタンをクリックした時のみ音声を再生します"
         },
 
         "account": {

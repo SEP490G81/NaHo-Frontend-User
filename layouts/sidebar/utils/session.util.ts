@@ -1,4 +1,7 @@
-import type { SessionMessageItem } from "@/types/responses/speaking.response";
+export interface GenericSessionMessage {
+    senderType?: string | null;
+    content?: string | null;
+}
 
 /**
  * Lấy câu cuối cùng để hiển thị trên Sidebar:
@@ -7,23 +10,25 @@ import type { SessionMessageItem } from "@/types/responses/speaking.response";
  * - Nếu không có tin nhắn nào thì trả về chuỗi rỗng.
  */
 export function getLastSessionMessage(
-    messages?: SessionMessageItem[],
+    messages?: readonly GenericSessionMessage[] | GenericSessionMessage[] | null,
 ): string {
     if (!messages || messages.length === 0) return "";
 
     // Tìm câu cuối của USER từ dưới lên
     for (let i = messages.length - 1; i >= 0; i--) {
-        if (messages[i].senderType?.toUpperCase().includes("USER")) {
-            return messages[i].content;
+        const msg = messages[i];
+        if (msg?.senderType?.toUpperCase().includes("USER") && msg.content) {
+            return msg.content;
         }
     }
 
     // Nếu chưa có câu của USER, tìm câu cuối của ASSISTANT
     for (let i = messages.length - 1; i >= 0; i--) {
-        if (messages[i].senderType?.toUpperCase().includes("ASSISTANT")) {
-            return messages[i].content;
+        const msg = messages[i];
+        if (msg?.senderType?.toUpperCase().includes("ASSISTANT") && msg.content) {
+            return msg.content;
         }
     }
 
-    return messages[messages.length - 1].content || "";
+    return messages[messages.length - 1]?.content || "";
 }

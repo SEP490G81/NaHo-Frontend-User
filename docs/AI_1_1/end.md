@@ -6,7 +6,55 @@
 
 ### Mô tả bài toán
 
-- Với chức năng hiển thị các session ở sidebar và xóa session, tôi cần có hiệu ứng loading
+- Tôi cần bạn khi ấn vào `modules/protected/live-chatroom/components/end-session-dialog.tsx` thì gọi API backend sau:
+
++ API: /speaking/session/end/{sessionCode}, method POST
++ Cần gửi lên 1 Request Body:
+
+```
+public record EndSessionRequest(
+        String topic,
+        String speechMetadata,
+        String asrConfidence
+) {
+}
+```
+
+- Response sẽ trả về:
+
+```
+public record ScoringResponse(
+        String sessionCode,
+        int overallScore,
+        String jlptEstimate,
+        Scores scores,
+        String summary,
+        List<String> strengths,
+        List<String> weaknesses,
+        Map<String, String> feedback,
+        List<ImprovedExpression> improvedExpressions
+) {
+    public record Scores(
+            int fluency,
+            int pronunciation,
+            int grammar,
+            int vocabulary,
+            int interaction,
+            int naturalness,
+            int coherence
+    ) {
+    }
+
+    public record ImprovedExpression(String original, String improved) {
+    }
+}
+```
+
+- Hãy tận dụng lại các components trong `modules/protected/live-chatroom/components` để hiển thị trang kết quả.
+- Tôi cũng muốn thêm 1 chức năng vào `modules/protected/settings` và URL là /settings chức năng config cho AI live chat
+  room như sau:
+
++ Nó sẽ có 1 nút để chọn giữa việc tự phát file âm thanh mà AI trả ra hoặc là phải bấm vào nút play thì mới phát
 
 ### Yêu cầu
 

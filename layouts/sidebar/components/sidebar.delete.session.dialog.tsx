@@ -8,6 +8,7 @@ import {
     DialogContent,
     DialogTitle,
 } from "@mui/material";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface SidebarDeleteSessionDialogProps {
@@ -75,6 +76,11 @@ export function SidebarDeleteSessionDialog({
                     color="error"
                     disabled={loading}
                     onClick={onConfirm}
+                    startIcon={
+                        loading ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : undefined
+                    }
                     sx={{
                         textTransform: "none",
                         fontWeight: 700,

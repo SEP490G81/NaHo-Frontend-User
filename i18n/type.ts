@@ -21,8 +21,8 @@ export type AllRoute =
     | "/speaking-history"
     | `/speaking-history/${string}` // hoặc "/speaking-history/[historyId]"
     | "/point-history"
-    | "/dialogue-setup"
     | "/live-chatroom"
+    | `/live-chatroom/${string}`
     | "/dialogue-history"
     | `/dialogue-history/${string}` // hoặc "/dialogue-history/[code]"
     | "/leaderboard"

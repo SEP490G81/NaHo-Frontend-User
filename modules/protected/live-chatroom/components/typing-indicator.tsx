@@ -6,7 +6,9 @@ import type { Companion } from "../types/live-chatroom.type";
 import { useTranslations } from "next-intl";
 
 /** Chỉ báo AI (Tanaka) đang soạn câu trả lời — hiện sau khi câu của bạn đã lên. */
-export function TypingIndicator({ companion }: { companion: Companion }) {
+export function TypingIndicator({
+    companion,
+}: Readonly<{ companion: Companion }>) {
     const t = useTranslations("liveChatroom");
 
     return (

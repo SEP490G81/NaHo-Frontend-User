@@ -6,7 +6,10 @@ interface AudioVisualizerProps {
     isRecording: boolean;
 }
 
-export function AudioVisualizer({ stream, isRecording }: AudioVisualizerProps) {
+export function AudioVisualizer({
+    stream,
+    isRecording,
+}: Readonly<AudioVisualizerProps>) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const animationRef = useRef<number | null>(null);
     const audioCtxRef = useRef<AudioContext | null>(null);

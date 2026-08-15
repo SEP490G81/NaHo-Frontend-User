@@ -5,16 +5,18 @@ import { Divider } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useChatStore } from "@/store/chatStore";
 import {
     COMPANIONS,
     resolveCompanions,
 } from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
-import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use-resume-session";
+import { getInProgressSessions } from "@/services/client/speaking.llm.service";
 import {
     deleteSpeakingSession,
-    getActiveSession,
     getPersonas,
 } from "@/services/client/speaking.service";
+import type { SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
 import SidebarActiveSessionItem from "../components/sidebar.active.session.item";
 import SidebarDeleteSessionDialog from "../components/sidebar.delete.session.dialog";
 
@@ -28,17 +30,22 @@ export function SidebarActiveSession({
     onCloseSidebar,
 }: Readonly<SidebarActiveSessionProps>) {
     const t = useTranslations("marugoto.path");
+    const router = useRouter();
+    const pathname = usePathname();
     const queryClient = useQueryClient();
-    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const setConfig = useChatStore((s) => s.setConfig);
+    const setSession = useChatStore((s) => s.setSession);
 
-    // 1. Lấy phiên đang dở của người dùng
-    const { data: active } = useQuery({
-        queryKey: ["active-speaking-session"],
-        queryFn: () => getActiveSession(),
-        staleTime: 60 * 1000,
+    const [deletingSessionCode, setDeletingSessionCode] = useState<string | null>(null);
+
+    // 1. Lấy danh sách các phiên hội thoại đang dở (IN_PROGRESS)
+    const { data: inProgressSessions } = useQuery<SpeakingSessionResponse[]>({
+        queryKey: ["in-progress-speaking-sessions"],
+        queryFn: getInProgressSessions,
+        staleTime: 30 * 1000,
     });
 
-    // 2. Lấy danh sách personas để dựng companions phục vụ khôi phục phiên
+    // 2. Lấy danh sách personas để dựng companions
     const { data: personas } = useQuery({
         queryKey: ["personas"],
         queryFn: getPersonas,
@@ -50,18 +57,26 @@ export function SidebarActiveSession({
         [personas],
     );
 
-    const { resume, resumingCode } = useResumeSession(companions);
-
     // 3. Mutation xóa phiên đang dở
     const deleteMutation = useMutation({
         mutationFn: (sessionCode: string) =>
             deleteSpeakingSession(sessionCode),
-        onSuccess: () => {
+        onSuccess: (_data, deletedSessionCode) => {
             toast.success(t("deleteSessionSuccess"));
-            setIsConfirmOpen(false);
+            setDeletingSessionCode(null);
             queryClient.invalidateQueries({
-                queryKey: ["active-speaking-session"],
+                queryKey: ["in-progress-speaking-sessions"],
             });
+
+            // Nếu người dùng đang ở phòng chat của phiên bị xóa -> đá về trang thiết lập
+            const isCurrentChatSession =
+                pathname === `/live-chatroom/${deletedSessionCode}` ||
+                pathname.startsWith(`/live-chatroom/${deletedSessionCode}/`);
+
+            if (isCurrentChatSession) {
+                useChatStore.getState().reset();
+                router.replace("/dialogue-setup");
+            }
         },
         onError: (err) => {
             toast.error(
@@ -70,21 +85,36 @@ export function SidebarActiveSession({
         },
     });
 
-    if (!active) return null;
+    if (!inProgressSessions || inProgressSessions.length === 0) return null;
 
-    const handleResume = async () => {
+    const handleResume = (session: SpeakingSessionResponse) => {
         onCloseSidebar?.();
-        await resume({
-            sessionCode: active.sessionCode,
-            personaId: active.personaId,
-            formalityLevel: active.formalityLevel,
-            marugotoLevel: active.marugotoLevel,
-            messages: active.messages,
+        const comp =
+            companions.find((c) => c.personaId === session.personaId) ??
+            COMPANIONS[0];
+
+        setConfig({
+            companionId: comp.id,
+            conversationStyle: session.formalityLevel ?? "NEUTRAL",
+            marugotoLevel: session.marugotoLevel ?? "STARTER_A1",
+            voiceSpeed: 1,
+            showHints: true,
         });
+
+        setSession({
+            sessionCode: session.sessionCode,
+            personaId: session.personaId,
+            companionId: comp.id,
+            aiGreeting: "",
+        });
+
+        router.push(`/live-chatroom/${session.sessionCode}`);
     };
 
     const handleDeleteConfirm = () => {
-        deleteMutation.mutate(active.sessionCode);
+        if (deletingSessionCode) {
+            deleteMutation.mutate(deletingSessionCode);
+        }
     };
 
     return (
@@ -101,22 +131,34 @@ export function SidebarActiveSession({
                 <Divider className="border-bdc-primary my-3 opacity-60" />
             )}
 
-            {/* Thẻ phiên hội thoại */}
-            <div className={isCollapsed ? "px-1.5" : "px-3"}>
-                <SidebarActiveSessionItem
-                    active={active}
-                    isCollapsed={isCollapsed}
-                    onResume={handleResume}
-                    onDelete={() => setIsConfirmOpen(true)}
-                    isResuming={resumingCode === active.sessionCode}
-                    isDeleting={deleteMutation.isPending}
-                />
+            {/* Danh sách thẻ phiên hội thoại */}
+            <div className={`space-y-1 ${isCollapsed ? "px-1.5" : "px-3"}`}>
+                {inProgressSessions.map((session) => {
+                    const isActive =
+                        pathname === `/live-chatroom/${session.sessionCode}` ||
+                        pathname.startsWith(`/live-chatroom/${session.sessionCode}/`);
+
+                    return (
+                        <SidebarActiveSessionItem
+                            key={session.sessionCode}
+                            session={session}
+                            isCollapsed={isCollapsed}
+                            isActive={isActive}
+                            onResume={() => handleResume(session)}
+                            onDelete={() => setDeletingSessionCode(session.sessionCode)}
+                            isDeleting={
+                                deleteMutation.isPending &&
+                                deletingSessionCode === session.sessionCode
+                            }
+                        />
+                    );
+                })}
             </div>
 
             {/* Modal xác nhận xóa */}
             <SidebarDeleteSessionDialog
-                open={isConfirmOpen}
-                onClose={() => setIsConfirmOpen(false)}
+                open={!!deletingSessionCode}
+                onClose={() => setDeletingSessionCode(null)}
                 onConfirm={handleDeleteConfirm}
                 loading={deleteMutation.isPending}
             />

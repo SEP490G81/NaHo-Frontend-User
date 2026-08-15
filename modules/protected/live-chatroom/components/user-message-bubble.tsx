@@ -17,7 +17,9 @@ function scoreTone(score: number): string {
     return "bg-rose-500/15 text-rose-600 dark:text-rose-300";
 }
 
-export function UserMessageBubble({ message }: { message: UserChatMessage }) {
+export function UserMessageBubble({
+    message,
+}: Readonly<{ message: UserChatMessage }>) {
     const t = useTranslations("liveChatroom");
     const { data: user } = useCurrentUser();
     const name = user?.fullName || "Bạn";

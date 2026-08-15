@@ -73,3 +73,30 @@ export interface AudioChatResponse {
     pronunciationScore: number;
     suggestedReplies: string[];
 }
+
+export interface Scores {
+    fluency: number;
+    pronunciation: number;
+    grammar: number;
+    vocabulary: number;
+    interaction: number;
+    naturalness: number;
+    coherence: number;
+}
+
+export interface ImprovedExpression {
+    original: string;
+    improved: string;
+}
+
+export interface ScoringResponse {
+    sessionCode: string;
+    overallScore: number;
+    jlptEstimate: string;
+    scores: Scores;
+    summary: string;
+    strengths: string[];
+    weaknesses: string[];
+    feedback: Record<string, string>;
+    improvedExpressions: ImprovedExpression[];
+}

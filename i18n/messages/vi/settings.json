@@ -19,7 +19,13 @@
             "darkMode": "Chế độ Tối",
             "systemMode": "Theo Hệ thống",
             "languageTitle": "Ngôn ngữ",
-            "languageDesc": "Đổi ngôn ngữ hiển thị của toàn bộ trang web"
+            "languageDesc": "Đổi ngôn ngữ hiển thị của toàn bộ trang web",
+            "aiAudioTitle": "Phát âm thanh AI (Live Chat)",
+            "aiAudioDesc": "Tùy chọn cách phát giọng đọc của AI trong phòng hội thoại trực tiếp",
+            "aiAudioAutoPlay": "Tự động phát âm thanh",
+            "aiAudioAutoPlayDesc": "Tự động phát giọng đọc ngay khi AI phản hồi",
+            "aiAudioManual": "Phát âm thanh thủ công",
+            "aiAudioManualDesc": "Chỉ phát âm thanh khi bạn bấm vào biểu tượng Play"
         },
 
         "account": {

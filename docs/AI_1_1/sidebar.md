@@ -8,36 +8,15 @@
 
 - Giờ tôi muốn bạn thêm cho tôi mục là để hiển thị các IN_PROGRESS session thông qua việc sử dụng API:
 
-```
-export async function getActiveSession(
-    personaId?: number | null,
-): Promise<ActiveSpeakingSessionResponse | null> {
-    const query = personaId != null ? `?personaId=${personaId}` : "";
-    const response = await apiRequest(`/api/speaking/session/active${query}`);
-    return unwrap<ActiveSpeakingSessionResponse | null>(response);
-}
-```
++ /session/in-progress/all
++ method GET
++ có access token
++ Response trả ra: List<SpeakingSessionResponse>
 
 - Các phiên đang nói dở đó sẽ được hiển thị trên `layouts/sidebar/components/learner.sidebar.tsx` ở dưới chỗ các chủ đề
   đã ghim
-- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang để tiếp tục nói chuyện với AI.
-
-```
-    // Khôi phục phiên dở → seed câu cũ + câu chào lại → vào phòng chat.
-    const handleResume = async () => {
-        if (!active) return;
-        await resume(
-            {
-                sessionCode: active.sessionCode,
-                personaId: active.personaId,
-                formalityLevel: active.formalityLevel,
-                marugotoLevel: active.marugotoLevel,
-                messages: active.messages,
-            },
-            { voiceSpeed, showHints },
-        );
-    };
-```
+- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang livechatroom/sessionCode để tiếp
+  tục nói chuyện với AI.
 
 - Khi thu nhỏ sidebar thì tôi muốn vẫn phải có divider để ngăn cách giữa các navigation items, chủ đề đã ghim và các
   session đang dở. Nếu không có thì không cần divider.

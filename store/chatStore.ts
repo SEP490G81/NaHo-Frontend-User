@@ -46,8 +46,10 @@ interface ChatState {
     config: ChatConfig | null;
     session: ChatSession | null;
     report: SessionScoringResponse | null;
+    autoPlayAudio: boolean;
+    setAutoPlayAudio: (autoPlay: boolean) => void;
     setConfig: (config: ChatConfig) => void;
-    setSession: (session: ChatSession) => void;
+    setSession: (session: ChatSession | null) => void;
     setReport: (report: SessionScoringResponse | null) => void;
     reset: () => void;
 }
@@ -58,6 +60,8 @@ export const useChatStore = create<ChatState>()(
             config: null,
             session: null,
             report: null,
+            autoPlayAudio: true,
+            setAutoPlayAudio: (autoPlayAudio) => set({ autoPlayAudio }),
             setConfig: (config) => set({ config }),
             setSession: (session) => set({ session }),
             setReport: (report) => set({ report }),
@@ -68,6 +72,7 @@ export const useChatStore = create<ChatState>()(
             // Không persist audio base64 (lớn) & report (chỉ cần trong phiên).
             partialize: (state) => ({
                 config: state.config,
+                autoPlayAudio: state.autoPlayAudio,
                 session: state.session
                     ? {
                           sessionCode: state.session.sessionCode,

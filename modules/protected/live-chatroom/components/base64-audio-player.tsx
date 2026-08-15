@@ -17,7 +17,7 @@ export function Base64AudioPlayer({
     mime = "audio/wav",
     playbackRate = 1,
     autoPlay = false,
-}: Props) {
+}: Readonly<Props>) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [playing, setPlaying] = useState(false);
     const [progress, setProgress] = useState(0);

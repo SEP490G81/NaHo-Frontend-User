@@ -22,7 +22,7 @@ export function MessagesList({
     companion,
     voiceSpeed,
     scrollRef,
-}: MessagesListProps) {
+}: Readonly<MessagesListProps>) {
     return (
         <div
             ref={scrollRef}

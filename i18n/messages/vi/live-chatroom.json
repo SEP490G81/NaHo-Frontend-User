@@ -39,7 +39,10 @@
         "processingFilterNoise": "Đang lọc nhiễu âm thanh...",
         "processingSTT": "Đang nhận dạng giọng nói (STT)...",
         "processingAnalysis": "Đang phân tích lỗi & ngữ pháp...",
-        "processingAiResponse": "AI đang chuẩn bị câu trả lời...",
-        "suggestionLabel": "Bạn bí từ? Gợi ý trả lời:"
+        "suggestionLabel": "Bạn bí từ? Gợi ý trả lời:",
+        "readyTitle": "Sẵn sàng trò chuyện",
+        "readyDescription": "Bấm nút bên dưới để người bạn đồng hành gửi lời chào đầu tiên.",
+        "readyButton": "Tôi đã sẵn sàng",
+        "readyLoading": "Đang kết nối..."
     }
 }
