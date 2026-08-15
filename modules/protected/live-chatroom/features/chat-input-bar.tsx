@@ -37,7 +37,7 @@ export function ChatInputBar({
     };
 
     return (
-        <div className="space-y-2">
+        <div data-tour-id="tour-ai1on1-chat" className="space-y-2">
             {isRecording && (
                 <div className="bg-bgc-highlight/10 text-bgc-highlight flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-xs font-medium">
                     <AudioVisualizer

@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { History, Sparkles } from "lucide-react";
+import { Compass, History, Sparkles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { CompanionList } from "./companion-list";
@@ -23,6 +23,8 @@ import {
     getTodayAiUsage,
 } from "@/services/client/subscription.service";
 import { useAuthStore } from "@/store/authStore";
+import { useTourStore } from "@/store/tourStore";
+import { AI_ONE_ON_ONE_TOUR_ID } from "@/modules/protected/user-guide/constants/ai.one.on.one.tour.constant";
 import { Link } from "@/i18n/navigation";
 import type {
     FormalityLevel,
@@ -34,7 +36,9 @@ import SubscriptionModal from "@/modules/protected/settings/billing/features/sub
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
+    const tGuide = useTranslations("userGuide.tour");
     const level = useAuthStore((s) => s.profile?.level);
+    const startTour = useTourStore((s) => s.startTour);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
@@ -196,6 +200,14 @@ export function DialogueSetup() {
                                 <History className="h-4 w-4" />
                                 {t("viewHistory")}
                             </Link>
+                            <button
+                                type="button"
+                                onClick={() => startTour(AI_ONE_ON_ONE_TOUR_ID)}
+                                className="border-bdc-primary text-text-muted hover:border-bgc-highlight/60 hover:text-bgc-highlight inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
+                            >
+                                <Compass className="h-4 w-4" />
+                                {tGuide("restart")}
+                            </button>
                         </div>
                     </div>
 

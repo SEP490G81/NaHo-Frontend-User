@@ -136,6 +136,7 @@ export function ChatSidebar({
                     color="error"
                     fullWidth
                     disabled={ending}
+                    data-tour-id="tour-ai1on1-end"
                     onClick={() => setIsDialogOpen(true)}
                     className="!h-10 !rounded-lg font-bold capitalize"
                     startIcon={
