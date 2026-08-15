@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import type { ReportDetail } from "@/data/mockReports";
 import TranscriptView from "../features/transcript.view";
 import PronunciationView from "../features/pronunciation.view";
-import AdvancedHintsView from "../features/advanced.hints.view";
 
 interface HistoryDetailTabsProps {
     report: ReportDetail;
@@ -47,15 +46,14 @@ export function HistoryDetailTabs({
             >
                 <Tab label={t("tabTranscript")} />
                 <Tab label={t("tabPronunciation")} />
-                <Tab label={t("tabHints")} />
             </Tabs>
 
             <Box className="mt-4">
                 {tabIndex === 0 && (
                     <TranscriptView
+                        fullTranscript={report.fullTranscript}
                         transcript={report.userTranscript}
                         aiSuggestion={report.aiSuggestion}
-                        showFurigana={showFurigana}
                     />
                 )}
                 {tabIndex === 1 && (
@@ -63,15 +61,9 @@ export function HistoryDetailTabs({
                         <PronunciationView
                             pronunciation={report.pronunciation}
                             note={report.pronunciationNote}
+                            showFurigana={showFurigana}
                         />
                     </div>
-                )}
-                {tabIndex === 2 && (
-                    <AdvancedHintsView
-                        expressions={report.expressions}
-                        itVocab={report.itVocab}
-                        showFurigana={showFurigana}
-                    />
                 )}
             </Box>
         </Box>
