@@ -9,9 +9,9 @@ export interface SpeakingAnalysisResponse {
 
 /* ─── AI 1:1 Dialogue (luồng nói chuyện với persona) ─────────────── */
 
-/** POST /speaking/session/{personaId} — bắt đầu hội thoại với AI. */
+/** POST /speaking/session/persona/{personaId} — bắt đầu hội thoại với AI. */
 export interface StartConversationResponse {
-    sessionId: string;
+    sessionCode: string;
     /** WAV base64 (không có tiền tố data:) của câu chào — phát bằng TTS. */
     audioBase64: string;
     aiGreeting: string;
@@ -21,7 +21,7 @@ export interface StartConversationResponse {
     grammarExplanation: string | null;
 }
 
-/** POST /speaking/session/{sessionId}/audio — STT + điểm phát âm + reply + phụ trợ học. */
+/** POST /speaking/session/{sessionCode}/audio — STT + điểm phát âm + reply + phụ trợ học. */
 export interface AudioChatResponse {
     transcribedText: string;
     assistantReply: string;
@@ -41,7 +41,7 @@ export interface AudioChatResponse {
     pronunciationScore: number | null;
 }
 
-/** POST /speaking/session/{sessionId}/message — reply text (kèm phụ trợ học). */
+/** POST /speaking/session/{sessionCode}/message — reply text (kèm phụ trợ học). */
 export interface ChatReplyResponse {
     assistantReply: string;
     assistantReplyTranslation: string | null;
@@ -170,9 +170,9 @@ export interface SessionImprovedExpression {
     improved: string;
 }
 
-/** POST /speaking/session/{sessionId}/end — báo cáo chấm điểm cả phiên. */
+/** POST /speaking/session/{sessionCode}/end — báo cáo chấm điểm cả phiên. */
 export interface SessionScoringResponse {
-    sessionId: string;
+    sessionCode: string;
     overallScore: number;
     jlptEstimate: string;
     scores: SessionScoreBreakdown;

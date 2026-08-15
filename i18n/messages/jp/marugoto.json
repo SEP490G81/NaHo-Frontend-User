@@ -81,7 +81,16 @@
             "rewardsHint": "ごほうび箱を開ける",
             "loadingQuestion": "問題を読み込み中...",
             "hoverOpen": "クリックして詳細を見る",
-            "hoverRelearn": "クリックして再挑戦"
+            "hoverRelearn": "クリックして再挑戦",
+            "activeSessionSection": "進行中",
+            "resumeSessionTooltip": "セッションを再開: \"{text}\"",
+            "deleteSessionTitle": "セッションを削除",
+            "deleteSessionConfirm": "この会話セッションを削除してもよろしいですか？",
+            "deleteSessionSuccess": "セッションを削除しました。",
+            "deleteSessionError": "セッションの削除に失敗しました。もう一度お試しください。",
+            "deleteSessionButton": "削除",
+            "cancelButton": "キャンセル",
+            "noUtterance": "進行中の会話"
         },
         "node": {
             "vocabTitle": "語彙",

@@ -1,10 +1,6 @@
 import { ApiResponse, PageMeta, ProblemDetail } from "@/types/responses/base.response";
-import { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
+import { PersonaResponse } from "@/types/responses/persona.response";
 import {
-    ActiveSpeakingSessionResponse,
-    AudioChatResponse,
-    ChatReplyResponse,
-    SessionScoringResponse,
     SpeakingAnalysisResponse,
     SpeakingHistoryDetailResponse,
     SpeakingHistoryListItem,
@@ -159,116 +155,6 @@ export async function getPersonas(): Promise<PersonaResponse[]> {
     return unwrap<PersonaResponse[]>(response);
 }
 
-export interface StartConversationInput {
-    /** Override thể lịch sự (khác mặc định của persona). */
-    formalityLevel?: FormalityLevel | null;
-    /** Override cấp độ Marugoto. */
-    marugotoLevel?: MarugotoLevel | null;
-}
-
-/** Bắt đầu hội thoại với persona (kèm override style tuỳ chọn). */
-export async function startConversation(
-    personaId: number,
-    input: StartConversationInput = {},
-): Promise<StartConversationResponse> {
-    const hasOverride = !!(input.formalityLevel || input.marugotoLevel);
-    const response = await apiRequest(
-        `/api/speaking/session/${personaId}`,
-        hasOverride
-            ? {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                      formalityLevel: input.formalityLevel ?? undefined,
-                      marugotoLevel: input.marugotoLevel ?? undefined,
-                  }),
-              }
-            : { method: "POST" },
-    );
-    return unwrap<StartConversationResponse>(response);
-}
-
-/** Đuôi file theo mime của bản ghi để BE nhận đúng định dạng. */
-function sessionFileName(blob: Blob): string {
-    if (blob.type.includes("wav")) return "message.wav";
-    if (blob.type.includes("mp4") || blob.type.includes("m4a"))
-        return "message.m4a";
-    if (blob.type.includes("ogg")) return "message.ogg";
-    return "message.webm";
-}
-
-/** Gửi audio trong phiên → STT + điểm phát âm + reply của AI. */
-export async function sendSessionAudio(
-    sessionId: string,
-    blob: Blob,
-    referenceText?: string,
-): Promise<AudioChatResponse> {
-    const form = new FormData();
-    form.append("file", blob, sessionFileName(blob));
-
-    const query = referenceText
-        ? `?reference-text=${encodeURIComponent(referenceText)}`
-        : "";
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/audio${query}`,
-        { method: "POST", body: form },
-    );
-    return unwrap<AudioChatResponse>(response);
-}
-
-/** Gửi tin nhắn text trong phiên → reply của AI. */
-export async function sendTextMessage(
-    sessionId: string,
-    transcript: string,
-): Promise<ChatReplyResponse> {
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/message`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ transcript }),
-        },
-    );
-    return unwrap<ChatReplyResponse>(response);
-}
-
-export interface EndSessionInput {
-    topic?: string;
-    speechMetadata?: string;
-    asrConfidence?: string;
-}
-
-/** Kết thúc phiên → báo cáo chấm điểm cả buổi. */
-export async function endSession(
-    sessionId: string,
-    input: EndSessionInput = {},
-): Promise<SessionScoringResponse> {
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/end`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                topic: input.topic ?? "",
-                speechMetadata: input.speechMetadata ?? "",
-                asrConfidence: input.asrConfidence ?? "",
-            }),
-        },
-    );
-    return unwrap<SessionScoringResponse>(response);
-}
-
-/* ─── AI 1:1 Session persistence: resume + history (#59) ─────────── */
-
-/** Phiên đang dở của user (null nếu không có). */
-export async function getActiveSession(
-    personaId?: number | null,
-): Promise<ActiveSpeakingSessionResponse | null> {
-    const query = personaId != null ? `?personaId=${personaId}` : "";
-    const response = await apiRequest(`/api/speaking/session/active${query}`);
-    return unwrap<ActiveSpeakingSessionResponse | null>(response);
-}
-
 /** Khôi phục phiên dở theo sessionCode → câu chào "chào lại". */
 export async function resumeSession(
     sessionCode: string,
@@ -321,4 +207,23 @@ export async function getSpeakingSessionDetail(
         `/api/speaking/session/history/${sessionCode}`,
     );
     return unwrap<SpeakingSessionDetail>(response);
+}
+
+/** Xoá một phiên hội thoại AI 1:1 theo sessionCode (HTTP DELETE 204). */
+export async function deleteSpeakingSession(
+    sessionCode: string,
+): Promise<void> {
+    const response = await apiRequest(`/api/speaking/session/${sessionCode}`, {
+        method: "DELETE",
+    });
+    if (!response.ok && response.status !== 204) {
+        let detail = "Không thể xoá phiên hội thoại.";
+        try {
+            const json = await response.json();
+            if (json?.detail) detail = json.detail;
+        } catch {
+            // ignore non-json errors
+        }
+        throw new Error(detail);
+    }
 }

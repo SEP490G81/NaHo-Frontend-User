@@ -8,7 +8,10 @@ interface Props {
     onPick: (text: string) => void;
 }
 
-export function SuggestionPills({ suggestions, onPick }: Props) {
+export function SuggestionPills({
+    suggestions,
+    onPick,
+}: Readonly<Props>) {
     const t = useTranslations("liveChatroom");
 
     return (

@@ -1,22 +1,15 @@
 "use client";
-import { useState } from "react";
+
+import React, { useState } from "react";
 import { Lightbulb, Loader2, LogOut } from "lucide-react";
-import {
-    Avatar,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Slider,
-    Switch,
-} from "@mui/material";
+import { Avatar, Button, Slider, Switch } from "@mui/material";
 import { useTranslations } from "next-intl";
+import BackButton from "@/components/ui/back.button";
 import type { Companion } from "../types/live-chatroom.type";
 import { getInitials } from "../utils/get-initials";
 import { styleKeyOf } from "../constants/live-chatroom.constant";
 import type { FormalityLevel } from "@/types/responses/persona.response";
+import { EndSessionDialog } from "./end-session-dialog";
 
 interface ChatSidebarProps {
     companion: Companion;
@@ -41,7 +34,7 @@ export function ChatSidebar({
     onEndSession,
     ending,
     onCloseMobile,
-}: ChatSidebarProps) {
+}: Readonly<ChatSidebarProps>) {
     const t = useTranslations("liveChatroom");
     const ts = useTranslations("dialogueSetup");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,7 +46,14 @@ export function ChatSidebar({
     };
 
     return (
-        <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-5 border-r p-5">
+        <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-4 border-r p-5">
+            {/* Nút quay lại */}
+            <BackButton
+                href="/dialogue-setup"
+                label={t("back")}
+                className="!py-1.5 !px-3 !text-xs self-start"
+            />
+
             {/* Companion */}
             <div className="flex flex-col items-center gap-2 text-center">
                 <Avatar
@@ -151,41 +151,12 @@ export function ChatSidebar({
                 </Button>
             </div>
 
-            <Dialog
+            <EndSessionDialog
                 open={isDialogOpen}
                 onClose={() => setIsDialogOpen(false)}
-                className="[&_.MuiPaper-root]:border-bdc-primary [&_.MuiPaper-root]:bg-bgc-app [&_.MuiPaper-root]:!rounded-2xl [&_.MuiPaper-root]:border [&_.MuiPaper-root]:!shadow-xl"
-                slotProps={{
-                    backdrop: {
-                        style: { backgroundColor: "rgba(0, 0, 0, 0.4)" },
-                    },
-                }}
-            >
-                <DialogTitle className="text-text-contrast !font-bold">
-                    {t("endChatModal.title")}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText className="!text-text-muted">
-                        {t("endChatModal.description")}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions className="gap-2 p-4">
-                    <Button
-                        onClick={() => setIsDialogOpen(false)}
-                        className="!text-text-muted hover:!bg-hbgc-app capitalize"
-                    >
-                        {t("endChatModal.cancel")}
-                    </Button>
-                    <Button
-                        onClick={handleConfirmEnd}
-                        variant="contained"
-                        color="error"
-                        className="!rounded-lg !px-4 !font-bold capitalize hover:opacity-90"
-                    >
-                        {t("endChatModal.confirm")}
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                onConfirm={handleConfirmEnd}
+                loading={ending}
+            />
         </aside>
     );
 }

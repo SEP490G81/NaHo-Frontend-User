@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "react-toastify";
-import { getActiveSession, resumeSession } from "@/services/client/speaking.service";
+import { resumeSession } from "@/services/client/speaking.service";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
 import { DEFAULT_FORMALITY, DEFAULT_MARUGOTO } from "../constants/live-chatroom.constant";
@@ -40,18 +40,7 @@ export function useResumeSession(companions: Companion[]) {
     const resume = async (target: ResumeTarget, opts: ResumeOptions = {}) => {
         setResumingCode(target.sessionCode);
         try {
-            // Nạp tin nhắn cũ nếu chưa có: /active lọc theo personaId, chỉ dùng
-            // khi trùng sessionCode (tránh lấy nhầm phiên khác cùng persona).
-            let messages = target.messages;
-            if (!messages) {
-                const active = await getActiveSession(
-                    target.personaId ?? undefined,
-                );
-                messages =
-                    active?.sessionCode === target.sessionCode
-                        ? active.messages
-                        : [];
-            }
+            const messages = target.messages ?? [];
 
             const res = await resumeSession(target.sessionCode);
             const comp =
@@ -73,7 +62,7 @@ export function useResumeSession(companions: Companion[]) {
                 showHints: opts.showHints ?? true,
             });
             setSession({
-                sessionId: res.sessionId || target.sessionCode,
+                sessionCode: res.sessionCode || target.sessionCode,
                 personaId: target.personaId ?? comp.personaId ?? 0,
                 companionId: comp.id,
                 aiGreeting: res.aiGreeting,
@@ -82,7 +71,8 @@ export function useResumeSession(companions: Companion[]) {
                 greetingAudioBase64: res.audioBase64,
                 resumedMessages: messages ?? [],
             });
-            router.push("/live-chatroom");
+            const finalCode = res.sessionCode || target.sessionCode;
+            router.push(`/live-chatroom/${finalCode}`);
         } catch (err) {
             toast.error(err instanceof Error ? err.message : t("resumeError"));
             setResumingCode(null);

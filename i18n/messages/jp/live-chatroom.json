@@ -1,6 +1,7 @@
 {
     "liveChatroom": {
-        "settingsTitle": "会話設定",
+        "back": "戻る",
+        "settingsTitle": "会話の設定",
         "online": "オンライン",
         "ending": "終了中...",
         "sendError": "メッセージを送信できませんでした。もう一度お試しください。",
@@ -38,7 +39,10 @@
         "processingFilterNoise": "音声のノイズを除去中...",
         "processingSTT": "音声をテキストに変換中 (STT)...",
         "processingAnalysis": "文法と言い回しを分析中...",
-        "processingAiResponse": "AIが回答を作成中...",
-        "suggestionLabel": "ヒントが必要ですか？推奨回答："
+        "suggestionLabel": "ヒントが必要ですか？推奨回答：",
+        "readyTitle": "会話の準備ができました",
+        "readyDescription": "下のボタンを押して、AIパートナーからの最初の挨拶を受け取りましょう。",
+        "readyButton": "準備完了",
+        "readyLoading": "接続中..."
     }
 }

@@ -13,7 +13,11 @@ interface Props {
     voiceSpeed: number;
 }
 
-export function AiMessageBubble({ message, companion, voiceSpeed }: Props) {
+export function AiMessageBubble({
+    message,
+    companion,
+    voiceSpeed,
+}: Readonly<Props>) {
     const t = useTranslations("liveChatroom");
     const [showTranslation, setShowTranslation] = useState(false);
     const [showGrammar, setShowGrammar] = useState(false);

@@ -81,7 +81,16 @@
             "rewardsHint": "Open Reward Chest",
             "loadingQuestion": "Loading question...",
             "hoverOpen": "Click to view detail",
-            "hoverRelearn": "Click to practice again"
+            "hoverRelearn": "Click to practice again",
+            "activeSessionSection": "In Progress",
+            "resumeSessionTooltip": "Resume session: \"{text}\"",
+            "deleteSessionTitle": "Delete Session",
+            "deleteSessionConfirm": "Are you sure you want to delete this ongoing conversation session?",
+            "deleteSessionSuccess": "Session deleted successfully.",
+            "deleteSessionError": "Failed to delete session. Please try again.",
+            "deleteSessionButton": "Delete",
+            "cancelButton": "Cancel",
+            "noUtterance": "Ongoing dialogue"
         },
         "node": {
             "vocabTitle": "Vocabulary",
