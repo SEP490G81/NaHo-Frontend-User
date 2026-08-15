@@ -24,8 +24,8 @@ export function CommentReactionBar({ summary, onReact }: Props) {
     );
     const total = summary?.total ?? 0;
 
+    // Chưa thả cảm xúc thì chỉ hiện chữ, không hiện icon mặc định.
     const btnLabel = mine ? REACTION_EMOJIS[mine].label : t("like");
-    const btnEmoji = mine ? REACTION_EMOJIS[mine].emoji : "👍";
 
     return (
         <div className="flex items-center gap-3 text-xs select-none">
@@ -42,7 +42,11 @@ export function CommentReactionBar({ summary, onReact }: Props) {
                             : "text-text-muted hover:text-text-contrast"
                     }`}
                 >
-                    <span className="text-sm">{btnEmoji}</span>
+                    {mine && (
+                        <span className="text-sm">
+                            {REACTION_EMOJIS[mine].emoji}
+                        </span>
+                    )}
                     <span>{btnLabel}</span>
                 </button>
 
