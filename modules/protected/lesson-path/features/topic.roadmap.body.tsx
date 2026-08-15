@@ -140,7 +140,10 @@ export function TopicRoadmapBody({
     };
 
     return (
-        <div className="relative z-20 flex flex-col items-center">
+        <div
+            data-tour-id="tour-marugoto-roadmap"
+            className="relative z-20 flex flex-col items-center"
+        >
             <TopicSnakePath
                 groups={groups}
                 accent={accent}

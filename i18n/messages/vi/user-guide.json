@@ -1,0 +1,57 @@
+{
+    "userGuide": {
+        "tour": {
+            "stepCounter": "Bước {current}/{total}",
+            "skip": "Bỏ qua",
+            "finish": "Hoàn tất",
+            "pointHint": "Bấm vào phần được khoanh sáng để tiếp tục",
+            "restart": "Xem hướng dẫn"
+        },
+        "tours": {
+            "marugoto": {
+                "chooseBook": {
+                    "title": "Chọn một cuốn sách",
+                    "description": "Bắt đầu với cuốn sách đang mở khoá (đánh dấu \"Đang học\"). Bấm vào để xem các chủ đề bên trong."
+                },
+                "chooseTopic": {
+                    "title": "Chọn một chủ đề",
+                    "description": "Mỗi chủ đề (topic) gồm nhiều câu hỏi và từ vựng. Bấm vào chủ đề đang mở để bắt đầu."
+                },
+                "roadmap": {
+                    "title": "Đi theo bản đồ lộ trình",
+                    "description": "Mỗi chặng là một câu hỏi, từ vựng hoặc rương thưởng. Bấm vào một câu hỏi (icon micro) để luyện nói."
+                },
+                "practice": {
+                    "title": "Bắt đầu luyện nói",
+                    "description": "Xem đề bài, từ vựng và câu mẫu, sau đó bấm \"Luyện nói ngay\" để ghi âm câu trả lời."
+                },
+                "record": {
+                    "title": "Ghi âm & nhận điểm",
+                    "description": "Kiểm tra mic rồi ghi âm câu trả lời của bạn. AI sẽ chấm điểm ngay, cộng điểm và lưu vào lịch sử để bạn xem lại bất cứ lúc nào."
+                }
+            },
+            "aiOneOnOne": {
+                "persona": {
+                    "title": "Chọn bạn đồng hành AI",
+                    "description": "Mỗi bạn đồng hành có phong cách nói chuyện riêng. Bấm vào một người để chọn làm đối tác luyện tập."
+                },
+                "start": {
+                    "title": "Bắt đầu trò chuyện",
+                    "description": "Xem lại tóm tắt lựa chọn của bạn, sau đó bấm \"Bắt đầu\" để vào phòng chat."
+                },
+                "chat": {
+                    "title": "Trò chuyện với AI",
+                    "description": "Gõ hoặc bấm micro để nói chuyện bằng tiếng Nhật. AI sẽ trả lời, sửa lỗi và dịch nghĩa ngay trong khung chat."
+                },
+                "end": {
+                    "title": "Kết thúc buổi luyện",
+                    "description": "Khi trò chuyện xong, bấm \"Kết thúc\" rồi xác nhận trong hộp thoại để xem kết quả."
+                },
+                "result": {
+                    "title": "Xem kết quả buổi luyện",
+                    "description": "Điểm tổng, điểm theo từng kỹ năng và gợi ý cải thiện hiện ngay ở đây, đồng thời được lưu vào lịch sử để bạn xem lại bất cứ lúc nào."
+                }
+            }
+        }
+    }
+}

@@ -59,7 +59,10 @@ export function SandboxStep1({
                 </ol>
             </div>
 
-            <aside className="border-bdc-primary bg-bgc-app rounded-2xl border p-6">
+            <aside
+                data-tour-id="tour-marugoto-record"
+                className="border-bdc-primary bg-bgc-app rounded-2xl border p-6"
+            >
                 <h2 className="text-text-contrast text-lg font-semibold">
                     {t("micTestTitle")}
                 </h2>

@@ -86,7 +86,10 @@ export function SessionReport() {
     return (
         <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
             {/* Hero */}
-            <div className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8">
+            <div
+                data-tour-id="tour-ai1on1-result"
+                className="border-bdc-primary bg-bgc-app relative overflow-hidden rounded-2xl border p-6 shadow-sm sm:p-8"
+            >
                 <span
                     aria-hidden
                     className="bg-bgc-highlight absolute inset-y-0 left-0 w-1.5"
