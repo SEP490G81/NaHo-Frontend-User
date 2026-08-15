@@ -23,8 +23,8 @@
 }
 ```
 
-- Tôi muốn bạn sửa lại cho tôi phần login `naho-fe-admin\modules\public\login` và  `naho-fe-user\modules\public\login` để thêm thông báo lỗi khi mà người dùng đăng nhập sai
-  quá nhiều.
+- Tôi muốn bạn sửa lại cho tôi phần login `naho-fe-admin\modules\public\login` và  `naho-fe-user\modules\public\login`
+  để thêm thông báo lỗi khi mà người dùng đăng nhập sai quá nhiều.
 - Logic này tôi vẫn để chung vào API credentials login thôi nhé.
 
 ### Yêu cầu

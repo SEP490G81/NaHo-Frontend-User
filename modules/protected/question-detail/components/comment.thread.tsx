@@ -316,7 +316,10 @@ export function CommentThread({
                 }}
             >
                 <DialogTitle
-                    sx={{ fontWeight: 700, color: "var(--color-text-contrast)" }}
+                    sx={{
+                        fontWeight: 700,
+                        color: "var(--color-text-contrast)",
+                    }}
                 >
                     {t("deleteTitle")}
                 </DialogTitle>

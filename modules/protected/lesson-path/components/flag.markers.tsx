@@ -47,9 +47,36 @@ export function ToriiMark({ locked }: { locked: boolean }) {
     return (
         <svg width={58} height={52} viewBox="0 0 58 52" fill="none">
             <g className={dim(locked)}>
-                <rect x="17" y="13" width="5" height="37" rx="1" fill={TORII} stroke={TORII_DARK} strokeWidth={1} />
-                <rect x="36" y="13" width="5" height="37" rx="1" fill={TORII} stroke={TORII_DARK} strokeWidth={1} />
-                <rect x="12" y="22" width="34" height="5" rx="1" fill={TORII} stroke={TORII_DARK} strokeWidth={1} />
+                <rect
+                    x="17"
+                    y="13"
+                    width="5"
+                    height="37"
+                    rx="1"
+                    fill={TORII}
+                    stroke={TORII_DARK}
+                    strokeWidth={1}
+                />
+                <rect
+                    x="36"
+                    y="13"
+                    width="5"
+                    height="37"
+                    rx="1"
+                    fill={TORII}
+                    stroke={TORII_DARK}
+                    strokeWidth={1}
+                />
+                <rect
+                    x="12"
+                    y="22"
+                    width="34"
+                    height="5"
+                    rx="1"
+                    fill={TORII}
+                    stroke={TORII_DARK}
+                    strokeWidth={1}
+                />
                 <rect x="27" y="14" width="4" height="8" fill={TORII_DARK} />
                 <path
                     d="M5 12 Q29 17 53 12 L53 6 Q29 11 5 6 Z"
@@ -68,11 +95,43 @@ export function KoinoboriMark({ locked }: { locked: boolean }) {
     return (
         <svg width={44} height={50} viewBox="0 0 44 50" fill="none">
             <g className={dim(locked)}>
-                <rect x="8" y="9" width="3" height="39" rx="1.5" fill="#6b7280" />
-                <circle cx="9.5" cy="7" r="2.6" fill="#f5c542" stroke="#b7860b" strokeWidth={0.8} />
-                <Carp x={10} y={9} s={0.86} body={KOI[0].body} fin={KOI[0].fin} />
-                <Carp x={10} y={20} s={0.78} body={KOI[1].body} fin={KOI[1].fin} />
-                <Carp x={10} y={30} s={0.7} body={KOI[2].body} fin={KOI[2].fin} />
+                <rect
+                    x="8"
+                    y="9"
+                    width="3"
+                    height="39"
+                    rx="1.5"
+                    fill="#6b7280"
+                />
+                <circle
+                    cx="9.5"
+                    cy="7"
+                    r="2.6"
+                    fill="#f5c542"
+                    stroke="#b7860b"
+                    strokeWidth={0.8}
+                />
+                <Carp
+                    x={10}
+                    y={9}
+                    s={0.86}
+                    body={KOI[0].body}
+                    fin={KOI[0].fin}
+                />
+                <Carp
+                    x={10}
+                    y={20}
+                    s={0.78}
+                    body={KOI[1].body}
+                    fin={KOI[1].fin}
+                />
+                <Carp
+                    x={10}
+                    y={30}
+                    s={0.7}
+                    body={KOI[2].body}
+                    fin={KOI[2].fin}
+                />
             </g>
         </svg>
     );

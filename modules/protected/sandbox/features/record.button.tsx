@@ -82,9 +82,7 @@ export function RecordButton({
             <div
                 className={cn(
                     "font-mono text-2xl tabular-nums transition-colors",
-                    urgent
-                        ? "text-bgc-error font-bold"
-                        : "text-text-contrast",
+                    urgent ? "text-bgc-error font-bold" : "text-text-contrast",
                 )}
             >
                 {formatTime(display)}

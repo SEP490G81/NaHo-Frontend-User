@@ -45,9 +45,7 @@ export function SampleAnswerCard({
     }
 
     if (!japanese?.trim()) {
-        return (
-            <p className="text-text-muted text-sm italic">{t("empty")}</p>
-        );
+        return <p className="text-text-muted text-sm italic">{t("empty")}</p>;
     }
 
     return (

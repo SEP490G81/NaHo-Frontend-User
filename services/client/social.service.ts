@@ -1,8 +1,5 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import type {
-    CommentListResponse,
-    ReactionToggleRequest,
-} from "@/types/responses/social.response";
+import type { CommentListResponse, ReactionToggleRequest } from "@/types/responses/social.response";
 
 /** Bóc envelope { data } nếu có, ngược lại trả thẳng payload. */
 function unwrap<T>(result: unknown): T {
@@ -21,7 +18,9 @@ async function readJson(response: Response): Promise<unknown> {
 function fail(result: unknown, fallback: string, status?: number): never {
     const problem = result as (ProblemDetail & { message?: string }) | null;
     const detail = problem?.detail || problem?.title || problem?.message;
-    throw new Error(detail || (status ? `${fallback} (HTTP ${status})` : fallback));
+    throw new Error(
+        detail || (status ? `${fallback} (HTTP ${status})` : fallback),
+    );
 }
 
 /** Danh sách comment (dạng cây) của một câu hỏi nói. */
@@ -52,7 +51,8 @@ export async function createComment(input: {
             parentId: input.parentId ?? null,
         }),
     });
-    if (!response.ok) fail(await readJson(response), "Không gửi được bình luận.");
+    if (!response.ok)
+        fail(await readJson(response), "Không gửi được bình luận.");
 }
 
 /** Sửa nội dung comment (BE lấy userId từ token, chỉ cần commentId + nội dung). */
@@ -68,7 +68,8 @@ export async function updateComment(input: {
             newContent: input.newContent,
         }),
     });
-    if (!response.ok) fail(await readJson(response), "Không sửa được bình luận.");
+    if (!response.ok)
+        fail(await readJson(response), "Không sửa được bình luận.");
 }
 
 /** Xoá comment theo id. */
@@ -78,7 +79,8 @@ export async function deleteComment(commentId: number): Promise<void> {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ commentId }),
     });
-    if (!response.ok) fail(await readJson(response), "Không xoá được bình luận.");
+    if (!response.ok)
+        fail(await readJson(response), "Không xoá được bình luận.");
 }
 
 /** Thả / đổi / gỡ reaction cho một comment. */

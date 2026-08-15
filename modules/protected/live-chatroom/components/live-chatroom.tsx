@@ -14,6 +14,7 @@ import {
     getCompanion,
 } from "../constants/live-chatroom.constant";
 import type { ChatMessage } from "../types/live-chatroom.type";
+import { blobToWav } from "../utils/wav.encoder";
 import { useChatStore } from "@/store/chatStore";
 import {
     endSession,
@@ -68,9 +69,7 @@ export function LiveChatroom() {
             // Dựng lại lịch sử khi khôi phục phiên dở.
             const history: ChatMessage[] = (session.resumedMessages ?? []).map(
                 (m) => {
-                    const isUser = m.senderType
-                        ?.toUpperCase()
-                        .includes("USER");
+                    const isUser = m.senderType?.toUpperCase().includes("USER");
                     if (isUser) {
                         return {
                             id: nextId("h"),
@@ -204,7 +203,8 @@ export function LiveChatroom() {
         if (!session) return;
         setAudioProcessing(true);
         try {
-            const res = await sendSessionAudio(session.sessionId, blob);
+            const wavBlob = await blobToWav(blob);
+            const res = await sendSessionAudio(session.sessionId, wavBlob);
             setAudioProcessing(false);
             setMessages((m) => [
                 ...m,

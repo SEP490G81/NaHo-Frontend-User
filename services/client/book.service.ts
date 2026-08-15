@@ -6,10 +6,7 @@ import {
     TopicDetailResponse,
     TopicListItemResponse
 } from "@/types/responses/book.response";
-import {
-    LearningPathNodeDetailResponse,
-    VocabulariesOfTopicResponse,
-} from "@/types/responses/learning.response";
+import { LearningPathNodeDetailResponse, VocabulariesOfTopicResponse } from "@/types/responses/learning.response";
 import { UserNodeProgressResponse } from "@/types/responses/league.response";
 
 /**

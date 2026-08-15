@@ -17,9 +17,9 @@ import { cn } from "@/libs/utils";
 
 const ScoreRadar = dynamic(
     () =>
-        import(
-            "@/modules/protected/speaking-result/components/score-radar"
-        ).then((m) => m.ScoreRadar),
+        import("@/modules/protected/speaking-result/components/score-radar").then(
+            (m) => m.ScoreRadar,
+        ),
     {
         ssr: false,
         loading: () => (
@@ -201,7 +201,9 @@ export function SessionDetail({ sessionCode }: { sessionCode: string }) {
                                 className="border-bdc-primary bg-bgc-page/40 rounded-xl border p-4"
                             >
                                 <div className="text-bgc-highlight mb-1 text-xs font-bold tracking-wide uppercase">
-                                    {dimSet.has(k) ? t(`dim_${k as DimKey}`) : k}
+                                    {dimSet.has(k)
+                                        ? t(`dim_${k as DimKey}`)
+                                        : k}
                                 </div>
                                 <p className="text-text-contrast text-sm leading-relaxed">
                                     {v}

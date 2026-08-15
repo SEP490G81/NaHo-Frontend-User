@@ -26,7 +26,10 @@ export function CommentAuthorCard({ user }: { user: LeaderboardUserResponse }) {
             <div className="flex items-center gap-3">
                 <LearnerAvatar
                     fullName={user.fullName}
-                    avatarUrl={resolveAvatarUrl(user.avatarUrl, user.authAvatarUrl)}
+                    avatarUrl={resolveAvatarUrl(
+                        user.avatarUrl,
+                        user.authAvatarUrl,
+                    )}
                     size={48}
                 />
                 <div className="min-w-0">
@@ -47,7 +50,9 @@ export function CommentAuthorCard({ user }: { user: LeaderboardUserResponse }) {
             </div>
             <div className="border-bdc-primary mt-2 flex items-center justify-between border-t pt-2 text-xs">
                 <span className="text-text-muted">
-                    {user.rank != null ? t("profileRank", { rank: user.rank }) : ""}
+                    {user.rank != null
+                        ? t("profileRank", { rank: user.rank })
+                        : ""}
                 </span>
                 <span className="text-text-highlight font-bold">
                     {t("profilePoints", {

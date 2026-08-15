@@ -42,7 +42,7 @@ export function NodeTooltip({ tip, children, enabled = true, onOpen }: Props) {
                         className="pointer-events-none fixed z-[100] flex -translate-x-1/2 -translate-y-full flex-col items-center pb-1"
                         style={{ left: pos.x, top: pos.y }}
                     >
-                        <div className="border-bdc-primary bg-bgc-app min-w-[190px] max-w-xs rounded-xl border p-3 text-center shadow-lg">
+                        <div className="border-bdc-primary bg-bgc-app max-w-xs min-w-[190px] rounded-xl border p-3 text-center shadow-lg">
                             {tip}
                         </div>
                         <div className="border-bdc-primary bg-bgc-app -mt-1 h-2 w-2 rotate-45 border-r border-b" />

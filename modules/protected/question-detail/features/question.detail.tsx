@@ -112,7 +112,9 @@ export function QuestionDetail() {
                         <div className="border-bdc-primary bg-bgc-app flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border px-4 py-3 text-sm">
                             <span className="text-text-muted">
                                 {t("yourBestScore", {
-                                    score: Number(nodeProg.bestScore).toFixed(1),
+                                    score: Number(nodeProg.bestScore).toFixed(
+                                        1,
+                                    ),
                                 })}
                             </span>
                             <span
