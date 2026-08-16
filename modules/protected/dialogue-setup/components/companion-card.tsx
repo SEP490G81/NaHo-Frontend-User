@@ -50,7 +50,10 @@ export function CompanionCard({
                 )}
             </div>
             {companion.description && (
-                <p className="text-text-muted line-clamp-3 text-xs leading-relaxed">
+                <p
+                    className="text-text-muted line-clamp-3 text-xs leading-relaxed"
+                    title={companion.prompt || companion.description}
+                >
                     {companion.description}
                 </p>
             )}

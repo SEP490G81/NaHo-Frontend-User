@@ -67,7 +67,7 @@ export function DialogueSetup() {
         subscription?.plan?.tier ??
         "FREE";
 
-    const [companionId, setCompanionId] = useState(COMPANIONS[0].id);
+    const [selectedCompanionId, setSelectedCompanionId] = useState<string | null>(null);
     const [styleOverride, setStyleOverride] = useState<FormalityLevel | null>(
         null,
     );
@@ -76,8 +76,17 @@ export function DialogueSetup() {
     const [voiceSpeed, setVoiceSpeed] = useState(1.0);
     const [showHints, setShowHints] = useState(true);
 
+    const activeCompanionId = useMemo(() => {
+        if (selectedCompanionId) {
+            const found = companions.find((c) => c.id === selectedCompanionId);
+            if (found && found.personaId != null) return found.id;
+        }
+        const firstAvailable = companions.find((c) => c.personaId != null);
+        return firstAvailable?.id ?? companions[0]?.id ?? COMPANIONS[0].id;
+    }, [companions, selectedCompanionId]);
+
     const selected =
-        companions.find((c) => c.id === companionId) ?? companions[0];
+        companions.find((c) => c.id === activeCompanionId) ?? companions[0];
 
     const conversationStyle =
         styleOverride ?? selected?.defaultFormality ?? DEFAULT_FORMALITY;
@@ -85,7 +94,7 @@ export function DialogueSetup() {
         marugotoOverride ?? selected?.defaultMarugotoLevel ?? DEFAULT_MARUGOTO;
 
     const handleSelectCompanion = (id: string) => {
-        setCompanionId(id);
+        setSelectedCompanionId(id);
         setStyleOverride(null);
         setMarugotoOverride(null);
     };
@@ -116,7 +125,7 @@ export function DialogueSetup() {
                         </div>
                         <CompanionList
                             companions={companions}
-                            selectedId={companionId}
+                            selectedId={activeCompanionId}
                             onSelect={handleSelectCompanion}
                             loading={isLoading}
                         />

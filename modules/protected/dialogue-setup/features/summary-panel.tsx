@@ -89,20 +89,32 @@ export function SummaryPanel({
                 {t("summaryTitle")}
             </h2>
 
-            <div className="border-bdc-primary bg-bgc-app flex items-center gap-3 rounded-xl border p-3">
-                <Avatar className={`h-12 w-12 ${companion.accent} font-bold`}>
-                    {getInitials(companion.name)}
-                </Avatar>
-                <div className="min-w-0">
-                    <div className="text-text-contrast truncate font-semibold">
-                        {companion.name}
-                    </div>
-                    {companion.role && (
-                        <div className="text-text-muted truncate text-xs">
-                            {companion.role}
+            <div className="border-bdc-primary bg-bgc-app flex flex-col gap-2 rounded-xl border p-3">
+                <div className="flex items-center gap-3">
+                    <Avatar className={`h-12 w-12 ${companion.accent} font-bold`}>
+                        {getInitials(companion.name)}
+                    </Avatar>
+                    <div className="min-w-0">
+                        <div className="text-text-contrast truncate font-semibold">
+                            {companion.name}
                         </div>
-                    )}
+                        {companion.role && (
+                            <div className="text-text-muted truncate text-xs">
+                                {companion.role}
+                            </div>
+                        )}
+                    </div>
                 </div>
+                {companion.prompt && (
+                    <div className="border-bdc-primary/40 mt-1 border-t pt-2 text-xs">
+                        <span className="text-text-muted mb-1 block font-medium">
+                            Prompt Persona:
+                        </span>
+                        <p className="text-text-contrast line-clamp-4 break-words leading-relaxed italic">
+                            &quot;{companion.prompt}&quot;
+                        </p>
+                    </div>
+                )}
             </div>
 
             <div className="space-y-2.5">

@@ -3,6 +3,7 @@ export interface Companion {
     name: string;
     role: string;
     description: string;
+    prompt?: string;
     level: string;
     accent: string; // tailwind bg/text style for avatar tint
     /** Từ khoá khớp tên persona bên BE (GET /personas), so khớp không phân biệt hoa/thường. */

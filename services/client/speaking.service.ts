@@ -152,7 +152,17 @@ export async function getSpeakingHistoryList(
 /** Danh sách persona AI (GET /personas). */
 export async function getPersonas(): Promise<PersonaResponse[]> {
     const response = await apiRequest("/api/personas");
-    return unwrap<PersonaResponse[]>(response);
+    const data = await unwrap<PersonaResponse[] | PersonaResponse>(response);
+    if (!data) return [];
+    return Array.isArray(data) ? data : [data];
+}
+
+/** Chi tiết persona AI theo ID (GET /personas/{id}). */
+export async function getPersonaById(
+    id: number | string,
+): Promise<PersonaResponse> {
+    const response = await apiRequest(`/api/personas/${id}`);
+    return unwrap<PersonaResponse>(response);
 }
 
 /** Khôi phục phiên dở theo sessionCode → câu chào "chào lại". */

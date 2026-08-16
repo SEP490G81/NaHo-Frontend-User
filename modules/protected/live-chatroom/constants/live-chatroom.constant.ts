@@ -112,11 +112,18 @@ export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
         const match = personas.find(
             (p) =>
                 !used.has(p.id) &&
-                p.name?.toLowerCase().includes(c.matchKeyword),
+                (p.name?.toLowerCase().includes(c.matchKeyword) ||
+                    c.matchKeyword.includes(p.name?.toLowerCase() ?? "")),
         );
         if (match) used.add(match.id);
         return {
             ...c,
+            name: match?.name ?? c.name,
+            prompt: match?.prompt ?? undefined,
+            description:
+                match?.prompt ??
+                match?.conversationStyle?.description ??
+                c.description,
             personaId: match ? match.id : null,
             // Ưu tiên thể lịch sự + cấp độ từ BE, thiếu thì mặc định companion.
             defaultFormality:
@@ -130,15 +137,17 @@ export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
         };
     });
 
-    // Persona chưa khớp companion nào → dựng thẻ từ dữ liệu BE (mô tả + cấp độ).
+    // Persona chưa khớp companion nào → dựng thẻ từ dữ liệu BE (tên + prompt + cấp độ).
     const extras: Companion[] = personas
         .filter((p) => !used.has(p.id))
         .map((p, i) => ({
             id: `persona-${p.id}`,
             name: p.name,
-            role: "AI Companion",
-            description: p.conversationStyle?.description ?? "",
-            level: marugotoLabel(p.conversationStyle?.marugotoLevel),
+            role: "Giảng viên / Companion AI",
+            description: p.prompt || p.conversationStyle?.description || "",
+            prompt: p.prompt,
+            level:
+                marugotoLabel(p.conversationStyle?.marugotoLevel) || "Tất cả",
             accent: EXTRA_ACCENTS[i % EXTRA_ACCENTS.length],
             matchKeyword: "",
             personaId: p.id,
