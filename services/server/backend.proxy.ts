@@ -11,6 +11,9 @@ import { ProblemDetail } from "@/types/responses/base.response";
  */
 async function forwardJson(backendResponse: Response) {
     const text = await backendResponse.text();
+
+    console.log(">>> check text: ", text);
+
     let body: unknown = null;
     if (text) {
         try {
@@ -199,4 +202,3 @@ export async function proxyDelete(path: string) {
 
     return forwardJson(backendResponse);
 }
-
