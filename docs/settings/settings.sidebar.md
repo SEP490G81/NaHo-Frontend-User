@@ -8,7 +8,7 @@
 
 - Tôi muốn bạn sửa lại style của `modules/protected/settings/components/settings.sidebar.tsx` sao cho các hiệu ứng
   hover, active 1 setting sidebar component nó giống với lại app sidebar:
-  `layouts/sidebar/components/learner.sidebar.tsx`
+  `../../layouts/sidebar/components/sidebar.tsx`
 
 ### Yêu cầu
 

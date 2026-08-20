@@ -15,17 +15,7 @@ export interface ChatConfig {
     conversationStyle: FormalityLevel;
     /** Cấp độ Marugoto của phiên. */
     marugotoLevel: MarugotoLevel;
-    voiceSpeed: number;
-    showHints: boolean;
 }
-
-export const defaultChatConfig: ChatConfig = {
-    companionId: "sakura",
-    conversationStyle: "NEUTRAL",
-    marugotoLevel: "STARTER_A1",
-    voiceSpeed: 1,
-    showHints: true,
-};
 
 /** Phiên hội thoại đang chạy (trả về từ POST /speaking/session/persona/{personaId}). */
 export interface ChatSession {

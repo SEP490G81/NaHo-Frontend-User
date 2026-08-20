@@ -65,6 +65,15 @@
                 "comingSoon": "Sắp ra mắt",
                 "new": "Mới"
             },
+            "chatroomSidebar": {
+                "newChat": "Đoạn chat mới",
+                "completedSection": "Đã hoàn thành",
+                "chatSection": "Đoạn chat",
+                "noCompletedChats": "Chưa có đoạn chat hoàn thành",
+                "noActiveChats": "Chưa có đoạn chat nào",
+                "brandTitle": "NaHo Chat",
+                "untitledChat": "Đoạn chat chưa có tên"
+            },
             "header": {
                 "collapseSidebar": "Thu gọn thanh bên",
                 "expandSidebar": "Mở rộng thanh bên",

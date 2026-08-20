@@ -1,6 +1,5 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { getCurrentUser } from "@/services/server/user.service";
-import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
 import { redirect } from "next/navigation";
 import {
     dehydrate,
@@ -8,18 +7,17 @@ import {
     QueryClient,
 } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
-import Sidebar from "@/layouts/sidebar/components/sidebar";
-import SakuraFalling from "@/components/ui/sakura-falling";
-import JapanBackground from "@/components/ui/japan-background";
-import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
-import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigana.provider";
 import UserLearningProgressProvider from "@/components/providers/user.learning.progress.provider";
+import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigana.provider";
+import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
 import TourUserScope from "@/modules/protected/user-guide/providers/tour.user.scope";
 import ActiveTours from "@/modules/protected/user-guide/providers/active.tours";
+import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
+import SakuraFalling from "@/components/ui/sakura-falling";
+import JapanBackground from "@/components/ui/japan-background";
+import ChatroomSidebar from "@/layouts/chatroom-sidebar/components/chatroom.sidebar";
 
-const ProtectedLayout = async ({
-    children,
-}: Readonly<{ children: ReactNode }>) => {
+const ChatroomLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getCurrentUser();
 
     if (!user) {
@@ -38,7 +36,7 @@ const ProtectedLayout = async ({
                     <TourUserScope userId={String(user.id)} />
                     <ActiveTours />
                     <div className="relative flex min-h-screen">
-                        <Sidebar />
+                        <ChatroomSidebar />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <ProtectedHeader />
                             <div className="bg-bgc-page relative isolate w-full flex-1 p-5">
@@ -56,4 +54,4 @@ const ProtectedLayout = async ({
     );
 };
 
-export default ProtectedLayout;
+export default ChatroomLayout;

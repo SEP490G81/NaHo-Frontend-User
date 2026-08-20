@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
-import { NavItem } from "../constants/leaner.sidebar.constant";
+import { NavItem } from "../constants/sidebar.constant";
 import { cn } from "@/libs/utils";
 
 interface SidebarItemProps {

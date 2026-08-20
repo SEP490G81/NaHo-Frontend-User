@@ -20,16 +20,6 @@ export interface ResumeTarget {
     messages?: SessionMessageItem[];
 }
 
-interface ResumeOptions {
-    voiceSpeed?: number;
-    showHints?: boolean;
-}
-
-/**
- * Khôi phục một phiên AI 1:1 đang dở rồi điều hướng vào phòng chat. Dùng chung
- * cho màn Thiết lập (banner) và màn Lịch sử (bấm vào phiên IN_PROGRESS).
- * `resumingCode` = sessionCode đang khôi phục để hiển thị loading đúng item.
- */
 export function useResumeSession(companions: Companion[]) {
     const t = useTranslations("dialogueSetup");
     const router = useRouter();
@@ -37,7 +27,7 @@ export function useResumeSession(companions: Companion[]) {
     const setSession = useChatStore((s) => s.setSession);
     const [resumingCode, setResumingCode] = useState<string | null>(null);
 
-    const resume = async (target: ResumeTarget, opts: ResumeOptions = {}) => {
+    const resume = async (target: ResumeTarget) => {
         setResumingCode(target.sessionCode);
         try {
             const messages = target.messages ?? [];
@@ -58,8 +48,6 @@ export function useResumeSession(companions: Companion[]) {
                     (target.marugotoLevel as MarugotoLevel) ??
                     comp.defaultMarugotoLevel ??
                     DEFAULT_MARUGOTO,
-                voiceSpeed: opts.voiceSpeed ?? 1,
-                showHints: opts.showHints ?? true,
             });
             setSession({
                 sessionCode: res.sessionCode || target.sessionCode,

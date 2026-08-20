@@ -10,13 +10,11 @@ import { useTranslations } from "next-intl";
 interface Props {
     message: AiChatMessage;
     companion: Companion;
-    voiceSpeed: number;
 }
 
 export function AiMessageBubble({
     message,
     companion,
-    voiceSpeed,
 }: Readonly<Props>) {
     const t = useTranslations("liveChatroom");
     const [showTranslation, setShowTranslation] = useState(false);
@@ -42,7 +40,6 @@ export function AiMessageBubble({
                         <div className="mt-3">
                             <Base64AudioPlayer
                                 base64={message.audioBase64}
-                                playbackRate={voiceSpeed}
                                 autoPlay={message.autoPlay}
                             />
                         </div>

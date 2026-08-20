@@ -23,8 +23,6 @@ interface SummaryPanelProps {
     companion: Companion;
     conversationStyle: FormalityLevel;
     marugotoLevel: MarugotoLevel;
-    voiceSpeed: number;
-    showHints: boolean;
     isQuotaExhausted?: boolean;
 }
 
@@ -32,8 +30,6 @@ export function SummaryPanel({
     companion,
     conversationStyle,
     marugotoLevel,
-    voiceSpeed,
-    showHints,
     isQuotaExhausted = false,
 }: Readonly<SummaryPanelProps>) {
     const t = useTranslations("dialogueSetup");
@@ -52,7 +48,6 @@ export function SummaryPanel({
             value: t(`style_${styleKeyOf(conversationStyle)}`),
         },
         { label: t("summaryLevel"), value: marugotoLabel(marugotoLevel) },
-        { label: t("summarySpeed"), value: `${voiceSpeed.toFixed(1)}x` },
     ];
 
     const handleStart = async () => {
@@ -61,14 +56,14 @@ export function SummaryPanel({
         try {
             const sessionCode = await startConversation(personaId);
             if (!sessionCode || sessionCode === "[object Object]") {
-                throw new Error("Không nhận được mã phiên hội thoại từ máy chủ.");
+                throw new Error(
+                    "Không nhận được mã phiên hội thoại từ máy chủ.",
+                );
             }
             setConfig({
                 companionId: companion.id,
                 conversationStyle,
                 marugotoLevel,
-                voiceSpeed,
-                showHints,
             });
             setSession({
                 sessionCode,
@@ -91,7 +86,9 @@ export function SummaryPanel({
 
             <div className="border-bdc-primary bg-bgc-app flex flex-col gap-2 rounded-xl border p-3">
                 <div className="flex items-center gap-3">
-                    <Avatar className={`h-12 w-12 ${companion.accent} font-bold`}>
+                    <Avatar
+                        className={`h-12 w-12 ${companion.accent} font-bold`}
+                    >
                         {getInitials(companion.name)}
                     </Avatar>
                     <div className="min-w-0">
@@ -110,7 +107,7 @@ export function SummaryPanel({
                         <span className="text-text-muted mb-1 block font-medium">
                             Prompt Persona:
                         </span>
-                        <p className="text-text-contrast line-clamp-4 break-words leading-relaxed italic">
+                        <p className="text-text-contrast line-clamp-4 leading-relaxed wrap-break-word italic">
                             &quot;{companion.prompt}&quot;
                         </p>
                     </div>
@@ -138,7 +135,7 @@ export function SummaryPanel({
                 variant="contained"
                 color="primary"
                 fullWidth
-                className="[&.Mui-disabled]:!bg-bdc-primary [&.Mui-disabled]:!text-text-muted !h-12 !rounded-xl !font-bold text-white capitalize hover:opacity-90"
+                className="[&.Mui-disabled]:bg-bdc-primary! [&.Mui-disabled]:text-text-muted! h-12! rounded-xl! font-bold! text-white capitalize hover:opacity-90"
                 endIcon={
                     starting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -149,14 +146,6 @@ export function SummaryPanel({
             >
                 {starting ? t("starting") : t("startButton")}
             </Button>
-
-            <p className="text-text-muted text-center text-xs">
-                {personaId == null
-                    ? t("personaUnavailable")
-                    : isQuotaExhausted
-                      ? t("dailyQuotaExhausted")
-                      : t("startHint")}
-            </p>
         </div>
     );
 }

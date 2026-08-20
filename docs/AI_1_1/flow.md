@@ -4,37 +4,33 @@
 - Tool sở trưởng của bạn là Next.JS, MUI, và Tailwindcss.
 - Bạn đã làm việc cho các tập đoàn lớn và dành được giải thưởng lớn trong các cuộc thi thiết kế.
 
+### Input
+
+- Các file trong folder: `app/[locale]/(chatroom)/live-chatroom`
+- Các file trong folder: `modules/protected/dialogue-setup`
+- Các file trong folder: `modules/protected/live-chatroom`
+- File `services/server/speaking.llm.service.ts`
+- File `services/client/speaking.llm.service.ts`
+
 ### Mô tả bài toán
 
-- Giờ tôi muốn bạn thêm cho tôi mục là để hiển thị các IN_PROGRESS session thông qua việc sử dụng API:
+- Tôi muốn bạn sửa lại luồng của phần chat với AI như sau:
 
-+ /session/in-progress/all
-+ method GET
-+ có access token
-+ Response trả ra: List<SpeakingSessionResponse>
+1. Khi ấn bắt đầu 1 đoạn chat (`SummaryPanel`) thì sẽ gọi tới API backend là `startConversation`
+2. API `startConversation` sẽ trả về 1 sessionCode, sau đó FE điều hướng người dùng tới trang
+   `live-chatroom/{sessionCode}`
+3. Khi tới trang, `live-chatroom/{sessionCode}` thì sẽ gọi API backend là `getInProgressSessionDetails`, nếu bị lỗi hoặc
+   không có kết quả thì tức là đoạn chat này chưa được bắt đầu, khi đó, sẽ hiện nút sẵn sàng.
 
-- Các phiên đang nói dở đó sẽ được hiển thị trên `../../layouts/sidebar/components/sidebar.tsx` ở dưới chỗ các chủ đề đã
-  ghim
-- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang livechatroom/sessionCode để tiếp
-  tục nói chuyện với AI.
++ Nếu người dùng ấn vào nút sẵn sàng thì gọi API `initFirstGreeting` để bắt đầu trò chuyện với AI.
++ Nếu có kết quả thì sẽ hiện thị ra các message trò chuyện giữa 2 bên.
 
-- Khi thu nhỏ sidebar thì tôi muốn vẫn phải có divider để ngăn cách giữa các navigation items, chủ đề đã ghim và các
-  session đang dở. Nếu không có thì không cần divider.
-- Thông tin của 1 session cần hiển thị khi phóng to sẽ bao gồm:
-
-+ Icon cái mic
-+ Câu cuối cùng mà người dùng nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI
-  nói (senderType = "ASSISTANT")
-
-- Khi thu nhỏ thì sẽ hiện thông tin là icon cái mic, và khi hover vào thì hiện thông tin về câu cuối cùng mà người dùng
-  nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI nói (senderType =
-  "ASSISTANT")
-
-- Ở session đó tôi cũng cần dấu "x" để khi ấn vào thì hỏi confirm là bạn có muốn xóa session này không rồi mới cho xóa.
-  Xóa thì bạn hãy gọi API /speaking/session/${sessionCode} Method là Delete trả về void thành công là mã 204
+- Sau khi sửa, bạn hãy xóa toàn bộ các file không còn dùng tới, không liên quan nữa, outdate để tránh làm rối.
+- Các API đã có đủ trong `services`, bạn hãy sử dụng chúng.
 
 ### Yêu cầu
 
+- Code đủ, đúng, không cần dài dòng.
 - Phân tách các module, các component, các hàm rõ ràng, dễ quản lí code, tránh code vào 1 file quá dài (1 file phải ít
   hơn 200 dòng).
 - Đặt tên các file theo cú pháp "a.b.c[đuôi file]" và nhìn vào có thể biết luôn là file đó làm cái gì.

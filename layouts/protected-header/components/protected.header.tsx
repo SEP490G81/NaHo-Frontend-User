@@ -46,9 +46,9 @@ const ProtectedHeader = () => {
                         }}
                     >
                         {isSidebarCollapsed ? (
-                            <KeyboardDoubleArrowLeftOutlinedIcon className="h-5 w-5" />
-                        ) : (
                             <KeyboardDoubleArrowRightOutlinedIcon className="h-5 w-5" />
+                        ) : (
+                            <KeyboardDoubleArrowLeftOutlinedIcon className="h-5 w-5" />
                         )}
                     </Button>
                 </TooltipCustom>

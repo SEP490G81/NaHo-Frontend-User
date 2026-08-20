@@ -31,6 +31,24 @@ export interface SpeakingSessionMessageResponse {
     userRecordAudio: string | null;
 }
 
+export interface SpeakingSessionListItemResponse {
+    id: number;
+    sessionCode: string;
+    userId: number;
+    personaId: number;
+    topic: string;
+    voiceName: string;
+    marugotoLevel: MarugotoLevel;
+    formalityLevel: FormalityLevel;
+    durationSeconds: number | null;
+    totalTurns: number;
+    asrConfidence: number | null;
+    fullTranscript: string | null;
+    status: SpeakingSessionStatus;
+    startedAt: string;
+    endedAt: string | null;
+}
+
 export interface SpeakingSessionResponse {
     id: number;
     sessionCode: string;

@@ -1,0 +1,4 @@
+export const CHATROOM_DRAWER_WIDTH = 260;
+export const CHATROOM_COLLAPSED_WIDTH = 72;
+
+export const CHATROOM_SIDEBAR_DEFAULT_TITLE = "NaHo Chat";

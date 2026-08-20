@@ -18,7 +18,6 @@ import {
     getMySubscription,
     getTodayAiUsage,
 } from "@/services/client/subscription.service";
-import { useAuthStore } from "@/store/authStore";
 import type {
     FormalityLevel,
     MarugotoLevel,
@@ -27,7 +26,6 @@ import SubscriptionModal from "@/modules/protected/settings/billing/features/sub
 
 export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
-    const level = useAuthStore((s) => s.profile?.level);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
@@ -67,19 +65,19 @@ export function DialogueSetup() {
         subscription?.plan?.tier ??
         "FREE";
 
-    const [selectedCompanionId, setSelectedCompanionId] = useState<string | null>(null);
+    const [selectedCompanionId, setSelectedCompanionId] = useState<
+        string | null
+    >(null);
     const [styleOverride, setStyleOverride] = useState<FormalityLevel | null>(
         null,
     );
     const [marugotoOverride, setMarugotoOverride] =
         useState<MarugotoLevel | null>(null);
-    const [voiceSpeed, setVoiceSpeed] = useState(1.0);
-    const [showHints, setShowHints] = useState(true);
 
     const activeCompanionId = useMemo(() => {
         if (selectedCompanionId) {
             const found = companions.find((c) => c.id === selectedCompanionId);
-            if (found && found.personaId != null) return found.id;
+            if (found?.personaId != null) return found.id;
         }
         const firstAvailable = companions.find((c) => c.personaId != null);
         return firstAvailable?.id ?? companions[0]?.id ?? COMPANIONS[0].id;
@@ -100,18 +98,17 @@ export function DialogueSetup() {
     };
 
     return (
-        <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
+        <div className="mx-auto max-w-5xl space-y-5">
             <SetupHero
-                level={level}
                 aiLimit={aiLimit}
                 aiRemaining={aiRemaining}
                 aiExhausted={aiExhausted}
                 onOpenUpgradeModal={() => setIsModalOpen(true)}
             />
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-5 lg:grid-cols-3">
                 {/* Left: companion + advanced settings */}
-                <div className="space-y-6 lg:col-span-2">
+                <div className="space-y-5 lg:col-span-2">
                     <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-sm sm:p-6">
                         <div className="mb-4 flex items-center justify-between">
                             <h2 className="text-text-contrast text-base font-semibold">
@@ -134,12 +131,8 @@ export function DialogueSetup() {
                     <AdvancedSettingsForm
                         conversationStyle={conversationStyle}
                         marugotoLevel={marugotoLevel}
-                        voiceSpeed={voiceSpeed}
-                        showHints={showHints}
                         onStyleChange={setStyleOverride}
                         onMarugotoChange={setMarugotoOverride}
-                        onVoiceSpeedChange={setVoiceSpeed}
-                        onShowHintsChange={setShowHints}
                     />
                 </div>
 
@@ -149,8 +142,6 @@ export function DialogueSetup() {
                         companion={selected}
                         conversationStyle={conversationStyle}
                         marugotoLevel={marugotoLevel}
-                        voiceSpeed={voiceSpeed}
-                        showHints={showHints}
                         isQuotaExhausted={aiExhausted}
                     />
                 </div>

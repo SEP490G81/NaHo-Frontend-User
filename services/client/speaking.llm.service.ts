@@ -6,6 +6,7 @@ import {
     AudioChatResponse,
     ChatResponse,
     ScoringResponse,
+    SpeakingSessionListItemResponse,
     SpeakingSessionResponse,
     StartConversationResponse,
 } from "@/types/responses/speaking.llm.response";
@@ -163,10 +164,10 @@ export async function endSpeakingSession(
 
 /**
  * 7. Lấy danh sách các phiên hội thoại đang dở (IN_PROGRESS)
- * GET /speaking/session/in-progress/all -> trả về SpeakingSessionResponse[]
+ * GET /speaking/session/in-progress/all -> trả về SpeakingSessionListItemResponse[]
  */
 export async function getInProgressSessions(): Promise<
-    SpeakingSessionResponse[]
+    SpeakingSessionListItemResponse[]
 > {
     const response = await apiRequest(
         "/api/speaking/session/in-progress/all",
@@ -175,5 +176,5 @@ export async function getInProgressSessions(): Promise<
             headers: { "Content-Type": "application/json" },
         },
     );
-    return unwrap<SpeakingSessionResponse[]>(response);
+    return unwrap<SpeakingSessionListItemResponse[]>(response);
 }

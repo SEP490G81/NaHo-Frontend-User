@@ -11,7 +11,6 @@ interface MessagesListProps {
     isTyping: boolean;
     audioProcessing: boolean;
     companion: Companion;
-    voiceSpeed: number;
     scrollRef: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -20,7 +19,6 @@ export function MessagesList({
     isTyping,
     audioProcessing,
     companion,
-    voiceSpeed,
     scrollRef,
 }: Readonly<MessagesListProps>) {
     return (
@@ -36,7 +34,6 @@ export function MessagesList({
                                 key={m.id}
                                 message={m}
                                 companion={companion}
-                                voiceSpeed={voiceSpeed}
                             />
                         ) : (
                             <UserMessageBubble key={m.id} message={m} />

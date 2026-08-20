@@ -4,17 +4,16 @@ import React from "react";
 import { usePathname } from "@/i18n/navigation";
 import { Box, Drawer, List } from "@mui/material";
 import { cn } from "@/libs/utils";
-import { NAV_ITEMS } from "@/layouts/sidebar/constants/leaner.sidebar.constant";
+import { NAV_ITEMS } from "@/layouts/sidebar/constants/sidebar.constant";
 import { useUiStore } from "@/store/uiStore";
 import SidebarLogoButton from "./sidebar.logo.button";
 import SidebarItem from "./sidebar.item";
 import UserAvatar from "./user.avatar";
 import SidebarPinnedTopics from "../features/sidebar.pinned.topics";
-import SidebarActiveSession from "../features/sidebar.active.session";
 
 const DRAWER_WIDTH = 260;
 
-export function LearnerSidebar() {
+export function Sidebar() {
     const pathname = usePathname();
     const {
         isSidebarOpen,
@@ -100,12 +99,6 @@ export function LearnerSidebar() {
                     isCollapsed={isCollapsed}
                     onCloseSidebar={closeSidebar}
                 />
-
-                {/* Active Speaking Session Section */}
-                <SidebarActiveSession
-                    isCollapsed={isCollapsed}
-                    onCloseSidebar={closeSidebar}
-                />
             </Box>
 
             {/* User Avatar Footer */}
@@ -164,5 +157,4 @@ export function LearnerSidebar() {
     );
 }
 
-export default LearnerSidebar;
-
+export default Sidebar;

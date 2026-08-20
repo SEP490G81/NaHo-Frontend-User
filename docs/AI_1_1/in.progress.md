@@ -4,34 +4,46 @@
 - Tool sở trưởng của bạn là Next.JS, MUI, và Tailwindcss.
 - Bạn đã làm việc cho các tập đoàn lớn và dành được giải thưởng lớn trong các cuộc thi thiết kế.
 
+### Input
+
+- Các file trong folder `layouts/chatroom-sidebar`
+
 ### Mô tả bài toán
 
-- Giờ tôi muốn bạn thêm cho tôi mục là để hiển thị các IN_PROGRESS session thông qua việc sử dụng API:
+- Trước tiên hãy gọi API backend: `http://localhost:8386/api/v1/speaking/session/in-progress/all`
 
-+ /session/in-progress/all
-+ method GET
-+ có access token
-+ Response trả ra: List<SpeakingSessionResponse>
++ Method: GET
++ Response: List<SpeakingSessionListItemResponse>
 
-- Các phiên đang nói dở đó sẽ được hiển thị trên `../../layouts/sidebar/components/sidebar.tsx` ở dưới chỗ các chủ đề đã
-  ghim
-- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang livechatroom/sessionCode để tiếp
-  tục nói chuyện với AI.
+```
+public record SpeakingSessionListItemResponse(
+        Long id,
+        String sessionCode,
+        Long userId,
+        Long personaId,
+        String topic,
+        String voiceName,
+        MarugotoLevel marugotoLevel,
+        FormalityLevel formalityLevel,
+        Integer durationSeconds,
+        int totalTurns,
+        Double asrConfidence,
+        String fullTranscript,
+        SpeakingSessionStatus status,
+        Instant startedAt,
+        Instant endedAt
+) {
+}
+```
 
-- Khi thu nhỏ sidebar thì tôi muốn vẫn phải có divider để ngăn cách giữa các navigation items, chủ đề đã ghim và các
-  session đang dở. Nếu không có thì không cần divider.
-- Thông tin của 1 session cần hiển thị khi phóng to sẽ bao gồm:
+- Bạn cũng hãy cập nhật/tạo mới SpeakingSessionListItemResponse trong `types/responses`
 
-+ Icon cái mic
-+ Câu cuối cùng mà người dùng nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI
-  nói (senderType = "ASSISTANT")
+- Tôi muốn bạn làm cho tôi cái hiển thị các in progress session lên cái sidebar như sau:
 
-- Khi thu nhỏ thì sẽ hiện thông tin là icon cái mic, và khi hover vào thì hiện thông tin về câu cuối cùng mà người dùng
-  nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI nói (senderType =
-  "ASSISTANT")
++ Khi sidebar mở thì hiện icon và thông tin `topic` và ở dưới là thời gian start dạng giờ việt nam (`startedAt`)
++ Khi sidebar đóng thì hiện icon và khi hover vào thì hiển đầy đủ thông tin ở tooltip
 
-- Ở session đó tôi cũng cần dấu "x" để khi ấn vào thì hỏi confirm là bạn có muốn xóa session này không rồi mới cho xóa.
-  Xóa thì bạn hãy gọi API /speaking/session/${sessionCode} Method là Delete trả về void thành công là mã 204
+- Xóa toàn bộ các kiểu Response cũ, hàm gọi API cũ có liên quan.
 
 ### Yêu cầu
 

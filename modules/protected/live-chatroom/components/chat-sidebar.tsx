@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Lightbulb, Loader2, LogOut } from "lucide-react";
-import { Avatar, Button, Slider, Switch } from "@mui/material";
+import { Loader2, LogOut } from "lucide-react";
+import { Avatar, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import BackButton from "@/components/ui/back.button";
 import type { Companion } from "../types/live-chatroom.type";
@@ -14,10 +14,6 @@ import { EndSessionDialog } from "./end-session-dialog";
 interface ChatSidebarProps {
     companion: Companion;
     conversationStyle: FormalityLevel;
-    voiceSpeed: number;
-    onVoiceSpeedChange: (v: number) => void;
-    showHints: boolean;
-    onShowHintsChange: (v: boolean) => void;
     onEndSession: () => void;
     ending: boolean;
     isMobile?: boolean;
@@ -27,10 +23,6 @@ interface ChatSidebarProps {
 export function ChatSidebar({
     companion,
     conversationStyle,
-    voiceSpeed,
-    onVoiceSpeedChange,
-    showHints,
-    onShowHintsChange,
     onEndSession,
     ending,
     onCloseMobile,
@@ -51,7 +43,7 @@ export function ChatSidebar({
             <BackButton
                 href="/dialogue-setup"
                 label={t("back")}
-                className="!py-1.5 !px-3 !text-xs self-start"
+                className="self-start px-3! py-1.5! text-xs!"
             />
 
             {/* Companion */}
@@ -87,48 +79,6 @@ export function ChatSidebar({
                 </div>
             </div>
 
-            {/* Tốc độ nói */}
-            <div className="border-bdc-primary space-y-2 border-t pt-4">
-                <div className="flex items-center justify-between">
-                    <span className="text-text-contrast text-xs font-medium">
-                        {t("speedLabel")}
-                    </span>
-                    <span className="bg-bgc-page text-bgc-highlight rounded-md px-2 py-0.5 text-xs font-semibold">
-                        {voiceSpeed.toFixed(1)}x
-                    </span>
-                </div>
-                <Slider
-                    value={voiceSpeed}
-                    min={0.8}
-                    max={1.5}
-                    step={0.1}
-                    onChange={(_e, v) => onVoiceSpeedChange(v as number)}
-                    color="primary"
-                />
-                <div className="text-text-muted flex justify-between text-[10px]">
-                    <span>0.8x</span>
-                    <span>1.5x</span>
-                </div>
-            </div>
-
-            {/* Gợi ý câu trả lời */}
-            <label className="border-bdc-primary bg-bgc-page/40 flex cursor-pointer items-start justify-between gap-3 rounded-xl border p-3">
-                <span className="flex-1">
-                    <span className="text-text-contrast flex items-center gap-1.5 text-sm font-medium">
-                        <Lightbulb className="text-bgc-highlight h-3.5 w-3.5" />
-                        {ts("hintsTitle")}
-                    </span>
-                    <span className="text-text-muted mt-0.5 block text-xs">
-                        {ts("hintsDesc")}
-                    </span>
-                </span>
-                <Switch
-                    checked={showHints}
-                    onChange={(e) => onShowHintsChange(e.target.checked)}
-                    color="primary"
-                />
-            </label>
-
             {/* End */}
             <div className="border-bdc-primary mt-auto border-t pt-4">
                 <Button
@@ -138,7 +88,7 @@ export function ChatSidebar({
                     disabled={ending}
                     data-tour-id="tour-ai1on1-end"
                     onClick={() => setIsDialogOpen(true)}
-                    className="!h-10 !rounded-lg font-bold capitalize"
+                    className="h-10! rounded-lg! font-bold capitalize"
                     startIcon={
                         ending ? (
                             <Loader2 className="h-4 w-4 animate-spin" />

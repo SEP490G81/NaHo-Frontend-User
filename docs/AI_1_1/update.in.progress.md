@@ -4,34 +4,21 @@
 - Tool sở trưởng của bạn là Next.JS, MUI, và Tailwindcss.
 - Bạn đã làm việc cho các tập đoàn lớn và dành được giải thưởng lớn trong các cuộc thi thiết kế.
 
+### Input
+
+- File `layouts/chatroom-sidebar/components/chatroom.item.tsx`
+- File `layouts/chatroom-sidebar/features/chatroom.in.progress.section.tsx`
+- Image `docs/assets/img_2.png` và `docs/assets/img_3.png`
+
 ### Mô tả bài toán
 
-- Giờ tôi muốn bạn thêm cho tôi mục là để hiển thị các IN_PROGRESS session thông qua việc sử dụng API:
+- Tôi muốn bạn sửa lại phần hiển thị của các in progress session như sau:
 
-+ /session/in-progress/all
-+ method GET
-+ có access token
-+ Response trả ra: List<SpeakingSessionResponse>
++ Nếu như sidebar đang ở dạng phóng to thì hiển thị các item, tuy nhiên bỏ cái icon `MessageCircle` ở các item đi
++ Nếu như sidebar thi nhỏ thì chỉ hiện cái `MessageCircle` của `ChatroomSectionHeader`, sau đó khi ấn vào cái icon đó
+  thì sẽ hiện lên các in progress item ở bên tay phải (sử dụng Popover của MUI)
 
-- Các phiên đang nói dở đó sẽ được hiển thị trên `../../layouts/sidebar/components/sidebar.tsx` ở dưới chỗ các chủ đề đã
-  ghim
-- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang livechatroom/sessionCode để tiếp
-  tục nói chuyện với AI.
-
-- Khi thu nhỏ sidebar thì tôi muốn vẫn phải có divider để ngăn cách giữa các navigation items, chủ đề đã ghim và các
-  session đang dở. Nếu không có thì không cần divider.
-- Thông tin của 1 session cần hiển thị khi phóng to sẽ bao gồm:
-
-+ Icon cái mic
-+ Câu cuối cùng mà người dùng nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI
-  nói (senderType = "ASSISTANT")
-
-- Khi thu nhỏ thì sẽ hiện thông tin là icon cái mic, và khi hover vào thì hiện thông tin về câu cuối cùng mà người dùng
-  nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI nói (senderType =
-  "ASSISTANT")
-
-- Ở session đó tôi cũng cần dấu "x" để khi ấn vào thì hỏi confirm là bạn có muốn xóa session này không rồi mới cho xóa.
-  Xóa thì bạn hãy gọi API /speaking/session/${sessionCode} Method là Delete trả về void thành công là mã 204
+- Bạn hãy tham khảo hình ảnh ở mục [input]
 
 ### Yêu cầu
 

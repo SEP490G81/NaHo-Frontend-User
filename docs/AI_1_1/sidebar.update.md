@@ -1,39 +1,31 @@
-### Bạn là ai?
+### Vai trò
 
 - Bạn là 1 designer với 20 năm kinh nghiệm làm việc trong lĩnh vực thiết kế giao diện website.
 - Tool sở trưởng của bạn là Next.JS, MUI, và Tailwindcss.
 - Bạn đã làm việc cho các tập đoàn lớn và dành được giải thưởng lớn trong các cuộc thi thiết kế.
 
+### Input
+
+- Các file trong folder `layouts/sidebar`
+- File `layouts/protected-header/components/protected.header.tsx`
+- Ảnh `docs/assets/img.png` và `docs/assets/img_1.png`
+
 ### Mô tả bài toán
 
-- Giờ tôi muốn bạn thêm cho tôi mục là để hiển thị các IN_PROGRESS session thông qua việc sử dụng API:
+- Hãy làm cho tôi cái sidebar cho layout của chatroom, tạm thời nó bao gồm các phần tử sau:
 
-+ /session/in-progress/all
-+ method GET
-+ có access token
-+ Response trả ra: List<SpeakingSessionResponse>
++ App Logo (ấn vào sẽ redirect tới trang chủ)
++ Button `Tạo đoạn chat mới`
++ 1 mục lớn là `Đã hoàn thành` (tạm thời để trống các item, sau này sẽ gọi API)
++ 1 mục lớn là `Đoạn chat` (tạm thời để trống các item, sau này sẽ gọi API)
++ Ở cuối thanh sidebar sẽ có component `UserAvatar`
 
-- Các phiên đang nói dở đó sẽ được hiển thị trên `../../layouts/sidebar/components/sidebar.tsx` ở dưới chỗ các chủ đề đã
-  ghim
-- Khi tôi ấn vào 1 session trên sidebar đó thì nó sẽ gọi API, sau đó chuyển sang trang livechatroom/sessionCode để tiếp
-  tục nói chuyện với AI.
+- Các item trong các mục lớn có thể có nhiều nên bạn phải thiết kế để có thể cuộn, tuy nhiên nút tạo mới và user avatar
+  thì không được cuộn theo.
+- Ở trên `ProtectedHeader` có 1 button để thu/phóng sidebar, tôi cũng muốn nó thu phóng được sidebar của chatroom.
+- Bạn có thể tham khảo 2 hình ảnh tôi đính kèm ở trong [input]
 
-- Khi thu nhỏ sidebar thì tôi muốn vẫn phải có divider để ngăn cách giữa các navigation items, chủ đề đã ghim và các
-  session đang dở. Nếu không có thì không cần divider.
-- Thông tin của 1 session cần hiển thị khi phóng to sẽ bao gồm:
-
-+ Icon cái mic
-+ Câu cuối cùng mà người dùng nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI
-  nói (senderType = "ASSISTANT")
-
-- Khi thu nhỏ thì sẽ hiện thông tin là icon cái mic, và khi hover vào thì hiện thông tin về câu cuối cùng mà người dùng
-  nói (senderType = "USER"). Nếu người dùng chưa nói câu nào thì sẽ lấy câu cuối cùng mà AI nói (senderType =
-  "ASSISTANT")
-
-- Ở session đó tôi cũng cần dấu "x" để khi ấn vào thì hỏi confirm là bạn có muốn xóa session này không rồi mới cho xóa.
-  Xóa thì bạn hãy gọi API /speaking/session/${sessionCode} Method là Delete trả về void thành công là mã 204
-
-### Yêu cầu
+### Ràng buộc
 
 - Phân tách các module, các component, các hàm rõ ràng, dễ quản lí code, tránh code vào 1 file quá dài (1 file phải ít
   hơn 200 dòng).
@@ -57,3 +49,7 @@
   trực tiếp backend thật.
 - Về phần props, nếu truyền props >=3 component thì nên sử dụng react context. Các props mà chỉ đọc thì phải để thành
   `Readonly`
+
+### Output
+
+- Các file code trong folder `layouts/chatroom-sidebar`

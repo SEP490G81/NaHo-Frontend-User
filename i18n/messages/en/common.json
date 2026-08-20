@@ -60,6 +60,15 @@
                 "comingSoon": "Coming Soon",
                 "new": "New"
             },
+            "chatroomSidebar": {
+                "newChat": "New chat",
+                "completedSection": "Completed",
+                "chatSection": "Chats",
+                "noCompletedChats": "No completed chats yet",
+                "noActiveChats": "No chats yet",
+                "brandTitle": "NaHo Chat",
+                "untitledChat": "Untitled chat"
+            },
             "header": {
                 "collapseSidebar": "Collapse sidebar",
                 "expandSidebar": "Expand sidebar",

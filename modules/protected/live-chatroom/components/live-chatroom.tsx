@@ -13,7 +13,11 @@ import { ReadyStartCard } from "./ready-start-card";
 import { ChatInputBar } from "../features/chat-input-bar";
 import { useAudioRecorder } from "../hooks/use-audio-recorder";
 import { useLiveChat } from "../hooks/use-live-chat";
-import { COMPANIONS, DEFAULT_SUGGESTIONS, getCompanion } from "../constants/live-chatroom.constant";
+import {
+    COMPANIONS,
+    DEFAULT_SUGGESTIONS,
+    getCompanion,
+} from "../constants/live-chatroom.constant";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
 import type { SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
@@ -24,7 +28,10 @@ interface LiveChatroomProps {
     initialSession?: SpeakingSessionResponse | null;
 }
 
-export function LiveChatroom({ sessionCode, initialSession }: Readonly<LiveChatroomProps>) {
+export function LiveChatroom({
+    sessionCode,
+    initialSession,
+}: Readonly<LiveChatroomProps>) {
     const router = useRouter();
     const queryClient = useQueryClient();
     const t = useTranslations("liveChatroom");
@@ -33,27 +40,40 @@ export function LiveChatroom({ sessionCode, initialSession }: Readonly<LiveChatr
     const companion = useMemo(() => {
         if (config?.companionId) return getCompanion(config.companionId);
         if (initialSession?.personaId) {
-            const found = COMPANIONS.find((c) => c.personaId === initialSession.personaId);
+            const found = COMPANIONS.find(
+                (c) => c.personaId === initialSession.personaId,
+            );
             if (found) return found;
         }
         return COMPANIONS[0];
     }, [config?.companionId, initialSession?.personaId]);
 
-    const conversationStyle = config?.conversationStyle ?? initialSession?.formalityLevel ?? "NEUTRAL";
+    const conversationStyle =
+        config?.conversationStyle ??
+        initialSession?.formalityLevel ??
+        "NEUTRAL";
     const [input, setInput] = useState("");
     const [ending, setEnding] = useState(false);
-    const [voiceSpeed, setVoiceSpeed] = useState(config?.voiceSpeed ?? 1);
-    const [showHints, setShowHints] = useState(config?.showHints ?? true);
     const [mobileOpen, setMobileOpen] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const {
-        messages, isReady, isTyping, audioProcessing, isStartingGreeting,
-        suggestions, handleInitGreeting, handleSendText, handleSendAudio,
+        messages,
+        isReady,
+        isTyping,
+        audioProcessing,
+        isStartingGreeting,
+        suggestions,
+        handleInitGreeting,
+        handleSendText,
+        handleSendAudio,
     } = useLiveChat(sessionCode, initialSession);
 
     useEffect(() => {
-        scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+        scrollRef.current?.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+        });
     }, [messages, isTyping, audioProcessing]);
 
     const onSendTextMessage = async () => {
@@ -63,10 +83,16 @@ export function LiveChatroom({ sessionCode, initialSession }: Readonly<LiveChatr
         await handleSendText(text);
     };
 
-    const { isRecording, micStream, startRecording, stopRecording, cancelRecording } =
-        useAudioRecorder(handleSendAudio);
+    const {
+        isRecording,
+        micStream,
+        startRecording,
+        stopRecording,
+        cancelRecording,
+    } = useAudioRecorder(handleSendAudio);
 
-    const handleToggleRecord = () => (isRecording ? stopRecording() : startRecording());
+    const handleToggleRecord = () =>
+        isRecording ? stopRecording() : startRecording();
 
     const handleEndSession = async () => {
         if (ending) return;
@@ -87,42 +113,73 @@ export function LiveChatroom({ sessionCode, initialSession }: Readonly<LiveChatr
     };
 
     const sidebarProps = {
-        companion, conversationStyle, voiceSpeed, onVoiceSpeedChange: setVoiceSpeed,
-        showHints, onShowHintsChange: setShowHints, onEndSession: handleEndSession, ending,
+        companion,
+        conversationStyle,
+        onEndSession: handleEndSession,
+        ending,
     };
 
     return (
         <div className="border-bdc-primary bg-bgc-app mx-auto flex h-[calc(100vh-120px)] w-full max-w-5xl overflow-hidden rounded-2xl border shadow-sm">
-            <div className="hidden w-72 shrink-0 lg:block"><ChatSidebar {...sidebarProps} /></div>
+            <div className="hidden w-72 shrink-0 lg:block">
+                <ChatSidebar {...sidebarProps} />
+            </div>
             <Drawer
-                anchor="left" open={mobileOpen} onClose={() => setMobileOpen(false)}
+                anchor="left"
+                open={mobileOpen}
+                onClose={() => setMobileOpen(false)}
                 className="[&_.MuiDrawer-paper]:bg-bgc-app [&_.MuiDrawer-paper]:border-bdc-primary [&_.MuiDrawer-paper]:box-border [&_.MuiDrawer-paper]:w-72 [&_.MuiDrawer-paper]:border-r"
             >
-                <ChatSidebar {...sidebarProps} isMobile onCloseMobile={() => setMobileOpen(false)} />
+                <ChatSidebar
+                    {...sidebarProps}
+                    isMobile
+                    onCloseMobile={() => setMobileOpen(false)}
+                />
             </Drawer>
             <div className="bg-bgc-page/20 flex min-w-0 flex-1 flex-col">
-                <MobileHeader companion={companion} onOpenSettings={() => setMobileOpen(true)} />
+                <MobileHeader
+                    companion={companion}
+                    onOpenSettings={() => setMobileOpen(true)}
+                />
                 {!isReady ? (
-                    <ReadyStartCard companion={companion} onReady={handleInitGreeting} loading={isStartingGreeting} />
+                    <ReadyStartCard
+                        companion={companion}
+                        onReady={handleInitGreeting}
+                        loading={isStartingGreeting}
+                    />
                 ) : (
                     <MessagesList
-                        messages={messages} isTyping={isTyping} audioProcessing={audioProcessing}
-                        companion={companion} voiceSpeed={voiceSpeed} scrollRef={scrollRef}
+                        messages={messages}
+                        isTyping={isTyping}
+                        audioProcessing={audioProcessing}
+                        companion={companion}
+                        scrollRef={scrollRef}
                     />
                 )}
                 <div className="border-bdc-primary bg-bgc-app border-t px-4 py-4 sm:px-6">
                     <div className="mx-auto flex max-w-6xl flex-col gap-3">
-                        {isReady && showHints && (
+                        {isReady && (
                             <SuggestionPills
                                 suggestions={suggestions ?? DEFAULT_SUGGESTIONS}
-                                onPick={(t) => setInput((p) => (p ? `${p} ${t}` : t))}
+                                onPick={(t) =>
+                                    setInput((p) => (p ? `${p} ${t}` : t))
+                                }
                             />
                         )}
                         <ChatInputBar
-                            value={input} onChange={setInput} onSend={onSendTextMessage}
-                            isRecording={isRecording} micStream={micStream}
-                            onToggleRecord={handleToggleRecord} onCancelRecord={cancelRecording}
-                            disabled={!isReady || isTyping || audioProcessing || ending}
+                            value={input}
+                            onChange={setInput}
+                            onSend={onSendTextMessage}
+                            isRecording={isRecording}
+                            micStream={micStream}
+                            onToggleRecord={handleToggleRecord}
+                            onCancelRecord={cancelRecording}
+                            disabled={
+                                !isReady ||
+                                isTyping ||
+                                audioProcessing ||
+                                ending
+                            }
                         />
                     </div>
                 </div>

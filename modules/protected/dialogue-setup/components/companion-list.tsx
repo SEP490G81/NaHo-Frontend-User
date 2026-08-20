@@ -30,7 +30,7 @@ export function CompanionList({
     }
 
     return (
-        <div className="max-h-[780px] overflow-y-auto p-1 pr-2 [scrollbar-color:var(--color-bgc-highlight)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgc-page/60 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgc-highlight/70 hover:[&::-webkit-scrollbar-thumb]:bg-bgc-highlight">
+        <div className="[&::-webkit-scrollbar-track]:bg-bgc-page/60 [&::-webkit-scrollbar-thumb]:bg-bgc-highlight/70 hover:[&::-webkit-scrollbar-thumb]:bg-bgc-highlight max-h-195 scrollbar-thin [scrollbar-color:var(--color-bgc-highlight)_transparent] overflow-y-auto p-1 pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full">
             <div
                 data-tour-id="tour-ai1on1-persona"
                 className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
