@@ -58,6 +58,8 @@
         "correctionSuggestion": "Đề xuất sửa lỗi",
         "corrected": "Đã sửa",
         "recording": "Đang ghi âm...",
-        "stopRecording": "Dừng ghi âm"
+        "stopRecording": "Dừng ghi âm",
+        "stopAndSend": "Dừng & Gửi",
+        "playbackSpeed": "Tốc độ phát"
     }
 }

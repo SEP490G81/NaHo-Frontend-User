@@ -58,6 +58,8 @@
         "correctionSuggestion": "修正の提案",
         "corrected": "修正後",
         "recording": "録音中...",
-        "stopRecording": "録音停止"
+        "stopRecording": "録音停止",
+        "stopAndSend": "停止して送信",
+        "playbackSpeed": "再生速度"
     }
 }

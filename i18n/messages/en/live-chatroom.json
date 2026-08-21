@@ -58,6 +58,8 @@
         "correctionSuggestion": "Correction suggestion",
         "corrected": "Corrected",
         "recording": "Recording...",
-        "stopRecording": "Stop recording"
+        "stopRecording": "Stop recording",
+        "stopAndSend": "Stop & Send",
+        "playbackSpeed": "Playback Speed"
     }
 }

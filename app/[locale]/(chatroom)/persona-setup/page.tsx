@@ -1,6 +1,5 @@
-import React from "react";
 import { getTranslations } from "next-intl/server";
-import DialogueSetup from "@/modules/protected/dialogue-setup/features/dialogue.setup";
+import { getAllPersonas } from "@/services/client/persona.service";
 
 export async function generateMetadata({
     params,
@@ -21,7 +20,8 @@ export async function generateMetadata({
 }
 
 const DialogueSetupPage = async () => {
-    return <DialogueSetup />;
+    const personaResponse = await getAllPersonas();
+    const personas = personaResponse.data;
 };
 
 export default DialogueSetupPage;
