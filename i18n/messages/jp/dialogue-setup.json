@@ -63,6 +63,10 @@
         "dailyQuotaStatus": "本日残り {remaining}/{limit} 回",
         "dailyQuotaExhausted": "本日のAI会話回数上限に達しました。",
         "dailyQuotaUpgradeHint": "1日のAI会話数を増やすには、新しいプランにアップグレードしてください。",
+        "quotaExhaustedMsg": "本日のAI会話回数上限に達しました。",
+        "quotaRemainingMsg": "本日残り {remaining}/{limit} 回会話できます。",
+        "quotaUpgradeBtn": "プランをアップグレード",
+        "companionUnavailable": "このペルソナはサーバーにまだ設定されていません。",
         "toastStartSuccess": "設定を保存しました。会話を開始します！",
         "companionLevel": "レベル：{level}"
     }

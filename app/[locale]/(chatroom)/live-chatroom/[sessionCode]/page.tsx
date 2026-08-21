@@ -1,7 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
-import LiveChatroom from "@/modules/protected/live-chatroom/components/live-chatroom";
+import LiveChatroom from "@/modules/protected/live-chatroom/features/live.chatroom";
 import { getInProgressSessionDetailsServer } from "@/services/server/speaking.llm.service";
 
 interface LiveChatroomSessionPageProps {
@@ -33,10 +32,6 @@ export default async function LiveChatroomSessionPage({
     const { sessionCode } = await params;
 
     const initialSession = await getInProgressSessionDetailsServer(sessionCode);
-
-    if (!initialSession) {
-        redirect("/dialogue-setup");
-    }
 
     return (
         <LiveChatroom

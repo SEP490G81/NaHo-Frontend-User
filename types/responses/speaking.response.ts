@@ -53,7 +53,7 @@ export interface ChatReplyResponse {
 
 /* ─── AI 1:1 Session persistence: resume + history (#59) ─────────── */
 
-export type SpeakingSessionStatus = "IN_PROGRESS" | "COMPLETED";
+export type SpeakingSessionStatus = "INIT" | "IN_PROGRESS" | "COMPLETED";
 
 /** Một tin nhắn đã lưu trong phiên (dùng khi resume / xem chi tiết). */
 export interface SessionMessageItem {

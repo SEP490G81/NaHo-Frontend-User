@@ -43,6 +43,21 @@
         "readyTitle": "Sẵn sàng trò chuyện",
         "readyDescription": "Bấm nút bên dưới để người bạn đồng hành gửi lời chào đầu tiên.",
         "readyButton": "Tôi đã sẵn sàng",
-        "readyLoading": "Đang kết nối..."
+        "readyLoading": "Đang kết nối...",
+        "grammarExplanation": "Giải thích ngữ pháp",
+        "hideTranslation": "Ẩn dịch",
+        "translate": "Dịch",
+        "hideGrammar": "Ẩn ngữ pháp",
+        "grammar": "Ngữ pháp",
+        "playingAudio": "Đang phát...",
+        "endConfirmTitle": "Kết thúc hội thoại?",
+        "endConfirmDesc": "Bạn có chắc chắn muốn kết thúc phiên hội thoại này? Kết quả sẽ được lưu và chuyển sang trang đánh giá.",
+        "cancel": "Hủy",
+        "suggestions": "Gợi ý",
+        "transcribing": "Đang nhận dạng giọng nói...",
+        "correctionSuggestion": "Đề xuất sửa lỗi",
+        "corrected": "Đã sửa",
+        "recording": "Đang ghi âm...",
+        "stopRecording": "Dừng ghi âm"
     }
 }

@@ -1,5 +1,9 @@
-import type { Companion } from "../types/live-chatroom.type";
-import type { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
+import type { Companion } from "../types/live.chatroom.type";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+    PersonaResponse,
+} from "@/types/responses/persona.response";
 
 /**
  * Style hội thoại — khớp enum FormalityLevel bên BE.
@@ -125,7 +129,6 @@ export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
                 match?.conversationStyle?.description ??
                 c.description,
             personaId: match ? match.id : null,
-            // Ưu tiên thể lịch sự + cấp độ từ BE, thiếu thì mặc định companion.
             defaultFormality:
                 match?.conversationStyle?.formalityLevel ??
                 c.defaultFormality ??
@@ -137,7 +140,6 @@ export function resolveCompanions(personas: PersonaResponse[]): Companion[] {
         };
     });
 
-    // Persona chưa khớp companion nào → dựng thẻ từ dữ liệu BE (tên + prompt + cấp độ).
     const extras: Companion[] = personas
         .filter((p) => !used.has(p.id))
         .map((p, i) => ({

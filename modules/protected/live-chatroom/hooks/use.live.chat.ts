@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import type { ChatMessage } from "../types/live-chatroom.type";
+import type { ChatMessage } from "../types/live.chatroom.type";
 import type { SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
 import {
+    getInProgressSessionDetails,
     initFirstGreeting,
     sendAudioMessage,
     sendMessage,
@@ -13,10 +14,12 @@ import {
 import { useChatStore } from "@/store/chatStore";
 import { blobToWav } from "../utils/wav.encoder";
 import {
-    getNextId,
-    getNowTime,
+    createAiMessage,
+    createUserMessage,
     mapInitialMessages,
 } from "../utils/message.mapper";
+
+import { SpeakingSessionStatus } from "@/types/enums/speaking.llm.enum";
 
 export function useLiveChat(
     sessionCode: string,
@@ -24,15 +27,60 @@ export function useLiveChat(
 ) {
     const t = useTranslations("liveChatroom");
     const autoPlayAudio = useChatStore((s) => s.autoPlayAudio);
+    const [sessionDetails, setSessionDetails] =
+        useState<SpeakingSessionResponse | null>(initialSession ?? null);
     const [messages, setMessages] = useState<ChatMessage[]>(() =>
         mapInitialMessages(initialSession?.messages),
+    );
+    const [isLoading, setIsLoading] = useState<boolean>(
+        !initialSession && !!sessionCode,
     );
     const [isTyping, setIsTyping] = useState(false);
     const [audioProcessing, setAudioProcessing] = useState(false);
     const [isStartingGreeting, setIsStartingGreeting] = useState(false);
     const [suggestions, setSuggestions] = useState<string[] | null>(null);
 
-    const isReady = messages.length > 0;
+    useEffect(() => {
+        if (!sessionCode) return;
+        if (initialSession) {
+            setSessionDetails(initialSession);
+            setMessages(mapInitialMessages(initialSession.messages));
+            setIsLoading(false);
+            return;
+        }
+
+        let isCancelled = false;
+        setIsLoading(true);
+
+        getInProgressSessionDetails(sessionCode)
+            .then((res) => {
+                if (!isCancelled && res) {
+                    setSessionDetails(res);
+                    if (res.messages && res.messages.length > 0) {
+                        setMessages(mapInitialMessages(res.messages));
+                    }
+                }
+            })
+            .catch(() => {})
+            .finally(() => {
+                if (!isCancelled) {
+                    setIsLoading(false);
+                }
+            });
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [sessionCode, initialSession]);
+
+    // Trạng thái phiên: INIT | IN_PROGRESS | COMPLETED
+    const sessionStatus =
+        sessionDetails?.status ??
+        (messages.length > 0 ? SpeakingSessionStatus.IN_PROGRESS : SpeakingSessionStatus.INIT);
+
+    // Chỉ khi trạng thái là INIT và chưa có tin nhắn nào mới hiển thị ReadyStartCard
+    const isInit =
+        sessionStatus === SpeakingSessionStatus.INIT && messages.length === 0;
 
     const handleInitGreeting = useCallback(async () => {
         if (!sessionCode || isStartingGreeting) return;
@@ -40,17 +88,19 @@ export function useLiveChat(
         try {
             const res = await initFirstGreeting(sessionCode);
             setMessages([
-                {
-                    id: getNextId("greet"),
-                    role: "ai",
-                    text: res.content,
-                    translation: res.contentTranslation,
-                    grammar: res.grammarNote,
-                    audioBase64: res.audioBase64,
-                    autoPlay: autoPlayAudio && !!res.audioBase64,
-                    timestamp: getNowTime(),
-                },
+                createAiMessage(
+                    res.content,
+                    res.contentTranslation,
+                    res.grammarNote,
+                    res.audioBase64,
+                    autoPlayAudio,
+                ),
             ]);
+            setSessionDetails((prev) =>
+                prev
+                    ? { ...prev, status: SpeakingSessionStatus.IN_PROGRESS }
+                    : null,
+            );
         } catch (err) {
             toast.error(err instanceof Error ? err.message : t("sendError"));
         } finally {
@@ -62,11 +112,9 @@ export function useLiveChat(
         async (text: string) => {
             const trimmed = text.trim();
             if (!trimmed || !sessionCode || isTyping) return;
-            const userId = getNextId("u");
-            setMessages((m) => [
-                ...m,
-                { id: userId, role: "user", text: trimmed, timestamp: getNowTime() },
-            ]);
+
+            const userMsg = createUserMessage(trimmed);
+            setMessages((m) => [...m, userMsg]);
             setIsTyping(true);
             try {
                 const res = await sendMessage(sessionCode, {
@@ -74,7 +122,7 @@ export function useLiveChat(
                 });
                 setMessages((m) =>
                     m.map((msg) =>
-                        msg.id === userId && msg.role === "user"
+                        msg.id === userMsg.id && msg.role === "user"
                             ? {
                                   ...msg,
                                   correction: res.correctionExplanation
@@ -92,19 +140,18 @@ export function useLiveChat(
                 );
                 setMessages((m) => [
                     ...m,
-                    {
-                        id: getNextId("ai"),
-                        role: "ai",
-                        text: res.assistantReply,
-                        translation: res.assistantReplyTranslation,
-                        grammar: res.grammarExplanation,
-                        audioBase64: res.aiReplyAudio ?? undefined,
-                        autoPlay: autoPlayAudio && !!res.aiReplyAudio,
-                        timestamp: getNowTime(),
-                    },
+                    createAiMessage(
+                        res.assistantReply,
+                        res.assistantReplyTranslation,
+                        res.grammarExplanation,
+                        res.aiReplyAudio ?? undefined,
+                        autoPlayAudio,
+                    ),
                 ]);
             } catch (err) {
-                toast.error(err instanceof Error ? err.message : t("sendError"));
+                toast.error(
+                    err instanceof Error ? err.message : t("sendError"),
+                );
             } finally {
                 setIsTyping(false);
             }
@@ -120,25 +167,20 @@ export function useLiveChat(
                 const wavBlob = await blobToWav(blob);
                 const res = await sendAudioMessage(sessionCode, wavBlob);
                 setAudioProcessing(false);
-                const userId = getNextId("u");
-                setMessages((m) => [
-                    ...m,
-                    {
-                        id: userId,
-                        role: "user",
-                        text: res.transcribedText,
-                        pronunciationScore: res.pronunciationScore,
-                        correction: res.correctionExplanation
-                            ? {
-                                  correctedText:
-                                      res.correctedUserText ??
-                                      res.transcribedText,
-                                  explanation: res.correctionExplanation,
-                              }
-                            : null,
-                        timestamp: getNowTime(),
-                    },
-                ]);
+
+                const userMsg = createUserMessage(
+                    res.transcribedText,
+                    res.pronunciationScore,
+                    res.correctionExplanation
+                        ? {
+                              correctedText:
+                                  res.correctedUserText ?? res.transcribedText,
+                              explanation: res.correctionExplanation,
+                          }
+                        : null,
+                );
+                setMessages((m) => [...m, userMsg]);
+
                 if (res.suggestedReplies && res.suggestedReplies.length > 0) {
                     setSuggestions(res.suggestedReplies);
                 }
@@ -146,19 +188,18 @@ export function useLiveChat(
                 await new Promise((r) => setTimeout(r, 600));
                 setMessages((m) => [
                     ...m,
-                    {
-                        id: getNextId("ai"),
-                        role: "ai",
-                        text: res.assistantReply,
-                        translation: res.assistantReplyTranslation,
-                        grammar: res.grammarExplanation,
-                        audioBase64: res.aiReplyAudio ?? undefined,
-                        autoPlay: autoPlayAudio && !!res.aiReplyAudio,
-                        timestamp: getNowTime(),
-                    },
+                    createAiMessage(
+                        res.assistantReply,
+                        res.assistantReplyTranslation,
+                        res.grammarExplanation,
+                        res.aiReplyAudio ?? undefined,
+                        autoPlayAudio,
+                    ),
                 ]);
             } catch (err) {
-                toast.error(err instanceof Error ? err.message : t("sendError"));
+                toast.error(
+                    err instanceof Error ? err.message : t("sendError"),
+                );
             } finally {
                 setAudioProcessing(false);
                 setIsTyping(false);
@@ -169,7 +210,9 @@ export function useLiveChat(
 
     return {
         messages,
-        isReady,
+        sessionDetails,
+        isInit,
+        isLoading,
         isTyping,
         audioProcessing,
         isStartingGreeting,
@@ -179,3 +222,5 @@ export function useLiveChat(
         handleSendAudio,
     };
 }
+
+export default useLiveChat;

@@ -1,6 +1,6 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import DialogueSetup from "@/modules/protected/dialogue-setup/components/dialogue-setup";
+import DialogueSetup from "@/modules/protected/dialogue-setup/features/dialogue.setup";
 
 export async function generateMetadata({
     params,

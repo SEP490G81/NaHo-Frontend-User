@@ -19,10 +19,10 @@ import {
 import {
     COMPANIONS,
     resolveCompanions,
-} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
-import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use-resume-session";
-import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
-import type { Companion } from "@/modules/protected/live-chatroom/types/live-chatroom.type";
+} from "@/modules/protected/live-chatroom/constants/live.chatroom.constant";
+import { useResumeSession } from "@/modules/protected/live-chatroom/hooks/use.resume.session";
+import { getInitials } from "@/modules/protected/live-chatroom/utils/get.initials";
+import type { Companion } from "@/modules/protected/live-chatroom/types/live.chatroom.type";
 import type {
     SpeakingSessionListItem,
     SpeakingSessionStatus,

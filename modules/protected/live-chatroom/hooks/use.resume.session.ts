@@ -5,9 +5,15 @@ import { toast } from "react-toastify";
 import { resumeSession } from "@/services/client/speaking.service";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
-import { DEFAULT_FORMALITY, DEFAULT_MARUGOTO } from "../constants/live-chatroom.constant";
-import type { Companion } from "../types/live-chatroom.type";
-import type { FormalityLevel, MarugotoLevel } from "@/types/responses/persona.response";
+import {
+    DEFAULT_FORMALITY,
+    DEFAULT_MARUGOTO,
+} from "../constants/live.chatroom.constant";
+import type { Companion } from "../types/live.chatroom.type";
+import type {
+    FormalityLevel,
+    MarugotoLevel,
+} from "@/types/responses/persona.response";
 import type { SessionMessageItem } from "@/types/responses/speaking.response";
 
 /** Thông tin tối thiểu để khôi phục một phiên dở (từ banner hoặc list lịch sử). */
@@ -69,3 +75,5 @@ export function useResumeSession(companions: Companion[]) {
 
     return { resume, resumingCode };
 }
+
+export default useResumeSession;

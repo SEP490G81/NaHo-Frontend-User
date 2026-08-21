@@ -43,6 +43,21 @@
         "readyTitle": "会話の準備ができました",
         "readyDescription": "下のボタンを押して、AIパートナーからの最初の挨拶を受け取りましょう。",
         "readyButton": "準備完了",
-        "readyLoading": "接続中..."
+        "readyLoading": "接続中...",
+        "grammarExplanation": "文法解説",
+        "hideTranslation": "翻訳を隠す",
+        "translate": "翻訳",
+        "hideGrammar": "文法を隠す",
+        "grammar": "文法",
+        "playingAudio": "再生中...",
+        "endConfirmTitle": "会話を終了しますか？",
+        "endConfirmDesc": "この会話を終了してもよろしいですか？結果は採点され、履歴に保存されます。",
+        "cancel": "キャンセル",
+        "suggestions": "返答のヒント",
+        "transcribing": "音声を認識中...",
+        "correctionSuggestion": "修正の提案",
+        "corrected": "修正後",
+        "recording": "録音中...",
+        "stopRecording": "録音停止"
     }
 }

@@ -63,6 +63,10 @@
         "dailyQuotaStatus": "Còn {remaining}/{limit} lượt hôm nay",
         "dailyQuotaExhausted": "Bạn đã sử dụng hết số lượt nói chuyện với AI hôm nay.",
         "dailyQuotaUpgradeHint": "Hãy nâng cấp gói mới để tăng thêm lượt nói chuyện với AI mỗi ngày.",
+        "quotaExhaustedMsg": "Bạn đã sử dụng hết số lượt nói chuyện với AI hôm nay.",
+        "quotaRemainingMsg": "Hôm nay bạn còn {remaining}/{limit} lượt trò chuyện với AI.",
+        "quotaUpgradeBtn": "Nâng cấp gói",
+        "companionUnavailable": "Nhân vật này chưa được thiết lập trên máy chủ.",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
         "companionLevel": "Trình độ: {level}"
     }

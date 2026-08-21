@@ -4,16 +4,12 @@ import React, { useState } from "react";
 import { Loader2, LogOut } from "lucide-react";
 import { Avatar, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
-import BackButton from "@/components/ui/back.button";
-import type { Companion } from "../types/live-chatroom.type";
-import { getInitials } from "../utils/get-initials";
-import { styleKeyOf } from "../constants/live-chatroom.constant";
-import type { FormalityLevel } from "@/types/responses/persona.response";
-import { EndSessionDialog } from "./end-session-dialog";
+import type { Companion } from "../types/live.chatroom.type";
+import { getInitials } from "../utils/get.initials";
+import { EndSessionDialog } from "./end.session.dialog";
 
 interface ChatSidebarProps {
     companion: Companion;
-    conversationStyle: FormalityLevel;
     onEndSession: () => void;
     ending: boolean;
     isMobile?: boolean;
@@ -22,13 +18,11 @@ interface ChatSidebarProps {
 
 export function ChatSidebar({
     companion,
-    conversationStyle,
     onEndSession,
     ending,
     onCloseMobile,
 }: Readonly<ChatSidebarProps>) {
     const t = useTranslations("liveChatroom");
-    const ts = useTranslations("dialogueSetup");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const handleConfirmEnd = () => {
@@ -39,13 +33,6 @@ export function ChatSidebar({
 
     return (
         <aside className="border-bdc-primary bg-bgc-app flex h-full flex-col gap-4 border-r p-5">
-            {/* Nút quay lại */}
-            <BackButton
-                href="/dialogue-setup"
-                label={t("back")}
-                className="self-start px-3! py-1.5! text-xs!"
-            />
-
             {/* Companion */}
             <div className="flex flex-col items-center gap-2 text-center">
                 <Avatar
@@ -66,16 +53,6 @@ export function ChatSidebar({
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                         {t("online")}
                     </span>
-                </div>
-            </div>
-
-            {/* Style hội thoại */}
-            <div className="border-bdc-primary space-y-1.5 border-t pt-4">
-                <span className="text-text-muted text-[11px] font-bold tracking-[0.12em] uppercase">
-                    {ts("styleLabel")}
-                </span>
-                <div className="bg-bgc-highlight/10 text-bgc-highlight inline-flex items-center rounded-lg px-3 py-1.5 text-sm font-semibold">
-                    {ts(`style_${styleKeyOf(conversationStyle)}`)}
                 </div>
             </div>
 

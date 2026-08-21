@@ -1,23 +1,20 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Drawer } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChatSidebar } from "./chat-sidebar";
-import { MobileHeader } from "./mobile-header";
-import { MessagesList } from "./messages-list";
-import { SuggestionPills } from "./suggestion-pills";
-import { ReadyStartCard } from "./ready-start-card";
-import { ChatInputBar } from "../features/chat-input-bar";
-import { useAudioRecorder } from "../hooks/use-audio-recorder";
-import { useLiveChat } from "../hooks/use-live-chat";
-import {
-    COMPANIONS,
-    DEFAULT_SUGGESTIONS,
-    getCompanion,
-} from "../constants/live-chatroom.constant";
+import { ChatSidebar } from "../components/chat.sidebar";
+import { MobileHeader } from "../components/mobile.header";
+import { MessagesList } from "../components/messages.list";
+import { SuggestionPills } from "../components/suggestion.pills";
+import { ReadyStartCard } from "../components/ready.start.card";
+import { ChatInputBar } from "./chat.input.bar";
+import { useAudioRecorder } from "../hooks/use.audio.recorder";
+import { useLiveChat } from "../hooks/use.live.chat";
+import { COMPANIONS, DEFAULT_SUGGESTIONS, getCompanion } from "../constants/live.chatroom.constant";
 import { useChatStore } from "@/store/chatStore";
 import { useRouter } from "@/i18n/navigation";
 import type { SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
@@ -37,21 +34,6 @@ export function LiveChatroom({
     const t = useTranslations("liveChatroom");
     const config = useChatStore((s) => s.config);
 
-    const companion = useMemo(() => {
-        if (config?.companionId) return getCompanion(config.companionId);
-        if (initialSession?.personaId) {
-            const found = COMPANIONS.find(
-                (c) => c.personaId === initialSession.personaId,
-            );
-            if (found) return found;
-        }
-        return COMPANIONS[0];
-    }, [config?.companionId, initialSession?.personaId]);
-
-    const conversationStyle =
-        config?.conversationStyle ??
-        initialSession?.formalityLevel ??
-        "NEUTRAL";
     const [input, setInput] = useState("");
     const [ending, setEnding] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -59,7 +41,9 @@ export function LiveChatroom({
 
     const {
         messages,
-        isReady,
+        sessionDetails,
+        isInit,
+        isLoading,
         isTyping,
         audioProcessing,
         isStartingGreeting,
@@ -68,6 +52,19 @@ export function LiveChatroom({
         handleSendText,
         handleSendAudio,
     } = useLiveChat(sessionCode, initialSession);
+
+    const companion = useMemo(() => {
+        if (config?.companionId) return getCompanion(config.companionId);
+        const personaId =
+            initialSession?.personaId ?? sessionDetails?.personaId;
+        if (personaId) {
+            const found = COMPANIONS.find(
+                (c) => c.personaId === personaId,
+            );
+            if (found) return found;
+        }
+        return COMPANIONS[0];
+    }, [config?.companionId, initialSession?.personaId, sessionDetails?.personaId]);
 
     useEffect(() => {
         scrollRef.current?.scrollTo({
@@ -114,7 +111,6 @@ export function LiveChatroom({
 
     const sidebarProps = {
         companion,
-        conversationStyle,
         onEndSession: handleEndSession,
         ending,
     };
@@ -141,7 +137,11 @@ export function LiveChatroom({
                     companion={companion}
                     onOpenSettings={() => setMobileOpen(true)}
                 />
-                {!isReady ? (
+                {isLoading ? (
+                    <div className="my-auto flex flex-1 items-center justify-center py-12">
+                        <Loader2 className="text-bgc-highlight h-8 w-8 animate-spin" />
+                    </div>
+                ) : isInit ? (
                     <ReadyStartCard
                         companion={companion}
                         onReady={handleInitGreeting}
@@ -158,7 +158,7 @@ export function LiveChatroom({
                 )}
                 <div className="border-bdc-primary bg-bgc-app border-t px-4 py-4 sm:px-6">
                     <div className="mx-auto flex max-w-6xl flex-col gap-3">
-                        {isReady && (
+                        {!isInit && !isLoading && (
                             <SuggestionPills
                                 suggestions={suggestions ?? DEFAULT_SUGGESTIONS}
                                 onPick={(t) =>
@@ -175,7 +175,8 @@ export function LiveChatroom({
                             onToggleRecord={handleToggleRecord}
                             onCancelRecord={cancelRecording}
                             disabled={
-                                !isReady ||
+                                isInit ||
+                                isLoading ||
                                 isTyping ||
                                 audioProcessing ||
                                 ending

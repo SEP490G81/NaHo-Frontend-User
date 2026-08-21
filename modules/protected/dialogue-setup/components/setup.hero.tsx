@@ -3,7 +3,7 @@
 import React from "react";
 import { Compass } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { SetupQuotaBanner } from "./setup-quota-banner";
+import { SetupQuotaBanner } from "./setup.quota.banner";
 import { useTourStore } from "@/store/tourStore";
 import { AI_ONE_ON_ONE_TOUR_ID } from "@/modules/protected/user-guide/constants/ai.one.on.one.tour.constant";
 

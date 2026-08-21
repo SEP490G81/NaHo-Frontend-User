@@ -1,15 +1,14 @@
 "use client";
 
 import React from "react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import {
     Button,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
 } from "@mui/material";
-import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface EndSessionDialogProps {
@@ -30,45 +29,47 @@ export function EndSessionDialog({
     return (
         <Dialog
             open={open}
-            onClose={() => {
-                if (!loading) onClose();
-            }}
-            className="[&_.MuiPaper-root]:border-bdc-primary [&_.MuiPaper-root]:bg-bgc-app [&_.MuiPaper-root]:!rounded-2xl [&_.MuiPaper-root]:border [&_.MuiPaper-root]:!shadow-xl"
+            onClose={loading ? undefined : onClose}
+            maxWidth="xs"
+            fullWidth
             slotProps={{
-                backdrop: {
-                    style: { backgroundColor: "rgba(0, 0, 0, 0.4)" },
+                paper: {
+                    className:
+                        "bg-bgc-app border border-bdc-primary rounded-2xl p-2",
                 },
             }}
         >
-            <DialogTitle className="text-text-contrast !font-bold">
-                {t("endChatModal.title")}
+            <DialogTitle className="flex items-center gap-2 text-base font-bold text-text-contrast">
+                <AlertCircle className="h-5 w-5 text-amber-500" />
+                {t("endConfirmTitle")}
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText className="!text-text-muted">
-                    {t("endChatModal.description")}
-                </DialogContentText>
+
+            <DialogContent className="text-sm text-text-muted">
+                {t("endConfirmDesc")}
             </DialogContent>
-            <DialogActions className="gap-2 p-4">
+
+            <DialogActions className="gap-2 px-6 pb-4">
                 <Button
                     onClick={onClose}
                     disabled={loading}
-                    className="!text-text-muted hover:!bg-hbgc-app capitalize"
+                    variant="outlined"
+                    className="!rounded-xl capitalize !border-bdc-primary !text-text-contrast"
                 >
-                    {t("endChatModal.cancel")}
+                    {t("cancel")}
                 </Button>
                 <Button
                     onClick={onConfirm}
                     disabled={loading}
                     variant="contained"
                     color="error"
+                    className="!rounded-xl !font-bold capitalize text-white"
                     startIcon={
                         loading ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
                         ) : undefined
                     }
-                    className="!rounded-lg !px-4 !font-bold capitalize hover:opacity-90"
                 >
-                    {loading ? t("ending") : t("endChatModal.confirm")}
+                    {loading ? t("ending") : t("endChatButton")}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -5,12 +5,12 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { Avatar, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import { getInitials } from "@/modules/protected/live-chatroom/utils/get-initials";
+import { getInitials } from "@/modules/protected/live-chatroom/utils/get.initials";
 import {
     marugotoLabel,
     styleKeyOf,
-} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
-import type { Companion } from "@/modules/protected/live-chatroom/types/live-chatroom.type";
+} from "@/modules/protected/live-chatroom/constants/live.chatroom.constant";
+import type { Companion } from "@/modules/protected/live-chatroom/types/live.chatroom.type";
 import type {
     FormalityLevel,
     MarugotoLevel,

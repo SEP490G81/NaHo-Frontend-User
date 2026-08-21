@@ -3,16 +3,16 @@
 import React, { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { CompanionList } from "./companion-list";
-import { SetupHero } from "./setup-hero";
-import { SummaryPanel } from "../features/summary-panel";
-import { AdvancedSettingsForm } from "../features/advanced-settings-form";
+import { CompanionList } from "../components/companion.list";
+import { SetupHero } from "../components/setup.hero";
+import { SummaryPanel } from "./summary.panel";
+import { AdvancedSettingsForm } from "./advanced.settings.form";
 import {
     COMPANIONS,
     DEFAULT_FORMALITY,
     DEFAULT_MARUGOTO,
     resolveCompanions,
-} from "@/modules/protected/live-chatroom/constants/live-chatroom.constant";
+} from "@/modules/protected/live-chatroom/constants/live.chatroom.constant";
 import { getPersonas } from "@/services/client/speaking.service";
 import {
     getMySubscription,
@@ -28,7 +28,6 @@ export function DialogueSetup() {
     const t = useTranslations("dialogueSetup");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Hybrid: giữ metadata UI đẹp, gắn personaId + style mặc định từ GET /personas.
     const { data: personas, isLoading } = useQuery({
         queryKey: ["personas"],
         queryFn: getPersonas,
@@ -40,7 +39,6 @@ export function DialogueSetup() {
         [personas],
     );
 
-    // Quota AI 1:1 hôm nay = lượt đã dùng / hạn mức của gói.
     const { data: subscription } = useQuery({
         queryKey: ["my-subscription"],
         queryFn: getMySubscription,

@@ -143,7 +143,7 @@ export function useAudioRecorder(onRecordComplete: (blob: Blob) => void) {
         }
         const recorder = recorderRef.current;
         if (recorder && recorder.state !== "inactive") {
-            recorder.stop(); // onstop sẽ dựng Blob + cleanup
+            recorder.stop();
         } else {
             cleanup();
         }

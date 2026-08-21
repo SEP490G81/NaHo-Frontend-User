@@ -63,6 +63,10 @@
         "dailyQuotaStatus": "{remaining}/{limit} left today",
         "dailyQuotaExhausted": "You have reached your daily AI conversation limit.",
         "dailyQuotaUpgradeHint": "Please upgrade to a new plan to get more daily AI conversation sessions.",
+        "quotaExhaustedMsg": "You have reached your daily AI conversation limit.",
+        "quotaRemainingMsg": "{remaining}/{limit} AI sessions left today.",
+        "quotaUpgradeBtn": "Upgrade plan",
+        "companionUnavailable": "This persona hasn't been set up on the server yet.",
         "toastStartSuccess": "Settings saved. Start chatting!",
         "companionLevel": "Level: {level}"
     }

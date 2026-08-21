@@ -5,6 +5,7 @@ export enum FormalityLevel {
 }
 
 export enum SpeakingSessionStatus {
+    INIT = "INIT",
     IN_PROGRESS = "IN_PROGRESS",
     COMPLETED = "COMPLETED",
 }
