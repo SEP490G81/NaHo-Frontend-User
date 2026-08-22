@@ -1,8 +1,8 @@
 import { ApiResponse, PageMeta, ProblemDetail } from "@/types/responses/base.response";
 import { PersonaResponse } from "@/types/responses/persona.response";
 import {
-    SpeakingAnalysisResponse,
-    SpeakingHistoryDetailResponse,
+    AnswerHistoryListItemResponse,
+    AnswerHistoryResponse,
     SpeakingHistoryListItem,
     SpeakingSessionDetail,
     SpeakingSessionListItem,
@@ -73,10 +73,10 @@ export interface SpeakingAnalysisInput {
     durationSec: number;
 }
 
-/** Upload bản ghi + chấm điểm → trả { historyId, score }. */
+/** Upload bản ghi + chấm điểm → trả AnswerHistoryResponse đầy đủ (cùng shape với getAnswerHistoryDetail). */
 export async function submitSpeakingAnalysis(
     input: SpeakingAnalysisInput,
-): Promise<SpeakingAnalysisResponse> {
+): Promise<AnswerHistoryResponse> {
     const form = new FormData();
     form.append("file", input.file, fileNameFor(input.file));
     form.append("speakingQuestionId", String(input.speakingQuestionId));
@@ -89,15 +89,25 @@ export async function submitSpeakingAnalysis(
         method: "POST",
         body: form,
     });
-    return unwrap<SpeakingAnalysisResponse>(response);
+    return unwrap<AnswerHistoryResponse>(response);
 }
 
-/** Chi tiết báo cáo luyện nói theo historyId. */
-export async function getSpeakingHistoryDetail(
-    historyId: string | number,
-): Promise<SpeakingHistoryDetailResponse> {
-    const response = await fetch(`/api/history/${historyId}`);
-    return unwrap<SpeakingHistoryDetailResponse>(response);
+/** Chi tiết một lượt luyện nói theo answerHistoryId (màn Báo cáo / xem lại lịch sử). */
+export async function getAnswerHistoryDetail(
+    answerHistoryId: string | number,
+): Promise<AnswerHistoryResponse> {
+    const response = await fetch(`/api/history/${answerHistoryId}`);
+    return unwrap<AnswerHistoryResponse>(response);
+}
+
+/** Toàn bộ lịch sử luyện nói của một câu hỏi cụ thể (dùng cho danh sách ở trang chi tiết câu hỏi). */
+export async function getAnswerHistoriesBySpeakingQuestion(
+    speakingQuestionId: string | number,
+): Promise<AnswerHistoryListItemResponse[]> {
+    const response = await fetch(
+        `/api/answer-histories/speaking-question/${speakingQuestionId}`,
+    );
+    return unwrap<AnswerHistoryListItemResponse[]>(response);
 }
 
 export interface SpeakingHistoryListQuery {
