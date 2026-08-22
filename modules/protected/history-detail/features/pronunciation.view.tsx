@@ -82,10 +82,10 @@ export function PronunciationView({
                                                     background: `color-mix(in srgb, ${hexColor} 12%, transparent)`,
                                                 }}
                                             >
-                                                {Math.round(
-                                                    item.accuracyScore ?? 0,
-                                                )}
-                                                %
+                                                {(
+                                                    item.accuracyScore ?? 0
+                                                ).toFixed(1)}
+                                                /10
                                             </span>
                                         </td>
                                         <td className="text-text-muted px-4 py-3 align-middle">
@@ -112,7 +112,7 @@ export function PronunciationView({
                             {t("fluencyLabel")}
                         </p>
                         <p className="text-text-contrast text-lg font-bold tabular-nums">
-                            {Math.round(fluencyScore ?? 0)}%
+                            {(fluencyScore ?? 0).toFixed(1)}/10
                         </p>
                     </div>
                 </div>
@@ -128,7 +128,7 @@ export function PronunciationView({
                             {t("completenessLabel")}
                         </p>
                         <p className="text-text-contrast text-lg font-bold tabular-nums">
-                            {Math.round(completenessScore ?? 0)}%
+                            {(completenessScore ?? 0).toFixed(1)}/10
                         </p>
                     </div>
                 </div>

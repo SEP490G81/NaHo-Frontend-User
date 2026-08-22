@@ -45,7 +45,7 @@ export function HistoryDetailOverview({
                             background: `color-mix(in srgb, ${accent} 12%, transparent)`,
                         }}
                     >
-                        {Math.round(speechAssessment.averageScore ?? 0)}/100
+                        {(speechAssessment.averageScore ?? 0).toFixed(1)}/10
                     </span>
                 </div>
                 <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
@@ -88,7 +88,7 @@ export function HistoryDetailOverview({
                             background: `color-mix(in srgb, ${accent} 12%, transparent)`,
                         }}
                     >
-                        {Math.round(aiFeedback.averageScore ?? 0)}/100
+                        {(aiFeedback.averageScore ?? 0).toFixed(1)}/10
                     </span>
                 </div>
                 <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
