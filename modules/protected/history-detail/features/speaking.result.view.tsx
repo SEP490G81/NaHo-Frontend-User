@@ -173,15 +173,8 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                 </div>
 
                 <HistoryDetailOverview
-                    pronunciationScore={
-                        data.speechAssessment.pronunciationScore ?? 0
-                    }
-                    vocabularyScore={data.aiFeedback.vocabularyScore ?? 0}
-                    grammarScore={data.aiFeedback.grammarScore ?? 0}
-                    naturalnessScore={data.aiFeedback.naturalnessScore ?? 0}
-                    contentRelevantScore={
-                        data.aiFeedback.contentRelevantScore ?? 0
-                    }
+                    speechAssessment={data.speechAssessment}
+                    aiFeedback={data.aiFeedback}
                     accent={accent}
                 />
 
