@@ -15,6 +15,7 @@ import {
 import { getMySubscription } from "@/services/client/subscription.service";
 import { useLearningFrontier } from "@/hooks/use.learning.frontier";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
+import { useReportStore } from "@/store/reportStore";
 import SampleAnswerCard from "@/components/ui/sample.answer.card";
 import NotFoundView from "@/components/ui/not.found.view";
 import PreviewSection from "@/modules/protected/lesson-path/components/preview.section";
@@ -33,6 +34,7 @@ export function QuestionDetail() {
     const topicId = params?.topicId as string;
     const nodeId = params?.nodeId as string;
     const { showFurigana } = useFurigana();
+    const openReport = useReportStore((s) => s.openModal);
 
     const nodeQ = useQuery({
         queryKey: ["learning-node", nodeId],
@@ -97,6 +99,7 @@ export function QuestionDetail() {
                 vietnamese={sq.vietnameseName}
                 showFurigana={showFurigana}
                 accent={accent}
+                onReport={() => openReport("QUESTION", String(sq.id))}
             />
 
             <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
@@ -109,6 +112,16 @@ export function QuestionDetail() {
                         accent={accent}
                         locked={!sampleAnswerEnabled}
                     />
+
+                    <Link
+                        href={practiceHref as AllRoute}
+                        data-tour-id="tour-marugoto-practice"
+                        className="text-text-pure flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-opacity hover:opacity-90"
+                        style={{ background: accent }}
+                    >
+                        <Mic className="h-4 w-4" />
+                        {t("practiceNow")}
+                    </Link>
 
                     {nodeProg?.bestScore != null && (
                         <div className="border-bdc-primary bg-bgc-app flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border px-4 py-3 text-sm">
@@ -137,16 +150,6 @@ export function QuestionDetail() {
                             </span>
                         </div>
                     )}
-
-                    <Link
-                        href={practiceHref as AllRoute}
-                        data-tour-id="tour-marugoto-practice"
-                        className="text-text-pure flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-opacity hover:opacity-90"
-                        style={{ background: accent }}
-                    >
-                        <Mic className="h-4 w-4" />
-                        {t("practiceNow")}
-                    </Link>
 
                     <QuestionHistoryList
                         speakingQuestionId={sq.id}
