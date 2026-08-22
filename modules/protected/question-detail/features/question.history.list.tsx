@@ -16,11 +16,13 @@ interface Props {
     accent: string;
 }
 
-/**
- * Lịch sử các lượt luyện của riêng câu hỏi này (GET /answer-histories/speaking-question/{id}).
- * BE chưa trả thời điểm luyện — đánh số lượt theo id tăng dần (id nhỏ = luyện trước),
- * hiển thị mới nhất lên đầu.
- */
+function fmt(iso: string | null): string {
+    if (!iso) return "";
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? "" : d.toLocaleString("vi-VN");
+}
+
+/** Lịch sử các lượt luyện của riêng câu hỏi này (GET /answer-histories/speaking-question/{id}). */
 export function QuestionHistoryList({
     speakingQuestionId,
     bookId,
@@ -36,7 +38,11 @@ export function QuestionHistoryList({
 
     if (!data || data.length === 0) return null;
 
-    const sortedAsc = [...data].sort((a, b) => a.id - b.id);
+    const sortedAsc = [...data].sort((a, b) => {
+        const ta = a.createdTime ? new Date(a.createdTime).getTime() : a.id;
+        const tb = b.createdTime ? new Date(b.createdTime).getTime() : b.id;
+        return ta - tb;
+    });
     const rows = sortedAsc
         .map((item, idx) => ({ item, attemptIndex: idx + 1 }))
         .reverse();
@@ -60,6 +66,7 @@ export function QuestionHistoryList({
                 {rows.map(({ item, attemptIndex }) => {
                     const score = item.overallScore ?? 0;
                     const passed = score >= PASS_SCORE;
+                    const practicedAt = fmt(item.createdTime);
                     return (
                         <li key={item.id}>
                             <Link
@@ -68,12 +75,19 @@ export function QuestionHistoryList({
                                 }
                                 className="hover:bg-hbgc-app -mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-2.5 text-sm transition-colors"
                             >
-                                <span className="text-text-contrast font-medium">
-                                    {t("historyAttempt", {
-                                        index: attemptIndex,
-                                    })}
+                                <span className="min-w-0">
+                                    <span className="text-text-contrast block font-medium">
+                                        {t("historyAttempt", {
+                                            index: attemptIndex,
+                                        })}
+                                    </span>
+                                    {practicedAt && (
+                                        <span className="text-text-muted block text-xs">
+                                            {practicedAt}
+                                        </span>
+                                    )}
                                 </span>
-                                <span className="flex items-center gap-2">
+                                <span className="flex shrink-0 items-center gap-2">
                                     <span
                                         className={
                                             passed

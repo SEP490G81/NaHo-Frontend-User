@@ -141,8 +141,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     topicName={topicQ.data?.japaneseName ?? null}
                     topicLabel={topicLabel}
                     topicHref={topicHref}
+                    practicedAt={data.createdTime}
                     durationSec={data.duration}
                     audioUrl={data.audioFile?.accessUrl ?? null}
+                    hasAudioFile={data.audioFile != null}
                     accent={accent}
                 />
 

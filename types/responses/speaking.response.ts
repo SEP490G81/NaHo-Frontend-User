@@ -269,6 +269,8 @@ export interface AnswerHistoryResponse {
     audioFile: AnswerHistoryAudioFile | null;
     duration: number | null;
     overallScore: number | null;
+    createdTime: string | null;
+    modifiedTime: string | null;
 }
 
 /** Một dòng trong danh sách lịch sử luyện nói theo câu hỏi (GET /answer-histories/speaking-question/{id}). */
@@ -279,6 +281,8 @@ export interface AnswerHistoryListItemResponse {
     audioFile: AnswerHistoryAudioFile | null;
     duration: number | null;
     overallScore: number | null;
+    createdTime: string | null;
+    modifiedTime: string | null;
 }
 
 /** Một dòng trong danh sách lịch sử luyện nói (GET /history). */
