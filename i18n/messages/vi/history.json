@@ -31,6 +31,7 @@
         "failDesc": "Cần tối thiểu {min}/10 để mở bài tiếp theo. Hãy luyện lại câu này.",
         "reportTitle": "Báo cáo chi tiết bài luyện",
         "reportSubtitle": "AI chấm theo 4 tiêu chí: Phát âm · Từ vựng · Ngữ pháp · Độ tự nhiên.",
+        "reportQuestionBtn": "Báo cáo câu hỏi",
         "viewAllBtn": "Quay lại lộ trình",
         "scoreLabel": "Điểm tổng quan",
         "practicedAtLabel": "Thời điểm",

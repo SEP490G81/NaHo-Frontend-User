@@ -4,6 +4,7 @@ import {
     AlertTriangle,
     ArrowRight,
     CheckCircle2,
+    Flag,
     ListChecks,
     Mic,
 } from "lucide-react";
@@ -18,6 +19,7 @@ import { getBookDetail, getTopicDetail } from "@/services/client/book.service";
 import { mapBook } from "@/data/marugoto/mapper";
 import { PASS_SCORE } from "@/store/marugotoStore";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
+import { useReportStore } from "@/store/reportStore";
 import ReportHero from "../components/report.hero";
 import HistoryDetailOverview from "../components/history.detail.overview";
 import HistoryDetailTabs from "../components/history.detail.tabs";
@@ -28,6 +30,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
     const t = useTranslations("historyDetail");
     const searchParams = useSearchParams();
     const { showFurigana } = useFurigana();
+    const openReport = useReportStore((s) => s.openModal);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["answer-history", historyId],
@@ -183,43 +186,66 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     aiFeedback={data.aiFeedback}
                 />
 
-                <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
+                <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-between">
                     <Button
-                        component={Link}
-                        href={(topicHref ?? "/books") as AllRoute}
-                        variant="outlined"
-                        startIcon={<ListChecks className="h-4 w-4" />}
+                        onClick={() =>
+                            openReport(
+                                "QUESTION",
+                                String(data.speakingQuestion.id),
+                            )
+                        }
+                        variant="text"
+                        startIcon={<Flag className="h-4 w-4" />}
                         sx={{
                             textTransform: "none",
-                            borderColor: "var(--color-bdc-muted)",
-                            color: "var(--color-text-contrast)",
+                            color: "var(--color-text-muted)",
                             fontWeight: 600,
                             "&:hover": {
-                                borderColor: "var(--color-bdc-primary)",
+                                color: "var(--color-text-error)",
                                 backgroundColor: "var(--color-hbgc-app)",
                             },
                         }}
                     >
-                        {t("viewAllBtn")}
+                        {t("reportQuestionBtn")}
                     </Button>
-                    <Button
-                        component={Link}
-                        href={retryHref as AllRoute}
-                        variant={passed ? "outlined" : "contained"}
-                        startIcon={<Mic className="h-4 w-4" />}
-                        sx={passed ? softSx : emphSx}
-                    >
-                        {t("retryBtn")}
-                    </Button>
-                    <Button
-                        component={Link}
-                        href={(topicHref ?? "/topics") as AllRoute}
-                        variant={passed ? "contained" : "outlined"}
-                        endIcon={<ArrowRight className="h-4 w-4" />}
-                        sx={passed ? emphSx : softSx}
-                    >
-                        {t("continueBtn")}
-                    </Button>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        <Button
+                            component={Link}
+                            href={(topicHref ?? "/books") as AllRoute}
+                            variant="outlined"
+                            startIcon={<ListChecks className="h-4 w-4" />}
+                            sx={{
+                                textTransform: "none",
+                                borderColor: "var(--color-bdc-muted)",
+                                color: "var(--color-text-contrast)",
+                                fontWeight: 600,
+                                "&:hover": {
+                                    borderColor: "var(--color-bdc-primary)",
+                                    backgroundColor: "var(--color-hbgc-app)",
+                                },
+                            }}
+                        >
+                            {t("viewAllBtn")}
+                        </Button>
+                        <Button
+                            component={Link}
+                            href={retryHref as AllRoute}
+                            variant={passed ? "outlined" : "contained"}
+                            startIcon={<Mic className="h-4 w-4" />}
+                            sx={passed ? softSx : emphSx}
+                        >
+                            {t("retryBtn")}
+                        </Button>
+                        <Button
+                            component={Link}
+                            href={(topicHref ?? "/topics") as AllRoute}
+                            variant={passed ? "contained" : "outlined"}
+                            endIcon={<ArrowRight className="h-4 w-4" />}
+                            sx={passed ? emphSx : softSx}
+                        >
+                            {t("continueBtn")}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
