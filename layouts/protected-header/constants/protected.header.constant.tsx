@@ -4,7 +4,6 @@ import {
 } from "@/layouts/protected-header/types/protected.header.type";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 import StarsOutlinedIcon from "@mui/icons-material/StarsOutlined";
-import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import OutlinedFlagIcon from "@mui/icons-material/OutlinedFlag";
@@ -25,13 +24,6 @@ export const ACCOUNT_MENU_ITEMS: (
         titleKey: "pointHistory",
         redirectLink: "/point-history",
         icon: <StarsOutlinedIcon fontSize="small" />,
-        type: "LINK",
-    },
-    {
-        id: "i-speaking-history",
-        titleKey: "speakingHistory",
-        redirectLink: "/speaking-history",
-        icon: <HistoryOutlinedIcon fontSize="small" />,
         type: "LINK",
     },
     {
