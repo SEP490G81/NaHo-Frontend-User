@@ -158,6 +158,8 @@
             "badge": "Chi tiết câu hỏi",
             "translation": "Bản dịch",
             "practiceNow": "Luyện nói câu này ngay",
+            "historyTitle": "Lịch sử luyện tập câu này ({count})",
+            "historyAttempt": "Lượt {index}",
             "vocab": "Từ vựng",
             "grammar": "Ngữ pháp tiêu biểu",
             "discussion": "Thảo luận & tương tác",

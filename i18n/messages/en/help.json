@@ -99,15 +99,10 @@
                     "description": "Learn how to use the report after each session so you improve faster.",
                     "duration": "About 4 minutes",
                     "steps": [
-                        "Open the account menu in the top right corner and choose “Speaking history”.",
-                        "Select a completed session to open its detailed report.",
+                        "After you finish a speaking practice, the detailed report opens automatically.",
                         "Compare what you said with the model sentence to spot mispronounced or missing sounds.",
                         "Redo the lowest-scoring sentences before moving on to a new lesson."
-                    ],
-                    "action": {
-                        "label": "View speaking history",
-                        "href": "/speaking-history"
-                    }
+                    ]
                 },
                 {
                     "id": "daily-routine",
@@ -208,13 +203,9 @@
                     "categoryId": "speaking-ai",
                     "question": "Where can I review my completed speaking sessions?",
                     "answer": [
-                        "Open the account menu in the top right corner and choose “Speaking history”. The list shows completed sessions with their time and results.",
-                        "Select any session to open its detailed report."
-                    ],
-                    "link": {
-                        "label": "View speaking history",
-                        "href": "/speaking-history"
-                    }
+                        "Right after you finish a speaking practice, the detailed report for that attempt opens automatically.",
+                        "The report includes the score, translation, and per-word pronunciation detail so you can review and redo it."
+                    ]
                 },
                 {
                     "id": "what-is-lpoint",

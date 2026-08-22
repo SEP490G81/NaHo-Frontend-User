@@ -158,6 +158,8 @@
             "badge": "Question detail",
             "translation": "Translation",
             "practiceNow": "Practice this question now",
+            "historyTitle": "Practice history for this question ({count})",
+            "historyAttempt": "Attempt {index}",
             "vocab": "Vocabulary",
             "grammar": "Key grammar",
             "discussion": "Discussion & interaction",
