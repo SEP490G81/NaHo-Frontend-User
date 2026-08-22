@@ -27,7 +27,7 @@ export type NodeGrammarItem = NodeVocabularyItem;
 /** Toàn bộ từ vựng của một chủ đề (GET /vocabularies/topic/{topicId}). */
 export interface VocabulariesOfTopicResponse {
     topicId: number;
-    vocabularyDetailResults: NodeVocabularyItem[];
+    vocabularies: NodeVocabularyItem[];
 }
 
 export interface LearningPathNodeDetailResponseSpeakingQuestionDetailResponse {
