@@ -142,7 +142,15 @@
             "learned": "Đã thuộc",
             "finish": "Hoàn thành",
             "done": "Đã hoàn thành",
-            "finishHint": "Lướt hết các thẻ để hoàn thành"
+            "finishHint": "Lướt hết các thẻ để hoàn thành",
+            "recordToCheck": "Ghi âm để kiểm tra",
+            "recordAgain": "Ghi âm lại",
+            "recording": "Đang ghi âm... chạm để dừng",
+            "scoring": "Đang chấm điểm...",
+            "recordPassed": "Đạt {score}/10 — có thể sang từ tiếp theo",
+            "recordFailed": "Được {score}/10 — cần tối thiểu {min}/10, hãy thử lại",
+            "recordError": "Không ghi âm được, hãy thử lại",
+            "recordGateHint": "Ghi âm và đạt tối thiểu {min}/10 để mở khoá từ tiếp theo"
         },
         "sampleAnswer": {
             "title": "Câu trả lời mẫu",

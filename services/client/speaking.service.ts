@@ -7,6 +7,7 @@ import {
     SpeakingSessionDetail,
     SpeakingSessionListItem,
     SpeakingSessionQuery,
+    SpeechAssessmentResponse,
     StartConversationResponse
 } from "@/types/responses/speaking.response";
 
@@ -90,6 +91,23 @@ export async function submitSpeakingAnalysis(
         body: form,
     });
     return unwrap<AnswerHistoryResponse>(response);
+}
+
+/** Chấm phát âm 1 đoạn ghi âm bất kỳ theo văn bản tham chiếu — không gắn với
+ *  câu hỏi nói cụ thể nào (dùng để luyện đọc từng từ vựng trong thẻ flashcard). */
+export async function assessPronunciation(
+    file: Blob,
+    referenceText: string,
+): Promise<SpeechAssessmentResponse> {
+    const form = new FormData();
+    form.append("file", file, fileNameFor(file));
+    form.append("reference-text", referenceText);
+
+    const response = await fetch("/api/speaking/assessment", {
+        method: "POST",
+        body: form,
+    });
+    return unwrap<SpeechAssessmentResponse>(response);
 }
 
 /** Chi tiết một lượt luyện nói theo answerHistoryId (màn Báo cáo / xem lại lịch sử). */
