@@ -20,6 +20,7 @@ import NotFoundView from "@/components/ui/not.found.view";
 import PreviewSection from "@/modules/protected/lesson-path/components/preview.section";
 import NodeTermList from "@/modules/protected/lesson-path/components/node.term.list";
 import QuestionComments from "./question.comments";
+import QuestionHistoryList from "./question.history.list";
 import QuestionDetailHeader from "../components/question.detail.header";
 
 const DEFAULT_ACCENT = "var(--color-bgc-highlight)";
@@ -146,6 +147,14 @@ export function QuestionDetail() {
                         <Mic className="h-4 w-4" />
                         {t("practiceNow")}
                     </Link>
+
+                    <QuestionHistoryList
+                        speakingQuestionId={sq.id}
+                        bookId={bookId}
+                        topicId={topicId}
+                        nodeId={nodeId}
+                        accent={accent}
+                    />
 
                     <QuestionComments speakingQuestionId={sq.id} />
                 </div>
