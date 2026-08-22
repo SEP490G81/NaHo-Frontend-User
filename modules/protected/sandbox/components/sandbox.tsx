@@ -181,20 +181,21 @@ function SandboxContent({
             // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
             useMarugotoStore
                 .getState()
-                .setQuestionScore(questionId, result.overallScore);
+                .setQuestionScore(questionId, result.overallScore ?? 0);
             // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],
             });
+            // Seed sẵn cache báo cáo bằng đúng response vừa nhận — màn
+            // /speaking-history/{id} mở lên hiện ngay, không phải gọi lại API.
+            queryClient.setQueryData(["answer-history", String(result.id)], result);
             // Kèm ngữ cảnh để màn kết quả mở lại đúng sandbox câu này.
             const ctx = new URLSearchParams();
             if (nodeId) ctx.set("node", nodeId);
             if (bookParam) ctx.set("book", bookParam);
             if (topicParam) ctx.set("topic", topicParam);
             const qs = ctx.toString();
-            push(
-                `/speaking-history/${result.answerHistoryId}${qs ? `?${qs}` : ""}`,
-            );
+            push(`/speaking-history/${result.id}${qs ? `?${qs}` : ""}`);
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
@@ -220,7 +221,7 @@ function SandboxContent({
             ? `/books/${bookParam}/topics/${topicParam}`
             : bookParam
               ? `/books/${bookParam}`
-              : "/speaking-history";
+              : "/books";
 
     const handleAnalyze = async () => {
         if (!audioUrl) return;

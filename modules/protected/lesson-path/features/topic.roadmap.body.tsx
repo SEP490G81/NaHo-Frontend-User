@@ -167,6 +167,7 @@ export function TopicRoadmapBody({
                 finishing={vocabMutation.isPending}
                 finished={vocabDone}
                 accent={accent}
+                progressKey={active?.node.id}
             />
 
             <ChestDialog

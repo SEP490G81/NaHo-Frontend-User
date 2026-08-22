@@ -1,9 +1,10 @@
 "use client";
-import React, { useMemo } from "react";
+import React from "react";
 import {
     AlertTriangle,
     ArrowRight,
     CheckCircle2,
+    Flag,
     ListChecks,
     Mic,
 } from "lucide-react";
@@ -13,64 +14,46 @@ import { Button, type SxProps, type Theme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
-import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
-import {
-    getBookDetail,
-    getLearningPathNodeDetail,
-    getTopicDetail,
-} from "@/services/client/book.service";
+import { getAnswerHistoryDetail } from "@/services/client/speaking.service";
+import { getBookDetail, getTopicDetail } from "@/services/client/book.service";
 import { mapBook } from "@/data/marugoto/mapper";
 import { PASS_SCORE } from "@/store/marugotoStore";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";
-import { mapSpeakingReport } from "../utils/speaking.mapper";
+import { useReportStore } from "@/store/reportStore";
 import ReportHero from "../components/report.hero";
 import HistoryDetailOverview from "../components/history.detail.overview";
 import HistoryDetailTabs from "../components/history.detail.tabs";
 
-/** Màn báo cáo chi tiết bài luyện (GET /history/{id}). */
+/** Màn báo cáo chi tiết bài luyện — dùng chung cho lúc vừa nộp bài (cache được
+ *  seed sẵn ở sandbox.tsx) lẫn khi mở lại từ danh sách lịch sử. */
 export function SpeakingResultView({ historyId }: { historyId: string }) {
     const t = useTranslations("historyDetail");
     const searchParams = useSearchParams();
     const { showFurigana } = useFurigana();
+    const openReport = useReportStore((s) => s.openModal);
 
     const { data, isLoading, isError } = useQuery({
-        queryKey: ["speaking-history", historyId],
-        queryFn: () => getSpeakingHistoryDetail(historyId),
+        queryKey: ["answer-history", historyId],
+        queryFn: () => getAnswerHistoryDetail(historyId),
         enabled: !!historyId,
     });
 
-    const report = useMemo(
-        () => (data ? mapSpeakingReport(data.report) : null),
-        [data],
-    );
+    // AnswerHistoryResponse không kèm sách/chủ đề → lấy từ query string do
+    // sandbox/danh sách lịch sử truyền sang (thiếu thì chỉ ẩn tag chủ đề).
+    const bookId = searchParams.get("book");
+    const topicId = searchParams.get("topic");
+    const nodeId = searchParams.get("node");
 
-    const bookId = data?.bookId ?? searchParams.get("book");
-    const topicId = data?.topicId ?? searchParams.get("topic");
-
-    // Màu chủ đạo theo quyển sách của câu hỏi (đồng bộ tone với lộ trình).
     const bookQ = useQuery({
         queryKey: ["book", String(bookId)],
         queryFn: () => getBookDetail(String(bookId)),
         enabled: !!bookId,
     });
-    // Thứ tự chủ đề để hiển thị "Chủ đề N · tên".
     const topicQ = useQuery({
         queryKey: ["topic", String(topicId)],
         queryFn: () => getTopicDetail(String(topicId)),
         enabled: !!topicId,
     });
-    // Node lộ trình của câu hỏi — chỉ để lấy bản dịch tiếng Việt của đề bài
-    // (SpeakingHistoryDetailResponse không có sẵn field này).
-    const nodeId = data?.learningPathNodeId;
-    const nodeQ = useQuery({
-        queryKey: ["learning-node", String(nodeId)],
-        queryFn: () => getLearningPathNodeDetail(nodeId!),
-        enabled: !!nodeId,
-    });
-    const questionTranslation =
-        nodeQ.data?.speakingQuestion?.vietnameseName ?? null;
-    const questionTitleMarkup =
-        nodeQ.data?.speakingQuestion?.japaneseNameMarkup ?? null;
 
     const accent = bookQ.data
         ? (mapBook(bookQ.data).coverColor ?? "var(--color-bgc-highlight)")
@@ -84,7 +67,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         );
     }
 
-    if (isError || !data || !report) {
+    if (isError || !data) {
         return (
             <div className="flex h-[50vh] flex-col items-center justify-center gap-4 text-center">
                 <h2 className="text-text-contrast text-2xl font-bold">
@@ -93,7 +76,7 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                 <p className="text-text-muted">{t("notFoundSubtitle")}</p>
                 <Button
                     component={Link}
-                    href="/speaking-history"
+                    href="/books"
                     variant="contained"
                     sx={{
                         textTransform: "none",
@@ -108,12 +91,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         );
     }
 
-    // Mở lại đúng sandbox câu này: ưu tiên ngữ cảnh từ BE, thiếu thì lấy từ URL.
-    const node = data.learningPathNodeId ?? searchParams.get("node");
     const ctx = new URLSearchParams();
-    if (node) ctx.set("node", String(node));
-    if (bookId) ctx.set("book", String(bookId));
-    if (topicId) ctx.set("topic", String(topicId));
+    if (nodeId) ctx.set("node", nodeId);
+    if (bookId) ctx.set("book", bookId);
+    if (topicId) ctx.set("topic", topicId);
     const qs = ctx.toString();
     const topicHref =
         bookId && topicId ? `/books/${bookId}/topics/${topicId}` : null;
@@ -121,12 +102,10 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         topicQ.data?.orderIndex != null
             ? t("topicLabel", { index: topicQ.data.orderIndex })
             : null;
-    const retryHref =
-        data.questionId != null
-            ? `/sandbox/${data.questionId}${qs ? `?${qs}` : ""}`
-            : "/speaking-history";
+    const retryHref = `/sandbox/${data.speakingQuestion.id}${qs ? `?${qs}` : ""}`;
+    const average = data.overallScore ?? 0;
     // Đạt khi điểm tổng ≥ 7.5/10 (đồng bộ ngưỡng BE) → BE đã mở node kế.
-    const passed = report.average >= PASS_SCORE;
+    const passed = average >= PASS_SCORE;
 
     // Nhấn mạnh đổi theo kết quả (giữ nguyên thứ tự nút): đạt → nổi bật "Tiếp
     // tục"; chưa đạt → nổi bật "Luyện lại". Nút còn lại chuyển sang dạng viền.
@@ -155,17 +134,20 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
         >
             <div className="mx-auto max-w-6xl space-y-6">
                 <ReportHero
-                    average={report.average}
-                    questionTitle={data.speakingQuestionTitle}
-                    questionTitleMarkup={questionTitleMarkup}
-                    questionTranslation={questionTranslation}
+                    average={average}
+                    questionTitle={data.speakingQuestion.japaneseName}
+                    questionTitleMarkup={
+                        data.speakingQuestion.japaneseNameMarkup
+                    }
+                    questionTranslation={data.speakingQuestion.vietnameseName}
                     showFurigana={showFurigana}
-                    topicName={data.topicName}
+                    topicName={topicQ.data?.japaneseName ?? null}
                     topicLabel={topicLabel}
                     topicHref={topicHref}
-                    practicedAt={data.practicedAt}
-                    durationSec={data.durationSec}
-                    audioUrl={data.audioUrl}
+                    practicedAt={data.createdTime}
+                    durationSec={data.duration}
+                    audioUrl={data.audioFile?.accessUrl ?? null}
+                    hasAudioFile={data.audioFile != null}
                     accent={accent}
                 />
 
@@ -193,50 +175,77 @@ export function SpeakingResultView({ historyId }: { historyId: string }) {
                     </div>
                 </div>
 
-                <HistoryDetailOverview report={report} accent={accent} />
-
-                <HistoryDetailTabs
-                    report={report}
-                    showFurigana={showFurigana}
+                <HistoryDetailOverview
+                    speechAssessment={data.speechAssessment}
+                    aiFeedback={data.aiFeedback}
+                    accent={accent}
                 />
 
-                <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-end">
+                <HistoryDetailTabs
+                    speechAssessment={data.speechAssessment}
+                    aiFeedback={data.aiFeedback}
+                />
+
+                <div className="sticky bottom-4 z-10 flex flex-wrap justify-center gap-3 md:static md:justify-between">
                     <Button
-                        component={Link}
-                        href="/speaking-history"
-                        variant="outlined"
-                        startIcon={<ListChecks className="h-4 w-4" />}
+                        onClick={() =>
+                            openReport(
+                                "QUESTION",
+                                String(data.speakingQuestion.id),
+                            )
+                        }
+                        variant="text"
+                        startIcon={<Flag className="h-4 w-4" />}
                         sx={{
                             textTransform: "none",
-                            borderColor: "var(--color-bdc-muted)",
-                            color: "var(--color-text-contrast)",
+                            color: "var(--color-text-muted)",
                             fontWeight: 600,
                             "&:hover": {
-                                borderColor: "var(--color-bdc-primary)",
+                                color: "var(--color-text-error)",
                                 backgroundColor: "var(--color-hbgc-app)",
                             },
                         }}
                     >
-                        {t("viewAllBtn")}
+                        {t("reportQuestionBtn")}
                     </Button>
-                    <Button
-                        component={Link}
-                        href={retryHref as AllRoute}
-                        variant={passed ? "outlined" : "contained"}
-                        startIcon={<Mic className="h-4 w-4" />}
-                        sx={passed ? softSx : emphSx}
-                    >
-                        {t("retryBtn")}
-                    </Button>
-                    <Button
-                        component={Link}
-                        href={(topicHref ?? "/topics") as AllRoute}
-                        variant={passed ? "contained" : "outlined"}
-                        endIcon={<ArrowRight className="h-4 w-4" />}
-                        sx={passed ? emphSx : softSx}
-                    >
-                        {t("continueBtn")}
-                    </Button>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        <Button
+                            component={Link}
+                            href={(topicHref ?? "/books") as AllRoute}
+                            variant="outlined"
+                            startIcon={<ListChecks className="h-4 w-4" />}
+                            sx={{
+                                textTransform: "none",
+                                borderColor: "var(--color-bdc-muted)",
+                                color: "var(--color-text-contrast)",
+                                fontWeight: 600,
+                                "&:hover": {
+                                    borderColor: "var(--color-bdc-primary)",
+                                    backgroundColor: "var(--color-hbgc-app)",
+                                },
+                            }}
+                        >
+                            {t("viewAllBtn")}
+                        </Button>
+                        <Button
+                            component={Link}
+                            href={retryHref as AllRoute}
+                            variant={passed ? "outlined" : "contained"}
+                            startIcon={<Mic className="h-4 w-4" />}
+                            sx={passed ? softSx : emphSx}
+                        >
+                            {t("retryBtn")}
+                        </Button>
+                        <Button
+                            component={Link}
+                            href={(topicHref ?? "/topics") as AllRoute}
+                            variant={passed ? "contained" : "outlined"}
+                            endIcon={<ArrowRight className="h-4 w-4" />}
+                            sx={passed ? emphSx : softSx}
+                        >
+                            {t("continueBtn")}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

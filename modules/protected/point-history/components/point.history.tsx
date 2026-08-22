@@ -15,7 +15,8 @@ import PointHistoryHeader from "./point.history.header";
 import PointHistoryToolbar from "./point.history.toolbar";
 import PointHistoryTable from "./point.history.table";
 
-const PAGE_SIZE = 10;
+// BE yêu cầu size trong khoảng 20-100 (PointHistoryQueryCommand), nhỏ hơn sẽ bị 400.
+const PAGE_SIZE = 20;
 
 export function PointHistory() {
     const t = useTranslations("pointHistory");

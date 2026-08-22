@@ -142,7 +142,15 @@
             "learned": "覚えた",
             "finish": "完了",
             "done": "完了済み",
-            "finishHint": "すべてのカードを見て完了"
+            "finishHint": "すべてのカードを見て完了",
+            "recordToCheck": "録音してチェック",
+            "recordAgain": "録音し直す",
+            "recording": "録音中...タップして停止",
+            "scoring": "採点中...",
+            "recordPassed": "{score}/10 で合格 — 次の単語に進めます",
+            "recordFailed": "{score}/10 でした — 最低 {min}/10 が必要です。もう一度",
+            "recordError": "録音できませんでした。もう一度お試しください",
+            "recordGateHint": "録音して最低 {min}/10 を取ると次の単語が解放されます"
         },
         "sampleAnswer": {
             "title": "模範解答",
@@ -158,6 +166,8 @@
             "badge": "問題の詳細",
             "translation": "翻訳",
             "practiceNow": "この問題を今すぐ練習",
+            "historyTitle": "この問題の練習履歴（{count}）",
+            "historyAttempt": "{index} 回目",
             "vocab": "語彙",
             "grammar": "主要な文法",
             "discussion": "ディスカッション＆リアクション",

@@ -17,10 +17,24 @@ interface MarugotoState {
     lPoints: number;
     /** Ghi nhớ lựa chọn hiện furigana giữa các phiên. */
     showFurigana: boolean;
+    /**
+     * Vị trí thẻ đang xem + đã ghi âm đạt hết bộ từ vựng chưa, theo từng node
+     * (key = PathNode.id). Đặt ở store (persist) thay vì state cục bộ của dialog
+     * vì dialog có thể bị unmount/remount (VD: TopicRoadmapBody remount do
+     * React Query gc cache khi đổi tab lâu) — state cục bộ sẽ mất, store thì không.
+     */
+    vocabDialogProgress: Record<
+        string,
+        { cardIndex: number; viewedAll: boolean }
+    >;
     setShowFurigana: (v: boolean) => void;
     setActiveBook: (id: string) => void;
     setQuestionScore: (questionId: string, score: number) => void;
     markNodeDone: (nodeId: string) => void;
+    setVocabDialogProgress: (
+        nodeId: string,
+        progress: { cardIndex: number; viewedAll: boolean },
+    ) => void;
     /** Mở rương: đánh dấu hoàn thành + cộng L-Point (chỉ 1 lần). */
     claimChest: (nodeId: string, reward: number) => boolean;
     /** Gắn tiến độ cục bộ với 1 user; nếu khác chủ cũ thì xóa sạch trước. */
@@ -31,6 +45,10 @@ const EMPTY_PROGRESS = {
     questionScores: {} as Record<string, number>,
     completedNodes: [] as string[],
     lPoints: 0,
+    vocabDialogProgress: {} as Record<
+        string,
+        { cardIndex: number; viewedAll: boolean }
+    >,
 };
 
 export const useMarugotoStore = create<MarugotoState>()(
@@ -42,7 +60,15 @@ export const useMarugotoStore = create<MarugotoState>()(
             completedNodes: [],
             lPoints: 0,
             showFurigana: true,
+            vocabDialogProgress: {},
             setShowFurigana: (v) => set({ showFurigana: v }),
+            setVocabDialogProgress: (nodeId, progress) =>
+                set((s) => ({
+                    vocabDialogProgress: {
+                        ...s.vocabDialogProgress,
+                        [nodeId]: progress,
+                    },
+                })),
             setActiveBook: (id) => set({ activeBookId: id }),
             scopeToUser: (userId) => {
                 if (get().userId === userId) return;
