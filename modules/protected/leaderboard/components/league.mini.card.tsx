@@ -124,7 +124,7 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
                             {e.fullName}
                         </span>
                         <span className="tabular-nums">
-                            {t("points", { points: e.point })}
+                            {t("points", { points: Math.round(e.point) })}
                         </span>
                     </li>
                 ))}
@@ -138,7 +138,9 @@ export function LeagueMiniCard({ accent }: { accent: string }) {
                     <span className="w-4 text-center">{lbUser.rank}</span>
                     <span className="flex-1">{t("yourRank")}</span>
                     <span className="tabular-nums">
-                        {t("points", { points: lbUser.totalPoint })}
+                        {t("points", {
+                            points: Math.round(lbUser.totalPoint),
+                        })}
                     </span>
                 </div>
             )}
