@@ -4,20 +4,21 @@ import { useTranslations } from "next-intl";
 import DimensionMeter from "./dimension.meter";
 
 interface HistoryDetailOverviewProps {
-    report: {
-        scores: {
-            pronunciation: number;
-            vocabulary: number;
-            grammar: number;
-            naturalness: number;
-        };
-    };
+    pronunciationScore: number;
+    vocabularyScore: number;
+    grammarScore: number;
+    naturalnessScore: number;
+    contentRelevantScore: number;
     accent: string;
 }
 
-/** Thẻ 4 tiêu chí đánh giá (điểm tổng hiển thị ở hero). */
+/** Thẻ 5 tiêu chí đánh giá (điểm tổng hiển thị ở hero) — thang điểm 0-100. */
 export function HistoryDetailOverview({
-    report,
+    pronunciationScore,
+    vocabularyScore,
+    grammarScore,
+    naturalnessScore,
+    contentRelevantScore,
     accent,
 }: HistoryDetailOverviewProps) {
     const t = useTranslations("historyDetail");
@@ -26,22 +27,27 @@ export function HistoryDetailOverview({
             <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
                 <DimensionMeter
                     label={t("dimensionPronunciation")}
-                    score={report.scores.pronunciation * 10}
+                    score={pronunciationScore}
                     color={accent}
                 />
                 <DimensionMeter
                     label={t("dimensionVocabulary")}
-                    score={report.scores.vocabulary * 10}
+                    score={vocabularyScore}
                     color={accent}
                 />
                 <DimensionMeter
                     label={t("dimensionGrammar")}
-                    score={report.scores.grammar * 10}
+                    score={grammarScore}
                     color={accent}
                 />
                 <DimensionMeter
                     label={t("dimensionNaturalness")}
-                    score={report.scores.naturalness * 10}
+                    score={naturalnessScore}
+                    color={accent}
+                />
+                <DimensionMeter
+                    label={t("dimensionContentRelevance")}
+                    score={contentRelevantScore}
                     color={accent}
                 />
             </div>

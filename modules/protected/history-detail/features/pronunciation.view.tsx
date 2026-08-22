@@ -1,67 +1,39 @@
 "use client";
 import React from "react";
-import { AlertCircle } from "lucide-react";
+import { Activity, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
-import { FuriganaHtml } from "@/components/ui/furigana.html";
-
-export interface PronunciationWord {
-    word: string;
-    score: number;
-    feedback: string;
-}
-
-/** Dạng thô của một mục phát âm — chấp nhận cả field cũ (word/score/feedback)
- *  lẫn field đã map (text/severity/note/accuracyScore/hexColor). */
-interface RawPronItem {
-    word?: string;
-    text?: string;
-    score?: number;
-    severity?: string;
-    feedback?: string;
-    note?: string;
-    furigana?: string | null;
-    accuracyScore?: number | null;
-    colorCategory?: string | null;
-    hexColor?: string | null;
-}
+import type {
+    SpeechAssessmentErrorType,
+    WordAssessmentResponse,
+} from "@/types/responses/speaking.response";
+import { getWordAccuracyColor } from "../constants/history-detail.constant";
 
 interface PronunciationViewProps {
-    pronunciation: RawPronItem[];
-    note: string;
-    showFurigana: boolean;
+    words: WordAssessmentResponse[];
+    fluencyScore: number | null;
+    completenessScore: number | null;
+}
+
+function noteKeyFor(errorType: SpeechAssessmentErrorType) {
+    switch (errorType) {
+        case "OMISSION":
+            return "pronunciationNoteOmission" as const;
+        case "INSERTION":
+            return "pronunciationNoteInsertion" as const;
+        case "MISPRONUNCIATION":
+            return "pronunciationNoteMispronunciation" as const;
+        default:
+            return "pronunciationNoteNone" as const;
+    }
 }
 
 export function PronunciationView({
-    pronunciation,
-    note,
-    showFurigana,
+    words,
+    fluencyScore,
+    completenessScore,
 }: PronunciationViewProps) {
     const t = useTranslations("historyDetail");
-
-    const normalizedPronunciation = React.useMemo(() => {
-        if (!pronunciation || !Array.isArray(pronunciation)) return [];
-        return pronunciation.map((item: RawPronItem) => {
-            const word = item.word ?? item.text ?? "";
-            const furiganaMarkup = item.furigana ?? null;
-            let score = item.accuracyScore ?? item.score;
-            const feedback = item.feedback ?? item.note ?? "";
-
-            if (score === undefined && item.severity) {
-                if (item.severity === "ok") score = 90;
-                else if (item.severity === "warn") score = 70;
-                else score = 45;
-            }
-
-            return {
-                word,
-                furiganaMarkup,
-                score: score ?? 100,
-                hexColor: item.hexColor ?? null,
-                feedback,
-            };
-        });
-    }, [pronunciation]);
 
     return (
         <div className="space-y-6">
@@ -86,64 +58,80 @@ export function PronunciationView({
                             </tr>
                         </thead>
                         <tbody>
-                            {normalizedPronunciation.map((item, i) => (
-                                <tr
-                                    key={i}
-                                    className="border-bdc-primary hover:bg-hbgc-app/50 border-b last:border-0"
-                                >
-                                    <td className="text-text-contrast px-4 py-3 align-middle text-base font-semibold">
-                                        <FuriganaHtml
-                                            text={item.word}
-                                            markup={item.furiganaMarkup}
-                                            showFurigana={showFurigana}
-                                        />
-                                    </td>
-                                    <td className="px-4 py-3 align-middle">
-                                        <span
-                                            className={cn(
-                                                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold",
-                                                !item.hexColor &&
-                                                    (item.score >= 80
-                                                        ? "bg-green-500/10 text-green-500"
-                                                        : item.score >= 60
-                                                          ? "bg-orange-500/10 text-orange-500"
-                                                          : "bg-red-500/10 text-red-500"),
-                                            )}
-                                            style={
-                                                item.hexColor
-                                                    ? {
-                                                          color: item.hexColor,
-                                                          background: `color-mix(in srgb, ${item.hexColor} 12%, transparent)`,
-                                                      }
-                                                    : undefined
-                                            }
-                                        >
-                                            {item.score}%
-                                        </span>
-                                    </td>
-                                    <td className="text-text-muted px-4 py-3 align-middle">
-                                        {item.feedback}
-                                    </td>
-                                </tr>
-                            ))}
+                            {words.map((item) => {
+                                const hexColor = getWordAccuracyColor(
+                                    item.accuracyScore,
+                                    item.errorType,
+                                );
+                                const noteKey = noteKeyFor(item.errorType);
+                                return (
+                                    <tr
+                                        key={item.id}
+                                        className="border-bdc-primary hover:bg-hbgc-app/50 border-b last:border-0"
+                                    >
+                                        <td className="font-noto-jp text-text-contrast px-4 py-3 align-middle text-base font-semibold">
+                                            {item.word}
+                                        </td>
+                                        <td className="px-4 py-3 align-middle">
+                                            <span
+                                                className={cn(
+                                                    "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold",
+                                                )}
+                                                style={{
+                                                    color: hexColor,
+                                                    background: `color-mix(in srgb, ${hexColor} 12%, transparent)`,
+                                                }}
+                                            >
+                                                {Math.round(
+                                                    item.accuracyScore ?? 0,
+                                                )}
+                                                %
+                                            </span>
+                                        </td>
+                                        <td className="text-text-muted px-4 py-3 align-middle">
+                                            {t(noteKey)}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div className="border-bdc-primary bg-bgc-page rounded-md border p-4">
-                <h4 className="text-text-muted flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
-                    <AlertCircle
-                        className="h-4 w-4"
+            <div className="grid gap-3 sm:grid-cols-2">
+                <div className="border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-md border p-4">
+                    <Activity
+                        className="h-4 w-4 shrink-0"
                         style={{
                             color: "var(--book-accent, var(--color-bgc-highlight))",
                         }}
                     />
-                    {t("aiPronunciationNoteLabel")}
-                </h4>
-                <p className="text-text-contrast mt-2 text-sm leading-relaxed">
-                    {note}
-                </p>
+                    <div>
+                        <p className="text-text-muted text-xs font-semibold tracking-wide uppercase">
+                            {t("fluencyLabel")}
+                        </p>
+                        <p className="text-text-contrast text-lg font-bold tabular-nums">
+                            {Math.round(fluencyScore ?? 0)}%
+                        </p>
+                    </div>
+                </div>
+                <div className="border-bdc-primary bg-bgc-page flex items-center gap-3 rounded-md border p-4">
+                    <CheckCircle2
+                        className="h-4 w-4 shrink-0"
+                        style={{
+                            color: "var(--book-accent, var(--color-bgc-highlight))",
+                        }}
+                    />
+                    <div>
+                        <p className="text-text-muted text-xs font-semibold tracking-wide uppercase">
+                            {t("completenessLabel")}
+                        </p>
+                        <p className="text-text-contrast text-lg font-bold tabular-nums">
+                            {Math.round(completenessScore ?? 0)}%
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
