@@ -61,3 +61,45 @@ export async function getPersonaById(
 
     return result as ApiResponse<PersonaResponse>;
 }
+
+/**
+ * Bắt đầu một phiên hội thoại AI 1:1 với Persona.
+ * Gọi POST /api/speaking/session/[personaId] -> BE trả sessionCode.
+ *
+ * @param personaId ID của persona
+ * @returns sessionCode để điều hướng tới /live-chatroom/[sessionCode]
+ */
+export async function startConversation(
+    personaId: number | string,
+): Promise<string> {
+    const response = await fetch(`/api/speaking/session/${personaId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    const text = await response.text();
+    let result: any = null;
+    if (text) {
+        try {
+            result = JSON.parse(text);
+        } catch {
+            result = text;
+        }
+    }
+
+    if (!response.ok) {
+        const errorDetail =
+            result?.detail ||
+            result?.title ||
+            "Không thể bắt đầu phiên trò chuyện với AI.";
+        throw new Error(errorDetail);
+    }
+
+    if (typeof result === "string") {
+        return result;
+    }
+    return result?.data ?? result?.sessionCode ?? String(result);
+}
+

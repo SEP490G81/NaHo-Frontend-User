@@ -8,6 +8,7 @@
         "companionCount": "{count}人の話し相手",
         "advancedTitle": "コンテキスト設定と詳細設定",
         "advancedSubtitle": "あなたの練習目標に合わせて細かく調整します。",
+        "resetDefaults": "デフォルトに戻す",
         "toneLabel": "会話モード",
         "toneCasual": "タメ口",
         "toneBusiness": "ビジネス",

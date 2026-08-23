@@ -1,8 +1,7 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import LiveChatroom from "@/modules/protected/live-chatroom/features/live.chatroom";
-import { getInProgressSessionDetailsServer } from "@/services/server/speaking.llm.service";
-import { redirect } from "next/navigation";
+import { LiveChatroomProvider } from "@/modules/protected/live-chatroom/providers/live.chatroom.provider";
+import LiveChatroomView from "@/modules/protected/live-chatroom/features/live.chatroom.view";
 
 interface LiveChatroomSessionPageProps {
     params: Promise<{
@@ -32,17 +31,9 @@ export default async function LiveChatroomSessionPage({
 }: Readonly<LiveChatroomSessionPageProps>) {
     const { sessionCode } = await params;
 
-    const initialSession = await getInProgressSessionDetailsServer(sessionCode);
-
-    if (!initialSession) {
-        redirect("/not-found");
-    }
-
-    console.log(">>> check session: ", initialSession);
     return (
-        <LiveChatroom
-            sessionCode={sessionCode}
-            initialSession={initialSession}
-        />
+        <LiveChatroomProvider sessionCode={sessionCode}>
+            <LiveChatroomView />
+        </LiveChatroomProvider>
     );
 }

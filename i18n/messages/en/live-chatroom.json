@@ -60,6 +60,22 @@
         "recording": "Recording...",
         "stopRecording": "Stop recording",
         "stopAndSend": "Stop & Send",
-        "playbackSpeed": "Playback Speed"
+        "playbackSpeed": "Playback Speed",
+        "hintHeader": "Learning Hint",
+        "reRecord": "Re-record",
+        "toggleSuggestions": "Toggle suggestions",
+        "backToTop": "Scroll to top",
+        "scrollToBottom": "Scroll to bottom",
+        "limitExceededError": "The conversation session has reached its message limit. Please end the session to view evaluation.",
+        "aiAudioTitle": "Auto-play AI Audio",
+        "aiAudioAutoPlayDesc": "Auto plays when AI replies",
+        "aiAudioManualDesc": "Click Play button to listen",
+        "aiTyping": "AI is generating a response...",
+        "endSessionBtn": "End Conversation",
+        "endSessionConfirmTitle": "End Conversation Session",
+        "endSessionConfirmDesc": "Are you sure you want to end this conversation session? AI will generate a detailed evaluation report.",
+        "endSessionSuccess": "Conversation session ended. Report generated!",
+        "confirmEnd": "End & Get Evaluation",
+        "endingSession": "Processing..."
     }
 }

@@ -8,6 +8,7 @@
         "companionCount": "{count} companions available",
         "advancedTitle": "Context Setup & Advanced Settings",
         "advancedSubtitle": "Fine-tune to match your practice goals.",
+        "resetDefaults": "Reset to default",
         "toneLabel": "Conversation Tone",
         "toneCasual": "Casual",
         "toneBusiness": "Business",

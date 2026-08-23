@@ -1,0 +1,96 @@
+"use client";
+
+import React from "react";
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from "@mui/material";
+import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
+import { useTranslations } from "next-intl";
+
+interface EndSessionDialogProps {
+    readonly open: boolean;
+    readonly isEnding: boolean;
+    readonly onConfirm: () => void;
+    readonly onClose: () => void;
+}
+
+const EndSessionDialogComponent = ({
+    open,
+    isEnding,
+    onConfirm,
+    onClose,
+}: EndSessionDialogProps) => {
+    const t = useTranslations("liveChatroom");
+
+    return (
+        <Dialog
+            open={open}
+            onClose={isEnding ? undefined : onClose}
+            maxWidth="xs"
+            fullWidth
+            slotProps={{
+                paper: {
+                    sx: {
+                        borderRadius: "16px",
+                        backgroundColor: "var(--color-bgc-app)",
+                        border: "1px solid var(--color-bdc-primary)",
+                    },
+                },
+            }}
+        >
+            <DialogTitle className="flex items-center gap-2 text-base font-bold text-text-contrast">
+                <FlagOutlinedIcon className="text-red-500" sx={{ fontSize: 20 }} />
+                {t("endSessionConfirmTitle") || "Kết thúc phiên trò chuyện"}
+            </DialogTitle>
+
+            <DialogContent>
+                <DialogContentText className="text-xs leading-relaxed text-text-muted">
+                    {t("endSessionConfirmDesc") ||
+                        "Bạn có chắc chắn muốn kết thúc phiên trò chuyện này không? AI sẽ tạo báo cáo đánh giá chi tiết về năng lực giao tiếp của bạn."}
+                </DialogContentText>
+            </DialogContent>
+
+            <DialogActions className="p-4 pt-2">
+                <Button
+                    onClick={onClose}
+                    disabled={isEnding}
+                    variant="outlined"
+                    sx={{
+                        borderRadius: "10px",
+                        color: "var(--color-text-contrast)",
+                        borderColor: "var(--color-bdc-primary)",
+                    }}
+                >
+                    {t("cancel") || "Hủy"}
+                </Button>
+                <Button
+                    onClick={onConfirm}
+                    disabled={isEnding}
+                    variant="contained"
+                    color="error"
+                    startIcon={
+                        isEnding ? (
+                            <CircularProgress size={16} color="inherit" />
+                        ) : undefined
+                    }
+                    sx={{
+                        borderRadius: "10px",
+                        fontWeight: "bold",
+                    }}
+                >
+                    {isEnding
+                        ? t("endingSession") || "Đang xử lý..."
+                        : t("confirmEnd") || "Kết thúc & Nhận đánh giá"}
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
+
+export default EndSessionDialogComponent;

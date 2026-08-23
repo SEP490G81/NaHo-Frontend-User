@@ -15,7 +15,9 @@ import ActiveTours from "@/modules/protected/user-guide/providers/active.tours";
 import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
 import SakuraFalling from "@/components/ui/sakura-falling";
 import JapanBackground from "@/components/ui/japan-background";
-import ChatroomSidebar from "@/layouts/chatroom-sidebar/components/chatroom.sidebar";
+import ChatSidebar from "@/layouts/chat-sidebar/components/chat.sidebar";
+import { getSpeakingSessionsByStatusServer } from "@/services/server/speaking.llm.service";
+import { SpeakingSessionStatus } from "@/types/enums/speaking.llm.enum";
 
 const ChatroomLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getCurrentUser();
@@ -23,6 +25,11 @@ const ChatroomLayout = async ({ children }: { children: React.ReactNode }) => {
     if (!user) {
         redirect("/login");
     }
+
+    const [inProgressSessions, completedProgressSessions] = await Promise.all([
+        getSpeakingSessionsByStatusServer(SpeakingSessionStatus.IN_PROGRESS),
+        getSpeakingSessionsByStatusServer(SpeakingSessionStatus.COMPLETED),
+    ]);
 
     const queryClient = new QueryClient();
     queryClient.setQueryData(queryKeys.auth.currentUser, user);
@@ -36,7 +43,12 @@ const ChatroomLayout = async ({ children }: { children: React.ReactNode }) => {
                     <TourUserScope userId={String(user.id)} />
                     <ActiveTours />
                     <div className="relative flex min-h-screen">
-                        <ChatroomSidebar />
+                        <ChatSidebar
+                            inProgressSessions={inProgressSessions}
+                            completedProgressSessions={
+                                completedProgressSessions
+                            }
+                        />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <ProtectedHeader />
                             <div className="bg-bgc-page relative isolate w-full flex-1 p-5">

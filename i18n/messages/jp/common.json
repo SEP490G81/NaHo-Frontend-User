@@ -60,6 +60,28 @@
                 "comingSoon": "近日公開",
                 "new": "NEW"
             },
+            "chatroomSidebar": {
+                "newChat": "新しいチャット",
+                "completedSection": "完了済み",
+                "chatSection": "チャット",
+                "noCompletedChats": "完了したチャットはありません",
+                "noActiveChats": "チャットはまだありません",
+                "brandTitle": "NaHo Chat",
+                "untitledChat": "タイトルなしのチャット",
+                "searchPlaceholder": "チャットを検索...",
+                "allSessions": "すべてのチャット",
+                "recentChats": "最近のチャット",
+                "deleteChat": "チャットを削除",
+                "deleteDialog": {
+                    "title": "チャットを削除しますか？",
+                    "description": "このチャットセッションを削除してもよろしいですか？データは復元できません。",
+                    "confirm": "削除",
+                    "cancel": "キャンセル",
+                    "deleting": "削除中...",
+                    "success": "チャットを削除しました。",
+                    "error": "チャットの削除に失敗しました。"
+                }
+            },
             "header": {
                 "collapseSidebar": "サイドバーを折りたたむ",
                 "expandSidebar": "サイドバーを展開する",

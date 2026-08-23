@@ -233,6 +233,26 @@ input::-ms-clear {
     @apply scrollbar-none [&::-webkit-scrollbar]:hidden;
 }
 
+@utility custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-bgc-highlight) transparent;
+    &::-webkit-scrollbar {
+        display: block !important;
+        width: 6px;
+        height: 6px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-bgc-highlight);
+        border-radius: 12px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        opacity: 0.8;
+    }
+}
+
 /* width của scrollbar */
 ::-webkit-scrollbar {
     display: none;

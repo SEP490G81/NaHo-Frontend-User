@@ -1,0 +1,8 @@
+export const DEFAULT_CHAT_SPEECH_SPEED = 1.0;
+export const MIN_SPEECH_SPEED = 0.5;
+export const MAX_SPEECH_SPEED = 2.0;
+export const SPEECH_SPEED_STEP = 0.1;
+
+export const INITIALIZATION_REQUIRED_ERROR_CODE = "LLM_A005";
+export const SESSION_LIMIT_EXCEEDED_ERROR_CODE = "LLM_A006";
+

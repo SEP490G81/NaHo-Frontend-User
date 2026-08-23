@@ -72,7 +72,20 @@
                 "noCompletedChats": "Chưa có đoạn chat hoàn thành",
                 "noActiveChats": "Chưa có đoạn chat nào",
                 "brandTitle": "NaHo Chat",
-                "untitledChat": "Đoạn chat chưa có tên"
+                "untitledChat": "Đoạn chat chưa có tên",
+                "searchPlaceholder": "Tìm kiếm đoạn chat...",
+                "allSessions": "Tất cả đoạn chat",
+                "recentChats": "Gần đây",
+                "deleteChat": "Xóa đoạn chat",
+                "deleteDialog": {
+                    "title": "Xóa đoạn chat?",
+                    "description": "Bạn có chắc chắn muốn xóa phiên trò chuyện này không? Dữ liệu sẽ không thể khôi phục.",
+                    "confirm": "Xóa",
+                    "cancel": "Hủy",
+                    "deleting": "Đang xóa...",
+                    "success": "Đã xóa đoạn chat thành công.",
+                    "error": "Không thể xóa đoạn chat. Vui lòng thử lại."
+                }
             },
             "header": {
                 "collapseSidebar": "Thu gọn thanh bên",
