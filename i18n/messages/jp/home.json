@@ -7,7 +7,7 @@
             "startNow": "Đăng ký trải nghiệm",
             "exploreFeatures": "Khám phá tính năng",
             "mockup": {
-                "senseiName": "Sensei Yuki",
+                "personaName": "Yuki",
                 "speaking": "Đang nói chuyện",
                 "topicTag": "Phỏng vấn IT",
                 "questionJp": "自己紹介をお願いします。",
@@ -27,15 +27,15 @@
             "items": {
                 "topics": {
                     "title": "Luyện nói theo chủ đề",
-                    "description": "Kho chủ đề đa dạng từ giao tiếp công sở đến phỏng vấn BrSE, kèm mục tiêu học tập và từ vựng chính cho từng bài."
+                    "description": "まるごとのカリキュラムに沿ったトピック集。入門から上級まで、日常生活に即したコミュニケーション場面を収録し、各課にCan-do目標と重要語彙を明記。"
                 },
                 "aiFeedback": {
                     "title": "AI chấm điểm 4 tiêu chí",
                     "description": "Nhận phản hồi tức thì về Phát âm, Từ vựng, Ngữ pháp và Độ tự nhiên sau mỗi lượt nói."
                 },
-                "customQuestion": {
-                    "title": "Đề chọn tự phát",
-                    "description": "Tự soạn câu hỏi luyện nói theo nhu cầu riêng, AI hỗ trợ gợi ý câu hỏi tiếng Nhật chuẩn ngữ cảnh."
+                "freeConversation": {
+                    "title": "AIとの自由会話",
+                    "description": "好きなAIキャラクターを選び、自由なテーマで自然な会話を練習。難易度はレベルに合わせて調整できます。"
                 },
                 "history": {
                     "title": "Theo dõi tiến bộ",
@@ -45,28 +45,28 @@
         },
         "companions": {
             "title": "Chọn nhân vật phù hợp với mục tiêu của bạn",
-            "subtitle": "Các cá tính AI khác biệt — từ giảng viên dịu dàng đến khách hàng trang trọng.",
-            "levelLabel": "Trình độ",
+            "subtitle": "まるごとの枠組みに沿った個性豊かなAIキャラクター — 優しい先生から丁重な取引先まで。",
+            "levelLabel": "まるごと",
             "items": {
                 "sakura": {
                     "role": "Giảng viên tiếng Nhật",
                     "description": "Nhẹ nhàng, thân thiện, tập trung giao tiếp hàng ngày và sửa ngữ pháp.",
-                    "level": "Tất cả"
+                    "level": "A1 – B1.2"
                 },
                 "kenji": {
                     "role": "Kỹ sư phần mềm Senior",
                     "description": "Chuyên nghiệp, hội thoại kỹ thuật, mô phỏng họp văn phòng Nhật.",
-                    "level": "N3 – N1"
+                    "level": "A2/B1 – B1.2"
                 },
                 "yuki": {
                     "role": "Người phỏng vấn tuyển dụng",
                     "description": "Nghiêm khắc, phỏng vấn chuẩn, hỏi các câu hành vi khó.",
-                    "level": "N2 – N1"
+                    "level": "B1.1 – B1.2"
                 },
                 "tanaka": {
                     "role": "Khách hàng Nhật Bản",
                     "description": "Keigo trang trọng, mô phỏng đàm phán và thảo luận kinh doanh.",
-                    "level": "N1"
+                    "level": "B1.2"
                 }
             }
         },
@@ -80,7 +80,7 @@
                 },
                 "step2": {
                     "title": "Luyện nói cùng AI",
-                    "description": "Chọn chủ đề, vào phòng luyện và ghi âm câu trả lời của bạn."
+                    "description": "まるごとのトピックまたはお気に入りのAIキャラクターを選び、練習ルームに入って回答を録音します。"
                 },
                 "step3": {
                     "title": "Nhận phản hồi & tiến bộ",
@@ -101,7 +101,7 @@
                 "t2": {
                     "name": "Quốc Bảo",
                     "role": "Kỹ sư cầu nối",
-                    "quote": "Tính năng tự soạn câu hỏi rất hợp với công việc của mình — luyện đúng các tình huống họp dự án thật với khách hàng Nhật."
+                    "quote": "AIキャラクターと日本人同僚役の自由会話を練習できたおかげで、実際の顧客とのプロジェクト会議に近い場面に慣れることができました。"
                 },
                 "t3": {
                     "name": "Thu Hà",
@@ -127,6 +127,16 @@
                     "answer": "NaHo được thiết kế cho sinh viên ngành Kỹ sư cầu nối (BrSE) Đại học FPT và người học tiếng Nhật trong lĩnh vực công nghệ, đặc biệt là những ai cần luyện phản xạ Kaiwa cho phỏng vấn và môi trường công sở Nhật."
                 }
             }
+        },
+        "cta": {
+            "title": "会話の反射神経を鍛える準備はできましたか？",
+            "subtitle": "今すぐNaHoに参加して、AIと一緒に日本語会話を練習しましょう。無料で始められ、クレジットカードは不要です。",
+            "button": "無料で始める"
+        },
+        "footer": {
+            "tagline": "日本語学習者のためのAI会話練習プラットフォーム。",
+            "productTitle": "製品",
+            "legalTitle": "法的情報"
         }
     }
 }

@@ -31,12 +31,12 @@ const ChatMockup = () => {
             <div className="border-bdc-primary bg-bgc-app/70 relative w-full max-w-md rounded-3xl border p-5 shadow-[0_20px_60px_-20px_rgba(255,153,172,0.4)] backdrop-blur-xl">
                 <div className="border-bdc-primary flex items-center justify-between border-b pb-3">
                     <div className="flex items-center gap-2">
-                        <div className="bg-bgc-highlight flex h-9 w-9 items-center justify-center rounded-full font-bold text-[#333533]">
-                            先
+                        <div className="bg-bgc-highlight flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-[#333533]">
+                            YU
                         </div>
                         <div>
                             <div className="text-sm font-semibold">
-                                {t("home.hero.mockup.senseiName")}
+                                {t("home.hero.mockup.personaName")}
                             </div>
                             <div className="text-text-muted flex items-center gap-1 text-xs">
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
