@@ -24,9 +24,7 @@ export function LanguageSetting() {
                     <LanguageOutlinedIcon fontSize="small" />
                     {t("languageTitle")}
                 </h2>
-                <p className="text-text-muted text-xs">
-                    {t("languageDesc")}
-                </p>
+                <p className="text-text-muted text-xs">{t("languageDesc")}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

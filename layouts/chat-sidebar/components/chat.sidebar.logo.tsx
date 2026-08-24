@@ -16,7 +16,7 @@ const ChatSidebarLogo = ({ isCollapsed = false }: ChatSidebarLogoProps) => {
         <div className="flex items-center justify-center">
             <Link
                 href="/dashboard"
-                className="flex items-center gap-x-2.5 select-none transition-transform hover:scale-[1.02]"
+                className="flex items-center gap-x-2.5 transition-transform select-none hover:scale-[1.02]"
             >
                 <Image
                     src="/logo.png"
@@ -27,7 +27,7 @@ const ChatSidebarLogo = ({ isCollapsed = false }: ChatSidebarLogoProps) => {
                 />
                 {!isCollapsed && (
                     <div className="flex flex-col">
-                        <h1 className="text-text-contrast text-lg font-bold tracking-wider leading-tight">
+                        <h1 className="text-text-contrast text-lg leading-tight font-bold tracking-wider">
                             {t("brandTitle")}
                         </h1>
                     </div>

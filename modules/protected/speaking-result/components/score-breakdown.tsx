@@ -36,9 +36,7 @@ export function ScoreBreakdown({ scores }: Readonly<ScoreBreakdownProps>) {
             {DIMS.map((d) => (
                 <div key={d} className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
-                        <span className="text-text-muted">
-                            {t(`dim_${d}`)}
-                        </span>
+                        <span className="text-text-muted">{t(`dim_${d}`)}</span>
                         <span className="text-text-contrast font-semibold">
                             {scores[d]}
                         </span>

@@ -33,4 +33,3 @@ const DialogueSetupPage = async () => {
 };
 
 export default DialogueSetupPage;
-

@@ -1,12 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import {
-    AlertTriangle,
-    ArrowRight,
-    CheckCircle2,
-    ListChecks,
-    Mic,
-} from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, ListChecks, Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button, type SxProps, type Theme } from "@mui/material";
@@ -14,11 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { getSpeakingHistoryDetail } from "@/services/client/speaking.service";
-import {
-    getBookDetail,
-    getLearningPathNodeDetail,
-    getTopicDetail,
-} from "@/services/client/book.service";
+import { getBookDetail, getLearningPathNodeDetail, getTopicDetail } from "@/services/client/book.service";
 import { mapBook } from "@/data/marugoto/mapper";
 import { PASS_SCORE } from "@/store/marugotoStore";
 import { useFurigana } from "@/components/providers/app.toggle.furigana.provider";

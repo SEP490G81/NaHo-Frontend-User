@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button, Chip, CircularProgress, Collapse } from "@mui/material";
+import { Button, CircularProgress, Collapse } from "@mui/material";
 import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
@@ -62,42 +62,52 @@ const MessageItemComponent = ({
                 </div>
 
                 {/* Pronunciation Score Badge */}
-                {message.pronunciationScore != null && (() => {
-                    const rawScore = message.pronunciationScore;
-                    const isScale10 = rawScore <= 10;
-                    const normalizedScore = isScale10 ? rawScore * 10 : rawScore;
-                    const displayScore = isScale10
-                        ? Number.isInteger(rawScore)
-                            ? rawScore
-                            : rawScore.toFixed(1)
-                        : Math.round(rawScore);
+                {message.pronunciationScore != null &&
+                    (() => {
+                        const rawScore = message.pronunciationScore;
+                        const isScale10 = rawScore <= 10;
+                        const normalizedScore = isScale10
+                            ? rawScore * 10
+                            : rawScore;
+                        const displayScore = isScale10
+                            ? Number.isInteger(rawScore)
+                                ? rawScore
+                                : rawScore.toFixed(1)
+                            : Math.round(rawScore);
 
-                    let colorScheme = {
-                        bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400",
-                        iconColor: "text-emerald-500",
-                    };
-                    if (normalizedScore < 50) {
-                        colorScheme = {
-                            bg: "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400",
-                            iconColor: "text-rose-500",
+                        let colorScheme = {
+                            bg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400",
+                            iconColor: "text-emerald-500",
                         };
-                    } else if (normalizedScore < 80) {
-                        colorScheme = {
-                            bg: "bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400",
-                            iconColor: "text-amber-500",
-                        };
-                    }
+                        if (normalizedScore < 50) {
+                            colorScheme = {
+                                bg: "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400",
+                                iconColor: "text-rose-500",
+                            };
+                        } else if (normalizedScore < 80) {
+                            colorScheme = {
+                                bg: "bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400",
+                                iconColor: "text-amber-500",
+                            };
+                        }
 
-                    return (
-                        <div className="flex items-center justify-end pt-1 pr-0.5">
-                            <div className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium shadow-2xs transition-all ${colorScheme.bg}`}>
-                                <RecordVoiceOverOutlinedIcon sx={{ fontSize: 13 }} className={colorScheme.iconColor} />
-                                <span>{t("pronunciationScore")}:</span>
-                                <span className="font-extrabold tracking-wide">{displayScore}đ</span>
+                        return (
+                            <div className="flex items-center justify-end pt-1 pr-0.5">
+                                <div
+                                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium shadow-2xs transition-all ${colorScheme.bg}`}
+                                >
+                                    <RecordVoiceOverOutlinedIcon
+                                        sx={{ fontSize: 13 }}
+                                        className={colorScheme.iconColor}
+                                    />
+                                    <span>{t("pronunciationScore")}:</span>
+                                    <span className="font-extrabold tracking-wide">
+                                        {displayScore}đ
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    );
-                })()}
+                        );
+                    })()}
 
                 {/* Feedback Buttons for User Message */}
                 {(message.correctedText || message.hintForLearner) && (
@@ -251,21 +261,31 @@ const MessageItemComponent = ({
                 {/* Collapses Container with Spacing */}
                 {(message.contentTranslation || message.grammarNote) && (
                     <div className="mt-2 space-y-2">
-                        <Collapse in={showTranslation} className="w-fit max-w-[80%]">
+                        <Collapse
+                            in={showTranslation}
+                            className="w-fit max-w-[80%]"
+                        >
                             <div className="border-bdc-primary bg-bgc-secondary/90 text-text-contrast mt-1.5 w-fit rounded-xl border p-2.5 text-left text-xs shadow-xs">
                                 <span className="mb-0.5 block font-semibold text-amber-600 dark:text-amber-400">
                                     {t("translationHeader")}:
                                 </span>
-                                <p className="font-medium">{message.contentTranslation}</p>
+                                <p className="font-medium">
+                                    {message.contentTranslation}
+                                </p>
                             </div>
                         </Collapse>
 
-                        <Collapse in={showGrammar} className="w-fit max-w-[80%]">
+                        <Collapse
+                            in={showGrammar}
+                            className="w-fit max-w-[80%]"
+                        >
                             <div className="border-bdc-primary bg-bgc-secondary/90 text-text-contrast mt-1.5 w-fit rounded-xl border p-2.5 text-left text-xs shadow-xs">
                                 <span className="mb-0.5 block font-semibold text-indigo-600 dark:text-indigo-400">
                                     {t("grammarHeader")}:
                                 </span>
-                                <p className="font-medium">{message.grammarNote}</p>
+                                <p className="font-medium">
+                                    {message.grammarNote}
+                                </p>
                             </div>
                         </Collapse>
                     </div>

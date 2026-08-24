@@ -1,13 +1,19 @@
-import { SpeakingSessionAssessmentResponse } from "@/types/responses/speaking.llm.response";
+import {
+    SpeakingSessionAssessmentResponse,
+    SpeakingSessionResponse,
+} from "@/types/responses/speaking.llm.response";
 
 export interface ChatResultProps {
-    readonly assessment: SpeakingSessionAssessmentResponse | null;
-    readonly sessionCode?: string;
-    readonly isLoading?: boolean;
+    readonly session: SpeakingSessionResponse;
+}
+
+export interface ResultPersonaCardProps {
+    readonly session: SpeakingSessionResponse;
 }
 
 export interface ResultHeroProps {
     readonly assessment: SpeakingSessionAssessmentResponse;
+    readonly session?: SpeakingSessionResponse;
 }
 
 export interface ResultStrengthsWeaknessesProps {

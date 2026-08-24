@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { proxyGet } from "@/services/server/backend.proxy";
+import {NextRequest} from "next/server";
+import {proxyGet} from "@/services/server/backend.proxy";
 
 /** Lớp 1: /api/books/[id] → BE /books/{id} (chi tiết 1 quyển sách). */
 export async function GET(

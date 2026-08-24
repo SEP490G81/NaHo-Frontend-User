@@ -41,9 +41,7 @@ const SettingsStandaloneLayout = async ({
                         <div className="bg-bgc-page relative isolate w-full flex-1 p-5">
                             <SakuraFalling />
                             <JapanBackground />
-                            <div className="mx-auto max-w-7xl">
-                                {children}
-                            </div>
+                            <div className="mx-auto max-w-7xl">{children}</div>
                         </div>
                     </div>
                 </AppToggleFuriganaProvider>

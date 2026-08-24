@@ -1,22 +1,15 @@
 "use client";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
-import {
-    FormalityLevel,
-    MarugotoLevel,
-} from "@/types/enums/speaking.llm.enum";
-import { PersonaResponse } from "@/types/responses/persona.response";
 import {
     SpeakingSessionMessageResponse,
     SpeakingSessionResponse,
 } from "@/types/responses/speaking.llm.response";
-import { getPersonaById } from "@/services/client/persona.service";
 import { useRouter } from "@/i18n/navigation";
 import {
     endSpeakingSession,
-    getInProgressSessionDetails,
     sendAudioMessage as sendAudioMessageApi,
     sendTextMessage as sendTextMessageApi,
 } from "@/services/client/speaking.llm.service";
@@ -51,92 +44,59 @@ const mapMessageToItem = (
     suggestedReplies: m.suggestedReplies || [],
 });
 
-export const LiveChatroomProvider = ({
-    sessionCode,
-    status,
-    children,
-}: {
+interface LiveChatroomProviderProps {
     readonly sessionCode: string;
+    readonly initialSessionDetails?: SpeakingSessionResponse | null;
     readonly status?: string;
     readonly children: React.ReactNode;
-}) => {
+}
+
+export const LiveChatroomProvider = ({
+    sessionCode,
+    initialSessionDetails,
+    status = "IN_PROGRESS",
+    children,
+}: LiveChatroomProviderProps) => {
     const t = useTranslations("liveChatroom");
     const router = useRouter();
 
-    const [sessionDetails, setSessionDetails] =
-        useState<SpeakingSessionResponse | null>(null);
-    const [personaInfo, setPersonaInfo] = useState<PersonaResponse | null>(
-        null,
-    );
-    const [marugotoLevel, setMarugotoLevel] =
-        useState<MarugotoLevel>("STARTER_A1");
-    const [formalityLevel, setFormalityLevel] =
-        useState<FormalityLevel>("NEUTRAL");
+    const sessionDetails = initialSessionDetails || null;
+    const personaInfo = initialSessionDetails?.persona || null;
+    const marugotoLevel = initialSessionDetails?.marugotoLevel || "STARTER_A1";
+    const formalityLevel = initialSessionDetails?.formalityLevel || "NEUTRAL";
     const [speechSpeed, setSpeechSpeed] = useState<number>(
         DEFAULT_CHAT_SPEECH_SPEED,
     );
     const [showSuggestions, setShowSuggestions] = useState<boolean>(true);
-    const [messages, setMessages] = useState<ChatMessageItem[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [messages, setMessages] = useState<ChatMessageItem[]>(() => {
+        const msgList =
+            initialSessionDetails?.speakingSessionMessages ||
+            initialSessionDetails?.messages ||
+            [];
+        return msgList.map(mapMessageToItem);
+    });
     const [isSendingMessage, setIsSendingMessage] = useState<boolean>(false);
     const [isEndingSession, setIsEndingSession] = useState<boolean>(false);
 
     const endChatSession = async () => {
-        if (typeof window !== "undefined") {
-            window.dispatchEvent(new CustomEvent("refresh-chat-sessions"));
-        }
-        router.refresh();
-        router.push(`/chat-result/${sessionCode}`);
-    };
-
-    useEffect(() => {
-        let isMounted = true;
-        const loadSession = async () => {
-            try {
-                setIsLoading(true);
-                const details = await getInProgressSessionDetails(
-                    sessionCode,
-                    status || "IN_PROGRESS",
-                );
-                if (!isMounted) return;
-
-                setSessionDetails(details);
-                if (details.marugotoLevel) setMarugotoLevel(details.marugotoLevel);
-                if (details.formalityLevel) setFormalityLevel(details.formalityLevel);
-
-                if (details.persona) {
-                    setPersonaInfo(details.persona);
-                } else if (details.personaId) {
-                    try {
-                        const personaRes = await getPersonaById(details.personaId);
-                        if (isMounted) setPersonaInfo(personaRes.data || personaRes);
-                    } catch {
-                        // ignore persona fetch error
-                    }
-                }
-
-                const msgList =
-                    details.speakingSessionMessages || details.messages || [];
-                const mapped = msgList.map(mapMessageToItem);
-                setMessages(mapped);
-            } catch (err: any) {
-                if (!isMounted) return;
-                toast.error(
-                    err?.message || "Không thể tải thông tin phiên hội thoại.",
-                );
-            } finally {
-                if (isMounted) setIsLoading(false);
+        try {
+            setIsEndingSession(true);
+            await endSpeakingSession(sessionCode);
+            if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("refresh-chat-sessions"));
             }
-        };
-
-        if (sessionCode) {
-            loadSession();
+            router.refresh();
+            router.push(`/chat-result/${sessionCode}`);
+        } catch (err: unknown) {
+            const errorMsg =
+                err instanceof Error
+                    ? err.message
+                    : "Không thể kết thúc phiên hội thoại.";
+            toast.error(errorMsg);
+        } finally {
+            setIsEndingSession(false);
         }
-
-        return () => {
-            isMounted = false;
-        };
-    }, [sessionCode, status]);
+    };
 
     const sendTextMessage = async (userMessageText: string) => {
         if (!userMessageText.trim() || isSendingMessage) return;
@@ -165,15 +125,16 @@ export const LiveChatroomProvider = ({
                     .map((m) => (m.id === tempId ? userMsgItem : m))
                     .concat(aiMsgItem),
             );
-        } catch (err: any) {
+        } catch (err: unknown) {
             setMessages((prev) => prev.filter((m) => m.id !== tempId));
+            const errObj = err as { errorCode?: string; message?: string };
             if (
-                err?.errorCode === SESSION_LIMIT_EXCEEDED_ERROR_CODE ||
-                err?.message?.includes("LLM_A006")
+                errObj?.errorCode === SESSION_LIMIT_EXCEEDED_ERROR_CODE ||
+                errObj?.message?.includes("LLM_A006")
             ) {
                 toast.error(t("limitExceededError"));
             } else {
-                toast.error(err?.message || "Không thể gửi tin nhắn.");
+                toast.error(errObj?.message || "Không thể gửi tin nhắn.");
             }
         } finally {
             setIsSendingMessage(false);
@@ -204,15 +165,16 @@ export const LiveChatroomProvider = ({
                     .map((m) => (m.id === tempId ? userMsgItem : m))
                     .concat(aiMsgItem),
             );
-        } catch (err: any) {
+        } catch (err: unknown) {
             setMessages((prev) => prev.filter((m) => m.id !== tempId));
+            const errObj = err as { errorCode?: string; message?: string };
             if (
-                err?.errorCode === SESSION_LIMIT_EXCEEDED_ERROR_CODE ||
-                err?.message?.includes("LLM_A006")
+                errObj?.errorCode === SESSION_LIMIT_EXCEEDED_ERROR_CODE ||
+                errObj?.message?.includes("LLM_A006")
             ) {
                 toast.error(t("limitExceededError"));
             } else {
-                toast.error(err?.message || "Không thể gửi file ghi âm.");
+                toast.error(errObj?.message || "Không thể gửi file ghi âm.");
             }
         } finally {
             setIsSendingMessage(false);
@@ -231,7 +193,6 @@ export const LiveChatroomProvider = ({
                 speechSpeed,
                 showSuggestions,
                 messages,
-                isLoading,
                 isSendingMessage,
                 isEndingSession,
                 setSpeechSpeed,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CircularProgress, Fab, Tooltip } from "@mui/material";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
@@ -101,12 +101,12 @@ const LiveChatroomView = () => {
                     {isLoading ? (
                         <div className="my-auto flex flex-col items-center justify-center py-20">
                             <CircularProgress size={36} />
-                            <p className="mt-3 text-xs text-text-muted">
+                            <p className="text-text-muted mt-3 text-xs">
                                 Đang tải thông tin phiên hội thoại...
                             </p>
                         </div>
                     ) : (
-                        <div className="relative flex flex-1 flex-col justify-between overflow-hidden min-h-0">
+                        <div className="relative flex min-h-0 flex-1 flex-col justify-between overflow-hidden">
                             {/* Messages Stream */}
                             <div
                                 ref={messagesContainerRef}
@@ -127,13 +127,13 @@ const LiveChatroomView = () => {
                                 {/* AI Typing Response Loading Indicator */}
                                 {isSendingMessage && (
                                     <div className="my-3 flex max-w-[85%] flex-col items-start space-y-2">
-                                        <div className="border-bdc-primary/60 bg-bgc-secondary/50 flex items-center gap-3 rounded-2xl rounded-tl-xs border px-4 py-3 text-text-contrast shadow-2xs backdrop-blur-xs">
+                                        <div className="border-bdc-primary/60 bg-bgc-secondary/50 text-text-contrast flex items-center gap-3 rounded-2xl rounded-tl-xs border px-4 py-3 shadow-2xs backdrop-blur-xs">
                                             <div className="flex items-center gap-1.5">
                                                 <span className="bg-bgc-highlight h-2 w-2 animate-bounce rounded-full [animation-delay:-0.3s]" />
                                                 <span className="bg-bgc-highlight h-2 w-2 animate-bounce rounded-full [animation-delay:-0.15s]" />
                                                 <span className="bg-bgc-highlight h-2 w-2 animate-bounce rounded-full" />
                                             </div>
-                                            <span className="text-xs font-medium italic text-text-muted">
+                                            <span className="text-text-muted text-xs font-medium italic">
                                                 {t("aiTyping")}
                                             </span>
                                         </div>

@@ -2,7 +2,12 @@
 
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import { CircularProgress, IconButton, InputBase, Tooltip } from "@mui/material";
+import {
+    CircularProgress,
+    IconButton,
+    InputBase,
+    Tooltip,
+} from "@mui/material";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import StopRoundedIcon from "@mui/icons-material/StopRounded";
@@ -74,7 +79,7 @@ const ChatInputComponent = ({
                     <div className="flex flex-1 items-center justify-between px-2">
                         <div className="flex items-center gap-2">
                             <span className="h-3 w-3 animate-ping rounded-full bg-red-500" />
-                            <span className="text-xs font-semibold text-text-contrast">
+                            <span className="text-text-contrast text-xs font-semibold">
                                 {t("recording")}
                             </span>
                         </div>
@@ -92,7 +97,10 @@ const ChatInputComponent = ({
                     /* Recorded Audio Preview Player */
                     <div className="flex flex-1 items-center justify-between gap-2 px-1">
                         <div className="flex-1">
-                            <AudioPlayerComponent audioUrl={audioUrl} autoPlay={false} />
+                            <AudioPlayerComponent
+                                audioUrl={audioUrl}
+                                autoPlay={false}
+                            />
                         </div>
                         <Tooltip title={t("reRecord")}>
                             <IconButton
@@ -100,7 +108,9 @@ const ChatInputComponent = ({
                                 onClick={clearRecording}
                                 disabled={isInputDisabled}
                             >
-                                <DeleteOutlineRoundedIcon sx={{ fontSize: 18 }} />
+                                <DeleteOutlineRoundedIcon
+                                    sx={{ fontSize: 18 }}
+                                />
                             </IconButton>
                         </Tooltip>
                     </div>
@@ -154,7 +164,8 @@ const ChatInputComponent = ({
                                 backgroundColor: "var(--color-bgc-highlight)",
                                 color: "#ffffff",
                                 "&:hover": {
-                                    backgroundColor: "var(--color-bgc-highlight)",
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
                                     opacity: 0.9,
                                 },
                                 "&.Mui-disabled": {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export function useAudioRecorder() {
     const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -11,7 +11,9 @@ export function useAudioRecorder() {
 
     const startRecording = useCallback(async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+            });
             const mediaRecorder = new MediaRecorder(stream);
             mediaRecorderRef.current = mediaRecorder;
             audioChunksRef.current = [];
@@ -23,7 +25,9 @@ export function useAudioRecorder() {
             };
 
             mediaRecorder.onstop = () => {
-                const blob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+                const blob = new Blob(audioChunksRef.current, {
+                    type: "audio/webm",
+                });
                 const url = URL.createObjectURL(blob);
                 setAudioBlob(blob);
                 setAudioUrl(url);

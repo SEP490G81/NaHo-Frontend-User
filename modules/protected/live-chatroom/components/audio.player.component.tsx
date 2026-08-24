@@ -92,7 +92,7 @@ const AudioPlayerComponent = ({
     if (!src) return null;
 
     return (
-        <div className="flex items-center gap-3 rounded-xl border border-bdc-primary bg-bgc-secondary/50 p-2.5 shadow-xs max-w-md my-1.5">
+        <div className="border-bdc-primary bg-bgc-secondary/50 my-1.5 flex max-w-md items-center gap-3 rounded-xl border p-2.5 shadow-xs">
             <audio
                 ref={audioRef}
                 src={src}
@@ -119,7 +119,7 @@ const AudioPlayerComponent = ({
                 )}
             </IconButton>
 
-            <div className="flex-1 flex flex-col justify-center">
+            <div className="flex flex-1 flex-col justify-center">
                 <Slider
                     size="small"
                     value={currentTime}
@@ -135,7 +135,7 @@ const AudioPlayerComponent = ({
                         },
                     }}
                 />
-                <div className="flex justify-between items-center text-[10px] text-text-muted mt-0.5">
+                <div className="text-text-muted mt-0.5 flex items-center justify-between text-[10px]">
                     <span>{formatAudioTime(currentTime)}</span>
                     <span className="flex items-center gap-0.5">
                         <VolumeUpRoundedIcon sx={{ fontSize: 11 }} />

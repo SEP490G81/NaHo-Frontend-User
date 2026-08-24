@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, AlertTriangle } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { ResultStrengthsWeaknessesProps } from "../types/chat.result.type";
 import { parseListOrLines } from "../utils/chat.result.util";
 
@@ -20,7 +20,7 @@ const ResultStrengthsWeaknessesComponent = ({
                     <CheckCircle2 className="h-5 w-5" />
                     <h3 className="text-base font-bold">Điểm mạnh</h3>
                 </div>
-                <ul className="mt-4 flex-1 space-y-2 text-xs leading-relaxed text-text-contrast">
+                <ul className="text-text-contrast mt-4 flex-1 space-y-2 text-xs leading-relaxed">
                     {strengthList.length > 0 ? (
                         strengthList.map((item, idx) => (
                             <li key={idx} className="flex items-start gap-2">
@@ -29,7 +29,7 @@ const ResultStrengthsWeaknessesComponent = ({
                             </li>
                         ))
                     ) : (
-                        <p className="italic text-text-muted">
+                        <p className="text-text-muted italic">
                             Chưa có ghi nhận điểm mạnh cụ thể.
                         </p>
                     )}
@@ -42,7 +42,7 @@ const ResultStrengthsWeaknessesComponent = ({
                     <AlertTriangle className="h-5 w-5" />
                     <h3 className="text-base font-bold">Điểm cần cải thiện</h3>
                 </div>
-                <ul className="mt-4 flex-1 space-y-2 text-xs leading-relaxed text-text-contrast">
+                <ul className="text-text-contrast mt-4 flex-1 space-y-2 text-xs leading-relaxed">
                     {weaknessList.length > 0 ? (
                         weaknessList.map((item, idx) => (
                             <li key={idx} className="flex items-start gap-2">
@@ -51,7 +51,7 @@ const ResultStrengthsWeaknessesComponent = ({
                             </li>
                         ))
                     ) : (
-                        <p className="italic text-text-muted">
+                        <p className="text-text-muted italic">
                             Chưa có ghi nhận điểm yếu cụ thể.
                         </p>
                     )}

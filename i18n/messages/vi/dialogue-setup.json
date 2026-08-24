@@ -67,6 +67,10 @@
         "quotaExhaustedMsg": "Bạn đã sử dụng hết số lượt nói chuyện với AI hôm nay.",
         "quotaRemainingMsg": "Hôm nay bạn còn {remaining}/{limit} lượt trò chuyện với AI.",
         "quotaUpgradeBtn": "Nâng cấp gói",
+        "concurrentLimitExceeded": "Đã đạt tối đa {max} phiên đang dở",
+        "concurrentLimitExceededMsg": "Bạn đang có {count}/{max} phiên trò chuyện chưa hoàn thành. Vui lòng hoàn thành hoặc kết thúc phiên cũ trước khi tạo phiên mới.",
+        "activeSessionsCount": "Phiên đang dở: {count}/{max}",
+        "currentPlanBadge": "Gói: {name}",
         "companionUnavailable": "Nhân vật này chưa được thiết lập trên máy chủ.",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
         "companionLevel": "Trình độ: {level}"

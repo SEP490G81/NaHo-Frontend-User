@@ -59,16 +59,17 @@ const PersonaSettingsForm = ({
         "NEUTRAL";
 
     const isDefault =
-        marugotoLevel === defaultMarugoto && formalityLevel === defaultFormality;
+        marugotoLevel === defaultMarugoto &&
+        formalityLevel === defaultFormality;
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 shadow-xs space-y-5">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-bdc-primary pb-3">
+        <div className="border-bdc-primary bg-bgc-app space-y-5 rounded-2xl border p-5 shadow-xs">
+            <div className="border-bdc-primary flex flex-wrap items-center justify-between gap-2 border-b pb-3">
                 <div>
                     <h3 className="text-text-contrast text-base font-bold">
                         {t("advancedTitle")}
                     </h3>
-                    <p className="text-text-muted text-xs mt-0.5">
+                    <p className="text-text-muted mt-0.5 text-xs">
                         {t("advancedSubtitle")}
                     </p>
                 </div>
@@ -77,9 +78,9 @@ const PersonaSettingsForm = ({
                         type="button"
                         onClick={onResetDefaults}
                         disabled={isDefault}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all ${
+                        className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
                             isDefault
-                                ? "opacity-50 cursor-not-allowed border-bdc-primary text-text-muted bg-transparent"
+                                ? "border-bdc-primary text-text-muted cursor-not-allowed bg-transparent opacity-50"
                                 : "border-bdc-primary bg-hbgc-app hover:bg-bgc-highlight/10 text-text-contrast hover:text-text-highlight cursor-pointer"
                         }`}
                         title={t("resetDefaults")}
@@ -104,14 +105,16 @@ const PersonaSettingsForm = ({
                         value={marugotoLevel}
                         label={t("levelLabel")}
                         onChange={(e) =>
-                            onMarugotoLevelChange(e.target.value as MarugotoLevel)
+                            onMarugotoLevelChange(
+                                e.target.value as MarugotoLevel,
+                            )
                         }
                         sx={{ borderRadius: "12px" }}
                     >
                         {MARUGOTO_LEVEL_OPTIONS.map((opt) => (
                             <MenuItem key={opt.value} value={opt.value}>
                                 <div className="flex items-center gap-2">
-                                    <span className="font-semibold text-xs rounded-md px-1.5 py-0.5 bg-hbgc-app border border-bdc-primary">
+                                    <span className="bg-hbgc-app border-bdc-primary rounded-md border px-1.5 py-0.5 text-xs font-semibold">
                                         {opt.levelCode}
                                     </span>
                                     <span className="text-sm">{opt.label}</span>
@@ -125,7 +128,9 @@ const PersonaSettingsForm = ({
                 <FormControl fullWidth size="small">
                     <InputLabel id="formality-level-label">
                         <span className="flex items-center gap-1.5 font-semibold">
-                            <RecordVoiceOverOutlinedIcon sx={{ fontSize: 16 }} />
+                            <RecordVoiceOverOutlinedIcon
+                                sx={{ fontSize: 16 }}
+                            />
                             {t("styleLabel")}
                         </span>
                     </InputLabel>
@@ -134,15 +139,21 @@ const PersonaSettingsForm = ({
                         value={formalityLevel}
                         label={t("styleLabel")}
                         onChange={(e) =>
-                            onFormalityLevelChange(e.target.value as FormalityLevel)
+                            onFormalityLevelChange(
+                                e.target.value as FormalityLevel,
+                            )
                         }
                         sx={{ borderRadius: "12px" }}
                     >
                         {FORMALITY_LEVEL_OPTIONS.map((opt) => (
                             <MenuItem key={opt.value} value={opt.value}>
                                 <div>
-                                    <p className="text-sm font-semibold">{opt.label}</p>
-                                    <p className="text-text-muted text-[11px]">{opt.description}</p>
+                                    <p className="text-sm font-semibold">
+                                        {opt.label}
+                                    </p>
+                                    <p className="text-text-muted text-[11px]">
+                                        {opt.description}
+                                    </p>
                                 </div>
                             </MenuItem>
                         ))}
@@ -151,15 +162,18 @@ const PersonaSettingsForm = ({
             </div>
 
             {/* Slider: AI Speech Speed */}
-            <div className="rounded-xl bg-hbgc-app/60 border border-bdc-primary p-4">
-                <div className="flex items-center justify-between mb-2">
+            <div className="bg-hbgc-app/60 border-bdc-primary rounded-xl border p-4">
+                <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <SpeedRoundedIcon sx={{ fontSize: 18 }} className="text-text-muted" />
-                        <span className="text-text-contrast text-xs font-bold uppercase tracking-wider">
+                        <SpeedRoundedIcon
+                            sx={{ fontSize: 18 }}
+                            className="text-text-muted"
+                        />
+                        <span className="text-text-contrast text-xs font-bold tracking-wider uppercase">
                             {t("speedLabel")}
                         </span>
                     </div>
-                    <span className="text-text-highlight text-xs font-extrabold bg-bgc-highlight/15 px-2 py-0.5 rounded-md">
+                    <span className="text-text-highlight bg-bgc-highlight/15 rounded-md px-2 py-0.5 text-xs font-extrabold">
                         {speechSpeed.toFixed(2)}x
                     </span>
                 </div>
@@ -177,22 +191,29 @@ const PersonaSettingsForm = ({
             </div>
 
             {/* Switch: Sample answers toggle */}
-            <div className="flex items-center justify-between rounded-xl bg-hbgc-app/60 border border-bdc-primary p-4">
-                <div className="flex items-start gap-3 min-w-0 pr-2">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 mt-0.5">
+            <div className="bg-hbgc-app/60 border-bdc-primary flex items-center justify-between rounded-xl border p-4">
+                <div className="flex min-w-0 items-start gap-3 pr-2">
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
                         <LightbulbOutlinedIcon sx={{ fontSize: 18 }} />
                     </div>
                     <div>
-                        <h4 className="text-text-contrast text-sm font-bold">{t("hintsTitle")}</h4>
-                        <p className="text-text-muted text-xs leading-relaxed mt-0.5">{t("hintsDesc")}</p>
+                        <h4 className="text-text-contrast text-sm font-bold">
+                            {t("hintsTitle")}
+                        </h4>
+                        <p className="text-text-muted mt-0.5 text-xs leading-relaxed">
+                            {t("hintsDesc")}
+                        </p>
                     </div>
                 </div>
                 <Switch
                     checked={showSampleAnswers}
                     onChange={(e) => onSampleAnswersChange(e.target.checked)}
                     sx={{
-                        "& .MuiSwitch-switchBase.Mui-checked": { color: "var(--color-bgc-highlight)" },
-                        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { backgroundColor: "var(--color-bgc-highlight)" },
+                        "& .MuiSwitch-switchBase.Mui-checked": {
+                            color: "var(--color-bgc-highlight)",
+                        },
+                        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                            { backgroundColor: "var(--color-bgc-highlight)" },
                     }}
                 />
             </div>

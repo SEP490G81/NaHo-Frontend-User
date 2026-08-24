@@ -1,4 +1,4 @@
-import { HelpContent, HelpSearchResult } from "@/modules/protected/get-help/types/help.ui.type";
+import {HelpContent, HelpSearchResult} from "@/modules/protected/get-help/types/help.ui.type";
 
 /**
  * Bỏ dấu và hạ chữ thường để người học gõ không dấu vẫn tìm được nội dung có dấu

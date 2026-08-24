@@ -1,15 +1,10 @@
 import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import {
-    ChatSessionMessageRequest,
-    InitFirstGreetingRequest,
-    StartConversationRequest,
-} from "@/types/requests/speaking.llm.request";
+import { ChatSessionMessageRequest, StartConversationRequest } from "@/types/requests/speaking.llm.request";
 import {
     ChatResponse,
     SpeakingSessionAssessmentResponse,
     SpeakingSessionListItemResponse,
-    SpeakingSessionResponse,
-    StartConversationResponse,
+    SpeakingSessionResponse
 } from "@/types/responses/speaking.llm.response";
 
 /**
@@ -50,72 +45,6 @@ export async function startConversation(
 }
 
 /**
- * Khởi tạo câu chào đầu tiên của phiên hội thoại AI 1:1.
- * Gọi POST /api/speaking/session/init/{sessionCode}
- */
-export async function initFirstGreeting(
-    sessionCode: string,
-    req?: InitFirstGreetingRequest,
-): Promise<StartConversationResponse> {
-    const response = await fetch(`/api/speaking/session/init/${sessionCode}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(req || {}),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        const err = new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
-                "Không thể khởi tạo lời chào từ AI.",
-        );
-        (err as any).errorCode = problemDetail?.title || (result as any)?.code;
-        throw err;
-    }
-
-    return ((result as ApiResponse<StartConversationResponse>).data ??
-        result) as StartConversationResponse;
-}
-
-/**
- * Lấy thông tin chi tiết phiên hội thoại dở/đang diễn ra.
- * Gọi GET /api/speaking/session/details?sessionCode={sessionCode}&status={status}
- */
-export async function getInProgressSessionDetails(
-    sessionCode: string,
-    status: string = "IN_PROGRESS",
-): Promise<SpeakingSessionResponse> {
-    const response = await fetch(
-        `/api/speaking/session/details?sessionCode=${sessionCode}&status=${status}`,
-        {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            cache: "no-store",
-        },
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        const err = new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
-                "Không thể lấy thông tin chi tiết phiên hội thoại.",
-        );
-        (err as any).errorCode = (result as any)?.code || problemDetail?.title;
-        (err as any).status = response.status;
-        throw err;
-    }
-
-    return ((result as ApiResponse<SpeakingSessionResponse>).data ??
-        result) as SpeakingSessionResponse;
-}
-
-/**
  * Gửi tin nhắn dạng văn bản trong phiên hội thoại AI 1:1.
  * Gọi POST /api/speaking/session/message
  */
@@ -142,7 +71,8 @@ export async function sendTextMessage(
         throw err;
     }
 
-    return ((result as ApiResponse<ChatResponse>).data ?? result) as ChatResponse;
+    return ((result as ApiResponse<ChatResponse>).data ??
+        result) as ChatResponse;
 }
 
 /**
@@ -181,7 +111,8 @@ export async function sendAudioMessage(
         throw err;
     }
 
-    return ((result as ApiResponse<ChatResponse>).data ?? result) as ChatResponse;
+    return ((result as ApiResponse<ChatResponse>).data ??
+        result) as ChatResponse;
 }
 
 /**
@@ -191,23 +122,19 @@ export async function sendAudioMessage(
 export async function getSpeakingSessionsByStatus(
     status: string,
 ): Promise<SpeakingSessionListItemResponse[]> {
-    const response = await fetch(
-        `/api/speaking/session/all?status=${status}`,
-        {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            cache: "no-store",
-        },
-    );
+    const response = await fetch(`/api/speaking/session/all?status=${status}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+    });
 
     const result = await response.json();
     if (!response.ok) {
         return [];
     }
 
-    const data = (
-        result as ApiResponse<SpeakingSessionListItemResponse[]>
-    ).data;
+    const data = (result as ApiResponse<SpeakingSessionListItemResponse[]>)
+        .data;
     if (Array.isArray(data)) {
         return data;
     }
@@ -231,7 +158,9 @@ export async function endSpeakingSession(
     const result = await response.json();
     if (!response.ok) {
         throw new Error(
-            result?.detail || result?.message || "Không thể kết thúc phiên hội thoại.",
+            result?.detail ||
+                result?.message ||
+                "Không thể kết thúc phiên hội thoại.",
         );
     }
 
@@ -263,25 +192,4 @@ export async function getSpeakingSessionDetailClient(
 
     return ((result as ApiResponse<SpeakingSessionResponse>).data ??
         result) as SpeakingSessionResponse;
-}
-
-/**
- * Lấy hoặc kết thúc phiên và nhận điểm đánh giá từ AI (GET /api/speaking/session/end/{sessionCode}).
- */
-export async function getOrEndSpeakingSessionAssessment(
-    sessionCode: string,
-): Promise<SpeakingSessionAssessmentResponse | null> {
-    const response = await fetch(`/api/speaking/session/end/${sessionCode}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store",
-    });
-
-    const result = await response.json();
-    if (!response.ok) {
-        return null;
-    }
-
-    return ((result as ApiResponse<SpeakingSessionAssessmentResponse>).data ??
-        result) as SpeakingSessionAssessmentResponse;
 }

@@ -18,6 +18,14 @@ const PersonaSetupView = ({ personas = [] }: PersonaSetupViewProps) => {
         speechSpeed,
         showSampleAnswers,
         isStarting,
+        dailyLimit,
+        dailyUsed,
+        isDailyLimitReached,
+        maxConcurrent,
+        inProgressSessionsCount,
+        isConcurrentLimitReached,
+        planName,
+        isLoadingUsage,
         setSelectedPersona,
         setMarugotoLevel,
         setFormalityLevel,
@@ -87,6 +95,14 @@ const PersonaSetupView = ({ personas = [] }: PersonaSetupViewProps) => {
                         speechSpeed={speechSpeed}
                         showSampleAnswers={showSampleAnswers}
                         isStarting={isStarting}
+                        dailyLimit={dailyLimit}
+                        dailyUsed={dailyUsed}
+                        isDailyLimitReached={isDailyLimitReached}
+                        maxConcurrent={maxConcurrent}
+                        inProgressSessionsCount={inProgressSessionsCount}
+                        isConcurrentLimitReached={isConcurrentLimitReached}
+                        planName={planName}
+                        isLoadingUsage={isLoadingUsage}
                         onStartChat={startChat}
                     />
                 </div>

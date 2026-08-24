@@ -3,6 +3,10 @@ import {
     MarugotoLevel,
     PersonaResponse,
 } from "@/types/responses/persona.response";
+import {
+    UserDailyAiUsageResponse,
+    UserSubscriptionResponse,
+} from "@/types/responses/subscription.response";
 
 export interface PersonaSetupContextType {
     selectedPersona: PersonaResponse | null;
@@ -11,6 +15,16 @@ export interface PersonaSetupContextType {
     speechSpeed: number;
     showSampleAnswers: boolean;
     isStarting: boolean;
+    todayUsage: UserDailyAiUsageResponse | null;
+    subscription: UserSubscriptionResponse | null;
+    inProgressSessionsCount: number;
+    dailyLimit: number;
+    dailyUsed: number;
+    isDailyLimitReached: boolean;
+    maxConcurrent: number;
+    isConcurrentLimitReached: boolean;
+    isLoadingUsage: boolean;
+    planName: string;
     setSelectedPersona: (persona: PersonaResponse) => void;
     setMarugotoLevel: (level: MarugotoLevel) => void;
     setFormalityLevel: (level: FormalityLevel) => void;
@@ -18,6 +32,7 @@ export interface PersonaSetupContextType {
     setShowSampleAnswers: (show: boolean) => void;
     resetToDefaults: () => void;
     startChat: () => Promise<void>;
+    refreshUsage: () => Promise<void>;
 }
 
 export interface PersonaCardProps {
@@ -52,6 +67,14 @@ export interface PersonaSummaryCardProps {
     readonly speechSpeed: number;
     readonly showSampleAnswers: boolean;
     readonly isStarting: boolean;
+    readonly dailyLimit?: number;
+    readonly dailyUsed?: number;
+    readonly isDailyLimitReached?: boolean;
+    readonly maxConcurrent?: number;
+    readonly inProgressSessionsCount?: number;
+    readonly isConcurrentLimitReached?: boolean;
+    readonly planName?: string;
+    readonly isLoadingUsage?: boolean;
     readonly onStartChat: () => void;
 }
 

@@ -7,7 +7,9 @@ import { PersonaResponse } from "@/types/responses/persona.response";
  *
  * @returns ApiResponse<PersonaResponse[]> chứa danh sách persona cùng metadata từ backend.
  */
-export async function getAllPersonas(): Promise<ApiResponse<PersonaResponse[]>> {
+export async function getAllPersonas(): Promise<
+    ApiResponse<PersonaResponse[]>
+> {
     const response = await fetch("/api/personas", {
         method: "GET",
         headers: {
@@ -102,4 +104,3 @@ export async function startConversation(
     }
     return result?.data ?? result?.sessionCode ?? String(result);
 }
-

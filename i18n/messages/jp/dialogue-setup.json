@@ -67,6 +67,10 @@
         "quotaExhaustedMsg": "本日のAI会話回数上限に達しました。",
         "quotaRemainingMsg": "本日残り {remaining}/{limit} 回会話できます。",
         "quotaUpgradeBtn": "プランをアップグレード",
+        "concurrentLimitExceeded": "未完了セッションの上限（{max}件）に達しました",
+        "concurrentLimitExceededMsg": "現在未完了のセッションが {count}/{max} 件あります。新しいセッションを作成する前に、既存のセッションを完了または終了してください。",
+        "activeSessionsCount": "進行中のセッション：{count}/{max}",
+        "currentPlanBadge": "プラン：{name}",
         "companionUnavailable": "このペルソナはサーバーにまだ設定されていません。",
         "toastStartSuccess": "設定を保存しました。会話を開始します！",
         "companionLevel": "レベル：{level}"

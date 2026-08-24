@@ -1,5 +1,5 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { Report } from "@/modules/protected/report/types/report";
+import {ApiResponse, ProblemDetail} from "@/types/responses/base.response";
+import {Report} from "@/modules/protected/report/types/report";
 
 /**
  * Gửi báo cáo mới kèm 1 hoặc nhiều hình ảnh.

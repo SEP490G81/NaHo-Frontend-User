@@ -29,7 +29,7 @@ const PersonaAvatarBadge = ({
         return (
             <div
                 className={cn(
-                    "relative shrink-0 overflow-hidden rounded-2xl border border-bdc-primary bg-bgc-app shadow-xs",
+                    "border-bdc-primary bg-bgc-app relative shrink-0 overflow-hidden rounded-2xl border shadow-xs",
                     className,
                 )}
                 style={{ width: size, height: size }}

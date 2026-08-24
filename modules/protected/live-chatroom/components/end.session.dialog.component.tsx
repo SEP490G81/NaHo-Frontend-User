@@ -44,13 +44,16 @@ const EndSessionDialogComponent = ({
                 },
             }}
         >
-            <DialogTitle className="flex items-center gap-2 text-base font-bold text-text-contrast">
-                <FlagOutlinedIcon className="text-red-500" sx={{ fontSize: 20 }} />
+            <DialogTitle className="text-text-contrast flex items-center gap-2 text-base font-bold">
+                <FlagOutlinedIcon
+                    className="text-red-500"
+                    sx={{ fontSize: 20 }}
+                />
                 {t("endSessionConfirmTitle") || "Kết thúc phiên trò chuyện"}
             </DialogTitle>
 
             <DialogContent>
-                <DialogContentText className="text-xs leading-relaxed text-text-muted">
+                <DialogContentText className="text-text-muted text-xs leading-relaxed">
                     {t("endSessionConfirmDesc") ||
                         "Bạn có chắc chắn muốn kết thúc phiên trò chuyện này không? AI sẽ tạo báo cáo đánh giá chi tiết về năng lực giao tiếp của bạn."}
                 </DialogContentText>

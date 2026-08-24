@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Tabs, Tab } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 import { ResultAspectFeedbackProps } from "../types/chat.result.type";
 
 interface AspectItem {
@@ -66,13 +66,13 @@ const ResultAspectFeedbackComponent = ({
     const currentAspect = aspects[activeTab] || aspects[0];
 
     return (
-        <div className="rounded-2xl border border-bdc-primary bg-bgc-app p-5 shadow-xs">
-            <h3 className="text-base font-bold text-text-contrast">
+        <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5 shadow-xs">
+            <h3 className="text-text-contrast text-base font-bold">
                 Nhận xét chi tiết theo tiêu chí
             </h3>
 
             {/* Horizontal Tabs */}
-            <div className="mt-3 border-b border-bdc-primary/50">
+            <div className="border-bdc-primary/50 mt-3 border-b">
                 <Tabs
                     value={activeTab}
                     onChange={(_, val) => setActiveTab(val)}
@@ -100,18 +100,18 @@ const ResultAspectFeedbackComponent = ({
             </div>
 
             {/* Feedback Content */}
-            <div className="mt-4 rounded-xl border border-bdc-primary/40 bg-bgc-secondary/20 p-4">
+            <div className="border-bdc-primary/40 bg-bgc-secondary/20 mt-4 rounded-xl border p-4">
                 <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-bold text-text-contrast">
+                    <h4 className="text-text-contrast text-sm font-bold">
                         {currentAspect.label}
                     </h4>
                     {typeof currentAspect.score === "number" && (
-                        <span className="rounded-full bg-bgc-highlight/10 px-2.5 py-0.5 text-xs font-extrabold text-text-highlight">
+                        <span className="bg-bgc-highlight/10 text-text-highlight rounded-full px-2.5 py-0.5 text-xs font-extrabold">
                             {currentAspect.score.toFixed(1)} / 10
                         </span>
                     )}
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-text-contrast">
+                <p className="text-text-contrast mt-2 text-xs leading-relaxed">
                     {currentAspect.feedback}
                 </p>
             </div>

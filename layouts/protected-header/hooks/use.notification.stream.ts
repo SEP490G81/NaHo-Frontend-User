@@ -4,15 +4,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCurrentUser } from "@/hooks/use.current.user";
 import { normalizeNotification } from "@/services/client/notification.service";
-import type {
-    NotificationResponse,
-    RawNotificationResponse,
-} from "@/types/responses/notification.response";
+import type { NotificationResponse, RawNotificationResponse } from "@/types/responses/notification.response";
 import {
     NOTIFICATION_QUERY_KEYS,
     NOTIFICATION_STREAM_EVENT,
     NOTIFICATION_STREAM_RETRY_DELAY,
-    NOTIFICATION_STREAM_URL,
+    NOTIFICATION_STREAM_URL
 } from "@/layouts/protected-header/constants/notification.constant";
 
 /** BE có thể đẩy object JSON hoặc chuỗi JSON đã bọc thêm một lớp nháy. */

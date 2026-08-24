@@ -27,14 +27,9 @@ const ChatResultSessionPage = async ({
     params: Promise<{ sessionCode: string }>;
 }) => {
     const { sessionCode } = await params;
-    const assessmentData = await getSpeakingSessionAssessmentServer(sessionCode);
+    const sessionData = await getSpeakingSessionAssessmentServer(sessionCode);
 
-    return (
-        <ChatResultView
-            assessment={assessmentData}
-            sessionCode={sessionCode}
-        />
-    );
+    return <ChatResultView session={sessionData} />;
 };
 
 export default ChatResultSessionPage;

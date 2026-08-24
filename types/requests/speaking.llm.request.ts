@@ -22,4 +22,3 @@ export interface EndSessionRequest {
     speechMetadata?: string | null;
     asrConfidence?: string | null;
 }
-

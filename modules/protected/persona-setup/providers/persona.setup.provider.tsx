@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
@@ -9,12 +9,25 @@ import {
     MarugotoLevel,
     PersonaResponse,
 } from "@/types/responses/persona.response";
-import { startConversation } from "@/services/client/speaking.llm.service";
+import {
+    UserDailyAiUsageResponse,
+    UserSubscriptionResponse,
+} from "@/types/responses/subscription.response";
+import { SpeakingSessionListItemResponse } from "@/types/responses/speaking.llm.response";
+import {
+    getSpeakingSessionsByStatus,
+    startConversation,
+} from "@/services/client/speaking.llm.service";
+import {
+    getMySubscription,
+    getTodayAiUsage,
+} from "@/services/client/subscription.service";
 import { PersonaSetupContextType } from "../types/persona.setup.type";
 import { DEFAULT_SPEED } from "../constants/persona.setup.constant";
 
-export const PersonaSetupContext =
-    createContext<PersonaSetupContextType | undefined>(undefined);
+export const PersonaSetupContext = createContext<
+    PersonaSetupContextType | undefined
+>(undefined);
 
 export const PersonaSetupProvider = ({
     initialPersonas = [],
@@ -27,33 +40,97 @@ export const PersonaSetupProvider = ({
     const router = useRouter();
 
     const [selectedPersona, setSelectedPersonaState] =
-        useState<PersonaResponse | null>(null);
-    const [marugotoLevel, setMarugotoLevel] =
-        useState<MarugotoLevel>("STARTER_A1");
-    const [formalityLevel, setFormalityLevel] =
-        useState<FormalityLevel>("NEUTRAL");
+        useState<PersonaResponse | null>(
+            () => (initialPersonas.length > 0 ? initialPersonas[0] : null),
+        );
+    const [marugotoLevel, setMarugotoLevel] = useState<MarugotoLevel>(
+        () =>
+            initialPersonas[0]?.defaultMarugotoLevel ||
+            initialPersonas[0]?.suggestedConversationStyle?.marugotoLevel ||
+            "STARTER_A1",
+    );
+    const [formalityLevel, setFormalityLevel] = useState<FormalityLevel>(
+        () =>
+            initialPersonas[0]?.defaultFormalityLevel ||
+            initialPersonas[0]?.suggestedConversationStyle?.formalityLevel ||
+            "NEUTRAL",
+    );
     const [speechSpeed, setSpeechSpeed] = useState<number>(DEFAULT_SPEED);
     const [showSampleAnswers, setShowSampleAnswers] = useState<boolean>(true);
     const [isStarting, setIsStarting] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (initialPersonas.length > 0 && !selectedPersona) {
-            const first = initialPersonas[0];
-            setSelectedPersonaState(first);
-            if (first.defaultMarugotoLevel) {
-                setMarugotoLevel(first.defaultMarugotoLevel);
-            } else if (first.suggestedConversationStyle?.marugotoLevel) {
-                setMarugotoLevel(first.suggestedConversationStyle.marugotoLevel);
+    // Subscription, Daily Usage & In-Progress sessions state
+    const [todayUsage, setTodayUsage] =
+        useState<UserDailyAiUsageResponse | null>(null);
+    const [subscription, setSubscription] =
+        useState<UserSubscriptionResponse | null>(null);
+    const [inProgressSessions, setInProgressSessions] = useState<
+        SpeakingSessionListItemResponse[]
+    >([]);
+    const [isLoadingUsage, setIsLoadingUsage] = useState<boolean>(true);
+
+    const refreshUsage = useCallback(async () => {
+        try {
+            setIsLoadingUsage(true);
+            const [usageRes, subRes, inProgRes] = await Promise.allSettled([
+                getTodayAiUsage(),
+                getMySubscription(),
+                getSpeakingSessionsByStatus("IN_PROGRESS"),
+            ]);
+            if (usageRes.status === "fulfilled") {
+                setTodayUsage(usageRes.value);
             }
-            if (first.defaultFormalityLevel) {
-                setFormalityLevel(first.defaultFormalityLevel);
-            } else if (first.suggestedConversationStyle?.formalityLevel) {
-                setFormalityLevel(
-                    first.suggestedConversationStyle.formalityLevel,
-                );
+            if (subRes.status === "fulfilled") {
+                setSubscription(subRes.value);
             }
+            if (inProgRes.status === "fulfilled") {
+                setInProgressSessions(inProgRes.value || []);
+            }
+        } catch {
+            // ignore fetch errors
+        } finally {
+            setIsLoadingUsage(false);
         }
-    }, [initialPersonas, selectedPersona]);
+    }, []);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        void refreshUsage();
+
+        const handleRefresh = () => {
+            void refreshUsage();
+        };
+
+        if (typeof window !== "undefined") {
+            window.addEventListener("refresh-chat-sessions", handleRefresh);
+        }
+
+        return () => {
+            if (typeof window !== "undefined") {
+                window.removeEventListener("refresh-chat-sessions", handleRefresh);
+            }
+        };
+    }, [refreshUsage]);
+
+    // Limit calculations
+    const plan = subscription?.subscriptionPlan || subscription?.plan;
+    const planName =
+        plan?.name ||
+        (plan?.code === "PREMIUM"
+            ? "Premium"
+            : plan?.code === "BASIC"
+              ? "Basic"
+              : "Miễn phí (Free)");
+
+    const dailyLimit =
+        plan?.dailyAiSessionStartLimit ??
+        (plan?.code === "PREMIUM" ? 50 : plan?.code === "BASIC" ? 15 : 3);
+    const dailyUsed = todayUsage?.aiSessionStartCount ?? 0;
+    const isDailyLimitReached = dailyLimit > 0 && dailyUsed >= dailyLimit;
+
+    const maxConcurrent = plan?.maxConcurrentAiSessionCount ?? 1;
+    const inProgressSessionsCount = inProgressSessions.length;
+    const isConcurrentLimitReached = inProgressSessionsCount >= maxConcurrent;
 
     const setSelectedPersona = (persona: PersonaResponse) => {
         setSelectedPersonaState(persona);
@@ -91,6 +168,21 @@ export const PersonaSetupProvider = ({
             return;
         }
 
+        if (isDailyLimitReached) {
+            toast.error(t("quotaExhaustedMsg"));
+            return;
+        }
+
+        if (isConcurrentLimitReached) {
+            toast.error(
+                t("concurrentLimitExceededMsg", {
+                    count: inProgressSessionsCount,
+                    max: maxConcurrent,
+                }),
+            );
+            return;
+        }
+
         try {
             setIsStarting(true);
             const sessionCode = await startConversation({
@@ -103,8 +195,9 @@ export const PersonaSetupProvider = ({
             }
             router.refresh();
             router.push(`/live-chatroom/${sessionCode}`);
-        } catch (error: any) {
-            toast.error(error?.message || t("startError"));
+        } catch (error: unknown) {
+            const errObj = error as { message?: string };
+            toast.error(errObj?.message || t("startError"));
         } finally {
             setIsStarting(false);
         }
@@ -119,6 +212,16 @@ export const PersonaSetupProvider = ({
                 speechSpeed,
                 showSampleAnswers,
                 isStarting,
+                todayUsage,
+                subscription,
+                inProgressSessionsCount,
+                dailyLimit,
+                dailyUsed,
+                isDailyLimitReached,
+                maxConcurrent,
+                isConcurrentLimitReached,
+                isLoadingUsage,
+                planName,
                 setSelectedPersona,
                 setMarugotoLevel,
                 setFormalityLevel,
@@ -126,6 +229,7 @@ export const PersonaSetupProvider = ({
                 setShowSampleAnswers,
                 resetToDefaults,
                 startChat,
+                refreshUsage,
             }}
         >
             {children}

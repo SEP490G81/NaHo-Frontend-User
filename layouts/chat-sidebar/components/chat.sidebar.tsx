@@ -36,13 +36,16 @@ export function ChatSidebar({
 
     const [inProgressList, setInProgressList] =
         useState<SpeakingSessionListItemResponse[]>(inProgressSessions);
-    const [completedList, setCompletedList] =
-        useState<SpeakingSessionListItemResponse[]>(completedProgressSessions);
+    const [completedList, setCompletedList] = useState<
+        SpeakingSessionListItemResponse[]
+    >(completedProgressSessions);
 
     // Sync initial props when layout re-renders
     useEffect(() => {
-        if (inProgressSessions.length > 0) setInProgressList(inProgressSessions);
-        if (completedProgressSessions.length > 0) setCompletedList(completedProgressSessions);
+        if (inProgressSessions.length > 0)
+            setInProgressList(inProgressSessions);
+        if (completedProgressSessions.length > 0)
+            setCompletedList(completedProgressSessions);
     }, [inProgressSessions, completedProgressSessions]);
 
     // Client-side dynamic refresh for real-time sidebar session updates
@@ -72,7 +75,10 @@ export function ChatSidebar({
 
         return () => {
             if (typeof window !== "undefined") {
-                window.removeEventListener("refresh-chat-sessions", handleRefresh);
+                window.removeEventListener(
+                    "refresh-chat-sessions",
+                    handleRefresh,
+                );
             }
         };
     }, [pathname, refreshSessions]);

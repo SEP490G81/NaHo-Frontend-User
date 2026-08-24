@@ -43,7 +43,7 @@ const ChatSidebarDeleteDialog = ({
         >
             <DialogTitle
                 id="delete-dialog-title"
-                className="flex items-center gap-2.5 text-text-contrast font-bold text-base"
+                className="text-text-contrast flex items-center gap-2.5 text-base font-bold"
                 sx={{ px: 2, pt: 2, pb: 1 }}
             >
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-600 dark:bg-red-950/50 dark:text-red-400">
@@ -57,8 +57,8 @@ const ChatSidebarDeleteDialog = ({
                     {t("description")}
                 </p>
                 {sessionTitle && (
-                    <div className="mt-3 rounded-lg bg-hbgc-app border border-bdc-primary px-3 py-2">
-                        <p className="text-text-contrast text-xs font-semibold truncate">
+                    <div className="bg-hbgc-app border-bdc-primary mt-3 rounded-lg border px-3 py-2">
+                        <p className="text-text-contrast truncate text-xs font-semibold">
                             {sessionTitle}
                         </p>
                     </div>

@@ -17,4 +17,3 @@ export enum MessageType {
     AUDIO = "AUDIO",
     TEXT = "TEXT",
 }
-

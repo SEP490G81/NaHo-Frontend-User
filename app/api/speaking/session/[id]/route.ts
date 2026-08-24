@@ -36,5 +36,3 @@ export async function DELETE(
     const { id } = await params;
     return proxyDelete(`/speaking/session/${id}`);
 }
-
-

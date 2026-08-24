@@ -26,7 +26,11 @@ const ChatSidebarSessionItem = ({
         ? `${CHAT_RESULT_ROUTE_PREFIX}/${session.sessionCode}`
         : `${CHAT_SESSION_ROUTE_PREFIX}/${session.sessionCode}`;
     const formattedTime = formatSessionTime(session.startedAt);
-    const title = session.voiceName || session.topic || t("untitledChat");
+    const title =
+        session.persona?.name ||
+        session.voiceName ||
+        session.topic ||
+        t("untitledChat");
 
     const handleDelete = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -51,8 +55,8 @@ const ChatSidebarSessionItem = ({
                         className={cn(
                             "truncate text-xs leading-snug",
                             isActive
-                                ? "font-bold text-text-contrast"
-                                : "font-medium text-text-contrast",
+                                ? "text-text-contrast font-bold"
+                                : "text-text-contrast font-medium",
                         )}
                         title={title}
                     >
@@ -60,7 +64,7 @@ const ChatSidebarSessionItem = ({
                     </p>
                     {formattedTime && (
                         <p
-                            className="mt-0.5 truncate text-[10.5px] leading-tight text-text-muted"
+                            className="text-text-muted mt-0.5 truncate text-[10.5px] leading-tight"
                             title={formattedTime}
                         >
                             {formattedTime}
@@ -69,7 +73,7 @@ const ChatSidebarSessionItem = ({
                 </div>
             </Link>
 
-            <div className="absolute top-1/2 right-1.5 -translate-y-1/2 shrink-0">
+            <div className="absolute top-1/2 right-1.5 shrink-0 -translate-y-1/2">
                 <Tooltip title={t("deleteChat")} arrow placement="top">
                     <IconButton
                         size="small"

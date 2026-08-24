@@ -1,7 +1,4 @@
-import {
-    FormalityLevel,
-    MarugotoLevel,
-} from "@/types/enums/speaking.llm.enum";
+import { FormalityLevel, MarugotoLevel } from "@/types/enums/speaking.llm.enum";
 import { PersonaResponse } from "@/types/responses/persona.response";
 import { SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
 
@@ -34,7 +31,6 @@ export interface LiveChatroomContextType {
     speechSpeed: number;
     showSuggestions: boolean;
     messages: ChatMessageItem[];
-    isLoading: boolean;
     isSendingMessage: boolean;
     isEndingSession: boolean;
     setSpeechSpeed: (speed: number) => void;

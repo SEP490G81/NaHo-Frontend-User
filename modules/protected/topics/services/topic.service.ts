@@ -1,6 +1,6 @@
-import { apiFetch, hasApiConfigured } from "@/libs/apiClient";
-import { mockTopics, type Topic } from "@/data/mockTopics";
-import { getMarugotoTopicsAsTopics } from "@/data/marugoto";
+import {apiFetch, hasApiConfigured} from "@/libs/apiClient";
+import {mockTopics, type Topic} from "@/data/mockTopics";
+import {getMarugotoTopicsAsTopics} from "@/data/marugoto";
 
 /** Danh sách topic dùng chung: mock cũ + topic sinh từ sách Marugoto. */
 function localTopics(): Topic[] {

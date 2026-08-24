@@ -19,13 +19,13 @@ const ChatSidebarSection = ({
     return (
         <div className="flex flex-col space-y-1.5">
             <div className="flex items-center justify-between px-2 py-1">
-                <div className="flex items-center gap-1.5 min-w-0">
+                <div className="flex min-w-0 items-center gap-1.5">
                     {icon && (
-                        <span className="shrink-0 text-text-muted flex items-center justify-center">
+                        <span className="text-text-muted flex shrink-0 items-center justify-center">
                             {icon}
                         </span>
                     )}
-                    <span className="text-text-muted text-xs font-bold uppercase tracking-wider truncate">
+                    <span className="text-text-muted truncate text-xs font-bold tracking-wider uppercase">
                         {title}
                     </span>
                 </div>
@@ -48,10 +48,12 @@ const ChatSidebarSection = ({
 
             {sessions.length === 0 ? (
                 <div className="px-2.5 py-2 text-center">
-                    <p className="text-text-muted text-xs italic">{emptyText}</p>
+                    <p className="text-text-muted text-xs italic">
+                        {emptyText}
+                    </p>
                 </div>
             ) : (
-                <ul className="space-y-1 p-0 m-0">
+                <ul className="m-0 space-y-1 p-0">
                     {sessions.map((session) => {
                         const isActive = isSessionActive(
                             session.sessionCode,

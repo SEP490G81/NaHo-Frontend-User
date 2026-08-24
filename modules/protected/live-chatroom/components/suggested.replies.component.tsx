@@ -19,8 +19,11 @@ const SuggestedRepliesComponent = ({
 
     return (
         <div className="mb-2 space-y-1.5 px-1">
-            <p className="text-text-muted text-[11px] font-medium flex items-center gap-1">
-                <LightbulbOutlinedIcon sx={{ fontSize: 14 }} className="text-amber-500" />
+            <p className="text-text-muted flex items-center gap-1 text-[11px] font-medium">
+                <LightbulbOutlinedIcon
+                    sx={{ fontSize: 14 }}
+                    className="text-amber-500"
+                />
                 {t("suggestionLabel")}
             </p>
             <div className="flex flex-wrap gap-1.5">

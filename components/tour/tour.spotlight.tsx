@@ -67,7 +67,9 @@ export function TourSpotlight({
 
     const step = steps[stepIndex];
     const onCurrentRoute = !!step && step.routeTest.test(pathname);
-    const rect = useTourTargetRect(isActive && onCurrentRoute ? step.targetId : "");
+    const rect = useTourTargetRect(
+        isActive && onCurrentRoute ? step.targetId : "",
+    );
     const hasRect = rect != null;
 
     // Nhiều bước có thể cùng nằm trên 1 route (vd mở dialog không đổi URL) —

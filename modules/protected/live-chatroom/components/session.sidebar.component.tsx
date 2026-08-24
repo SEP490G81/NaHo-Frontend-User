@@ -40,9 +40,9 @@ const SessionSidebarComponent = ({
     const setAutoPlayAudio = useChatStore((s) => s.setAutoPlayAudio);
 
     return (
-        <div className="flex h-full flex-col justify-between rounded-2xl border border-bdc-primary bg-bgc-app p-5 shadow-xs">
+        <div className="border-bdc-primary bg-bgc-app flex h-full flex-col justify-between rounded-2xl border p-5 shadow-xs">
             <div>
-                <h3 className="border-b border-bdc-primary pb-3 text-base font-bold text-text-contrast">
+                <h3 className="border-bdc-primary text-text-contrast border-b pb-3 text-base font-bold">
                     {t("settingsTitle")}
                 </h3>
 
@@ -50,10 +50,22 @@ const SessionSidebarComponent = ({
                 <div className="py-4">
                     {isLoading ? (
                         <div className="flex items-center gap-3">
-                            <Skeleton variant="circular" width={48} height={48} />
+                            <Skeleton
+                                variant="circular"
+                                width={48}
+                                height={48}
+                            />
                             <div className="min-w-0 flex-1 space-y-1.5">
-                                <Skeleton variant="text" width="70%" height={18} />
-                                <Skeleton variant="text" width="40%" height={14} />
+                                <Skeleton
+                                    variant="text"
+                                    width="70%"
+                                    height={18}
+                                />
+                                <Skeleton
+                                    variant="text"
+                                    width="40%"
+                                    height={14}
+                                />
                             </div>
                         </div>
                     ) : persona ? (
@@ -64,19 +76,23 @@ const SessionSidebarComponent = ({
                                 size={48}
                             />
                             <div className="min-w-0 flex-1">
-                                <h4 className="truncate text-sm font-bold text-text-contrast">
+                                <h4 className="text-text-contrast truncate text-sm font-bold">
                                     {persona.name}
                                 </h4>
                                 {persona.voiceName && (
-                                    <p className="mt-0.5 flex items-center gap-1 text-xs text-text-muted">
-                                        <GraphicEqRoundedIcon sx={{ fontSize: 13 }} />
-                                        <span className="truncate">{persona.voiceName}</span>
+                                    <p className="text-text-muted mt-0.5 flex items-center gap-1 text-xs">
+                                        <GraphicEqRoundedIcon
+                                            sx={{ fontSize: 13 }}
+                                        />
+                                        <span className="truncate">
+                                            {persona.voiceName}
+                                        </span>
                                     </p>
                                 )}
                             </div>
                         </div>
                     ) : (
-                        <p className="text-xs italic text-text-muted">
+                        <p className="text-text-muted text-xs italic">
                             {t("readyLoading")}
                         </p>
                     )}
@@ -87,28 +103,30 @@ const SessionSidebarComponent = ({
                 {/* Session Settings */}
                 <div className="space-y-3 py-4 text-xs">
                     <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5 text-text-muted">
+                        <span className="text-text-muted flex items-center gap-1.5">
                             <SchoolOutlinedIcon sx={{ fontSize: 15 }} />
                             Trình độ:
                         </span>
                         {isLoading ? (
                             <Skeleton variant="text" width={60} height={16} />
                         ) : (
-                            <span className="font-bold text-text-contrast">
+                            <span className="text-text-contrast font-bold">
                                 {getMarugotoLevelLabel(marugotoLevel)}
                             </span>
                         )}
                     </div>
 
                     <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5 text-text-muted">
-                            <RecordVoiceOverOutlinedIcon sx={{ fontSize: 15 }} />
+                        <span className="text-text-muted flex items-center gap-1.5">
+                            <RecordVoiceOverOutlinedIcon
+                                sx={{ fontSize: 15 }}
+                            />
                             Phong cách:
                         </span>
                         {isLoading ? (
                             <Skeleton variant="text" width={60} height={16} />
                         ) : (
-                            <span className="font-bold text-text-contrast">
+                            <span className="text-text-contrast font-bold">
                                 {getFormalityLevelLabel(formalityLevel)}
                             </span>
                         )}
@@ -117,11 +135,11 @@ const SessionSidebarComponent = ({
                     {/* Speech Speed Control */}
                     <div className="pt-2">
                         <div className="mb-1 flex items-center justify-between">
-                            <span className="flex items-center gap-1.5 text-text-muted">
+                            <span className="text-text-muted flex items-center gap-1.5">
                                 <SpeedRoundedIcon sx={{ fontSize: 15 }} />
                                 {t("speedLabel")}:
                             </span>
-                            <span className="font-extrabold text-text-highlight">
+                            <span className="text-text-highlight font-extrabold">
                                 {speechSpeed.toFixed(2)}x
                             </span>
                         </div>
@@ -146,12 +164,14 @@ const SessionSidebarComponent = ({
                         />
                     </div>
 
-                    <Divider sx={{ borderColor: "var(--color-bdc-primary)", my: 1 }} />
+                    <Divider
+                        sx={{ borderColor: "var(--color-bdc-primary)", my: 1 }}
+                    />
 
                     {/* AI Audio Playback Setting */}
                     <div className="pt-1">
                         <div className="flex items-center justify-between">
-                            <span className="flex items-center gap-1.5 font-medium text-text-muted">
+                            <span className="text-text-muted flex items-center gap-1.5 font-medium">
                                 <VolumeUpOutlinedIcon sx={{ fontSize: 15 }} />
                                 {t("aiAudioTitle")}:
                             </span>
@@ -159,30 +179,36 @@ const SessionSidebarComponent = ({
                                 size="small"
                                 checked={autoPlayAudio}
                                 disabled={isLoading}
-                                onChange={(e) => setAutoPlayAudio(e.target.checked)}
+                                onChange={(e) =>
+                                    setAutoPlayAudio(e.target.checked)
+                                }
                                 sx={{
                                     "& .MuiSwitch-switchBase.Mui-checked": {
                                         color: "var(--color-bgc-highlight)",
                                     },
-                                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                                        backgroundColor: "var(--color-bgc-highlight)",
-                                    },
+                                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                        {
+                                            backgroundColor:
+                                                "var(--color-bgc-highlight)",
+                                        },
                                 }}
                             />
                         </div>
-                        <p className="mt-1 text-[11px] italic text-text-muted">
+                        <p className="text-text-muted mt-1 text-[11px] italic">
                             {autoPlayAudio
                                 ? t("aiAudioAutoPlayDesc")
                                 : t("aiAudioManualDesc")}
                         </p>
                     </div>
 
-                    <Divider sx={{ borderColor: "var(--color-bdc-primary)", my: 1 }} />
+                    <Divider
+                        sx={{ borderColor: "var(--color-bdc-primary)", my: 1 }}
+                    />
 
                     {/* Toggle Suggestions Setting */}
                     <div className="pt-1">
                         <div className="flex items-center justify-between">
-                            <span className="flex items-center gap-1.5 font-medium text-text-muted">
+                            <span className="text-text-muted flex items-center gap-1.5 font-medium">
                                 <LightbulbOutlinedIcon sx={{ fontSize: 15 }} />
                                 {t("toggleSuggestions")}:
                             </span>
@@ -190,14 +216,18 @@ const SessionSidebarComponent = ({
                                 size="small"
                                 checked={showSuggestions}
                                 disabled={isLoading}
-                                onChange={(e) => onToggleSuggestions?.(e.target.checked)}
+                                onChange={(e) =>
+                                    onToggleSuggestions?.(e.target.checked)
+                                }
                                 sx={{
                                     "& .MuiSwitch-switchBase.Mui-checked": {
                                         color: "var(--color-bgc-highlight)",
                                     },
-                                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                                        backgroundColor: "var(--color-bgc-highlight)",
-                                    },
+                                    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                        {
+                                            backgroundColor:
+                                                "var(--color-bgc-highlight)",
+                                        },
                                 }}
                             />
                         </div>
@@ -206,7 +236,7 @@ const SessionSidebarComponent = ({
             </div>
 
             {/* End Session Action Button */}
-            <div className="pt-3 border-t border-bdc-primary">
+            <div className="border-bdc-primary border-t pt-3">
                 <Button
                     fullWidth
                     variant="outlined"

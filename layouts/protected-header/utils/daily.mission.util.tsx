@@ -1,4 +1,4 @@
-import { UserDailyMissionResponse } from "@/types/responses/daily.mission.response";
+import {UserDailyMissionResponse} from "@/types/responses/daily.mission.response";
 
 /**
  * Computes progress stats from user's daily missions list today

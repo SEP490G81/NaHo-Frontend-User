@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from "@/constants/app.constants";
-import { UserDailyAttendanceResponse } from "@/types/responses/daily.reward.response";
+import {cookies} from "next/headers";
+import {NextResponse} from "next/server";
+import {ApiResponse, ProblemDetail} from "@/types/responses/base.response";
+import {ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME} from "@/constants/app.constants";
+import {UserDailyAttendanceResponse} from "@/types/responses/daily.reward.response";
 
 /** Nhận phần thưởng điểm danh hàng ngày. */
 export async function POST(request: Request) {

@@ -1,4 +1,4 @@
-import type { Question } from "@/data/mockTopics";
+import type {Question} from "@/data/mockTopics";
 
 /** Loại node trên đường lộ trình vòng tròn của một Can-do. */
 export type PathNodeKind = "vocab" | "question" | "test";

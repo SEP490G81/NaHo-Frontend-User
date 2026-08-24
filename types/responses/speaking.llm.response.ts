@@ -37,7 +37,7 @@ export interface SpeakingSessionListItemResponse {
     id: number;
     sessionCode: string;
     userId: number;
-    personaId: number;
+    persona: PersonaResponse;
     topic: string;
     voiceName: string;
     marugotoLevel: MarugotoLevel;
@@ -90,8 +90,7 @@ export interface SpeakingSessionResponse {
     id: number;
     sessionCode: string;
     userId: number;
-    persona?: PersonaResponse | null;
-    personaId?: number | null;
+    persona: PersonaResponse;
     topic?: string | null;
     voiceName?: string | null;
     marugotoLevel: MarugotoLevel;
@@ -107,7 +106,6 @@ export interface SpeakingSessionResponse {
     speakingSessionMessages?: SpeakingSessionMessageResponse[] | null;
     messages?: SpeakingSessionMessageResponse[] | null;
 }
-
 
 export interface ChatResponse {
     userMessage: SpeakingSessionMessageResponse;

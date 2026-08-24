@@ -25,7 +25,8 @@
 
 ### Mô tả bài toán
 
-- Tôi muốn gọi API list ở `app/[locale]/(chatroom)/layout.tsx` sau đó truyền props vào component chat sidebar để hiển thị.
+- Tôi muốn gọi API list ở `app/[locale]/(chatroom)/layout.tsx` sau đó truyền props vào component chat sidebar để hiển
+  thị.
 - Tôi muốn hiển thị lên trên sidebar của chat layout như sau:
 
 * Có button `Đoạn chat mới` để khi ấn vào thì sẽ vào trang `persona-setup` (nếu tôi đang ở trang `persona-setup` thì nó
