@@ -3,7 +3,6 @@ import { PersonaResponse } from "@/types/responses/persona.response";
 import {
     AnswerHistoryListItemResponse,
     AnswerHistoryResponse,
-    SpeakingHistoryListItem,
     SpeakingSessionDetail,
     SpeakingSessionListItem,
     SpeakingSessionQuery,
@@ -126,53 +125,6 @@ export async function getAnswerHistoriesBySpeakingQuestion(
         `/api/answer-histories/speaking-question/${speakingQuestionId}`,
     );
     return unwrap<AnswerHistoryListItemResponse[]>(response);
-}
-
-export interface SpeakingHistoryListQuery {
-    page?: number;
-    size?: number;
-    topicId?: number | null;
-    speakingQuestionId?: number | null;
-    search?: string | null;
-}
-
-export interface SpeakingHistoryListPage {
-    items: SpeakingHistoryListItem[];
-    totalPages: number;
-    totalElements: number;
-}
-
-/**
- * Danh sách lịch sử luyện nói (POST /speaking-histories) — BE trả `data` là mảng,
- * phân trang nằm ở `meta.pageMeta`. userId lấy từ token ở BE.
- */
-export async function getSpeakingHistoryList(
-    query: SpeakingHistoryListQuery = {},
-): Promise<SpeakingHistoryListPage> {
-    const response = await fetch("/api/history", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            page: query.page ?? 0,
-            size: query.size ?? 10,
-            topicId: query.topicId ?? null,
-            speakingQuestionId: query.speakingQuestionId ?? null,
-            search: query.search || null,
-        }),
-    });
-    const result = await response.json();
-    if (!response.ok) {
-        throw new Error(
-            (result as ProblemDetail).detail ||
-                "Không tải được lịch sử luyện tập",
-        );
-    }
-    const api = result as ApiResponse<SpeakingHistoryListItem[]>;
-    return {
-        items: api.data ?? [],
-        totalPages: api.meta?.pageMeta?.totalPages ?? 0,
-        totalElements: api.meta?.pageMeta?.totalElements ?? 0,
-    };
 }
 
 /* ─── AI 1:1 Dialogue ────────────────────────────────────────────── */
