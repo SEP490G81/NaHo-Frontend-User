@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { ArrowLeft } from "lucide-react";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { ChatResultProps } from "../types/chat.result.type";
@@ -12,9 +13,12 @@ import ResultStrengthsWeaknessesComponent from "../components/result.strengths.w
 import ResultAspectFeedbackComponent from "../components/result.aspect.feedback.component";
 import ResultExpressionsComponent from "../components/result.expressions.component";
 import ResultStudyRecommendationComponent from "../components/result.study.recommendation.component";
+import ResultMessagesModalComponent from "../components/result.messages.modal.component";
 
 const ChatResultView = ({ session }: ChatResultProps) => {
+    const [isMessagesModalOpen, setIsMessagesModalOpen] = useState(false);
     const assessment = session.speakingSessionAssessment;
+    const messages = session.messages || session.speakingSessionMessages || [];
     const queryClient = useQueryClient();
 
     useEffect(() => {
@@ -46,6 +50,28 @@ const ChatResultView = ({ session }: ChatResultProps) => {
                     }}
                 >
                     Tạo phiên chat mới
+                </Button>
+
+                <Button
+                    variant="contained"
+                    onClick={() => setIsMessagesModalOpen(true)}
+                    startIcon={<ForumOutlinedIcon sx={{ fontSize: 16 }} />}
+                    sx={{
+                        borderRadius: "10px",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        backgroundColor: "var(--color-bgc-highlight)",
+                        color: "#ffffff",
+                        textTransform: "none",
+                        boxShadow: "none",
+                        "&:hover": {
+                            backgroundColor: "var(--color-bgc-highlight)",
+                            opacity: 0.9,
+                            boxShadow: "none",
+                        },
+                    }}
+                >
+                    Xem cuộc hội thoại ({messages.length})
                 </Button>
             </div>
 
@@ -87,6 +113,14 @@ const ChatResultView = ({ session }: ChatResultProps) => {
                     </p>
                 </div>
             )}
+
+            {/* Conversation Messages Modal (Read-only) */}
+            <ResultMessagesModalComponent
+                open={isMessagesModalOpen}
+                onClose={() => setIsMessagesModalOpen(false)}
+                messages={messages}
+                persona={session.persona}
+            />
         </div>
     );
 };

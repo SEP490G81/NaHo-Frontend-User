@@ -27,39 +27,51 @@ const MessageItemComponent = ({
     const isAi = message.sender === "AI";
 
     if (!isAi) {
+        const hasUserAudio = !!(message.userRecordAudio || message.audioUrl);
+        const userAudioUrl = message.userRecordAudio?.startsWith("http")
+            ? message.userRecordAudio
+            : message.audioUrl;
+        const userAudioBase64 = message.userRecordAudio?.startsWith("http")
+            ? undefined
+            : message.userRecordAudio;
+
         /* User Message Bubble */
         return (
-            <div className="my-3 flex flex-col items-end space-y-1">
-                <div
-                    className={`max-w-[80%] rounded-2xl rounded-tr-xs px-4 py-3 text-white shadow-xs transition-all ${
-                        message.isPending
-                            ? "bg-bgc-highlight/85 animate-pulse border border-white/20"
-                            : "bg-bgc-highlight"
-                    }`}
-                >
-                    <div className="flex items-center gap-2">
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                            {message.content}
-                        </p>
-                        {message.isPending && (
-                            <CircularProgress
-                                size={12}
-                                sx={{ color: "#ffffff", ml: 0.5 }}
-                            />
-                        )}
-                    </div>
-
-                    {/* Audio Player for User Recorded Voice */}
-                    {message.userRecordAudio && (
-                        <div className="mt-2">
-                            <AudioPlayerComponent
-                                audioBase64={message.userRecordAudio}
-                                speechSpeed={speechSpeed}
-                                autoPlay={false}
-                            />
+            <div className="my-3 flex flex-col items-end space-y-1.5">
+                {/* User Text Bubble */}
+                {message.content && (
+                    <div
+                        className={`max-w-[80%] rounded-2xl rounded-tr-xs px-4 py-3 text-white shadow-xs transition-all ${
+                            message.isPending
+                                ? "bg-bgc-highlight/85 animate-pulse border border-white/20"
+                                : "bg-bgc-highlight"
+                        }`}
+                    >
+                        <div className="flex items-center gap-2">
+                            <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                {message.content}
+                            </p>
+                            {message.isPending && (
+                                <CircularProgress
+                                    size={12}
+                                    sx={{ color: "#ffffff", ml: 0.5 }}
+                                />
+                            )}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
+
+                {/* Audio Player for User Recorded Voice (Same style as AI Audio Player) */}
+                {hasUserAudio && (
+                    <div className="w-full max-w-md">
+                        <AudioPlayerComponent
+                            audioBase64={userAudioBase64}
+                            audioUrl={userAudioUrl}
+                            speechSpeed={speechSpeed}
+                            autoPlay={false}
+                        />
+                    </div>
+                )}
 
                 {/* Pronunciation Score Badge */}
                 {message.pronunciationScore != null &&

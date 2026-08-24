@@ -3,7 +3,12 @@
  */
 export function base64ToAudioUrl(base64Data: string): string {
     if (!base64Data) return "";
-    if (base64Data.startsWith("data:audio")) {
+    if (
+        base64Data.startsWith("http://") ||
+        base64Data.startsWith("https://") ||
+        base64Data.startsWith("blob:") ||
+        base64Data.startsWith("data:audio")
+    ) {
         return base64Data;
     }
 
