@@ -18,7 +18,6 @@ export type AllRoute =
     | `/books/${string}/${string}/${string}/${string}/${string}` // ".../topics/[topicId]/nodes/[nodeId]"
     | "/sandbox"
     | `/sandbox/${string}` // hoặc "/sandbox/[questionId]"
-    | "/speaking-history"
     | `/speaking-history/${string}` // hoặc "/speaking-history/[historyId]"
     | "/point-history"
     | "/live-chatroom"

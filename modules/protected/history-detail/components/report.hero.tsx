@@ -1,24 +1,33 @@
 "use client";
 import React from "react";
-import { CalendarClock, ChevronRight, Clock, Sparkles } from "lucide-react";
+import {
+    AlertTriangle,
+    CalendarClock,
+    ChevronRight,
+    Clock,
+    Sparkles,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
 import { FuriganaHtml } from "@/components/ui/furigana.html";
+import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import ScoreGauge from "./score.gauge";
 
 interface Props {
     average: number;
-    questionTitle: string | null;
+    questionTitle: string;
     questionTitleMarkup?: string | null;
-    questionTranslation: string | null;
+    questionTranslation?: string | null;
     showFurigana: boolean;
-    topicName: string | null;
-    topicLabel: string | null;
-    topicHref: string | null;
-    practicedAt: string;
-    durationSec: number;
+    topicName?: string | null;
+    topicLabel?: string | null;
+    topicHref?: string | null;
+    practicedAt?: string | null;
+    durationSec: number | null;
+    /** null = không có file ghi âm nào; "" = có file nhưng chưa có accessUrl (upload thất bại/đang chờ upload lại). */
     audioUrl: string | null;
+    hasAudioFile: boolean;
     accent: string;
 }
 
@@ -40,6 +49,7 @@ export function ReportHero({
     practicedAt,
     durationSec,
     audioUrl,
+    hasAudioFile,
     accent,
 }: Props) {
     const t = useTranslations("historyDetail");
@@ -119,16 +129,23 @@ export function ReportHero({
                                     {topicText}
                                 </span>
                             ))}
-                        <div className="text-text-muted flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
-                            <span className="inline-flex items-center gap-1.5">
-                                <CalendarClock className="h-4 w-4" />
-                                {fmt(practicedAt)}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5">
-                                <Clock className="h-4 w-4" />
-                                {t("durationLabel")}: {durationSec}s
-                            </span>
-                        </div>
+                        {(practicedAt || durationSec != null) && (
+                            <div className="text-text-muted flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
+                                {practicedAt && (
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <CalendarClock className="h-4 w-4" />
+                                        {fmt(practicedAt)}
+                                    </span>
+                                )}
+                                {durationSec != null && (
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <Clock className="h-4 w-4" />
+                                        {t("durationLabel")}:{" "}
+                                        {Math.round(durationSec)}s
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -146,6 +163,13 @@ export function ReportHero({
                             className="w-full cursor-pointer"
                             preload="none"
                         />
+                    ) : hasAudioFile ? (
+                        <TooltipCustom title={t("audioUploadFailed")}>
+                            <span className="text-text-error inline-flex cursor-help items-center gap-1.5 text-sm">
+                                <AlertTriangle className="h-4 w-4" />
+                                {t("audioUploadFailed")}
+                            </span>
+                        </TooltipCustom>
                     ) : (
                         <span className="text-text-muted">—</span>
                     )}

@@ -20,7 +20,7 @@ export function TopicVocabDialog({ topicId, open, onClose }: Props) {
         queryFn: () => getTopicVocabularies(topicId),
         enabled: open && !!topicId,
     });
-    const items = data?.vocabularyDetailResults ?? [];
+    const items = data?.vocabularies ?? [];
 
     return (
         <Dialog

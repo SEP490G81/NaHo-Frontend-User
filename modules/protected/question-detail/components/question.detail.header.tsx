@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Flag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
@@ -15,6 +15,8 @@ interface Props {
     vietnamese?: string | null;
     showFurigana: boolean;
     accent: string;
+    /** Bỏ trống nếu chưa muốn hiện nút báo cáo câu hỏi. */
+    onReport?: () => void;
 }
 
 /** Đầu trang chi tiết câu hỏi: nút quay lại + đề bài (furigana) + bản dịch tiếng Việt. */
@@ -27,19 +29,32 @@ export function QuestionDetailHeader({
     vietnamese,
     showFurigana,
     accent,
+    onReport,
 }: Props) {
     const t = useTranslations("marugoto.questionDetail");
 
     return (
         <div className="space-y-3">
-            <Link
-                href={backHref as AllRoute}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-80"
-                style={{ color: accent }}
-            >
-                <ArrowLeft className="h-4 w-4" />
-                {t("back")}
-            </Link>
+            <div className="flex items-center justify-between">
+                <Link
+                    href={backHref as AllRoute}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-80"
+                    style={{ color: accent }}
+                >
+                    <ArrowLeft className="h-4 w-4" />
+                    {t("back")}
+                </Link>
+                {onReport && (
+                    <button
+                        type="button"
+                        onClick={onReport}
+                        className="text-text-muted hover:text-text-error inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                    >
+                        <Flag className="h-3.5 w-3.5" />
+                        {t("report")}
+                    </button>
+                )}
+            </div>
 
             <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-6 shadow-sm">
                 <span

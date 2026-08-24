@@ -142,7 +142,15 @@
             "learned": "Learned",
             "finish": "Finish",
             "done": "Completed",
-            "finishHint": "Go through all cards to finish"
+            "finishHint": "Go through all cards to finish",
+            "recordToCheck": "Record to check",
+            "recordAgain": "Record again",
+            "recording": "Recording... tap to stop",
+            "scoring": "Scoring...",
+            "recordPassed": "Passed {score}/10 — you can move to the next word",
+            "recordFailed": "Scored {score}/10 — need at least {min}/10, try again",
+            "recordError": "Couldn't record, please try again",
+            "recordGateHint": "Record and score at least {min}/10 to unlock the next word"
         },
         "sampleAnswer": {
             "title": "Sample answer",
@@ -158,6 +166,8 @@
             "badge": "Question detail",
             "translation": "Translation",
             "practiceNow": "Practice this question now",
+            "historyTitle": "Practice history for this question ({count})",
+            "historyAttempt": "Attempt {index}",
             "vocab": "Vocabulary",
             "grammar": "Key grammar",
             "discussion": "Discussion & interaction",

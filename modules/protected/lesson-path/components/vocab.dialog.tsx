@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { BookOpen, Check } from "lucide-react";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useTranslations } from "next-intl";
 import type { NodeVocabularyItem } from "@/types/responses/learning.response";
 import type { Vocab } from "@/data/marugoto/types";
+import { useMarugotoStore } from "@/store/marugotoStore";
 import FlashcardDeck from "./flashcard.deck";
 
 interface Props {
@@ -19,6 +20,9 @@ interface Props {
     finishing?: boolean;
     finished?: boolean;
     accent: string;
+    /** PathNode.id — key lưu vị trí thẻ/tiến trình ghi âm vào store (persist),
+     *  sống ngoài dialog nên không mất khi dialog bị unmount/remount. */
+    progressKey?: string;
 }
 
 function toVocab(v: NodeVocabularyItem): Vocab {
@@ -41,18 +45,29 @@ export function VocabDialog({
     finishing,
     finished,
     accent,
+    progressKey,
 }: Props) {
     const t = useTranslations("marugoto");
     const items = vocab.map(toVocab);
 
-    // Chỉ cho "Hoàn thành" sau khi đã lướt hết thẻ (0–1 thẻ thì không cần lướt).
-    // Reset ngay trong render khi hộp thoại mở/đóng (không dùng effect).
-    const [viewedAll, setViewedAll] = useState(false);
-    const [trackedOpen, setTrackedOpen] = useState(open);
-    if (open !== trackedOpen) {
-        setTrackedOpen(open);
-        setViewedAll(false);
-    }
+    // Vị trí thẻ đang xem + đã "Hoàn thành" hay chưa — lưu ở store (persist),
+    // key theo node, tự tách bộ nhớ giữa các node khác nhau và không mất khi
+    // dialog bị đóng/mở lại hoặc bị unmount/remount ngoài ý muốn.
+    const stored = useMarugotoStore((s) =>
+        progressKey ? s.vocabDialogProgress[progressKey] : undefined,
+    );
+    const setStoredProgress = useMarugotoStore((s) => s.setVocabDialogProgress);
+    const cardIndex = stored?.cardIndex ?? 0;
+    const viewedAll = stored?.viewedAll ?? false;
+    const setCardIndex = (index: number) => {
+        if (!progressKey) return;
+        setStoredProgress(progressKey, { cardIndex: index, viewedAll });
+    };
+    const setViewedAllDone = () => {
+        if (!progressKey) return;
+        setStoredProgress(progressKey, { cardIndex, viewedAll: true });
+    };
+    // 0–1 thẻ thì không cần lướt/ghi âm gì thêm là bấm "Hoàn thành" được luôn.
     const canFinish = viewedAll || (!loading && items.length <= 1);
 
     return (
@@ -97,7 +112,9 @@ export function VocabDialog({
                     <FlashcardDeck
                         vocab={items}
                         showFurigana={showFurigana}
-                        onReachedLast={() => setViewedAll(true)}
+                        cardIndex={cardIndex}
+                        onCardIndexChange={setCardIndex}
+                        onLastCardPassed={setViewedAllDone}
                     />
                 )}
             </DialogContent>
