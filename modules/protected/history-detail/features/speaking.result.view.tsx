@@ -1,13 +1,6 @@
 "use client";
 import React from "react";
-import {
-    AlertTriangle,
-    ArrowRight,
-    CheckCircle2,
-    Flag,
-    ListChecks,
-    Mic,
-} from "lucide-react";
+import { AlertTriangle, ArrowRight, CheckCircle2, Flag, ListChecks, Mic } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button, type SxProps, type Theme } from "@mui/material";
