@@ -5,6 +5,7 @@ import {
     CalendarClock,
     ChevronRight,
     Clock,
+    Flag,
     Sparkles,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -29,6 +30,8 @@ interface Props {
     audioUrl: string | null;
     hasAudioFile: boolean;
     accent: string;
+    /** Bỏ trống nếu chưa muốn hiện nút báo cáo câu hỏi. */
+    onReport?: () => void;
 }
 
 function fmt(iso: string): string {
@@ -51,6 +54,7 @@ export function ReportHero({
     audioUrl,
     hasAudioFile,
     accent,
+    onReport,
 }: Props) {
     const t = useTranslations("historyDetail");
     const topicText = topicLabel ? `${topicLabel} · ${topicName}` : topicName;
@@ -65,21 +69,33 @@ export function ReportHero({
                 background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 12%, var(--color-bgc-app)) 0%, var(--color-bgc-app) 70%)`,
             }}
         >
-            <div className="flex items-center gap-3">
-                <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
-                    style={{ background: accent }}
-                >
-                    <Sparkles className="h-5 w-5" />
-                </span>
-                <div>
-                    <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
-                        {t("reportTitle")}
-                    </h1>
-                    <p className="text-text-muted text-sm">
-                        {t("reportSubtitle")}
-                    </p>
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                    <span
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
+                        style={{ background: accent }}
+                    >
+                        <Sparkles className="h-5 w-5" />
+                    </span>
+                    <div>
+                        <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
+                            {t("reportTitle")}
+                        </h1>
+                        <p className="text-text-muted text-sm">
+                            {t("reportSubtitle")}
+                        </p>
+                    </div>
                 </div>
+                {onReport && (
+                    <button
+                        type="button"
+                        onClick={onReport}
+                        className="text-text-muted hover:text-text-error inline-flex shrink-0 items-center gap-1.5 text-sm font-medium transition-colors"
+                    >
+                        <Flag className="h-3.5 w-3.5" />
+                        {t("reportQuestionBtn")}
+                    </button>
+                )}
             </div>
 
             <div className="border-t pt-5" style={{ borderColor: softBorder }}>
