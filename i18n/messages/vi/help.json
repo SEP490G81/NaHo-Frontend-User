@@ -90,7 +90,7 @@
                     ],
                     "action": {
                         "label": "Mở Trò chuyện tự do AI",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {
@@ -186,7 +186,7 @@
                     ],
                     "link": {
                         "label": "Mở Trò chuyện tự do AI",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {

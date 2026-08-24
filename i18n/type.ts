@@ -32,7 +32,7 @@ export type AllRoute =
     | "/settings/billing"
     | "/orders"
     | "/reports"
-    | "/dialogue-setup"
+    | "/persona-setup"
     | "/get-help"
     | "/features"
     | "/learner-feedback"

@@ -1,8 +1,9 @@
 import React from "react";
 import { getTranslations } from "next-intl/server";
-import LiveChatroom from "@/modules/protected/live-chatroom/features/live.chatroom";
-import { getInProgressSessionDetailsServer } from "@/services/server/speaking.llm.service";
-import { redirect } from "next/navigation";
+import { LiveChatroomProvider } from "@/modules/protected/live-chatroom/providers/live.chatroom.provider";
+import LiveChatroomView from "@/modules/protected/live-chatroom/features/live.chatroom.view";
+import { getSpeakingSessionDetailServer } from "@/services/server/speaking.llm.service";
+import { SpeakingSessionStatus } from "@/types/enums/speaking.llm.enum";
 
 interface LiveChatroomSessionPageProps {
     params: Promise<{
@@ -31,18 +32,17 @@ export default async function LiveChatroomSessionPage({
     params,
 }: Readonly<LiveChatroomSessionPageProps>) {
     const { sessionCode } = await params;
+    const sessionDetails = await getSpeakingSessionDetailServer(
+        sessionCode,
+        SpeakingSessionStatus.IN_PROGRESS,
+    );
 
-    const initialSession = await getInProgressSessionDetailsServer(sessionCode);
-
-    if (!initialSession) {
-        redirect("/not-found");
-    }
-
-    console.log(">>> check session: ", initialSession);
     return (
-        <LiveChatroom
+        <LiveChatroomProvider
             sessionCode={sessionCode}
-            initialSession={initialSession}
-        />
+            initialSessionDetails={sessionDetails}
+        >
+            <LiveChatroomView />
+        </LiveChatroomProvider>
     );
 }

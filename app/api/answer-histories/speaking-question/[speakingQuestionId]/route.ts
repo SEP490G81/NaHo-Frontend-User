@@ -7,5 +7,7 @@ export async function GET(
     { params }: { params: Promise<{ speakingQuestionId: string }> },
 ) {
     const { speakingQuestionId } = await params;
-    return proxyGet(`/answer-histories/speaking-question/${speakingQuestionId}`);
+    return proxyGet(
+        `/answer-histories/speaking-question/${speakingQuestionId}`,
+    );
 }

@@ -7,7 +7,7 @@ import {
     deleteComment,
     getComments,
     toggleReaction,
-    updateComment,
+    updateComment
 } from "@/services/client/social.service";
 import type { ReactionType } from "@/types/responses/social.response";
 

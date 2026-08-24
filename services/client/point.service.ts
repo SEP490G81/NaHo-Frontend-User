@@ -18,7 +18,10 @@ export interface PointHistoryPage {
  * middleware không refresh vì matcher loại /api) thì rotation 1 lần rồi thử
  * lại. Body dạng string tái sử dụng được nên retry an toàn.
  */
-async function apiRequest(input: string, init?: RequestInit): Promise<Response> {
+async function apiRequest(
+    input: string,
+    init?: RequestInit,
+): Promise<Response> {
     let response = await fetch(input, init);
     if (response.status === 401) {
         const rotated = await fetch("/api/auth/rotation", {

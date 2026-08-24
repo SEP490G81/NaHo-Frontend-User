@@ -60,6 +60,24 @@
         "recording": "録音中...",
         "stopRecording": "録音停止",
         "stopAndSend": "停止して送信",
-        "playbackSpeed": "再生速度"
+        "playbackSpeed": "再生速度",
+        "hintHeader": "ヒント",
+        "reRecord": "再録音",
+        "toggleSuggestions": "返答ヒントの表示",
+        "backToTop": "トップに戻る",
+        "scrollToBottom": "最下部に移動",
+        "limitExceededError": "セッションのメッセージ上限に達しました。評価を確認するにはセッションを終了してください。",
+        "aiAudioTitle": "AI音声の自動再生",
+        "aiAudioAutoPlayDesc": "AIが返答時に自動再生",
+        "aiAudioManualDesc": "再生ボタンを押して再生",
+        "aiTyping": "AIが返答を作成中...",
+        "endSessionBtn": "会話を終了",
+        "endSessionConfirmTitle": "会話セッションの終了",
+        "endSessionConfirmDesc": "この会話セッションを終了してもよろしいですか？AIが詳細な評価レポートを作成します。",
+        "endSessionSuccess": "会話セッションを終了し、評価レポートを作成しました！",
+        "confirmEnd": "終了して評価を確認",
+        "endingSession": "処理中...",
+        "endSessionMinMessagesWarning": "まだメッセージが送信されていません。評価レポートを受け取るには、終了する前にAIへ少なくとも1つのメッセージを送信してください。",
+        "endSessionMinMessagesError": "セッションを終了する前に、少なくとも1つのメッセージを送信する必要があります。"
     }
 }

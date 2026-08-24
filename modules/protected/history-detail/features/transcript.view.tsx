@@ -97,7 +97,7 @@ export function TranscriptView({
                                     {err.incorrect}
                                 </span>
                                 <span className="text-text-muted mx-2">→</span>
-                                <span className="font-noto-jp text-emerald-500 font-semibold">
+                                <span className="font-noto-jp font-semibold text-emerald-500">
                                     {err.correction}
                                 </span>
                             </li>

@@ -105,7 +105,10 @@ function SandboxContent({
     const dailyLimit = subQ.data?.plan?.dailySpeakingQuestionEvaluationLimit;
     const remainingToday =
         dailyLimit != null
-            ? Math.max(0, dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0))
+            ? Math.max(
+                  0,
+                  dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0),
+              )
             : null;
 
     const question = useMemo(() => {
@@ -188,7 +191,10 @@ function SandboxContent({
             });
             // Seed sẵn cache báo cáo bằng đúng response vừa nhận — màn
             // /speaking-history/{id} mở lên hiện ngay, không phải gọi lại API.
-            queryClient.setQueryData(["answer-history", String(result.id)], result);
+            queryClient.setQueryData(
+                ["answer-history", String(result.id)],
+                result,
+            );
             // Kèm ngữ cảnh để màn kết quả mở lại đúng sandbox câu này.
             const ctx = new URLSearchParams();
             if (nodeId) ctx.set("node", nodeId);
@@ -202,7 +208,9 @@ function SandboxContent({
             setAnalyzing(false);
             // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
             // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
-            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
+            toast.error(
+                err instanceof Error ? err.message : t("analyzeFailed"),
+            );
         },
     });
 

@@ -29,8 +29,10 @@ export interface PersonaResponse {
     id: number;
     name: string;
     prompt: string;
-    avatarFile: FileResponse;
-    suggestedConversationStyle: ConversationStyleResponse;
+    avatarFile?: FileResponse | null;
+    defaultMarugotoLevel?: MarugotoLevel;
+    defaultFormalityLevel?: FormalityLevel;
+    suggestedConversationStyle?: ConversationStyleResponse;
     status: PersonaStatus;
     voiceName: string;
     gender: Gender;

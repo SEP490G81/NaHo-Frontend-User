@@ -10,7 +10,10 @@ export interface GenericSessionMessage {
  * - Nếu không có tin nhắn nào thì trả về chuỗi rỗng.
  */
 export function getLastSessionMessage(
-    messages?: readonly GenericSessionMessage[] | GenericSessionMessage[] | null,
+    messages?:
+        | readonly GenericSessionMessage[]
+        | GenericSessionMessage[]
+        | null,
 ): string {
     if (!messages || messages.length === 0) return "";
 
@@ -25,7 +28,10 @@ export function getLastSessionMessage(
     // Nếu chưa có câu của USER, tìm câu cuối của ASSISTANT
     for (let i = messages.length - 1; i >= 0; i--) {
         const msg = messages[i];
-        if (msg?.senderType?.toUpperCase().includes("ASSISTANT") && msg.content) {
+        if (
+            msg?.senderType?.toUpperCase().includes("ASSISTANT") &&
+            msg.content
+        ) {
             return msg.content;
         }
     }

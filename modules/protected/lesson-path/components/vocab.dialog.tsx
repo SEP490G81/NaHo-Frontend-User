@@ -56,9 +56,7 @@ export function VocabDialog({
     const stored = useMarugotoStore((s) =>
         progressKey ? s.vocabDialogProgress[progressKey] : undefined,
     );
-    const setStoredProgress = useMarugotoStore(
-        (s) => s.setVocabDialogProgress,
-    );
+    const setStoredProgress = useMarugotoStore((s) => s.setVocabDialogProgress);
     const cardIndex = stored?.cardIndex ?? 0;
     const viewedAll = stored?.viewedAll ?? false;
     const setCardIndex = (index: number) => {

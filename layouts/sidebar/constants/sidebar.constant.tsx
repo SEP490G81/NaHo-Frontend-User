@@ -32,17 +32,10 @@ export const NAV_ITEMS: NavItem[] = [
     {
         title: "Trò chuyện tự do AI",
         titleKey: "freeDialogue",
-        url: "/dialogue-setup",
+        url: "/persona-setup",
         icon: MessagesSquare,
         disabled: false,
     },
-    // {
-    //     title: "Shadowing & Dictation",
-    //     titleKey: "shadowing",
-    //     url: "/dashboard",
-    //     icon: Headphones,
-    //     disabled: true,
-    // },
     {
         title: "Bảng xếp hạng thi đua",
         titleKey: "leaderboard",

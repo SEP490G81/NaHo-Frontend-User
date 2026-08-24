@@ -1,3 +1,4 @@
+import { PersonaResponse } from "@/types/responses/persona.response";
 import {
     FormalityLevel,
     MarugotoLevel,
@@ -29,52 +30,86 @@ export interface SpeakingSessionMessageResponse {
     pronunciationScore: number | null;
     aiReplyAudio: string | null;
     userRecordAudio: string | null;
+    suggestedReplies?: string[] | null;
 }
 
 export interface SpeakingSessionListItemResponse {
     id: number;
     sessionCode: string;
     userId: number;
-    personaId: number;
+    persona: PersonaResponse;
     topic: string;
     voiceName: string;
     marugotoLevel: MarugotoLevel;
     formalityLevel: FormalityLevel;
     durationSeconds: number | null;
     totalTurns: number;
-    asrConfidence: number | null;
-    fullTranscript: string | null;
     status: SpeakingSessionStatus;
     startedAt: string;
     endedAt: string | null;
+}
+
+export interface SpeakingImprovedExpressionResponse {
+    id: number;
+    speakingSessionAssessmentId: number;
+    turnIndex: number;
+    originalText: string;
+    improvedText: string;
+    explanationVietnamese: string;
+}
+
+export interface SpeakingSessionAssessmentResponse {
+    id: number;
+    speakingSessionId: number;
+    overallScore: number;
+    jlptEstimate: string;
+    fluencyScore: number;
+    pronunciationScore: number;
+    grammarScore: number;
+    vocabularyScore: number;
+    interactionScore: number;
+    naturalnessScore: number;
+    coherenceScore: number;
+    summary: string;
+    strengths: string;
+    weaknesses: string;
+    feedbackFluency: string;
+    feedbackPronunciation: string;
+    feedbackGrammar: string;
+    feedbackVocabulary: string;
+    feedbackInteraction: string;
+    feedbackNaturalness: string;
+    feedbackCoherence: string;
+    studyFocusArea: string;
+    studyRecommendation: string;
+    studyEncouragement: string;
+    speakingImprovedExpressions?: SpeakingImprovedExpressionResponse[];
 }
 
 export interface SpeakingSessionResponse {
     id: number;
     sessionCode: string;
     userId: number;
-    personaId: number;
-    topic: string;
-    voiceName: string;
+    persona: PersonaResponse;
+    topic?: string | null;
+    voiceName?: string | null;
     marugotoLevel: MarugotoLevel;
     formalityLevel: FormalityLevel;
-    durationSeconds: number | null;
+    durationSeconds?: number | null;
     totalTurns: number;
-    asrConfidence: number | null;
-    fullTranscript: string | null;
+    asrConfidence?: number | null;
+    fullTranscript?: string | null;
     status: SpeakingSessionStatus;
     startedAt: string;
     endedAt: string | null;
-    messages: SpeakingSessionMessageResponse[];
+    speakingSessionAssessment?: SpeakingSessionAssessmentResponse | null;
+    speakingSessionMessages?: SpeakingSessionMessageResponse[] | null;
+    messages?: SpeakingSessionMessageResponse[] | null;
 }
 
 export interface ChatResponse {
-    assistantReply: string;
-    assistantReplyTranslation: string;
-    grammarExplanation: string;
-    correctedUserText: string;
-    correctionExplanation: string;
-    aiReplyAudio: string;
+    userMessage: SpeakingSessionMessageResponse;
+    aiMessage: SpeakingSessionMessageResponse;
 }
 
 export interface AudioChatResponse {

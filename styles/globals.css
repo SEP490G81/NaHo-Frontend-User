@@ -73,9 +73,9 @@
         0%,
         45% {
             background-color: color-mix(
-                in srgb,
-                var(--color-bgc-highlight) 35%,
-                transparent
+                    in srgb,
+                    var(--color-bgc-highlight) 35%,
+                    transparent
             );
         }
         100% {
@@ -87,9 +87,9 @@
         0%,
         45% {
             background-color: color-mix(
-                in srgb,
-                var(--color-bgc-highlight) 45%,
-                var(--color-bgc-page)
+                    in srgb,
+                    var(--color-bgc-highlight) 45%,
+                    var(--color-bgc-page)
             );
             border-color: var(--color-bgc-highlight);
         }
@@ -231,6 +231,29 @@ input::-ms-clear {
 
 @utility no-scrollbar {
     @apply scrollbar-none [&::-webkit-scrollbar]:hidden;
+}
+
+@utility custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-bgc-highlight) transparent;
+    &::-webkit-scrollbar {
+        display: block !important;
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-bgc-highlight);
+        border-radius: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        opacity: 0.8;
+    }
 }
 
 /* width của scrollbar */

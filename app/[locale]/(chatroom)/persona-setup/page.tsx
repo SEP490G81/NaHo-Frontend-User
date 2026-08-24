@@ -1,10 +1,13 @@
+import React from "react";
 import { getTranslations } from "next-intl/server";
-import { getAllPersonas } from "@/services/client/persona.service";
+import { getAllPersonasServer } from "@/services/server/persona.service";
+import { PersonaSetupProvider } from "@/modules/protected/persona-setup/providers/persona.setup.provider";
+import PersonaSetupView from "@/modules/protected/persona-setup/features/persona.setup.view";
 
 export async function generateMetadata({
     params,
 }: {
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }): Promise<{
     title: string;
 }> {
@@ -15,13 +18,18 @@ export async function generateMetadata({
     });
 
     return {
-        title: t("dialogueSetup"),
+        title: t("personaSetup"),
     };
 }
 
-const DialogueSetupPage = async () => {
-    const personaResponse = await getAllPersonas();
-    const personas = personaResponse.data;
+const PersonaSetupPage = async () => {
+    const personas = await getAllPersonasServer();
+
+    return (
+        <PersonaSetupProvider initialPersonas={personas}>
+            <PersonaSetupView personas={personas} />
+        </PersonaSetupProvider>
+    );
 };
 
-export default DialogueSetupPage;
+export default PersonaSetupPage;

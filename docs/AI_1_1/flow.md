@@ -7,7 +7,7 @@
 ### Input
 
 - Các file trong folder: `app/[locale]/(chatroom)/live-chatroom`
-- Các file trong folder: `modules/protected/dialogue-setup`
+- Các file trong folder: `modules/protected/persona-setup`
 - Các file trong folder: `modules/protected/live-chatroom`
 - File `services/server/speaking.llm.service.ts`
 - File `services/client/speaking.llm.service.ts`

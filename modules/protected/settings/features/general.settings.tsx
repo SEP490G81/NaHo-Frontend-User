@@ -7,7 +7,6 @@ import { useSettingHighlight } from "@/modules/protected/settings/hooks/use.sett
 import BackButton from "@/components/ui/back.button";
 import { AppearanceSetting } from "../components/appearance-setting";
 import { LanguageSetting } from "../components/language-setting";
-import { AiAudioSetting } from "../components/ai-audio-setting";
 
 const GeneralSettings = () => {
     const t = useTranslations("settings.general");
@@ -40,11 +39,6 @@ const GeneralSettings = () => {
 
             {/* Section 2: Language (Ngôn ngữ) */}
             <LanguageSetting />
-
-            <Divider className="border-bdc-primary/50 my-1" />
-
-            {/* Section 3: AI Live Chatroom Audio Setting */}
-            <AiAudioSetting />
         </div>
     );
 };

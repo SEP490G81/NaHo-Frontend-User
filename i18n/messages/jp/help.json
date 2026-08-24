@@ -90,7 +90,7 @@
                     ],
                     "action": {
                         "label": "AI フリー会話を開く",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {
@@ -186,7 +186,7 @@
                     ],
                     "link": {
                         "label": "AI フリー会話を開く",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {

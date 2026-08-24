@@ -24,9 +24,7 @@ export function AppearanceSetting() {
                 <h2 className="text-text-contrast text-base font-bold">
                     {t("appearanceTitle")}
                 </h2>
-                <p className="text-text-muted text-xs">
-                    {t("appearanceDesc")}
-                </p>
+                <p className="text-text-muted text-xs">{t("appearanceDesc")}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
