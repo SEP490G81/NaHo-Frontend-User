@@ -17,7 +17,8 @@
             "registerNow": "Đăng ký ngay",
             "pleaseEnterEmailOrUsername": "メールアドレスまたはユーザー名を入力してください！",
             "pleaseEnterPassword": "パスワードを入力してください！",
-            "wrongLoginInfo": "ログイン情報が正しくありません！"
+            "wrongLoginInfo": "ログイン情報が正しくありません！",
+            "accessDenied": "管理者およびコンテンツマネージャーのアカウントはこのサイトにアクセスする権限がありません！"
         },
         "lock": {
             "title": "アカウントが一時的にロックされています！",

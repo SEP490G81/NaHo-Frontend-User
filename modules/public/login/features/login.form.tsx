@@ -1,6 +1,6 @@
 "use client";
 import { USER_ERROR_CODES } from "@/constants/error.code.constants";
-import { getErrorCode } from "@/libs/api.error";
+import { ApiError, getErrorCode } from "@/libs/api.error";
 import LoginFormButtons from "@/modules/public/login/features/login.form.buttons";
 import LoginFormTextFields from "@/modules/public/login/components/login.form.text.fields";
 import { LoginState } from "@/modules/public/login/types/login.ui.type";
@@ -64,6 +64,11 @@ const LoginForm = () => {
                     replace(
                         `/verify-email?email=${encodeURIComponent(usernameOrEmail)}`,
                     );
+                    return;
+                }
+
+                if (error instanceof ApiError && error.status === 403) {
+                    setErrorMessage(t("login.form.accessDenied"));
                     return;
                 }
 

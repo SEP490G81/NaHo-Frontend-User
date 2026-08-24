@@ -5,6 +5,8 @@ import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 
+import { RoleName } from "@/types/enums/user.enum";
+
 // cache() function use to cache the result in a request
 export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
     const cookieStore = await cookies();
@@ -27,5 +29,18 @@ export const getCurrentUser = cache(async (): Promise<UserResponse | null> => {
         redirect("/login");
     }
 
-    return (result as ApiResponse<UserResponse>).data;
+    const user = (result as ApiResponse<UserResponse>).data;
+
+    const isRestrictedRole = user?.roles?.some((r) => {
+        const roleStr = typeof r === "string" ? r : r?.roleName;
+        return (
+            roleStr === RoleName.ADMIN || roleStr === RoleName.CONTENT_MANAGER
+        );
+    });
+
+    if (isRestrictedRole) {
+        return null;
+    }
+
+    return user;
 });

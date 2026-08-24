@@ -17,7 +17,8 @@
             "registerNow": "Đăng ký ngay",
             "pleaseEnterEmailOrUsername": "Please enter your email/username!",
             "pleaseEnterPassword": "Please enter your password!",
-            "wrongLoginInfo": "Invalid login credentials!"
+            "wrongLoginInfo": "Invalid login credentials!",
+            "accessDenied": "Account does not have permission to access!"
         },
         "lock": {
             "title": "Account Temporarily Locked!",

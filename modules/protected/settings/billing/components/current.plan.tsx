@@ -137,8 +137,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                         </span>
                         <span className="text-text-primary mt-1 text-base font-bold">
                             {t("quota.sessionsPerDay", {
-                                count:
-                                    plan.dailyAiSessionStartLimit ?? 0,
+                                count: plan.dailyAiSessionStartLimit ?? 0,
                             })}
                         </span>
                         <span className="text-text-muted mt-0.5 text-xs">
