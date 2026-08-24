@@ -118,12 +118,11 @@ export const PersonaSetupProvider = ({
     // Limit calculations
     const plan = subscription?.subscriptionPlan || subscription?.plan;
     const planName =
-        plan?.name ||
-        (plan?.code === "PREMIUM"
+        plan?.code === "PREMIUM"
             ? "Premium"
             : plan?.code === "BASIC"
               ? "Basic"
-              : "Miễn phí (Free)");
+              : "Miễn phí (Free)";
 
     const dailyLimit =
         plan?.dailyAiSessionStartLimit ??
@@ -131,7 +130,7 @@ export const PersonaSetupProvider = ({
     const dailyUsed = todayUsage?.aiSessionStartCount ?? 0;
     const isDailyLimitReached = dailyLimit > 0 && dailyUsed >= dailyLimit;
 
-    const maxConcurrent = plan?.maxConcurrentAiSessionCount ?? 1;
+    const maxConcurrent = plan?.maxInProgressSessionCount ?? 1;
     const inProgressSessionsCount = inProgressSessions.length;
     const isConcurrentLimitReached = inProgressSessionsCount >= maxConcurrent;
 

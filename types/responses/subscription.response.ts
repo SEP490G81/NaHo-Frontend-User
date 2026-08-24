@@ -35,25 +35,18 @@ export type PlanStatus = (typeof PlanStatus)[keyof typeof PlanStatus];
 
 export interface SubscriptionPlanResponse {
     id: number;
-
     code: PlanCode;
-    name?: string;
     description: string;
-
     tier: PlanTier;
-
     priceAmount: number;
     priceCurrency: string;
-
     durationDays: number | null;
-
     dailySpeakingQuestionEvaluationLimit: number;
     maxSpeakingQuestionRecordingSeconds: number;
-    maxConcurrentAiSessionCount: number;
     maxTurnsPerAiSession: number;
-    dailyAiSessionEvaluationLimit?: number;
-    dailyAiSessionStartLimit?: number;
+    dailyAiSessionStartLimit: number;
     maxAiTurnSpeakingSeconds: number;
+    maxInProgressSessionCount: number;
     sampleAnswerEnabled: boolean;
     status: PlanStatus;
 }

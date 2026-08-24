@@ -42,14 +42,13 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
     const plan = subscription?.subscriptionPlan || subscription?.plan;
     const tier = plan?.tier || "FREE";
     const planName =
-        plan?.name ||
-        (tier === "FREE"
+        tier === "FREE"
             ? t("freePlan")
             : tier === "BASIC"
               ? t("basicPlan")
               : tier === "PREMIUM"
                 ? t("premiumPlan")
-                : tier);
+                : tier;
 
     const isFree = tier === "FREE";
 
@@ -139,9 +138,7 @@ const CurrentPlan: React.FC<CurrentPlanProps> = ({
                         <span className="text-text-primary mt-1 text-base font-bold">
                             {t("quota.sessionsPerDay", {
                                 count:
-                                    plan.dailyAiSessionStartLimit ??
-                                    plan.dailyAiSessionEvaluationLimit ??
-                                    0,
+                                    plan.dailyAiSessionStartLimit ?? 0,
                             })}
                         </span>
                         <span className="text-text-muted mt-0.5 text-xs">
