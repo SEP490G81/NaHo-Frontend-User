@@ -285,19 +285,3 @@ export interface AnswerHistoryListItemResponse {
     modifiedTime: string | null;
 }
 
-/** Một dòng trong danh sách lịch sử luyện nói (GET /history). */
-export interface SpeakingHistoryListItem {
-    historyId: number;
-    speakingQuestionId: number | null;
-    speakingQuestionTitle: string | null;
-    topicId: number | null;
-    topicName: string | null;
-    /** Node lộ trình chứa câu hỏi — để mở lại sandbox đúng đề bài. */
-    learningPathNodeId: number | null;
-    bookId: number | null;
-    score: number;
-    durationSec: number;
-    /** URL CloudFront phát được trực tiếp. */
-    audioUrl: string | null;
-    practicedAt: string;
-}
