@@ -7,7 +7,7 @@
             "startNow": "Đăng ký trải nghiệm",
             "exploreFeatures": "Khám phá tính năng",
             "mockup": {
-                "senseiName": "Sensei Yuki",
+                "personaName": "Yuki",
                 "speaking": "Đang nói chuyện",
                 "topicTag": "Phỏng vấn IT",
                 "questionJp": "自己紹介をお願いします。",
@@ -27,15 +27,15 @@
             "items": {
                 "topics": {
                     "title": "Luyện nói theo chủ đề",
-                    "description": "Kho chủ đề đa dạng từ giao tiếp công sở đến phỏng vấn BrSE, kèm mục tiêu học tập và từ vựng chính cho từng bài."
+                    "description": "Kho chủ đề bám sát giáo trình Marugoto, trải dài từ Nhập môn đến Cao cấp với các tình huống giao tiếp đời sống thực tế, kèm mục tiêu học tập (Can-do) và từ vựng chính cho từng bài."
                 },
                 "aiFeedback": {
                     "title": "AI chấm điểm 4 tiêu chí",
                     "description": "Nhận phản hồi tức thì về Phát âm, Từ vựng, Ngữ pháp và Độ tự nhiên sau mỗi lượt nói."
                 },
-                "customQuestion": {
-                    "title": "Đề chọn tự phát",
-                    "description": "Tự soạn câu hỏi luyện nói theo nhu cầu riêng, AI hỗ trợ gợi ý câu hỏi tiếng Nhật chuẩn ngữ cảnh."
+                "freeConversation": {
+                    "title": "Trò chuyện tự do với AI",
+                    "description": "Chọn nhân vật AI yêu thích, luyện hội thoại tự nhiên theo mọi chủ đề với độ khó tuỳ chỉnh theo năng lực của bạn."
                 },
                 "history": {
                     "title": "Theo dõi tiến bộ",
@@ -45,28 +45,28 @@
         },
         "companions": {
             "title": "Chọn nhân vật phù hợp với mục tiêu của bạn",
-            "subtitle": "Các cá tính AI khác biệt — từ giảng viên dịu dàng đến khách hàng trang trọng.",
-            "levelLabel": "Trình độ",
+            "subtitle": "Các cá tính AI khác biệt, độ khó bám sát khung trình độ Marugoto — từ giảng viên dịu dàng đến khách hàng trang trọng.",
+            "levelLabel": "Marugoto",
             "items": {
                 "sakura": {
                     "role": "Giảng viên tiếng Nhật",
                     "description": "Nhẹ nhàng, thân thiện, tập trung giao tiếp hàng ngày và sửa ngữ pháp.",
-                    "level": "Tất cả"
+                    "level": "A1 – B1.2"
                 },
                 "kenji": {
                     "role": "Kỹ sư phần mềm Senior",
                     "description": "Chuyên nghiệp, hội thoại kỹ thuật, mô phỏng họp văn phòng Nhật.",
-                    "level": "N3 – N1"
+                    "level": "A2/B1 – B1.2"
                 },
                 "yuki": {
                     "role": "Người phỏng vấn tuyển dụng",
                     "description": "Nghiêm khắc, phỏng vấn chuẩn, hỏi các câu hành vi khó.",
-                    "level": "N2 – N1"
+                    "level": "B1.1 – B1.2"
                 },
                 "tanaka": {
                     "role": "Khách hàng Nhật Bản",
                     "description": "Keigo trang trọng, mô phỏng đàm phán và thảo luận kinh doanh.",
-                    "level": "N1"
+                    "level": "B1.2"
                 }
             }
         },
@@ -80,7 +80,7 @@
                 },
                 "step2": {
                     "title": "Luyện nói cùng AI",
-                    "description": "Chọn chủ đề, vào phòng luyện và ghi âm câu trả lời của bạn."
+                    "description": "Chọn chủ đề Marugoto hoặc nhân vật AI yêu thích, vào phòng luyện và ghi âm câu trả lời của bạn."
                 },
                 "step3": {
                     "title": "Nhận phản hồi & tiến bộ",
@@ -101,7 +101,7 @@
                 "t2": {
                     "name": "Quốc Bảo",
                     "role": "Kỹ sư cầu nối",
-                    "quote": "Tính năng tự soạn câu hỏi rất hợp với công việc của mình — luyện đúng các tình huống họp dự án thật với khách hàng Nhật."
+                    "quote": "Trò chuyện tự do với nhân vật AI đóng vai đồng nghiệp Nhật giúp mình luyện đúng các tình huống họp dự án thật với khách hàng."
                 },
                 "t3": {
                     "name": "Thu Hà",

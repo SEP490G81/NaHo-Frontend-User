@@ -10,7 +10,7 @@ import {
 } from "@/modules/public/home/types/home.ui.type";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import EditNoteIcon from "@mui/icons-material/EditNote";
+import ForumIcon from "@mui/icons-material/Forum";
 import InsightsIcon from "@mui/icons-material/Insights";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import MicIcon from "@mui/icons-material/Mic";
@@ -29,8 +29,8 @@ export const FEATURE_ITEMS: FeatureItem[] = [
     },
     {
         id: "f-3",
-        icon: EditNoteIcon,
-        messageKey: "customQuestion",
+        icon: ForumIcon,
+        messageKey: "freeConversation",
     },
     {
         id: "f-4",
