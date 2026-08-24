@@ -19,7 +19,13 @@
             "darkMode": "Dark Mode",
             "systemMode": "System Preferences",
             "languageTitle": "Language",
-            "languageDesc": "Change the display language for the entire website"
+            "languageDesc": "Change the display language for the entire website",
+            "aiAudioTitle": "AI Audio Playback (Live Chat)",
+            "aiAudioDesc": "Customize how AI voice audio is played during live conversation sessions",
+            "aiAudioAutoPlay": "Auto-play Audio",
+            "aiAudioAutoPlayDesc": "Automatically play AI voice as soon as AI responds",
+            "aiAudioManual": "Manual Playback",
+            "aiAudioManualDesc": "Only play voice audio when you manually click the Play button"
         },
 
         "account": {

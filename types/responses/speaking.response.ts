@@ -1,17 +1,8 @@
-import { FileResponse } from "@/types/responses/file.response";
-
-/** Response của POST /analysis (chấm điểm phát âm). */
-export interface SpeakingAnalysisResponse {
-    answerHistoryId: number;
-    overallScore: number;
-    audioFile: FileResponse;
-}
-
 /* ─── AI 1:1 Dialogue (luồng nói chuyện với persona) ─────────────── */
 
-/** POST /speaking/session/{personaId} — bắt đầu hội thoại với AI. */
+/** POST /speaking/session/persona/{personaId} — bắt đầu hội thoại với AI. */
 export interface StartConversationResponse {
-    sessionId: string;
+    sessionCode: string;
     /** WAV base64 (không có tiền tố data:) của câu chào — phát bằng TTS. */
     audioBase64: string;
     aiGreeting: string;
@@ -21,7 +12,7 @@ export interface StartConversationResponse {
     grammarExplanation: string | null;
 }
 
-/** POST /speaking/session/{sessionId}/audio — STT + điểm phát âm + reply + phụ trợ học. */
+/** POST /speaking/session/{sessionCode}/audio — STT + điểm phát âm + reply + phụ trợ học. */
 export interface AudioChatResponse {
     transcribedText: string;
     assistantReply: string;
@@ -41,7 +32,7 @@ export interface AudioChatResponse {
     pronunciationScore: number | null;
 }
 
-/** POST /speaking/session/{sessionId}/message — reply text (kèm phụ trợ học). */
+/** POST /speaking/session/{sessionCode}/message — reply text (kèm phụ trợ học). */
 export interface ChatReplyResponse {
     assistantReply: string;
     assistantReplyTranslation: string | null;
@@ -170,9 +161,9 @@ export interface SessionImprovedExpression {
     improved: string;
 }
 
-/** POST /speaking/session/{sessionId}/end — báo cáo chấm điểm cả phiên. */
+/** POST /speaking/session/{sessionCode}/end — báo cáo chấm điểm cả phiên. */
 export interface SessionScoringResponse {
-    sessionId: string;
+    sessionCode: string;
     overallScore: number;
     jlptEstimate: string;
     scores: SessionScoreBreakdown;
@@ -184,104 +175,113 @@ export interface SessionScoringResponse {
     improvedExpressions: SessionImprovedExpression[];
 }
 
-export interface SpeakingReportScores {
-    pronunciation: number;
-    vocabulary: number;
-    grammar: number;
-    naturalness: number;
+/* ─── Answer History (chấm điểm + báo cáo luyện nói theo câu hỏi) ─── */
+
+export type SpeechAssessmentErrorType =
+    | "OMISSION"
+    | "INSERTION"
+    | "MISPRONUNCIATION"
+    | "NONE";
+
+export type LanguageCategory = "VOCABULARY" | "GRAMMAR";
+
+/** Điểm phát âm một từ (Azure Pronunciation Assessment). */
+export interface WordAssessmentResponse {
+    id: number;
+    word: string;
+    accuracyScore: number | null;
+    errorType: SpeechAssessmentErrorType;
 }
 
-export interface SpeakingTranscriptError {
-    type: string;
-    explanation: string;
-    suggestion: string;
+/** Kết quả chấm phát âm từ Azure — accuracy/fluency/completeness/pronunciation đều thang 0-100. */
+export interface SpeechAssessmentResponse {
+    id: number;
+    /** Bản STT đầy đủ, thật từ Azure — nguồn hiển thị chính cho "Bản ghi âm của bạn". */
+    transcriptText: string | null;
+    accuracyScore: number | null;
+    fluencyScore: number | null;
+    completenessScore: number | null;
+    pronunciationScore: number | null;
+    averageScore: number | null;
+    words: WordAssessmentResponse[];
 }
 
-export interface SpeakingTranscriptItem {
-    text: string;
-    error: SpeakingTranscriptError | null;
+/** Một cụm từ vựng/ngữ pháp học viên đã dùng đúng trong câu trả lời. */
+export interface UsedVocabularyAndGrammarResponse {
+    id: number;
+    expression: string;
+    category: LanguageCategory;
 }
 
-export interface SpeakingAiSuggestion {
-    jp: string;
-    furigana: string;
-    vi: string;
+/** Một lỗi trong câu trả lời của học viên kèm bản sửa. */
+export interface UserAnswerErrorResponse {
+    id: number;
+    incorrect: string;
+    correction: string;
 }
 
-export interface SpeakingPronunciationItem {
-    text: string;
-    furigana: string;
-    severity: string;
-    note: string;
+/** Nhận xét của AI (LLM) — điểm ngữ pháp/từ vựng/tự nhiên/độ bám sát đề bài đều thang 0-100. */
+export interface AiFeedbackResponse {
+    id: number;
+    grammarScore: number | null;
+    vocabularyScore: number | null;
+    naturalnessScore: number | null;
+    contentRelevantScore: number | null;
+    averageScore: number | null;
+    suggestJapaneseAnswer: string | null;
+    suggestAnswerTranslation: string | null;
+    usedVocabulariesAndGrammars: UsedVocabularyAndGrammarResponse[];
+    userAnswerErrors: UserAnswerErrorResponse[];
 }
 
-export interface SpeakingExpressionItem {
-    jp: string;
-    furigana: string;
-    vi: string;
-    note: string;
+/** Đề bài rút gọn đính kèm trong answer history (không phải DTO đầy đủ của câu hỏi). */
+export interface AnswerHistorySpeakingQuestion {
+    id: number;
+    japaneseName: string;
+    japaneseNameMarkup: string | null;
+    vietnameseName: string | null;
+    description: string | null;
+    descriptionMarkup: string | null;
+    japaneseSampleAnswer: string | null;
+    japaneseSampleAnswerMarkup: string | null;
+    vietnameseSampleAnswer: string | null;
 }
 
-export interface SpeakingVocabItem {
-    term: string;
-    reading: string;
-    meaning: string;
+export interface AnswerHistoryAudioFile {
+    id: number;
+    /** Đã là presigned URL phát được trực tiếp, không cần gọi thêm endpoint nào khác. */
+    accessUrl: string | null;
+    originalFileName: string | null;
+    contentType: string | null;
 }
 
-export interface SpeakingReport {
-    average: number;
-    scores: SpeakingReportScores;
-    userTranscript: SpeakingTranscriptItem[];
-    aiSuggestion: SpeakingAiSuggestion | null;
-    pronunciation: SpeakingPronunciationItem[];
-    pronunciationNote: string;
-    expressions: SpeakingExpressionItem[];
-    itVocab: SpeakingVocabItem[];
+/**
+ * Chi tiết một lượt luyện nói — response CHUNG cho cả POST /speaking/analysis
+ * (vừa nộp bài) lẫn GET /answer-histories/{id} (xem lại lịch sử). overallScore
+ * thang 0-10 (so với PASS_SCORE để biết đạt/chưa đạt).
+ */
+export interface AnswerHistoryResponse {
+    id: number;
+    userId: number;
+    speakingQuestion: AnswerHistorySpeakingQuestion;
+    speechAssessment: SpeechAssessmentResponse;
+    aiFeedback: AiFeedbackResponse;
+    audioFile: AnswerHistoryAudioFile | null;
+    duration: number | null;
+    overallScore: number | null;
+    createdTime: string | null;
+    modifiedTime: string | null;
 }
 
-/** Một dòng trong danh sách lịch sử luyện nói (GET /history). */
-export interface SpeakingHistoryListItem {
-    historyId: number;
-    speakingQuestionId: number | null;
-    speakingQuestionTitle: string | null;
-    topicId: number | null;
-    topicName: string | null;
-    /** Node lộ trình chứa câu hỏi — để mở lại sandbox đúng đề bài. */
-    learningPathNodeId: number | null;
-    bookId: number | null;
-    score: number;
-    durationSec: number;
-    /** URL CloudFront phát được trực tiếp. */
-    audioUrl: string | null;
-    practicedAt: string;
+/** Một dòng trong danh sách lịch sử luyện nói theo câu hỏi (GET /answer-histories/speaking-question/{id}). */
+export interface AnswerHistoryListItemResponse {
+    id: number;
+    userId: number;
+    speakingQuestion: AnswerHistorySpeakingQuestion;
+    audioFile: AnswerHistoryAudioFile | null;
+    duration: number | null;
+    overallScore: number | null;
+    createdTime: string | null;
+    modifiedTime: string | null;
 }
 
-/** Shape phân trang của Spring Page (endpoint /history trả trong `data`). */
-export interface SpringPage<T> {
-    content: T[];
-    totalElements: number;
-    totalPages: number;
-    size: number;
-    number: number;
-    first: boolean;
-    last: boolean;
-    numberOfElements: number;
-    empty: boolean;
-}
-
-/** Response của GET /history/{historyId} (chi tiết báo cáo luyện nói). */
-export interface SpeakingHistoryDetailResponse {
-    historyId: number;
-    topicId: number | null;
-    questionId: number | null;
-    speakingQuestionTitle: string | null;
-    topicName: string | null;
-    /** Node lộ trình chứa câu hỏi — để mở lại sandbox đúng đề bài. */
-    learningPathNodeId: number | null;
-    bookId: number | null;
-    practicedAt: string;
-    durationSec: number;
-    score: number;
-    audioUrl: string | null;
-    report: SpeakingReport;
-}

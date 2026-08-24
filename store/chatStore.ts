@@ -15,21 +15,11 @@ export interface ChatConfig {
     conversationStyle: FormalityLevel;
     /** Cấp độ Marugoto của phiên. */
     marugotoLevel: MarugotoLevel;
-    voiceSpeed: number;
-    showHints: boolean;
 }
 
-export const defaultChatConfig: ChatConfig = {
-    companionId: "sakura",
-    conversationStyle: "NEUTRAL",
-    marugotoLevel: "STARTER_A1",
-    voiceSpeed: 1,
-    showHints: true,
-};
-
-/** Phiên hội thoại đang chạy (trả về từ POST /speaking/session/{personaId}). */
+/** Phiên hội thoại đang chạy (trả về từ POST /speaking/session/persona/{personaId}). */
 export interface ChatSession {
-    sessionId: string;
+    sessionCode: string;
     personaId: number;
     companionId: string;
     aiGreeting: string;
@@ -46,8 +36,10 @@ interface ChatState {
     config: ChatConfig | null;
     session: ChatSession | null;
     report: SessionScoringResponse | null;
+    autoPlayAudio: boolean;
+    setAutoPlayAudio: (autoPlay: boolean) => void;
     setConfig: (config: ChatConfig) => void;
-    setSession: (session: ChatSession) => void;
+    setSession: (session: ChatSession | null) => void;
     setReport: (report: SessionScoringResponse | null) => void;
     reset: () => void;
 }
@@ -58,6 +50,8 @@ export const useChatStore = create<ChatState>()(
             config: null,
             session: null,
             report: null,
+            autoPlayAudio: true,
+            setAutoPlayAudio: (autoPlayAudio) => set({ autoPlayAudio }),
             setConfig: (config) => set({ config }),
             setSession: (session) => set({ session }),
             setReport: (report) => set({ report }),
@@ -68,9 +62,10 @@ export const useChatStore = create<ChatState>()(
             // Không persist audio base64 (lớn) & report (chỉ cần trong phiên).
             partialize: (state) => ({
                 config: state.config,
+                autoPlayAudio: state.autoPlayAudio,
                 session: state.session
                     ? {
-                          sessionId: state.session.sessionId,
+                          sessionCode: state.session.sessionCode,
                           personaId: state.session.personaId,
                           companionId: state.session.companionId,
                           aiGreeting: state.session.aiGreeting,

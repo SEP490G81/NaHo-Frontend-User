@@ -1,21 +1,37 @@
 "use client";
 import React from "react";
-import { CalendarClock, ChevronRight, Clock, Sparkles } from "lucide-react";
+import {
+    AlertTriangle,
+    CalendarClock,
+    ChevronRight,
+    Clock,
+    Flag,
+    Sparkles,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AllRoute } from "@/i18n/type";
+import { FuriganaHtml } from "@/components/ui/furigana.html";
+import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
 import ScoreGauge from "./score.gauge";
 
 interface Props {
     average: number;
-    questionTitle: string | null;
-    topicName: string | null;
-    topicLabel: string | null;
-    topicHref: string | null;
-    practicedAt: string;
-    durationSec: number;
+    questionTitle: string;
+    questionTitleMarkup?: string | null;
+    questionTranslation?: string | null;
+    showFurigana: boolean;
+    topicName?: string | null;
+    topicLabel?: string | null;
+    topicHref?: string | null;
+    practicedAt?: string | null;
+    durationSec: number | null;
+    /** null = không có file ghi âm nào; "" = có file nhưng chưa có accessUrl (upload thất bại/đang chờ upload lại). */
     audioUrl: string | null;
+    hasAudioFile: boolean;
     accent: string;
+    /** Bỏ trống nếu chưa muốn hiện nút báo cáo câu hỏi. */
+    onReport?: () => void;
 }
 
 function fmt(iso: string): string {
@@ -27,13 +43,18 @@ function fmt(iso: string): string {
 export function ReportHero({
     average,
     questionTitle,
+    questionTitleMarkup,
+    questionTranslation,
+    showFurigana,
     topicName,
     topicLabel,
     topicHref,
     practicedAt,
     durationSec,
     audioUrl,
+    hasAudioFile,
     accent,
+    onReport,
 }: Props) {
     const t = useTranslations("historyDetail");
     const topicText = topicLabel ? `${topicLabel} · ${topicName}` : topicName;
@@ -48,21 +69,33 @@ export function ReportHero({
                 background: `linear-gradient(180deg, color-mix(in srgb, ${accent} 12%, var(--color-bgc-app)) 0%, var(--color-bgc-app) 70%)`,
             }}
         >
-            <div className="flex items-center gap-3">
-                <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
-                    style={{ background: accent }}
-                >
-                    <Sparkles className="h-5 w-5" />
-                </span>
-                <div>
-                    <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
-                        {t("reportTitle")}
-                    </h1>
-                    <p className="text-text-muted text-sm">
-                        {t("reportSubtitle")}
-                    </p>
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                    <span
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white shadow-sm"
+                        style={{ background: accent }}
+                    >
+                        <Sparkles className="h-5 w-5" />
+                    </span>
+                    <div>
+                        <h1 className="text-text-contrast text-xl font-bold md:text-2xl">
+                            {t("reportTitle")}
+                        </h1>
+                        <p className="text-text-muted text-sm">
+                            {t("reportSubtitle")}
+                        </p>
+                    </div>
                 </div>
+                {onReport && (
+                    <button
+                        type="button"
+                        onClick={onReport}
+                        className="text-text-muted hover:text-text-error inline-flex shrink-0 items-center gap-1.5 text-sm font-medium transition-colors"
+                    >
+                        <Flag className="h-3.5 w-3.5" />
+                        {t("reportQuestionBtn")}
+                    </button>
+                )}
             </div>
 
             <div className="border-t pt-5" style={{ borderColor: softBorder }}>
@@ -79,7 +112,16 @@ export function ReportHero({
                         </p>
                         {questionTitle && (
                             <p className="text-text-contrast text-lg leading-snug font-bold">
-                                {questionTitle}
+                                <FuriganaHtml
+                                    text={questionTitle}
+                                    markup={questionTitleMarkup}
+                                    showFurigana={showFurigana}
+                                />
+                            </p>
+                        )}
+                        {questionTranslation?.trim() && (
+                            <p className="text-text-muted text-sm">
+                                {questionTranslation}
                             </p>
                         )}
                         {topicText &&
@@ -103,16 +145,23 @@ export function ReportHero({
                                     {topicText}
                                 </span>
                             ))}
-                        <div className="text-text-muted flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
-                            <span className="inline-flex items-center gap-1.5">
-                                <CalendarClock className="h-4 w-4" />
-                                {fmt(practicedAt)}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5">
-                                <Clock className="h-4 w-4" />
-                                {t("durationLabel")}: {durationSec}s
-                            </span>
-                        </div>
+                        {(practicedAt || durationSec != null) && (
+                            <div className="text-text-muted flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm">
+                                {practicedAt && (
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <CalendarClock className="h-4 w-4" />
+                                        {fmt(practicedAt)}
+                                    </span>
+                                )}
+                                {durationSec != null && (
+                                    <span className="inline-flex items-center gap-1.5">
+                                        <Clock className="h-4 w-4" />
+                                        {t("durationLabel")}:{" "}
+                                        {Math.round(durationSec)}s
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -130,6 +179,13 @@ export function ReportHero({
                             className="w-full cursor-pointer"
                             preload="none"
                         />
+                    ) : hasAudioFile ? (
+                        <TooltipCustom title={t("audioUploadFailed")}>
+                            <span className="text-text-error inline-flex cursor-help items-center gap-1.5 text-sm">
+                                <AlertTriangle className="h-4 w-4" />
+                                {t("audioUploadFailed")}
+                            </span>
+                        </TooltipCustom>
                     ) : (
                         <span className="text-text-muted">—</span>
                     )}

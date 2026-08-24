@@ -1,16 +1,12 @@
 import { ApiResponse, PageMeta, ProblemDetail } from "@/types/responses/base.response";
-import { FormalityLevel, MarugotoLevel, PersonaResponse } from "@/types/responses/persona.response";
+import { PersonaResponse } from "@/types/responses/persona.response";
 import {
-    ActiveSpeakingSessionResponse,
-    AudioChatResponse,
-    ChatReplyResponse,
-    SessionScoringResponse,
-    SpeakingAnalysisResponse,
-    SpeakingHistoryDetailResponse,
-    SpeakingHistoryListItem,
+    AnswerHistoryListItemResponse,
+    AnswerHistoryResponse,
     SpeakingSessionDetail,
     SpeakingSessionListItem,
     SpeakingSessionQuery,
+    SpeechAssessmentResponse,
     StartConversationResponse
 } from "@/types/responses/speaking.response";
 
@@ -77,10 +73,10 @@ export interface SpeakingAnalysisInput {
     durationSec: number;
 }
 
-/** Upload bản ghi + chấm điểm → trả { historyId, score }. */
+/** Upload bản ghi + chấm điểm → trả AnswerHistoryResponse đầy đủ (cùng shape với getAnswerHistoryDetail). */
 export async function submitSpeakingAnalysis(
     input: SpeakingAnalysisInput,
-): Promise<SpeakingAnalysisResponse> {
+): Promise<AnswerHistoryResponse> {
     const form = new FormData();
     form.append("file", input.file, fileNameFor(input.file));
     form.append("speakingQuestionId", String(input.speakingQuestionId));
@@ -93,62 +89,42 @@ export async function submitSpeakingAnalysis(
         method: "POST",
         body: form,
     });
-    return unwrap<SpeakingAnalysisResponse>(response);
+    return unwrap<AnswerHistoryResponse>(response);
 }
 
-/** Chi tiết báo cáo luyện nói theo historyId. */
-export async function getSpeakingHistoryDetail(
-    historyId: string | number,
-): Promise<SpeakingHistoryDetailResponse> {
-    const response = await fetch(`/api/history/${historyId}`);
-    return unwrap<SpeakingHistoryDetailResponse>(response);
-}
+/** Chấm phát âm 1 đoạn ghi âm bất kỳ theo văn bản tham chiếu — không gắn với
+ *  câu hỏi nói cụ thể nào (dùng để luyện đọc từng từ vựng trong thẻ flashcard). */
+export async function assessPronunciation(
+    file: Blob,
+    referenceText: string,
+): Promise<SpeechAssessmentResponse> {
+    const form = new FormData();
+    form.append("file", file, fileNameFor(file));
+    form.append("reference-text", referenceText);
 
-export interface SpeakingHistoryListQuery {
-    page?: number;
-    size?: number;
-    topicId?: number | null;
-    speakingQuestionId?: number | null;
-    search?: string | null;
-}
-
-export interface SpeakingHistoryListPage {
-    items: SpeakingHistoryListItem[];
-    totalPages: number;
-    totalElements: number;
-}
-
-/**
- * Danh sách lịch sử luyện nói (POST /speaking-histories) — BE trả `data` là mảng,
- * phân trang nằm ở `meta.pageMeta`. userId lấy từ token ở BE.
- */
-export async function getSpeakingHistoryList(
-    query: SpeakingHistoryListQuery = {},
-): Promise<SpeakingHistoryListPage> {
-    const response = await fetch("/api/history", {
+    const response = await fetch("/api/speaking/assessment", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            page: query.page ?? 0,
-            size: query.size ?? 10,
-            topicId: query.topicId ?? null,
-            speakingQuestionId: query.speakingQuestionId ?? null,
-            search: query.search || null,
-        }),
+        body: form,
     });
-    const result = await response.json();
-    if (!response.ok) {
-        throw new Error(
-            (result as ProblemDetail).detail ||
-                "Không tải được lịch sử luyện tập",
-        );
-    }
-    const api = result as ApiResponse<SpeakingHistoryListItem[]>;
-    return {
-        items: api.data ?? [],
-        totalPages: api.meta?.pageMeta?.totalPages ?? 0,
-        totalElements: api.meta?.pageMeta?.totalElements ?? 0,
-    };
+    return unwrap<SpeechAssessmentResponse>(response);
+}
+
+/** Chi tiết một lượt luyện nói theo answerHistoryId (màn Báo cáo / xem lại lịch sử). */
+export async function getAnswerHistoryDetail(
+    answerHistoryId: string | number,
+): Promise<AnswerHistoryResponse> {
+    const response = await fetch(`/api/history/${answerHistoryId}`);
+    return unwrap<AnswerHistoryResponse>(response);
+}
+
+/** Toàn bộ lịch sử luyện nói của một câu hỏi cụ thể (dùng cho danh sách ở trang chi tiết câu hỏi). */
+export async function getAnswerHistoriesBySpeakingQuestion(
+    speakingQuestionId: string | number,
+): Promise<AnswerHistoryListItemResponse[]> {
+    const response = await fetch(
+        `/api/answer-histories/speaking-question/${speakingQuestionId}`,
+    );
+    return unwrap<AnswerHistoryListItemResponse[]>(response);
 }
 
 /* ─── AI 1:1 Dialogue ────────────────────────────────────────────── */
@@ -156,117 +132,17 @@ export async function getSpeakingHistoryList(
 /** Danh sách persona AI (GET /personas). */
 export async function getPersonas(): Promise<PersonaResponse[]> {
     const response = await apiRequest("/api/personas");
-    return unwrap<PersonaResponse[]>(response);
+    const data = await unwrap<PersonaResponse[] | PersonaResponse>(response);
+    if (!data) return [];
+    return Array.isArray(data) ? data : [data];
 }
 
-export interface StartConversationInput {
-    /** Override thể lịch sự (khác mặc định của persona). */
-    formalityLevel?: FormalityLevel | null;
-    /** Override cấp độ Marugoto. */
-    marugotoLevel?: MarugotoLevel | null;
-}
-
-/** Bắt đầu hội thoại với persona (kèm override style tuỳ chọn). */
-export async function startConversation(
-    personaId: number,
-    input: StartConversationInput = {},
-): Promise<StartConversationResponse> {
-    const hasOverride = !!(input.formalityLevel || input.marugotoLevel);
-    const response = await apiRequest(
-        `/api/speaking/session/${personaId}`,
-        hasOverride
-            ? {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                      formalityLevel: input.formalityLevel ?? undefined,
-                      marugotoLevel: input.marugotoLevel ?? undefined,
-                  }),
-              }
-            : { method: "POST" },
-    );
-    return unwrap<StartConversationResponse>(response);
-}
-
-/** Đuôi file theo mime của bản ghi để BE nhận đúng định dạng. */
-function sessionFileName(blob: Blob): string {
-    if (blob.type.includes("wav")) return "message.wav";
-    if (blob.type.includes("mp4") || blob.type.includes("m4a"))
-        return "message.m4a";
-    if (blob.type.includes("ogg")) return "message.ogg";
-    return "message.webm";
-}
-
-/** Gửi audio trong phiên → STT + điểm phát âm + reply của AI. */
-export async function sendSessionAudio(
-    sessionId: string,
-    blob: Blob,
-    referenceText?: string,
-): Promise<AudioChatResponse> {
-    const form = new FormData();
-    form.append("file", blob, sessionFileName(blob));
-
-    const query = referenceText
-        ? `?reference-text=${encodeURIComponent(referenceText)}`
-        : "";
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/audio${query}`,
-        { method: "POST", body: form },
-    );
-    return unwrap<AudioChatResponse>(response);
-}
-
-/** Gửi tin nhắn text trong phiên → reply của AI. */
-export async function sendTextMessage(
-    sessionId: string,
-    transcript: string,
-): Promise<ChatReplyResponse> {
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/message`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ transcript }),
-        },
-    );
-    return unwrap<ChatReplyResponse>(response);
-}
-
-export interface EndSessionInput {
-    topic?: string;
-    speechMetadata?: string;
-    asrConfidence?: string;
-}
-
-/** Kết thúc phiên → báo cáo chấm điểm cả buổi. */
-export async function endSession(
-    sessionId: string,
-    input: EndSessionInput = {},
-): Promise<SessionScoringResponse> {
-    const response = await apiRequest(
-        `/api/speaking/session/${sessionId}/end`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                topic: input.topic ?? "",
-                speechMetadata: input.speechMetadata ?? "",
-                asrConfidence: input.asrConfidence ?? "",
-            }),
-        },
-    );
-    return unwrap<SessionScoringResponse>(response);
-}
-
-/* ─── AI 1:1 Session persistence: resume + history (#59) ─────────── */
-
-/** Phiên đang dở của user (null nếu không có). */
-export async function getActiveSession(
-    personaId?: number | null,
-): Promise<ActiveSpeakingSessionResponse | null> {
-    const query = personaId != null ? `?personaId=${personaId}` : "";
-    const response = await apiRequest(`/api/speaking/session/active${query}`);
-    return unwrap<ActiveSpeakingSessionResponse | null>(response);
+/** Chi tiết persona AI theo ID (GET /personas/{id}). */
+export async function getPersonaById(
+    id: number | string,
+): Promise<PersonaResponse> {
+    const response = await apiRequest(`/api/personas/${id}`);
+    return unwrap<PersonaResponse>(response);
 }
 
 /** Khôi phục phiên dở theo sessionCode → câu chào "chào lại". */
@@ -321,4 +197,23 @@ export async function getSpeakingSessionDetail(
         `/api/speaking/session/history/${sessionCode}`,
     );
     return unwrap<SpeakingSessionDetail>(response);
+}
+
+/** Xoá một phiên hội thoại AI 1:1 theo sessionCode (HTTP DELETE 204). */
+export async function deleteSpeakingSession(
+    sessionCode: string,
+): Promise<void> {
+    const response = await apiRequest(`/api/speaking/session/${sessionCode}`, {
+        method: "DELETE",
+    });
+    if (!response.ok && response.status !== 204) {
+        let detail = "Không thể xoá phiên hội thoại.";
+        try {
+            const json = await response.json();
+            if (json?.detail) detail = json.detail;
+        } catch {
+            // ignore non-json errors
+        }
+        throw new Error(detail);
+    }
 }

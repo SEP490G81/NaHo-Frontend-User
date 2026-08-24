@@ -26,7 +26,7 @@ export const MISSION_TYPE_CONFIGS: Record<string, MissionTypeConfig> = {
         accentColor: "text-indigo-500 dark:text-indigo-400",
         bgGradient: "from-indigo-500/10 to-purple-500/5",
         borderColor: "border-indigo-500/30",
-        actionUrl: "/dialogue-setup",
+        actionUrl: "/persona-setup",
         i18nKey: "TALK_WITH_AI",
     },
 };

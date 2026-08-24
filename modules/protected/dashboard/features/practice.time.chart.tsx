@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useSyncExternalStore } from "react";
 import {
     Area,
     AreaChart,
@@ -15,38 +15,71 @@ import { useQuery } from "@tanstack/react-query";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { ContainerBox } from "@/components/ui/container.box";
-import { getSpeakingHistoryList } from "@/services/client/speaking.service";
-import type { SpeakingHistoryListItem } from "@/types/responses/speaking.response";
-import {
-    DAY_NAMES_VI,
-    DEFAULT_CHART_HISTORY_PAGE_SIZE,
-} from "../constants/dashboard.constant";
+import { getPointHistory } from "@/services/client/point.service";
+import type { PointTransactionType } from "@/types/responses/point.response";
+import { DAY_NAMES_VI } from "../constants/dashboard.constant";
+
+/**
+ * Các loại giao dịch tính là 1 "lượt luyện tập" (không tính thưởng điểm danh/
+ * streak/thành tựu/phạt — đó là thưởng, không phải hành động luyện tập).
+ * BE hiện chưa có API liệt kê answer-history tổng hợp có phân trang (chỉ còn
+ * GET theo từng speakingQuestionId), nên dùng point-history đã có sẵn để suy
+ * ra hoạt động luyện tập theo ngày thay vì đo trực tiếp bằng giây.
+ */
+const PRACTICE_TRANSACTION_TYPES: readonly PointTransactionType[] = [
+    "LEARNING_PATH_NODE_COMPLETION",
+    "LEARNING_PATH_NODE_RETAKE",
+    "CAN_DO_COMPLETION",
+];
+
+function subscribeNever() {
+    return () => {};
+}
+
+/** Chỉ true sau khi hydrate xong ở client — tránh Recharts đo container 0px
+ *  lúc SSR. useSyncExternalStore thay vì setState trong effect (rule
+ *  react-hooks/set-state-in-effect của repo, xem use.hash.anchor.ts). */
+function useHasMounted() {
+    return useSyncExternalStore(
+        subscribeNever,
+        () => true,
+        () => false,
+    );
+}
 
 export function PracticeTimeChart({ className = "" }: { className?: string }) {
     const t = useTranslations("dashboard");
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const mounted = useHasMounted();
 
     const { data, isLoading, isError, refetch } = useQuery({
-        queryKey: ["speaking-history-chart"],
-        queryFn: () =>
-            getSpeakingHistoryList({
+        queryKey: ["point-history-chart"],
+        queryFn: () => {
+            const now = new Date();
+            const from = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate() - 13,
+                0,
+                0,
+                0,
+                0,
+            );
+            return getPointHistory({
                 page: 0,
-                size: DEFAULT_CHART_HISTORY_PAGE_SIZE,
-            }),
+                size: 100,
+                sortColumn: "TRANSACTION_TIME",
+                sortDirection: "DESC",
+                transactionTimeFrom: from.toISOString(),
+                transactionTimeTo: now.toISOString(),
+            });
+        },
     });
 
-    const items = useMemo<SpeakingHistoryListItem[]>(
-        () => data?.items ?? [],
-        [data],
-    );
+    const items = useMemo(() => data?.items ?? [], [data]);
 
-    const { chartData, totalSec, avgSec, trendPercent } = useMemo(() => {
+    const { chartData, totalCount, avgCount, trendPercent } = useMemo(() => {
         const now = new Date();
-        const dateMap = new Map<string, { totalSec: number; count: number }>();
+        const dateMap = new Map<string, number>();
 
         const todayEnd = new Date(
             now.getFullYear(),
@@ -76,31 +109,22 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
             0,
         ).getTime();
 
-        let current7TotalSec = 0;
-        let prev7TotalSec = 0;
+        let current7Count = 0;
+        let prev7Count = 0;
 
         items.forEach((item) => {
-            if (!item.practicedAt) return;
-            const d = new Date(item.practicedAt);
+            if (!PRACTICE_TRANSACTION_TYPES.includes(item.transactionType))
+                return;
+            const d = new Date(item.transactionTime);
             const time = d.getTime();
             if (Number.isNaN(time)) return;
 
-            const sec = item.durationSec || 0;
-
             if (time >= startCurrent7 && time <= todayEnd) {
-                current7TotalSec += sec;
-
+                current7Count += 1;
                 const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-                const prev = dateMap.get(dateKey) || {
-                    totalSec: 0,
-                    count: 0,
-                };
-                dateMap.set(dateKey, {
-                    totalSec: prev.totalSec + sec,
-                    count: prev.count + 1,
-                });
+                dateMap.set(dateKey, (dateMap.get(dateKey) ?? 0) + 1);
             } else if (time >= startPrev7 && time < startCurrent7) {
-                prev7TotalSec += sec;
+                prev7Count += 1;
             }
         });
 
@@ -112,34 +136,29 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                 now.getDate() - i,
             );
             const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-            const stat = dateMap.get(dateKey) || { totalSec: 0, count: 0 };
+            const count = dateMap.get(dateKey) ?? 0;
 
             const dayName = DAY_NAMES_VI[d.getDay()];
             const fullLabel = `${dayName} (${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")})`;
 
-            result.push({
-                day: dayName,
-                fullLabel,
-                seconds: stat.totalSec,
-                count: stat.count,
-            });
+            result.push({ day: dayName, fullLabel, count });
         }
 
-        const averageSec = Math.round((current7TotalSec / 7) * 10) / 10;
+        const average = Math.round((current7Count / 7) * 10) / 10;
 
         let trend = 0;
-        if (prev7TotalSec > 0) {
+        if (prev7Count > 0) {
             trend = Math.round(
-                ((current7TotalSec - prev7TotalSec) / prev7TotalSec) * 100,
+                ((current7Count - prev7Count) / prev7Count) * 100,
             );
-        } else if (current7TotalSec > 0) {
+        } else if (current7Count > 0) {
             trend = 100;
         }
 
         return {
             chartData: result,
-            totalSec: current7TotalSec,
-            avgSec: averageSec,
+            totalCount: current7Count,
+            avgCount: average,
             trendPercent: trend,
         };
     }, [items]);
@@ -203,7 +222,7 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                             {t("chartTotal")}
                         </span>
                         <span className="text-sm font-extrabold text-[#ff758f]">
-                            {t("chartSeconds", { count: totalSec })}
+                            {t("chartCount", { count: totalCount })}
                         </span>
                     </div>
                     <div className="bg-bdc-primary/50 h-8 w-px" />
@@ -212,7 +231,7 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                             {t("chartAvg")}
                         </span>
                         <span className="text-text-primary text-sm font-extrabold">
-                            {t("chartSeconds", { count: avgSec })}
+                            {t("chartCount", { count: avgCount })}
                         </span>
                     </div>
                     <div className="bg-bdc-primary/50 h-8 w-px" />
@@ -274,6 +293,7 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                             fontSize={12}
                             tickLine={false}
                             axisLine={false}
+                            allowDecimals={false}
                         />
                         <Tooltip
                             cursor={{
@@ -289,17 +309,12 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                                 boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
                                 color: "var(--color-text-primary)",
                             }}
-                            formatter={(value: any, _name: any, item: any) => {
-                                const payload = item?.payload;
-                                const count = payload?.count || 0;
-                                return [
-                                    t("chartTooltipDetail", {
-                                        seconds: value,
-                                        count,
-                                    }),
-                                    t("chartTooltipTime"),
-                                ];
-                            }}
+                            formatter={(value) => [
+                                t("chartTooltipDetail", {
+                                    count: Number(value),
+                                }),
+                                t("chartTooltipTime"),
+                            ]}
                             labelFormatter={(label, items) => {
                                 const payload = items?.[0]?.payload;
                                 return payload?.fullLabel
@@ -311,7 +326,7 @@ export function PracticeTimeChart({ className = "" }: { className?: string }) {
                         />
                         <Area
                             type="monotone"
-                            dataKey="seconds"
+                            dataKey="count"
                             stroke="#ff758f"
                             strokeWidth={3}
                             fillOpacity={1}

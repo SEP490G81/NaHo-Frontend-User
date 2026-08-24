@@ -1,8 +1,8 @@
 import RegisterPasswordHint from "@/modules/public/register/components/register.password.hint";
 import RegisterTextField from "@/modules/public/register/components/register.text.field";
 import {
-    MAX_PASSWORD_LENGTH,
     FULL_NAME_MAX_LENGTH,
+    MAX_PASSWORD_LENGTH,
     RegisterFieldErrors,
     RegisterValues,
     validateField,

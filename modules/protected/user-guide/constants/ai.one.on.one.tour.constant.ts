@@ -10,22 +10,22 @@ export const AI_ONE_ON_ONE_TOUR_ID = "aiOneOnOne";
 export const AI_ONE_ON_ONE_TOUR_STEPS: TourStepDef[] = [
     {
         id: "persona",
-        routeTest: /^\/dialogue-setup$/,
+        routeTest: /^\/persona-setup$/,
         targetId: "tour-ai1on1-persona",
     },
     {
         id: "start",
-        routeTest: /^\/dialogue-setup$/,
+        routeTest: /^\/persona-setup$/,
         targetId: "tour-ai1on1-start",
     },
     {
         id: "chat",
-        routeTest: /^\/live-chatroom$/,
+        routeTest: /^\/live-chatroom\/[^/]+$/,
         targetId: "tour-ai1on1-chat",
     },
     {
         id: "end",
-        routeTest: /^\/live-chatroom$/,
+        routeTest: /^\/live-chatroom\/[^/]+$/,
         targetId: "tour-ai1on1-end",
     },
     {

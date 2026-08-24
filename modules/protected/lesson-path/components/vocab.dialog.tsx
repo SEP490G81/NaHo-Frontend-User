@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { BookOpen, Check } from "lucide-react";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useTranslations } from "next-intl";
 import type { NodeVocabularyItem } from "@/types/responses/learning.response";
 import type { Vocab } from "@/data/marugoto/types";
+import { useMarugotoStore } from "@/store/marugotoStore";
 import FlashcardDeck from "./flashcard.deck";
 
 interface Props {
@@ -19,6 +20,9 @@ interface Props {
     finishing?: boolean;
     finished?: boolean;
     accent: string;
+    /** PathNode.id — key lưu vị trí thẻ/tiến trình ghi âm vào store (persist),
+     *  sống ngoài dialog nên không mất khi dialog bị unmount/remount. */
+    progressKey?: string;
 }
 
 function toVocab(v: NodeVocabularyItem): Vocab {
@@ -41,19 +45,46 @@ export function VocabDialog({
     finishing,
     finished,
     accent,
+    progressKey,
 }: Props) {
     const t = useTranslations("marugoto");
     const items = vocab.map(toVocab);
 
-    // Chỉ cho "Hoàn thành" sau khi đã lướt hết thẻ (0–1 thẻ thì không cần lướt).
-    // Reset ngay trong render khi hộp thoại mở/đóng (không dùng effect).
-    const [viewedAll, setViewedAll] = useState(false);
-    const [trackedOpen, setTrackedOpen] = useState(open);
-    if (open !== trackedOpen) {
-        setTrackedOpen(open);
-        setViewedAll(false);
-    }
-    const canFinish = viewedAll || (!loading && items.length <= 1);
+    // Vị trí thẻ đang xem + đã "Hoàn thành" hay chưa — lưu ở store (persist),
+    // key theo node, tự tách bộ nhớ giữa các node khác nhau và không mất khi
+    // dialog bị đóng/mở lại hoặc bị unmount/remount ngoài ý muốn.
+    const stored = useMarugotoStore((s) =>
+        progressKey ? s.vocabDialogProgress[progressKey] : undefined,
+    );
+    const setStoredProgress = useMarugotoStore((s) => s.setVocabDialogProgress);
+    const cardIndex = stored?.cardIndex ?? 0;
+    // "Đã ghi âm đạt thẻ cuối" — phản ánh lần ghi âm GẦN NHẤT (không kẹt true
+    // mãi sau 1 lần đạt rồi ghi âm lại fail, xem onLastCardPassChange).
+    const lastCardPassed = stored?.lastCardPassed ?? false;
+    // Patch từng phần qua store (store tự gộp với progress cũ + bỏ qua nếu
+    // không đổi) — nhờ vậy 2 hàm này KHÔNG cần đóng gói cardIndex/lastCardPassed,
+    // giữ được reference ổn định giữa các lần render. Cần thiết vì FlashcardDeck
+    // dùng onLastCardPassChange làm dependency của effect: nếu hàm đổi reference
+    // mỗi render sẽ khiến effect chạy lại → gọi lại setState → re-render → lặp vô hạn.
+    const setCardIndex = useCallback(
+        (index: number) => {
+            if (!progressKey) return;
+            setStoredProgress(progressKey, { cardIndex: index });
+        },
+        [progressKey, setStoredProgress],
+    );
+    const setLastCardPassed = useCallback(
+        (passed: boolean) => {
+            if (!progressKey) return;
+            setStoredProgress(progressKey, { lastCardPassed: passed });
+        },
+        [progressKey, setStoredProgress],
+    );
+    // Không có thẻ nào (không hiện FlashcardDeck) thì không có gì để ghi âm nên
+    // cho "Hoàn thành" luôn. CHỈ trường hợp này — kể cả đúng 1 thẻ vẫn phải ghi
+    // âm đạt thẻ đó (FlashcardDeck tự coi thẻ #1 là thẻ cuối khi total = 1, nên
+    // luồng bình thường đã yêu cầu đúng, không cần bypass thêm ở đây).
+    const canFinish = lastCardPassed || (!loading && items.length === 0);
 
     return (
         <Dialog
@@ -97,7 +128,9 @@ export function VocabDialog({
                     <FlashcardDeck
                         vocab={items}
                         showFurigana={showFurigana}
-                        onReachedLast={() => setViewedAll(true)}
+                        cardIndex={cardIndex}
+                        onCardIndexChange={setCardIndex}
+                        onLastCardPassChange={setLastCardPassed}
                     />
                 )}
             </DialogContent>

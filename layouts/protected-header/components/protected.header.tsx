@@ -15,43 +15,49 @@ import DailyStreakButton from "@/layouts/protected-header/features/daily.streak.
 import KeyboardDoubleArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 
-const ProtectedHeader = () => {
+const ProtectedHeader = ({
+    showSidebarToggle = true,
+}: {
+    readonly showSidebarToggle?: boolean;
+}) => {
     const t = useTranslations();
     const { toggleSidebarCollapse, isSidebarCollapsed } = useUiStore();
 
     return (
-        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between overflow-hidden border-b px-3 py-3.5">
+        <div className="border-b-bdc-primary bg-bgc-app sticky top-0 left-0 z-10 flex items-center justify-between overflow-hidden border-b px-3 py-3.5 [--header-height:69px]">
             <HeaderDecoration />
 
             {/* Left: collapse toggle (desktop) + mobile menu button */}
             <div className="z-10 flex min-w-0 items-center justify-start gap-x-3">
-                <TooltipCustom
-                    arrow
-                    title={
-                        isSidebarCollapsed
-                            ? t("common.layout.header.expandSidebar")
-                            : t("common.layout.header.collapseSidebar")
-                    }
-                    placement="bottom"
-                >
-                    <Button
-                        onClick={toggleSidebarCollapse}
-                        variant="outlined"
-                        color="primary"
-                        sx={{
-                            width: "40px",
-                            minWidth: "40px",
-                            height: "40px",
-                            display: { xs: "none", md: "inline-flex" },
-                        }}
+                {showSidebarToggle && (
+                    <TooltipCustom
+                        arrow
+                        title={
+                            isSidebarCollapsed
+                                ? t("common.layout.header.expandSidebar")
+                                : t("common.layout.header.collapseSidebar")
+                        }
+                        placement="bottom"
                     >
-                        {isSidebarCollapsed ? (
-                            <KeyboardDoubleArrowLeftOutlinedIcon className="h-5 w-5" />
-                        ) : (
-                            <KeyboardDoubleArrowRightOutlinedIcon className="h-5 w-5" />
-                        )}
-                    </Button>
-                </TooltipCustom>
+                        <Button
+                            onClick={toggleSidebarCollapse}
+                            variant="outlined"
+                            color="primary"
+                            sx={{
+                                width: "40px",
+                                minWidth: "40px",
+                                height: "40px",
+                                display: { xs: "none", md: "inline-flex" },
+                            }}
+                        >
+                            {isSidebarCollapsed ? (
+                                <KeyboardDoubleArrowRightOutlinedIcon className="h-5 w-5" />
+                            ) : (
+                                <KeyboardDoubleArrowLeftOutlinedIcon className="h-5 w-5" />
+                            )}
+                        </Button>
+                    </TooltipCustom>
+                )}
             </div>
 
             <div className="flex items-center justify-center gap-x-3">

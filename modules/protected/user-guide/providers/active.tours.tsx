@@ -1,12 +1,9 @@
 "use client";
 import TourSpotlight from "@/components/tour/tour.spotlight";
-import {
-    MARUGOTO_TOUR_ID,
-    MARUGOTO_TOUR_STEPS,
-} from "@/modules/protected/user-guide/constants/marugoto.tour.constant";
+import { MARUGOTO_TOUR_ID, MARUGOTO_TOUR_STEPS } from "@/modules/protected/user-guide/constants/marugoto.tour.constant";
 import {
     AI_ONE_ON_ONE_TOUR_ID,
-    AI_ONE_ON_ONE_TOUR_STEPS,
+    AI_ONE_ON_ONE_TOUR_STEPS
 } from "@/modules/protected/user-guide/constants/ai.one.on.one.tour.constant";
 
 /**

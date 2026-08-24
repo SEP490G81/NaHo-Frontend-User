@@ -12,7 +12,7 @@ interface Props {
 }
 
 /** Radar 7 chiều điểm. Import động (ssr:false) ở parent để tránh lệch hydrate. */
-export function ScoreRadar({ data }: Props) {
+export function ScoreRadar({ data }: Readonly<Props>) {
     return (
         <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height={256} minWidth={0}>

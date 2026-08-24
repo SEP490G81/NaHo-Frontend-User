@@ -1,38 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import { Target } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { toast } from "react-toastify";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTodayUserDailyMissions } from "@/services/client/daily.mission.service";
 import { UserDailyMissionResponse } from "@/types/responses/daily.mission.response";
 import DailyMissionHeader from "../components/daily.mission.header";
 import DailyMissionItem from "../components/daily.mission.item";
 import { TooltipCustom } from "@/components/ui/mui-custom/tooltip.custom";
+import { calculateUserMissionProgress } from "../utils/daily.mission.util";
 
 const DailyMissionButton = () => {
     const t = useTranslations("dailyMission");
     const [isOpen, setIsOpen] = useState(false);
-    const [userMissions, setUserMissions] = useState<
-        UserDailyMissionResponse[]
-    >([]);
+    const queryClient = useQueryClient();
 
-    const fetchDailyMissionsData = async () => {
-        try {
-            const missions = await getTodayUserDailyMissions();
-            setUserMissions(missions);
-        } catch (e) {
-            console.error("Fetch Daily Missions Error:", e);
-            if (e instanceof Error) {
-                toast.error(e.message);
-            }
-        }
-    };
+    const { data: userMissions = [], refetch } = useQuery({
+        queryKey: ["user-daily-missions"],
+        queryFn: getTodayUserDailyMissions,
+        staleTime: 60 * 1000,
+    });
 
-    const handleOpen = async () => {
+    const { claimableCount } = calculateUserMissionProgress(userMissions);
+
+    const handleOpen = () => {
         setIsOpen(true);
-        await fetchDailyMissionsData();
+        refetch();
     };
 
     const handleClose = () => {
@@ -40,10 +35,28 @@ const DailyMissionButton = () => {
     };
 
     const handleEarnSuccess = (updatedMission: UserDailyMissionResponse) => {
-        setUserMissions((prev) =>
-            prev.map((m) => (m.id === updatedMission.id ? updatedMission : m)),
+        queryClient.setQueryData<UserDailyMissionResponse[]>(
+            ["user-daily-missions"],
+            (prev) =>
+                prev
+                    ? prev.map((m) =>
+                          m.id === updatedMission.id ? updatedMission : m,
+                      )
+                    : [updatedMission],
         );
+        queryClient.invalidateQueries({ queryKey: ["user-learning-progress"] });
     };
+
+    useEffect(() => {
+        const handleRefresh = () => {
+            refetch();
+        };
+
+        window.addEventListener("refresh-daily-missions", handleRefresh);
+        return () => {
+            window.removeEventListener("refresh-daily-missions", handleRefresh);
+        };
+    }, [refetch]);
 
     return (
         <>
@@ -54,6 +67,12 @@ const DailyMissionButton = () => {
                 >
                     <div className="relative flex items-center justify-center">
                         <Target className="h-4 w-4 text-emerald-500 transition-transform duration-300 group-hover:scale-110" />
+                        {claimableCount > 0 && (
+                            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                            </span>
+                        )}
                     </div>
                     <span className="hidden font-extrabold sm:inline">
                         {t("triggerBtn")}

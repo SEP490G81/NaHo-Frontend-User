@@ -35,7 +35,7 @@
                 "community-library": "Community Library",
                 "report": "Báo cáo",
                 "liveChatroom": "Trò chuyện trực tuyến",
-                "dialogueSetup": "Trò chuyện tự do AI",
+                "personaSetup": "Trò chuyện tự do AI",
                 "dialogueHistory": "Lịch sử trò chuyện AI",
                 "speakingResult": "Báo cáo phiên luyện",
                 "leaderboard": "Bảng xếp hạng thi đua",
@@ -64,6 +64,28 @@
                 "leaderboard": "Bảng xếp hạng thi đua",
                 "comingSoon": "Sắp ra mắt",
                 "new": "Mới"
+            },
+            "chatroomSidebar": {
+                "newChat": "Đoạn chat mới",
+                "completedSection": "Đã hoàn thành",
+                "chatSection": "Đoạn chat",
+                "noCompletedChats": "Chưa có đoạn chat hoàn thành",
+                "noActiveChats": "Chưa có đoạn chat nào",
+                "brandTitle": "NaHo",
+                "untitledChat": "Đoạn chat chưa có tên",
+                "searchPlaceholder": "Tìm kiếm đoạn chat...",
+                "allSessions": "Tất cả đoạn chat",
+                "recentChats": "Gần đây",
+                "deleteChat": "Xóa đoạn chat",
+                "deleteDialog": {
+                    "title": "Xóa đoạn chat?",
+                    "description": "Bạn có chắc chắn muốn xóa phiên trò chuyện này không? Dữ liệu sẽ không thể khôi phục.",
+                    "confirm": "Xóa",
+                    "cancel": "Hủy",
+                    "deleting": "Đang xóa...",
+                    "success": "Đã xóa đoạn chat thành công.",
+                    "error": "Không thể xóa đoạn chat. Vui lòng thử lại."
+                }
             },
             "header": {
                 "collapseSidebar": "Thu gọn thanh bên",

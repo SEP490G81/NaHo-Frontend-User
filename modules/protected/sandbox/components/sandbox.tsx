@@ -105,7 +105,10 @@ function SandboxContent({
     const dailyLimit = subQ.data?.plan?.dailySpeakingQuestionEvaluationLimit;
     const remainingToday =
         dailyLimit != null
-            ? Math.max(0, dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0))
+            ? Math.max(
+                  0,
+                  dailyLimit - (usageQ.data?.speakingEvaluationCount ?? 0),
+              )
             : null;
 
     const question = useMemo(() => {
@@ -114,8 +117,7 @@ function SandboxContent({
                 id: questionId,
                 jp: sq.japaneseName,
                 markup: sq.japaneseNameMarkup,
-                vi: sq.description ?? "",
-                viMarkup: sq.descriptionMarkup ?? undefined,
+                vi: sq.vietnameseName ?? "",
             };
         }
         // Chưa nạp được node → placeholder tối thiểu để vẫn ghi âm/gửi chấm được.
@@ -124,7 +126,6 @@ function SandboxContent({
             jp: "録音して発音を分析しましょう",
             markup: undefined,
             vi: "",
-            viMarkup: undefined,
         };
     }, [sq, questionId]);
 
@@ -183,27 +184,33 @@ function SandboxContent({
             // Ghi điểm cục bộ để mở khóa node kế trên lộ trình.
             useMarugotoStore
                 .getState()
-                .setQuestionScore(questionId, result.overallScore);
+                .setQuestionScore(questionId, result.overallScore ?? 0);
             // BE đã cộng L-Point/streak → làm mới tiến độ để header đúng.
             queryClient.invalidateQueries({
                 queryKey: ["user-learning-progress"],
             });
+            // Seed sẵn cache báo cáo bằng đúng response vừa nhận — màn
+            // /speaking-history/{id} mở lên hiện ngay, không phải gọi lại API.
+            queryClient.setQueryData(
+                ["answer-history", String(result.id)],
+                result,
+            );
             // Kèm ngữ cảnh để màn kết quả mở lại đúng sandbox câu này.
             const ctx = new URLSearchParams();
             if (nodeId) ctx.set("node", nodeId);
             if (bookParam) ctx.set("book", bookParam);
             if (topicParam) ctx.set("topic", topicParam);
             const qs = ctx.toString();
-            push(
-                `/speaking-history/${result.answerHistoryId}${qs ? `?${qs}` : ""}`,
-            );
+            push(`/speaking-history/${result.id}${qs ? `?${qs}` : ""}`);
         },
         onError: (err) => {
             console.error("Lỗi phân tích giọng nói:", err);
             setAnalyzing(false);
             // Hiện message thật từ BE (hết lượt, node khoá, chấm thất bại…) thay
             // vì báo lỗi chung chung — dễ biết đúng nguyên nhân.
-            toast.error(err instanceof Error ? err.message : t("analyzeFailed"));
+            toast.error(
+                err instanceof Error ? err.message : t("analyzeFailed"),
+            );
         },
     });
 
@@ -222,7 +229,7 @@ function SandboxContent({
             ? `/books/${bookParam}/topics/${topicParam}`
             : bookParam
               ? `/books/${bookParam}`
-              : "/speaking-history";
+              : "/books";
 
     const handleAnalyze = async () => {
         if (!audioUrl) return;
@@ -267,7 +274,6 @@ function SandboxContent({
                     jp={question.jp}
                     markup={question.markup}
                     vi={question.vi}
-                    viMarkup={question.viMarkup}
                     accent={accent}
                     showFurigana={showFurigana}
                 />

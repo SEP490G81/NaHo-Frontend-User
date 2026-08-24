@@ -90,7 +90,7 @@
                     ],
                     "action": {
                         "label": "Mở Trò chuyện tự do AI",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {
@@ -99,15 +99,10 @@
                     "description": "Biết cách khai thác báo cáo sau mỗi phiên để tiến bộ nhanh hơn.",
                     "duration": "Khoảng 4 phút",
                     "steps": [
-                        "Vào menu tài khoản ở góc trên bên phải và chọn “Lịch sử luyện nói theo sách”.",
-                        "Chọn một phiên đã hoàn thành để mở báo cáo chi tiết.",
+                        "Sau khi luyện nói xong, hệ thống tự động mở báo cáo chi tiết ngay lập tức.",
                         "Đối chiếu câu bạn nói với câu mẫu để tìm âm bị phát sai hoặc nói thiếu.",
                         "Ưu tiên luyện lại những câu có điểm thấp nhất trước khi sang bài mới."
-                    ],
-                    "action": {
-                        "label": "Xem lịch sử luyện nói",
-                        "href": "/speaking-history"
-                    }
+                    ]
                 },
                 {
                     "id": "daily-routine",
@@ -191,7 +186,7 @@
                     ],
                     "link": {
                         "label": "Mở Trò chuyện tự do AI",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {
@@ -208,13 +203,9 @@
                     "categoryId": "speaking-ai",
                     "question": "Tôi xem lại các buổi luyện nói đã hoàn thành ở đâu?",
                     "answer": [
-                        "Mở menu tài khoản ở góc trên bên phải và chọn “Lịch sử luyện nói theo sách”. Danh sách hiển thị các phiên đã hoàn thành kèm thời gian và kết quả.",
-                        "Nhấn vào một phiên bất kỳ để mở báo cáo chi tiết của phiên đó."
-                    ],
-                    "link": {
-                        "label": "Xem lịch sử luyện nói",
-                        "href": "/speaking-history"
-                    }
+                        "Ngay sau khi hoàn thành một lượt luyện nói, hệ thống tự động mở báo cáo chi tiết của lượt đó.",
+                        "Báo cáo gồm điểm số, bản dịch, chi tiết phát âm từng từ để bạn đối chiếu và luyện lại."
+                    ]
                 },
                 {
                     "id": "what-is-lpoint",

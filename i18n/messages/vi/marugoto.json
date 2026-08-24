@@ -81,7 +81,16 @@
             "rewardsHint": "Mở rương phần thưởng",
             "loadingQuestion": "Đang tải câu hỏi...",
             "hoverOpen": "Bấm để xem chi tiết",
-            "hoverRelearn": "Bấm để luyện lại"
+            "hoverRelearn": "Bấm để luyện lại",
+            "activeSessionSection": "Đang diễn ra",
+            "resumeSessionTooltip": "Tiếp tục phiên: \"{text}\"",
+            "deleteSessionTitle": "Xóa phiên hội thoại",
+            "deleteSessionConfirm": "Bạn có chắc chắn muốn xóa phiên hội thoại đang dở này không?",
+            "deleteSessionSuccess": "Đã xóa phiên hội thoại thành công.",
+            "deleteSessionError": "Không thể xóa phiên hội thoại. Vui lòng thử lại.",
+            "deleteSessionButton": "Xóa",
+            "cancelButton": "Hủy",
+            "noUtterance": "Hội thoại đang dở"
         },
         "node": {
             "vocabTitle": "Từ vựng",
@@ -133,7 +142,15 @@
             "learned": "Đã thuộc",
             "finish": "Hoàn thành",
             "done": "Đã hoàn thành",
-            "finishHint": "Lướt hết các thẻ để hoàn thành"
+            "finishHint": "Lướt hết các thẻ để hoàn thành",
+            "recordToCheck": "Ghi âm để kiểm tra",
+            "recordAgain": "Ghi âm lại",
+            "recording": "Đang ghi âm... chạm để dừng",
+            "scoring": "Đang chấm điểm...",
+            "recordPassed": "Đạt {score}/10 — có thể sang từ tiếp theo",
+            "recordFailed": "Được {score}/10 — cần tối thiểu {min}/10, hãy thử lại",
+            "recordError": "Không ghi âm được, hãy thử lại",
+            "recordGateHint": "Ghi âm và đạt tối thiểu {min}/10 để mở khoá từ tiếp theo"
         },
         "sampleAnswer": {
             "title": "Câu trả lời mẫu",
@@ -147,7 +164,10 @@
         "questionDetail": {
             "back": "Quay lại lộ trình",
             "badge": "Chi tiết câu hỏi",
+            "translation": "Bản dịch",
             "practiceNow": "Luyện nói câu này ngay",
+            "historyTitle": "Lịch sử luyện tập câu này ({count})",
+            "historyAttempt": "Lượt {index}",
             "vocab": "Từ vựng",
             "grammar": "Ngữ pháp tiêu biểu",
             "discussion": "Thảo luận & tương tác",

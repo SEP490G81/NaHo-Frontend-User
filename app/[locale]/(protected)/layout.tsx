@@ -8,7 +8,7 @@ import {
     QueryClient,
 } from "@tanstack/react-query";
 import { queryKeys } from "@/libs/query.keys";
-import LearnerSidebar from "@/layouts/sidebar/components/learner.sidebar";
+import Sidebar from "@/layouts/sidebar/components/sidebar";
 import SakuraFalling from "@/components/ui/sakura-falling";
 import JapanBackground from "@/components/ui/japan-background";
 import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
@@ -38,7 +38,7 @@ const ProtectedLayout = async ({
                     <TourUserScope userId={String(user.id)} />
                     <ActiveTours />
                     <div className="relative flex min-h-screen">
-                        <LearnerSidebar />
+                        <Sidebar />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <ProtectedHeader />
                             <div className="bg-bgc-page relative isolate w-full flex-1 p-5">

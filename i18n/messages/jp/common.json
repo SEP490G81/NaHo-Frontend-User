@@ -30,7 +30,7 @@
                 "community-library": "Community Library",
                 "report": "報告・フィードバック",
                 "liveChatroom": "ライブチャットルーム",
-                "dialogueSetup": "AIとの自由会話",
+                "personaSetup": "AIとの自由会話",
                 "dialogueHistory": "AI会話履歴",
                 "speakingResult": "セッションレポート",
                 "leaderboard": "ランキング",
@@ -59,6 +59,28 @@
                 "leaderboard": "ランキング",
                 "comingSoon": "近日公開",
                 "new": "NEW"
+            },
+            "chatroomSidebar": {
+                "newChat": "新しいチャット",
+                "completedSection": "完了済み",
+                "chatSection": "チャット",
+                "noCompletedChats": "完了したチャットはありません",
+                "noActiveChats": "チャットはまだありません",
+                "brandTitle": "NaHo",
+                "untitledChat": "タイトルなしのチャット",
+                "searchPlaceholder": "チャットを検索...",
+                "allSessions": "すべてのチャット",
+                "recentChats": "最近のチャット",
+                "deleteChat": "チャットを削除",
+                "deleteDialog": {
+                    "title": "チャットを削除しますか？",
+                    "description": "このチャットセッションを削除してもよろしいですか？データは復元できません。",
+                    "confirm": "削除",
+                    "cancel": "キャンセル",
+                    "deleting": "削除中...",
+                    "success": "チャットを削除しました。",
+                    "error": "チャットの削除に失敗しました。"
+                }
             },
             "header": {
                 "collapseSidebar": "サイドバーを折りたたむ",

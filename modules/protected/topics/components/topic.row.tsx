@@ -19,8 +19,7 @@ export function TopicRow({ view, bookId, accent }: Props) {
     const lessonCount = topic.lessons.length;
     const locked = view.status === "locked";
     const tone = locked ? "var(--color-text-muted)" : accent;
-    const tourId =
-        view.status === "active" ? "tour-marugoto-topic" : undefined;
+    const tourId = view.status === "active" ? "tour-marugoto-topic" : undefined;
 
     const inner = (
         <>

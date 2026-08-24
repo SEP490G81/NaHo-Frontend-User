@@ -2,19 +2,21 @@
 import React, { useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
-import type { ReportDetail } from "@/data/mockReports";
+import type {
+    AiFeedbackResponse,
+    SpeechAssessmentResponse,
+} from "@/types/responses/speaking.response";
 import TranscriptView from "../features/transcript.view";
 import PronunciationView from "../features/pronunciation.view";
-import AdvancedHintsView from "../features/advanced.hints.view";
 
 interface HistoryDetailTabsProps {
-    report: ReportDetail;
-    showFurigana: boolean;
+    speechAssessment: SpeechAssessmentResponse;
+    aiFeedback: AiFeedbackResponse;
 }
 
 export function HistoryDetailTabs({
-    report,
-    showFurigana,
+    speechAssessment,
+    aiFeedback,
 }: HistoryDetailTabsProps) {
     const t = useTranslations("historyDetail");
     const [tabIndex, setTabIndex] = useState(0);
@@ -47,31 +49,25 @@ export function HistoryDetailTabs({
             >
                 <Tab label={t("tabTranscript")} />
                 <Tab label={t("tabPronunciation")} />
-                <Tab label={t("tabHints")} />
             </Tabs>
 
             <Box className="mt-4">
                 {tabIndex === 0 && (
                     <TranscriptView
-                        transcript={report.userTranscript}
-                        aiSuggestion={report.aiSuggestion}
-                        showFurigana={showFurigana}
+                        transcriptText={speechAssessment.transcriptText ?? ""}
+                        aiFeedback={aiFeedback}
                     />
                 )}
                 {tabIndex === 1 && (
                     <div className="border-bdc-primary bg-bgc-app rounded-2xl border p-5">
                         <PronunciationView
-                            pronunciation={report.pronunciation}
-                            note={report.pronunciationNote}
+                            words={speechAssessment.words ?? []}
+                            fluencyScore={speechAssessment.fluencyScore}
+                            completenessScore={
+                                speechAssessment.completenessScore
+                            }
                         />
                     </div>
-                )}
-                {tabIndex === 2 && (
-                    <AdvancedHintsView
-                        expressions={report.expressions}
-                        itVocab={report.itVocab}
-                        showFurigana={showFurigana}
-                    />
                 )}
             </Box>
         </Box>

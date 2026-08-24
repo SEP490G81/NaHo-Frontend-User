@@ -81,7 +81,16 @@
             "rewardsHint": "Open Reward Chest",
             "loadingQuestion": "Loading question...",
             "hoverOpen": "Click to view detail",
-            "hoverRelearn": "Click to practice again"
+            "hoverRelearn": "Click to practice again",
+            "activeSessionSection": "In Progress",
+            "resumeSessionTooltip": "Resume session: \"{text}\"",
+            "deleteSessionTitle": "Delete Session",
+            "deleteSessionConfirm": "Are you sure you want to delete this ongoing conversation session?",
+            "deleteSessionSuccess": "Session deleted successfully.",
+            "deleteSessionError": "Failed to delete session. Please try again.",
+            "deleteSessionButton": "Delete",
+            "cancelButton": "Cancel",
+            "noUtterance": "Ongoing dialogue"
         },
         "node": {
             "vocabTitle": "Vocabulary",
@@ -133,7 +142,15 @@
             "learned": "Learned",
             "finish": "Finish",
             "done": "Completed",
-            "finishHint": "Go through all cards to finish"
+            "finishHint": "Go through all cards to finish",
+            "recordToCheck": "Record to check",
+            "recordAgain": "Record again",
+            "recording": "Recording... tap to stop",
+            "scoring": "Scoring...",
+            "recordPassed": "Passed {score}/10 — you can move to the next word",
+            "recordFailed": "Scored {score}/10 — need at least {min}/10, try again",
+            "recordError": "Couldn't record, please try again",
+            "recordGateHint": "Record and score at least {min}/10 to unlock the next word"
         },
         "sampleAnswer": {
             "title": "Sample answer",
@@ -147,7 +164,10 @@
         "questionDetail": {
             "back": "Back to path",
             "badge": "Question detail",
+            "translation": "Translation",
             "practiceNow": "Practice this question now",
+            "historyTitle": "Practice history for this question ({count})",
+            "historyAttempt": "Attempt {index}",
             "vocab": "Vocabulary",
             "grammar": "Key grammar",
             "discussion": "Discussion & interaction",
