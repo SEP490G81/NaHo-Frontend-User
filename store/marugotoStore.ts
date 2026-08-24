@@ -18,14 +18,16 @@ interface MarugotoState {
     /** Ghi nhớ lựa chọn hiện furigana giữa các phiên. */
     showFurigana: boolean;
     /**
-     * Vị trí thẻ đang xem + đã ghi âm đạt hết bộ từ vựng chưa, theo từng node
-     * (key = PathNode.id). Đặt ở store (persist) thay vì state cục bộ của dialog
-     * vì dialog có thể bị unmount/remount (VD: TopicRoadmapBody remount do
-     * React Query gc cache khi đổi tab lâu) — state cục bộ sẽ mất, store thì không.
+     * Vị trí thẻ đang xem + ghi âm thẻ CUỐI có đang đạt ngưỡng không (theo lần
+     * ghi âm gần nhất — không kẹt true mãi sau 1 lần đạt rồi ghi âm lại fail),
+     * theo từng node (key = PathNode.id). Đặt ở store (persist) thay vì state
+     * cục bộ của dialog vì dialog có thể bị unmount/remount (VD: TopicRoadmapBody
+     * remount do React Query gc cache khi đổi tab lâu) — state cục bộ sẽ mất,
+     * store thì không.
      */
     vocabDialogProgress: Record<
         string,
-        { cardIndex: number; viewedAll: boolean }
+        { cardIndex: number; lastCardPassed: boolean }
     >;
     setShowFurigana: (v: boolean) => void;
     setActiveBook: (id: string) => void;
@@ -33,7 +35,7 @@ interface MarugotoState {
     markNodeDone: (nodeId: string) => void;
     setVocabDialogProgress: (
         nodeId: string,
-        progress: { cardIndex: number; viewedAll: boolean },
+        patch: Partial<{ cardIndex: number; lastCardPassed: boolean }>,
     ) => void;
     /** Mở rương: đánh dấu hoàn thành + cộng L-Point (chỉ 1 lần). */
     claimChest: (nodeId: string, reward: number) => boolean;
@@ -47,7 +49,7 @@ const EMPTY_PROGRESS = {
     lPoints: 0,
     vocabDialogProgress: {} as Record<
         string,
-        { cardIndex: number; viewedAll: boolean }
+        { cardIndex: number; lastCardPassed: boolean }
     >,
 };
 
@@ -62,13 +64,31 @@ export const useMarugotoStore = create<MarugotoState>()(
             showFurigana: true,
             vocabDialogProgress: {},
             setShowFurigana: (v) => set({ showFurigana: v }),
-            setVocabDialogProgress: (nodeId, progress) =>
-                set((s) => ({
-                    vocabDialogProgress: {
-                        ...s.vocabDialogProgress,
-                        [nodeId]: progress,
-                    },
-                })),
+            // Gộp với progress cũ + bỏ qua nếu giá trị không đổi — nếu luôn tạo
+            // object mới thì selector đọc theo key sẽ đổi reference mỗi lần gọi,
+            // khiến component subscribe re-render dù giá trị y hệt → nếu render
+            // đó lại gọi hàm này (VD effect phụ thuộc callback không stable) sẽ
+            // lặp vô hạn ("Maximum update depth exceeded").
+            setVocabDialogProgress: (nodeId, patch) =>
+                set((s) => {
+                    const prev = s.vocabDialogProgress[nodeId] ?? {
+                        cardIndex: 0,
+                        lastCardPassed: false,
+                    };
+                    const next = { ...prev, ...patch };
+                    if (
+                        next.cardIndex === prev.cardIndex &&
+                        next.lastCardPassed === prev.lastCardPassed
+                    ) {
+                        return s;
+                    }
+                    return {
+                        vocabDialogProgress: {
+                            ...s.vocabDialogProgress,
+                            [nodeId]: next,
+                        },
+                    };
+                }),
             setActiveBook: (id) => set({ activeBookId: id }),
             scopeToUser: (userId) => {
                 if (get().userId === userId) return;
@@ -103,6 +123,9 @@ export const useMarugotoStore = create<MarugotoState>()(
                 return true;
             },
         }),
-        { name: "naho-marugoto-path-v5" },
+        // v7: đổi vocabDialogProgress.viewedAll (cờ 1 chiều, kẹt true mãi) thành
+        // lastCardPassed (phản ánh lần ghi âm gần nhất) — đổi tên key để xóa sạch
+        // dữ liệu cũ thay vì viết migrate cho 1 trường tạm thời.
+        { name: "naho-marugoto-path-v7" },
     ),
 );

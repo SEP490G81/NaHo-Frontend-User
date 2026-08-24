@@ -29,15 +29,20 @@ export function FlashcardDeck({
     showFurigana,
     cardIndex,
     onCardIndexChange,
-    onLastCardPassed,
+    onLastCardPassChange,
 }: {
     vocab: Vocab[];
     showFurigana: boolean;
     /** Vị trí thẻ đang xem — điều khiển từ VocabDialog để còn nguyên khi đóng/mở lại. */
     cardIndex: number;
     onCardIndexChange: (index: number) => void;
-    /** Gọi khi người dùng đã ghi âm ĐẠT ngưỡng ở thẻ cuối (mở nút "Hoàn thành"). */
-    onLastCardPassed?: () => void;
+    /**
+     * Báo mỗi khi trạng thái "đang ở thẻ cuối VÀ ghi âm đạt" đổi (cả true lẫn
+     * false) — không chỉ báo 1 lần lúc đạt. Bắt buộc phải sống (re-check mỗi khi
+     * đổi thẻ/ghi âm lại/mount lại) để "Hoàn thành" luôn phản ánh đúng lần ghi âm
+     * GẦN NHẤT ở thẻ cuối, không bị kẹt true mãi sau 1 lần đạt rồi ghi âm lại fail.
+     */
+    onLastCardPassChange?: (passed: boolean) => void;
 }) {
     const t = useTranslations("marugoto");
     const total = vocab.length;
@@ -52,9 +57,10 @@ export function FlashcardDeck({
         reset: resetPron,
     } = useVocabPronunciation();
 
+    const isLastCardPassed = total > 0 && i >= total - 1 && pronPassed;
     useEffect(() => {
-        if (total > 0 && i >= total - 1 && pronPassed) onLastCardPassed?.();
-    }, [i, total, pronPassed, onLastCardPassed]);
+        onLastCardPassChange?.(isLastCardPassed);
+    }, [isLastCardPassed, onLastCardPassChange]);
 
     // Đổi thẻ → reset kết quả ghi âm của thẻ trước, phải ghi âm lại cho thẻ mới.
     useEffect(() => {
