@@ -1,5 +1,5 @@
-import {FileResponse} from "@/types/responses/file.response";
-import {Gender} from "@/types/enums/user.enum";
+import { FileResponse } from "@/types/responses/file.response";
+import { Gender } from "@/types/enums/user.enum";
 
 /** Thể lịch sự của hội thoại (khớp enum FormalityLevel bên BE). */
 export type FormalityLevel = "INFORMAL" | "NEUTRAL" | "FORMAL";

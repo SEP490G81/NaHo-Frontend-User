@@ -59,8 +59,8 @@ export interface SessionSidebarProps {
     readonly formalityLevel: FormalityLevel;
     readonly speechSpeed: number;
     readonly showSuggestions?: boolean;
-    readonly isLoading?: boolean;
     readonly isEndingSession?: boolean;
+    readonly canEndSession?: boolean;
     readonly onSpeedChange: (speed: number) => void;
     readonly onToggleSuggestions?: (show: boolean) => void;
     readonly onEndSession?: () => void;

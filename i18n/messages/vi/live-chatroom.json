@@ -76,6 +76,8 @@
         "endSessionConfirmDesc": "Bạn có chắc chắn muốn kết thúc phiên trò chuyện này không? AI sẽ tạo báo cáo đánh giá chi tiết về năng lực giao tiếp của bạn.",
         "endSessionSuccess": "Đã kết thúc phiên trò chuyện và tạo báo cáo đánh giá!",
         "confirmEnd": "Kết thúc & Nhận đánh giá",
-        "endingSession": "Đang xử lý..."
+        "endingSession": "Đang xử lý...",
+        "endSessionMinMessagesWarning": "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc để nhận báo cáo đánh giá.",
+        "endSessionMinMessagesError": "Bạn cần gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc phiên trò chuyện."
     }
 }

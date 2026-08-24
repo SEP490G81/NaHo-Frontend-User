@@ -10,7 +10,7 @@ const PersonaGrid = ({
     selectedPersonaId,
     onSelectPersona,
 }: PersonaGridProps) => {
-    const t = useTranslations("dialogueSetup");
+    const t = useTranslations("personaSetup");
 
     if (personas.length === 0) {
         return (

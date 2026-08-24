@@ -76,6 +76,8 @@
         "endSessionConfirmDesc": "この会話セッションを終了してもよろしいですか？AIが詳細な評価レポートを作成します。",
         "endSessionSuccess": "会話セッションを終了し、評価レポートを作成しました！",
         "confirmEnd": "終了して評価を確認",
-        "endingSession": "処理中..."
+        "endingSession": "処理中...",
+        "endSessionMinMessagesWarning": "まだメッセージが送信されていません。評価レポートを受け取るには、終了する前にAIへ少なくとも1つのメッセージを送信してください。",
+        "endSessionMinMessagesError": "セッションを終了する前に、少なくとも1つのメッセージを送信する必要があります。"
     }
 }

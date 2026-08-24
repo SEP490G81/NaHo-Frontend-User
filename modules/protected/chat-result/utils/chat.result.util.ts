@@ -1,7 +1,4 @@
-import {
-    FormalityLevel,
-    MarugotoLevel,
-} from "@/types/enums/speaking.llm.enum";
+import { FormalityLevel, MarugotoLevel } from "@/types/enums/speaking.llm.enum";
 
 export function parseListOrLines(raw?: string | null): string[] {
     if (!raw) return [];

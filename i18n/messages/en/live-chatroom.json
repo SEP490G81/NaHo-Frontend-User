@@ -76,6 +76,8 @@
         "endSessionConfirmDesc": "Are you sure you want to end this conversation session? AI will generate a detailed evaluation report.",
         "endSessionSuccess": "Conversation session ended. Report generated!",
         "confirmEnd": "End & Get Evaluation",
-        "endingSession": "Processing..."
+        "endingSession": "Processing...",
+        "endSessionMinMessagesWarning": "No interaction from you yet. Please send at least 1 message to the AI before ending the session to receive an evaluation report.",
+        "endSessionMinMessagesError": "At least 1 message must be sent before ending the chat session."
     }
 }

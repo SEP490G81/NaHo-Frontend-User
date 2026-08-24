@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import { Button, Divider, Skeleton, Slider, Switch } from "@mui/material";
+import { Button, Divider, Slider, Switch, Tooltip } from "@mui/material";
 import GraphicEqRoundedIcon from "@mui/icons-material/GraphicEqRounded";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import RecordVoiceOverOutlinedIcon from "@mui/icons-material/RecordVoiceOverOutlined";
@@ -29,8 +29,8 @@ const SessionSidebarComponent = ({
     formalityLevel,
     speechSpeed,
     showSuggestions = true,
-    isLoading = false,
     isEndingSession = false,
+    canEndSession = true,
     onSpeedChange,
     onToggleSuggestions,
     onEndSession,
@@ -48,27 +48,7 @@ const SessionSidebarComponent = ({
 
                 {/* Persona Info */}
                 <div className="py-4">
-                    {isLoading ? (
-                        <div className="flex items-center gap-3">
-                            <Skeleton
-                                variant="circular"
-                                width={48}
-                                height={48}
-                            />
-                            <div className="min-w-0 flex-1 space-y-1.5">
-                                <Skeleton
-                                    variant="text"
-                                    width="70%"
-                                    height={18}
-                                />
-                                <Skeleton
-                                    variant="text"
-                                    width="40%"
-                                    height={14}
-                                />
-                            </div>
-                        </div>
-                    ) : persona ? (
+                    {persona ? (
                         <div className="flex items-center gap-3">
                             <PersonaAvatarBadge
                                 name={persona.name}
@@ -107,13 +87,9 @@ const SessionSidebarComponent = ({
                             <SchoolOutlinedIcon sx={{ fontSize: 15 }} />
                             Trình độ:
                         </span>
-                        {isLoading ? (
-                            <Skeleton variant="text" width={60} height={16} />
-                        ) : (
-                            <span className="text-text-contrast font-bold">
-                                {getMarugotoLevelLabel(marugotoLevel)}
-                            </span>
-                        )}
+                        <span className="text-text-contrast font-bold">
+                            {getMarugotoLevelLabel(marugotoLevel)}
+                        </span>
                     </div>
 
                     <div className="flex items-center justify-between">
@@ -123,13 +99,9 @@ const SessionSidebarComponent = ({
                             />
                             Phong cách:
                         </span>
-                        {isLoading ? (
-                            <Skeleton variant="text" width={60} height={16} />
-                        ) : (
-                            <span className="text-text-contrast font-bold">
-                                {getFormalityLevelLabel(formalityLevel)}
-                            </span>
-                        )}
+                        <span className="text-text-contrast font-bold">
+                            {getFormalityLevelLabel(formalityLevel)}
+                        </span>
                     </div>
 
                     {/* Speech Speed Control */}
@@ -149,7 +121,6 @@ const SessionSidebarComponent = ({
                             min={MIN_SPEECH_SPEED}
                             max={MAX_SPEECH_SPEED}
                             step={SPEECH_SPEED_STEP}
-                            disabled={isLoading}
                             onChange={(_, val) =>
                                 onSpeedChange(Array.isArray(val) ? val[0] : val)
                             }
@@ -178,7 +149,6 @@ const SessionSidebarComponent = ({
                             <Switch
                                 size="small"
                                 checked={autoPlayAudio}
-                                disabled={isLoading}
                                 onChange={(e) =>
                                     setAutoPlayAudio(e.target.checked)
                                 }
@@ -215,7 +185,6 @@ const SessionSidebarComponent = ({
                             <Switch
                                 size="small"
                                 checked={showSuggestions}
-                                disabled={isLoading}
                                 onChange={(e) =>
                                     onToggleSuggestions?.(e.target.checked)
                                 }
@@ -237,27 +206,47 @@ const SessionSidebarComponent = ({
 
             {/* End Session Action Button */}
             <div className="border-bdc-primary border-t pt-3">
-                <Button
-                    fullWidth
-                    variant="outlined"
-                    color="error"
-                    disabled={isLoading || isEndingSession}
-                    onClick={onEndSession}
-                    startIcon={<FlagOutlinedIcon sx={{ fontSize: 16 }} />}
-                    sx={{
-                        borderRadius: "10px",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                        py: 1,
-                        borderColor: "rgba(239, 35, 60, 0.4)",
-                        "&:hover": {
-                            backgroundColor: "rgba(239, 35, 60, 0.08)",
-                            borderColor: "var(--color-text-error)",
-                        },
-                    }}
+                <Tooltip
+                    title={
+                        !canEndSession
+                            ? t("endSessionMinMessagesWarning") ||
+                              "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc."
+                            : ""
+                    }
+                    arrow
+                    disableHoverListener={canEndSession}
                 >
-                    {t("endSessionBtn") || "Kết thúc trò chuyện"}
-                </Button>
+                    <span className="block w-full">
+                        <Button
+                            fullWidth
+                            variant="outlined"
+                            color="error"
+                            disabled={isEndingSession || !canEndSession}
+                            onClick={onEndSession}
+                            startIcon={
+                                <FlagOutlinedIcon sx={{ fontSize: 16 }} />
+                            }
+                            sx={{
+                                borderRadius: "10px",
+                                fontSize: "12px",
+                                fontWeight: "bold",
+                                py: 1,
+                                borderColor: "rgba(239, 35, 60, 0.4)",
+                                "&.Mui-disabled": {
+                                    borderColor: "var(--color-bdc-primary)",
+                                    color: "var(--color-text-muted)",
+                                    opacity: 0.6,
+                                },
+                                "&:hover": {
+                                    backgroundColor: "rgba(239, 35, 60, 0.08)",
+                                    borderColor: "var(--color-text-error)",
+                                },
+                            }}
+                        >
+                            {t("endSessionBtn") || "Kết thúc trò chuyện"}
+                        </Button>
+                    </span>
+                </Tooltip>
             </div>
         </div>
     );

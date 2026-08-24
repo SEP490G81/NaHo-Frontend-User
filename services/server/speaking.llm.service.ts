@@ -4,10 +4,7 @@ import { ACCESS_TOKEN_NAME } from "@/constants/app.constants";
 import { cookies } from "next/headers";
 import { ApiResponse } from "@/types/responses/base.response";
 import { SpeakingSessionStatus } from "@/types/enums/speaking.llm.enum";
-import {
-    SpeakingSessionListItemResponse,
-    SpeakingSessionResponse,
-} from "@/types/responses/speaking.llm.response";
+import { SpeakingSessionListItemResponse, SpeakingSessionResponse } from "@/types/responses/speaking.llm.response";
 
 /**
  * Lấy danh sách session theo trạng thái (IN_PROGRESS, COMPLETED) từ Server Side.

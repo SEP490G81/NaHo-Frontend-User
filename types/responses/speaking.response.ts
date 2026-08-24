@@ -1,4 +1,4 @@
-import {FileResponse} from "@/types/responses/file.response";
+import { FileResponse } from "@/types/responses/file.response";
 
 /** Response của POST /analysis (chấm điểm phát âm). */
 export interface SpeakingAnalysisResponse {

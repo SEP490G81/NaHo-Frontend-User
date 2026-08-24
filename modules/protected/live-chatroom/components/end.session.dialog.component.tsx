@@ -2,6 +2,7 @@
 
 import React from "react";
 import {
+    Alert,
     Button,
     CircularProgress,
     Dialog,
@@ -16,6 +17,7 @@ import { useTranslations } from "next-intl";
 interface EndSessionDialogProps {
     readonly open: boolean;
     readonly isEnding: boolean;
+    readonly canEndSession?: boolean;
     readonly onConfirm: () => void;
     readonly onClose: () => void;
 }
@@ -23,6 +25,7 @@ interface EndSessionDialogProps {
 const EndSessionDialogComponent = ({
     open,
     isEnding,
+    canEndSession = true,
     onConfirm,
     onClose,
 }: EndSessionDialogProps) => {
@@ -52,11 +55,25 @@ const EndSessionDialogComponent = ({
                 {t("endSessionConfirmTitle") || "Kết thúc phiên trò chuyện"}
             </DialogTitle>
 
-            <DialogContent>
+            <DialogContent className="space-y-3">
                 <DialogContentText className="text-text-muted text-xs leading-relaxed">
                     {t("endSessionConfirmDesc") ||
                         "Bạn có chắc chắn muốn kết thúc phiên trò chuyện này không? AI sẽ tạo báo cáo đánh giá chi tiết về năng lực giao tiếp của bạn."}
                 </DialogContentText>
+
+                {!canEndSession && (
+                    <Alert
+                        severity="warning"
+                        sx={{
+                            fontSize: "12px",
+                            borderRadius: "10px",
+                            padding: "6px 12px",
+                        }}
+                    >
+                        {t("endSessionMinMessagesWarning") ||
+                            "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc để nhận báo cáo đánh giá."}
+                    </Alert>
+                )}
             </DialogContent>
 
             <DialogActions className="p-4 pt-2">
@@ -74,7 +91,7 @@ const EndSessionDialogComponent = ({
                 </Button>
                 <Button
                     onClick={onConfirm}
-                    disabled={isEnding}
+                    disabled={isEnding || !canEndSession}
                     variant="contained"
                     color="error"
                     startIcon={

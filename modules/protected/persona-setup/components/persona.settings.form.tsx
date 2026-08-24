@@ -14,7 +14,9 @@ import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import RecordVoiceOverOutlinedIcon from "@mui/icons-material/RecordVoiceOverOutlined";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
+import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import { useTranslations } from "next-intl";
+import { useChatStore } from "@/store/chatStore";
 import {
     FormalityLevel,
     MarugotoLevel,
@@ -47,7 +49,9 @@ const PersonaSettingsForm = ({
     onSampleAnswersChange,
     onResetDefaults,
 }: PersonaSettingsFormProps) => {
-    const t = useTranslations("dialogueSetup");
+    const t = useTranslations("personaSetup");
+    const autoPlayAudio = useChatStore((s) => s.autoPlayAudio);
+    const setAutoPlayAudio = useChatStore((s) => s.setAutoPlayAudio);
 
     const defaultMarugoto =
         selectedPersona?.defaultMarugotoLevel ||
@@ -91,9 +95,9 @@ const PersonaSettingsForm = ({
                 )}
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
                 {/* Select 1: Marugoto Level */}
-                <FormControl fullWidth size="small">
+                <FormControl fullWidth size="small" className="h-full">
                     <InputLabel id="marugoto-level-label">
                         <span className="flex items-center gap-1.5 font-semibold">
                             <SchoolOutlinedIcon sx={{ fontSize: 16 }} />
@@ -109,7 +113,7 @@ const PersonaSettingsForm = ({
                                 e.target.value as MarugotoLevel,
                             )
                         }
-                        sx={{ borderRadius: "12px" }}
+                        sx={{ borderRadius: "12px", height: "100%" }}
                     >
                         {MARUGOTO_LEVEL_OPTIONS.map((opt) => (
                             <MenuItem key={opt.value} value={opt.value}>
@@ -125,7 +129,7 @@ const PersonaSettingsForm = ({
                 </FormControl>
 
                 {/* Select 2: Formality Level */}
-                <FormControl fullWidth size="small">
+                <FormControl fullWidth size="small" className="h-full">
                     <InputLabel id="formality-level-label">
                         <span className="flex items-center gap-1.5 font-semibold">
                             <RecordVoiceOverOutlinedIcon
@@ -138,12 +142,17 @@ const PersonaSettingsForm = ({
                         labelId="formality-level-label"
                         value={formalityLevel}
                         label={t("styleLabel")}
+                        renderValue={(selected) =>
+                            FORMALITY_LEVEL_OPTIONS.find(
+                                (o) => o.value === selected,
+                            )?.label
+                        }
                         onChange={(e) =>
                             onFormalityLevelChange(
                                 e.target.value as FormalityLevel,
                             )
                         }
-                        sx={{ borderRadius: "12px" }}
+                        sx={{ borderRadius: "12px", height: "100%" }}
                     >
                         {FORMALITY_LEVEL_OPTIONS.map((opt) => (
                             <MenuItem key={opt.value} value={opt.value}>
@@ -190,32 +199,72 @@ const PersonaSettingsForm = ({
                 </div>
             </div>
 
-            {/* Switch: Sample answers toggle */}
-            <div className="bg-hbgc-app/60 border-bdc-primary flex items-center justify-between rounded-xl border p-4">
-                <div className="flex min-w-0 items-start gap-3 pr-2">
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                        <LightbulbOutlinedIcon sx={{ fontSize: 18 }} />
+            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
+                {/* Switch: Sample answers toggle */}
+                <div className="bg-hbgc-app/60 border-bdc-primary flex h-full items-center justify-between rounded-xl border p-4">
+                    <div className="flex min-w-0 items-start gap-3 pr-2">
+                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                            <LightbulbOutlinedIcon sx={{ fontSize: 18 }} />
+                        </div>
+                        <div>
+                            <h4 className="text-text-contrast text-sm font-bold">
+                                {t("hintsTitle")}
+                            </h4>
+                            <p className="text-text-muted mt-0.5 text-xs leading-relaxed">
+                                {t("hintsDesc")}
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h4 className="text-text-contrast text-sm font-bold">
-                            {t("hintsTitle")}
-                        </h4>
-                        <p className="text-text-muted mt-0.5 text-xs leading-relaxed">
-                            {t("hintsDesc")}
-                        </p>
-                    </div>
+                    <Switch
+                        checked={showSampleAnswers}
+                        onChange={(e) =>
+                            onSampleAnswersChange(e.target.checked)
+                        }
+                        sx={{
+                            "& .MuiSwitch-switchBase.Mui-checked": {
+                                color: "var(--color-bgc-highlight)",
+                            },
+                            "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                {
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
+                                },
+                        }}
+                    />
                 </div>
-                <Switch
-                    checked={showSampleAnswers}
-                    onChange={(e) => onSampleAnswersChange(e.target.checked)}
-                    sx={{
-                        "& .MuiSwitch-switchBase.Mui-checked": {
-                            color: "var(--color-bgc-highlight)",
-                        },
-                        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
-                            { backgroundColor: "var(--color-bgc-highlight)" },
-                    }}
-                />
+
+                {/* Switch: AI Audio Playback setting */}
+                <div className="bg-hbgc-app/60 border-bdc-primary flex h-full items-center justify-between rounded-xl border p-4">
+                    <div className="flex min-w-0 items-start gap-3 pr-2">
+                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400">
+                            <VolumeUpOutlinedIcon sx={{ fontSize: 18 }} />
+                        </div>
+                        <div>
+                            <h4 className="text-text-contrast text-sm font-bold">
+                                {t("aiAudioTitle")}
+                            </h4>
+                            <p className="text-text-muted mt-0.5 text-xs leading-relaxed">
+                                {autoPlayAudio
+                                    ? t("aiAudioAutoPlayDesc")
+                                    : t("aiAudioManualDesc")}
+                            </p>
+                        </div>
+                    </div>
+                    <Switch
+                        checked={autoPlayAudio}
+                        onChange={(e) => setAutoPlayAudio(e.target.checked)}
+                        sx={{
+                            "& .MuiSwitch-switchBase.Mui-checked": {
+                                color: "var(--color-bgc-highlight)",
+                            },
+                            "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
+                                {
+                                    backgroundColor:
+                                        "var(--color-bgc-highlight)",
+                                },
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { ApiResponse, ProblemDetail, ProblemDetailResponse } from "@/types/responses/base.response";
 import { ChatSessionMessageRequest, StartConversationRequest } from "@/types/requests/speaking.llm.request";
 import {
     ChatResponse,
@@ -31,11 +31,27 @@ export async function startConversation(
     }
 
     if (!response.ok) {
+        const problem = result as ProblemDetail &
+            ProblemDetailResponse & {
+                detail?: string;
+                message?: string;
+                title?: string;
+            };
+        const errorCode = problem?.errorCode || (result as any)?.code || "";
         const errorDetail =
-            result?.detail ||
-            result?.title ||
+            problem?.detail ||
+            problem?.message ||
+            problem?.title ||
             "Không thể bắt đầu phiên trò chuyện với AI.";
-        throw new Error(errorDetail);
+        const err = new Error(errorDetail) as Error & {
+            errorCode?: string;
+            problem?: ProblemDetailResponse;
+        };
+        if (errorCode) {
+            err.errorCode = errorCode;
+        }
+        err.problem = problem;
+        throw err;
     }
 
     if (typeof result === "string") {
@@ -60,14 +76,29 @@ export async function sendTextMessage(
     const result = await response.json();
 
     if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
+        const problem = result as ProblemDetail &
+            ProblemDetailResponse & {
+                detail?: string;
+                message?: string;
+                title?: string;
+            };
+        const errorCode =
+            problem?.errorCode || (result as any)?.code || problem?.title;
         const err = new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
+            problem?.detail ||
+                problem?.message ||
+                problem?.title ||
                 "Không thể gửi tin nhắn.",
-        );
-        (err as any).errorCode = (result as any)?.code || problemDetail?.title;
-        (err as any).status = response.status;
+        ) as Error & {
+            errorCode?: string;
+            status?: number;
+            problem?: ProblemDetailResponse;
+        };
+        if (errorCode) {
+            err.errorCode = errorCode;
+        }
+        err.status = response.status;
+        err.problem = problem;
         throw err;
     }
 
@@ -100,14 +131,29 @@ export async function sendAudioMessage(
     const result = await response.json();
 
     if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
+        const problem = result as ProblemDetail &
+            ProblemDetailResponse & {
+                detail?: string;
+                message?: string;
+                title?: string;
+            };
+        const errorCode =
+            problem?.errorCode || (result as any)?.code || problem?.title;
         const err = new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
+            problem?.detail ||
+                problem?.message ||
+                problem?.title ||
                 "Không thể gửi file âm thanh.",
-        );
-        (err as any).errorCode = (result as any)?.code || problemDetail?.title;
-        (err as any).status = response.status;
+        ) as Error & {
+            errorCode?: string;
+            status?: number;
+            problem?: ProblemDetailResponse;
+        };
+        if (errorCode) {
+            err.errorCode = errorCode;
+        }
+        err.status = response.status;
+        err.problem = problem;
         throw err;
     }
 
@@ -157,11 +203,27 @@ export async function endSpeakingSession(
 
     const result = await response.json();
     if (!response.ok) {
-        throw new Error(
-            result?.detail ||
-                result?.message ||
-                "Không thể kết thúc phiên hội thoại.",
-        );
+        const problem = result as ProblemDetail &
+            ProblemDetailResponse & {
+                detail?: string;
+                message?: string;
+                title?: string;
+            };
+        const errorCode = problem?.errorCode || (result as any)?.code || "";
+        const errorMsg =
+            problem?.detail ||
+            problem?.message ||
+            problem?.title ||
+            "Không thể kết thúc phiên hội thoại.";
+        const err = new Error(errorMsg) as Error & {
+            errorCode?: string;
+            problem?: ProblemDetailResponse;
+        };
+        if (errorCode) {
+            err.errorCode = errorCode;
+        }
+        err.problem = problem;
+        throw err;
     }
 
     return ((result as ApiResponse<SpeakingSessionAssessmentResponse>).data ??

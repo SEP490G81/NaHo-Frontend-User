@@ -1,5 +1,5 @@
 "use client";
-import {hashAnchorId, useHashAnchor} from "@/hooks/use.hash.anchor";
+import { hashAnchorId, useHashAnchor } from "@/hooks/use.hash.anchor";
 
 /** BE gửi targetUrl của thông báo report dạng "/reports#report-<id>". */
 const REPORT_ANCHOR_PREFIX = "report";

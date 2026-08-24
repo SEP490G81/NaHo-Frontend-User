@@ -18,11 +18,11 @@ export async function generateMetadata({
     });
 
     return {
-        title: t("dialogueSetup"),
+        title: t("personaSetup"),
     };
 }
 
-const DialogueSetupPage = async () => {
+const PersonaSetupPage = async () => {
     const personas = await getAllPersonasServer();
 
     return (
@@ -32,4 +32,4 @@ const DialogueSetupPage = async () => {
     );
 };
 
-export default DialogueSetupPage;
+export default PersonaSetupPage;

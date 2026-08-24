@@ -90,7 +90,7 @@
                     ],
                     "action": {
                         "label": "Open free AI dialogue",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {
@@ -191,7 +191,7 @@
                     ],
                     "link": {
                         "label": "Open free AI dialogue",
-                        "href": "/dialogue-setup"
+                        "href": "/persona-setup"
                     }
                 },
                 {

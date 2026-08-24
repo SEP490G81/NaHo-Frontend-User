@@ -1,5 +1,5 @@
 {
-    "dialogueSetup": {
+    "personaSetup": {
         "brand": "Sakura Speak · AI Studio",
         "title": "Trò chuyện tự do AI",
         "subtitle": "Chọn bạn đồng hành và điều chỉnh cài đặt ngữ cảnh để có trải nghiệm luyện nói tốt nhất.",
@@ -68,11 +68,16 @@
         "quotaRemainingMsg": "Hôm nay bạn còn {remaining}/{limit} lượt trò chuyện với AI.",
         "quotaUpgradeBtn": "Nâng cấp gói",
         "concurrentLimitExceeded": "Đã đạt tối đa {max} phiên đang dở",
-        "concurrentLimitExceededMsg": "Bạn đang có {count}/{max} phiên trò chuyện chưa hoàn thành. Vui lòng hoàn thành hoặc kết thúc phiên cũ trước khi tạo phiên mới.",
+        "concurrentLimitExceededMsg": "Bạn đang có {count}/{max} phiên trò chuyện chưa hoàn thành. Vui lòng kết thúc phiên cũ trước khi tạo phiên mới.",
         "activeSessionsCount": "Phiên đang dở: {count}/{max}",
         "currentPlanBadge": "Gói: {name}",
         "companionUnavailable": "Nhân vật này chưa được thiết lập trên máy chủ.",
         "toastStartSuccess": "Đã lưu cài đặt. Bắt đầu trò chuyện!",
-        "companionLevel": "Trình độ: {level}"
+        "companionLevel": "Trình độ: {level}",
+        "aiAudioTitle": "Tự động phát âm thanh AI",
+        "aiAudioAutoPlayDesc": "Tự động phát âm thanh khi AI gửi tin nhắn trả lời.",
+        "aiAudioManualDesc": "Chỉ phát âm thanh khi bấm nút Play thủ công.",
+        "autoMode": "Tự động",
+        "manualMode": "Thủ công"
     }
 }

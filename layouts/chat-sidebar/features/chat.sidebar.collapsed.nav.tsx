@@ -21,14 +21,6 @@ const ChatSidebarCollapsedNav = ({
 
     const isPopoverOpen = Boolean(anchorEl);
 
-    const isCurrentActive =
-        inProgressSessions.some((s) =>
-            currentPathname.includes(s.sessionCode),
-        ) ||
-        completedProgressSessions.some((s) =>
-            currentPathname.includes(s.sessionCode),
-        );
-
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -48,10 +40,7 @@ const ChatSidebarCollapsedNav = ({
                     onClick={handleClick}
                     aria-label={t("chatSection")}
                     className={cn(
-                        "group relative flex h-11 w-11 items-center justify-center rounded-xl border transition-all duration-200",
-                        isPopoverOpen || isCurrentActive
-                            ? "bg-bgc-highlight border-bgc-highlight shadow-bgc-highlight/30 text-white shadow-md"
-                            : "text-text-contrast hover:bg-hbgc-app hover:text-text-highlight border-bdc-primary bg-bgc-app",
+                        "group relative flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-200",
                     )}
                 >
                     <Badge

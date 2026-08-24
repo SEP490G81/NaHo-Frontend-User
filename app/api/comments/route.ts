@@ -1,4 +1,4 @@
-import {proxyBodyJson, proxyGet} from "@/services/server/backend.proxy";
+import { proxyBodyJson, proxyGet } from "@/services/server/backend.proxy";
 
 /** Danh sách comment (dạng cây) của một câu hỏi nói: ?speakingQuestionId= */
 export async function GET(request: Request) {

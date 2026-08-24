@@ -39,7 +39,7 @@ export function SessionReport() {
     const reset = useChatStore((s) => s.reset);
 
     useEffect(() => {
-        if (!report) router.replace("/dialogue-setup");
+        if (!report) router.replace("/persona-setup");
     }, [report, router]);
 
     if (!report) return null;
@@ -51,7 +51,7 @@ export function SessionReport() {
 
     const handleRetry = () => {
         reset();
-        router.push("/dialogue-setup");
+        router.push("/persona-setup");
     };
 
     return (

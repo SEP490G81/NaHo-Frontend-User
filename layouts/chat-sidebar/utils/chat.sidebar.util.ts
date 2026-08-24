@@ -1,4 +1,4 @@
-import {CHAT_RESULT_ROUTE_PREFIX, CHAT_SESSION_ROUTE_PREFIX,} from "../constants/chat.sidebar.constant";
+import { CHAT_RESULT_ROUTE_PREFIX, CHAT_SESSION_ROUTE_PREFIX } from "../constants/chat.sidebar.constant";
 
 /**
  * Format thời gian bắt đầu của session một cách thân thiện.

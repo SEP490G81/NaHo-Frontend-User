@@ -10,7 +10,7 @@ import PersonaSummaryCard from "../components/persona.summary.card";
 import ContainerBox from "@/components/ui/container.box";
 
 const PersonaSetupView = ({ personas = [] }: PersonaSetupViewProps) => {
-    const t = useTranslations("dialogueSetup");
+    const t = useTranslations("personaSetup");
     const {
         selectedPersona,
         marugotoLevel,

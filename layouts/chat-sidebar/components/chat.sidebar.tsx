@@ -8,6 +8,7 @@ import { useUiStore } from "@/store/uiStore";
 import UserAvatar from "@/layouts/sidebar/components/user.avatar";
 import { SpeakingSessionListItemResponse } from "@/types/responses/speaking.llm.response";
 import { getSpeakingSessionsByStatus } from "@/services/client/speaking.llm.service";
+import { SpeakingSessionStatus } from "@/types/enums/speaking.llm.enum";
 import { ChatSidebarProps } from "../types/chat.sidebar.type";
 import {
     CHAT_DRAWER_COLLAPSED_WIDTH,
@@ -40,33 +41,27 @@ export function ChatSidebar({
         SpeakingSessionListItemResponse[]
     >(completedProgressSessions);
 
-    // Sync initial props when layout re-renders
-    useEffect(() => {
-        if (inProgressSessions.length > 0)
-            setInProgressList(inProgressSessions);
-        if (completedProgressSessions.length > 0)
-            setCompletedList(completedProgressSessions);
-    }, [inProgressSessions, completedProgressSessions]);
-
-    // Client-side dynamic refresh for real-time sidebar session updates
-    const refreshSessions = useCallback(async () => {
+    const refetchSessions = useCallback(async () => {
         try {
             const [inProg, comp] = await Promise.all([
-                getSpeakingSessionsByStatus("IN_PROGRESS"),
-                getSpeakingSessionsByStatus("COMPLETED"),
+                getSpeakingSessionsByStatus(SpeakingSessionStatus.IN_PROGRESS),
+                getSpeakingSessionsByStatus(SpeakingSessionStatus.COMPLETED),
             ]);
             setInProgressList(inProg);
             setCompletedList(comp);
-        } catch {
-            // ignore fetch errors
+        } catch (e) {
+            console.error("Failed to refetch sidebar chat sessions:", e);
         }
     }, []);
 
     useEffect(() => {
-        refreshSessions();
+        setInProgressList(inProgressSessions);
+        setCompletedList(completedProgressSessions);
+    }, [inProgressSessions, completedProgressSessions]);
 
+    useEffect(() => {
         const handleRefresh = () => {
-            refreshSessions();
+            void refetchSessions();
         };
 
         if (typeof window !== "undefined") {
@@ -81,7 +76,7 @@ export function ChatSidebar({
                 );
             }
         };
-    }, [pathname, refreshSessions]);
+    }, [refetchSessions]);
 
     const renderDrawerContent = (isCollapsed: boolean) => (
         <div className="flex h-full flex-col justify-between overflow-hidden">

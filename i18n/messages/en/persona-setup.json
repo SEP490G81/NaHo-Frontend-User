@@ -1,5 +1,5 @@
 {
-    "dialogueSetup": {
+    "personaSetup": {
         "brand": "Sakura Speak · AI Studio",
         "title": "Free AI Conversation",
         "subtitle": "Choose your AI companion and adjust context settings for the best speaking experience.",
@@ -68,11 +68,16 @@
         "quotaRemainingMsg": "{remaining}/{limit} AI sessions left today.",
         "quotaUpgradeBtn": "Upgrade plan",
         "concurrentLimitExceeded": "Maximum {max} active sessions reached",
-        "concurrentLimitExceededMsg": "You currently have {count}/{max} in-progress session(s). Please finish or end active sessions before creating a new one.",
+        "concurrentLimitExceededMsg": "You currently have {count}/{max} in-progress session(s). Please end active sessions before creating a new one.",
         "activeSessionsCount": "Active sessions: {count}/{max}",
         "currentPlanBadge": "Plan: {name}",
         "companionUnavailable": "This persona hasn't been set up on the server yet.",
         "toastStartSuccess": "Settings saved. Start chatting!",
-        "companionLevel": "Level: {level}"
+        "companionLevel": "Level: {level}",
+        "aiAudioTitle": "Auto-play AI Audio",
+        "aiAudioAutoPlayDesc": "Automatically play audio when AI replies.",
+        "aiAudioManualDesc": "Play audio manually by clicking the play button.",
+        "autoMode": "Auto",
+        "manualMode": "Manual"
     }
 }

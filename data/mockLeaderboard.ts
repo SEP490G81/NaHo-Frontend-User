@@ -1,4 +1,4 @@
-import {LeaderboardEntry, LeagueResponse, UserLearningProgressResponse} from "@/types/responses/league.response";
+import { LeaderboardEntry, LeagueResponse, UserLearningProgressResponse } from "@/types/responses/league.response";
 
 /** Khớp seed V4__leagues_data.sql của BE. */
 export const mockLeagues: LeagueResponse[] = [

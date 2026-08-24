@@ -23,8 +23,7 @@ const ResultPersonaCardComponent = ({ session }: ResultPersonaCardProps) => {
     const [imageError, setImageError] = useState(false);
     const persona = session.persona;
     const personaName = persona?.name || "Bạn đồng hành AI";
-    const avatarUrl =
-        persona?.avatarFile?.accessUrl || persona?.avatarFile?.fileUrl;
+    const avatarUrl = persona?.avatarFile?.accessUrl;
     const initialLetter = getInitialLetter(personaName);
     const gradient = getAvatarGradient(personaName);
 
@@ -70,7 +69,9 @@ const ResultPersonaCardComponent = ({ session }: ResultPersonaCardProps) => {
                             </h3>
                             {persona?.voiceName && (
                                 <span className="border-bdc-primary bg-bgc-secondary text-text-muted inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-medium">
-                                    <GraphicEqRoundedIcon sx={{ fontSize: 13 }} />
+                                    <GraphicEqRoundedIcon
+                                        sx={{ fontSize: 13 }}
+                                    />
                                     {persona.voiceName}
                                 </span>
                             )}
@@ -113,7 +114,8 @@ const ResultPersonaCardComponent = ({ session }: ResultPersonaCardProps) => {
                                 fontSize: "11px",
                                 fontWeight: 700,
                                 borderRadius: "8px",
-                                backgroundColor: "var(--color-bgc-highlight)/15",
+                                backgroundColor:
+                                    "var(--color-bgc-highlight)/15",
                                 color: "var(--color-text-highlight)",
                                 "& .MuiChip-icon": {
                                     color: "var(--color-text-highlight)",
@@ -131,7 +133,9 @@ const ResultPersonaCardComponent = ({ session }: ResultPersonaCardProps) => {
                                     sx={{ fontSize: 15 }}
                                 />
                             }
-                            label={getFormalityLevelLabel(session.formalityLevel)}
+                            label={getFormalityLevelLabel(
+                                session.formalityLevel,
+                            )}
                             size="small"
                             sx={{
                                 height: 26,
@@ -152,7 +156,9 @@ const ResultPersonaCardComponent = ({ session }: ResultPersonaCardProps) => {
                     {typeof session.totalTurns === "number" && (
                         <Tooltip title="Tổng số lượt trao đổi" arrow>
                             <Chip
-                                icon={<ForumOutlinedIcon sx={{ fontSize: 14 }} />}
+                                icon={
+                                    <ForumOutlinedIcon sx={{ fontSize: 14 }} />
+                                }
                                 label={`${session.totalTurns} lượt`}
                                 size="small"
                                 sx={{

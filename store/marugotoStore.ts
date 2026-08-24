@@ -1,6 +1,6 @@
-import {create} from "zustand";
-import {persist} from "zustand/middleware";
-import {CURRENT_BOOK_ID} from "@/data/marugoto/books";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { CURRENT_BOOK_ID } from "@/data/marugoto/books";
 
 /** Điểm tối thiểu để một câu hỏi được tính là "đạt" (đồng bộ với BE). */
 export const PASS_SCORE = 7.5;

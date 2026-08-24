@@ -36,12 +36,12 @@ export const PersonaSetupProvider = ({
     readonly initialPersonas?: PersonaResponse[];
     readonly children: React.ReactNode;
 }) => {
-    const t = useTranslations("dialogueSetup");
+    const t = useTranslations("personaSetup");
     const router = useRouter();
 
     const [selectedPersona, setSelectedPersonaState] =
-        useState<PersonaResponse | null>(
-            () => (initialPersonas.length > 0 ? initialPersonas[0] : null),
+        useState<PersonaResponse | null>(() =>
+            initialPersonas.length > 0 ? initialPersonas[0] : null,
         );
     const [marugotoLevel, setMarugotoLevel] = useState<MarugotoLevel>(
         () =>
@@ -107,7 +107,10 @@ export const PersonaSetupProvider = ({
 
         return () => {
             if (typeof window !== "undefined") {
-                window.removeEventListener("refresh-chat-sessions", handleRefresh);
+                window.removeEventListener(
+                    "refresh-chat-sessions",
+                    handleRefresh,
+                );
             }
         };
     }, [refreshUsage]);

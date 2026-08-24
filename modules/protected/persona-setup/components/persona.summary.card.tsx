@@ -17,11 +17,13 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import RecordVoiceOverOutlinedIcon from "@mui/icons-material/RecordVoiceOverOutlined";
 import SpeedRoundedIcon from "@mui/icons-material/SpeedRounded";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import HourglassEmptyRoundedIcon from "@mui/icons-material/HourglassEmptyRounded";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { useChatStore } from "@/store/chatStore";
 import { PersonaSummaryCardProps } from "../types/persona.setup.type";
 import PersonaAvatarBadge from "./persona.avatar.badge";
 import {
@@ -46,7 +48,8 @@ const PersonaSummaryCard = ({
     isLoadingUsage = false,
     onStartChat,
 }: PersonaSummaryCardProps) => {
-    const t = useTranslations("dialogueSetup");
+    const t = useTranslations("personaSetup");
+    const autoPlayAudio = useChatStore((s) => s.autoPlayAudio);
     const remainingDaily = Math.max(0, dailyLimit - dailyUsed);
     const usagePercent = Math.min(
         100,
@@ -166,6 +169,22 @@ const PersonaSummaryCard = ({
                         }
                     >
                         {showSampleAnswers ? "Bật" : "Tắt"}
+                    </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                    <span className="text-text-muted flex items-center gap-1.5">
+                        <VolumeUpOutlinedIcon sx={{ fontSize: 15 }} />
+                        {t("aiAudioTitle")}
+                    </span>
+                    <span
+                        className={
+                            autoPlayAudio
+                                ? "font-bold text-sky-600 dark:text-sky-400"
+                                : "text-text-muted font-medium"
+                        }
+                    >
+                        {autoPlayAudio ? t("autoMode") : t("manualMode")}
                     </span>
                 </div>
             </div>

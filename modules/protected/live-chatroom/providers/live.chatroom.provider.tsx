@@ -13,6 +13,7 @@ import {
     sendAudioMessage as sendAudioMessageApi,
     sendTextMessage as sendTextMessageApi,
 } from "@/services/client/speaking.llm.service";
+import { useQueryClient } from "@tanstack/react-query";
 import {
     ChatMessageItem,
     LiveChatroomContextType,
@@ -59,6 +60,7 @@ export const LiveChatroomProvider = ({
 }: LiveChatroomProviderProps) => {
     const t = useTranslations("liveChatroom");
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     const sessionDetails = initialSessionDetails || null;
     const personaInfo = initialSessionDetails?.persona || null;
@@ -79,19 +81,46 @@ export const LiveChatroomProvider = ({
     const [isEndingSession, setIsEndingSession] = useState<boolean>(false);
 
     const endChatSession = async () => {
+        if (messages.length <= 1) {
+            toast.warning(
+                t("endSessionMinMessagesWarning") ||
+                    "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc để nhận báo cáo đánh giá.",
+            );
+            return;
+        }
+
         try {
             setIsEndingSession(true);
             await endSpeakingSession(sessionCode);
+
+            // làm mới cache streak và nhiệm vụ hàng ngày ở header
+            await Promise.all([
+                queryClient.invalidateQueries({
+                    queryKey: ["user-learning-progress"],
+                }),
+                queryClient.invalidateQueries({
+                    queryKey: ["user-daily-missions"],
+                }),
+            ]);
+
             if (typeof window !== "undefined") {
                 window.dispatchEvent(new CustomEvent("refresh-chat-sessions"));
+                window.dispatchEvent(new CustomEvent("refresh-daily-missions"));
             }
             router.refresh();
             router.push(`/chat-result/${sessionCode}`);
         } catch (err: unknown) {
-            const errorMsg =
-                err instanceof Error
-                    ? err.message
-                    : "Không thể kết thúc phiên hội thoại.";
+            const errObj = err as { message?: string; errorCode?: string };
+            let errorMsg =
+                errObj?.message || "Không thể kết thúc phiên hội thoại.";
+            if (
+                errObj?.errorCode === "LLM_A005" ||
+                errorMsg.includes("LLM_A005")
+            ) {
+                errorMsg =
+                    t("endSessionMinMessagesError") ||
+                    "Bạn cần gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc phiên trò chuyện.";
+            }
             toast.error(errorMsg);
         } finally {
             setIsEndingSession(false);

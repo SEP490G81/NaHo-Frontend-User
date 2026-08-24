@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import { ArrowLeft } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@/i18n/navigation";
 import { ChatResultProps } from "../types/chat.result.type";
 import ResultPersonaCardComponent from "../components/result.persona.card.component";
@@ -14,6 +15,16 @@ import ResultStudyRecommendationComponent from "../components/result.study.recom
 
 const ChatResultView = ({ session }: ChatResultProps) => {
     const assessment = session.speakingSessionAssessment;
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        queryClient.invalidateQueries({
+            queryKey: ["user-learning-progress"],
+        });
+        queryClient.invalidateQueries({
+            queryKey: ["user-daily-missions"],
+        });
+    }, [queryClient]);
 
     return (
         <div className="mx-auto max-w-5xl space-y-6 pb-12">

@@ -4,10 +4,10 @@ import type {
     LessonDetailResponse,
     LessonListItemResponse,
     ObjectiveListItemResponse,
-    TopicListItemResponse,
+    TopicListItemResponse
 } from "@/types/responses/book.response";
-import type {LearningPathNodeListItemResponse} from "@/types/responses/learning.response";
-import type {BookTopic, CanDo, Lesson, MarugotoBook} from "./types";
+import type { LearningPathNodeListItemResponse } from "@/types/responses/learning.response";
+import type { BookTopic, CanDo, Lesson, MarugotoBook } from "./types";
 
 /** Tách markup "[漢字](かな)…" thành text gốc và chuỗi đọc (reading) tương ứng. */
 export function splitMarkup(markup: string): { text: string; reading: string } {

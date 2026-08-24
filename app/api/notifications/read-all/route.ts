@@ -1,5 +1,5 @@
-import {NextRequest} from "next/server";
-import {proxyBodyJson} from "@/services/server/backend.proxy";
+import { NextRequest } from "next/server";
+import { proxyBodyJson } from "@/services/server/backend.proxy";
 
 /** Đánh dấu tất cả thông báo là đã đọc. */
 export async function PATCH(req: NextRequest) {

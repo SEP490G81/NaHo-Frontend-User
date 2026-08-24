@@ -1,5 +1,5 @@
 {
-    "dialogueSetup": {
+    "personaSetup": {
         "brand": "Sakura Speak · AI Studio",
         "title": "AIとの自由会話",
         "subtitle": "話す練習を最適化するために、AIの話し相手を選択し、設定を調整してください。",
@@ -73,6 +73,11 @@
         "currentPlanBadge": "プラン：{name}",
         "companionUnavailable": "このペルソナはサーバーにまだ設定されていません。",
         "toastStartSuccess": "設定を保存しました。会話を開始します！",
-        "companionLevel": "レベル：{level}"
+        "companionLevel": "レベル：{level}",
+        "aiAudioTitle": "AI音声の自動再生",
+        "aiAudioAutoPlayDesc": "AI返信時に音声メッセージを自動再生します。",
+        "aiAudioManualDesc": "手動で再生ボタンを押して再生します。",
+        "autoMode": "自動",
+        "manualMode": "手動"
     }
 }
