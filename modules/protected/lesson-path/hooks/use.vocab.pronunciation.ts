@@ -2,7 +2,7 @@
 import { useCallback, useRef, useState } from "react";
 import { blobToWav } from "@/modules/protected/sandbox/utils/wav.encoder";
 import { assessPronunciation } from "@/services/client/speaking.service";
-import { PASS_SCORE } from "@/store/marugotoStore";
+import { VOCAB_PASS_SCORE } from "@/store/marugotoStore";
 
 export type VocabRecordStatus =
     | "idle"
@@ -13,15 +13,15 @@ export type VocabRecordStatus =
 
 /**
  * Ghi âm + chấm điểm phát âm 1 từ vựng (POST /speaking/assessment, không gắn
- * câu hỏi nói cụ thể). Điểm trả về thang 0-10 — dùng chung ngưỡng PASS_SCORE
- * với luyện nói câu hỏi để nhất quán toàn app.
+ * câu hỏi nói cụ thể). Điểm trả về thang 0-10 — ngưỡng đạt VOCAB_PASS_SCORE
+ * (5) thấp hơn PASS_SCORE (7.5) của câu nói vì đây chỉ luyện phát âm 1 từ.
  */
 export function useVocabPronunciation() {
     const [status, setStatus] = useState<VocabRecordStatus>("idle");
     const [score, setScore] = useState<number | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
-    const passed = score != null && score >= PASS_SCORE;
+    const passed = score != null && score >= VOCAB_PASS_SCORE;
 
     const reset = useCallback(() => {
         setStatus("idle");

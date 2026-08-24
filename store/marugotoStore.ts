@@ -4,6 +4,9 @@ import { CURRENT_BOOK_ID } from "@/data/marugoto/books";
 
 /** Điểm tối thiểu để một câu hỏi được tính là "đạt" (đồng bộ với BE). */
 export const PASS_SCORE = 7.5;
+/** Điểm tối thiểu để 1 từ vựng ghi âm được tính là "đạt" — thấp hơn PASS_SCORE
+ *  vì đây chỉ là bước luyện phát âm từng từ, không phải chấm cả câu nói. */
+export const VOCAB_PASS_SCORE = 5;
 
 interface MarugotoState {
     /** Chủ tài khoản của tiến độ cục bộ; đổi user → xóa sạch để không lẫn dữ liệu. */

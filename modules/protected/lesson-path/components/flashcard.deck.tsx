@@ -13,7 +13,7 @@ import {
 import { useTranslations } from "next-intl";
 import { cn } from "@/libs/utils";
 import type { Vocab } from "@/data/marugoto/types";
-import { PASS_SCORE } from "@/store/marugotoStore";
+import { VOCAB_PASS_SCORE } from "@/store/marugotoStore";
 import { useVocabPronunciation } from "../hooks/use.vocab.pronunciation";
 
 function speak(text: string) {
@@ -174,7 +174,9 @@ export function FlashcardDeck({
                     disabled={isLast || !pronPassed}
                     title={
                         !pronPassed
-                            ? t("vocab.recordGateHint", { min: PASS_SCORE })
+                            ? t("vocab.recordGateHint", {
+                                  min: VOCAB_PASS_SCORE,
+                              })
                             : undefined
                     }
                     className="border-bdc-primary text-text-contrast hover:bg-hbgc-app inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-40"
@@ -240,7 +242,7 @@ export function FlashcardDeck({
                               })
                             : t("vocab.recordFailed", {
                                   score: pronScore.toFixed(1),
-                                  min: PASS_SCORE,
+                                  min: VOCAB_PASS_SCORE,
                               })}
                     </div>
                 )}
