@@ -110,14 +110,13 @@ const PlanCard: React.FC<PlanCardProps> = ({
                     </div>
 
                     <h3 className="text-text-primary text-2xl font-black tracking-tight">
-                        {plan.name ||
-                            (tierCode === "FREE"
-                                ? t("freePlan")
-                                : tierCode === "BASIC"
-                                  ? t("basicPlan")
-                                  : tierCode === "PREMIUM"
-                                    ? t("premiumPlan")
-                                    : tierCode)}
+                        {tierCode === "FREE"
+                            ? t("freePlan")
+                            : tierCode === "BASIC"
+                              ? t("basicPlan")
+                              : tierCode === "PREMIUM"
+                                ? t("premiumPlan")
+                                : tierCode}
                     </h3>
                     <p className="text-text-muted mt-1.5 min-h-[38px] text-xs leading-relaxed font-medium">
                         {plan.description}
@@ -203,9 +202,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
                                     {t("card.aiConversationLabel")}{" "}
                                     <strong className="font-extrabold">
                                         {formatLimitCount(
-                                            plan.dailyAiSessionStartLimit ??
-                                                plan.dailyAiSessionEvaluationLimit ??
-                                                0,
+                                            plan.dailyAiSessionStartLimit ?? 0,
                                         )}
                                     </strong>
                                     <span className="text-text-muted">
