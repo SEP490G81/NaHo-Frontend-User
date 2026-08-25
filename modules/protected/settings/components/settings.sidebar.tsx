@@ -6,17 +6,22 @@ import { useTranslations } from "next-intl";
 import SettingsSearchBox from "@/modules/protected/settings/components/settings.search.box";
 import { Divider } from "@mui/material";
 import BackButton from "@/components/ui/back.button";
+import { useSettingsBackNavigation } from "@/modules/protected/settings/hooks/use.settings.back.navigation";
 import { cn } from "@/libs/utils";
 
 const SettingsSidebar = () => {
     const tRaw = useTranslations();
     const t = tRaw as (key: string) => string;
     const pathname = usePathname();
+    const handleBack = useSettingsBackNavigation();
 
     return (
         <div className="flex w-full flex-col">
             <div className="mb-3">
-                <BackButton label={t("common.metadata.back") || "Quay lại"} />
+                <BackButton
+                    label={t("common.metadata.back") || "Quay lại"}
+                    onClick={handleBack}
+                />
             </div>
 
             <SettingsSearchBox />
