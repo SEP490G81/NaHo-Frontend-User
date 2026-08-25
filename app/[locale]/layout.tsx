@@ -12,6 +12,7 @@ import React from "react";
 import { QueryProvider } from "@/components/providers/query.provider";
 import { InitColorSchemeScript } from "@mui/material";
 import SseProvider from "@/components/providers/sse.provider";
+import NavigationHistoryTracker from "@/components/providers/navigation.history.tracker";
 import { routing } from "@/i18n/routing";
 
 type Props = {
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
                             <AppThemeProvider>
                                 <QueryProvider>
                                     <SseProvider>
+                                        <NavigationHistoryTracker />
                                         <main>{children}</main>
                                     </SseProvider>
                                 </QueryProvider>
