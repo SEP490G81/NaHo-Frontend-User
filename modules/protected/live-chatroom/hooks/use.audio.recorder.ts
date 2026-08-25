@@ -1,16 +1,38 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useAudioRecorder() {
+export function useAudioRecorder(maxDurationSeconds: number = 30) {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [timeLeft, setTimeLeft] = useState<number>(maxDurationSeconds);
+
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const clearTimer = useCallback(() => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+        }
+    }, []);
+
+    const stopRecording = useCallback(() => {
+        clearTimer();
+        if (
+            mediaRecorderRef.current &&
+            mediaRecorderRef.current.state !== "inactive"
+        ) {
+            mediaRecorderRef.current.stop();
+        }
+        setIsRecording(false);
+    }, [clearTimer]);
 
     const startRecording = useCallback(async () => {
         try {
+            clearTimer();
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
             });
@@ -36,30 +58,44 @@ export function useAudioRecorder() {
 
             mediaRecorder.start();
             setIsRecording(true);
+            setTimeLeft(maxDurationSeconds);
+
+            timerRef.current = setInterval(() => {
+                setTimeLeft((prev) => {
+                    if (prev <= 1) {
+                        stopRecording();
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
         } catch (error) {
             console.error("Audio recording error:", error);
         }
-    }, []);
-
-    const stopRecording = useCallback(() => {
-        if (mediaRecorderRef.current && isRecording) {
-            mediaRecorderRef.current.stop();
-            setIsRecording(false);
-        }
-    }, [isRecording]);
+    }, [maxDurationSeconds, clearTimer, stopRecording]);
 
     const clearRecording = useCallback(() => {
+        clearTimer();
         if (audioUrl) {
             URL.revokeObjectURL(audioUrl);
         }
         setAudioBlob(null);
         setAudioUrl(null);
-    }, [audioUrl]);
+        setTimeLeft(maxDurationSeconds);
+    }, [audioUrl, maxDurationSeconds, clearTimer]);
+
+    useEffect(() => {
+        return () => {
+            clearTimer();
+        };
+    }, [clearTimer]);
 
     return {
         isRecording,
         audioBlob,
         audioUrl,
+        timeLeft,
+        maxDurationSeconds,
         startRecording,
         stopRecording,
         clearRecording,
