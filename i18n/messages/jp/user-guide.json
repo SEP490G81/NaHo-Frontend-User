@@ -1,5 +1,11 @@
 {
     "userGuide": {
+        "onboardingPrompt": {
+            "title": "NaHoでの学び方はもうご存知ですか？",
+            "subtitle": "まだの場合は、今すぐまるごとルートをご案内します。",
+            "yesLabel": "はい、知っています",
+            "noLabel": "いいえ、案内してください"
+        },
         "tour": {
             "stepCounter": "ステップ {current}/{total}",
             "skip": "スキップ",

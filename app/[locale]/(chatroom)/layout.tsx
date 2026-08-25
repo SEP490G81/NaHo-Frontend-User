@@ -12,6 +12,7 @@ import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigan
 import MarugotoUserScope from "@/components/providers/marugoto.user.scope";
 import TourUserScope from "@/modules/protected/user-guide/providers/tour.user.scope";
 import ActiveTours from "@/modules/protected/user-guide/providers/active.tours";
+import OnboardingPrompt from "@/modules/protected/user-guide/features/onboarding.prompt";
 import ProtectedHeader from "@/layouts/protected-header/components/protected.header";
 import SakuraFalling from "@/components/ui/sakura-falling";
 import JapanBackground from "@/components/ui/japan-background";
@@ -42,6 +43,7 @@ const ChatroomLayout = async ({ children }: { children: React.ReactNode }) => {
                     <MarugotoUserScope userId={String(user.id)} />
                     <TourUserScope userId={String(user.id)} />
                     <ActiveTours />
+                    <OnboardingPrompt />
                     <div className="relative flex min-h-screen">
                         <ChatSidebar
                             inProgressSessions={inProgressSessions}

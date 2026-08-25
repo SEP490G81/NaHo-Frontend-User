@@ -1,5 +1,11 @@
 {
     "userGuide": {
+        "onboardingPrompt": {
+            "title": "Bạn đã biết cách để học tập chưa?",
+            "subtitle": "Nếu chưa, để NaHo hướng dẫn nhanh bạn qua lộ trình Marugoto ngay bây giờ.",
+            "yesLabel": "Rồi, tôi biết cách học rồi",
+            "noLabel": "Chưa, hướng dẫn tôi luôn"
+        },
         "tour": {
             "stepCounter": "Bước {current}/{total}",
             "skip": "Bỏ qua",

@@ -1,5 +1,11 @@
 {
     "userGuide": {
+        "onboardingPrompt": {
+            "title": "Do you already know how to study here?",
+            "subtitle": "If not, let NaHo walk you through the Marugoto path right now.",
+            "yesLabel": "Yes, I already know",
+            "noLabel": "No, guide me now"
+        },
         "tour": {
             "stepCounter": "Step {current}/{total}",
             "skip": "Skip",

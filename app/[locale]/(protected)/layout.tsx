@@ -16,6 +16,7 @@ import AppToggleFuriganaProvider from "@/components/providers/app.toggle.furigan
 import UserLearningProgressProvider from "@/components/providers/user.learning.progress.provider";
 import TourUserScope from "@/modules/protected/user-guide/providers/tour.user.scope";
 import ActiveTours from "@/modules/protected/user-guide/providers/active.tours";
+import OnboardingPrompt from "@/modules/protected/user-guide/features/onboarding.prompt";
 
 const ProtectedLayout = async ({
     children,
@@ -37,6 +38,7 @@ const ProtectedLayout = async ({
                     <MarugotoUserScope userId={String(user.id)} />
                     <TourUserScope userId={String(user.id)} />
                     <ActiveTours />
+                    <OnboardingPrompt />
                     <div className="relative flex min-h-screen">
                         <Sidebar />
                         <div className="flex min-w-0 flex-1 flex-col">
