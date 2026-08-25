@@ -92,7 +92,9 @@ export function useNotificationStream() {
             };
         };
 
-        connect();
+        // TODO: Uncomment `connect()` when Backend `NotificationSseController.java` is enabled.
+        // Currently disabled to avoid continuous 500 retry errors on missing Backend endpoint /api/v1/notifications/stream.
+        // connect();
 
         return () => {
             isMounted = false;
