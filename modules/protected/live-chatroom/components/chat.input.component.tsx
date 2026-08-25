@@ -12,10 +12,17 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import StopRoundedIcon from "@mui/icons-material/StopRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import { useMySubscription } from "@/hooks/use.my.subscription";
 import SuggestedRepliesComponent from "./suggested.replies.component";
 import AudioPlayerComponent from "./audio.player.component";
 import { useAudioRecorder } from "../hooks/use.audio.recorder";
 import { ChatInputProps } from "../types/live.chatroom.type";
+
+const formatTime = (totalSeconds: number) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+};
 
 const ChatInputComponent = ({
     suggestedReplies = [],
@@ -27,14 +34,23 @@ const ChatInputComponent = ({
 }: ChatInputProps) => {
     const t = useTranslations("liveChatroom");
     const [inputText, setInputText] = useState<string>("");
+
+    const { data: userSub } = useMySubscription();
+    const maxSpeakingSeconds =
+        (userSub as any)?.subscriptionPlan?.maxAiTurnSpeakingSeconds ??
+        (userSub as any)?.plan?.maxAiTurnSpeakingSeconds ??
+        (userSub as any)?.maxAiTurnSpeakingSeconds ??
+        30;
+
     const {
         isRecording,
         audioBlob,
         audioUrl,
+        timeLeft,
         startRecording,
         stopRecording,
         clearRecording,
-    } = useAudioRecorder();
+    } = useAudioRecorder(maxSpeakingSeconds);
 
     const handleSelectSuggestion = (text: string) => {
         setInputText(text);
@@ -81,6 +97,15 @@ const ChatInputComponent = ({
                             <span className="h-3 w-3 animate-ping rounded-full bg-red-500" />
                             <span className="text-text-contrast text-xs font-semibold">
                                 {t("recording")}
+                            </span>
+                            <span
+                                className={`rounded-full px-2 py-0.5 font-mono text-xs font-bold transition-colors ${
+                                    timeLeft <= 5
+                                        ? "animate-pulse bg-red-500/20 text-red-500"
+                                        : "bg-bgc-highlight/15 text-bgc-highlight"
+                                }`}
+                            >
+                                {formatTime(timeLeft)} / {formatTime(maxSpeakingSeconds)}
                             </span>
                         </div>
                         <Tooltip title={t("stopRecording")}>

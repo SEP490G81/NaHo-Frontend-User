@@ -1,5 +1,5 @@
 # Stage 1: Dependencies
-FROM node:24.12.0-alpine3.23 AS dependencies
+FROM node:22-alpine AS dependencies
 
 WORKDIR /app
 
@@ -9,12 +9,15 @@ COPY package*.json ./
 # không dùng npm install
 # Dùng npm clean install vì bắt buộc cài đúng version trong lock file
 # Tránh việc trong file package.json có dấu "^" khiến version mỗi lần build không cố định
-RUN npm i
+RUN npm install
 
 # Stage 2: Builder
-FROM node:24.12.0-alpine3.23 AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
+
+ARG NEXT_PUBLIC_API_URL=https://api.naho.io.vn/api/v1
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Copy node modules từ stage trước
 COPY --from=dependencies /app/node_modules ./node_modules
@@ -30,7 +33,7 @@ COPY . .
 RUN npm run build
 
 # Stage 3: Runner
-FROM node:24.12.0-alpine3.23 AS runner
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 

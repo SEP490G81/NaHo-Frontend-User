@@ -7,7 +7,7 @@
             "startNow": "Đăng ký trải nghiệm",
             "exploreFeatures": "Khám phá tính năng",
             "mockup": {
-                "senseiName": "Sensei Yuki",
+                "personaName": "Yuki",
                 "speaking": "Đang nói chuyện",
                 "topicTag": "Phỏng vấn IT",
                 "questionJp": "自己紹介をお願いします。",
@@ -27,15 +27,15 @@
             "items": {
                 "topics": {
                     "title": "Luyện nói theo chủ đề",
-                    "description": "Kho chủ đề đa dạng từ giao tiếp công sở đến phỏng vấn BrSE, kèm mục tiêu học tập và từ vựng chính cho từng bài."
+                    "description": "A library of topics aligned with the Marugoto curriculum, spanning from Starter to Advanced with real-life communication scenarios, each paired with clear Can-do goals and key vocabulary."
                 },
                 "aiFeedback": {
                     "title": "AI chấm điểm 4 tiêu chí",
                     "description": "Nhận phản hồi tức thì về Phát âm, Từ vựng, Ngữ pháp và Độ tự nhiên sau mỗi lượt nói."
                 },
-                "customQuestion": {
-                    "title": "Đề chọn tự phát",
-                    "description": "Tự soạn câu hỏi luyện nói theo nhu cầu riêng, AI hỗ trợ gợi ý câu hỏi tiếng Nhật chuẩn ngữ cảnh."
+                "freeConversation": {
+                    "title": "Free conversation with AI",
+                    "description": "Pick your favorite AI persona and practice natural dialogue on any topic, with difficulty you can adjust to match your level."
                 },
                 "history": {
                     "title": "Theo dõi tiến bộ",
@@ -45,28 +45,28 @@
         },
         "companions": {
             "title": "Chọn nhân vật phù hợp với mục tiêu của bạn",
-            "subtitle": "Các cá tính AI khác biệt — từ giảng viên dịu dàng đến khách hàng trang trọng.",
-            "levelLabel": "Trình độ",
+            "subtitle": "Distinct AI personalities aligned with the Marugoto framework — from a gentle teacher to a formal business client.",
+            "levelLabel": "Marugoto",
             "items": {
                 "sakura": {
                     "role": "Giảng viên tiếng Nhật",
                     "description": "Nhẹ nhàng, thân thiện, tập trung giao tiếp hàng ngày và sửa ngữ pháp.",
-                    "level": "Tất cả"
+                    "level": "A1 – B1.2"
                 },
                 "kenji": {
                     "role": "Kỹ sư phần mềm Senior",
                     "description": "Chuyên nghiệp, hội thoại kỹ thuật, mô phỏng họp văn phòng Nhật.",
-                    "level": "N3 – N1"
+                    "level": "A2/B1 – B1.2"
                 },
                 "yuki": {
                     "role": "Người phỏng vấn tuyển dụng",
                     "description": "Nghiêm khắc, phỏng vấn chuẩn, hỏi các câu hành vi khó.",
-                    "level": "N2 – N1"
+                    "level": "B1.1 – B1.2"
                 },
                 "tanaka": {
                     "role": "Khách hàng Nhật Bản",
                     "description": "Keigo trang trọng, mô phỏng đàm phán và thảo luận kinh doanh.",
-                    "level": "N1"
+                    "level": "B1.2"
                 }
             }
         },
@@ -80,7 +80,7 @@
                 },
                 "step2": {
                     "title": "Luyện nói cùng AI",
-                    "description": "Chọn chủ đề, vào phòng luyện và ghi âm câu trả lời của bạn."
+                    "description": "Pick a Marugoto topic or your favorite AI persona, enter the practice room, and record your answer."
                 },
                 "step3": {
                     "title": "Nhận phản hồi & tiến bộ",
@@ -101,7 +101,7 @@
                 "t2": {
                     "name": "Quốc Bảo",
                     "role": "Kỹ sư cầu nối",
-                    "quote": "Tính năng tự soạn câu hỏi rất hợp với công việc của mình — luyện đúng các tình huống họp dự án thật với khách hàng Nhật."
+                    "quote": "Free-form conversation with an AI persona playing a Japanese colleague helped me practice real project meeting scenarios with clients."
                 },
                 "t3": {
                     "name": "Thu Hà",
@@ -127,6 +127,16 @@
                     "answer": "NaHo được thiết kế cho sinh viên ngành Kỹ sư cầu nối (BrSE) Đại học FPT và người học tiếng Nhật trong lĩnh vực công nghệ, đặc biệt là những ai cần luyện phản xạ Kaiwa cho phỏng vấn và môi trường công sở Nhật."
                 }
             }
+        },
+        "cta": {
+            "title": "Ready to master your Kaiwa reflexes?",
+            "subtitle": "Join NaHo today to practice speaking Japanese with AI — free to start, no credit card required.",
+            "button": "Start for free"
+        },
+        "footer": {
+            "tagline": "An AI-powered Kaiwa practice platform for Japanese learners.",
+            "productTitle": "Product",
+            "legalTitle": "Legal"
         }
     }
 }

@@ -84,7 +84,7 @@ export const LiveChatroomProvider = ({
         if (messages.length <= 1) {
             toast.warning(
                 t("endSessionMinMessagesWarning") ||
-                    "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc để nhận báo cáo đánh giá.",
+                "Phiên trò chuyện chưa có tương tác từ bạn. Vui lòng gửi ít nhất 1 tin nhắn cho AI trước khi kết thúc để nhận báo cáo đánh giá.",
             );
             return;
         }
@@ -173,16 +173,42 @@ export const LiveChatroomProvider = ({
     const sendAudioMessage = async (audioBlob: Blob) => {
         if (isSendingMessage) return;
         const tempId = `temp-user-${Date.now()}`;
+        const analysisSteps = [
+            t("analyzingVoice") || "Đang phân tích giọng nói",
+            t("analyzingContent") || "Đang phân tích nội dung",
+            t("analyzingGrammar") || "Đang phân tích từ vựng, ngữ pháp",
+        ];
+
         const tempUserMsg: ChatMessageItem = {
             id: tempId,
             sender: "USER",
-            content: "...",
+            content: analysisSteps[0],
             isPending: true,
         };
+
+        let stepIndex = 0;
+        let intervalId: NodeJS.Timeout | null = null;
 
         try {
             setIsSendingMessage(true);
             setMessages((prev) => [...prev, tempUserMsg]);
+
+            intervalId = setInterval(() => {
+                stepIndex++;
+                if (stepIndex < analysisSteps.length) {
+                    const nextContent = analysisSteps[stepIndex];
+                    setMessages((prev) =>
+                        prev.map((m) =>
+                            m.id === tempId
+                                ? { ...m, content: nextContent }
+                                : m,
+                        ),
+                    );
+                } else if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                }
+            }, 3600);
 
             const res = await sendAudioMessageApi(sessionCode, audioBlob);
 
@@ -206,6 +232,9 @@ export const LiveChatroomProvider = ({
                 toast.error(errObj?.message || "Không thể gửi file ghi âm.");
             }
         } finally {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
             setIsSendingMessage(false);
         }
     };

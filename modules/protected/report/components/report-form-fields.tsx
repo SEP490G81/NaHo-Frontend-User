@@ -77,7 +77,7 @@ export function ReportFormFields({
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <label className="text-text-contrast block text-sm font-semibold">
-                        {t("fieldImage")}
+                        {t("fieldImage")} <span className="text-text-muted text-xs font-normal">(Tối đa 1MB/ảnh)</span>
                     </label>
                     {files.length > 0 && (
                         <span className="text-text-muted text-xs font-medium">

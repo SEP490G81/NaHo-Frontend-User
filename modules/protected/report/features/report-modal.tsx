@@ -40,6 +40,8 @@ export function ReportModal() {
         }
     }, [modalState.isOpen]);
 
+    const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
+
     const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFiles = Array.from(e.target.files || []);
         if (selectedFiles.length === 0) return;
@@ -49,6 +51,14 @@ export function ReportModal() {
         );
         if (invalidFile) {
             toast.error(t("errorOnlyImage"));
+            return;
+        }
+
+        const oversizeFile = selectedFiles.find(
+            (file) => file.size > MAX_FILE_SIZE,
+        );
+        if (oversizeFile) {
+            toast.error(t("errorMaxFileSize"));
             return;
         }
 
@@ -76,6 +86,12 @@ export function ReportModal() {
 
         if (!title.trim() || !description.trim()) {
             toast.error(t("errorRequired"));
+            return;
+        }
+
+        const oversizeFile = files.find((file) => file.size > MAX_FILE_SIZE);
+        if (oversizeFile) {
+            toast.error(t("errorMaxFileSize"));
             return;
         }
 

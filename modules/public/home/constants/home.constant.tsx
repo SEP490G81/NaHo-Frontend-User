@@ -3,13 +3,14 @@ import {
     FaqItem,
     FeatureItem,
     FeedbackBarItem,
+    FooterLinkItem,
     HeroPetalItem,
     StepItem,
     TestimonialItem,
 } from "@/modules/public/home/types/home.ui.type";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import EditNoteIcon from "@mui/icons-material/EditNote";
+import ForumIcon from "@mui/icons-material/Forum";
 import InsightsIcon from "@mui/icons-material/Insights";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import MicIcon from "@mui/icons-material/Mic";
@@ -28,8 +29,8 @@ export const FEATURE_ITEMS: FeatureItem[] = [
     },
     {
         id: "f-3",
-        icon: EditNoteIcon,
-        messageKey: "customQuestion",
+        icon: ForumIcon,
+        messageKey: "freeConversation",
     },
     {
         id: "f-4",
@@ -186,6 +187,19 @@ export const HERO_PETAL_ITEMS: HeroPetalItem[] = [
         size: 12,
         delay: 2.5,
         duration: 13,
+    },
+];
+
+export const FOOTER_LEGAL_LINKS: FooterLinkItem[] = [
+    {
+        id: "l-1",
+        titleKey: "terms",
+        redirectLink: "/terms",
+    },
+    {
+        id: "l-2",
+        titleKey: "privacy",
+        redirectLink: "/privacy",
     },
 ];
 

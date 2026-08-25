@@ -51,13 +51,15 @@ const HelpGuideCard = ({ guide, stepLabel }: HelpGuideCardProps) => {
                 ))}
             </ol>
 
-            <Link
-                href={guide.action.href}
-                className="text-bgc-highlight mt-6 inline-flex items-center gap-x-1.5 self-start text-sm font-semibold hover:underline"
-            >
-                {guide.action.label}
-                <ArrowRight className="h-4 w-4" />
-            </Link>
+            {guide.action && (
+                <Link
+                    href={guide.action.href}
+                    className="text-bgc-highlight mt-6 inline-flex items-center gap-x-1.5 self-start text-sm font-semibold hover:underline"
+                >
+                    {guide.action.label}
+                    <ArrowRight className="h-4 w-4" />
+                </Link>
+            )}
         </article>
     );
 };

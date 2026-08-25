@@ -18,7 +18,7 @@ export interface HelpGuide {
     description: string;
     duration: string;
     steps: string[];
-    action: HelpLink;
+    action?: HelpLink;
 }
 
 export interface HelpFaqItem {

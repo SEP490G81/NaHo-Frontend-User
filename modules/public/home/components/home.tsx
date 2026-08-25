@@ -4,6 +4,7 @@ import CompanionsSection from "@/modules/public/home/components/companions.secti
 import HowItWorksSection from "@/modules/public/home/components/how.it.works.section";
 import LearnerFeedbackSection from "@/modules/public/home/components/learner.feedback.section";
 import FaqSection from "@/modules/public/home/components/faq.section";
+import CtaSection from "@/modules/public/home/components/cta.section";
 import HomeFooter from "@/modules/public/home/components/home.footer";
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
             <HowItWorksSection />
             <LearnerFeedbackSection />
             <FaqSection />
+            <CtaSection />
             <HomeFooter />
         </div>
     );

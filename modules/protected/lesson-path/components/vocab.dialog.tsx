@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import { BookOpen, Check } from "lucide-react";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -58,17 +58,33 @@ export function VocabDialog({
     );
     const setStoredProgress = useMarugotoStore((s) => s.setVocabDialogProgress);
     const cardIndex = stored?.cardIndex ?? 0;
-    const viewedAll = stored?.viewedAll ?? false;
-    const setCardIndex = (index: number) => {
-        if (!progressKey) return;
-        setStoredProgress(progressKey, { cardIndex: index, viewedAll });
-    };
-    const setViewedAllDone = () => {
-        if (!progressKey) return;
-        setStoredProgress(progressKey, { cardIndex, viewedAll: true });
-    };
-    // 0–1 thẻ thì không cần lướt/ghi âm gì thêm là bấm "Hoàn thành" được luôn.
-    const canFinish = viewedAll || (!loading && items.length <= 1);
+    // "Đã ghi âm đạt thẻ cuối" — phản ánh lần ghi âm GẦN NHẤT (không kẹt true
+    // mãi sau 1 lần đạt rồi ghi âm lại fail, xem onLastCardPassChange).
+    const lastCardPassed = stored?.lastCardPassed ?? false;
+    // Patch từng phần qua store (store tự gộp với progress cũ + bỏ qua nếu
+    // không đổi) — nhờ vậy 2 hàm này KHÔNG cần đóng gói cardIndex/lastCardPassed,
+    // giữ được reference ổn định giữa các lần render. Cần thiết vì FlashcardDeck
+    // dùng onLastCardPassChange làm dependency của effect: nếu hàm đổi reference
+    // mỗi render sẽ khiến effect chạy lại → gọi lại setState → re-render → lặp vô hạn.
+    const setCardIndex = useCallback(
+        (index: number) => {
+            if (!progressKey) return;
+            setStoredProgress(progressKey, { cardIndex: index });
+        },
+        [progressKey, setStoredProgress],
+    );
+    const setLastCardPassed = useCallback(
+        (passed: boolean) => {
+            if (!progressKey) return;
+            setStoredProgress(progressKey, { lastCardPassed: passed });
+        },
+        [progressKey, setStoredProgress],
+    );
+    // Không có thẻ nào (không hiện FlashcardDeck) thì không có gì để ghi âm nên
+    // cho "Hoàn thành" luôn. CHỈ trường hợp này — kể cả đúng 1 thẻ vẫn phải ghi
+    // âm đạt thẻ đó (FlashcardDeck tự coi thẻ #1 là thẻ cuối khi total = 1, nên
+    // luồng bình thường đã yêu cầu đúng, không cần bypass thêm ở đây).
+    const canFinish = lastCardPassed || (!loading && items.length === 0);
 
     return (
         <Dialog
@@ -114,7 +130,7 @@ export function VocabDialog({
                         showFurigana={showFurigana}
                         cardIndex={cardIndex}
                         onCardIndexChange={setCardIndex}
-                        onLastCardPassed={setViewedAllDone}
+                        onLastCardPassChange={setLastCardPassed}
                     />
                 )}
             </DialogContent>
