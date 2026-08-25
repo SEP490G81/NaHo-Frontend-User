@@ -16,7 +16,6 @@ const MESSAGE_FILES = [
     "settings",
     "live-chatroom",
     "persona-setup",
-    "dialogue-history",
     "speaking-result",
     "marugoto",
     "leaderboard",
