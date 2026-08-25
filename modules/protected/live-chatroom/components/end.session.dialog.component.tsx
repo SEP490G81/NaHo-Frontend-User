@@ -31,6 +31,12 @@ const EndSessionDialogComponent = ({
 }: EndSessionDialogProps) => {
     const t = useTranslations("liveChatroom");
 
+    const handleConfirm = () => {
+        if (isEnding || !canEndSession) return;
+        onClose();
+        onConfirm();
+    };
+
     return (
         <Dialog
             open={open}
@@ -90,7 +96,7 @@ const EndSessionDialogComponent = ({
                     {t("cancel") || "Hủy"}
                 </Button>
                 <Button
-                    onClick={onConfirm}
+                    onClick={handleConfirm}
                     disabled={isEnding || !canEndSession}
                     variant="contained"
                     color="error"

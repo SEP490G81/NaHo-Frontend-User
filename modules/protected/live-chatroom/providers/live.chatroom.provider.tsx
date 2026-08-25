@@ -81,6 +81,7 @@ export const LiveChatroomProvider = ({
     const [isEndingSession, setIsEndingSession] = useState<boolean>(false);
 
     const endChatSession = async () => {
+        if (isEndingSession) return;
         if (messages.length <= 1) {
             toast.warning(
                 t("endSessionMinMessagesWarning") ||

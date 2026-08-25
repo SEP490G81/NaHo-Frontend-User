@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { useLiveChatroom } from "../hooks/use.live.chatroom";
 import SessionSidebarComponent from "../components/session.sidebar.component";
 import MessageItemComponent from "../components/message.item.component";
@@ -117,9 +118,38 @@ const LiveChatroomView = () => {
                 open={isEndDialogOpen}
                 isEnding={isEndingSession}
                 canEndSession={messages.length > 1}
-                onConfirm={endChatSession}
+                onConfirm={() => {
+                    setIsEndDialogOpen(false);
+                    endChatSession();
+                }}
                 onClose={() => setIsEndDialogOpen(false)}
             />
+
+            {/* Loading Backdrop when ending session */}
+            <Backdrop
+                open={isEndingSession}
+                sx={{
+                    zIndex: (theme) => theme.zIndex.drawer + 999,
+                    backgroundColor: "rgba(0, 0, 0, 0.7)",
+                    backdropFilter: "blur(6px)",
+                    color: "#fff",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                }}
+            >
+                <div className="flex flex-col items-center gap-3">
+                    <CircularProgress color="inherit" size={44} thickness={4} />
+                    <div className="text-center">
+                        <p className="text-base font-bold text-white">
+                            {t("endingSession") || "Đang xử lý..."}
+                        </p>
+                        <p className="mt-1 text-xs text-white/80">
+                            {t("endSessionConfirmDesc") ? "Đang tạo báo cáo đánh giá chi tiết..." : ""}
+                        </p>
+                    </div>
+                </div>
+            </Backdrop>
         </div>
     );
 };
