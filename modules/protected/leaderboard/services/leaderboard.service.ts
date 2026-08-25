@@ -3,9 +3,10 @@ import {
     LeaderboardEntry,
     LeagueLeaderboardEntryResponse,
     LeagueResponse,
-    UserLearningProgressResponse
+    UserLearningProgressResponse,
 } from "@/types/responses/league.response";
 import { resolveAvatarUrl } from "../utils/leaderboard.util";
+import { clientFetchJson } from "@/services/client/client.fetch";
 
 /**
  * Bật mock CÓ CHỦ ĐÍCH cho dev không chạy BE (đặt NEXT_PUBLIC_USE_MOCK=true).
@@ -35,11 +36,8 @@ export async function getLeagues(): Promise<LeagueResponse[]> {
     if (USE_MOCK) {
         return sortByMinPoint(mockLeagues);
     }
-    const response = await fetch("/api/leagues", { credentials: "include" });
-    if (!response.ok) {
-        throw new Error(`getLeagues failed with status ${response.status}`);
-    }
-    return sortByMinPoint((await response.json()) as LeagueResponse[]);
+    const data = await clientFetchJson<LeagueResponse[]>("/api/leagues");
+    return sortByMinPoint(data || []);
 }
 
 export async function getLeagueLeaderboard(
@@ -48,29 +46,17 @@ export async function getLeagueLeaderboard(
     if (USE_MOCK) {
         return getMockLeaderboardEntries(leagueId);
     }
-    const response = await fetch(`/api/leagues/leaderboard/${leagueId}`, {
-        credentials: "include",
-    });
-    if (!response.ok) {
-        throw new Error(
-            `getLeagueLeaderboard failed with status ${response.status}`,
-        );
-    }
-    const raw = (await response.json()) as LeagueLeaderboardEntryResponse[];
-    return toLeaderboardEntries(raw);
+    const raw = await clientFetchJson<LeagueLeaderboardEntryResponse[]>(
+        `/api/leagues/leaderboard/${leagueId}`,
+    );
+    return toLeaderboardEntries(raw || []);
 }
 
 export async function getUserLearningProgress(): Promise<UserLearningProgressResponse> {
     if (USE_MOCK) {
         return getMockUserProgress();
     }
-    const response = await fetch("/api/user-learning-progresses/me", {
-        credentials: "include",
-    });
-    if (!response.ok) {
-        throw new Error(
-            `getUserLearningProgress failed with status ${response.status}`,
-        );
-    }
-    return (await response.json()) as UserLearningProgressResponse;
+    return clientFetchJson<UserLearningProgressResponse>(
+        "/api/user-learning-progresses/me",
+    );
 }

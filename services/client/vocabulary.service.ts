@@ -1,5 +1,5 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
 import { VocabQuizItem } from "@/types/responses/vocabulary.response";
+import { clientFetchJson } from "./client.fetch";
 
 /**
  * Service client lấy danh sách câu hỏi trắc nghiệm từ vựng từ API /api/vocabularies/quiz
@@ -7,18 +7,11 @@ import { VocabQuizItem } from "@/types/responses/vocabulary.response";
 export async function getRandomVocabQuiz(
     count: number = 1,
 ): Promise<VocabQuizItem[]> {
-    const response = await fetch(`/api/vocabularies/quiz?count=${count}`, {
-        cache: "no-store",
-    });
-    const result = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            (result as ProblemDetail).detail ||
-                "Không lấy được câu hỏi trắc nghiệm từ vựng",
-        );
-    }
-
-    const api = result as ApiResponse<VocabQuizItem[]>;
-    return api.data ?? [];
+    const data = await clientFetchJson<VocabQuizItem[]>(
+        `/api/vocabularies/quiz?count=${count}`,
+        {
+            cache: "no-store",
+        },
+    );
+    return data ?? [];
 }

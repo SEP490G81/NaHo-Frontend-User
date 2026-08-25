@@ -8,13 +8,13 @@ import {
     SpeakingSessionListItem,
     SpeakingSessionQuery,
     SpeechAssessmentResponse,
-    StartConversationResponse
+    StartConversationResponse,
 } from "@/types/responses/speaking.response";
+import { clientFetch, clientFetchJson, unwrapData } from "./client.fetch";
 
 /**
  * Service phía client cho tính năng chấm điểm luyện nói. Gọi qua Next route
- * handler (/api/*) cùng origin (pattern 2 lớp) — route handler đứng ra gọi BE,
- * nhờ vậy tránh CORS và tự đính kèm access token từ cookie.
+ * handler (/api/*) cùng origin với cơ chế tự động xoay token khi 401.
  */
 
 async function unwrap<T>(response: Response): Promise<T> {
@@ -24,7 +24,6 @@ async function unwrap<T>(response: Response): Promise<T> {
         try {
             result = JSON.parse(text);
         } catch {
-            // Phản hồi không phải JSON (vd trang lỗi HTML) → báo lỗi rõ ràng.
             throw new Error(`Máy chủ phản hồi lỗi (HTTP ${response.status}).`);
         }
     }
@@ -34,29 +33,7 @@ async function unwrap<T>(response: Response): Promise<T> {
                 `Yêu cầu thất bại (HTTP ${response.status}).`,
         );
     }
-    return (result as ApiResponse<T>).data;
-}
-
-/**
- * Gọi proxy /api/*; nếu BE trả 401 (access token hết hạn giữa phiên chat sống
- * lâu, middleware không refresh vì matcher loại /api) thì rotation 1 lần rồi thử
- * lại. Body dạng string/FormData tái sử dụng được nên retry an toàn.
- */
-async function apiRequest(
-    input: string,
-    init?: RequestInit,
-): Promise<Response> {
-    let response = await fetch(input, init);
-    if (response.status === 401) {
-        const rotated = await fetch("/api/auth/rotation", {
-            method: "POST",
-            credentials: "include",
-        });
-        if (rotated.ok) {
-            response = await fetch(input, init);
-        }
-    }
-    return response;
+    return unwrapData<T>(result);
 }
 
 /** Đuôi file theo mime của bản ghi để BE nhận đúng định dạng. */
@@ -86,7 +63,7 @@ export async function submitSpeakingAnalysis(
         String(Math.max(1, Math.round(input.durationSec))),
     );
 
-    const response = await fetch("/api/analysis", {
+    const response = await clientFetch("/api/analysis", {
         method: "POST",
         body: form,
     });
@@ -103,7 +80,7 @@ export async function assessPronunciation(
     form.append("file", file, fileNameFor(file));
     form.append("reference-text", referenceText);
 
-    const response = await fetch("/api/speaking/assessment", {
+    const response = await clientFetch("/api/speaking/assessment", {
         method: "POST",
         body: form,
     });
@@ -114,7 +91,7 @@ export async function assessPronunciation(
 export async function getAnswerHistoryDetail(
     answerHistoryId: string | number,
 ): Promise<AnswerHistoryResponse> {
-    const response = await fetch(`/api/history/${answerHistoryId}`);
+    const response = await clientFetch(`/api/history/${answerHistoryId}`);
     return unwrap<AnswerHistoryResponse>(response);
 }
 
@@ -122,7 +99,7 @@ export async function getAnswerHistoryDetail(
 export async function getAnswerHistoriesBySpeakingQuestion(
     speakingQuestionId: string | number,
 ): Promise<AnswerHistoryListItemResponse[]> {
-    const response = await fetch(
+    const response = await clientFetch(
         `/api/answer-histories/speaking-question/${speakingQuestionId}`,
     );
     return unwrap<AnswerHistoryListItemResponse[]>(response);
@@ -149,9 +126,8 @@ export interface SpeakingHistoryListPage {
 export async function getSpeakingHistoryList(
     query: SpeakingHistoryListQuery = {},
 ): Promise<SpeakingHistoryListPage> {
-    const response = await fetch("/api/history", {
+    const response = await clientFetch("/api/history", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             page: query.page ?? 0,
             size: query.size ?? 10,
@@ -179,7 +155,7 @@ export async function getSpeakingHistoryList(
 
 /** Danh sách persona AI (GET /personas). */
 export async function getPersonas(): Promise<PersonaResponse[]> {
-    const response = await apiRequest("/api/personas");
+    const response = await clientFetch("/api/personas");
     const data = await unwrap<PersonaResponse[] | PersonaResponse>(response);
     if (!data) return [];
     return Array.isArray(data) ? data : [data];
@@ -189,7 +165,7 @@ export async function getPersonas(): Promise<PersonaResponse[]> {
 export async function getPersonaById(
     id: number | string,
 ): Promise<PersonaResponse> {
-    const response = await apiRequest(`/api/personas/${id}`);
+    const response = await clientFetch(`/api/personas/${id}`);
     return unwrap<PersonaResponse>(response);
 }
 
@@ -197,7 +173,7 @@ export async function getPersonaById(
 export async function resumeSession(
     sessionCode: string,
 ): Promise<StartConversationResponse> {
-    const response = await apiRequest(
+    const response = await clientFetch(
         `/api/speaking/session/${sessionCode}/resume`,
         { method: "POST" },
     );
@@ -213,9 +189,8 @@ export interface SpeakingSessionPage {
 export async function getSpeakingSessions(
     query: SpeakingSessionQuery = {},
 ): Promise<SpeakingSessionPage> {
-    const response = await apiRequest("/api/speaking/session/history", {
+    const response = await clientFetch("/api/speaking/session/history", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             page: query.page ?? 0,
             size: query.size ?? 10,
@@ -241,7 +216,7 @@ export async function getSpeakingSessions(
 export async function getSpeakingSessionDetail(
     sessionCode: string,
 ): Promise<SpeakingSessionDetail> {
-    const response = await apiRequest(
+    const response = await clientFetch(
         `/api/speaking/session/history/${sessionCode}`,
     );
     return unwrap<SpeakingSessionDetail>(response);
@@ -251,7 +226,7 @@ export async function getSpeakingSessionDetail(
 export async function deleteSpeakingSession(
     sessionCode: string,
 ): Promise<void> {
-    const response = await apiRequest(`/api/speaking/session/${sessionCode}`, {
+    const response = await clientFetch(`/api/speaking/session/${sessionCode}`, {
         method: "DELETE",
     });
     if (!response.ok && response.status !== 204) {

@@ -1,41 +1,25 @@
-import { ProblemDetail } from "@/types/responses/base.response";
 import { NextResponse } from "next/server";
-import { REFRESH_TOKEN_NAME } from "@/constants/app.constants";
-import { cookies } from "next/headers";
+import { rotateTokensOnServer } from "@/services/server/backend.fetch";
 
 export async function POST() {
-    const cookieStore = await cookies();
-    const refreshToken = cookieStore.get(REFRESH_TOKEN_NAME)?.value;
+    const result = await rotateTokensOnServer();
 
-    if (!refreshToken) {
-        return NextResponse.json(null, { status: 401 });
+    if (!result.ok) {
+        return NextResponse.json(
+            {
+                detail: "Phiên đăng nhập đã hết hạn hoặc không hợp lệ.",
+                status: result.status || 401,
+            },
+            { status: result.status || 401 },
+        );
     }
 
-    const backendResponse = await fetch(
-        `${process.env.API_URL}/auth/rotation`,
-        {
-            method: "POST",
-            cache: "no-store",
-            headers: {
-                Cookie: `${REFRESH_TOKEN_NAME}=${refreshToken}`,
-            },
-        },
+    const response = NextResponse.json(
+        { success: true },
+        { status: result.status },
     );
 
-    if (!backendResponse.ok) {
-        const result = await backendResponse.json();
-        const problemDetail: ProblemDetail = result as ProblemDetail;
-        return NextResponse.json(problemDetail, {
-            status: backendResponse.status,
-        });
-    }
-
-    const response = NextResponse.json(null, {
-        status: backendResponse.status,
-    });
-
-    const responseCookies = backendResponse.headers.getSetCookie();
-    responseCookies.forEach((cookie) => {
+    result.setCookieHeaders.forEach((cookie) => {
         response.headers.append("set-cookie", cookie);
     });
 

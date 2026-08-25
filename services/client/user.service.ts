@@ -10,73 +10,82 @@ import {
     VerifyEmailRequest,
     VerifyForgotPasswordOtpRequest,
 } from "@/types/requests/user.request";
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { ProblemDetail } from "@/types/responses/base.response";
 import {
     ResetPasswordTokenResponse,
     UserResponse,
 } from "@/types/responses/user.response";
+import {
+    clientFetch,
+    clientFetchJson,
+    rotateTokenClient,
+} from "./client.fetch";
 
 export async function credentialsLogin(
     request: CredentialsLoginRequest,
 ): Promise<void> {
-    const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/login",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
 }
 
 export async function register(request: RegisterRequest): Promise<void> {
-    const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/register",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
 }
 
 export async function verifyEmail(request: VerifyEmailRequest): Promise<void> {
-    const response = await fetch("/api/auth/verify-email", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/verify-email",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
 }
 
 export async function resendOtp(request: ResendOtpRequest): Promise<void> {
-    const response = await fetch("/api/auth/resend-otp", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/resend-otp",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
@@ -85,16 +94,17 @@ export async function resendOtp(request: ResendOtpRequest): Promise<void> {
 export async function forgotPassword(
     request: ForgotPasswordRequest,
 ): Promise<void> {
-    const response = await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/forgot-password",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
@@ -103,44 +113,36 @@ export async function forgotPassword(
 export async function verifyForgotPasswordOtp(
     request: VerifyForgotPasswordOtpRequest,
 ): Promise<ResetPasswordTokenResponse> {
-    const response = await fetch("/api/auth/forgot-password-otp", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    return clientFetchJson<ResetPasswordTokenResponse>(
+        "/api/auth/forgot-password-otp",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        throw new ApiError(problemDetail);
-    }
-
-    return result as ResetPasswordTokenResponse;
+    );
 }
 
 export async function resetPassword(
     request: ResetPasswordRequest,
 ): Promise<void> {
-    const response = await fetch("/api/auth/reset-password", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await clientFetch(
+        "/api/auth/reset-password",
+        {
+            method: "POST",
+            body: JSON.stringify(request),
         },
-        body: JSON.stringify(request),
-    });
+        { autoRotate: false },
+    );
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
         throw new ApiError(problemDetail);
     }
 }
 
 export async function logout(): Promise<void> {
-    const response = await fetch("/api/auth/logout", {
+    const response = await clientFetch("/api/auth/logout", {
         method: "POST",
     });
 
@@ -149,71 +151,48 @@ export async function logout(): Promise<void> {
     }
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.detail);
+        throw new Error(problemDetail?.detail || "Đăng xuất thất bại.");
     }
 }
 
 export async function logoutAll(): Promise<void> {
-    const response = await fetch("/api/auth/logout-all", {
+    const response = await clientFetch("/api/auth/logout-all", {
         method: "POST",
     });
 
     if (!response.ok) {
-        const result = await response.json();
+        const result = await response.json().catch(() => null);
         const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.detail);
+        throw new Error(
+            problemDetail?.detail || "Đăng xuất tất cả thiết bị thất bại.",
+        );
     }
 }
 
-export async function getCurrentUserClient() {
-    const response = await fetch("/api/auth/me", {
-        credentials: "include",
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
+export async function getCurrentUserClient(): Promise<UserResponse | null> {
+    try {
+        return await clientFetchJson<UserResponse>("/api/auth/me");
+    } catch {
         return null;
     }
-
-    return result as UserResponse;
 }
 
-export async function rotateToken() {
-    const response = await fetch("/api/auth/rotation", {
-        method: "POST",
-        credentials: "include",
-    });
-
-    if (!response.ok) {
-        const result = await response.json();
-        const problemDetail = result as ProblemDetail;
-        throw new Error(problemDetail.detail);
+export async function rotateToken(): Promise<void> {
+    const ok = await rotateTokenClient();
+    if (!ok) {
+        throw new Error("Không thể xoay token.");
     }
 }
 
 export async function updateUserInfoClient(
     request: UpdateUserInfoRequest,
 ): Promise<UserResponse> {
-    const response = await fetch("/api/users/info", {
+    return clientFetchJson<UserResponse>("/api/users/info", {
         method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(request),
     });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        throw new ApiError(problemDetail);
-    }
-
-    const apiResponse = result as ApiResponse<UserResponse>;
-    return apiResponse.data || (result as UserResponse);
 }
 
 export async function uploadUserAvatarClient(
@@ -222,37 +201,17 @@ export async function uploadUserAvatarClient(
     const formData = new FormData();
     formData.append("avatar", file);
 
-    const response = await fetch("/api/users/avatar", {
+    return clientFetchJson<UserResponse>("/api/users/avatar", {
         method: "PATCH",
         body: formData,
     });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        throw new ApiError(problemDetail);
-    }
-
-    const apiResponse = result as ApiResponse<UserResponse>;
-    return apiResponse.data || (result as UserResponse);
 }
 
 export async function changePassword(
     request: ChangePasswordRequest,
 ): Promise<void> {
-    const response = await fetch("/api/auth/change-password", {
+    await clientFetchJson<void>("/api/auth/change-password", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(request),
     });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
-        throw new ApiError(problemDetail);
-    }
 }

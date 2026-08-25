@@ -4,8 +4,9 @@ import {
     ChatResponse,
     SpeakingSessionAssessmentResponse,
     SpeakingSessionListItemResponse,
-    SpeakingSessionResponse
+    SpeakingSessionResponse,
 } from "@/types/responses/speaking.llm.response";
+import { clientFetch } from "./client.fetch";
 
 /**
  * Bắt đầu phiên hội thoại AI 1:1.
@@ -14,9 +15,8 @@ import {
 export async function startConversation(
     req: StartConversationRequest,
 ): Promise<string> {
-    const response = await fetch("/api/speaking/session/start", {
+    const response = await clientFetch("/api/speaking/session/start", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(req),
     });
 
@@ -67,9 +67,8 @@ export async function startConversation(
 export async function sendTextMessage(
     req: ChatSessionMessageRequest,
 ): Promise<ChatResponse> {
-    const response = await fetch("/api/speaking/session/message", {
+    const response = await clientFetch("/api/speaking/session/message", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(req),
     });
 
@@ -123,10 +122,13 @@ export async function sendAudioMessage(
               });
     formData.append("file", fileToUpload);
 
-    const response = await fetch(`/api/speaking/session/audio/${sessionCode}`, {
-        method: "POST",
-        body: formData,
-    });
+    const response = await clientFetch(
+        `/api/speaking/session/audio/${sessionCode}`,
+        {
+            method: "POST",
+            body: formData,
+        },
+    );
 
     const result = await response.json();
 
@@ -168,26 +170,32 @@ export async function sendAudioMessage(
 export async function getSpeakingSessionsByStatus(
     status: string,
 ): Promise<SpeakingSessionListItemResponse[]> {
-    const response = await fetch(`/api/speaking/session/all?status=${status}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store",
-    });
+    try {
+        const response = await clientFetch(
+            `/api/speaking/session/all?status=${status}`,
+            {
+                method: "GET",
+                cache: "no-store",
+            },
+        );
 
-    const result = await response.json();
-    if (!response.ok) {
+        const result = await response.json();
+        if (!response.ok) {
+            return [];
+        }
+
+        const data = (result as ApiResponse<SpeakingSessionListItemResponse[]>)
+            .data;
+        if (Array.isArray(data)) {
+            return data;
+        }
+        if (Array.isArray(result)) {
+            return result;
+        }
+        return [];
+    } catch {
         return [];
     }
-
-    const data = (result as ApiResponse<SpeakingSessionListItemResponse[]>)
-        .data;
-    if (Array.isArray(data)) {
-        return data;
-    }
-    if (Array.isArray(result)) {
-        return result;
-    }
-    return [];
 }
 
 /**
@@ -197,9 +205,12 @@ export async function getSpeakingSessionsByStatus(
 export async function endSpeakingSession(
     sessionCode: string,
 ): Promise<SpeakingSessionAssessmentResponse> {
-    const response = await fetch(`/api/speaking/session/end/${sessionCode}`, {
-        method: "POST",
-    });
+    const response = await clientFetch(
+        `/api/speaking/session/end/${sessionCode}`,
+        {
+            method: "POST",
+        },
+    );
 
     const result = await response.json();
     if (!response.ok) {
@@ -238,20 +249,23 @@ export async function getSpeakingSessionDetailClient(
     sessionCode: string,
     status: string = "COMPLETED",
 ): Promise<SpeakingSessionResponse | null> {
-    const response = await fetch(
-        `/api/speaking/session/details?sessionCode=${sessionCode}&status=${status}`,
-        {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            cache: "no-store",
-        },
-    );
+    try {
+        const response = await clientFetch(
+            `/api/speaking/session/details?sessionCode=${sessionCode}&status=${status}`,
+            {
+                method: "GET",
+                cache: "no-store",
+            },
+        );
 
-    const result = await response.json();
-    if (!response.ok) {
+        const result = await response.json();
+        if (!response.ok) {
+            return null;
+        }
+
+        return ((result as ApiResponse<SpeakingSessionResponse>).data ??
+            result) as SpeakingSessionResponse;
+    } catch {
         return null;
     }
-
-    return ((result as ApiResponse<SpeakingSessionResponse>).data ??
-        result) as SpeakingSessionResponse;
 }

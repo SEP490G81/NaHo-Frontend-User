@@ -1,30 +1,25 @@
-import { ApiResponse, ProblemDetail } from "@/types/responses/base.response";
+import { ApiResponse } from "@/types/responses/base.response";
 import { PersonaResponse } from "@/types/responses/persona.response";
+import { clientFetch, clientFetchJson } from "./client.fetch";
 
 /**
  * Lấy danh sách toàn bộ Persona AI.
  * Gọi qua Next.js API route (/api/personas) trung gian trước khi tới backend (/api/v1/personas).
- *
- * @returns ApiResponse<PersonaResponse[]> chứa danh sách persona cùng metadata từ backend.
  */
 export async function getAllPersonas(): Promise<
     ApiResponse<PersonaResponse[]>
 > {
-    const response = await fetch("/api/personas", {
+    const response = await clientFetch("/api/personas", {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
         cache: "no-store",
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
         throw new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
+            result?.detail ||
+                result?.title ||
                 "Không thể lấy danh sách Persona.",
         );
     }
@@ -34,29 +29,21 @@ export async function getAllPersonas(): Promise<
 
 /**
  * Lấy thông tin chi tiết Persona AI theo ID.
- * Gọi qua Next.js API route (/api/personas/[id]) trung gian trước khi tới backend (/api/v1/personas/[id]).
- *
- * @param id ID của persona cần lấy
- * @returns ApiResponse<PersonaResponse> chứa thông tin persona.
  */
 export async function getPersonaById(
     id: number | string,
 ): Promise<ApiResponse<PersonaResponse>> {
-    const response = await fetch(`/api/personas/${id}`, {
+    const response = await clientFetch(`/api/personas/${id}`, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
         cache: "no-store",
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-        const problemDetail = result as ProblemDetail;
         throw new Error(
-            problemDetail?.detail ||
-                problemDetail?.title ||
+            result?.detail ||
+                result?.title ||
                 `Không thể lấy thông tin Persona #${id}.`,
         );
     }
@@ -67,18 +54,12 @@ export async function getPersonaById(
 /**
  * Bắt đầu một phiên hội thoại AI 1:1 với Persona.
  * Gọi POST /api/speaking/session/[personaId] -> BE trả sessionCode.
- *
- * @param personaId ID của persona
- * @returns sessionCode để điều hướng tới /live-chatroom/[sessionCode]
  */
 export async function startConversation(
     personaId: number | string,
 ): Promise<string> {
-    const response = await fetch(`/api/speaking/session/${personaId}`, {
+    const response = await clientFetch(`/api/speaking/session/${personaId}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
     });
 
     const text = await response.text();

@@ -31,6 +31,9 @@ export async function POST(request: Request) {
     });
 
     const cookies = backendResponse.headers.getSetCookie();
+
+    console.log(">>> check cookie: ", cookies);
+
     cookies.forEach((cookie) => {
         response.headers.append("set-cookie", cookie);
     });
