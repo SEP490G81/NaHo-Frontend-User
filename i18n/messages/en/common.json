@@ -153,6 +153,7 @@
             "submitting": "Submitting...",
             "submitSuccess": "Report submitted successfully! Thank you for your feedback.",
             "errorOnlyImage": "Please select only image files!",
+            "errorMaxFileSize": "Each image size must not exceed 1MB!",
             "errorRequired": "Please fill in both title and description!",
             "statusResolved": "Resolved",
             "statusPending": "Pending",

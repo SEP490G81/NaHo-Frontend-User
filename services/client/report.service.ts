@@ -10,17 +10,38 @@ export async function createReport(formData: FormData): Promise<Report> {
         body: formData,
     });
 
-    const result = await response.json();
+    const text = await response.text();
+    let result: any = null;
+    if (text) {
+        try {
+            result = JSON.parse(text);
+        } catch {
+            if (!response.ok) {
+                if (response.status === 413) {
+                    throw new Error(
+                        "Dung lượng ảnh hoặc nội dung báo cáo vượt quá giới hạn (tối đa 1MB/ảnh).",
+                    );
+                }
+                throw new Error(
+                    `Phản hồi từ máy chủ không hợp lệ (HTTP ${response.status}). Vui lòng thử lại sau.`,
+                );
+            }
+        }
+    }
 
     if (!response.ok) {
         const problem = result as ProblemDetail;
         throw new Error(
-            problem.detail || result.message || "Không thể tạo báo cáo.",
+            problem?.detail ||
+                result?.message ||
+                (response.status === 413
+                    ? "Dung lượng tệp tin quá lớn (tối đa 1MB)."
+                    : "Không thể tạo báo cáo."),
         );
     }
 
     const api = result as ApiResponse<Report>;
-    return api.data ?? (result as Report);
+    return api?.data ?? (result as Report);
 }
 
 /**
