@@ -4,7 +4,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "@/services/client/user.service";
 import { useRouter } from "@/i18n/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "@/libs/query.keys";
+import { useAuthStore } from "@/store/authStore";
 
 const LogoutButton = () => {
     const t = useTranslations();
@@ -14,12 +14,15 @@ const LogoutButton = () => {
     const handleLogout = async () => {
         try {
             await logout();
-
-            queryClient.setQueryData(queryKeys.auth.currentUser, null);
-
-            replace("/login");
         } catch (error) {
-            console.error(error);
+            console.error("Logout error:", error);
+        } finally {
+            if (typeof window !== "undefined") {
+                localStorage.removeItem("naho-auth");
+            }
+            useAuthStore.getState().logout();
+            queryClient.clear();
+            replace("/login");
         }
     };
 

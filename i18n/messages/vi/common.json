@@ -158,6 +158,7 @@
             "submitting": "Đang gửi...",
             "submitSuccess": "Gửi báo cáo thành công! Cảm ơn đóng góp của bạn.",
             "errorOnlyImage": "Vui lòng chỉ chọn tệp hình ảnh!",
+            "errorMaxFileSize": "Dung lượng mỗi ảnh không được vượt quá 1MB!",
             "errorRequired": "Vui lòng nhập đầy đủ tiêu đề và mô tả!",
             "statusResolved": "Đã xử lý",
             "statusPending": "Đang xử lý",

@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/store/authStore";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.naho.io.vn/api/v1";
 
 export function hasApiConfigured(): boolean {
     return !!BASE_URL;
